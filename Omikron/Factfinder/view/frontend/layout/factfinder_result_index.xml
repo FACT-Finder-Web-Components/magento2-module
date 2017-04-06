@@ -1,0 +1,41 @@
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <remove src="Omikron_Factfinder/js/search-redirect.js" />
+        <css src="Omikron_Factfinder/::css/ff/template.css"/>
+        <css src="Omikron_Factfinder/::css/ff/asn.css"/>
+        <css src="Omikron_Factfinder/::css/ff/record-list.css"/>
+        <css src="Omikron_Factfinder/::css/ff/breadcrumb.css"/>
+        <css src="Omikron_Factfinder/::css/ff/sortbox.css"/>
+        <css src="Omikron_Factfinder/::css/ff/paging.css"/>
+        <css src="Omikron_Factfinder/::css/ff/products-per-page.css"/>
+        <css src="Omikron_Factfinder/::css/ff/campaign.css"/>
+        <css src="Omikron_Factfinder/::css/ff/pushed-products-campaign.css"/>
+    </head>
+    <body>
+        <!-- Remove the search box from the header -->
+        <referenceContainer name="factfinder.top.search" remove="true" />
+        <referenceContainer name="top.search" remove="true" />
+
+        <!-- Add asn to sidebar -->
+        <referenceContainer name="sidebar.additional">
+            <block class="Omikron\Factfinder\Block\FF\ASN" ifconfig="factfinder/components/ff_asn" template="Omikron_Factfinder::ff/asn.phtml"  before="-" />
+        </referenceContainer>
+
+        <!-- Add remaining web-components -->
+        <referenceContainer name="content">
+            <block class="Omikron\Factfinder\Block\FF\Searchbox" ifconfig="factfinder/general/is_enabled" template="Omikron_Factfinder::ff/searchbox.phtml" />
+            <block class="Omikron\Factfinder\Block\FF\Breadcrumb" ifconfig="factfinder/components/ff_breadcrumb" template="Omikron_Factfinder::ff/breadcrumb.phtml" />
+            <block class="Omikron\Factfinder\Block\FF\Campaign" ifconfig="factfinder/components/ff_campaign" template="Omikron_Factfinder::ff/campaign.phtml" />
+            <block class="Omikron\Factfinder\Block\FF\PushedProductsCampaign" ifconfig="factfinder/components/ff_pushedproductscampaign" template="Omikron_Factfinder::ff/pushed-products-campaign.phtml" />
+            <container name="ff-navigation-top" htmlTag="div" htmlClass="ff-navigation">
+                <block class="Omikron\Factfinder\Block\FF\Sortbox" ifconfig="factfinder/components/ff_sortbox" template="Omikron_Factfinder::ff/sortbox.phtml" before="-" />
+                <block class="Omikron\Factfinder\Block\FF\Paging" ifconfig="factfinder/components/ff_paging" template="Omikron_Factfinder::ff/paging.phtml" />
+                <block class="Omikron\Factfinder\Block\FF\ProductsPerPage" ifconfig="factfinder/components/ff_productspp" template="Omikron_Factfinder::ff/products-per-page.phtml" />
+            </container>
+            <block class="Omikron\Factfinder\Block\FF\RecordList" template="Omikron_Factfinder::ff/record-list.phtml" />
+            <container name="ff-navigation-bottom" htmlTag="div" htmlClass="ff-navigation">
+                <block class="Omikron\Factfinder\Block\FF\Paging" ifconfig="factfinder/components/ff_paging" template="Omikron_Factfinder::ff/paging.phtml" />
+            </container>
+        </referenceContainer>
+    </body>
+</page>

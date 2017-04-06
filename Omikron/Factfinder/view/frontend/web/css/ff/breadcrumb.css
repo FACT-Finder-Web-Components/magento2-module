@@ -1,0 +1,23 @@
+ff-breadcrumb-trail {
+    font-size: 36px;
+    padding-left: 15px;
+    margin-left: 0;
+}
+
+.ff-breadcrumb-trail {
+    font-size: 36px;
+    margin: 50px 10px 30px 10px;
+}
+
+@media (max-width: 560px) {
+    .ff-breadcrumb-trail {
+        text-align: center;
+    }
+    .ff-breadcrumb-trail * {
+        font-size: 24px !important;
+    }
+}
+
+ff-breadcrumb-trail-item {
+    color: rgb(255, 105, 44);
+}

@@ -1,0 +1,27 @@
+<?php
+/** @var $this \Omikron\Factfinder\Block\FF\Breadcrumb */
+?>
+
+<div class="ff-breadcrumb-trail">
+    <span class="description"><?php echo __('Your Search for:') ?></span>
+    <ff-breadcrumb-trail>
+        <!-- The search item is the content of the search query-->
+        <ff-breadcrumb-trail-item type="search">
+            <span>{{text}}</span>
+        </ff-breadcrumb-trail-item>
+
+        <!-- Filter items are set by the URL or over the ASN-->
+        <ff-breadcrumb-trail-item type="filter">
+            <span>{{text}}</span>
+        </ff-breadcrumb-trail-item>
+
+        <!-- Advisor items are included in the breadcrumb when an advisor-campaign is selected-->
+        <ff-breadcrumb-trail-item type="advisor">
+            <span>{{text}}</span>
+        </ff-breadcrumb-trail-item>
+    </ff-breadcrumb-trail>
+    <ff-template scope="result" unresolved>
+        <span style="padding-left: 15px"><?php echo __("produced {{resultCount}} Hits") ?></span>
+    </ff-template>
+</div>
+

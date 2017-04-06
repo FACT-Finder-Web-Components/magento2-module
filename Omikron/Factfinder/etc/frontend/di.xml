@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../../lib/internal/Magento/Framework/ObjectManager/etc/config.xsd">
+    <type name="Magento\Framework\App\RouterList">
+        <arguments>
+            <argument name="routerList" xsi:type="array">
+                <item name="omikroncustomrouter" xsi:type="array">
+                    <item name="class" xsi:type="string">Omikron\Factfinder\Controller\Router</item>
+                    <item name="disable" xsi:type="boolean">false</item>
+                    <item name="sortOrder" xsi:type="string">22</item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+    <preference for="Magento\CatalogSearch\Controller\Result\Index" type="Omikron\Factfinder\Controller\Forwarder\CatalogSearchResult" />
+    <preference for="Magento\CatalogSearch\Controller\Advanced\Index" type="Omikron\Factfinder\Controller\Forwarder\CatalogSearchAdvanced" />
+    <preference for="Magento\CatalogSearch\Controller\Advanced\Result" type="Omikron\Factfinder\Controller\Forwarder\CatalogSearchAdvancedResult" />
+    <preference for="Magento\Search\Controller\Term\Popular" type="Omikron\Factfinder\Controller\Forwarder\SearchTerm" />
+</config>

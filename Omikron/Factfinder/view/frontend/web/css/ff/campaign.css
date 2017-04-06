@@ -1,0 +1,17 @@
+ff-campaign-advisor {
+    margin: 10px;
+}
+
+ff-campaign-advisor-question h1 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+ff-campaign-advisor-answer {
+    color: rgb(255, 105, 44);
+    cursor: pointer;
+}
+
+ff-campaign-feedbacktext {
+    margin: 10px;
+}

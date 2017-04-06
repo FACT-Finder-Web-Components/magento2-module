@@ -1,0 +1,20 @@
+<?php
+/** @var $this \Omikron\Factfinder\Block\FF\PushedProductsCampaign */
+?>
+<ff-campaign-landing-page page-id="mylandingpage"></ff-campaign-landing-page>
+
+<ff-campaign-pushed-products>
+    <span id="productCampaignCaption">Product Campaign</span>
+    <ff-record-list unresolved>
+        <ff-record>
+            <img data-image="{{record.ImageName}}">
+            <div>
+                <a href="{{record.ProductUrl}}" data-action="redirect">
+                    {{record.Name}}
+                </a>
+                <div>Price: <strong>{{record.Price}}</strong></div>
+            </div>
+        </ff-record>
+    </ff-record-list>
+</ff-campaign-pushed-products>
+

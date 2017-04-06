@@ -1,0 +1,23 @@
+<?php
+/** @var $this \Omikron\Factfinder\Block\FF\Campaign */
+?>
+<ff-campaign-advisor name="myadvisorcampaign">
+    <ff-campaign-advisor-question>
+        <span>
+            <h1 data-question>{{text}}</h1>
+        </span>
+        <div>
+            <ff-campaign-advisor-answer>
+                <div>
+                    {{text}}
+                </div>
+            </ff-campaign-advisor-answer>
+        </div>
+    </ff-campaign-advisor-question>
+</ff-campaign-advisor>
+
+<ff-campaign-feedbacktext label="myfeedbackcampaign">
+    {{text}}
+    <!--or mixed content-->
+    <!--<div>{{text}}</div>-->
+</ff-campaign-feedbacktext>
