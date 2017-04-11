@@ -16,6 +16,7 @@ class Data extends AbstractHelper
 
     const PATH_TRACKING_PRODUCT_NUMBER_FIELD_ROLE = 'factfinder/general/tracking_product_number_field_role';
     const PATH_IS_ENABLED = 'factfinder/general/is_enabled';
+    const PATH_IS_ENRICHMENT_ENABLED = 'factfinder/general/ff_enrichment';
     const PATH_ADDRESS = 'factfinder/general/address';
     const PATH_CHANNEL = 'factfinder/general/channel';
     const PATH_USERNAME = 'factfinder/general/username';
@@ -45,10 +46,21 @@ class Data extends AbstractHelper
 
     /**
      * Public Getter
+     * @param null|int|string $scopeCode
+     * @return bool
      */
-    public function isEnabled()
+    public function isEnabled($scopeCode = null)
     {
-        return $this->scopeConfig->getValue(self::PATH_IS_ENABLED, 'store');
+        return boolval($this->scopeConfig->getValue(self::PATH_IS_ENABLED, 'store', $scopeCode));
+    }
+
+    /**
+     * Public Getter
+     * @return bool
+     */
+    public function isEnrichmentEnabled()
+    {
+        return boolval($this->scopeConfig->getValue(self::PATH_IS_ENRICHMENT_ENABLED, 'store'));
     }
 
     /**
@@ -68,22 +80,22 @@ class Data extends AbstractHelper
 
     /**
      * Returns the FACT-Finder channel name
-     * @param null|string $storeId
+     * @param null|int|string $scopeCode
      * @return string
      */
-    public function getChannel($storeId = null)
+    public function getChannel($scopeCode = null)
     {
-        return $this->scopeConfig->getValue(self::PATH_CHANNEL, 'store', $storeId);
+        return $this->scopeConfig->getValue(self::PATH_CHANNEL, 'store', $scopeCode);
     }
 
     /**
      * Returns pushImport Setting
-     * @param null|string $storeCode
+     * @param null|int|string $scopeCode
      * @return bool
      */
-    public function isPushImportEnabled($storeCode = null)
+    public function isPushImportEnabled($scopeCode = null)
     {
-        return (bool)$this->scopeConfig->getValue(self::PATH_DATATRANSFER_IMPORT, 'store', $storeCode);
+        return boolval($this->scopeConfig->getValue(self::PATH_DATATRANSFER_IMPORT, 'store', $scopeCode));
     }
 
     /**
@@ -130,12 +142,12 @@ class Data extends AbstractHelper
 
     /**
      * Returns the current FACT-Finder version
-     * @param null|string $storeCode
+     * @param null|int|string $scopeCode
      * @return mixed
      */
-    public function getVersion($storeCode = null)
+    public function getVersion($scopeCode = null)
     {
-        return $this->scopeConfig->getValue(self::PATH_ADVANCED_VERSION, 'store', $storeCode);
+        return $this->scopeConfig->getValue(self::PATH_ADVANCED_VERSION, 'store', $scopeCode);
     }
 
     /**

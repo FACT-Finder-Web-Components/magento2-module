@@ -82,7 +82,7 @@ class Communication extends AbstractHelper
         $result['success'] = true;
         $result['ff_error_response'] = "";
         $result['ff_error_stacktrace'] = "";
-        $result['ff_response_decoded'] = json_decode($this->sendToFF('Search.ff', ['query' =>  $this->_helper->getVersion($store->getCode()), 'channel' => $this->_helper->getChannel($store->getCode()), 'verbose' => 'true']), true);
+        $result['ff_response_decoded'] = json_decode($this->sendToFF('Search.ff', ['query' =>  $this->_helper->getVersion($store->getId()), 'channel' => $this->_helper->getChannel($store->getId()), 'verbose' => 'true']), true);
 
         if (!is_array($result['ff_response_decoded'])) {
             $result['ff_response_decoded'] = [];

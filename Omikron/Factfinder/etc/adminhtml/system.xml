@@ -42,6 +42,11 @@
                     <label>Show 'Add to Cart' button in search results</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
+                <field id="ff_enrichment" translate="label" type="select" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Activate Enrichment feature</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Data enrichment enables you to refine the data coming back from FACT-Finder inside the SDK code. Please refer the documentation for more infos (last chapter about data-communication).</comment>
+                </field>
             </group>
             <group id="advanced" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>Advanced Settings</label>
@@ -202,9 +207,9 @@
                 </field>
 
                 <!--<field id="ff_salesrank" translate="label" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">-->
-                    <!--<label>Sales rank</label>-->
-                    <!--<source_model>Omikron\Factfinder\Model\Source\Attribute</source_model>-->
-                    <!--<comment>Select the Attribute which stores the sales rank of a product.</comment>-->
+                <!--<label>Sales rank</label>-->
+                <!--<source_model>Omikron\Factfinder\Model\Source\Attribute</source_model>-->
+                <!--<comment>Select the Attribute which stores the sales rank of a product.</comment>-->
                 <!--</field>-->
 
                 <field id="ff_ean" translate="label" type="select" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">

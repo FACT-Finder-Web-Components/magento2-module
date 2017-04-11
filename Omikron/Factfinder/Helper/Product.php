@@ -291,7 +291,7 @@ class Product extends AbstractHelper
      */
     private function getManufacturer($product, $store)
     {
-        return $product->getData($this->scopeConfig->getValue(self::PATH_DATA_TRANSFER_MANUFACTURER, 'store', $store->getCode()));
+        return $product->getData($this->scopeConfig->getValue(self::PATH_DATA_TRANSFER_MANUFACTURER, 'store', $store->getId()));
     }
 
     /**
@@ -303,7 +303,7 @@ class Product extends AbstractHelper
      */
     private function getEAN($product, $store)
     {
-        return $product->getData($this->scopeConfig->getValue(self::PATH_DATA_TRANSFER_EAN, 'store', $store->getCode()));
+        return $product->getData($this->scopeConfig->getValue(self::PATH_DATA_TRANSFER_EAN, 'store', $store->getId()));
     }
 
 
@@ -315,7 +315,7 @@ class Product extends AbstractHelper
      */
     private function getAdditionalAttributes($store)
     {
-        return $this->scopeConfig->getValue(self::PATH_DATA_TRANSFER_ADDITIONAL_ATTRIBUTES, 'store', $store->getCode());
+        return $this->scopeConfig->getValue(self::PATH_DATA_TRANSFER_ADDITIONAL_ATTRIBUTES, 'store', $store->getId());
     }
 
     /**

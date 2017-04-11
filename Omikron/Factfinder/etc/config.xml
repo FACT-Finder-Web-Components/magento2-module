@@ -10,6 +10,7 @@
                 <authentication_prefix></authentication_prefix>
                 <authentication_postfix></authentication_postfix>
                 <show_add_to_card_button>1</show_add_to_card_button>
+                <ff_enrichment>0</ff_enrichment>
                 <tracking_product_number_field_role>{"brand":"Manufacturer","campaignProductNumber":"ProductNumber","deeplink":"ProductUrl","description":"Description","displayProductNumber":"ProductNumber","ean":"EAN","imageUrl":"ImageUrl","masterArticleNumber":"MasterProductNumber","price":"Price","productName":"Name","trackingProductNumber":"ProductNumber"}</tracking_product_number_field_role>
             </general>
             <advanced>

@@ -194,7 +194,7 @@ class Product extends AbstractModel
 
         foreach ($stores as $store) {
             $currChannel = $this->helperData->getChannel($store->getId());
-            if (in_array($currChannel, $exportedChannels)) {
+            if (in_array($currChannel, $exportedChannels) || !$this->helperData->isEnabled($store->getId())) {
                 continue;
             }
 
@@ -233,7 +233,7 @@ class Product extends AbstractModel
             return $result;
         }
 
-        if ($this->helperData->isPushImportEnabled($store->getCode())) {
+        if ($this->helperData->isPushImportEnabled($store->getId())) {
 
             if ($this->helperCommunication->pushImport($this->helperData->getChannel($store->getId()))) {
                 $result['message'] .= ' ' . __('Import successfully pushed.');

@@ -50,7 +50,7 @@ class Communication extends Template
 
         $this->_configData = [
             'url' => [
-                'value' => '/' . Data::FRONT_NAME . '/',
+                'value' =>  ($this->_helper->isEnrichmentEnabled() ? '/' . Data::FRONT_NAME . '/' : $this->_helper->getAddress()),
                 'type' => 'string',
                 'defaultValue' => null
             ],

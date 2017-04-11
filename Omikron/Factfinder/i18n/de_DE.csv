@@ -43,6 +43,8 @@
 "Authentication Postfix","Authentifizierungs Postfix"
 "API version","API Version"
 "FACT-Finder version.","FACT-Finder Version."
+"Activate Enrichment feature","Aktiviere Daten-Anreicherungs Funktion"
+"Data enrichment enables you to refine the data coming back from FACT-Finder inside the SDK code. Please refer the documentation for more infos (last chapter about data-communication).","Mit der Daten-Anreicherungs Funktion können Sie die Daten, die von FACT-Finder zurückkommen, im Code dieses Moduls weiterverarbeiten. Weitere Informationen dazu finden Sie in der Dokumentation im Abschnitt über den Ablauf der Datenkommunikation."
 
 "The advanced settings can change how the search works. Please edit them with caution and only if you know what they are doing.","Die erweiterten Einstellungen können die Funktionsweise der Suche ändern. Bitte bearbeiten Sie folgende Einstellungen nur wenn Sie deren Auswirkungen kennen."
 "If set to true, the http parameters of the current search are pushed to the browser url.","Wenn auf JA gesetzt, werden die http-Parameter der aktuellen Suche in die Browser-URL eingefügt."
