@@ -15,7 +15,7 @@
             <advanced>
                 <version>7.3</version>
                 <search_immediate>0</search_immediate>
-                <use_url_parameter>0</use_url_parameter>
+                <use_url_parameter>1</use_url_parameter>
                 <use_cache>0</use_cache>
                 <default_query>*</default_query>
                 <add_params></add_params>
