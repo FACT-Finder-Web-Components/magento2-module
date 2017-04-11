@@ -53,3 +53,7 @@ ff-paging ff-paging-item[type="currentLink"] {
     color: #FFF;
     font-weight: normal;
 }
+
+[unresolved] {
+    opacity: 0;
+}

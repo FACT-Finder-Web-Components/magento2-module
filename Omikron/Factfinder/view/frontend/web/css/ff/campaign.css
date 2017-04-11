@@ -15,3 +15,7 @@ ff-campaign-advisor-answer {
 ff-campaign-feedbacktext {
     margin: 10px;
 }
+
+[unresolved] {
+    opacity: 0;
+}

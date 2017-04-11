@@ -21,3 +21,7 @@ ff-breadcrumb-trail {
 ff-breadcrumb-trail-item {
     color: rgb(255, 105, 44);
 }
+
+[unresolved] {
+    opacity: 0;
+}
