@@ -39,7 +39,3 @@ ff-sortbox-item:hover{
     background-color: rgb(255, 105, 44);
     color: white;
 }
-
-[unresolved] {
-    opacity: 0;
-}

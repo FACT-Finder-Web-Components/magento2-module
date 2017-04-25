@@ -12,8 +12,3 @@ ff-campaign-pushed-products {
     text-align: center;
     display: block;
 }
-
-[unresolved] {
-    transition: 700ms;
-    opacity: 0;
-}

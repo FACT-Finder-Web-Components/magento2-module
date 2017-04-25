@@ -44,7 +44,3 @@ ff-products-per-page-item.selected:hover {
     background-color: #393b3e;
     color: white;
 }
-
-[unresolved] {
-    opacity: 0;
-}

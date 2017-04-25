@@ -138,7 +138,3 @@ ff-asn-group-slider [data-container="removeFilter"] {
 ff-asn-group[filter-style="TREE"] ff-asn-group-element {
     padding-top: 3px;
 }
-
-[unresolved] {
-    opacity: 0;
-}
