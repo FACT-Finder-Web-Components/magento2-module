@@ -1,0 +1,30 @@
+.top-search-box {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.top-search-box input {
+    padding: 10px;
+    width: 70%;
+}
+
+.top-search-box button {
+    border: 1px solid lightgray;
+    background-color: white;
+    box-shadow: none;
+    transition: 200ms;
+    border-radius: 0;
+    padding: 9px;
+    margin-left: 10px;
+}
+
+.top-search-box button:hover {
+    background-color: #393b3e;
+    color: white;
+}
+
+.search-wrapper {
+    display: flex;
+    flex-direction: column;
+    margin: 0 10px;
+}

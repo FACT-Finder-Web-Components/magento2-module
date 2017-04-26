@@ -1,0 +1,380 @@
+<!DOCTYPE html><html><head><script src="elements.build.js" defer=""></script><!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+--><!--
+@license
+Copyright (c) 2014 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+--><meta charset="UTF-8"></head><body><div hidden="" by-vulcanize=""><dom-module id="ff-slider" assetpath="bower_components/fact-finder-custom-elements/dist/ff-slider/">
+    <style>:host{height:8px;background-color:#336;border:1px solid #336;margin-left:auto;margin-right:auto;margin-top:5px;margin-bottom:5px;display:block;opacity:0;transition:opacity 800ms;}.slider{background:repeat-x scroll 50% 50% #f6f6f6;border:1px solid #7f7f7f;color:#fff;font-weight:bold;outline:medium none;margin-left:-0.5em;top:-0.3em;cursor:default;height:18px;position:absolute;width:1em;z-index:3;-moz-border-radius:4px;-webkit-border-radius:4px;font-family:Verdana,Arial,sans-serif;font-size:1.1em;text-align:left;text-decoration:none;}.ff_slidebar{@apply(--slidebar-mixin);}.cursorPointer{cursor:pointer;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}.noCursor{cursor:none !important;}</style>
+    <template>
+        <div style="position: relative;width: 100%;height: 100%" class="ff_slidebar">
+            
+            <div id="slider1" style="position: absolute !important;">
+                <content select="#slider1">
+                    <div class="slider cursorPointer"></div>
+                </content>
+            </div>
+            <div id="slider2" style="position: absolute !important;">
+                <content select="#slider2">
+                    <div class="slider cursorPointer"></div>
+                </content>
+            </div>
+        </div>
+    </template>
+</dom-module>
+<dom-module id="ff-slider-control" assetpath="bower_components/fact-finder-custom-elements/dist/ff-slider-control/">
+    <style>:host{display:block;/*width:200px;*/ opacity:0;transition:opacity 800ms;padding:10px 0 10px 0;}#ffSlideControlSection{margin-left:auto;margin-right:auto;position:relative;min-height:20px;}#ffSlideControlSection input{width:40px;}#ffSliderSection{margin-top:10px;}</style>
+
+    <template>
+        <div id="ffSlideControlSection">
+            <content data-content-control="1" select="[data-control='1']">
+                <input data-control="1" type="text" style="position: absolute;left: 0px;">
+            </content>
+            <content data-content-control="2" select="[data-control='2']">
+                <input data-control="2" type="text" style="position: absolute;right: 0px;">
+            </content>
+        </div>
+        <div id="ffSliderSection">
+            <content data-content-slider="" select="*">
+                
+                
+            </content>
+        </div>
+    </template>
+</dom-module>
+<dom-module id="ff-asn-group" assetpath="bower_components/fact-finder-custom-elements/dist/ff-asn-group/">
+    <style>:host{opacity:0;transition:opacity 400ms;outline:none;display:block;min-width:180px;max-width:220px;}:host-context([align="horizontal"]) #wrapper{position:absolute;width:100%;}.ff-asn-group-container{position:relative;}#wrapper{position:relative;transition-duration:350ms;@apply(--all-links-container);}</style>
+
+    <template>
+        
+        <content select="[data-container='groupCaption']">
+
+        </content>
+
+        
+        <div class="ff-asn-group-container">
+            <div opened="" id="wrapper">
+                <content></content>
+            </div>
+        </div>
+    </template>
+</dom-module>
+<dom-module id="ff-asn-group-slider" assetpath="bower_components/fact-finder-custom-elements/dist/ff-asn-group-slider/">
+    <style>:host{opacity:0;transition:opacity 400ms;outline:none;display:block;min-width:180px;max-width:220px;}:host-context([align="horizontal"]) #wrapper{position:absolute;width:100%;}.container{position:relative;}#wrapper{position:relative;transition-duration:400ms;@apply(--all-links-container);}</style>
+
+    <template>
+        
+        <content select="[data-container='groupCaption']">
+        </content>
+
+        
+        <div class="container">
+            <div opened="" id="wrapper">
+                <content></content>
+            </div>
+        </div>
+    </template>
+</dom-module>
+<dom-module id="ff-asn-group-element" assetpath="bower_components/fact-finder-custom-elements/dist/ff-asn-group-element/">
+    <style>:host{display:block;outline:none;}</style>
+    <template>
+        <div id="selected" style="display: none">
+            <content select="[data-selected]"></content>
+        </div>
+        <div id="unselected">
+            <content select="[data-unselected]"></content>
+        </div>
+    </template>
+</dom-module>
+<dom-module id="ff-asn" assetpath="bower_components/fact-finder-custom-elements/dist/ff-asn/">
+    <style>:host{outline:none;transition:opacity 600ms;display:block;}:host([align="horizontal"]){display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex;}</style>
+
+    <template>
+        <content></content>
+    </template>
+</dom-module>
+
+<dom-module id="ff-breadcrumb-trail-item" assetpath="bower_components/fact-finder-custom-elements/dist/ff-breadcrumb-trail/ff-breadcrumb-trail-item/">
+    <style>:host{transition:opacity 800ms;cursor:pointer;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}</style>
+    
+    <template>
+        <content></content>
+    </template>
+</dom-module>
+<dom-module id="ff-breadcrumb-trail" assetpath="bower_components/fact-finder-custom-elements/dist/ff-breadcrumb-trail/">
+    <style>:host{display:inline;}</style>
+    
+    <template>
+        <content></content>
+    </template>
+</dom-module>
+<dom-module id="ff-navigation-item" assetpath="bower_components/fact-finder-custom-elements/dist/ff-navigation-item/">
+    <style>:host{-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1;position:relative;display:-webkit-box;display:-ms-flexbox;display:flex;cursor:pointer;}.item-caption{width:100%;}/*for better initial performance*/ .container-hidden{display:none !important;}.item-container{display:none;-webkit-transition:0.1s all linear;transition:0.1s all linear;-webkit-transition-delay:0.3s;transition-delay:0.3s;position:absolute;z-index:1;background-color:white;@apply(--container-mixin);}:host([direction="down"][flyout="true"]) > .item-container{top:100%;}:host[direction="down"] > .item-container{top:100%;left:0px;}</style>
+
+    <style id="mobile-mode">/* only hover when not minimized */ :host([flyout="false"][selected]) > .item-container{/*always container down and no z-index*/ /*top:100%;*/ top:0%;z-index:0;position:relative;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;}:host([flyout="false"]) > .item-container{display:none;}:host([flyout="false"][direction="down"][selected]) > .item-container{top:0%;}:host([flyout="false"]){-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;}:host([flyout="false"][selected]) .ff-navigation-link{display:none !important;top:0%;}:host([flyout="false"]) ::content .ff-navigation-link{display:none !important;}</style>
+
+    <style id="desktop-mode">:host([flyout="true"][direction="right"]) > .item-container{top:0%;left:100%;}:host([flyout="true"][direction="left"]) > .item-container{top:0%;right:100%;}:host([flyout="true"]:hover) > .item-container{display:inline-block;}</style>
+    <template>
+        <div class="item-caption" on-mouseover="onHovered">
+            <slot name="content"></slot>
+        </div>
+        <div id="itemContainer" class="item-container container-hidden">
+            <content select="[cluster-level='{{nextClusterLevel}}']"></content>
+        </div>
+    </template>
+</dom-module>
+<dom-module id="ff-navigation" assetpath="bower_components/fact-finder-custom-elements/dist/ff-navigation/">
+    <style>:host{display:-webkit-box;display:-ms-flexbox;display:flex;-ms-flex-wrap:nowrap;flex-wrap:nowrap;-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between;}#items{-webkit-box-flex:1;-ms-flex:1;flex:1;width:100%;display:-webkit-box;display:-ms-flexbox;display:flex;}:host([layout="vertical"]) > #items{-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;}:host([layout="horizontal"]) > #items{-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;}.navigation-label{display:none;}#navigation-menu{display:none;border-bottom:1px solid black;cursor:pointer;padding:5px;background-color:#b9ecff;-webkit-box-flex:1;-ms-flex:1;flex:1;width:100%;}</style>
+
+    
+    <style id="navigation-mobile-mode">:host([mobile="true"]) > .navigation-label{display:block;}:host([mobile="true"]) > #navigation-menu:checked + label + #items{display:-webkit-box !important;display:-ms-flexbox !important;display:flex !important;-webkit-box-orient:vertical !important;-webkit-box-direction:normal !important;-ms-flex-direction:column !important;flex-direction:column !important;}:host([mobile="true"]) > #items{display:none;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;}:host([mobile="true"]){-webkit-box-orient:vertical !important;-webkit-box-direction:normal !important;-ms-flex-direction:column !important;flex-direction:column !important;width:100%;}</style>
+
+    <template>
+        <input id="navigation-menu" type="checkbox">
+        <label for="navigation-menu" class="navigation-label">
+            <slot name="menu"></slot>
+        </label>
+
+        <div id="items">
+            <slot></slot>
+        </div>
+    </template>
+</dom-module>
+<dom-module id="ff-nav-element" assetpath="bower_components/fact-finder-custom-elements/dist/ff-header-navigation/">
+    <template>
+        {{element.name}}
+    </template>
+    </dom-module>
+
+<dom-module id="ff-header-navigation" assetpath="bower_components/fact-finder-custom-elements/dist/ff-header-navigation/">
+    <style>#wrapper{@apply(--wrapper);position:relative;}#header{display:-webkit-box;display:-ms-flexbox;display:flex;-ms-flex-wrap:nowrap;flex-wrap:nowrap;-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between;@apply(--header);}#header:hover{@apply(--header-hover);}.nav-item{-webkit-box-flex:1;-ms-flex:1;flex:1;@apply(--nav-item);}.nav-item:hover{@apply(--nav-item-hover);}.nav-item-seperator{@apply(--nav-item-seperator);}#container{display:-webkit-box;display:-ms-flexbox;display:flex;-ms-flex-wrap:wrap;flex-wrap:wrap;/*nessecary for hover*/ position:absolute;z-index:1;width:inherit;left:0%;right:0%;background-color:white;@apply(--container);}.hiden{display:none !important;}.nav-group{-webkit-box-flex:0;-ms-flex-positive:0;flex-grow:0;-ms-flex-negative:0;flex-shrink:0;-ms-flex-preferred-size:300px;flex-basis:300px;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;@apply(--nav-group);}.nav-group-caption{@apply(--nav-group-caption);}.nav-group-caption:hover{@apply(--nav-group-caption-hover);}.nav-link{@apply(--nav-link);}.nav-link:hover{@apply(--nav-link-hover);}</style>
+
+    <template>
+        <div id="wrapper" on-mouseout="onHoverEnd" on-mouseover="onHoverAll">
+            <div id="header">
+                <div class="nav-item-seperator"></div>
+                <template is="dom-repeat" items="{{elements}}" as="header">
+                    <ff-nav-element element="{{header}}" class="nav-item" on-mouseover="onHovered">
+                    </ff-nav-element>
+                    <div class="nav-item-seperator"></div>
+                </template>
+            </div>
+            <div id="container" class="hiden">
+                <slot name="container-start"></slot>
+                <template is="dom-repeat" items="{{getGroups(selectedElement.groups)}}" as="group">
+                    <div class="nav-group">
+                        <ff-nav-element class="nav-group-caption" element="{{group}}"></ff-nav-element>
+                        <template is="dom-repeat" items="{{getLinks(group.links)}}" as="link">
+                            <ff-nav-element class="nav-link" element="{{link}}"></ff-nav-element>
+                        </template>
+                    </div>
+                </template>
+                <slot name="container-end"></slot>
+            </div>
+        </div>
+    </template>
+
+</dom-module>
+<dom-module id="ff-campaign-advisor-answer" assetpath="bower_components/fact-finder-custom-elements/dist/ff-campaign-advisor-answer/">
+    <style>:host{display:block;}button{background:#06507f;color:white;}button:hover{background:#03a9f4;}</style>
+    <template>
+        <content>
+            <button><span>{{model.text}}</span></button>
+        </content>
+    </template>
+</dom-module>
+
+<dom-module id="ff-campaign-advisor-question" assetpath="bower_components/fact-finder-custom-elements/dist/ff-campaign-advisor-question/">
+    <style>:host{display:block;}</style>
+    <template>
+       <content></content>
+    </template>
+</dom-module>
+
+<dom-module id="ff-campaign-advisor" assetpath="bower_components/fact-finder-custom-elements/dist/ff-campaign-advisor/">
+    <style>:host{display:block;}</style>
+    <template>
+        <content></content>
+    </template>
+</dom-module>
+
+<dom-module id="ff-campaign-feedbacktext" assetpath="bower_components/fact-finder-custom-elements/dist/ff-campaign-feedbacktext/">
+    <style>:host{display:block;}</style>
+    <template>
+        <content></content>
+    </template>
+</dom-module>
+
+<dom-module id="ff-campaign-product" assetpath="bower_components/fact-finder-custom-elements/dist/ff-campaign-product/">
+    <style>:host{display:block;}</style>
+    <template>
+        <content></content>
+    </template>
+</dom-module>
+
+<dom-module id="ff-campaign-pushed-products" assetpath="bower_components/fact-finder-custom-elements/dist/ff-campaign-pushed-products/">
+    <style>:host{display:block;}</style>
+    <template>
+        <content></content>
+    </template>
+</dom-module>
+
+<dom-module id="ff-campaign-redirect" assetpath="bower_components/fact-finder-custom-elements/dist/ff-campaign-redirect/">
+</dom-module>
+
+<dom-module id="ff-campaign-landing-page" assetpath="bower_components/fact-finder-custom-elements/dist/ff-campaign-landing-page/">
+    <style>:host{display:block;}</style>
+    <template>
+        <content></content>
+    </template>
+</dom-module>
+
+<dom-module id="ff-search-feedback" assetpath="bower_components/fact-finder-custom-elements/dist/ff-search-feedback/">
+    <style>:host{position:absolute;top:20px;}:host([hidden]){display:none;}:host([unresolved]){opacity:0;}:host([align="left"]){left:0;}:host([align="right"]){right:0;}:host([align="left"]) #content{transform:translate(0%,0%);}:host([align="left"]) #caption{transform:translate(100%,0%);}.noTransition{transition:0s !important;}#caption{position:absolute;right:0;transition:transform 0.3s;cursor:pointer;@apply(--caption-mixin);}#content{position:absolute;transition:transform 0.3s;transform:translate(100%,0%);right:0;text-align:left;@apply(--content-mixin);}.transformZero{transform:translate(0%,0%) !important;}.transformX{transform:translate(100%,0%) !important;}</style>
+    <template>
+        <div id="caption" on-tap="_handleTap" class="noTransition">
+            <slot name="caption"></slot>
+        </div>
+        <div id="content" class="noTransition">
+            <slot name="content"></slot>
+        </div>
+    </template>
+</dom-module>
+
+<dom-module id="ff-communication" assetpath="bower_components/fact-finder-custom-elements/dist/ff-communication/">
+</dom-module>
+
+<dom-module id="ff-paging" assetpath="bower_components/fact-finder-custom-elements/dist/ff-paging/">
+    <style>:host{display:inline-block;}</style>
+    <template>
+        <content></content>
+    </template>
+</dom-module>
+<dom-module id="ff-paging-set" assetpath="bower_components/fact-finder-custom-elements/dist/ff-paging-set/">
+    <style>:host{display:inline-block;}</style>
+    <template>
+        <content></content>
+    </template>
+</dom-module>
+<dom-module id="ff-paging-item" assetpath="bower_components/fact-finder-custom-elements/dist/ff-paging-item/">
+    <style>:host{display:inline-block;}.cursor{cursor:pointer;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;@apply(--paging-item-cursor-mixin);}</style>
+    <template>
+        <div id="pageItemContainer" class="cursor">
+            <content>&nbsp;</content>
+        </div>
+    </template>
+</dom-module>
+<dom-module id="ff-products-per-page-item" assetpath="bower_components/fact-finder-custom-elements/dist/ff-products-per-page-item/">
+    <style>:host{display:block;cursor:pointer;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}</style>
+    <template>
+        <content></content>
+    </template>
+</dom-module>
+<dom-module id="ff-products-per-page-dropdown" assetpath="bower_components/fact-finder-custom-elements/dist/ff-products-per-page-dropdown/">
+    <style>:host{display:inline-block;outline:none;}.ff-ppp-drowdown-container{position:absolute;background-color:white;outline:none;z-index:1001;-webkit-transition:height .4s;-moz-transition:height .4s;-ms-transition:height .4s;-o-transition:height .4s;transition:height .4s;box-sizing:border-box;@apply(--dropdown-item-container);}.ff-ppp-drowdown-closed{display:none;}</style>
+    <template>
+        <content select="ff-products-per-page-item.selected"></content>
+        <div class="ff-ppp-drowdown-container ff-ppp-drowdown-closed">
+            <content select="ff-products-per-page-item"></content>
+        </div>
+    </template>
+</dom-module>
+<dom-module id="ff-products-per-page-list" assetpath="bower_components/fact-finder-custom-elements/dist/ff-products-per-page-list/">
+    <style>:host{display:inline-block;outline:none;}:host ff-products-per-page-item{display:inline-block;}</style>
+    <template>
+        <content select="ff-products-per-page-item"></content>
+    </template>
+</dom-module>
+<dom-module id="ff-recommendation" assetpath="bower_components/fact-finder-custom-elements/dist/ff-recommendation/">
+    <style>:host{display:block;}</style>
+    <template>
+        <content></content>
+    </template>
+</dom-module>
+
+<dom-module id="ff-record" assetpath="bower_components/fact-finder-custom-elements/dist/ff-record/">
+    <style>:host{display:inline-block;vertical-align:top;}</style>
+    <template>
+            <content></content>
+    </template>
+</dom-module>
+
+<dom-module id="ff-record-list" assetpath="bower_components/fact-finder-custom-elements/dist/ff-record-list/">
+    <style>:host{display:block;}</style>
+    <template>
+        <content></content>
+    </template>
+</dom-module>
+<dom-module id="ff-searchbox" assetpath="bower_components/fact-finder-custom-elements/dist/ff-searchbox/"></dom-module>
+<dom-module id="ff-searchbutton" assetpath="bower_components/fact-finder-custom-elements/dist/ff-searchbutton/">
+</dom-module>
+<dom-module id="ff-similar-products" assetpath="bower_components/fact-finder-custom-elements/dist/ff-similar-products/">
+    <style>:host{display:block;}</style>
+    <template>
+        <content></content>
+    </template>
+</dom-module>
+
+<dom-module id="ff-single-word-search" assetpath="bower_components/fact-finder-custom-elements/dist/ff-single-word-search/">
+    <style>:host{display:block;}</style>
+    <template>
+        <content></content>
+    </template>
+</dom-module>
+<dom-module id="ff-single-word-search-record" assetpath="bower_components/fact-finder-custom-elements/dist/ff-single-word-search-record/">
+    <style>:host{display:block;}</style>
+    <template>
+        <content></content>
+    </template>
+</dom-module>
+<dom-module id="ff-sortbox" assetpath="bower_components/fact-finder-custom-elements/dist/ff-sortbox/">
+    <style>:host{display:inline-block;outline:none;}.ff-sort-closed{display:none;}.ff-sort-dropdown-container{position:absolute;background-color:white;z-index:1001;-webkit-transition:height .4s;-moz-transition:height .4s;-ms-transition:height .4s;-o-transition:height .4s;transition:height .4s;box-sizing:border-box;@apply(--sort-item-container);}</style>
+    <template>
+        <content select="ff-sortbox-item.selected"></content>
+        <div class="ff-sort-dropdown-container ff-sort-closed">
+            <content select="ff-sortbox-item"></content>
+        </div>
+    </template>
+</dom-module>
+
+<dom-module id="ff-sortbox-item" assetpath="bower_components/fact-finder-custom-elements/dist/ff-sortbox/">
+    <style>:host{display:none;cursor:pointer;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}</style>
+    <template>
+        <content></content>
+    </template>
+</dom-module>
+<dom-module id="ff-suggest-item" assetpath="bower_components/fact-finder-custom-elements/dist/ff-suggest-item/">
+    <style>:host{display:block;word-wrap:break-word;}:host:hover{text-decoration:underline;}</style>
+
+    <template>
+        <content></content>
+    </template>
+</dom-module>
+
+<dom-module id="ff-suggest" assetpath="bower_components/fact-finder-custom-elements/dist/ff-suggest/">
+    <style>:host{display:block;z-index:9999;}.blockLayout{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex;flex-wrap:nowrap;-ms-flex-wrap:nowrap;-webkit-flex-wrap:nowrap;flex-direction:row;-ms-flex-direction:row;-webkit-flex-direction:row;}.listLayout{display:block;}.containerItem:hover{text-decoration:underline;}.listContainerItem:hover{text-decoration:underline;}#ffSuggestContainer{position:relative;z-index:9999;/*padding:10px 10px 3px 10px;*/ background-color:#ffffff;top:0px;left:0px;right:0px;@apply(--suggest-container);}#ffSuggestContainerWrapper{position:absolute;@apply(--suggest-container-wrapper);}.hideffSuggestContainerWrapper{display:none;}#ffSuggestContainer ::content > section.displayNoneImportant{display:none !important;}</style>
+
+    <template>
+        <div style="position: relative; width: 100%">
+            <div id="ffSuggestContainerWrapper" class="hideffSuggestContainerWrapper">
+                <div id="ffSuggestContainer" class="listLayout">
+                    <content id="ffContentElement" select="section"></content>
+                </div>
+            </div>
+        </div>
+    </template>
+</dom-module>
+<dom-module id="ff-template" assetpath="bower_components/fact-finder-custom-elements/dist/ff-template/">
+
+</dom-module>
+</div></body></html>

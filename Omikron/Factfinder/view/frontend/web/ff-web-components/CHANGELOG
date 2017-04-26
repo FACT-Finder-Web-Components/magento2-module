@@ -1,0 +1,49 @@
+1.1.0
+ADD: ff-search-feedback element
+ADD: ff-campaign-landing-page element
+ADD: ff-navigation element
+ADD: ff-header-navigation element
+1.0.16
+fix: console error log on tracking request
+fix: recommendation are not displayed
+
+1.0.15
+ff-communiction: fixed search-immediate always true when use-seo="true"
+ff-slider: fixed encoding issue
+ff-breadcrumb-trail-item: does now reflect type attribute
+fixed tracking 401 bug
+
+1.0.14
+ff-searchbox: fixed on key left right console error when no ff-suggest available
+ff-communication: fixed encoding issue when use-seo was set to true
+ff-campaign-advisor: fixed polyfill related display bug which caused the advisor question not to show up occasionally in firefox and IE
+ff-communication: fixed a bug where setting the version attribute to 7.2 resulted in console log: version ont supported
+
+1.0.12
+ff-campaign-advisor bugfix: The ff-campaign-advisor-questions contains now the ff-campaign-advisor-answer as it should be. Therefore the ff-campaign-advisor element is now able to process more than 1 advisor question.
+add use-browser-history="true/false" to <ff-communication>
+add use-url-parameter="true/false" to <ff-communication>
+minor improvements
+
+1.0.10 -> 1.0.11
+fixed umlaut encoding bug in suggest searchTerms
+
+1.0.9 -> 1.0.10
+fixed: search-immediate wasn't occasionally executed in Internet Explorer
+
+1.0.8 -> 1.0.9
+ff-asn does now set style="display:none;" at creation time
+fixed search-immediate error again
+
+1.0.7 -> 1.0.8
+fixed a bug where no tracking request was send on data-redirect
+add factfinder.communication.version
+
+1.0.6 -> 1.0.7
+fixed onerror-image uncaught exception
+
+1.0.5 -> 1.0.6
+Renamed shadow dom css class from container to ff-asn-group-container due to polyfill lack of scoping
+Add removeUnresolvedAttribute behavior. It's now possible to prevent FOUC with the [unresovled] attribute on all ff-* elements with visual component
+[data-image] attribute is now automatically resolved with the appropriate fieldRole value if possible
+ff-sortbox does not change the key anymore when showSelected is true (currentKey + "_showSelected")

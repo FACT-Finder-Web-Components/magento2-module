@@ -1,0 +1,47 @@
+<?php
+/** @var $this \Omikron\Factfinder\Block\FF\Suggest */
+?>
+<ff-suggest layout="block">
+    <section id="searchContainer" class="searchTermContainer">
+        <div data-container="searchTerm">
+            <p class="containerCaption">Suchvorschläge</p>
+            <ff-suggest-item type="searchTerm">
+                <span>{{{name}}}</span>
+            </ff-suggest-item>
+        </div>
+
+        <div data-container="category">
+            <p class="containerCaption">Kategorievorschläge</p>
+            <ff-suggest-item type="category">
+                <span>{{{name}}}</span>
+            </ff-suggest-item>
+        </div>
+
+        <div data-container="brand">
+            <p class="containerCaption">Marken</p>
+            <ff-suggest-item type="brand">
+                <span>{{{name}}}</span>
+            </ff-suggest-item>
+        </div>
+    </section>
+
+    <section id="productContainer" class="productsContainer">
+        <div data-container="productName">
+            <p class="containerCaption">Vorgeschlagene Produkte</p>
+            <div>
+                <ff-suggest-item type="productName" onclick="typeof ffRedirect !== 'undefined' && window.setTimeout(ffRedirect, 250)">
+                    <img data-image="{{{suggestions.image}}}">
+                    <div class="product-center">
+                        <div class="product-name">{{{name}}}</div>
+                        <div>Shipping</div>
+                        <div>Rating</div>
+                    </div>
+                    <div class="product-right">
+                        <div class="product-price">{{attributes.Price}}€</div>
+                        <div class="product-availabilitytext">{{attributes.availabilitytext}}</div>
+                    </div>
+                </ff-suggest-item>
+            </div>
+        </div>
+    </section>
+</ff-suggest>

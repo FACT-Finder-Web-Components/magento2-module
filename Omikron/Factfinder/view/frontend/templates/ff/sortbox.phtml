@@ -1,0 +1,23 @@
+<?php
+/** @var $this \Omikron\Factfinder\Block\FF\Sortbox */
+?>
+<div class="ff-sortbox">
+    <ff-sortbox collapse-onblur="true" unresolved>
+        <!--override relevance layout -->
+        <ff-sortbox-item key="null.desc">
+            <?php echo __("Relevance"); ?>
+        </ff-sortbox-item>
+        <ff-sortbox-item key="Name.asc">
+            <?php echo __("Name (Ascending)"); ?>
+        </ff-sortbox-item>
+        <ff-sortbox-item key="Name.desc">
+            <?php echo __("Name (Descending)"); ?>
+        </ff-sortbox-item>
+        <ff-sortbox-item key="Price.asc">
+            <?php echo __("Price (Ascending)"); ?>
+        </ff-sortbox-item>
+        <ff-sortbox-item key="Price.desc">
+            <?php echo __("Price (Descending)"); ?>
+        </ff-sortbox-item>
+    </ff-sortbox>
+</div>

@@ -1,0 +1,10 @@
+<?php
+/** @var $this \Omikron\Factfinder\Block\FF\Searchbox */
+?>
+<div class="search-wrapper">
+    <div class="top-search-box">
+        <input is="ff-searchbox" placeholder="<?php echo __("Search..."); ?>" suggest-onfocus="false" hidesuggest-onblur="true" />
+        <button is="ff-searchbutton"><?php echo __("Search"); ?></button>
+    </div>
+    <?php echo $this->getLayout()->createBlock('Omikron\Factfinder\Block\FF\Suggest')->setTemplate('Omikron_Factfinder::ff/suggest.phtml')->toHtml() ?>
+</div>

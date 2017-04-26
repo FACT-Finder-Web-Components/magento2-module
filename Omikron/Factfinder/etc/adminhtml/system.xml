@@ -1,0 +1,243 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="factfinder" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>FACT-Finder</label>
+            <tab>catalog</tab>
+            <resource>Omikron_Factfinder::config</resource>
+            <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Main Settings</label>
+                <comment>Please always save the config in the upper right corner after making changes.</comment>
+                <field id="is_enabled" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Activate FACT-Finder integration</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="address" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Server URL</label>
+                    <validate>required-entry validate-url</validate>
+                </field>
+                <field id="channel" translate="label" type="text" sortOrder="11" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Channel</label>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="username" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Username</label>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="password" translate="label" type="password" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Password</label>
+                </field>
+                <field id="authentication_prefix" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Authentication Prefix</label>
+                </field>
+                <field id="authentication_postfix" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Authentication Postfix</label>
+                </field>
+                <field id="ff_build_connection" translate="label comment" type="button" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Test Connection</label>
+                    <frontend_model>Omikron\Factfinder\Block\Adminhtml\System\Config\Button\TestConnection</frontend_model>
+                    <comment></comment>
+                </field>
+                <field id="show_add_to_card_button" translate="label" type="select" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Show 'Add to Cart' button in search results</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="ff_enrichment" translate="label" type="select" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Activate Enrichment feature</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Data enrichment enables you to refine the data coming back from FACT-Finder inside the SDK code. Please refer the documentation for more infos (last chapter about data-communication).</comment>
+                </field>
+            </group>
+            <group id="advanced" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Advanced Settings</label>
+                <comment>The advanced settings can change how the search works. Please edit them with caution and only if you know what they are doing.</comment>
+                <field id="version" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>API version</label>
+                    <source_model>Omikron\Factfinder\Model\Source\FFVersion</source_model>
+                    <comment>FACT-Finder version.</comment>
+                </field>
+                <field id="use_url_parameter" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>use-url-parameter</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>If set to true, the http parameters of the current search are pushed to the browser url.</comment>
+                </field>
+                <field id="use_cache" translate="label" type="select" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>use-cache</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>This value determines, if the browser should cache previous search requests or not. Some browsers support this feature and therefore speed up the search for repeated requests.</comment>
+                </field>
+                <field id="default_query" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>default-query</label>
+                    <validate>required-entry</validate>
+                    <comment>Determines which search term should be used by default. Default is '*'</comment>
+                </field>
+                <field id="add_params" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>add-params</label>
+                    <comment>With this property you can deliver standard parameters which will then be attached to the search request. Example: param1=abc,param2=xyz.</comment>
+                </field>
+                <field id="add_tracking_params" translate="label" type="text" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>add-tracking-params</label>
+                    <comment>With this property you can deliver standard parameters which are attached to every tracking request. Example: param1=abc,param2=xyz.</comment>
+                </field>
+                <field id="keep_filters" translate="label" type="select" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>keep-filters</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>With this property you can determine if filters (which where set before the search, e.g. via ASN) should be kept or discarded.</comment>
+                </field>
+                <field id="keep_url_params" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>keep-url-params</label>
+                    <comment>Determines if parameters which are written into the URL should be kept.</comment>
+                </field>
+                <field id="use_asn" translate="label" type="select" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>use-asn</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Determines if the the ASN is returned. Can be set to false to save performance, if the ASN is not required. Default is true.</comment>
+                </field>
+                <field id="use_found_words" translate="label" type="select" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>use-found-words</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>For found records, FACT-Finder is capable of returning the words which lead to the find. The determination of these words costs performance. It is therefore deactivated by default. If true, words are created. If false, words are not created.</comment>
+                </field>
+                <field id="use_campaigns" translate="label" type="select" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>use-campaigns</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Use this parameter if you want to prevent the campaign manager from checking if there is a campaign for this search request.If true, campaigns are analyzed and returned. If false, campaigns are ignored. Default is true.</comment>
+                </field>
+                <field id="generate_advisor_tree" translate="label" type="select" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>generate-advisor-tree</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Is used with advisor campaigns. Please refer the campaign manager documentation. If true, the whole question-answer-tree is returned with the advisor campaign. If false, only the currently active questions and their answers are returned. Default is false.</comment>
+                </field>
+                <field id="disable_cache" translate="label" type="select" sortOrder="140" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>disable-cache</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Controls the usage of search result caches. If true, cache is ignored. If false, cache is used. Default is false.</comment>
+                </field>
+                <field id="use_personalization" translate="label" type="select" sortOrder="150" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>use-personalization</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Allows activating/deactivating of request personalization. If true, the search result is personalized if the personalization module is active and all other requirements are met. If false, the search result is not personalized. Default is true.</comment>
+                </field>
+                <field id="use_semantic_enhancer" translate="label" type="select" sortOrder="160" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>use-semantic_enhancer</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Allows activating/deactivating of the semantic enrichment of requests. If true, the search result is semantically enriched if the enhanced module is activated and all other requirements are met. If false, the search result is not semantically enriched. Default value is true.</comment>
+                </field>
+                <field id="use_aso" translate="label" type="select" sortOrder="170" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>use-aso</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Allows activating/deactivating of automated search optimization. If true, the search result is automatically optimized. If false, the search result is not optimized. Default is true.</comment>
+                </field>
+                <field id="use_browser_history" translate="label" type="select" sortOrder="180" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>use-browser-history</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>If true, the search history is pushed to the browser history, even without using url parameter. Default is true.</comment>
+                </field>
+                <field id="use_seo" translate="label" type="select" sortOrder="190" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>use-seo</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>If true, web components will use the FACT-Finder SEO API. Set this only to true if the module is active in FACT-Finder.</comment>
+                </field>
+                <field id="seo_prefix" translate="label" type="text" sortOrder="200" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>seo-prefix</label>
+                    <comment>The seo-prefix is used to show a piece of path between your domain the actual seo-path. E.g. domain.com/prefix/seoPath</comment>
+                </field>
+            </group>
+            <group id="components" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Activated Web-Components</label>
+                <comment>Please always save the config in the upper right corner after making changes.</comment>
+                <field id="ff_suggest" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Suggestions</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>TODO Description Suggestions</comment>
+                </field>
+                <field id="ff_asn" translate="label" type="select" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Filter / ASN</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>TODO Description Filter / ASN</comment>
+                </field>
+                <field id="ff_paging" translate="label" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Paging</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>TODO Description Paging</comment>
+                </field>
+                <field id="ff_sortbox" translate="label" type="select" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Sorting</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>TODO Description Sorting</comment>
+                </field>
+                <field id="ff_breadcrumb" translate="label" type="select" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Breadcrumb</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>TODO Description Breadcrumb</comment>
+                </field>
+                <field id="ff_productspp" translate="label" type="select" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Products per page</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>TODO Description Products Per Page</comment>
+                </field>
+                <field id="ff_campaign" translate="label" type="select" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Campaigns</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>TODO Description Campaigns</comment>
+                </field>
+                <field id="ff_pushedproductscampaign" translate="label" type="select" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Pushed Products</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>TODO Description Pushed Products</comment>
+                </field>
+            </group>
+            <group id="data_transfer" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Data export</label>
+                <comment>Please always save the config in the upper right corner after making changes. Especially before using the export-button.</comment>
+                <field id="ff_upload_host" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Upload Host</label>
+                    <comment>Please specify the FTP server address, where the export file(s) should be uploaded. For example shopname.fact-finder.de. This parameter shouldn't have any trailing slashes and shouldn't be prefixed with ftp://.</comment>
+                </field>
+                <field id="ff_upload_user" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Upload User</label>
+                </field>
+                <field id="ff_upload_password" translate="label" type="password" sortOrder="30" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Upload Password</label>
+                </field>
+                <field id="ff_manufacturer" translate="label" type="select" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Manufacturer</label>
+                    <source_model>Omikron\Factfinder\Model\Source\Attribute</source_model>
+                    <comment>Select the Attribute which stores the manufacturer of a product.</comment>
+                </field>
+
+                <!--<field id="ff_salesrank" translate="label" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">-->
+                <!--<label>Sales rank</label>-->
+                <!--<source_model>Omikron\Factfinder\Model\Source\Attribute</source_model>-->
+                <!--<comment>Select the Attribute which stores the sales rank of a product.</comment>-->
+                <!--</field>-->
+
+                <field id="ff_ean" translate="label" type="select" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>EAN/ISBN</label>
+                    <source_model>Omikron\Factfinder\Model\Source\Attribute</source_model>
+                    <comment>Select the Attribute which stores the ean or isbn of a product.</comment>
+                </field>
+                <field id="ff_additional_attributes" translate="label" type="multiselect" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Select Additional Attributes</label>
+                    <source_model>Omikron\Factfinder\Model\Source\Attribute</source_model>
+                    <comment>Select all attributes which should be exported to the product feed.</comment>
+                </field>
+                <field id="ff_createfeed" translate="label comment" type="button" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Generate Export File</label>
+                    <frontend_model>Omikron\Factfinder\Block\Adminhtml\System\Config\Button\Feed</frontend_model>
+                    <comment>On buttonclick CSV exports of all your products will be generated and uploaded to the specified FTP Server.</comment>
+                </field>
+                <field id="ff_cron_import" translate="label" type="select" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Automatic Import of productdata</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Runs an automatic import of the product data to the FACT-Finder servers, after the FTP upload is finished.</comment>
+                </field>
+                <field id="ff_cron_enabled" translate="label" type="select" sortOrder="120" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Generate Export Files(s) automatically</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>If enabled, new export files will be created once daily at 1 a.m. system time.</comment>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>
