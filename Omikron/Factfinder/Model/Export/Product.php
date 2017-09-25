@@ -110,6 +110,7 @@ class Product extends AbstractModel
     {
         $collection = $this->productCollectionFactory->create();
         $collection->addAttributeToSelect('*');
+        $collection->addFieldToFilter('visibility',['neq' => \Magento\Catalog\Model\Product\Visibility::VISIBILITY_NOT_VISIBLE]);
         $collection->setStore($store);
         
         return $collection;
