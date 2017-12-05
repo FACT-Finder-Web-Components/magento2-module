@@ -1,0 +1,15 @@
+<ff-recommendation>
+    <div class="recommendationHeader">Recommendations</div>
+    <ff-record-list >
+        <!-- in this demo a click on the product sets the recommendation product-->
+        <ff-record>
+            <img data-image="{{record.ImageUrl}}">
+            <div>
+                <a href="{{record.ProductUrl}}" data-action="redirect">
+                    {{record.Title}}
+                </a>
+                <div>Price: <strong>{{record.Price}} €</strong></div>
+            </div>
+        </ff-record>
+    </ff-record-list>
+</ff-recommendation>
