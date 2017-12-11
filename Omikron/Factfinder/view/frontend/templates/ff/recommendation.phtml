@@ -1,7 +1,38 @@
+<script>
+    jQuery(document).ready(function () {
+        console.log('hi pal');
+        factfinder.communication.ResultDispatcher.subscribe("result", function (result) {
+            if (result.timedOut) {
+                alert("Search timeout! Try again later");
+            } else {
+                if (result.records.length > 8) {
+                    result.records.splice(8, result.records.length);
+                }
+            }
+        }, this);
+        factfinder.communication.ResultDispatcher.subscribe("result", function (result) {
+            var recommendationElement = document.querySelector("ff-recommendation");
+            if (result.resultStatus === "nothingFound") {
+                //reset recommendation
+                recommendationElement.recordId = "";
+            } else if (result.resultStatus === "resultsFound") {
+                var record = result.records[0];
+                recommendationElement.recordId = record.id;
+            }
+        });
+        function setRecommendationProduct(ffRecordElement) {
+            var recommendationElement = document.querySelector("ff-recommendation");
+            recommendationElement.recordId = ffRecordElement.recordData.id;
+        }
+    })
+</script>
+
+
+
+
 <ff-recommendation>
     <div class="recommendationHeader">Recommendations</div>
     <ff-record-list >
-        <!-- in this demo a click on the product sets the recommendation product-->
         <ff-record>
             <img data-image="{{record.ImageUrl}}">
             <div>
