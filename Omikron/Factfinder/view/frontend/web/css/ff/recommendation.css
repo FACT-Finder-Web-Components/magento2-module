@@ -1,0 +1,12 @@
+ff-recommendation {
+    border: 2px solid #006299;
+    margin-bottom: 30px;
+}
+
+.recommendationHeader {
+    background-color: #006299;
+    color: white;
+    width: 150px;
+    padding: 10px;
+    font-weight: bold;
+}
