@@ -1,0 +1,13 @@
+ff-similar-products {
+    border: 2px solid orangered;
+    margin-bottom: 15px;
+    display: inline-block;
+}
+
+.similarProductsHeader {
+    background-color: orangered;
+    color: white;
+    width: 150px;
+    padding: 10px;
+    font-weight: bold;
+}
