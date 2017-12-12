@@ -44,6 +44,7 @@
                 <ff_productspp>0</ff_productspp>
                 <ff_campaign>0</ff_campaign>
                 <ff_pushedproductscampaign>0</ff_pushedproductscampaign>
+                <ff_recommendation>0</ff_recommendation>
             </components>
             <data_transfer>
                 <ff_cron_enabled>0</ff_cron_enabled>
