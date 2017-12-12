@@ -1,6 +1,5 @@
 <script>
     jQuery(document).ready(function () {
-        console.log('hi pal');
         factfinder.communication.ResultDispatcher.subscribe("result", function (result) {
             if (result.timedOut) {
                 alert("Search timeout! Try again later");
@@ -34,12 +33,34 @@
     <div class="recommendationHeader">Recommendations</div>
     <ff-record-list >
         <ff-record>
-            <img data-image="{{record.ImageUrl}}">
-            <div>
-                <a href="{{record.ProductUrl}}" data-action="redirect">
-                    {{record.Title}}
+            <img src="{{record.ImageUrl}}" data-image="{{record.ImageUrl}}" data-image-onerror="<?php echo $this->getProductImagePlaceholder(); ?>" />
+            <br/>
+            <div class="recordContent">
+                <a class="productDetailLink" href="{{record.ProductUrl}}" onclick="return false;"
+                   data-redirect="{{record.ProductUrl}}" data-redirect-target="_top">
+                    {{{record.Name}}}
                 </a>
-                <div>Price: <strong>{{record.Price}} €</strong></div>
+                <div class="description">
+                    {{{record.Description}}}
+                </div>
+                <a class="toProduct" href="{{record.ProductUrl}}" onclick="return false;" data-redirect="{{record.ProductUrl}}" data-redirect-target="{{record.ProductUrl}}">
+                    Product Page
+                </a>
+                <div class="productInfo">
+                    <?php if($this->isAddToCartEnabled()): ?>
+                        <div class="addCartLink basketIcon">
+                            <form action="<?php echo $this->getAddToCartUrl(); ?>" method="post" id="product_addtocart_form" novalidate="novalidate">
+                                <input type="hidden" name="product" value="{{record.MagentoEntityId}}">
+                                <?php echo $this->getBlockHtml('formkey') ?>
+                                <button data-track type="submit" title="<?php echo __("Add to Cart"); ?>" class="action primary tocart" id="product-addtocart-button">
+                                    <span><?php echo __("Add to Cart"); ?></span>
+                                </button>
+                            </form>
+                        </div>
+                    <?php endif; ?>
+                    <span class="brand">{{record.Manufacturer}}</span>
+                    <span class="price">{{record.Price}} <?php echo $this->getCurrentCurrencySymbol(); ?> </span>
+                </div>
             </div>
         </ff-record>
     </ff-record-list>
