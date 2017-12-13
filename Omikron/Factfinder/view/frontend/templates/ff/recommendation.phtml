@@ -1,67 +1,40 @@
-<script>
-    jQuery(document).ready(function () {
-        factfinder.communication.ResultDispatcher.subscribe("result", function (result) {
-            if (result.timedOut) {
-                alert("Search timeout! Try again later");
-            } else {
-                if (result.records.length > 8) {
-                    result.records.splice(8, result.records.length);
-                }
-            }
-        }, this);
-        factfinder.communication.ResultDispatcher.subscribe("result", function (result) {
-            var recommendationElement = document.querySelector("ff-recommendation");
-            if (result.resultStatus === "nothingFound") {
-                //reset recommendation
-                recommendationElement.recordId = "";
-            } else if (result.resultStatus === "resultsFound") {
-                var record = result.records[0];
-                recommendationElement.recordId = record.id;
-            }
-        });
-        function setRecommendationProduct(ffRecordElement) {
-            var recommendationElement = document.querySelector("ff-recommendation");
-            recommendationElement.recordId = ffRecordElement.recordData.id;
-        }
-    })
-</script>
+<?php
+/** @var $block \Magento\Catalog\Block\Product\View */
+?>
 
-
-
-
-<ff-recommendation>
-    <div class="recommendationHeader"><?= __("Recommendations") ?></div>
-    <ff-record-list >
-        <ff-record>
-            <img src="{{record.ImageUrl}}" data-image="{{record.ImageUrl}}" data-image-onerror="<?php echo $this->getProductImagePlaceholder(); ?>" />
-            <br/>
-            <div class="recordContent">
-                <a class="productDetailLink" href="{{record.ProductUrl}}" onclick="return false;"
-                   data-redirect="{{record.ProductUrl}}" data-redirect-target="_top">
-                    {{{record.Name}}}
-                </a>
-                <div class="description">
-                    {{{record.Description}}}
+    <ff-recommendation record-id="<?= $block->getProduct()->getSku() ?>">
+        <div class="recommendationHeader"><?= __("Recommendations") ?></div>
+        <ff-record-list >
+            <ff-record>
+                <img src="{{record.ImageUrl}}" data-image="{{record.ImageUrl}}" data-image-onerror="<?php echo $this->getProductImagePlaceholder(); ?>" />
+                <br/>
+                <div class="recordContent">
+                    <a class="productDetailLink" href="{{record.ProductUrl}}" onclick="return false;"
+                       data-redirect="{{record.ProductUrl}}" data-redirect-target="_top">
+                        {{{record.Name}}}
+                    </a>
+                    <div class="description">
+                        {{{record.Description}}}
+                    </div>
+                    <a class="toProduct" href="{{record.ProductUrl}}" onclick="return false;" data-redirect="{{record.ProductUrl}}" data-redirect-target="{{record.ProductUrl}}">
+                        Product Page
+                    </a>
+                    <div class="productInfo">
+                        <?php if($this->isAddToCartEnabled()): ?>
+                            <div class="addCartLink basketIcon">
+                                <form action="<?php echo $this->getAddToCartUrl(); ?>" method="post" id="product_addtocart_form" novalidate="novalidate">
+                                    <input type="hidden" name="product" value="{{record.MagentoEntityId}}">
+                                    <?php echo $this->getBlockHtml('formkey') ?>
+                                    <button data-track type="submit" title="<?php echo __("Add to Cart"); ?>" class="action primary tocart" id="product-addtocart-button">
+                                        <span><?php echo __("Add to Cart"); ?></span>
+                                    </button>
+                                </form>
+                            </div>
+                        <?php endif; ?>
+                        <span class="brand">{{record.Manufacturer}}</span>
+                        <span class="price">{{record.Price}} <?php echo $this->getCurrentCurrencySymbol(); ?> </span>
+                    </div>
                 </div>
-                <a class="toProduct" href="{{record.ProductUrl}}" onclick="return false;" data-redirect="{{record.ProductUrl}}" data-redirect-target="{{record.ProductUrl}}">
-                    Product Page
-                </a>
-                <div class="productInfo">
-                    <?php if($this->isAddToCartEnabled()): ?>
-                        <div class="addCartLink basketIcon">
-                            <form action="<?php echo $this->getAddToCartUrl(); ?>" method="post" id="product_addtocart_form" novalidate="novalidate">
-                                <input type="hidden" name="product" value="{{record.MagentoEntityId}}">
-                                <?php echo $this->getBlockHtml('formkey') ?>
-                                <button data-track type="submit" title="<?php echo __("Add to Cart"); ?>" class="action primary tocart" id="product-addtocart-button">
-                                    <span><?php echo __("Add to Cart"); ?></span>
-                                </button>
-                            </form>
-                        </div>
-                    <?php endif; ?>
-                    <span class="brand">{{record.Manufacturer}}</span>
-                    <span class="price">{{record.Price}} <?php echo $this->getCurrentCurrencySymbol(); ?> </span>
-                </div>
-            </div>
-        </ff-record>
-    </ff-record-list>
-</ff-recommendation>
+            </ff-record>
+        </ff-record-list>
+    </ff-recommendation>
