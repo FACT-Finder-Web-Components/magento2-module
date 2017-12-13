@@ -6,6 +6,7 @@
         <css src="Omikron_Factfinder/::css/ff/asn.css"/>
         <css src="Omikron_Factfinder/::css/ff/record-list.css"/>
         <css src="Omikron_Factfinder/::css/ff/recommendation.css"/>
+        <css src="Omikron_Factfinder/::css/ff/similar.css"/>
         <css src="Omikron_Factfinder/::css/ff/breadcrumb.css"/>
         <css src="Omikron_Factfinder/::css/ff/sortbox.css"/>
         <css src="Omikron_Factfinder/::css/ff/paging.css"/>
