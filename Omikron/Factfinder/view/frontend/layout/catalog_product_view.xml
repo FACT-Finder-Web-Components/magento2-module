@@ -9,10 +9,12 @@
     <head>
         <css src="Omikron_Factfinder/::css/ff/recommendation.css"/>
         <css src="Omikron_Factfinder/::css/ff/record-list.css"/>
+        <css src="Omikron_Factfinder/::css/ff/similar.css"/>
     </head>
     <body>
         <referenceContainer name="content">
             <block class="Omikron\Factfinder\Block\FF\Recommendation" ifconfig="factfinder/components/ff_recommendation" template="Omikron_Factfinder::ff/recommendation.phtml" />
+            <block class="Omikron\Factfinder\Block\FF\Similar" ifconfig="factfinder/components/ff_similar" template="Omikron_Factfinder::ff/similar.phtml" />
         </referenceContainer>
     </body>
 </page>

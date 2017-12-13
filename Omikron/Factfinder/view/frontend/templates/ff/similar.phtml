@@ -1,35 +1,4 @@
-<script>
-    jQuery(document).ready(function () {
-        factfinder.communication.ResultDispatcher.subscribe("result", function (result) {
-            if (result.timedOut) {
-                alert("Search timeout! Try again later");
-            }
-        }, this);
-
-        //Add a handler to the search result and use the first product for similar products.
-        factfinder.communication.ResultDispatcher.subscribe("result", function (result) {
-            var similarProductsElement = document.querySelector("ff-similar-products");
-
-            if (result.resultStatus === "nothingFound") {
-                //reset recommendation
-                similarProductsElement.recordId = "";
-            } else {
-                var record = result.records[0];
-                similarProductsElement.recordId = record.id;
-            }
-        });
-        function setSimilarProductId(ffRecordElement) {
-            console.log("setSimilarproduct", ffRecordElement.recordData);
-            var similarProductsElement = document.querySelector("ff-similar-products");
-            similarProductsElement.recordId = ffRecordElement.recordData.id;
-        }
-    })
-</script>
-
-
-
-
-<ff-similar-products>
+<ff-similar-products  record-id="<?= $block->getProduct()->getSku() ?>">
     <div class="similarProductsHeader"><?= __("Similar Products") ?></div>
     <ff-record-list >
         <ff-record>
