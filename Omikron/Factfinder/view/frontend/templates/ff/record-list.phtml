@@ -6,6 +6,7 @@
         <img src="{{record.ImageUrl}}" data-image="{{record.ImageUrl}}" data-image-onerror="<?php echo $this->getProductImagePlaceholder(); ?>" />
         <br/>
         <div class="recordContent">
+            <div class="brand">{{record.Manufacturer}}</div>
             <a class="productDetailLink" href="{{record.ProductUrl}}" onclick="return false;"
                data-redirect="{{record.ProductUrl}}" data-redirect-target="_top">
                 {{{record.Name}}}
@@ -28,7 +29,6 @@
                         </form>
                     </div>
                 <?php endif; ?>
-                <span class="brand">{{record.Manufacturer}}</span>
                 <span class="price">{{record.Price}} <?php echo $this->getCurrentCurrencySymbol(); ?> </span>
             </div>
         </div>
