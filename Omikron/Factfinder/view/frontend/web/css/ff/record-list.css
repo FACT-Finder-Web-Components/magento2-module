@@ -122,6 +122,7 @@ ff-record-list ff-record .brand {
     padding-bottom: 15px;
     font-size: 22px;
     color: #393b3e;
+    text-align: center;
 }
 
 ff-record-list ff-record .productInfo {
@@ -132,14 +133,13 @@ ff-record-list ff-record .productInfo {
 }
 
 ff-record-list ff-record .toProduct {
-    border-top: 1px solid #d8dcde;
-    border-left: 1px solid #d8dcde;
-    border-bottom: 1px solid #d8dcde;
+    border: 1px solid #d8dcde;
 
     padding: 15px;
     margin-top: 15px;
     cursor: pointer;
     text-align: center;
+    margin-right: 25px;
 }
 
 ff-record-list ff-record .toProduct:hover {
