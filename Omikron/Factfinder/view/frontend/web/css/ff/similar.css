@@ -1,9 +1,3 @@
-ff-similar-products {
-    border: 2px solid orangered;
-    margin-bottom: 15px;
-    display: inline-block;
-}
-
 .similarProductsHeader {
     background-color: orangered;
     color: white;
@@ -11,3 +5,32 @@ ff-similar-products {
     padding: 10px;
     font-weight: bold;
 }
+ff-similar-products .product-image-container{
+    width: 152px;
+}
+
+ff-similar-products .product-image-container .product-image-wrapper
+{
+    padding-bottom: 125%;
+}
+ff-similar-products ff-record-list ff-record {
+    width: auto;
+    border: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+ff-similar-products .product-image-container .product-image-wrapper image
+{
+    width: 152px;
+    height: 90px;
+}
+
+    @media all and (min-width: 1024px), print {
+        .page-layout-1column ff-similar-products .products-grid .product-item {
+            width: 100%;
+        }
+        .page-layout-1column ff-similar-products ff-record {
+             width: 16.66666667%;
+         }
+    }
