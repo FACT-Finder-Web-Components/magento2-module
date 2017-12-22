@@ -46,16 +46,11 @@ class Communication extends Template
         $filePath = $this->_moduleDirReader->getModuleDir('etc', 'Omikron_Factfinder') . '/config.xml';
         $defaultValues = $this->_parser->load($filePath)->xmlToArray()['config']['_value']['default']['factfinder'];
 
-        $this->_requiredAttributes = ['url', 'channel', 'sid'];
+        $this->_requiredAttributes = ['url', 'channel'];
 
         $this->_configData = [
             'url' => [
                 'value' =>  ($this->_helper->isEnrichmentEnabled() ? '/' . Data::FRONT_NAME . '/' : $this->_helper->getAddress()),
-                'type' => 'string',
-                'defaultValue' => null
-            ],
-            'sid' => [
-                'value' => $tracking->getSessionId(),
                 'type' => 'string',
                 'defaultValue' => null
             ],
