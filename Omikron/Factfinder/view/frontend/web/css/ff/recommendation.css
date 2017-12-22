@@ -1,12 +1,29 @@
-ff-recommendation {
-    border: 2px solid #006299;
-    margin-bottom: 30px;
+ff-recommendation .product-image-container {
+    width: 152px;
 }
 
-.recommendationHeader {
-    background-color: #006299;
-    color: white;
-    width: 150px;
-    padding: 10px;
-    font-weight: bold;
+ff-recommendation .product-image-container .product-image-wrapper {
+    padding-bottom: 125%;
+}
+
+ff-recommendation ff-record-list ff-record {
+    width: auto;
+    border: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+ff-recommendation .product-image-container .product-image-wrapper image {
+    width: 152px;
+    height: 90px;
+}
+
+@media all and (min-width: 1024px), print {
+    .page-layout-1column ff-recommendation .products-grid .product-item {
+        width: 100%;
+    }
+
+    .page-layout-1column ff-recommendation ff-record {
+        width: 16.66666667%;
+    }
 }
