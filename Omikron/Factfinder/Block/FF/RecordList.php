@@ -24,9 +24,9 @@ class RecordList extends Template
      *
      * @param Template\Context $context
      * @param \Magento\Directory\Model\Currency $currency
-     * @param array $data
      * @param \Magento\Catalog\Helper\Image $imageHelper
      * @param \Omikron\Factfinder\Helper\Data $helper
+     * @param array $data
      */
     public function __construct(
         Template\Context $context,
