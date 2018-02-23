@@ -6,14 +6,90 @@
         <ff-asn-group for-group="all" class="cursor">
             <ff-asn-group-element>
                 <div data-selected>
-                    <span class="filterCheckboxUnselected"><span class="filterCheckboxSelected"></span></span>
-                    <span class="filterName">{{element.name}} {{group.unit}}</span>
+                    <span class="filterName">{{element.name}}</span>
                 </div>
                 <div data-unselected>
-                    <span class="filterCheckboxUnselected"></span>
-                    <span class="filterName">{{element.name}} {{group.unit}}</span>
+                    <span class="filterName">{{element.name}}</span>
                 </div>
             </ff-asn-group-element>
+            <div data-container="groupCaption" class="groupCaption">
+                {{group.name}}<span class="filterArrowDown">&nbsp;</span>
+            </div>
+
+            <div opened data-container="detailedLinks">
+                <!--we'll show all links which should be displayed immediately aside this element-->
+                <div data-content="detailedLinks"></div>
+                <!--use this container for automatically showing the hiddenLinks container on tap-->
+                <div data-container="showMore">
+                    <!-- set the padding on an inner element so we don't suffer from height 0 + padding issues-->
+                    <span class="text">Show More</span>
+                </div>
+                <div class="marginBottom"></div>
+            </div>
+
+            <div data-container="hiddenLinks">
+                <!--we'll hide all links which should NOT be displayed immediately aside this element-->
+                <div data-content="hiddenLinks"></div>
+                <!--use this container for automatically hiding the hiddenLinks container on tap-->
+                <div data-container="showLess">
+                    <!-- set the padding on an inner element so we don't suffer from height 0 + padding issues-->
+                    <span class="text">Show Less</span>
+                </div>
+                <div class="marginBottom"></div>
+            </div>
         </ff-asn-group>
+        <!--        <ff-asn-group for-group="all" class="cursor">-->
+        <!--            <ff-asn-group-element>-->
+        <!--                <div data-selected>-->
+        <!--                    <span class="filterCheckboxUnselected"><span class="filterCheckboxSelected"></span></span>-->
+        <!--                    <span class="filterName">{{element.name}} {{group.unit}}</span>-->
+        <!--                </div>-->
+        <!--                <div data-unselected>-->
+        <!--                    <span class="filterCheckboxUnselected"></span>-->
+        <!--                    <span class="filterName">{{element.name}} {{group.unit}}</span>-->
+        <!--                </div>-->
+        <!--            </ff-asn-group-element>-->
+        <!--        </ff-asn-group>-->
+
+        <ff-asn-group filter-style="TREE" opened class="cursor">
+            <ff-asn-group-element>
+                <div data-selected>
+                    &nbsp;&nbsp;<span class="filterName"><b>{{element.name}}</b></span>
+                </div>
+                <div data-unselected>
+                    &nbsp;<span class="filterArrowRight"></span>&nbsp;<span
+                            class="filterName">{{element.name}}</span>
+                </div>
+            </ff-asn-group-element>
+            <div data-container="groupCaption" class="groupCaption">
+                {{group.name}} <span class="filterArrowDown">&nbsp;</span>
+            </div>
+            <div opened data-container="detailedLinks">
+                <div data-content="detailedLinks"></div>
+                <div class="marginBottom"></div>
+            </div>
+        </ff-asn-group>
+
+        <ff-asn-group-slider>
+            <div data-container="groupCaption" class="groupCaption">
+                {{group.name}}<span class="filterArrowDown">&nbsp</span>
+            </div>
+            <div data-container="removeFilter">Remove Filter</div>
+            <ff-slider-control submit-on-input>
+                <input data-control='1'
+                       style="position: absolute; width: 60px;left: 15px;">
+                <input
+                        data-control='2' style="position: absolute; width: 60px;right: 15px;">
+
+                <ff-slider step-size="1" current-min-value="0" style="width: 150px;">
+                    <div data-slider="1" class="sliderBtn"></div>
+                    <div data-slider="2" class="sliderBtn"></div>
+                    <!-- Version < 1.2.2
+                    <div id="slider1" class="sliderBtn"></div>
+                    <div id="slider2" class="sliderBtn"></div>
+                    -->
+                </ff-slider>
+            </ff-slider-control>
+        </ff-asn-group-slider>
     </ff-asn>
 </div>

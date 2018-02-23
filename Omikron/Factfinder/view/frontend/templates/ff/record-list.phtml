@@ -12,18 +12,18 @@
 </script>
 <ff-record-list unresolved>
     <ff-record>
-        <img src="{{record.ImageUrl}}" data-image="{{record.ImageUrl}}" data-image-onerror="<?php echo $this->getProductImagePlaceholder(); ?>" />
+        <img data-image data-image-onerror="<?php echo $this->getProductImagePlaceholder(); ?>" />
         <br/>
         <div class="recordContent">
             <div class="brand">{{record.Manufacturer}}</div>
-            <a class="productDetailLink" href="{{record.ProductUrl}}" onclick="return false;"
-               data-redirect="{{record.ProductUrl}}" data-redirect-target="_top">
+            <a class="productDetailLink"
+               data-redirect="{{record.ProductUrl}}" data-redirect-target="_blank" data-anchor="{{record.ProductUrl}}">
                 {{{record.Name}}}
             </a>
             <div class="description">
                 {{{record.Description}}}
             </div>
-            <a class="toProduct" href="{{record.ProductUrl}}" onclick="return false;" data-redirect="{{record.ProductUrl}}" data-redirect-target="{{record.ProductUrl}}">
+            <a class="toProduct" data-redirect="{{record.ProductUrl}}" data-redirect-target="_blank" data-anchor="{{record.ProductUrl}}">
                 Product Page
             </a>
             <div class="productInfo">

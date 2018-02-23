@@ -55,7 +55,8 @@ class Communication extends Template
                 'defaultValue' => null
             ],
             'sid' => [
-                'value' => $tracking->getSessionId(),
+                //TODO write proper helper method
+                'value' => $tracking->getSessionId() . '1234',
                 'type' => 'string',
                 'defaultValue' => null
             ],
