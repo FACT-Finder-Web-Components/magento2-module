@@ -1,8 +1,8 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <head>
-        <link src="Omikron_Factfinder/webcomponentsjs/webcomponents.min.js" async="true"/>
-        <link src="Omikron_Factfinder/js/search-redirect.js" async="true"/>
+        <link src="Omikron_Factfinder/webcomponentsjs/webcomponents.min.js"/>
+        <link src="Omikron_Factfinder/js/search-redirect.js"/>
         <link rel="import" src="Omikron_Factfinder/ff-web-components/dist/elements.build_with_dependencies.html"/>
         <css src="Omikron_Factfinder/::css/ff/searchbox.css"/>
         <css src="Omikron_Factfinder/::css/ff/suggest.css"/>
