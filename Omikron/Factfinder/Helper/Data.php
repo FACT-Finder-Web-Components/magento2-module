@@ -13,6 +13,7 @@ class Data extends AbstractHelper
 {
     const FRONT_NAME = "FACT-Finder";
     const CUSTOM_RESULT_PAGE = "result";
+    const SESSION_ID_LENGTH = 30;
 
     const PATH_TRACKING_PRODUCT_NUMBER_FIELD_ROLE = 'factfinder/general/tracking_product_number_field_role';
     const PATH_IS_ENABLED = 'factfinder/general/is_enabled';
@@ -424,5 +425,23 @@ class Data extends AbstractHelper
     public function setFieldRoles($value, $store)
     {
         return $this->_resourceConfig->saveConfig(self::PATH_TRACKING_PRODUCT_NUMBER_FIELD_ROLE, $value, 'stores', $store->getId());
+    }
+
+    /**
+     * Get correct sessionId
+     * @param string $sessionId
+     * @return string
+     */
+    public function getCorrectSessionId($sessionId)
+    {
+        while (strlen($sessionId) !== self::SESSION_ID_LENGTH) {
+            if (strlen($sessionId) < self::SESSION_ID_LENGTH) {
+                $sessionId = $sessionId . substr($sessionId, 0, (self::SESSION_ID_LENGTH - strlen($sessionId)));
+            } else if (strlen($sessionId) > self::SESSION_ID_LENGTH) {
+                $sessionId = substr($sessionId, 0, self::SESSION_ID_LENGTH);
+            }
+        }
+
+        return $sessionId;
     }
 }
