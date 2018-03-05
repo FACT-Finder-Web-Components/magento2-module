@@ -1,8 +1,6 @@
 <?php
 
-namespace Omikron\Factfinder\Test\Unit\Model;
-
-use Omikron\Factfinder\Model\Source\FFVersion;
+namespace Omikron\Factfinder\Test\Unit\Model\Source;
 
 class FFVersionTest extends \PHPUnit_Framework_TestCase
 {
