@@ -2,17 +2,18 @@
 
 namespace Omikron\Factfinder\Test\Unit\Model\Source;
 
+use Omikron\Factfinder\Model\Source\FFVersion;
+
 class FFVersionTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var FFVersion
+     * @var Omikron\Factfinder\Model\Source\FFVersion
      */
     protected $ffVersion;
 
     public function setUp()
     {
-        $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
-        $this->ffVersion = $objectManager->getObject('Omikron\Factfinder\Model\Source\FFVersion');
+        $this->ffVersion = new FFVersion();
     }
 
     public function testToOptionArray()
