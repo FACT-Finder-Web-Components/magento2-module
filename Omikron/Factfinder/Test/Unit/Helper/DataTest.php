@@ -244,4 +244,16 @@ class DataTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertEquals(true, $this->data->isPushImportEnabled());
     }
+
+    public function testGetAuthArray()
+    {
+        $authArray = $this->data->getAuthArray();
+
+        $this->assertArrayHasKey('password', $authArray);
+        $this->assertArrayHasKey('timestamp', $authArray);
+        $this->assertNotNull($authArray['password']);
+        $this->assertNotNull($authArray['timestamp']);
+        $this->assertRegExp('/^[a-f0-9]{32}$/i', $authArray['password']);
+        $this->assertTrue(is_numeric($authArray['timestamp']));
+    }
 }
