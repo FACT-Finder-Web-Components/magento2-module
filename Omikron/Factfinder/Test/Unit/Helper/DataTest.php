@@ -36,6 +36,7 @@ class DataTest extends \PHPUnit_Framework_TestCase
             ['factfinder/components/ff_campaign', ScopeInterface::SCOPE_STORE, null, 1],
             ['factfinder/components/ff_pushedproductscampaign', ScopeInterface::SCOPE_STORE, null, 1],
             ['factfinder/advanced/version', ScopeInterface::SCOPE_STORE, null, '7.3'],
+            ['factfinder/advanced/search_immediate', ScopeInterface::SCOPE_STORE, null, 'search-immediate'],
             ['factfinder/advanced/use_url_parameter', ScopeInterface::SCOPE_STORE, null, 1],
             ['factfinder/advanced/use_cache', ScopeInterface::SCOPE_STORE, null, 1],
             ['factfinder/advanced/default_query', ScopeInterface::SCOPE_STORE, null, '*'],
@@ -54,7 +55,16 @@ class DataTest extends \PHPUnit_Framework_TestCase
             ['factfinder/advanced/use_browser_history', ScopeInterface::SCOPE_STORE, null, 1],
             ['factfinder/advanced/use_seo', ScopeInterface::SCOPE_STORE, null, 1],
             ['factfinder/advanced/seo_prefix', ScopeInterface::SCOPE_STORE, null, 'domain.com/prefix/seoPath'],
-            ['factfinder/data_transfer/ff_cron_import', ScopeInterface::SCOPE_STORE, null, 1]
+            ['factfinder/data_transfer/ff_cron_import', ScopeInterface::SCOPE_STORE, null, 1],
+            [
+                'factfinder/general/tracking_product_number_field_role',
+                ScopeInterface::SCOPE_STORE,
+                null,
+                '{"brand":"Manufacturer","campaignProductNumber":"ArticleNumber","deeplink":"Deeplink",'
+                . '"description":"Description","displayProductNumber":"ArticleNumber","ean":"EAN",'
+                . '"imageUrl":"ImageName","masterArticleNumber":"MasterArticleNumber","price":"Price"'
+                . ',"productName":"Title","trackingProductNumber":"ArticleNumber"}'
+            ]
         ];
 
         $scopeConfig = $this->getMockBuilder(ScopeConfigInterface::class)
@@ -148,6 +158,11 @@ class DataTest extends \PHPUnit_Framework_TestCase
     public function testGetVersion()
     {
         $this->assertEquals('7.3', $this->data->getVersion());
+    }
+
+    public function testSearchImmediate()
+    {
+        $this->assertEquals('search-immediate', $this->data->getSearchImmediate());
     }
 
     public function testGetUseUrlParameter()
@@ -256,5 +271,22 @@ class DataTest extends \PHPUnit_Framework_TestCase
         $this->assertNotNull($authArray['timestamp']);
         $this->assertRegExp('/^[a-f0-9]{32}$/i', $authArray['password']);
         $this->assertTrue(is_numeric($authArray['timestamp']));
+    }
+
+    public function testGetFieldRole()
+    {
+        $this->assertEquals('Manufacturer', $this->data->getFieldRole('brand'));
+        $this->assertEquals('ArticleNumber', $this->data->getFieldRole('campaignProductNumber'));
+        $this->assertEquals('Deeplink', $this->data->getFieldRole('deeplink'));
+        $this->assertEquals('Description', $this->data->getFieldRole('description'));
+        $this->assertEquals('ArticleNumber', $this->data->getFieldRole('displayProductNumber'));
+        $this->assertEquals('EAN', $this->data->getFieldRole('ean'));
+        $this->assertEquals('ImageName', $this->data->getFieldRole('imageUrl'));
+        $this->assertEquals('MasterArticleNumber', $this->data->getFieldRole('masterArticleNumber'));
+        $this->assertEquals('Price', $this->data->getFieldRole('price'));
+        $this->assertEquals('Title', $this->data->getFieldRole('productName'));
+        $this->assertEquals('ArticleNumber', $this->data->getFieldRole('trackingProductNumber'));
+
+        $this->assertEquals('', $this->data->getFieldRole('some-unknown-field'));
     }
 }
