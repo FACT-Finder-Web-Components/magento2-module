@@ -249,6 +249,7 @@ class DataTest extends \PHPUnit_Framework_TestCase
     {
         $authArray = $this->data->getAuthArray();
 
+        $this->assertInternalType('array', $authArray);
         $this->assertArrayHasKey('password', $authArray);
         $this->assertArrayHasKey('timestamp', $authArray);
         $this->assertNotNull($authArray['password']);
