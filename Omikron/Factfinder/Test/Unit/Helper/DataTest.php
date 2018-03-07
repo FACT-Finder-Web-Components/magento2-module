@@ -2,6 +2,7 @@
 
 namespace Omikron\Factfinder\Test\Unit\Helper\Data;
 
+use Magento\Store\Api\Data\StoreInterface;
 use \Magento\Store\Model\ScopeInterface;
 use \Magento\Framework\App\Config\ScopeConfigInterface;
 use \Magento\Framework\App\Helper\Context;
@@ -14,6 +15,11 @@ class DataTest extends \PHPUnit_Framework_TestCase
      * @var Omikron\Factfinder\Helper\Data
      */
     protected $data;
+
+    /**
+     * @var \Magento\Config\Model\ResourceModel\Config
+     */
+    protected $resourceConfig;
 
     public function setUp()
     {
@@ -78,11 +84,13 @@ class DataTest extends \PHPUnit_Framework_TestCase
             ->getMock();
         $context->method('getScopeConfig')
             ->willReturn($scopeConfig);
-        $resourceConfig = $this->getMockBuilder(Config::class)
+        $this->resourceConfig = $this->getMockBuilder(Config::class)
             ->disableOriginalConstructor()
             ->getMock();
+        $this->resourceConfig->method('saveConfig')
+            ->willReturn($this->resourceConfig);
 
-        $this->data = new Data($context, $resourceConfig);
+        $this->data = new Data($context, $this->resourceConfig);
     }
 
     public function testIsEnabled()
@@ -288,5 +296,15 @@ class DataTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('ArticleNumber', $this->data->getFieldRole('trackingProductNumber'));
 
         $this->assertEquals('', $this->data->getFieldRole('some-unknown-field'));
+    }
+
+    public function testSetFieldRoles()
+    {
+        $store = $this->getMockBuilder(StoreInterface::class)
+            ->getMock();
+        $store->method('getId')
+            ->willReturn(1);
+
+        $this->assertEquals($this->resourceConfig, $this->data->setFieldRoles('value', $store));
     }
 }
