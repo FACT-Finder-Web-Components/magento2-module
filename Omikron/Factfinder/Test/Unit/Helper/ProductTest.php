@@ -11,6 +11,7 @@ use \Magento\Catalog\Api\CategoryRepositoryInterface;
 use \Magento\Store\Api\Data\StoreInterface;
 use \Magento\Catalog\Model\Product;
 use Omikron\Factfinder\Helper\Product as ProductHelper;
+use \Magento\Framework\App\Config\ScopeConfigInterface;
 
 class ProductTest extends \PHPUnit_Framework_TestCase
 {
@@ -25,6 +26,8 @@ class ProductTest extends \PHPUnit_Framework_TestCase
     const PRODUCT_PRICE = '10,99';
     const PRODUCT_PRICE_2 = 10;
     const PRODUCT_PRICE_CORRECT_VALUE = 10.00;
+    const PRODUCT_MANUFACTURER = 'product-manufacturer';
+    const PRODUCT_EAN = 'product-ean';
 
     /**
      * @var Magento\Store\Model\Store
@@ -43,17 +46,31 @@ class ProductTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $map = [
+        $dataMap = [
             ['sku', null, self::PRODUCT_SKU],
             ['name', null, self::PRODUCT_NAME],
             ['description', null, self::PRODUCT_DESCRIPTION],
             ['short_description', null, self::PRODUCT_SHORT_DESCRIPTION],
-            ['price', null, self::PRODUCT_PRICE]
+            ['price', null, self::PRODUCT_PRICE],
+            [self::PRODUCT_MANUFACTURER, null, self::PRODUCT_MANUFACTURER],
+            [self::PRODUCT_EAN, null, self::PRODUCT_EAN]
         ];
 
+        $scopeConfigMap = [
+            [ProductHelper::PATH_DATA_TRANSFER_MANUFACTURER, 'store', self::STORE_ID, self::PRODUCT_MANUFACTURER],
+            [ProductHelper::PATH_DATA_TRANSFER_EAN, 'store', self::STORE_ID, self::PRODUCT_EAN]
+        ];
+
+        $scopeConfig = $this->getMockBuilder(ScopeConfigInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $scopeConfig->method('getValue')
+            ->will($this->returnValueMap($scopeConfigMap));
         $context = $this->getMockBuilder(Context::class)
             ->disableOriginalConstructor()
             ->getMock();
+        $context->method('getScopeConfig')
+            ->willReturn($scopeConfig);
         $image = $this->getMockBuilder(Image::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -90,7 +107,7 @@ class ProductTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
         $this->product->method('getData')
-            ->will($this->returnValueMap($map));
+            ->will($this->returnValueMap($dataMap));
         $this->product->method('getUrlInStore')
             ->willReturn(self::PRODUCT_URL);
         $this->product->method('isAvailable')
@@ -161,5 +178,15 @@ class ProductTest extends \PHPUnit_Framework_TestCase
     public function testGetMagentoEntityId()
     {
         $this->assertEquals(self::PRODUCT_ID, $this->productHelper->get('MagentoEntityId', $this->product, $this->store));
+    }
+
+    public function testGetManufacturer()
+    {
+        $this->assertEquals(self::PRODUCT_MANUFACTURER, $this->productHelper->get('Manufacturer', $this->product, $this->store));
+    }
+
+    public function testGetEAN()
+    {
+        $this->assertEquals(self::PRODUCT_EAN, $this->productHelper->get('EAN', $this->product, $this->store));
     }
 }
