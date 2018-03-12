@@ -17,17 +17,48 @@ class ProductTest extends \PHPUnit_Framework_TestCase
 {
     const STORE_ID = 1;
     const PRODUCT_SKU = 12345;
+    const PRODUCT_ID = 12345;
     const PRODUCT_NAME = 'product-name';
     const PRODUCT_DESCRIPTION = 'product-description';
     const PRODUCT_SHORT_DESCRIPTION = 'product-short-description';
     const PRODUCT_URL = 'http://magento.local/product-url';
-    const PRODUCT_ID = 12345;
     const PRODUCT_IMAGE_URL = 'http://magento.local/product-image-url';
     const PRODUCT_PRICE = '10,99';
     const PRODUCT_PRICE_2 = 10;
     const PRODUCT_PRICE_CORRECT_VALUE = 10.00;
     const PRODUCT_MANUFACTURER = 'product-manufacturer';
     const PRODUCT_EAN = 'product-ean';
+    const PRODUCT_PARENT_ID_BY_PRODUCT_ID = 123;
+
+    /**
+     * @var \Magento\Framework\App\Helper\Context
+     */
+    protected $context;
+
+    /**
+     * @var \Magento\Catalog\Helper\Image
+     */
+    protected $image;
+
+    /**
+     * @var \Magento\Eav\Model\Config
+     */
+    protected $config;
+
+    /**
+     * @var \Magento\Catalog\Model\ProductRepository
+     */
+    protected $productRepository;
+
+    /**
+     * @var \Magento\ConfigurableProduct\Model\ResourceModel\Product\Type\Configurable
+     */
+    protected $configurable;
+
+    /**
+     * @var \Magento\Catalog\Api\CategoryRepositoryInterface
+     */
+    protected $categoryRepositoryInterface;
 
     /**
      * @var Magento\Store\Model\Store
@@ -66,36 +97,36 @@ class ProductTest extends \PHPUnit_Framework_TestCase
             ->getMock();
         $scopeConfig->method('getValue')
             ->will($this->returnValueMap($scopeConfigMap));
-        $context = $this->getMockBuilder(Context::class)
+        $this->context = $this->getMockBuilder(Context::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $context->method('getScopeConfig')
+        $this->context->method('getScopeConfig')
             ->willReturn($scopeConfig);
-        $image = $this->getMockBuilder(Image::class)
+        $this->image = $this->getMockBuilder(Image::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $image->method('init')
-            ->willReturn($image);
-        $image->method('constrainOnly')
-            ->willReturn($image);
-        $image->method('keepAspectRatio')
-            ->willReturn($image);
-        $image->method('keepTransparency')
-            ->willReturn($image);
-        $image->method('resize')
-            ->willReturn($image);
-        $image->method('getUrl')
+        $this->image->method('init')
+            ->willReturn($this->image);
+        $this->image->method('constrainOnly')
+            ->willReturn($this->image);
+        $this->image->method('keepAspectRatio')
+            ->willReturn($this->image);
+        $this->image->method('keepTransparency')
+            ->willReturn($this->image);
+        $this->image->method('resize')
+            ->willReturn($this->image);
+        $this->image->method('getUrl')
             ->willReturn(self::PRODUCT_IMAGE_URL);
-        $config = $this->getMockBuilder(Config::class)
+        $this->config = $this->getMockBuilder(Config::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $productRepository = $this->getMockBuilder(ProductRepository::class)
+        $this->configurable = $this->getMockBuilder(Configurable::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $configurable = $this->getMockBuilder(Configurable::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $categoryRepositoryInterface = $this->getMockBuilder(CategoryRepositoryInterface::class)
+        $this->configurable->method('getParentIdsByChild')
+            ->with($this->equalTo(self::PRODUCT_ID))
+            ->willReturn(self::PRODUCT_PARENT_ID_BY_PRODUCT_ID);
+        $this->categoryRepositoryInterface = $this->getMockBuilder(CategoryRepositoryInterface::class)
             ->disableOriginalConstructor()
             ->getMock();
         $this->store = $this->getMockBuilder(StoreInterface::class)
@@ -114,8 +145,16 @@ class ProductTest extends \PHPUnit_Framework_TestCase
             ->willReturn(true);
         $this->product->method('getId')
             ->willReturn(self::PRODUCT_ID);
+        $this->product->method('getSku')
+            ->willReturn(self::PRODUCT_SKU);
+        $this->productRepository = $this->getMockBuilder(ProductRepository::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $this->productRepository->method('getById')
+            ->with($this->equalTo(self::PRODUCT_PARENT_ID_BY_PRODUCT_ID))
+            ->willReturn($this->product);
 
-        $this->productHelper = new ProductHelper($context, $image, $config, $productRepository, $configurable, $categoryRepositoryInterface);
+        $this->productHelper = new ProductHelper($this->context, $this->image, $this->config, $this->productRepository, $this->configurable, $this->categoryRepositoryInterface);
     }
 
     public function testGetUnknownMethod()
@@ -126,6 +165,25 @@ class ProductTest extends \PHPUnit_Framework_TestCase
     public function testGetProductNumber()
     {
         $this->assertEquals(self::PRODUCT_SKU, $this->productHelper->get('ProductNumber', $this->product, $this->store));
+    }
+
+    public function testGetMasterProductNumber()
+    {
+        $this->assertEquals(self::PRODUCT_SKU, $this->productHelper->get('MasterProductNumber', $this->product, $this->store));
+    }
+
+    public function testGetMasterProductNumberWhenParentByChildIsArray()
+    {
+        $this->configurable = $this->getMockBuilder(Configurable::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $this->configurable->method('getParentIdsByChild')
+            ->with($this->equalTo(self::PRODUCT_ID))
+            ->willReturn(array(self::PRODUCT_PARENT_ID_BY_PRODUCT_ID));
+
+        $this->productHelper = new ProductHelper($this->context, $this->image, $this->config, $this->productRepository, $this->configurable, $this->categoryRepositoryInterface);
+
+        $this->assertEquals(self::PRODUCT_SKU, $this->productHelper->get('MasterProductNumber', $this->product, $this->store));
     }
 
     public function testGetName()
