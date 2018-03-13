@@ -31,6 +31,7 @@ class ProductTest extends \PHPUnit_Framework_TestCase
     const PRODUCT_MANUFACTURER = 'product-manufacturer';
     const PRODUCT_EAN = 'product-ean';
     const PRODUCT_PARENT_ID_BY_PRODUCT_ID = 123;
+    const PRODUCT_AVAILABILITY = 1;
     const PRODUCT_CATEGORY_IDS = [12345, 23456, 34567];
 
     /**
@@ -167,7 +168,7 @@ class ProductTest extends \PHPUnit_Framework_TestCase
         $this->product->method('getUrlInStore')
             ->willReturn(self::PRODUCT_URL);
         $this->product->method('isAvailable')
-            ->willReturn(true);
+            ->willReturn(self::PRODUCT_AVAILABILITY);
         $this->product->method('getId')
             ->willReturn(self::PRODUCT_ID);
         $this->product->method('getSku')
@@ -263,7 +264,7 @@ class ProductTest extends \PHPUnit_Framework_TestCase
 
     public function testGetAvailability()
     {
-        $this->assertEquals(1, $this->productHelper->get('Availability', $this->product, $this->store));
+        $this->assertEquals(self::PRODUCT_AVAILABILITY, $this->productHelper->get('Availability', $this->product, $this->store));
     }
 
     public function testGetMagentoEntityId()
