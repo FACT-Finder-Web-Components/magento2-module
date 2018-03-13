@@ -12,6 +12,8 @@ use \Magento\Store\Api\Data\StoreInterface;
 use \Magento\Catalog\Model\Product;
 use Omikron\Factfinder\Helper\Product as ProductHelper;
 use \Magento\Framework\App\Config\ScopeConfigInterface;
+use \Magento\Catalog\Api\Data\CategoryInterface;
+use \Magento\Catalog\Model\Category;
 
 class ProductTest extends \PHPUnit_Framework_TestCase
 {
@@ -29,6 +31,7 @@ class ProductTest extends \PHPUnit_Framework_TestCase
     const PRODUCT_MANUFACTURER = 'product-manufacturer';
     const PRODUCT_EAN = 'product-ean';
     const PRODUCT_PARENT_ID_BY_PRODUCT_ID = 123;
+    const PRODUCT_CATEGORY_IDS = [12345, 23456, 34567];
 
     /**
      * @var \Magento\Framework\App\Helper\Context
@@ -92,16 +95,30 @@ class ProductTest extends \PHPUnit_Framework_TestCase
             [ProductHelper::PATH_DATA_TRANSFER_EAN, 'store', self::STORE_ID, self::PRODUCT_EAN]
         ];
 
+        $categoryInterface = $this->getMockBuilder(CategoryInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $categoryInterface->method('getParentId')
+            ->willReturn(Category::ROOT_CATEGORY_ID);
+
+        $categoryRepositoryInterfaceMap = [
+            [self::PRODUCT_CATEGORY_IDS[0], null, $categoryInterface],
+            [self::PRODUCT_CATEGORY_IDS[1], null, $categoryInterface],
+            [self::PRODUCT_CATEGORY_IDS[2], null, $categoryInterface]
+        ];
+
         $scopeConfig = $this->getMockBuilder(ScopeConfigInterface::class)
             ->disableOriginalConstructor()
             ->getMock();
         $scopeConfig->method('getValue')
             ->will($this->returnValueMap($scopeConfigMap));
+
         $this->context = $this->getMockBuilder(Context::class)
             ->disableOriginalConstructor()
             ->getMock();
         $this->context->method('getScopeConfig')
             ->willReturn($scopeConfig);
+
         $this->image = $this->getMockBuilder(Image::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -117,23 +134,31 @@ class ProductTest extends \PHPUnit_Framework_TestCase
             ->willReturn($this->image);
         $this->image->method('getUrl')
             ->willReturn(self::PRODUCT_IMAGE_URL);
+
         $this->config = $this->getMockBuilder(Config::class)
             ->disableOriginalConstructor()
             ->getMock();
+
         $this->configurable = $this->getMockBuilder(Configurable::class)
             ->disableOriginalConstructor()
             ->getMock();
         $this->configurable->method('getParentIdsByChild')
             ->with($this->equalTo(self::PRODUCT_ID))
             ->willReturn(self::PRODUCT_PARENT_ID_BY_PRODUCT_ID);
+
         $this->categoryRepositoryInterface = $this->getMockBuilder(CategoryRepositoryInterface::class)
             ->disableOriginalConstructor()
             ->getMock();
+        $this->categoryRepositoryInterface->expects($this->any())
+            ->method('get')
+            ->will($this->returnValueMap($categoryRepositoryInterfaceMap));
+
         $this->store = $this->getMockBuilder(StoreInterface::class)
             ->disableOriginalConstructor()
             ->getMock();
         $this->store->method('getId')
             ->willReturn(self::STORE_ID);
+
         $this->product = $this->getMockBuilder(Product::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -147,6 +172,9 @@ class ProductTest extends \PHPUnit_Framework_TestCase
             ->willReturn(self::PRODUCT_ID);
         $this->product->method('getSku')
             ->willReturn(self::PRODUCT_SKU);
+        $this->product->method('getCategoryIds')
+            ->willReturn(self::PRODUCT_CATEGORY_IDS);
+
         $this->productRepository = $this->getMockBuilder(ProductRepository::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -226,6 +254,11 @@ class ProductTest extends \PHPUnit_Framework_TestCase
             ->willReturn(self::PRODUCT_PRICE_2);
 
         $this->assertEquals(self::PRODUCT_PRICE_CORRECT_VALUE, $this->productHelper->get('Price', $this->product, $this->store));
+    }
+
+    public function testGetCategoryPathWhenEmpty()
+    {
+        $this->assertEquals('', $this->productHelper->get('CategoryPath', $this->product, $this->store));
     }
 
     public function testGetAvailability()
