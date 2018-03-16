@@ -1,6 +1,6 @@
 <?php
 
-namespace Omikron\Factfinder\Test\Unit\Model\Source;
+namespace Omikron\Factfinder\Test\Unit\Observer;
 
 use \Magento\Framework\Event;
 use \Magento\Framework\Event\Observer;

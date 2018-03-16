@@ -1,6 +1,6 @@
 <?php
 
-namespace Omikron\Factfinder\Test\Unit\Model\Source;
+namespace Omikron\Factfinder\Test\Unit\Observer;
 
 use \Omikron\Factfinder\Helper\Tracking;
 use Omikron\Factfinder\Observer\TrackingAddToCart;
