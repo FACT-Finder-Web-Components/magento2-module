@@ -42,9 +42,7 @@ class Router implements \Magento\Framework\App\RouterInterface
      */
     public function match(\Magento\Framework\App\RequestInterface $request)
     {
-        // check if URL matches FACT-Finder front name defined in Data helper
-        $pathRegex = "/^(\/" . Data::FRONT_NAME . "\/)/";
-        if (!preg_match($pathRegex, $request->getPathInfo())) {
+        if (!$this->isValidRequest($request)) {
             return false;
         }
 
@@ -63,5 +61,18 @@ class Router implements \Magento\Framework\App\RouterInterface
             'Magento\Framework\App\Action\Forward',
             ['request' => $request]
         );
+    }
+
+    /**
+     * Check request state to trigger router match
+     *
+     * @param \Magento\Framework\App\RequestInterface $request
+     * @return bool
+     */
+    protected function isValidRequest(\Magento\Framework\App\RequestInterface $request) {
+        $pathRegex = "/^(\/" . Data::FRONT_NAME . "\/)/";
+        // don't match if controller name is already set
+        // also check if URL matches FACT-Finder front name defined in Data helper
+        return is_null($request->getControllerName()) && preg_match($pathRegex, $request->getPathInfo());
     }
 }
