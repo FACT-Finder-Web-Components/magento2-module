@@ -1,18 +1,18 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <head>
-        <remove src="Omikron_Factfinder/js/search-redirect.js" />
-        <css src="Omikron_Factfinder/::css/ff/shared-styles.css"/>
-        <css src="Omikron_Factfinder/::css/ff/template.css"/>
-        <css src="Omikron_Factfinder/::css/ff/asn.css"/>
-        <css src="Omikron_Factfinder/::css/ff/record-list.css"/>
-        <css src="Omikron_Factfinder/::css/ff/recommendation.css"/>
-        <css src="Omikron_Factfinder/::css/ff/similar.css"/>
-        <css src="Omikron_Factfinder/::css/ff/breadcrumb.css"/>
-        <css src="Omikron_Factfinder/::css/ff/sortbox.css"/>
-        <css src="Omikron_Factfinder/::css/ff/paging.css"/>
-        <css src="Omikron_Factfinder/::css/ff/products-per-page.css"/>
-        <css src="Omikron_Factfinder/::css/ff/campaign.css"/>
-        <css src="Omikron_Factfinder/::css/ff/pushed-products-campaign.css"/>
+        <remove src="Omikron_Factfinder::js/search-redirect.js" />
+        <css src="Omikron_Factfinder::css/ff/shared-styles.css"/>
+        <css src="Omikron_Factfinder::css/ff/template.css"/>
+        <css src="Omikron_Factfinder::css/ff/asn.css"/>
+        <css src="Omikron_Factfinder::css/ff/record-list.css"/>
+        <css src="Omikron_Factfinder::css/ff/recommendation.css"/>
+        <css src="Omikron_Factfinder::css/ff/similar.css"/>
+        <css src="Omikron_Factfinder::css/ff/breadcrumb.css"/>
+        <css src="Omikron_Factfinder::css/ff/sortbox.css"/>
+        <css src="Omikron_Factfinder::css/ff/paging.css"/>
+        <css src="Omikron_Factfinder::css/ff/products-per-page.css"/>
+        <css src="Omikron_Factfinder::css/ff/campaign.css"/>
+        <css src="Omikron_Factfinder::css/ff/pushed-products-campaign.css"/>
     </head>
     <body>
         <!-- Remove the search box from the header -->

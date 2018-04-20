@@ -408,7 +408,7 @@ class Data extends AbstractHelper
         $prefix = $this->getAuthenticationPrefix();
         $postfix = $this->getAuthenticationPostfix();
 
-        $hashPassword = md5($prefix . (string)$time . md5($password) . $postfix);
+        $hashPassword = md5($prefix . (string)$time . $password . $postfix);
 
         $authArray['password'] = $hashPassword;
         $authArray['timestamp'] = $time;

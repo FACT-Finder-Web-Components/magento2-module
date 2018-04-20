@@ -7,9 +7,9 @@
 -->
 <page layout="1column" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <head>
-        <css src="Omikron_Factfinder/::css/ff/recommendation.css"/>
-        <css src="Omikron_Factfinder/::css/ff/record-list.css"/>
-        <css src="Omikron_Factfinder/::css/ff/similar.css"/>
+        <css src="Omikron_Factfinder::css/ff/recommendation.css"/>
+        <css src="Omikron_Factfinder::css/ff/record-list.css"/>
+        <css src="Omikron_Factfinder::css/ff/similar.css"/>
     </head>
     <body>
         <referenceContainer name="content">
