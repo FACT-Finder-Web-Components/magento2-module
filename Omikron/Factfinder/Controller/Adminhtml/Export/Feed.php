@@ -55,8 +55,10 @@ class Feed extends \Magento\Backend\App\Action
     {
         // get current store view from HTTP_REFERER
         $result = [];
-        if(isset($_SERVER) && isset($_SERVER['HTTP_REFERER'])) {
-            preg_match('@/store/([0-9]+)/@', $_SERVER['HTTP_REFERER'], $result);
+        $httpReferer = $this->_redirect->getRefererUrl();
+
+        if(isset($httpReferer)) {
+            preg_match('@/store/([0-9]+)/@', $httpReferer, $result);
         }
 
         /** @var \Magento\Store\Api\Data\StoreInterface $store */
