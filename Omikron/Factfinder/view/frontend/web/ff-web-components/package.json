@@ -5,12 +5,16 @@
     "tobias.armbruster <tobias.armbruster@omikron.net>"
   ],
   "description": "Web Components made to easily integrate FACT-Finder in onlineshops",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/FACT-Finder-Web-Components/ff-web-components"
+  },
   "main": "./dist/element.build_with_dependencies.html",
   "keywords": [
     "FACT-Finder"
   ],
   "dependencies": {
-    "webcomponentsjs": "^0.7.20"
+    "webcomponentsjs": "git://github.com/webcomponents/webcomponentsjs.git#v0.7.24"
   },
   "license": "FACT-Finder",
   "homepage": "http://web-components.fact-finder.de/",
