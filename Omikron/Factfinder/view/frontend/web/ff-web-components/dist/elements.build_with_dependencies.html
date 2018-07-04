@@ -14,86 +14,7 @@ The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
 The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
 Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
---><meta charset="UTF-8"></head><body><div hidden="" by-vulcanize=""><dom-module id="ff-slider" assetpath="bower_components/fact-finder-custom-elements/dist/ff-slider/">
-    <style>:host{height:5px;background-color:#336;margin:5px auto;display:block;opacity:0;transition:opacity 800ms;}.ff_slidebar{@apply(--slidebar-mixin);}</style>
-    <template>
-        <div id="ffSliderBar" style="position: relative;width: 100%;height: 100%" class="ff_slidebar">
-            
-            <div id="slider1" style="position: absolute !important;">
-                <content select="[data-slider='1']">
-                </content>
-            </div>
-            <div id="slider2" style="position: absolute !important;">
-                <content select="[data-slider='2']">
-                </content>
-            </div>
-        </div>
-    </template>
-</dom-module>
-<dom-module id="ff-slider-control" assetpath="bower_components/fact-finder-custom-elements/dist/ff-slider-control/">
-    <style>:host{display:block;/*width:200px;*/ opacity:0;transition:opacity 800ms;padding:10px 0 10px 0;}#ffSliderSection{margin-top:10px;@apply(--ff-slider-section);}</style>
-
-    <template>
-        <div id="ffSliderSection">
-            <content data-content-slider="" select="*">
-
-            </content>
-        </div>
-    </template>
-</dom-module>
-<dom-module id="ff-asn-group" assetpath="bower_components/fact-finder-custom-elements/dist/ff-asn-group/">
-    <style>:host{opacity:0;transition:opacity 400ms;outline:none;display:block;min-width:180px;max-width:220px;}:host-context([align="horizontal"]) #wrapper{position:absolute;width:100%;}.ff-asn-group-container{position:relative;@apply(--ff-asn-group-container);}#wrapper{position:relative;transition-duration:350ms;@apply(--all-links-container);}</style>
-
-    <template>
-        
-        <content select="[data-container='groupCaption']">
-
-        </content>
-
-        
-        <div class="ff-asn-group-container">
-            <div opened="" id="wrapper">
-                <content></content>
-            </div>
-        </div>
-    </template>
-</dom-module>
-<dom-module id="ff-asn-group-slider" assetpath="bower_components/fact-finder-custom-elements/dist/ff-asn-group-slider/">
-    <style>:host{opacity:0;transition:opacity 400ms;outline:none;display:block;min-width:180px;max-width:220px;}:host-context([align="horizontal"]) #wrapper{position:absolute;width:100%;}.container{position:relative;}.ff-asn-group-container{@apply(--ff-asn-group-container);}#wrapper{position:relative;transition-duration:400ms;@apply(--all-links-container);}</style>
-
-    <template>
-        
-        <content select="[data-container='groupCaption']">
-        </content>
-
-        
-        <div class="container ff-asn-group-container">
-            <div opened="" id="wrapper">
-                <content></content>
-            </div>
-        </div>
-    </template>
-</dom-module>
-<dom-module id="ff-asn-group-element" assetpath="bower_components/fact-finder-custom-elements/dist/ff-asn-group-element/">
-    <style>:host{display:block;outline:none;}#unselected{display:inline-block;@apply (--unselected-container);}#selected{display:inline-block;@apply (--selected-container);}</style>
-    <template>
-        <div id="selected" style="display: none">
-            <content select="[data-selected]"></content>
-        </div>
-        <div id="unselected">
-            <content select="[data-unselected]"></content>
-        </div>
-    </template>
-</dom-module>
-<dom-module id="ff-asn" assetpath="bower_components/fact-finder-custom-elements/dist/ff-asn/">
-    <style>:host{outline:none;transition:opacity 600ms;display:block;}:host([align="horizontal"]){display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex;}</style>
-
-    <template>
-        <content></content>
-    </template>
-</dom-module>
-
-<dom-module id="ff-asn-remove-all-filter" assetpath="bower_components/fact-finder-custom-elements/dist/ff-asn-remove-all-filter/">
+--><meta charset="UTF-8"></head><body><div hidden="" by-vulcanize=""><dom-module id="ff-asn-remove-all-filter" assetpath="bower_components/fact-finder-custom-elements/dist/ff-asn-remove-all-filter/">
     <style>:host{display:inline-block;}:host(.hidden){display:none;}</style>
     <template>
         <div>
@@ -203,6 +124,87 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </template>
 
 </dom-module>
+<dom-module id="ff-tag-cloud" assetpath="bower_components/fact-finder-custom-elements/dist/ff-tag-cloud/">
+    <template>
+        <style>:host{display:block;max-width:600px;}#tagCloudContainer{display:-webkit-box;/* OLD - iOS 6-,Safari 3.1-6 */ display:-moz-box;/* OLD - Firefox 19- (buggy but mostly works) */ display:-ms-flexbox;/* TWEENER - IE 10 */ display:-webkit-flex;/* NEW - Chrome */ display:flex;/* NEW,Spec - Opera 12.1,Firefox 20+ */ justify-content:space-around;flex-wrap:wrap;@apply(--tag-cloud-container)}.tagCloudLink{padding:2px;@apply(--tag-cloud-link);}</style>
+
+       <div id="tagCloudContainer">
+
+       </div>
+    </template>
+</dom-module>
+
+<dom-module id="ff-compare" assetpath="bower_components/fact-finder-custom-elements/dist/ff-compare/">
+    <style>:host{display:block;}</style>
+    <template>
+        <content></content>
+    </template>
+</dom-module>
+
+<dom-module id="ff-search-feedback" assetpath="bower_components/fact-finder-custom-elements/dist/ff-search-feedback/">
+    <style>:host{position:absolute;top:20px;}:host([hidden]){display:none;}:host([unresolved]){opacity:0;}:host([align="left"]){left:0;}:host([align="right"]){right:0;}:host([align="left"]) #content{transform:translate(0%,0%);}:host([align="left"]) #caption{transform:translate(100%,0%);}.noTransition{transition:0s !important;}#caption{position:absolute;right:0;transition:transform 0.3s;cursor:pointer;@apply(--caption-mixin);}#content{position:absolute;transition:transform 0.3s;transform:translate(100%,0%);right:0;text-align:left;@apply(--content-mixin);}.transformZero{transform:translate(0%,0%) !important;}.transformX{transform:translate(100%,0%) !important;}</style>
+    <template>
+        <div id="caption" on-tap="_handleTap" class="noTransition">
+            <slot name="caption"></slot>
+        </div>
+        <div id="content" class="noTransition">
+            <slot name="content"></slot>
+        </div>
+    </template>
+</dom-module>
+
+<dom-module id="ff-single-word-search" assetpath="bower_components/fact-finder-custom-elements/dist/ff-single-word-search/">
+    <style>:host{display:block;}</style>
+    <template>
+        <content></content>
+    </template>
+</dom-module>
+<dom-module id="ff-single-word-search-record" assetpath="bower_components/fact-finder-custom-elements/dist/ff-single-word-search-record/">
+    <style>:host{display:block;}</style>
+    <template>
+        <content></content>
+    </template>
+</dom-module>
+<dom-module id="ff-suggest-item" assetpath="bower_components/fact-finder-custom-elements/dist/ff-suggest-item/">
+    <style>:host{display:block;word-wrap:break-word;}:host:hover{text-decoration:underline;}</style>
+
+    <template>
+        <content></content>
+    </template>
+</dom-module>
+
+<dom-module id="ff-onfocus-suggest" assetpath="bower_components/fact-finder-custom-elements/dist/ff-onfocus-suggest/">
+    <style>:host{display:block;z-index:9999;}.blockLayout{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex;flex-wrap:nowrap;-ms-flex-wrap:nowrap;-webkit-flex-wrap:nowrap;flex-direction:row;-ms-flex-direction:row;-webkit-flex-direction:row;}#ffSuggestContainer{position:relative;z-index:9999;/*padding:10px 10px 3px 10px;*/ background-color:#ffffff;top:0px;left:0px;right:0px;@apply(--suggest-container);}#ffSuggestContainerWrapper{position:absolute;@apply(--suggest-container-wrapper);}.hideffSuggestContainerWrapper{display:none;}</style>
+
+    <template>
+        <div style="position: relative; width: 100%">
+            <div id="ffSuggestContainerWrapper" class="hideffSuggestContainerWrapper">
+                <div id="ffSuggestContainer" class="blockLayout">
+                    <content id="ffContentElement" select="section"></content>
+                </div>
+            </div>
+        </div>
+    </template>
+</dom-module>
+<dom-module id="ff-record" assetpath="bower_components/fact-finder-custom-elements/dist/ff-record/">
+    <style>:host{display:inline-block;vertical-align:top;}</style>
+    <template>
+            <content></content>
+    </template>
+</dom-module>
+
+<dom-module id="ff-carousel" assetpath="bower_components/fact-finder-custom-elements/dist/ff-carousel/">
+    <style>:host{display:block;}.ff-carousel-container{overflow:hidden;@apply(--ff-carousel-container);}.ff-carousel-plane{transition:500ms;transform:translate3d(0px,0px,0px);display:flex;flex-direction:row;flex-wrap:nowrap;justify-content:space-around;@apply(--ff-carousel-plane);}#bullets{text-align:center;@apply(--ff-carousel-bullets);}.ff-carousel-bullet-button{background-color:lightgrey;width:10px;height:10px;margin:0 5px;padding:0;cursor:pointer;outline:none;border-radius:10px;border:none;@apply(--ff-carousel-bullet-button);}.ff-carousel-bullet-button:hover{background-color:grey;@apply(--ff-carousel-bullet-button-hover);}.selected{background-color:grey;@apply(--ff-carousel-bullet-button-selected);}</style>
+    <template>
+        <slot name="buttons"></slot>
+        <div class="ff-carousel-container" id="container">
+            <div class="ff-carousel-plane" id="plane">
+                <slot name="items"></slot>
+            </div>
+        </div>
+        <div id="bullets"></div>
+    </template>
+</dom-module>
 <dom-module id="ff-campaign-advisor-answer" assetpath="bower_components/fact-finder-custom-elements/dist/ff-campaign-advisor-answer/">
     <style>:host{display:block;}button{background:#06507f;color:white;}button:hover{background:#03a9f4;}</style>
     <template>
@@ -258,35 +260,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 </dom-module>
 
 <dom-module id="ff-campaign-shopping-cart" assetpath="bower_components/fact-finder-custom-elements/dist/ff-campaign-shopping-cart/">
-    <style>:host{display:block;}</style>
-    <template>
-        <content></content>
-    </template>
-</dom-module>
-
-<dom-module id="ff-search-feedback" assetpath="bower_components/fact-finder-custom-elements/dist/ff-search-feedback/">
-    <style>:host{position:absolute;top:20px;}:host([hidden]){display:none;}:host([unresolved]){opacity:0;}:host([align="left"]){left:0;}:host([align="right"]){right:0;}:host([align="left"]) #content{transform:translate(0%,0%);}:host([align="left"]) #caption{transform:translate(100%,0%);}.noTransition{transition:0s !important;}#caption{position:absolute;right:0;transition:transform 0.3s;cursor:pointer;@apply(--caption-mixin);}#content{position:absolute;transition:transform 0.3s;transform:translate(100%,0%);right:0;text-align:left;@apply(--content-mixin);}.transformZero{transform:translate(0%,0%) !important;}.transformX{transform:translate(100%,0%) !important;}</style>
-    <template>
-        <div id="caption" on-tap="_handleTap" class="noTransition">
-            <slot name="caption"></slot>
-        </div>
-        <div id="content" class="noTransition">
-            <slot name="content"></slot>
-        </div>
-    </template>
-</dom-module>
-
-<dom-module id="ff-tag-cloud" assetpath="bower_components/fact-finder-custom-elements/dist/ff-tag-cloud/">
-    <template>
-        <style>:host{display:block;max-width:600px;}#tagCloudContainer{display:-webkit-box;/* OLD - iOS 6-,Safari 3.1-6 */ display:-moz-box;/* OLD - Firefox 19- (buggy but mostly works) */ display:-ms-flexbox;/* TWEENER - IE 10 */ display:-webkit-flex;/* NEW - Chrome */ display:flex;/* NEW,Spec - Opera 12.1,Firefox 20+ */ justify-content:space-around;flex-wrap:wrap;@apply(--tag-cloud-container)}.tagCloudLink{padding:2px;@apply(--tag-cloud-link);}</style>
-
-       <div id="tagCloudContainer">
-
-       </div>
-    </template>
-</dom-module>
-
-<dom-module id="ff-compare" assetpath="bower_components/fact-finder-custom-elements/dist/ff-compare/">
     <style>:host{display:block;}</style>
     <template>
         <content></content>
@@ -353,13 +326,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </template>
 </dom-module>
 
-<dom-module id="ff-record" assetpath="bower_components/fact-finder-custom-elements/dist/ff-record/">
-    <style>:host{display:inline-block;vertical-align:top;}</style>
-    <template>
-            <content></content>
-    </template>
-</dom-module>
-
 <dom-module id="ff-record-list" assetpath="bower_components/fact-finder-custom-elements/dist/ff-record-list/">
     <style>:host{display:block;}#infiniteBorder{height:1px;width:1px;position:absolute;}</style>
     <template>
@@ -368,18 +334,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 </dom-module>
 <dom-module id="ff-searchbox" assetpath="bower_components/fact-finder-custom-elements/dist/ff-searchbox/"></dom-module>
 <dom-module id="ff-searchbutton" assetpath="bower_components/fact-finder-custom-elements/dist/ff-searchbutton/"></dom-module>
-<dom-module id="ff-carousel" assetpath="bower_components/fact-finder-custom-elements/dist/ff-carousel/">
-    <style>:host{display:block;}.ff-carousel-container{overflow:hidden;@apply(--ff-carousel-container);}.ff-carousel-plane{transition:500ms;transform:translate3d(0px,0px,0px);display:flex;flex-direction:row;flex-wrap:nowrap;justify-content:space-around;@apply(--ff-carousel-plane);}#bullets{text-align:center;@apply(--ff-carousel-bullets);}.ff-carousel-bullet-button{background-color:lightgrey;width:10px;height:10px;margin:0 5px;padding:0;cursor:pointer;outline:none;border-radius:10px;border:none;@apply(--ff-carousel-bullet-button);}.ff-carousel-bullet-button:hover{background-color:grey;@apply(--ff-carousel-bullet-button-hover);}.selected{background-color:grey;@apply(--ff-carousel-bullet-button-selected);}</style>
-    <template>
-        <slot name="buttons"></slot>
-        <div class="ff-carousel-container" id="container">
-            <div class="ff-carousel-plane" id="plane">
-                <slot name="items"></slot>
-            </div>
-        </div>
-        <div id="bullets"></div>
-    </template>
-</dom-module>
 <dom-module id="ff-similar-products" assetpath="bower_components/fact-finder-custom-elements/dist/ff-similar-products/">
     <style>:host{display:block;}</style>
     <template>
@@ -387,16 +341,31 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </template>
 </dom-module>
 
-<dom-module id="ff-single-word-search" assetpath="bower_components/fact-finder-custom-elements/dist/ff-single-word-search/">
-    <style>:host{display:block;}</style>
+<dom-module id="ff-slider" assetpath="bower_components/fact-finder-custom-elements/dist/ff-slider/">
+    <style>:host{height:5px;background-color:#336;margin:5px auto;display:block;opacity:0;transition:opacity 800ms;}.sliderWrapper{min-width:1px;@apply(--slider-wrapper);}.ff_slidebar{@apply(--slidebar-mixin);}</style>
     <template>
-        <content></content>
+        <div id="ffSliderBar" style="position: relative;width: 100%;height: 100%" class="ff_slidebar">
+            
+            <div id="slider1" class="sliderWrapper" style="position: absolute !important;">
+                <content select="[data-slider='1']">
+                </content>
+            </div>
+            <div id="slider2" class="sliderWrapper" style="position: absolute !important;">
+                <content select="[data-slider='2']">
+                </content>
+            </div>
+        </div>
     </template>
 </dom-module>
-<dom-module id="ff-single-word-search-record" assetpath="bower_components/fact-finder-custom-elements/dist/ff-single-word-search-record/">
-    <style>:host{display:block;}</style>
+<dom-module id="ff-slider-control" assetpath="bower_components/fact-finder-custom-elements/dist/ff-slider-control/">
+    <style>:host{display:block;/*width:200px;*/ opacity:0;transition:opacity 800ms;padding:10px 0 10px 0;}#ffSliderSection{margin-top:10px;@apply(--ff-slider-section);}</style>
+
     <template>
-        <content></content>
+        <div id="ffSliderSection">
+            <content data-content-slider="" select="*">
+
+            </content>
+        </div>
     </template>
 </dom-module>
 <dom-module id="ff-sortbox" assetpath="bower_components/fact-finder-custom-elements/dist/ff-sortbox/">
@@ -415,14 +384,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <content></content>
     </template>
 </dom-module>
-<dom-module id="ff-suggest-item" assetpath="bower_components/fact-finder-custom-elements/dist/ff-suggest-item/">
-    <style>:host{display:block;word-wrap:break-word;}:host:hover{text-decoration:underline;}</style>
-
-    <template>
-        <content></content>
-    </template>
-</dom-module>
-
 <dom-module id="ff-suggest" assetpath="bower_components/fact-finder-custom-elements/dist/ff-suggest/">
     <style>:host{display:block;z-index:9999;}.blockLayout{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex;flex-wrap:nowrap;-ms-flex-wrap:nowrap;-webkit-flex-wrap:nowrap;flex-direction:row;-ms-flex-direction:row;-webkit-flex-direction:row;}.listLayout{display:block;}.containerItem:hover{text-decoration:underline;}.listContainerItem:hover{text-decoration:underline;}#ffSuggestContainer{position:relative;z-index:9999;/*padding:10px 10px 3px 10px;*/ background-color:#ffffff;top:0px;left:0px;right:0px;@apply(--suggest-container);}#ffSuggestContainerWrapper{position:absolute;@apply(--suggest-container-wrapper);}.hideffSuggestContainerWrapper{display:none;}#ffSuggestContainer ::content > section.displayNoneImportant{display:none !important;}</style>
 
@@ -436,18 +397,61 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </div>
     </template>
 </dom-module>
-<dom-module id="ff-onfocus-suggest" assetpath="bower_components/fact-finder-custom-elements/dist/ff-onfocus-suggest/">
-    <style>:host{display:block;z-index:9999;}.blockLayout{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex;flex-wrap:nowrap;-ms-flex-wrap:nowrap;-webkit-flex-wrap:nowrap;flex-direction:row;-ms-flex-direction:row;-webkit-flex-direction:row;}#ffSuggestContainer{position:relative;z-index:9999;/*padding:10px 10px 3px 10px;*/ background-color:#ffffff;top:0px;left:0px;right:0px;@apply(--suggest-container);}#ffSuggestContainerWrapper{position:absolute;@apply(--suggest-container-wrapper);}.hideffSuggestContainerWrapper{display:none;}</style>
+<dom-module id="ff-template" assetpath="bower_components/fact-finder-custom-elements/dist/ff-template/"></dom-module>
+<dom-module id="ff-asn-group" assetpath="bower_components/fact-finder-custom-elements/dist/ff-asn-group/">
+    <style>:host{opacity:0;transition:opacity 400ms;outline:none;display:block;min-width:180px;max-width:220px;}:host-context([align="horizontal"]) #wrapper{position:absolute;width:100%;}.ff-asn-group-container{position:relative;@apply(--ff-asn-group-container);}#wrapper{position:relative;transition-duration:350ms;@apply(--all-links-container);}</style>
 
     <template>
-        <div style="position: relative; width: 100%">
-            <div id="ffSuggestContainerWrapper" class="hideffSuggestContainerWrapper">
-                <div id="ffSuggestContainer" class="blockLayout">
-                    <content id="ffContentElement" select="section"></content>
-                </div>
+        
+        <content select="[data-container='groupCaption']">
+
+        </content>
+
+        
+        <div class="ff-asn-group-container">
+            <div opened="" id="wrapper">
+                <content></content>
             </div>
         </div>
     </template>
 </dom-module>
-<dom-module id="ff-template" assetpath="bower_components/fact-finder-custom-elements/dist/ff-template/"></dom-module>
+<dom-module id="ff-asn-group-slider" assetpath="bower_components/fact-finder-custom-elements/dist/ff-asn-group-slider/">
+    <style>:host{opacity:0;transition:opacity 400ms;outline:none;display:block;min-width:180px;max-width:220px;}:host-context([align="horizontal"]) #wrapper{position:absolute;width:100%;}.container{position:relative;}.ff-asn-group-container{@apply(--ff-asn-group-container);}#wrapper{position:relative;transition-duration:400ms;@apply(--all-links-container);}</style>
+
+    <template>
+        
+        <content select="[data-container='groupCaption']">
+        </content>
+
+        
+        <div class="container ff-asn-group-container">
+            <div opened="" id="wrapper">
+                <content></content>
+            </div>
+        </div>
+    </template>
+</dom-module>
+<dom-module id="ff-asn-group-element" assetpath="bower_components/fact-finder-custom-elements/dist/ff-asn-group-element/">
+    <style>:host{display:block;outline:none;}#unselected{display:inline-block;@apply (--unselected-container);}#selected{display:inline-block;@apply (--selected-container);}</style>
+    <template>
+        <div id="selected" style="display: none">
+            <content select="[data-selected]"></content>
+        </div>
+        <div id="unselected">
+            <content select="[data-unselected]"></content>
+        </div>
+    </template>
+</dom-module>
+<dom-module id="ff-asn" assetpath="bower_components/fact-finder-custom-elements/dist/ff-asn/">
+    <style>:host{outline:none;transition:opacity 600ms;display:block;}:host([align="horizontal"]){display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex;}</style>
+
+    <template>
+        <content></content>
+    </template>
+</dom-module>
+
+<dom-module id="ff-checkout-tracking" assetpath="bower_components/fact-finder-custom-elements/dist/ff-checkout-tracking/">
+</dom-module>
+<dom-module id="ff-checkout-tracking-item" assetpath="bower_components/fact-finder-custom-elements/dist/ff-checkout-tracking-item/">
+</dom-module>
 </div></body></html>
