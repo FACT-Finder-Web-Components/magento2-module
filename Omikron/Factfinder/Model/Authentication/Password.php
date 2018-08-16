@@ -13,8 +13,24 @@ class Password extends Value
      */
     public function beforeSave()
     {
-        $this->setValue(md5($this->getValue()));
+        $value = md5($this->getValue());
+
+        if (preg_match('/^[a-f0-9]{32}$/i', $this->getValue())) {
+            $value = $this->getOldValue();
+        }
+
+        $this->setValue($value);
 
         parent::beforeSave();
+    }
+
+    /**
+     * Get & decrypt old value from configuration
+     *
+     * @return string
+     */
+    public function getOldValue()
+    {
+        return parent::getOldValue();
     }
 }
