@@ -21,7 +21,7 @@
 
         <!-- Add asn to sidebar -->
         <referenceContainer name="sidebar.additional">
-            <block class="Omikron\Factfinder\Block\FF\ASN" ifconfig="factfinder/components/ff_asn" template="Omikron_Factfinder::ff/asn.phtml"  before="-" />
+            <block class="Omikron\Factfinder\Block\FF\ASN" name="factfinder.asn" ifconfig="factfinder/components/ff_asn" template="Omikron_Factfinder::ff/asn.phtml"  before="-" />
         </referenceContainer>
 
         <!-- Add remaining web-components -->
