@@ -1,3 +1,30 @@
+1.2.11
+FIX
+fixed navigation tracking when using use-url-params="false"
+
+1.2.10
+ADD
+log information about missing fieldRoles when localizing currencies
+log information about missing configuration
+log information about missing fieldRoles on tracking requests
+
+FIX
+fixed a tracking bug where origPageSize could be calculate wrong
+
+CHG
+data-redirect does now use an imperative event listener to prevent accidental overrides to onclick which could cause tracking request to be aborted before tracking succeeds
+
+Meaningful notes:
+we removed a behavior from the tracking class, where sending a tracking request was setting the global channel for all elements
+
+1.2.9
+ADD
+boolean attribute "disable-auto-expand" in ff-asn-group and ff-asn-group-slider which will prevent asn groups with active filters from expanding automatically
+FIX
+ff-communication currency-min/max-digits functionality restored
+fixed a bug where campaigns were disappearing after changing page or sort
+fixed a bug where currency symbols were not appearing for shopping cart campaign pushed products
+
 1.2.8
 fixed an error related to recommendationClick tracking on product detail pages.
 fixed a rare bug where similar products and recommendations are not displayed on first request
