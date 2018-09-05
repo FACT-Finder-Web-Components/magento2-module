@@ -46,7 +46,7 @@ class Communication extends Template
         $filePath = $this->_moduleDirReader->getModuleDir('etc', 'Omikron_Factfinder') . '/config.xml';
         $defaultValues = $this->_parser->load($filePath)->xmlToArray()['config']['_value']['default']['factfinder'];
 
-        $this->_requiredAttributes = ['url', 'channel', 'sid'];
+        $this->_requiredAttributes = ['url', 'channel', 'sid', 'version'];
 
         $this->_configData = [
             'url' => [
