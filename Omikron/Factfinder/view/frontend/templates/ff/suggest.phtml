@@ -30,16 +30,18 @@
             <p class="containerCaption">Vorgeschlagene Produkte</p>
             <div>
                 <ff-suggest-item type="productName">
-                    <img data-image="{{{suggestions.image}}}">
-                    <div class="product-center">
-                        <div class="product-name">{{{name}}}</div>
-                        <div>Shipping</div>
-                        <div>Rating</div>
-                    </div>
-                    <div class="product-right">
-                        <div class="product-price">{{attributes.Price}}€</div>
-                        <div class="product-availabilitytext">{{attributes.availabilitytext}}</div>
-                    </div>
+                    <a href="{{attributes.deeplink}}" data-redirect="{{attributes.deeplink}}" data-redirect-target="_blank">
+                        <img data-image="{{{suggestions.image}}}">
+                        <div class="product-center">
+                            <div class="product-name">{{{name}}}</div>
+                            <div>Shipping</div>
+                            <div>Rating</div>
+                        </div>
+                        <div class="product-right">
+                            <div class="product-price">{{attributes.Price}}€</div>
+                            <div class="product-availabilitytext">{{attributes.availabilitytext}}</div>
+                        </div>
+                    </a>
                 </ff-suggest-item>
             </div>
         </div>
