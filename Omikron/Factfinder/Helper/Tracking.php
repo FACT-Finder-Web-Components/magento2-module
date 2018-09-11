@@ -72,7 +72,7 @@ class Tracking extends AbstractHelper
             'id' => $this->_product->get($this->_helper->getFieldRole('trackingProductNumber'), $product, $this->_store),
             'masterId' => $this->_product->get($this->_helper->getFieldRole('masterArticleNumber'), $product, $this->_store),
             'price' => $this->_product->get('Price', $product, $this->_store),
-            'count' => $amount,
+            'count' => (int) round($amount),
             'sid' => $this->getSessionId(),
             'channel' => $this->getChannel(),
         ];
