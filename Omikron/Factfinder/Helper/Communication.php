@@ -12,6 +12,10 @@ use Magento\Framework\App\Helper\AbstractHelper;
  */
 class Communication extends AbstractHelper
 {
+    // API DATA
+    const API_NAME = 'Search.ff';
+    const API_QUERY = 'FACT-Finder version';
+
     /** @var \Omikron\Factfinder\Helper\Data */
     protected $_helper;
 
@@ -82,8 +86,8 @@ class Communication extends AbstractHelper
         $result['success'] = true;
         $result['ff_error_response'] = "";
         $result['ff_error_stacktrace'] = "";
-        $result['ff_response_decoded'] = json_decode($this->sendToFF('Search.ff', ['query' =>  $this->_helper->getVersion($store->getId()), 'channel' => $this->_helper->getChannel($store->getId()), 'verbose' => 'true']), true);
-
+        $result['ff_response_decoded'] = json_decode($this->sendToFF(self::API_NAME, ['query' =>  self::API_QUERY, 'channel' => $this->_helper->getChannel($store->getId()), 'verbose' => 'true']), true);
+        
         if (!is_array($result['ff_response_decoded'])) {
             $result['ff_response_decoded'] = [];
             $result['success'] = false;
