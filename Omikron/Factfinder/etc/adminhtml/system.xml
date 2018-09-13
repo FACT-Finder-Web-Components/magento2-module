@@ -26,6 +26,7 @@
                 </field>
                 <field id="password" translate="label" type="password" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Password</label>
+                    <backend_model>Omikron\Factfinder\Model\Authentication\Password</backend_model>
                 </field>
                 <field id="authentication_prefix" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Authentication Prefix</label>
