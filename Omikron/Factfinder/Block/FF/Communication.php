@@ -106,7 +106,7 @@ class Communication extends Template
             ],
             'keep-url-params' => [
                 'value' => $this->_helper->getKeepUrlParams(),
-                'type' => 'boolean',
+                'type' => 'string',
                 'defaultValue' => $defaultValues['advanced']['keep_url_params']
             ],
             'use-asn' => [
