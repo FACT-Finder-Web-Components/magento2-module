@@ -3,7 +3,7 @@
 ?>
 <script type="text/x-magento-init">
     {
-        "#product_addtocart_form": {
+        ".product_addtocart_form": {
             "catalogAddToCart": {
                 "bindSubmit": true
             }
@@ -29,10 +29,10 @@
             <div class="productInfo">
                 <?php if($this->isAddToCartEnabled()): ?>
                     <div class="addCartLink basketIcon">
-                        <form action="<?php echo $this->getAddToCartUrl(); ?>" method="post" id="product_addtocart_form" novalidate="novalidate">
+                        <form action="<?php echo $this->getAddToCartUrl(); ?>" method="post" class="product_addtocart_form" novalidate="novalidate">
                             <input type="hidden" name="product" value="{{record.MagentoEntityId}}">
                             <?php echo $this->getBlockHtml('formkey') ?>
-                            <button data-track type="submit" title="<?php echo __("Add to Cart"); ?>" class="action primary tocart" id="product-addtocart-button">
+                            <button data-track type="submit" title="<?php echo __("Add to Cart"); ?>" class="action primary tocart">
                                 <span><?php echo __("Add to Cart"); ?></span>
                             </button>
                         </form>
