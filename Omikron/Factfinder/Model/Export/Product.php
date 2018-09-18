@@ -46,6 +46,12 @@ class Product extends AbstractModel
     /** @var  \Magento\Store\Model\StoreManagerInterface */
     protected $storeManager;
 
+    /** @var \Magento\Framework\File\Csv */
+    protected $csvWriter;
+
+    /** @var \Magento\Framework\App\Filesystem\DirectoryList */
+    protected $directoryList;
+
     /**
      * Product constructor.
      * @param \Magento\Framework\Model\Context $context
@@ -60,7 +66,9 @@ class Product extends AbstractModel
      * @param \Omikron\Factfinder\Helper\Data $helperData
      * @param \Omikron\Factfinder\Helper\Communication $helperCommunication
      * @param \Omikron\Factfinder\Helper\Product $helperProduct
-     * @param \Magento\Store\Model\StoreManagerInterface $storeManager
+     * @param \Magento\Store\Model\StoreManagerInterface $storeManager,
+     * @param \Magento\Framework\File\Csv $csvWriter
+     * @param \Magento\Framework\App\Filesystem\DirectoryList $directoryList
      * @param array $data
      */
     public function __construct(
@@ -77,6 +85,8 @@ class Product extends AbstractModel
         \Omikron\Factfinder\Helper\Communication $helperCommunication,
         \Omikron\Factfinder\Helper\Product $helperProduct,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
+        \Magento\Framework\File\Csv $csvWriter,
+        \Magento\Framework\App\Filesystem\DirectoryList $directoryList,
         array $data = []
     )
     {
@@ -90,6 +100,8 @@ class Product extends AbstractModel
         $this->helperCommunication = $helperCommunication;
         $this->helperProduct = $helperProduct;
         $this->storeManager = $storeManager;
+        $this->csvWriter = $csvWriter;
+        $this->directoryList = $directoryList;
 
         parent::__construct(
             $context,
@@ -154,32 +166,18 @@ class Product extends AbstractModel
      * Write a line into the product feed
      *
      * @param array $fields
-     * @param string $delimiter
-     * @param string $enclosure
-     * @param bool $encloseAll
      *
-     * @return string
+     * @return array
      */
-    private function writeLine(array &$fields, $delimiter = ';', $enclosure = '"', $encloseAll = true)
+    private function writeLine(array $fields)
     {
-        $delimiter_esc = preg_quote($delimiter, '/');
-        $enclosure_esc = preg_quote($enclosure, '/');
-
         $output = [];
         foreach ($fields as $field) {
-            // Enclose fields containing $delimiter, $enclosure or whitespace
-            if ($encloseAll || preg_match("/(?:${delimiter_esc}|${enclosure_esc}|\s)/", $field)) {
-                $output[] = $enclosure . str_replace($enclosure, $enclosure . $enclosure, $field) . $enclosure;
-            } else {
-                $output[] = $field;
-            }
+            $output[] = $field;
         }
 
-        $lineString = implode($delimiter, $output) . "\n";
-
-        return $lineString;
+        return $output;
     }
-
 
     /**
      * Export all the products for all stores
@@ -246,10 +244,29 @@ class Product extends AbstractModel
     }
 
     /**
+     * Export all products for a specific store
+     * using external url
+     *
+     * @param \Magento\Store\Api\Data\StoreInterface $store
+     *
+     * @return array
+     */
+    public function exportProductWithExternalUrl($store)
+    {
+        $filename = self::FEED_FILE . $this->helperData->getChannel($store->getId()) . '.' . self::FEED_FILE_FILETYPE;
+        $output = $this->buildFeed($store);
+
+        return array(
+            'filename' => $filename,
+            'data' => $output
+        );
+    }
+
+    /**
      * Build the Product feed for a specific store
      *
      * @param \Magento\Store\Api\Data\StoreInterface $store
-     * @return string
+     * @return array
      */
     private function buildFeed($store)
     {
@@ -266,19 +283,17 @@ class Product extends AbstractModel
 
                 if ($addHeaderCols) {
                     $addHeaderCols = false;
-
-                    $headerCols = array_keys($rowData);
-                    $output .= $this->writeLine($headerCols, ';', '"', true);
+                    $output[] = array_keys($rowData);
                 }
 
-                $output .= $this->writeLine($rowData, ';', '"', true);
+                $output[] = $this->writeLine($rowData);
                 $productCount++;
             } else {
                 break;
             }
         }
 
-        return mb_convert_encoding($output, 'UTF-8');
+        return $output;
     }
 
     /**
@@ -290,26 +305,24 @@ class Product extends AbstractModel
      */
     private function writeFeedToFile($filename, &$output)
     {
-
         $result = [];
-        $filePath = self::FEED_PATH . $filename;
 
-        $writer = $this->fileSystem->getDirectoryWrite(DirectoryList::VAR_DIR);
-        $writer->create(self::FEED_PATH);
+        try {
+            $fileDirectoryPath = $this->directoryList->getPath(DirectoryList::VAR_DIR);
 
-        $file = $writer->openFile($filePath, 'wb');
-        if ($writer->isWritable($filePath)) {
-            try {
-                $file->write(pack("CCC", 0xef, 0xbb, 0xbf));
-                $file->write($output);
-            } catch (\Exception $e) {
-                $result['has_errors'] = true;
-                $result['message'] = __('Error: Could not write file. Error thrown in:' . __METHOD__);
+            if(!is_dir($fileDirectoryPath)) {
+                mkdir($fileDirectoryPath, 0777, true);
             }
-        } else {
-            // Show Error Message
+
+            $filePath =  $fileDirectoryPath . '/' . self::FEED_PATH . $filename;
+
+            $this->csvWriter
+                ->setEnclosure('"')
+                ->setDelimiter(';')
+                ->saveData($filePath, $output);
+        } catch (\Exception $e) {
             $result['has_errors'] = true;
-            $result['message'] = __('Target folder for export file is not writable!');
+            $result['message'] = 'Error: Could not write file' . ' - ' . $e->getMessage();
         }
 
         return $result;

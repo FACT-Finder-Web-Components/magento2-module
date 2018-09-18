@@ -249,6 +249,16 @@
                     <comment>If enabled, new export files will be created once daily at 1 a.m. system time.</comment>
                 </field>
             </group>
+            <group id="basic_auth_data_transfer" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Export via Basic Auth</label>
+                <field id="ff_upload_url_user" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Basic Auth User</label>
+                </field>
+                <field id="ff_upload_url_password" translate="label" type="password" sortOrder="30" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Basic Auth Password</label>
+                    <backend_model>Omikron\Factfinder\Model\Authentication\Password</backend_model>
+                </field>
+            </group>
         </section>
     </system>
 </config>
