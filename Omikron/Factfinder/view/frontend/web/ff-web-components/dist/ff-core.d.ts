@@ -493,6 +493,12 @@ declare module scope.communication {
         function subscribe(topic: any, fn: any, ctx?: any): string;
         function unsubscribe(topic: any, key: any): Boolean;
         /**
+         *  Sets "shouldDeferDispatches" to false and calls all deferred subscribers
+         *  (see FFWEB-803 for example reasoning)
+         */
+        function startDispatching(): void;
+        function setShouldDeferDispatches(shouldDefer: any): void;
+        /**
          * When no Topics to dispatch are set, then try to dispatch this as a 'searchResult' to all standard handler...
          * @param response
          * @param event
@@ -520,6 +526,7 @@ declare module scope.communication {
          * Old method name. Still here for downwards compatibility.
          * AP: rename this to 'dispatchSearchResult'
          * @param result
+         * @param event
          */
         function dispatchResult(result: any, event?: any): void;
         /**
