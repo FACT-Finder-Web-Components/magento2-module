@@ -189,6 +189,15 @@ class Communication extends Template
     }
 
     /**
+     * Returns all fields used as tracking id
+     * @return string
+     */
+    public function getFieldRoles()
+    {
+        return $this->_helper->getFieldRoles();
+    }
+
+    /**
      * XML element builder
      *
      * @param string $rootElement - name of rootElement

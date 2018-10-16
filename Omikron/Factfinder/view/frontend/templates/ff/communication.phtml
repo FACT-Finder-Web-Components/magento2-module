@@ -1,3 +1,16 @@
 <?php
 /** @var $this \Omikron\Factfinder\Block\FF\Communication */
 echo $this->getWebComponent();
+?>
+
+<!-- Set FieldRoles -->
+<script>
+    document.addEventListener("ffReady", function () {
+        factfinder.communication.fieldRoles =
+           <?php echo $this->getFieldRoles(); ?>
+        ;
+    });
+</script>
+
+<!-- Import WebComponents -->
+<link rel="import" href="<?php echo $this->getViewFileUrl('Omikron_Factfinder::ff-web-components/dist/elements.build_with_dependencies.html'); ?>" />

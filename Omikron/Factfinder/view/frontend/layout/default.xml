@@ -3,7 +3,6 @@
     <head>
         <link src="Omikron_Factfinder::webcomponentsjs/webcomponents-lite.min.js"/>
         <link src="Omikron_Factfinder::js/search-redirect.js"/>
-        <link rel="import" src="Omikron_Factfinder::ff-web-components/dist/elements.build_with_dependencies.html"/>
         <css src="Omikron_Factfinder::css/ff/searchbox.css"/>
         <css src="Omikron_Factfinder::css/ff/suggest.css"/>
     </head>
