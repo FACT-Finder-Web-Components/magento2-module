@@ -29,14 +29,19 @@ class Communication extends Template
      * Communication constructor.
      *
      * @param Template\Context $context
-     * @param array $data
      * @param Data $helper
      * @param Reader $moduleDirReader
      * @param Parser $parser
      * @param Tracking $tracking
+     * @param array $data
      */
-    public function __construct(Template\Context $context, $data = [], Data $helper, Reader $moduleDirReader, Parser $parser, Tracking $tracking)
-    {
+    public function __construct(
+        Template\Context $context,
+        Data $helper,
+        Reader $moduleDirReader,
+        Parser $parser,
+        Tracking $tracking, $data = []
+    ) {
         parent::__construct($context, $data);
         $this->_helper = $helper;
 

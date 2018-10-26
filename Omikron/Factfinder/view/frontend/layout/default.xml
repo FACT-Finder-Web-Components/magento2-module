@@ -8,7 +8,7 @@
     </head>
 
     <referenceContainer name="header.panel">
-        <block ifconfig="factfinder/general/is_enabled" class="Omikron\Factfinder\Block\FF\Communication" name="factfinder.communication" template="Omikron_Factfinder::ff/communication.phtml" cacheable="false" />
+        <block ifconfig="factfinder/general/is_enabled" class="Omikron\Factfinder\Block\FF\Communication" name="factfinder.communication" template="Omikron_Factfinder::ff/communication.phtml"/>
     </referenceContainer>
 
     <!-- init BlockClassManager -->
