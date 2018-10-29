@@ -21,7 +21,15 @@
             }
 
             new Ajax.Request('<?php echo $this->getUrl('factfinder/testconnection/testconnection') ?>', {
-                parameters:     {},
+                method: 'post',
+                parameters: {
+                    serverUrl: document.getElementById('factfinder_general_address').value,
+                    channel:  document.getElementById('factfinder_general_channel').value,
+                    username: document.getElementById('factfinder_general_username').value,
+                    password: document.getElementById('factfinder_general_password').value,
+                    authenticationPrefix: document.getElementById('factfinder_general_authentication_prefix').value,
+                    authenticationPostfix: document.getElementById('factfinder_general_authentication_postfix').value
+                },
                 loaderArea:     false,
                 asynchronous:   true,
 
