@@ -12,6 +12,7 @@ use Magento\Framework\App\Helper\AbstractHelper;
 class Data extends AbstractHelper
 {
     const FRONT_NAME = "FACT-Finder";
+    const EXPORT_PAGE = 'export';
     const CUSTOM_RESULT_PAGE = "result";
     const SESSION_ID_LENGTH = 30;
 
@@ -27,6 +28,10 @@ class Data extends AbstractHelper
     const PATH_AUTH_POSTFIX = 'factfinder/general/authentication_postfix';
     const PATH_ADVANCED_VERSION = 'factfinder/advanced/version';
     const PATH_DATATRANSFER_IMPORT = 'factfinder/data_transfer/ff_cron_import';
+
+    // Data Transfer
+    const PATH_FF_UPLOAD_URL_USER = 'factfinder/basic_auth_data_transfer/ff_upload_url_user';
+    const PATH_FF_UPLOAD_URL_PASSWORD = 'factfinder/basic_auth_data_transfer/ff_upload_url_password';
 
     /** @var \Magento\Config\Model\ResourceModel\Config */
     protected $_resourceConfig;
@@ -443,5 +448,25 @@ class Data extends AbstractHelper
         }
 
         return $sessionId;
+    }
+
+    /**
+     * Returns the upload username for external url
+     *
+     * @return string
+     */
+    public function getUploadUrlUser()
+    {
+        return $this->scopeConfig->getValue(self::PATH_FF_UPLOAD_URL_USER, 'store');
+    }
+
+    /**
+     * Returns the upload password for external url
+     *
+     * @return string
+     */
+    public function getUploadUrlPassword()
+    {
+        return $this->scopeConfig->getValue(self::PATH_FF_UPLOAD_URL_PASSWORD, 'store');
     }
 }

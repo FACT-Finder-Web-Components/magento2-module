@@ -53,6 +53,8 @@ class Router implements \Magento\Framework\App\RouterInterface
 
         if ($path == Data::CUSTOM_RESULT_PAGE) {
             $request->setModuleName('factfinder')->setControllerName('result')->setActionName('index');
+        } else if ($path == Data::EXPORT_PAGE) {
+            $request->setModuleName('factfinder')->setControllerName('export')->setActionName('export');
         } else {
             $request->setModuleName('factfinder')->setControllerName('proxy')->setActionName('call');
         }
