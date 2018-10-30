@@ -18,7 +18,7 @@
     <type name="Magento\Customer\CustomerData\SectionPoolInterface">
         <arguments>
             <argument name="sectionSourceMap" xsi:type="array">
-                <item name="ffcommunication" xsi:type="string">Omikron\Factfinder\CustomerData\FF\Comumnication</item>
+                <item name="ffcommunication" xsi:type="string">Omikron\Factfinder\CustomerData\FF\Communication</item>
             </argument>
         </arguments>
     </type>

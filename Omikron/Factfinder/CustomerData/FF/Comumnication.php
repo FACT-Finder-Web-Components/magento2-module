@@ -7,9 +7,9 @@ use Omikron\Factfinder\Helper\Data as FactfinderHelper;
 use Omikron\Factfinder\Helper\Tracking;
 
 /**
- * Class Comumnication
+ * Class Communication
  */
-class Comumnication implements SectionSourceInterface
+class Communication implements SectionSourceInterface
 {
     /**
      * @var Tracking
