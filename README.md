@@ -28,7 +28,25 @@ This document helps you integrate the FACT-Finder Web Components SDK into your M
 
 ## Installing the Module from a compressed Archive
 
-If you have received the FACT-Finder Module as a compressed archive, decompress it to the app/code folder of your Magento 2 Installation. The file path must be app/code/Omikron/Factfinder. You can now integrate the module into your shop. Proceed to the next step: “Activating the Module”. 
+If you have received the FACT-Finder Module as a compressed archive, decompress it to the app/code folder of your Magento 2 Installation. The file path must be app/code/Omikron/Factfinder. You can now integrate the module into your shop. Proceed to the next step: “Activating the Module”.
+
+## Installation by Composer
+In order to allow Composer to install module, please add following line to your project composer.json on ```repositores``` segment:
+```
+    "repositories": [
+          {
+              "type": "git",
+              "url": "https://github.com/FACT-Finder-Web-Components/magento2-module.git"
+          }
+    ]
+```
+Then, add a module declaration in ```require``` segment:
+```
+  "require": {
+        "omikron/magento2-factfinder": "VERSION YOU WANT TO INSTALL"
+    },
+```
+
 
 
 
