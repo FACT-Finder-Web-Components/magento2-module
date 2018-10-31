@@ -3,13 +3,12 @@
     <head>
         <link src="Omikron_Factfinder::webcomponentsjs/webcomponents-lite.min.js"/>
         <link src="Omikron_Factfinder::js/search-redirect.js"/>
-        <link rel="import" src="Omikron_Factfinder::ff-web-components/dist/elements.build_with_dependencies.html"/>
         <css src="Omikron_Factfinder::css/ff/searchbox.css"/>
         <css src="Omikron_Factfinder::css/ff/suggest.css"/>
     </head>
 
     <referenceContainer name="header.panel">
-        <block ifconfig="factfinder/general/is_enabled" class="Omikron\Factfinder\Block\FF\Communication" name="factfinder.communication" template="Omikron_Factfinder::ff/communication.phtml" cacheable="false" />
+        <block ifconfig="factfinder/general/is_enabled" class="Omikron\Factfinder\Block\FF\Communication" name="factfinder.communication" template="Omikron_Factfinder::ff/communication.phtml"/>
     </referenceContainer>
 
     <!-- init BlockClassManager -->

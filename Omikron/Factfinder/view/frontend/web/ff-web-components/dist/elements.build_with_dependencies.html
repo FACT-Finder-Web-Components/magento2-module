@@ -70,7 +70,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 </dom-module>
 <dom-module id="ff-nav-element" assetpath="bower_components/fact-finder-custom-elements/dist/ff-header-navigation/">
     <template>
-        {{element.name}}
+        <a href="[[element.__TARGET_URL__.url]]">{{element.name}}</a>
     </template>
     </dom-module>
 
@@ -82,7 +82,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <div id="header">
                 <div class="nav-item-seperator"></div>
                 <template is="dom-repeat" items="{{elements}}" as="header">
-                    <ff-nav-element element="{{header}}" class="nav-item" on-mouseover="onHovered">
+                    <ff-nav-element element="{{header}}" class="nav-item" on-mouseenter="onHovered">
                     </ff-nav-element>
                     <div class="nav-item-seperator"></div>
                 </template>

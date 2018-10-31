@@ -1,3 +1,25 @@
+# 1.2.12
+## BREAKING
+- new `<a>` elements in `ff-header-navigation` are likely to break styling
+- the `navigation` event emitted by `factfinder.communication.ResultDispatcher` now passes an array of navigation elements grouped by `clusterLevel` instead of a flat array of the first level of elements
+
+## ADD
+- `ff-header-navigation` now renders `<a>` elements to allow right-click navigation. `href`'s are customizable. Also see breaking changes!
+- log warning about improperly used Boolean properties
+- `ff-campaign-redirect` now has a Boolean attribute `relative-to-origin` to optionally enable FACT-Finder redirect campaigns to be configured with relative destination urls
+
+## FIX
+- the `count` parameter in tracking requests now always defaults to 1 when not provided explicitly
+- `ff-campaign-redirect` now immediately redirects preventing rendering of content
+- do never provide master ID instead of tracking ID in recommendation click tracking
+- fix `ff-onfocus-suggest` component, which wasn't shown due to an internal error
+- `ff-campaign-shopping-cart` now respects comma separated values
+
+## CHANGE
+- navigation elements passed by the `navigation` event emitted by `factfinder.communication.ResultDispatcher` now have a `__SUB_ELEMENTS__` property containing all immediate child elements
+- `ff-communication` registers with the `WebComponentsReady` event to call `factfinder.communication.ResultDispatcher.startDispatching()`. This is necessary due to a change in ff-core which now prevents search responses from going unnoticed by Web Components that are initialized too late. `ff-similar-products` and `ff-recommendation` combatted this behaviour by sending an extra request, which they no longer do
+- `ff-communication` search-immediate does now invoke the search much earlier than before. Dispatching occurs on `WebComponentsReady` event.
+
 1.2.11
 FIX
 fixed navigation tracking when using use-url-params="false"

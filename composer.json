@@ -1,0 +1,21 @@
+{
+    "name": "omikron/magento2-factfinder",
+    "description": "FACTFinder Webcomponents SDK",
+    "require": {
+        "php": "^5.5 || ^7.0",
+        "magento/magento-composer-installer": "*"
+    },
+    "suggest": {
+    },
+    "type": "magento2-module",
+    "license": [
+    ],
+    "autoload": {
+        "files": [
+            "./registration.php"
+        ],
+        "psr-4": {
+            "Omikron\\Factfinder\\": "Omikron/Factfinder"
+        }
+    }
+}

@@ -1,3 +1,23 @@
 <?php
-/** @var $this \Omikron\Factfinder\Block\FF\Communication */
-echo $this->getWebComponent();
+/** @var \Omikron\Factfinder\Block\FF\Communication $block */
+?>
+<div data-bind="scope: 'ffcommunication'">
+    <script type="text/x-magento-init">
+            {
+                "*": {
+                    "Magento_Ui/js/core/app": {
+                        "components": {
+                            "ffcommunication": {
+                                "component": "Omikron_Factfinder/js/view/ffcommunication",
+                                 "config": {
+                                    "fieldRoles": <?= /* @escapeNotVerified */ $block->getFieldRoles() ?>
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+    </script>
+</div>
+<!-- Import WebComponents -->
+<link rel="import" href="<?php echo $this->getViewFileUrl('Omikron_Factfinder::ff-web-components/dist/elements.build_with_dependencies.html'); ?>"/>
