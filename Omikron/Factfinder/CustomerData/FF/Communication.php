@@ -2,7 +2,7 @@
 namespace Omikron\Factfinder\CustomerData\FF;
 
 use Magento\Customer\CustomerData\SectionSourceInterface;
-use Omikron\Factfinder\Block\FF\Communication;
+use Omikron\Factfinder\Block\FF\Communication as CommunicationBlock;
 use Omikron\Factfinder\Helper\Data as FactfinderHelper;
 use Omikron\Factfinder\Helper\Tracking;
 
@@ -22,7 +22,7 @@ class Communication implements SectionSourceInterface
     protected $factfinderHelper;
 
     /**
-     * @var Communication
+     * @var CommunicationBlock
      */
     protected $communicationBlock;
 
@@ -30,12 +30,12 @@ class Communication implements SectionSourceInterface
      * Comunication constructor.
      * @param FactfinderHelper $factfinderHelper
      * @param Tracking $tracking
-     * @param Communication $communicationBlock
+     * @param CommunicationBlock $communicationBlock
      */
     public function __construct(
         FactfinderHelper $factfinderHelper,
         Tracking $tracking,
-        Communication $communicationBlock
+        CommunicationBlock $communicationBlock
     )
     {
         $this->factfinderHelper = $factfinderHelper;
