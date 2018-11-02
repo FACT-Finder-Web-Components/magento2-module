@@ -291,7 +291,9 @@ class Product extends AbstractHelper
      */
     private function getManufacturer($product, $store)
     {
-        return $product->getData($this->scopeConfig->getValue(self::PATH_DATA_TRANSFER_MANUFACTURER, 'store', $store->getId()));
+        $attr = $this->eavConfig->getAttribute('catalog_product', 'manufacturer');
+        $optionId = $product->getData($this->scopeConfig->getValue(self::PATH_DATA_TRANSFER_MANUFACTURER, 'store', $store->getId()));
+        return \html_entity_decode($attr->getSource()->getOptionText($optionId));
     }
 
     /**
