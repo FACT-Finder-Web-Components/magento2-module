@@ -3,7 +3,10 @@
 namespace Omikron\Factfinder\Helper;
 
 use Magento\Catalog\Model\Category;
+use Magento\ConfigurableProduct\Model\Product\Type\Configurable;
 use Magento\Framework\App\Helper\AbstractHelper;
+use Magento\Framework\Exception\NoSuchEntityException;
+
 
 /**
  * Class Product
@@ -134,12 +137,23 @@ class Product extends AbstractHelper
      */
     private function getMasterProductNumber($product)
     {
-        if ($parentId = $this->getProductParentIdByProductId($product->getId())) {
-            $parentProduct = $this->productRepository->getById($parentId);
-            return $parentProduct->getSku();
+        $masterProductNumber = null;
+        if ($product->getTypeId() == Configurable::TYPE_CODE) {
+            /**
+             * It's unnecessary to check parent product of configurable product
+             */
+            $masterProductNumber = $product->getSku();
         } else {
-            return $product->getSku();
+            $parentId = $this->getProductParentIdByProductId($product->getId());
+            try {
+                $parentProduct = $this->productRepository->getById($parentId);
+                $masterProductNumber = $parentProduct->getSku();
+            } catch (NoSuchEntityException $e) {
+                $masterProductNumber = $product->getSku();
+            }
         }
+
+        return $masterProductNumber;
     }
 
     /**
