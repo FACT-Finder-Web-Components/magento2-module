@@ -233,6 +233,11 @@
                     <source_model>Omikron\Factfinder\Model\Source\Attribute</source_model>
                     <comment>Select all attributes which should be exported to the product feed.</comment>
                 </field>
+                <field id="ff_product_visibility" translate="label comment" type="multiselect" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Select Product Visibility</label>
+                    <comment>Visibility attribute values used in filtering product collection.</comment>
+                    <source_model>Magento\Catalog\Model\Product\Visibility</source_model>
+                </field>
                 <field id="ff_createfeed" translate="label comment" type="button" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Generate Export File</label>
                     <frontend_model>Omikron\Factfinder\Block\Adminhtml\System\Config\Button\Feed</frontend_model>
