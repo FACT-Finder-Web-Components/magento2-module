@@ -105,7 +105,7 @@ class Product extends AbstractHelper
      * @param \Magento\Catalog\Model\Product $product
      * @return mixed
      */
-    private function getProductNumber($product)
+    protected function getProductNumber($product)
     {
         return $product->getData('sku');
     }
@@ -116,7 +116,7 @@ class Product extends AbstractHelper
      * @param integer $id
      * @return false|integer
      */
-    private function getProductParentIdByProductId($id)
+    protected function getProductParentIdByProductId($id)
     {
         $parentByChild = $this->catalogProductTypeConfigurable->getParentIdsByChild($id);
         $parentId = false;
@@ -132,7 +132,7 @@ class Product extends AbstractHelper
      * @param \Magento\Catalog\Model\Product $product
      * @return mixed
      */
-    private function getMasterProductNumber($product)
+    protected function getMasterProductNumber($product)
     {
         if ($parentId = $this->getProductParentIdByProductId($product->getId())) {
             $parentProduct = $this->productRepository->getById($parentId);
@@ -148,7 +148,7 @@ class Product extends AbstractHelper
      * @param \Magento\Catalog\Model\Product $product
      * @return mixed
      */
-    private function getName($product)
+    protected function getName($product)
     {
         return $product->getData('name');
     }
@@ -159,7 +159,7 @@ class Product extends AbstractHelper
      * @param \Magento\Catalog\Model\Product $product
      * @return string
      */
-    private function getDescription($product)
+    protected function getDescription($product)
     {
         return $this->cleanValue($product->getData('description'));
     }
@@ -170,7 +170,7 @@ class Product extends AbstractHelper
      * @param \Magento\Catalog\Model\Product $product
      * @return string
      */
-    private function getShort($product)
+    protected function getShort($product)
     {
         return $this->cleanValue($product->getData('short_description'));
     }
@@ -181,7 +181,7 @@ class Product extends AbstractHelper
      * @param \Magento\Catalog\Model\Product $product
      * @return mixed
      */
-    private function getProductUrl($product)
+    protected function getProductUrl($product)
     {
         return $product->getUrlInStore();
     }
@@ -192,7 +192,7 @@ class Product extends AbstractHelper
      * @param \Magento\Catalog\Model\ResourceModel\Product $product
      * @return string
      */
-    private function getImageUrl($product, $store)
+    protected function getImageUrl($product, $store)
     {
 
         $imageId = 'product_thumbnail_image';
@@ -214,7 +214,7 @@ class Product extends AbstractHelper
      * @param \Magento\Catalog\Model\Product $product
      * @return string
      */
-    private function getPrice($product)
+    protected function getPrice($product)
     {
         return number_format(round(floatval($product->getData('price')), 2), 2);
     }
@@ -225,7 +225,7 @@ class Product extends AbstractHelper
      * @param $product
      * @return string
      */
-    private function getCategoryPath($product)
+    protected function getCategoryPath($product)
     {
         $categoryIds = $product->getCategoryIds();
         $path = [];
@@ -250,7 +250,7 @@ class Product extends AbstractHelper
      * @param \Magento\Catalog\Api\Data\CategoryInterface $category
      * @return string
      */
-    private function getCategoryPathByCategory($category) {
+    protected function getCategoryPathByCategory($category) {
         if (in_array($category->getParentId(), [Category::ROOT_CATEGORY_ID, Category::TREE_ROOT_ID])) {
             return '';
         }
@@ -266,7 +266,7 @@ class Product extends AbstractHelper
      * @param \Magento\Catalog\Model\Product $product
      * @return int
      */
-    private function getAvailability($product)
+    protected function getAvailability($product)
     {
         return (int)$product->isAvailable();
     }
@@ -277,7 +277,7 @@ class Product extends AbstractHelper
      * @param \Magento\Catalog\Model\Product $product
      * @return int
      */
-    private function getMagentoEntityId($product)
+    protected function getMagentoEntityId($product)
     {
         return $product->getId();
     }
@@ -289,7 +289,7 @@ class Product extends AbstractHelper
      * @param \Magento\Store\Api\Data\StoreInterface $store
      * @return mixed
      */
-    private function getManufacturer($product, $store)
+    protected function getManufacturer($product, $store)
     {
         return $product->getData($this->scopeConfig->getValue(self::PATH_DATA_TRANSFER_MANUFACTURER, 'store', $store->getId()));
     }
@@ -301,7 +301,7 @@ class Product extends AbstractHelper
      * @param \Magento\Store\Api\Data\StoreInterface $store
      * @return mixed
      */
-    private function getEAN($product, $store)
+    protected function getEAN($product, $store)
     {
         return $product->getData($this->scopeConfig->getValue(self::PATH_DATA_TRANSFER_EAN, 'store', $store->getId()));
     }
@@ -313,7 +313,7 @@ class Product extends AbstractHelper
      * @param \Magento\Store\Api\Data\StoreInterface $store
      * @return mixed
      */
-    private function getAdditionalAttributes($store)
+    protected function getAdditionalAttributes($store)
     {
         return $this->scopeConfig->getValue(self::PATH_DATA_TRANSFER_ADDITIONAL_ATTRIBUTES, 'store', $store->getId());
     }
@@ -325,7 +325,7 @@ class Product extends AbstractHelper
      * @param \Magento\Store\Api\Data\StoreInterface $store
      * @return string
      */
-    private function getAttributes($product, $store)
+    protected function getAttributes($product, $store)
     {
         $data = [];
         $attributesString = '';
@@ -385,7 +385,7 @@ class Product extends AbstractHelper
      *
      * @return string
      */
-    private function cleanValue($value, $isMultiAttributeValue = false)
+    protected function cleanValue($value, $isMultiAttributeValue = false)
     {
         $value = strip_tags(nl2br($value));
         $value = preg_replace("/\r|\n/", "", $value);

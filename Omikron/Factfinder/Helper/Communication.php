@@ -80,7 +80,7 @@ class Communication extends AbstractHelper
      * @param \Magento\Store\Api\Data\StoreInterface $store
      * @return array
      */
-    private function checkConnection($store)
+    protected function checkConnection($store)
     {
         $result = [];
         $result['success'] = true;
