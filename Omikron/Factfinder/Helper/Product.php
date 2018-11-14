@@ -4,11 +4,18 @@ namespace Omikron\Factfinder\Helper;
 
 use Magento\Catalog\Api\Data\ProductInterface;
 use Magento\Catalog\Model\Category;
+use Magento\Catalog\Api\ProductRepositoryInterface;
+use Magento\Catalog\Api\CategoryRepositoryInterface;
+use Magento\ConfigurableProduct\Model\ResourceModel\Product\Type\Configurable as ConfigurableResource;
 use Magento\ConfigurableProduct\Model\Product\Type\Configurable;
 use Magento\Framework\App\Helper\AbstractHelper;
+use Magento\Catalog\Helper\ImageFactory;
+use Magento\Framework\App\Helper\Context;
 use Magento\Framework\Exception\LocalizedException;
+use Magento\Eav\Model\Config as EavConfig;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Store\Api\Data\StoreInterface;
+use Omikron\Factfinder\Helper\Product\PriceProvider;
 
 /**
  * Class Product
@@ -26,37 +33,43 @@ class Product extends AbstractHelper
     const PATH_DATA_TRANSFER_ATTRIBUTES_SEPARATE_COLUMNS    = 'factfinder/data_transfer/ff_additional_attributes_separate_columns';
     const PATH_DATA_TRANSFER_PRODUCT_VISIBILITY             = 'factfinder/data_transfer/ff_product_visibility';
 
-    /** @var \Magento\Catalog\Helper\ImageFactory */
+    /** @var ImageFactory */
     protected $imageHelperFactory;
 
-    /** @var \Magento\Eav\Model\Config */
+    /** @var EavConfig  */
     protected $eavConfig;
 
-    /** @var \Magento\Catalog\Model\ProductRepository */
+    /** @var ProductRepositoryInterface */
     protected $productRepository;
 
-    /** @var \Magento\ConfigurableProduct\Model\ResourceModel\Product\Type\Configurable */
+    /** @var ConfigurableResource */
     protected $catalogProductTypeConfigurable;
 
-    /** @var \Magento\Catalog\Api\CategoryRepositoryInterface */
+    /** @var CategoryRepositoryInterface */
     protected $categoryRepository;
+
+    /** @var PriceProvider */
+    protected $priceProvider;
 
     /**
      * Product constructor.
-     * @param \Magento\Framework\App\Helper\Context $context
-     * @param \Magento\Catalog\Helper\ImageFactory $imageHelperFactory
-     * @param \Magento\Eav\Model\Config $eavConfig
-     * @param \Magento\Catalog\Model\ProductRepository $productRepository
-     * @param \Magento\ConfigurableProduct\Model\ResourceModel\Product\Type\Configurable $catalogProductTypeConfigurable
-     * @param \Magento\Catalog\Api\CategoryRepositoryInterface $categoryRepository
+     *
+     * @param Context                     $context
+     * @param ImageFactory                $imageHelperFactory
+     * @param EavConfig                   $eavConfig
+     * @param ProductRepositoryInterface  $productRepository
+     * @param ConfigurableResource        $catalogProductTypeConfigurable
+     * @param CategoryRepositoryInterface $categoryRepository
+     * @param PriceProvider               $priceProvider
      */
     public function __construct(
-        \Magento\Framework\App\Helper\Context $context,
-        \Magento\Catalog\Helper\ImageFactory $imageHelperFactory,
-        \Magento\Eav\Model\Config $eavConfig,
-        \Magento\Catalog\Model\ProductRepository $productRepository,
-        \Magento\ConfigurableProduct\Model\ResourceModel\Product\Type\Configurable $catalogProductTypeConfigurable,
-        \Magento\Catalog\Api\CategoryRepositoryInterface $categoryRepository
+        Context $context,
+        ImageFactory $imageHelperFactory,
+        EavConfig $eavConfig,
+        ProductRepositoryInterface $productRepository,
+        ConfigurableResource $catalogProductTypeConfigurable,
+        CategoryRepositoryInterface $categoryRepository,
+        PriceProvider $priceProvider
     )
     {
         parent::__construct($context);
@@ -65,6 +78,7 @@ class Product extends AbstractHelper
         $this->productRepository = $productRepository;
         $this->catalogProductTypeConfigurable = $catalogProductTypeConfigurable;
         $this->categoryRepository = $categoryRepository;
+        $this->priceProvider = $priceProvider;
     }
 
     /**
@@ -112,6 +126,18 @@ class Product extends AbstractHelper
     public function getProductVisibility($store)
     {
         return explode(',', $this->scopeConfig->getValue(self::PATH_DATA_TRANSFER_PRODUCT_VISIBILITY, 'store', $store->getId()));
+    }
+
+    /**
+     * Return selected customer groups for price export
+     *
+     * @param \Magento\Store\Api\Data\StoreInterface $store $store
+     *
+     * @return array
+     */
+    public function getCustomerGroupsForPriceExport($store)
+    {
+        return explode(',', $this->scopeConfig->getValue(self::PATH_DATA_TRANSFER_PRODUCT_CUSTOMER_GROUP, 'store', $store->getId()));
     }
 
     /**
@@ -236,11 +262,18 @@ class Product extends AbstractHelper
      * Get the product price
      *
      * @param \Magento\Catalog\Model\Product $product
-     * @return string
+     * @param \Magento\Store\Api\Data\StoreInterface $store
+     * @return array
      */
-    protected function getPrice($product)
+    protected function getPrice($product, $store)
     {
-        return number_format(round(floatval($product->getFinalPrice()), 2), 2);
+        $customerGroups = $this->getCustomerGroupsForPriceExport($store);
+        $prices = $this->priceProvider->collectPricesForProduct($product, $customerGroups);
+        if (count($prices) == 1) {
+            return reset($prices);
+        }
+
+        return self::ATTRIBUTE_DELIMITER . http_build_query($prices,null,self::ATTRIBUTE_DELIMITER) . self::ATTRIBUTE_DELIMITER;
     }
 
     /**

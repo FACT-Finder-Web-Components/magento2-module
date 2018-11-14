@@ -56,6 +56,7 @@
                 <ff_push_import_type>suggest</ff_push_import_type>
                 <ff_product_visibility>3,4</ff_product_visibility>
                 <ff_additional_attributes_separate_columns>0</ff_additional_attributes_separate_columns>
+                <ff_price_customer_group>0</ff_price_customer_group>
             </data_transfer>
             <basic_auth_data_transfer>
                 <ff_upload_url_password backend_model="Magento\Config\Model\Config\Backend\Encrypted" />

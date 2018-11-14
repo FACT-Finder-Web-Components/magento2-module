@@ -1,3 +1,6 @@
+# [Unreleased]
+# ADD
+-  Added possibility to export prices for specific customer groups. If multiple groups are selected, prices are exported in a multi attribute format like |0=109.99|1=99.99|2=95.99| where 0,1,2 are the identifiers of selected customer groups
 # v0.9-beta.10
 ## ADD
 - Added possibility to enable FACT-Finder server responses logging
