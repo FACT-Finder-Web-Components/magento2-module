@@ -14,7 +14,7 @@ class Product extends AbstractModel
     const FEED_PATH = 'factfinder/';
     const FEED_FILE = 'export.';
     const FEED_FILE_FILETYPE = 'csv';
-    const PRODUCT_LIMIT = 50000;
+    const BATCH_SIZE = 3000;
 
     /** @var \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory */
     protected $productCollectionFactory;
@@ -116,15 +116,15 @@ class Product extends AbstractModel
      * Get all products for a specific store
      *
      * @param \Magento\Store\Api\Data\StoreInterface $store
+     * @param int $currentOffset
      * @return \Magento\Catalog\Model\ResourceModel\Product\Collection
      */
-    private function getProducts($store)
+    private function getProductsBatch($store, $currentOffset)
     {
-        $collection = $this->productCollectionFactory->create();
+        $collection = $this->getFilteredProductCollection($store);
         $collection->addAttributeToSelect('*');
-        $collection->addFieldToFilter('visibility', ['neq' => \Magento\Catalog\Model\Product\Visibility::VISIBILITY_NOT_VISIBLE]);
-        $collection->setStore($store);
-        
+        $collection->getSelect()->limit(self::BATCH_SIZE, $currentOffset);
+
         return $collection;
     }
 
@@ -263,6 +263,22 @@ class Product extends AbstractModel
     }
 
     /**
+     * @param StoreInterface $store
+     * @return Collection
+     */
+    private function getFilteredProductCollection($store)
+    {
+        /** @var Collection $collection */
+        return $this->productCollectionFactory
+            ->create()
+            ->clear()
+            ->addWebsiteFilter($store->getWebsiteId())
+            ->setStore($store)
+            ->addAttributeToFilter('visibility', ['neq' => \Magento\Catalog\Model\Product\Visibility::VISIBILITY_NOT_VISIBLE])
+            ->addAttributeToFilter('status', Status::STATUS_ENABLED);
+    }
+
+    /**
      * Build the Product feed for a specific store
      *
      * @param \Magento\Store\Api\Data\StoreInterface $store
@@ -270,27 +286,27 @@ class Product extends AbstractModel
      */
     private function buildFeed($store)
     {
-        $output = '';
+        $output        = [];
         $addHeaderCols = true;
-        $productCount = 0;
+        $productCount  = $this->getFilteredProductCollection($store)->getSize();
+        $currentOffset = 0;
 
-        /** @var \Magento\Catalog\Model\Product $product */
-        $products = $this->getProducts($store);
+        while ($currentOffset < $productCount) {
+            $products = $this->getProductsBatch($store, $currentOffset);
 
-        foreach ($products as $product) {
-            if ($productCount < self::PRODUCT_LIMIT) {
+            /** @var \Magento\Catalog\Model\Product $product */
+            foreach ($products as $product) {
                 $rowData = $this->buildFeedRow($product, $store);
 
                 if ($addHeaderCols) {
                     $addHeaderCols = false;
-                    $output[] = array_keys($rowData);
+                    $output[]      = array_keys($rowData);
                 }
 
                 $output[] = $this->writeLine($rowData);
-                $productCount++;
-            } else {
-                break;
             }
+
+            $currentOffset += $products->count();
         }
 
         return $output;
