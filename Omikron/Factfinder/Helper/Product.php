@@ -216,7 +216,7 @@ class Product extends AbstractHelper
      */
     private function getPrice($product)
     {
-        return number_format(round(floatval($product->getData('price')), 2), 2);
+        return number_format(round(floatval($product->getFinalPrice()), 2), 2);
     }
 
     /**
