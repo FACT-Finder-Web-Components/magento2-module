@@ -274,7 +274,7 @@ class Product extends AbstractModel
             ->clear()
             ->addWebsiteFilter($store->getWebsiteId())
             ->setStore($store)
-            ->addAttributeToFilter('visibility', ['neq' => \Magento\Catalog\Model\Product\Visibility::VISIBILITY_NOT_VISIBLE])
+            ->addFieldToFilter('visibility', ['in' => $this->helperProduct->getProductVisibility($store)])
             ->addAttributeToFilter('status', Status::STATUS_ENABLED);
     }
 

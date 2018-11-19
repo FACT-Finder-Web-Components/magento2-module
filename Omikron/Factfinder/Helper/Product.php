@@ -5,6 +5,7 @@ namespace Omikron\Factfinder\Helper;
 use Magento\Catalog\Model\Category;
 use Magento\ConfigurableProduct\Model\Product\Type\Configurable;
 use Magento\Framework\App\Helper\AbstractHelper;
+use Magento\Store\Api\Data\StoreInterface;
 use Magento\Framework\Exception\NoSuchEntityException;
 
 
@@ -15,12 +16,13 @@ use Magento\Framework\Exception\NoSuchEntityException;
  */
 class Product extends AbstractHelper
 {
-    const ATTRIBUTE_LIMIT = 1000;
+    const ATTRIBUTE_LIMIT     = 1000;
     const ATTRIBUTE_DELIMITER = '|';
 
-    const PATH_DATA_TRANSFER_MANUFACTURER = "factfinder/data_transfer/ff_manufacturer";
-    const PATH_DATA_TRANSFER_EAN = "factfinder/data_transfer/ff_ean";
+    const PATH_DATA_TRANSFER_MANUFACTURER          = "factfinder/data_transfer/ff_manufacturer";
+    const PATH_DATA_TRANSFER_EAN                   = "factfinder/data_transfer/ff_ean";
     const PATH_DATA_TRANSFER_ADDITIONAL_ATTRIBUTES = "factfinder/data_transfer/ff_additional_attributes";
+    const PATH_DATA_TRANSFER_PRODUCT_VISIBILITY    = "factfinder/data_transfer/ff_product_visibility";
 
     /** @var \Magento\Catalog\Helper\Image */
     protected $imageHelperFactory;
@@ -100,6 +102,16 @@ class Product extends AbstractHelper
             default:
                 return null;
         }
+    }
+
+    /**
+     * @param StoreInterface $store
+     *
+     * @return reutrn array
+     */
+    public function getProductVisibility($store)
+    {
+        return explode(',', $this->scopeConfig->getValue(self::PATH_DATA_TRANSFER_PRODUCT_VISIBILITY, 'store', $store->getId()));
     }
 
     /**
