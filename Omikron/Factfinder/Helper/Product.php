@@ -3,7 +3,11 @@
 namespace Omikron\Factfinder\Helper;
 
 use Magento\Catalog\Model\Category;
+use Magento\ConfigurableProduct\Model\Product\Type\Configurable;
 use Magento\Framework\App\Helper\AbstractHelper;
+use Magento\Store\Api\Data\StoreInterface;
+use Magento\Framework\Exception\NoSuchEntityException;
+
 
 /**
  * Class Product
@@ -12,12 +16,13 @@ use Magento\Framework\App\Helper\AbstractHelper;
  */
 class Product extends AbstractHelper
 {
-    const ATTRIBUTE_LIMIT = 1000;
+    const ATTRIBUTE_LIMIT     = 1000;
     const ATTRIBUTE_DELIMITER = '|';
 
-    const PATH_DATA_TRANSFER_MANUFACTURER = "factfinder/data_transfer/ff_manufacturer";
-    const PATH_DATA_TRANSFER_EAN = "factfinder/data_transfer/ff_ean";
+    const PATH_DATA_TRANSFER_MANUFACTURER          = "factfinder/data_transfer/ff_manufacturer";
+    const PATH_DATA_TRANSFER_EAN                   = "factfinder/data_transfer/ff_ean";
     const PATH_DATA_TRANSFER_ADDITIONAL_ATTRIBUTES = "factfinder/data_transfer/ff_additional_attributes";
+    const PATH_DATA_TRANSFER_PRODUCT_VISIBILITY    = "factfinder/data_transfer/ff_product_visibility";
 
     /** @var \Magento\Catalog\Helper\Image */
     protected $imageHelperFactory;
@@ -100,6 +105,16 @@ class Product extends AbstractHelper
     }
 
     /**
+     * @param StoreInterface $store
+     *
+     * @return reutrn array
+     */
+    public function getProductVisibility($store)
+    {
+        return explode(',', $this->scopeConfig->getValue(self::PATH_DATA_TRANSFER_PRODUCT_VISIBILITY, 'store', $store->getId()));
+    }
+
+    /**
      * Get the product number
      *
      * @param \Magento\Catalog\Model\Product $product
@@ -134,12 +149,23 @@ class Product extends AbstractHelper
      */
     protected function getMasterProductNumber($product)
     {
-        if ($parentId = $this->getProductParentIdByProductId($product->getId())) {
-            $parentProduct = $this->productRepository->getById($parentId);
-            return $parentProduct->getSku();
+        $masterProductNumber = null;
+        if ($product->getTypeId() == Configurable::TYPE_CODE) {
+            /**
+             * It's unnecessary to check parent product of configurable product
+             */
+            $masterProductNumber = $product->getSku();
         } else {
-            return $product->getSku();
+            $parentId = $this->getProductParentIdByProductId($product->getId());
+            try {
+                $parentProduct = $this->productRepository->getById($parentId);
+                $masterProductNumber = $parentProduct->getSku();
+            } catch (NoSuchEntityException $e) {
+                $masterProductNumber = $product->getSku();
+            }
         }
+
+        return $masterProductNumber;
     }
 
     /**
