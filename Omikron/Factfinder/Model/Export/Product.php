@@ -296,6 +296,7 @@ class Product extends AbstractModel
 
             /** @var \Magento\Catalog\Model\Product $product */
             foreach ($products as $product) {
+                $product->setStoreId($store->getId());
                 $rowData = $this->buildFeedRow($product, $store);
 
                 if ($addHeaderCols) {
