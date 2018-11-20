@@ -119,7 +119,7 @@ class Product extends AbstractModel
      * @param int $currentOffset
      * @return \Magento\Catalog\Model\ResourceModel\Product\Collection
      */
-    private function getProductsBatch($store, $currentOffset)
+    protected function getProductsBatch($store, $currentOffset)
     {
         $collection = $this->getFilteredProductCollection($store);
         $collection->addAttributeToSelect('*');
@@ -136,7 +136,7 @@ class Product extends AbstractModel
      *
      * @return array
      */
-    private function buildFeedRow($product, $store)
+    protected function buildFeedRow($product, $store)
     {
         $row = [];
         $attributes = [
@@ -169,7 +169,7 @@ class Product extends AbstractModel
      *
      * @return array
      */
-    private function writeLine(array $fields)
+    protected function writeLine(array $fields)
     {
         $output = [];
         foreach ($fields as $field) {
@@ -284,7 +284,7 @@ class Product extends AbstractModel
      * @param \Magento\Store\Api\Data\StoreInterface $store
      * @return array
      */
-    private function buildFeed($store)
+    protected function buildFeed($store)
     {
         $output        = [];
         $addHeaderCols = true;
@@ -319,7 +319,7 @@ class Product extends AbstractModel
      * @param string $output
      * @return array
      */
-    private function writeFeedToFile($filename, &$output)
+    protected function writeFeedToFile($filename, &$output)
     {
         $result = [];
 
@@ -350,7 +350,7 @@ class Product extends AbstractModel
      * @param $filename
      * @return bool
      */
-    private function deleteFeedFile($filename)
+    protected function deleteFeedFile($filename)
     {
 
         $filePath = self::FEED_PATH . $filename;
@@ -367,7 +367,7 @@ class Product extends AbstractModel
      * @param string $filename
      * @return array
      */
-    private function uploadFeed($filename)
+    protected function uploadFeed($filename)
     {
         $result = [];
 

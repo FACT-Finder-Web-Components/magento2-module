@@ -375,7 +375,7 @@ class Data extends AbstractHelper
      * Returns the FACT-Finder password
      * @return mixed
      */
-    private function getPassword()
+    protected function getPassword()
     {
         return $this->scopeConfig->getValue(self::PATH_PASSWORD, 'store');
     }
@@ -384,7 +384,7 @@ class Data extends AbstractHelper
      * Returns the authentication prefix
      * @return mixed
      */
-    private function getAuthenticationPrefix()
+    protected function getAuthenticationPrefix()
     {
         return $this->scopeConfig->getValue(self::PATH_AUTH_PREFIX, 'store');
     }
@@ -393,7 +393,7 @@ class Data extends AbstractHelper
      * Returns the authentication postfix
      * @return mixed
      */
-    private function getAuthenticationPostfix()
+    protected function getAuthenticationPostfix()
     {
         return $this->scopeConfig->getValue(self::PATH_AUTH_POSTFIX, 'store');
     }

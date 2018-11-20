@@ -44,7 +44,7 @@ class Upload extends AbstractHelper
      * @param $key
      * @return mixed
      */
-    private function getConfig($key)
+    protected function getConfig($key)
     {
         return $this->scopeConfig->getValue(self::CONFIG_PATH . $key, 'store');
     }

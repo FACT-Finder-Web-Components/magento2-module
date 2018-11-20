@@ -63,7 +63,7 @@ class Export extends \Magento\Framework\App\Action\Action
     /**
      * Generate downloadable CSV file
      */
-    private function generateCsvFile()
+    protected function generateCsvFile()
     {
         $data = $this->_productModel->exportProductWithExternalUrl($this->_storeManager->getStore());
 
