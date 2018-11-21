@@ -52,6 +52,9 @@ class Product extends AbstractModel
     /** @var \Magento\Framework\App\Filesystem\DirectoryList */
     protected $directoryList;
 
+    /** @var  \Magento\Store\Model\App\Emulation */
+    protected $appEmulation;
+
     /**
      * Product constructor.
      * @param \Magento\Framework\Model\Context $context
@@ -66,9 +69,10 @@ class Product extends AbstractModel
      * @param \Omikron\Factfinder\Helper\Data $helperData
      * @param \Omikron\Factfinder\Helper\Communication $helperCommunication
      * @param \Omikron\Factfinder\Helper\Product $helperProduct
-     * @param \Magento\Store\Model\StoreManagerInterface $storeManager,
+     * @param \Magento\Store\Model\StoreManagerInterface $storeManager
      * @param \Magento\Framework\File\Csv $csvWriter
      * @param \Magento\Framework\App\Filesystem\DirectoryList $directoryList
+     * @param \Magento\Store\Model\App\Emulation $appEmulation
      * @param array $data
      */
     public function __construct(
@@ -87,6 +91,7 @@ class Product extends AbstractModel
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \Magento\Framework\File\Csv $csvWriter,
         \Magento\Framework\App\Filesystem\DirectoryList $directoryList,
+        \Magento\Store\Model\App\Emulation $appEmulation,
         array $data = []
     )
     {
@@ -102,6 +107,7 @@ class Product extends AbstractModel
         $this->storeManager = $storeManager;
         $this->csvWriter = $csvWriter;
         $this->directoryList = $directoryList;
+        $this->appEmulation = $appEmulation;
 
         parent::__construct(
             $context,
@@ -286,6 +292,8 @@ class Product extends AbstractModel
      */
     protected function buildFeed($store)
     {
+        $this->appEmulation->startEnvironmentEmulation($store->getId(), \Magento\Framework\App\Area::AREA_FRONTEND, true);
+
         $output        = [];
         $addHeaderCols = true;
         $productCount  = $this->getFilteredProductCollection($store)->getSize();
@@ -296,7 +304,6 @@ class Product extends AbstractModel
 
             /** @var \Magento\Catalog\Model\Product $product */
             foreach ($products as $product) {
-                $product->setStoreId($store->getId());
                 $rowData = $this->buildFeedRow($product, $store);
 
                 if ($addHeaderCols) {
@@ -309,6 +316,8 @@ class Product extends AbstractModel
 
             $currentOffset += $products->count();
         }
+
+        $this->appEmulation->stopEnvironmentEmulation();
 
         return $output;
     }

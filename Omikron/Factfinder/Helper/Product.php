@@ -50,7 +50,7 @@ class Product extends AbstractHelper
      */
     public function __construct(
         \Magento\Framework\App\Helper\Context $context,
-        \Magento\Catalog\Helper\Image $imageHelperFactory,
+        \Magento\Catalog\Helper\ImageFactory $imageHelperFactory,
         \Magento\Eav\Model\Config $eavConfig,
         \Magento\Catalog\Model\ProductRepository $productRepository,
         \Magento\ConfigurableProduct\Model\ResourceModel\Product\Type\Configurable $catalogProductTypeConfigurable,
@@ -220,10 +220,9 @@ class Product extends AbstractHelper
      */
     protected function getImageUrl($product, $store)
     {
-
         $imageId = 'product_thumbnail_image';
         /**@var \Magento\Catalog\Helper\Image $image */
-        $image = $this->imageHelperFactory->init($product, $imageId, ['type' => 'thumbnail'])
+        $image = $this->imageHelperFactory->create()->init($product, $imageId, ['type' => 'thumbnail'])
             ->constrainOnly(true)
             ->keepAspectRatio(true)
             ->keepTransparency(true)
@@ -231,7 +230,6 @@ class Product extends AbstractHelper
             ->resize(200, 200);
 
         return $image->getUrl();
-
     }
 
     /**
