@@ -1,14 +1,6 @@
 <?php
-/** @var $this \Omikron\Factfinder\Block\FF\Communication */
-echo $this->getWebComponent(); ?>
-<!-- Set FieldRoles -->
-<script>
-    document.addEventListener("ffReady", function () {
-        factfinder.communication.fieldRoles =
-        <?php echo $this->getFieldRoles(); ?>
-        ;
-    });
-</script>
+/** @var \Omikron\Factfinder\Block\FF\Communication $block */
+?>
 <div data-bind="scope: 'ffcommunication'">
     <script type="text/x-magento-init">
             {
@@ -16,7 +8,10 @@ echo $this->getWebComponent(); ?>
                     "Magento_Ui/js/core/app": {
                         "components": {
                             "ffcommunication": {
-                                "component": "Omikron_Factfinder/js/view/ffcommunication"
+                                "component": "Omikron_Factfinder/js/view/ffcommunication",
+                                 "config": {
+                                    "fieldRoles": <?= /* @escapeNotVerified */ $block->getFieldRoles() ?>
+                                }
                             }
                         }
                     }
