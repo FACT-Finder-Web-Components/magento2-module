@@ -18,4 +18,4 @@
 - `ff-communication` component is now download by Magento Customer Sections mechanism, which allowed to turn FPC on
 
 ##ADD
-- Export feed file is now available via separate link
+- Feed Export: Export feed file is now available via separate link

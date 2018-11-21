@@ -2,8 +2,11 @@
 
 namespace Omikron\Factfinder\Model\Export;
 
+use Magento\Catalog\Model\Product\Attribute\Source\Status;
+use Magento\Catalog\Model\ResourceModel\Product\Collection;
 use Magento\Framework\Model\AbstractModel;
 use Magento\Framework\App\Filesystem\DirectoryList;
+use Magento\Store\Api\Data\StoreInterface;
 
 /**
  * Class Product
