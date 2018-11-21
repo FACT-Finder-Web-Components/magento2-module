@@ -9,15 +9,22 @@ define([
         /** @inheritdoc */
         initialize: function () {
             this._super();
-            customerData.reload(['ffcommunication']).done(function (result) {
-                let uid = result.ffcommunication.attributes.uid,
-                    sid = result.ffcommunication.attributes.sid;
+            let getRoles = this.getFieldRoles.bind(this);
 
-                $('ff-communication').attr('sid', sid);
-                if (uid !== null) {
-                    $('ff-communication').attr('uid', uid);
-                }
+            customerData.reload(['ffcommunication']).done(function (result) {
+                $('body').prepend(result.ffcommunication.component);
             });
+
+            document.addEventListener("ffReady", function () {
+                factfinder.communication.fieldRoles = getRoles();
+            });
+        },
+
+        /**
+         * @return JSON
+         */
+        getFieldRoles: function () {
+            return this.fieldRoles;
         },
     });
 });
