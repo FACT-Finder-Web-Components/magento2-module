@@ -24,9 +24,9 @@
                     <label>Username</label>
                     <validate>required-entry</validate>
                 </field>
-                <field id="password" translate="label" type="password" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="password" translate="label" type="obscure" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Password</label>
-                    <backend_model>Omikron\Factfinder\Model\Authentication\Password</backend_model>
+                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
                 </field>
                 <field id="authentication_prefix" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Authentication Prefix</label>
@@ -233,6 +233,11 @@
                     <source_model>Omikron\Factfinder\Model\Source\Attribute</source_model>
                     <comment>Select all attributes which should be exported to the product feed.</comment>
                 </field>
+                <field id="ff_product_visibility" translate="label comment" type="multiselect" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Select Product Visibility</label>
+                    <comment>Visibility attribute values used in filtering product collection.</comment>
+                    <source_model>Magento\Catalog\Model\Product\Visibility</source_model>
+                </field>
                 <field id="ff_createfeed" translate="label comment" type="button" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Generate Export File</label>
                     <frontend_model>Omikron\Factfinder\Block\Adminhtml\System\Config\Button\Feed</frontend_model>
@@ -254,9 +259,9 @@
                 <field id="ff_upload_url_user" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Basic Auth User</label>
                 </field>
-                <field id="ff_upload_url_password" translate="label" type="password" sortOrder="30" showInDefault="1" showInWebsite="0" showInStore="0">
+                <field id="ff_upload_url_password" translate="label" type="obscure" sortOrder="30" showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Basic Auth Password</label>
-                    <backend_model>Omikron\Factfinder\Model\Authentication\Password</backend_model>
+                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
                 </field>
             </group>
         </section>

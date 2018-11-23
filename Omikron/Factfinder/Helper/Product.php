@@ -3,7 +3,11 @@
 namespace Omikron\Factfinder\Helper;
 
 use Magento\Catalog\Model\Category;
+use Magento\ConfigurableProduct\Model\Product\Type\Configurable;
 use Magento\Framework\App\Helper\AbstractHelper;
+use Magento\Store\Api\Data\StoreInterface;
+use Magento\Framework\Exception\NoSuchEntityException;
+
 
 /**
  * Class Product
@@ -12,12 +16,13 @@ use Magento\Framework\App\Helper\AbstractHelper;
  */
 class Product extends AbstractHelper
 {
-    const ATTRIBUTE_LIMIT = 1000;
+    const ATTRIBUTE_LIMIT     = 1000;
     const ATTRIBUTE_DELIMITER = '|';
 
-    const PATH_DATA_TRANSFER_MANUFACTURER = "factfinder/data_transfer/ff_manufacturer";
-    const PATH_DATA_TRANSFER_EAN = "factfinder/data_transfer/ff_ean";
+    const PATH_DATA_TRANSFER_MANUFACTURER          = "factfinder/data_transfer/ff_manufacturer";
+    const PATH_DATA_TRANSFER_EAN                   = "factfinder/data_transfer/ff_ean";
     const PATH_DATA_TRANSFER_ADDITIONAL_ATTRIBUTES = "factfinder/data_transfer/ff_additional_attributes";
+    const PATH_DATA_TRANSFER_PRODUCT_VISIBILITY    = "factfinder/data_transfer/ff_product_visibility";
 
     /** @var \Magento\Catalog\Helper\Image */
     protected $imageHelperFactory;
@@ -45,7 +50,7 @@ class Product extends AbstractHelper
      */
     public function __construct(
         \Magento\Framework\App\Helper\Context $context,
-        \Magento\Catalog\Helper\Image $imageHelperFactory,
+        \Magento\Catalog\Helper\ImageFactory $imageHelperFactory,
         \Magento\Eav\Model\Config $eavConfig,
         \Magento\Catalog\Model\ProductRepository $productRepository,
         \Magento\ConfigurableProduct\Model\ResourceModel\Product\Type\Configurable $catalogProductTypeConfigurable,
@@ -100,12 +105,22 @@ class Product extends AbstractHelper
     }
 
     /**
+     * @param StoreInterface $store
+     *
+     * @return reutrn array
+     */
+    public function getProductVisibility($store)
+    {
+        return explode(',', $this->scopeConfig->getValue(self::PATH_DATA_TRANSFER_PRODUCT_VISIBILITY, 'store', $store->getId()));
+    }
+
+    /**
      * Get the product number
      *
      * @param \Magento\Catalog\Model\Product $product
      * @return mixed
      */
-    private function getProductNumber($product)
+    protected function getProductNumber($product)
     {
         return $product->getData('sku');
     }
@@ -116,7 +131,7 @@ class Product extends AbstractHelper
      * @param integer $id
      * @return false|integer
      */
-    private function getProductParentIdByProductId($id)
+    protected function getProductParentIdByProductId($id)
     {
         $parentByChild = $this->catalogProductTypeConfigurable->getParentIdsByChild($id);
         $parentId = false;
@@ -132,14 +147,25 @@ class Product extends AbstractHelper
      * @param \Magento\Catalog\Model\Product $product
      * @return mixed
      */
-    private function getMasterProductNumber($product)
+    protected function getMasterProductNumber($product)
     {
-        if ($parentId = $this->getProductParentIdByProductId($product->getId())) {
-            $parentProduct = $this->productRepository->getById($parentId);
-            return $parentProduct->getSku();
+        $masterProductNumber = null;
+        if ($product->getTypeId() == Configurable::TYPE_CODE) {
+            /**
+             * It's unnecessary to check parent product of configurable product
+             */
+            $masterProductNumber = $product->getSku();
         } else {
-            return $product->getSku();
+            $parentId = $this->getProductParentIdByProductId($product->getId());
+            try {
+                $parentProduct = $this->productRepository->getById($parentId);
+                $masterProductNumber = $parentProduct->getSku();
+            } catch (NoSuchEntityException $e) {
+                $masterProductNumber = $product->getSku();
+            }
         }
+
+        return $masterProductNumber;
     }
 
     /**
@@ -148,7 +174,7 @@ class Product extends AbstractHelper
      * @param \Magento\Catalog\Model\Product $product
      * @return mixed
      */
-    private function getName($product)
+    protected function getName($product)
     {
         return $product->getData('name');
     }
@@ -159,7 +185,7 @@ class Product extends AbstractHelper
      * @param \Magento\Catalog\Model\Product $product
      * @return string
      */
-    private function getDescription($product)
+    protected function getDescription($product)
     {
         return $this->cleanValue($product->getData('description'));
     }
@@ -170,7 +196,7 @@ class Product extends AbstractHelper
      * @param \Magento\Catalog\Model\Product $product
      * @return string
      */
-    private function getShort($product)
+    protected function getShort($product)
     {
         return $this->cleanValue($product->getData('short_description'));
     }
@@ -181,7 +207,7 @@ class Product extends AbstractHelper
      * @param \Magento\Catalog\Model\Product $product
      * @return mixed
      */
-    private function getProductUrl($product)
+    protected function getProductUrl($product)
     {
         return $product->getUrlInStore();
     }
@@ -192,12 +218,11 @@ class Product extends AbstractHelper
      * @param \Magento\Catalog\Model\ResourceModel\Product $product
      * @return string
      */
-    private function getImageUrl($product, $store)
+    protected function getImageUrl($product, $store)
     {
-
         $imageId = 'product_thumbnail_image';
         /**@var \Magento\Catalog\Helper\Image $image */
-        $image = $this->imageHelperFactory->init($product, $imageId, ['type' => 'thumbnail'])
+        $image = $this->imageHelperFactory->create()->init($product, $imageId, ['type' => 'thumbnail'])
             ->constrainOnly(true)
             ->keepAspectRatio(true)
             ->keepTransparency(true)
@@ -205,7 +230,6 @@ class Product extends AbstractHelper
             ->resize(200, 200);
 
         return $image->getUrl();
-
     }
 
     /**
@@ -214,9 +238,9 @@ class Product extends AbstractHelper
      * @param \Magento\Catalog\Model\Product $product
      * @return string
      */
-    private function getPrice($product)
+    protected function getPrice($product)
     {
-        return number_format(round(floatval($product->getData('price')), 2), 2);
+        return number_format(round(floatval($product->getFinalPrice()), 2), 2);
     }
 
     /**
@@ -225,7 +249,7 @@ class Product extends AbstractHelper
      * @param $product
      * @return string
      */
-    private function getCategoryPath($product)
+    protected function getCategoryPath($product)
     {
         $categoryIds = $product->getCategoryIds();
         $path = [];
@@ -250,7 +274,7 @@ class Product extends AbstractHelper
      * @param \Magento\Catalog\Api\Data\CategoryInterface $category
      * @return string
      */
-    private function getCategoryPathByCategory($category) {
+    protected function getCategoryPathByCategory($category) {
         if (in_array($category->getParentId(), [Category::ROOT_CATEGORY_ID, Category::TREE_ROOT_ID])) {
             return '';
         }
@@ -266,7 +290,7 @@ class Product extends AbstractHelper
      * @param \Magento\Catalog\Model\Product $product
      * @return int
      */
-    private function getAvailability($product)
+    protected function getAvailability($product)
     {
         return (int)$product->isAvailable();
     }
@@ -277,7 +301,7 @@ class Product extends AbstractHelper
      * @param \Magento\Catalog\Model\Product $product
      * @return int
      */
-    private function getMagentoEntityId($product)
+    protected function getMagentoEntityId($product)
     {
         return $product->getId();
     }
@@ -289,7 +313,7 @@ class Product extends AbstractHelper
      * @param \Magento\Store\Api\Data\StoreInterface $store
      * @return mixed
      */
-    private function getManufacturer($product, $store)
+    protected function getManufacturer($product, $store)
     {
         return $product->getData($this->scopeConfig->getValue(self::PATH_DATA_TRANSFER_MANUFACTURER, 'store', $store->getId()));
     }
@@ -301,7 +325,7 @@ class Product extends AbstractHelper
      * @param \Magento\Store\Api\Data\StoreInterface $store
      * @return mixed
      */
-    private function getEAN($product, $store)
+    protected function getEAN($product, $store)
     {
         return $product->getData($this->scopeConfig->getValue(self::PATH_DATA_TRANSFER_EAN, 'store', $store->getId()));
     }
@@ -313,7 +337,7 @@ class Product extends AbstractHelper
      * @param \Magento\Store\Api\Data\StoreInterface $store
      * @return mixed
      */
-    private function getAdditionalAttributes($store)
+    protected function getAdditionalAttributes($store)
     {
         return $this->scopeConfig->getValue(self::PATH_DATA_TRANSFER_ADDITIONAL_ATTRIBUTES, 'store', $store->getId());
     }
@@ -325,7 +349,7 @@ class Product extends AbstractHelper
      * @param \Magento\Store\Api\Data\StoreInterface $store
      * @return string
      */
-    private function getAttributes($product, $store)
+    protected function getAttributes($product, $store)
     {
         $data = [];
         $attributesString = '';
@@ -385,7 +409,7 @@ class Product extends AbstractHelper
      *
      * @return string
      */
-    private function cleanValue($value, $isMultiAttributeValue = false)
+    protected function cleanValue($value, $isMultiAttributeValue = false)
     {
         $value = strip_tags(nl2br($value));
         $value = preg_replace("/\r|\n/", "", $value);

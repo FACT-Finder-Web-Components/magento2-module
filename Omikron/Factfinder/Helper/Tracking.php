@@ -123,7 +123,7 @@ class Tracking extends AbstractHelper
         }
 
         // concatenate get parameters of ordered articles
-        $params .= implode("&", $paramsCollection);
+        $params .= '&' .implode("&", $paramsCollection);
 
         // track checkout event
         $this->_communication->sendToFF(self::API_NAME, $params);

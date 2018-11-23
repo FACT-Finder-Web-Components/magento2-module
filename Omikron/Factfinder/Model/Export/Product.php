@@ -2,8 +2,11 @@
 
 namespace Omikron\Factfinder\Model\Export;
 
+use Magento\Catalog\Model\Product\Attribute\Source\Status;
+use Magento\Catalog\Model\ResourceModel\Product\Collection;
 use Magento\Framework\Model\AbstractModel;
 use Magento\Framework\App\Filesystem\DirectoryList;
+use Magento\Store\Api\Data\StoreInterface;
 
 /**
  * Class Product
@@ -14,7 +17,7 @@ class Product extends AbstractModel
     const FEED_PATH = 'factfinder/';
     const FEED_FILE = 'export.';
     const FEED_FILE_FILETYPE = 'csv';
-    const PRODUCT_LIMIT = 50000;
+    const BATCH_SIZE = 3000;
 
     /** @var \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory */
     protected $productCollectionFactory;
@@ -52,6 +55,9 @@ class Product extends AbstractModel
     /** @var \Magento\Framework\App\Filesystem\DirectoryList */
     protected $directoryList;
 
+    /** @var  \Magento\Store\Model\App\Emulation */
+    protected $appEmulation;
+
     /**
      * Product constructor.
      * @param \Magento\Framework\Model\Context $context
@@ -66,9 +72,10 @@ class Product extends AbstractModel
      * @param \Omikron\Factfinder\Helper\Data $helperData
      * @param \Omikron\Factfinder\Helper\Communication $helperCommunication
      * @param \Omikron\Factfinder\Helper\Product $helperProduct
-     * @param \Magento\Store\Model\StoreManagerInterface $storeManager,
+     * @param \Magento\Store\Model\StoreManagerInterface $storeManager
      * @param \Magento\Framework\File\Csv $csvWriter
      * @param \Magento\Framework\App\Filesystem\DirectoryList $directoryList
+     * @param \Magento\Store\Model\App\Emulation $appEmulation
      * @param array $data
      */
     public function __construct(
@@ -87,6 +94,7 @@ class Product extends AbstractModel
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \Magento\Framework\File\Csv $csvWriter,
         \Magento\Framework\App\Filesystem\DirectoryList $directoryList,
+        \Magento\Store\Model\App\Emulation $appEmulation,
         array $data = []
     )
     {
@@ -102,6 +110,7 @@ class Product extends AbstractModel
         $this->storeManager = $storeManager;
         $this->csvWriter = $csvWriter;
         $this->directoryList = $directoryList;
+        $this->appEmulation = $appEmulation;
 
         parent::__construct(
             $context,
@@ -116,15 +125,15 @@ class Product extends AbstractModel
      * Get all products for a specific store
      *
      * @param \Magento\Store\Api\Data\StoreInterface $store
+     * @param int $currentOffset
      * @return \Magento\Catalog\Model\ResourceModel\Product\Collection
      */
-    private function getProducts($store)
+    protected function getProductsBatch($store, $currentOffset)
     {
-        $collection = $this->productCollectionFactory->create();
+        $collection = $this->getFilteredProductCollection($store);
         $collection->addAttributeToSelect('*');
-        $collection->addFieldToFilter('visibility', ['neq' => \Magento\Catalog\Model\Product\Visibility::VISIBILITY_NOT_VISIBLE]);
-        $collection->setStore($store);
-        
+        $collection->getSelect()->limit(self::BATCH_SIZE, $currentOffset);
+
         return $collection;
     }
 
@@ -136,7 +145,7 @@ class Product extends AbstractModel
      *
      * @return array
      */
-    private function buildFeedRow($product, $store)
+    protected function buildFeedRow($product, $store)
     {
         $row = [];
         $attributes = [
@@ -169,7 +178,7 @@ class Product extends AbstractModel
      *
      * @return array
      */
-    private function writeLine(array $fields)
+    protected function writeLine(array $fields)
     {
         $output = [];
         foreach ($fields as $field) {
@@ -263,35 +272,55 @@ class Product extends AbstractModel
     }
 
     /**
+     * @param StoreInterface $store
+     * @return Collection
+     */
+    private function getFilteredProductCollection($store)
+    {
+        /** @var Collection $collection */
+        return $this->productCollectionFactory
+            ->create()
+            ->clear()
+            ->addWebsiteFilter($store->getWebsiteId())
+            ->setStore($store)
+            ->addFieldToFilter('visibility', ['in' => $this->helperProduct->getProductVisibility($store)])
+            ->addAttributeToFilter('status', Status::STATUS_ENABLED);
+    }
+
+    /**
      * Build the Product feed for a specific store
      *
      * @param \Magento\Store\Api\Data\StoreInterface $store
      * @return array
      */
-    private function buildFeed($store)
+    protected function buildFeed($store)
     {
-        $output = '';
+        $this->appEmulation->startEnvironmentEmulation($store->getId(), \Magento\Framework\App\Area::AREA_FRONTEND, true);
+
+        $output        = [];
         $addHeaderCols = true;
-        $productCount = 0;
+        $productCount  = $this->getFilteredProductCollection($store)->getSize();
+        $currentOffset = 0;
 
-        /** @var \Magento\Catalog\Model\Product $product */
-        $products = $this->getProducts($store);
+        while ($currentOffset < $productCount) {
+            $products = $this->getProductsBatch($store, $currentOffset);
 
-        foreach ($products as $product) {
-            if ($productCount < self::PRODUCT_LIMIT) {
+            /** @var \Magento\Catalog\Model\Product $product */
+            foreach ($products as $product) {
                 $rowData = $this->buildFeedRow($product, $store);
 
                 if ($addHeaderCols) {
                     $addHeaderCols = false;
-                    $output[] = array_keys($rowData);
+                    $output[]      = array_keys($rowData);
                 }
 
                 $output[] = $this->writeLine($rowData);
-                $productCount++;
-            } else {
-                break;
             }
+
+            $currentOffset += $products->count();
         }
+
+        $this->appEmulation->stopEnvironmentEmulation();
 
         return $output;
     }
@@ -303,7 +332,7 @@ class Product extends AbstractModel
      * @param string $output
      * @return array
      */
-    private function writeFeedToFile($filename, &$output)
+    protected function writeFeedToFile($filename, &$output)
     {
         $result = [];
 
@@ -334,7 +363,7 @@ class Product extends AbstractModel
      * @param $filename
      * @return bool
      */
-    private function deleteFeedFile($filename)
+    protected function deleteFeedFile($filename)
     {
 
         $filePath = self::FEED_PATH . $filename;
@@ -351,7 +380,7 @@ class Product extends AbstractModel
      * @param string $filename
      * @return array
      */
-    private function uploadFeed($filename)
+    protected function uploadFeed($filename)
     {
         $result = [];
 

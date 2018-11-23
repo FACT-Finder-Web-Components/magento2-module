@@ -3,6 +3,8 @@
 namespace Omikron\Factfinder\Helper;
 
 use Magento\Framework\App\Helper\AbstractHelper;
+use Magento\Framework\Registry;
+use Magento\Framework\Encryption\EncryptorInterface;
 
 /**
  * Class Data
@@ -37,17 +39,33 @@ class Data extends AbstractHelper
     protected $_resourceConfig;
 
     /**
+     * @var Registry
+     */
+    protected $registry;
+
+    /**
+     * @var EncryptorInterface
+     */
+    protected $encryptor;
+
+    /**
      * Data constructor.
      * @param \Magento\Framework\App\Helper\Context $context
      * @param \Magento\Config\Model\ResourceModel\Config $resourceConfig
+     * @param Registry $registry
+     * @param EncryptorInterface $encryptor
      */
     public function __construct(
         \Magento\Framework\App\Helper\Context $context,
-        \Magento\Config\Model\ResourceModel\Config $resourceConfig
+        \Magento\Config\Model\ResourceModel\Config $resourceConfig,
+        Registry $registry,
+        EncryptorInterface $encryptor
     )
     {
         parent::__construct($context);
         $this->_resourceConfig = $resourceConfig;
+        $this->registry = $registry;
+        $this->encryptor = $encryptor;
     }
 
     /**
@@ -75,7 +93,8 @@ class Data extends AbstractHelper
      */
     public function getAddress()
     {
-        $url = $this->scopeConfig->getValue(self::PATH_ADDRESS, 'store');
+        $registeredAuthData = $this->getRegisteredAuthParams();
+        $url = $registeredAuthData['serverUrl'] ? $registeredAuthData['serverUrl'] : $this->scopeConfig->getValue(self::PATH_ADDRESS, 'store');
 
         if (substr(rtrim($url), -1) != "/") {
             $url .= "/";
@@ -91,7 +110,9 @@ class Data extends AbstractHelper
      */
     public function getChannel($scopeCode = null)
     {
-        return $this->scopeConfig->getValue(self::PATH_CHANNEL, 'store', $scopeCode);
+        $registeredAuthData = $this->getRegisteredAuthParams();
+
+        return $registeredAuthData['channel'] ? $registeredAuthData['channel'] : $this->scopeConfig->getValue(self::PATH_CHANNEL, 'store', $scopeCode);
     }
 
     /**
@@ -134,7 +155,9 @@ class Data extends AbstractHelper
      */
     public function getUsername()
     {
-        return $this->scopeConfig->getValue(self::PATH_USERNAME, 'store');
+        $registeredAuthData = $this->getRegisteredAuthParams();
+
+        return  $registeredAuthData['username'] ? $registeredAuthData['username'] : $this->scopeConfig->getValue(self::PATH_USERNAME, 'store');
     }
 
     /**
@@ -375,27 +398,33 @@ class Data extends AbstractHelper
      * Returns the FACT-Finder password
      * @return mixed
      */
-    private function getPassword()
+    protected function getPassword()
     {
-        return $this->scopeConfig->getValue(self::PATH_PASSWORD, 'store');
+        $registeredAuthData = $this->getRegisteredAuthParams();
+
+        return $registeredAuthData['password'] ? $registeredAuthData['password'] : $this->encryptor->decrypt($this->scopeConfig->getValue(self::PATH_PASSWORD, 'store'));
     }
 
     /**
      * Returns the authentication prefix
      * @return mixed
      */
-    private function getAuthenticationPrefix()
+    protected function getAuthenticationPrefix()
     {
-        return $this->scopeConfig->getValue(self::PATH_AUTH_PREFIX, 'store');
+        $registeredAuthData = $this->getRegisteredAuthParams();
+
+        return $registeredAuthData['authenticationPrefix'] ? $registeredAuthData['authenticationPrefix'] : $this->scopeConfig->getValue(self::PATH_AUTH_PREFIX, 'store');
     }
 
     /**
      * Returns the authentication postfix
      * @return mixed
      */
-    private function getAuthenticationPostfix()
+    protected function getAuthenticationPostfix()
     {
-        return $this->scopeConfig->getValue(self::PATH_AUTH_POSTFIX, 'store');
+        $registeredAuthData = $this->getRegisteredAuthParams();
+
+        return $registeredAuthData['authenticationPostfix'] ? $registeredAuthData['authenticationPostfix'] : $this->scopeConfig->getValue(self::PATH_AUTH_POSTFIX, 'store');
     }
 
     /**
@@ -413,7 +442,7 @@ class Data extends AbstractHelper
         $prefix = $this->getAuthenticationPrefix();
         $postfix = $this->getAuthenticationPostfix();
 
-        $hashPassword = md5($prefix . (string)$time . $password . $postfix);
+        $hashPassword = md5($prefix . (string)$time . md5($password) . $postfix);
 
         $authArray['password'] = $hashPassword;
         $authArray['timestamp'] = $time;
@@ -468,5 +497,13 @@ class Data extends AbstractHelper
     public function getUploadUrlPassword()
     {
         return $this->scopeConfig->getValue(self::PATH_FF_UPLOAD_URL_PASSWORD, 'store');
+    }
+
+    /**
+     * @return null|array
+     */
+    private function getRegisteredAuthParams()
+    {
+        return $this->registry->registry('ff-auth');
     }
 }
