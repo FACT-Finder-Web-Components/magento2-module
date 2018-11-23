@@ -2,7 +2,6 @@
 ## FIX
 - removed the product limit on feed export
 - returns simple product sku as master product number when it has a relation to nonexistent configurable product
-- do never provide master ID instead of tracking ID in recommendation click tracking
 - the price of a configurable product is now correctly exported as the cheapest price
 - images urls are now exported correctly with respect the store, the feed file is exported from
 - A missing ampersand character between parameters in http query is now added in checkout tracking
