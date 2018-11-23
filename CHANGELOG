@@ -3,10 +3,14 @@
 - removed the product limit on feed export
 - returns simple product sku as master product number when it has a relation to nonexistent configurable product
 - do never provide master ID instead of tracking ID in recommendation click tracking
+- the price of a configurable product is now correctly exported as the cheapest price
+- images urls are now exported correctly with respect the store, the feed file is exported from
+- A missing ampersand character between parameters in http query is now added in checkout tracking
 
 ## CHANGE
 - test connection functionality now uses data send from form with no need to save the configuration before checking the connection
-- `ff-communication` component is now is now included in the server response when entering the page and jsut the parameters `sid` and `uid` are fetched dynamically
+- `ff-communication` component is now is now included in the server response when entering the page and just the parameters `sid` and `uid` are fetched dynamically
+- change the Helper\Product methods access level to protected making this class easier to override
 
 ## ADD
 - allow user to choose which visibilities should be applied to collection filter
