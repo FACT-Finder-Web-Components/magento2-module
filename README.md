@@ -129,19 +129,17 @@ For the option *Manufacturer*, choose the product attribute, which signifies the
 
 The *Select additional Attributes* option offers a multiple-choice list of attributes. Select all of those you want added to the CSV file.
 
-Before starting the export by clicking *Generate Export File(s) now*, you need to commit all changes by clicking “Save Config”. 
-
-You can also set the program to generate the product data export automatically. Activate the option *Generate Export Files(s) automatically* and the export is generated every day at 01:00 server time.
-
-This file allows you to set other server times for the export: 
-```
-Omikron/Factfinder/etc/crontab.xml
-```
-
-In the file, change the entry `<schedule>0 1 * * *</schedule>` per your preferences. The time is defined with a cron expression. For more information about that topic, visit the [Wikipedia Page](https://en.wikipedia.org/wiki/Cron). 
-
+Before starting the export by clicking *Generate Export File(s) now*, you need to commit all changes by clicking “Save Config”.
+ 
 ![Product Data Export](Omikron/Factfinder/view/frontend/web/images/documentation/export-settings_en.jpg " Product Data Export")
 
+## Cron configuration
+
+You can  set the program to generate the product data export automatically. Activate the option *Generate Export Files(s) automatically* and the export is generated every day at 01:00 server time.
+
+ `<schedule>0 1 * * *</schedule>` is a default value however You can define your own cron expression in the module configuration at `Cron Schedule` section.
+  
+![Cron Configuration](Omikron/Factfinder/view/frontend/web/images/documentation/cron-configuration_en.jpg "Cron Configuration")
 
 ---
 

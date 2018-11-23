@@ -258,11 +258,6 @@
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment>Runs an automatic import of the product data to the FACT-Finder servers, after the FTP upload is finished.</comment>
                 </field>
-                <field id="ff_cron_enabled" translate="label" type="select" sortOrder="120" showInDefault="1" showInWebsite="0" showInStore="0">
-                    <label>Generate Export Files(s) automatically</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    <comment>If enabled, new export files will be created once daily at 1 a.m. system time.</comment>
-                </field>
             </group>
             <group id="basic_auth_data_transfer" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>Export via Basic Auth</label>
@@ -272,6 +267,27 @@
                 <field id="ff_upload_url_password" translate="label" type="obscure" sortOrder="30" showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Basic Auth Password</label>
                     <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                </field>
+            </group>
+            <group id="configurable_cron" translate="label" type="text" sortOrder="130" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>Cron Schedule</label>
+                <field id="ff_cron_enabled" translate="label" type="select" sortOrder="120" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Generate Export Files(s) automatically</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="ff_cron_time" translate="label comment" type="time" sortOrder="140" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Start Time</label>
+                    <depends>
+                        <field id="ff_cron_enabled">1</field>
+                    </depends>
+                </field>
+                <field id="ff_cron_frequency" translate="label comment" type="select" sortOrder="150" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Cron execution frequency</label>
+                    <source_model>Magento\Cron\Model\Config\Source\Frequency</source_model>
+                    <backend_model>Omikron\Factfinder\Model\Adminhtml\System\Config\Backend\Feed\Frequency</backend_model>
+                    <depends>
+                        <field id="ff_cron_enabled">1</field>
+                    </depends>
                 </field>
             </group>
         </section>
