@@ -30,6 +30,7 @@ class Data extends AbstractHelper
     const PATH_AUTH_POSTFIX = 'factfinder/general/authentication_postfix';
     const PATH_ADVANCED_VERSION = 'factfinder/advanced/version';
     const PATH_DATATRANSFER_IMPORT = 'factfinder/data_transfer/ff_cron_import';
+    const PATH_CONFIGURABLE_CRON_IS_ENABLED = 'factfinder/configurable_cron/ff_cron_enabled';
 
     // Data Transfer
     const PATH_FF_UPLOAD_URL_USER = 'factfinder/basic_auth_data_transfer/ff_upload_url_user';
@@ -397,6 +398,14 @@ class Data extends AbstractHelper
     public function getFFPushedproductscampaign()
     {
         return $this->scopeConfig->getValue('factfinder/components/ff_pushedproductscampaign', 'store');
+    }
+
+    /**
+     * @return bool
+     */
+    public function isCronEnabled()
+    {
+        return (bool) $this->scopeConfig->getValue(self::PATH_CONFIGURABLE_CRON_IS_ENABLED);
     }
 
     /**

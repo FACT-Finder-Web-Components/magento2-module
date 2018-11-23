@@ -85,16 +85,16 @@
 "Success! Connection successfully tested!","Verbindung erfolgreich getestet!"
 "Error! Connection could not be established. Please check your setup.","Verbindung konnte nicht aufgebaut werden. Bitte kontrollieren sie die Einstellungen."
 "FACT-Finder error message:","FACT-Finder Fehlermeldung:"
-
 "Generate Export File","Erstellung des Produktdaten Exports"
 "Generate Export Files(s) automatically","Automatische Erstellung des Produktdaten Exports"
 "If enabled, new export files will be created once daily at 1 a.m. system time.","Wenn dieses Feld aktiviert ist, wird der Produktdaten Export täglich um 1 Uhr Server-Zeit automatisch ausgeführt."
 "Runs an automatic import of the product data to the FACT-Finder servers, after the FTP upload is finished.","Startet nach dem FTP Upload der Produktdaten den automatischen Import zum FACT-Finder Server."
 "Automatic Import of productdata","Automatischer Import der Produktdaten"
-
 "Yes","Ja"
-"No","Nein
-
+"No","Nein"
 "Recommendations","Empfehlungen"
 "Select Product Visibility","Wählen Sie Produktsichtbarkeit"
 "Visibility attribute values used in filtering product collection.","Werte für die Sichtbarkeitsattribute, die bei der Filterung der Produktauswahl verwendet werden."
+"Cron schedule", "Cron zeitplan"
+"Start Time", "Startzeit"
+"Cron execution frequency", "Cron Ausführungshäufigkeit"

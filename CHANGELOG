@@ -5,6 +5,7 @@
 
 #ADD
 - Added possibility to export additional attributes in separate columns
+- Adds possibility to configure frequency of feed file generation by Cron
 
 # v0.9-beta.8
 ## FIX
