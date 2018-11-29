@@ -173,7 +173,12 @@ class Communication extends Template
                 'value' => $this->_helper->getSearchImmediate(),
                 'type' => 'boolean',
                 'defaultValue' => $defaultValues['advanced']['search_immediate']
-            ]
+            ],
+            'disable-single-hit-redirect'=> [
+                'value' => $this->_helper->getDisableSingleHitRedirect(),
+                'type' => 'boolean',
+                'defaultValue' => $defaultValues['advanced']['disable_single_hit_redirect']
+            ],
         ];
 
         // always enable "search-immediate" when on result page
