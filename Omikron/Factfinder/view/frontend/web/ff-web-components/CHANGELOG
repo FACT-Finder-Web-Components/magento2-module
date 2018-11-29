@@ -1,3 +1,30 @@
+# 1.2.14
+## FIX
+- up/down arrow navigation fix for ff-onfocus-suggest and ff-suggest component
+- fixed erroneous filtering when filter name contains unrelated substring "sort"
+- infinite scrolling of `ff-record-list` doesn't work reliably due to race condition on page load
+- fixed rendering of ff-slider buttons when detached and attached to dom
+
+## CHANGE
+- new `--nav-element-a` mixin to allow anchor elements in `ff-header-navigation` to be styled even in shadow DOM
+
+
+#1.2.13
+## ADD
+- new element `ff-sortbox-select`
+- new element `ff-products-per-page-select`
+- new elements `ff-middleware` and `ff-multi-attribute-parsing`. These can be used to configure how multi-attribute fields in the FACT-Finder response shall be parsed in order to access their values more easily. Alternatively, the same configuration is also possible with plain JavaScript. See https://web-components.fact-finder.de/api/ff-middleware#tab=docs for details
+- for a better debugging experience `ff-header-navigation` logs now when it hides 2nd layer navigation elements without 3rd layer children. If you want to show 2nd layer navigation without 3rd layer children, you can set the attribute `hide-empty-groups="false"`
+
+## FIX
+- `ff-asn-group-slider` does not hide anymore when its `absoluteMinValue` is `0`
+- CTRL + click now opens links from elements with `data-redirect` (click tracking) attributes in a new tab
+- clicking history back redirects to previous page now when immediate search is on, there is no need to click twice
+- in addition to left mouse clicks also CTRL+LMB, SHIFT+LMB and MMB are now tracked on elements with `data-redirect` attribute
+
+## CHANGE
+- `query` parameter is no longer included in navigation requests
+
 # 1.2.12
 ## BREAKING
 - new `<a>` elements in `ff-header-navigation` are likely to break styling
