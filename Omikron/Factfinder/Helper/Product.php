@@ -7,7 +7,8 @@ use Magento\ConfigurableProduct\Model\Product\Type\Configurable;
 use Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Store\Api\Data\StoreInterface;
 use Magento\Framework\Exception\NoSuchEntityException;
-
+use Magento\Framework\Exception\LocalizedException;
+use Magento\Catalog\Api\Data\ProductInterface;
 
 /**
  * Class Product
@@ -64,7 +65,6 @@ class Product extends AbstractHelper
         $this->categoryRepository = $categoryRepository;
 
         parent::__construct($context);
-
     }
 
     /**
@@ -309,27 +309,49 @@ class Product extends AbstractHelper
     /**
      * Get if the product manufacturer
      *
-     * @param \Magento\Catalog\Model\Product $product
-     * @param \Magento\Store\Api\Data\StoreInterface $store
+     * @param ProductInterface $product
+     * @param StoreInterface $store
      * @return mixed
      */
-    protected function getManufacturer($product, $store)
+    protected function getManufacturer(ProductInterface $product, StoreInterface $store)
     {
-        return $product->getData($this->scopeConfig->getValue(self::PATH_DATA_TRANSFER_MANUFACTURER, 'store', $store->getId()));
+        return $this->getConfiguredAttributeValue($product, $this->scopeConfig->getValue(self::PATH_DATA_TRANSFER_MANUFACTURER, 'store', $store->getId()));
     }
 
     /**
      * Get if the product ean
      *
-     * @param \Magento\Catalog\Model\Product $product
-     * @param \Magento\Store\Api\Data\StoreInterface $store
+     * @param ProductInterface $product
+     * @param StoreInterface $store
      * @return mixed
      */
-    protected function getEAN($product, $store)
+    protected function getEAN(ProductInterface$product, StoreInterface $store)
     {
-        return $product->getData($this->scopeConfig->getValue(self::PATH_DATA_TRANSFER_EAN, 'store', $store->getId()));
+        return $this->getConfiguredAttributeValue($product, $this->scopeConfig->getValue(self::PATH_DATA_TRANSFER_EAN, 'store', $store->getId()));
     }
 
+    /**
+     *
+     * @param ProductInterface $product
+     * @param string $attributeCode
+     *
+     * @return mixed
+     */
+    protected function getConfiguredAttributeValue(ProductInterface $product, $attributeCode)
+    {
+        try {
+            $attribute = $this->eavConfig->getAttribute('catalog_product', $attributeCode);
+        } catch (LocalizedException $e) {
+            return null;
+        }
+        if (in_array($attribute->getFrontendInput(), ['select', 'multiselect', 'boolean'])) {
+            $value = $product->getAttributeText($attributeCode);
+        } else {
+            $value = $product->getData($attributeCode);
+        }
+
+        return html_entity_decode($value);
+    }
 
     /**
      * Get the additional attribute fields for the store

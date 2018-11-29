@@ -7,6 +7,10 @@
         <css src="Omikron_Factfinder::css/ff/suggest.css"/>
     </head>
 
+    <referenceContainer name="after.body.start">
+        <block ifconfig="factfinder/general/is_enabled" name="prevent.fouc.css" template="Omikron_Factfinder::ff/styles.phtml"/>
+    </referenceContainer>
+
     <referenceContainer name="header.panel">
         <block ifconfig="factfinder/general/is_enabled" class="Omikron\Factfinder\Block\FF\Communication" name="factfinder.communication" template="Omikron_Factfinder::ff/communication.phtml"/>
     </referenceContainer>

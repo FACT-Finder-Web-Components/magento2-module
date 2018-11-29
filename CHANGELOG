@@ -1,3 +1,11 @@
+# v0.9-beta.7
+## FIX
+- Prevents flashing of unstyled content (FOUC) on web browsers which natively doesn't support web components
+- Gets correct "EAN" and "Manufacter" atribute values depending on attribute type set. For instance if selected attribute is a type of select, correct label is returned instead of its option identifier
+
+## Change
+- Upgraded FACT-Finder WebComponents to version 1.2.14
+
 # v0.9-beta.6
 ## FIX
 - removed the product limit on feed export
