@@ -382,6 +382,8 @@ declare module scope.communication {
          */
         function handleSeoSearch(event: any): void;
         function replaceHistoryState(result: any, urlString: string, ffEvent: any): void;
+        /** This wrapper enables mocking of readonly documentation.location.replace for testing suppose */
+        function replaceDocumentLocation(newLocation: any): void;
         /**
          * Push the result to the browser history and set's the url params according to the settings in global.
          * Has no effect on a suggest or tracking result.
@@ -832,6 +834,24 @@ declare module scope.communication {
         function addBeforeDispatchingCallback(fn: any): string;
         function getCurrentResult(version: any): any;
     }
+}
+declare module scope.middleware.response {
+    /**
+     * Register a middleware module to the response dispatch chain to manipulate the response before being emitted.
+     * @param module
+     */
+    function use(module: any): void;
+}
+declare module scope.middleware.response {
+    /**
+     * This modifier is used to transform multi-attribute fields in the FACT-Finder response to JavaScript objects.
+     * Values and units can then be accessed via their key.
+     * @param options
+     */
+    function MultiAttributeParsing(options: any): {
+        topic: string;
+        handler: (data: any) => void;
+    };
 }
 declare module scope.html {
     class RendererOptions {
