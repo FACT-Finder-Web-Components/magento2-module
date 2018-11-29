@@ -1,3 +1,7 @@
+# v0.9-beta.7
+## FIX
+- Prevents flashing of unstyled content (FOUC) on web browsers which natively doesn't support web components
+
 # v0.9-beta.6
 ## FIX
 - removed the product limit on feed export
