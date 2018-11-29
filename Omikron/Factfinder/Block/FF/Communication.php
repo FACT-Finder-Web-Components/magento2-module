@@ -166,7 +166,7 @@ class Communication extends Template
             ],
             'seo-prefix' => [
                 'value' => $this->_helper->getSeoPrefix(),
-                'type' => 'boolean',
+                'type' => 'string',
                 'defaultValue' => $defaultValues['advanced']['seo_prefix']
             ],
             'search-immediate' => [
