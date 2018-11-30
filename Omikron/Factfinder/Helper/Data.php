@@ -189,6 +189,15 @@ class Data extends AbstractHelper
     }
 
     /**
+     * Returns the disable-single-hit-redirect configuration
+     * @return mixed
+     */
+    public function getDisableSingleHitRedirect()
+    {
+        return $this->scopeConfig->getValue('factfinder/advanced/disable_single_hit_redirect', 'store');
+    }
+
+    /**
      * Returns the use-url-parameter configuration
      * @return mixed
      */
