@@ -4,6 +4,11 @@
 $viewModel  = $block->getViewModel();
 $parameters = ((array) $block->getData('communication_parameters')) + $viewModel->getParameters();
 ?>
+
+<script src="<?php echo $this->getViewFileUrl('Omikron_Factfinder::ff-web-components/dist/vendor/custom-elements-es5-adapter.js')?>"></script>
+<script src="<?php echo $this->getViewFileUrl('Omikron_Factfinder::ff-web-components/dist/vendor/webcomponents-loader.js')?>"></script>
+<script defer src="<?php echo $this->getViewFileUrl('Omikron_Factfinder::ff-web-components/dist/bundle.js')?>"></script>
+
 <ff-communication<?php foreach ($parameters as $key => $value) echo /** @noEscape */ sprintf(' %s="%s"', $key, $block->escapeHtmlAttr($value)) ?> />
 <!-- Set FieldRoles -->
 <script>
@@ -11,19 +16,18 @@ $parameters = ((array) $block->getData('communication_parameters')) + $viewModel
         factfinder.communication.fieldRoles = <?= /* @noEscape */ $viewModel->getFieldRoles() ?>;
     });
 </script>
-<div data-bind="scope: 'ffcommunication'"></div>
-<script type="text/x-magento-init">
-    {
-        "*": {
-            "Magento_Ui/js/core/app": {
-                "components": {
-                    "ffcommunication": {
-                        "component": "Omikron_Factfinder/js/view/ffcommunication"
+<div data-bind="scope: 'ffcommunication'">
+    <script type="text/x-magento-init">
+            {
+                "*": {
+                    "Magento_Ui/js/core/app": {
+                        "components": {
+                            "ffcommunication": {
+                                "component": "Omikron_Factfinder/js/view/ffcommunication"
+                            }
+                        }
                     }
                 }
             }
-        }
-    }
-</script>
-<!-- Import WebComponents -->
-<link rel="import" href="<?= $block->escapeUrl($block->getViewFileUrl('Omikron_Factfinder::ff-web-components/dist/elements.build_with_dependencies.html')) ?>"/>
+    </script>
+</div>

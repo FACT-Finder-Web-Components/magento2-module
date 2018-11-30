@@ -1,6 +1,6 @@
 {
   "name": "ff-web-components",
-  "version": "1.2.14" ,
+  "version": "3.0.0",
   "authors": [
     "tobias.armbruster <tobias.armbruster@omikron.net>"
   ],
@@ -14,7 +14,6 @@
     "FACT-Finder"
   ],
   "dependencies": {
-    "webcomponentsjs": "git://github.com/webcomponents/webcomponentsjs.git#v0.7.24"
   },
   "license": "FACT-Finder",
   "homepage": "http://web-components.fact-finder.de/",

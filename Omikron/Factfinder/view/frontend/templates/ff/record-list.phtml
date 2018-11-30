@@ -34,7 +34,7 @@ $viewModel = $block->getViewModel();
                         <form action="<?= $block->escapeUrl($viewModel->getAddToCartUrl()) ?>" method="post" class="product_addtocart_form" novalidate="novalidate">
                             <input type="hidden" name="product" value="{{record.MagentoEntityId}}">
                             <?= /* @noEscape */ $block->getBlockHtml('formkey') ?>
-                            <button data-track type="submit" title="<?= $block->escapeHtmlAttr(__('Add to Cart')) ?>" class="action primary tocart">
+                            <button data-track type="submit" title="<?= $block->escapeHtml(__('Add to Cart')) ?>" class="action primary tocart">
                                 <span><?= $block->escapeHtml(__('Add to Cart')) ?></span>
                             </button>
                         </form>

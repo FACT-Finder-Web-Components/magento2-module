@@ -1,13 +1,43 @@
-# 1.2.14
-## FIX
-- up/down arrow navigation fix for ff-onfocus-suggest and ff-suggest component
-- fixed erroneous filtering when filter name contains unrelated substring "sort"
-- infinite scrolling of `ff-record-list` doesn't work reliably due to race condition on page load
-- fixed rendering of ff-slider buttons when detached and attached to dom
+# 3.0.0-pre-release-1
+This the preview release of our next major update. During the next couple of weeks we are going to upgrade all our internal projects to use our 3.0.0 release.
+We expect possible bug fixes during this process but our 3.0 release is feature complete compared to our current version 1.2.13 (31.10.2018). The main difference is that we are now compatible with the current native implementation of Webcomponents and therefore we have a smaller JS bundle and a faster execution.
+
+## New Boilerplate
+```html
+...
+    <script src="../bower_components/ff-web-components/dist/vendor/custom-elements-es5-adapter.js"></script>
+    <script src="../bower_components/ff-web-components/dist/vendor/webcomponents-loader.js"></script>
+    <script defer src="../bower_components/ff-web-components/dist/bundle.js"></script>
+</head>
+```
+
+We already migrated our demos project in the release/3.0 branch: https://github.com/FACT-Finder-Web-Components/demos/tree/release/3.0
 
 ## CHANGE
-- new `--nav-element-a` mixin to allow anchor elements in `ff-header-navigation` to be styled even in shadow DOM
+- internal rewrite from [Polymer 1](https://www.polymer-project.org/1.0/docs/devguide/feature-overview) to [Polymer 3](https://www.polymer-project.org/3.0/docs/devguide/feature-overview)
 
+## BREAKING
+- The way of including the Web Components scripts has changed. See [Installation](https://web-components.fact-finder.de/documentation/install-dist) for the right way to include the scripts
+- Aligning with the current trend we no longer support [Bower](https://bower.io/). As a replacement you can use [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/lang/en/)
+- `ff-searchbox`
+    - extending built-in HTML elements is not supported anymore. Hence use `<ff-searchbox>` tag with mandatory `<input />` tag inside instead of `<input is="ff-searchbox" />`
+    - if you don't want to use the first `input` tag within `<ff-searchbox>`, you can use `SearchBox.resetInput(selector)` to set the input field
+- `ff-searchbutton`
+    - extending built-in HTML elements is not supported anymore. Hence use `<ff-searchbutton>` tag with mandatory `<button />` tag inside instead of `<button is="ff-searchutton" />`
+    - if you don't want to use the first `button` tag within `<ff-searchbutton>`, you can use `SearchButton.resetInput(selector)` to set the button
+- `ff-asn-group`
+    - use `<div slot="groupCaption" ...>` instead of `<div data-container="groupCaption" ...>`
+- `ff-asn-group-element`
+    - use `<div slot="selected" ...>` instead of `<div data-selected ...>`
+    - use `<div slot="unselected" ...>` instead of `<div data-unselected ...>`
+- `ff-asn-group-slider`
+    - use `<div slot="groupCaption" ...>` instead of `<div data-container="groupCaption" ...>`
+- `ff-slider`
+    - use `<div slot="slider1" id="slider1" ...></div>` instead of `<div data-slider="1" ...></div>`
+    - use `<div slot="slider2" id="slider2" ...></div>` instead of `<div data-slider="2" ...></div>`
+- `ff-carousel`
+    - removed `getCurrentSlide` method, use `currentSlide` property directly instead
+    - removed `getMaxSlides` method, use `maxSlides` property directly instead
 
 #1.2.13
 ## ADD

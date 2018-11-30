@@ -1,6 +1,7 @@
-<?php /** @var $block Magento\Framework\View\Element\Template */ ?>
+<?php /** @var Magento\Framework\View\Element\Template $block */ ?>
 <div class="ff-paging">
-    <ff-paging unresolved>
+    <ff-paging class="ff-paging" unresolved>
+
         <ff-paging-set state="currentPage <= 3 && pageCount-currentPage < 3">
             <ff-paging-item type="previousLink">
                 <input type="image" class="padd" src="<?= $block->escapeUrl($block->getViewFileUrl('Omikron_Factfinder::images/paging_prev_page.png')) ?>">
