@@ -132,10 +132,16 @@ class Communication extends AbstractHelper
     public function pushImport($channelName)
     {
         $response_json = json_decode($this->sendToFF('Import.ff', ['channel' => $channelName, 'type' => 'suggest', 'format' => 'json' , 'quiet' => 'true', 'download' => 'true']), true);
-        if(is_array($response_json) && isset($response_json['errors']) && is_array($response_json['errors']) && count($response_json['errors'])) {
-            return false;
-        } else {
-            return true;
+
+        if (is_array($response_json)) {
+            if (isset($response_json['errors']) && !empty($response_json['errors'])) {
+                return false;
+            }
+            elseif (isset($response_json['error']) && !empty($response_json['error'])) {
+                return false;
+            }
         }
+
+        return true;
     }
 }
