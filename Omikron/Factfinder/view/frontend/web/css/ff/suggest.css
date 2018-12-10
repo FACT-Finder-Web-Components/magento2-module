@@ -1,4 +1,4 @@
-.ff-suggest {
+#ffSuggestContainerWrapper  {
     background-color: white;
     box-shadow: 1px 1px 10px lightgrey;
 }
@@ -31,7 +31,7 @@
     float: left;
 }
 
-.product-name {
+.ff-product-name {
     width: 300px;
     position: relative;
     text-overflow: ellipsis;
