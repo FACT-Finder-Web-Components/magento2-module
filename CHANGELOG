@@ -2,6 +2,10 @@
 ## FIX
 - Correct type of `seo-prefix` parameter
 
+## CHANGE
+- Changed `ff-suggest` styles to differ from native Luma and Blank Magento theme
+- Changed the `ff-communication` location from `header.panel` to `after.body.start`
+
 ## ADD
 - Allow user to set value of the `disable-single-hit-redirect` parameter  in module configuration
 
@@ -10,7 +14,7 @@
 - Prevents flashing of unstyled content (FOUC) on web browsers which natively doesn't support web components
 - Gets correct "EAN" and "Manufacter" atribute values depending on attribute type set. For instance if selected attribute is a type of select, correct label is returned instead of its option identifier
 
-## Change
+## CHANGE
 - Upgraded FACT-Finder WebComponents to version 1.2.14
 
 # v0.9-beta.6
