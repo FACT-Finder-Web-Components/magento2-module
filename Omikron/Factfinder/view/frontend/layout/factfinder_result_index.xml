@@ -1,5 +1,6 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <head>
+        <title>Search Results</title>
         <remove src="Omikron_Factfinder::js/search-redirect.js" />
         <css src="Omikron_Factfinder::css/ff/shared-styles.css"/>
         <css src="Omikron_Factfinder::css/ff/template.css"/>
