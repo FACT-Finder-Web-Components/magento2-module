@@ -1,3 +1,7 @@
+# v0.9-beta.9
+## FIX
+- Add missing title to `factfinder_result_index` site
+
 # v0.9-beta.8
 ## FIX
 - Correct type of `seo-prefix` parameter
