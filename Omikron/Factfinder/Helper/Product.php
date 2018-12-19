@@ -94,13 +94,12 @@ class Product extends AbstractHelper
 
             case "ImageUrl":
             case "Manufacturer":
-            case "Attributes":
             case "EAN":
                 $method = 'get' . $attribute;
                 return call_user_func(array($this, $method), $product, $store);
 
             default:
-                return null;
+                return $this->getData($product, $attribute);
         }
     }
 
@@ -365,60 +364,48 @@ class Product extends AbstractHelper
     }
 
     /**
-     * Get all the attributes for a given product and store
+     * For custom attributes defined in the attributes array in export model
      *
-     * @param \Magento\Catalog\Model\ResourceModel\Product $product
-     * @param \Magento\Store\Api\Data\StoreInterface $store
-     * @return string
+     * @param \Magento\Catalog\Model\Product
+     * @param string
+     *
+     * @return string (empty if attribute not found)
      */
-    protected function getAttributes($product, $store)
+    protected function getData($product, string $attributeCode)
     {
         $data = [];
         $attributesString = '';
-        $additionalAttributes = $this->getAdditionalAttributes($store);
-        if (!empty($additionalAttributes)) {
-            $attributeCodes = explode(',', $additionalAttributes);
-            $attrCount = 0;
+        $attrCount = 0;
 
-            foreach ($attributeCodes as $attributeCode) {
-                $attribute = $this->eavConfig->getAttribute('catalog_product', $attributeCode);
-                $attributeValue = $product->getData($attribute->getAttributeCode());
-                if (empty($attributeValue)) {
-                    continue;
-                }
-                $frontendInput = $attribute->getFrontendInput();
-                $values = [];
-                if (in_array($frontendInput, ['select', 'multiselect'])) {
-                    // value holds single or multiple options IDs
-                    foreach (explode(",", $attributeValue) as $optionId) {
-                        $optionLabel = $attribute->getSource()->getOptionText($optionId);
-                        $values[] = $optionLabel;
-                    }
-                } else if ($frontendInput == 'price') {
-                    $values[] = number_format(round(floatval($attributeValue), 2), 2);
-                } else if ($frontendInput == 'boolean') {
-                    $values[] = $attributeValue ? "Yes" : "No";
-                } else {
-                    $values[] = $attributeValue;
-                }
-
-                $label = $product->getResource()->getAttribute($attribute->getAttributeCode())->getStoreLabel();
-                if (empty($label)) {
-                    $label = $attribute->getAttributeCode();
-                }
-
-                foreach ($values as $value) {
-                    if ($attrCount < self::ATTRIBUTE_LIMIT) {
-                        $data[] = __($this->cleanValue($label, true)) . '=' . __($this->cleanValue($value, true));
-                        $attrCount++;
-                    }
-                }
-            }
-
-            if (!empty($data)) {
-                $attributesString = self::ATTRIBUTE_DELIMITER . implode(self::ATTRIBUTE_DELIMITER, $data) . self::ATTRIBUTE_DELIMITER;
-            }
+        $attribute = $this->eavConfig->getAttribute('catalog_product', $attributeCode);
+        $attributeValue = $product->getData($attribute->getAttributeCode());
+        if (empty($attributeValue)) {
+            return '';
         }
+        $frontendInput = $attribute->getFrontendInput();
+        $values = [];
+        if (in_array($frontendInput, ['select', 'multiselect'])) {
+            // value holds single or multiple options IDs
+            foreach (explode(",", $attributeValue) as $optionId) {
+                $optionLabel = $attribute->getSource()->getOptionText($optionId);
+                $values[] = $optionLabel;
+            }
+        } else if ($frontendInput == 'price') {
+            $values[] = number_format(round(floatval($attributeValue), 2), 2);
+        } else if ($frontendInput == 'boolean') {
+            $values[] = $attributeValue ? "Yes" : "No";
+        } else {
+            $values[] = $attributeValue;
+        }
+
+        foreach ($values as $value) {
+            $data[] = __($this->cleanValue($value, count($values) > 1));
+        }
+
+        if (!empty($data)) {
+            $attributesString = implode(self::ATTRIBUTE_DELIMITER, $data);
+        }
+        
         return $attributesString;
     }
 
@@ -439,7 +426,7 @@ class Product extends AbstractHelper
 
         if ($isMultiAttributeValue) {
             // do not allow special chars in values
-            $value = preg_replace('/([^A-Za-z0-9 -])+/', '', $value);
+            $value = preg_replace('/([^\pL0-9 -])+/', '', $value);
             // reduce multiple spaces to one
             $value = preg_replace('/\s\s+/', ' ', $value);
         }
