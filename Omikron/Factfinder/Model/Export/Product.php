@@ -58,6 +58,9 @@ class Product extends AbstractModel
     /** @var  \Magento\Store\Model\App\Emulation */
     protected $appEmulation;
 
+    /** @var  \Magento\Framework\App\Config\ScopeConfigInterface */
+    protected $scopeConfig;
+
     /**
      * Product constructor.
      * @param \Magento\Framework\Model\Context $context
@@ -95,6 +98,7 @@ class Product extends AbstractModel
         \Magento\Framework\File\Csv $csvWriter,
         \Magento\Framework\App\Filesystem\DirectoryList $directoryList,
         \Magento\Store\Model\App\Emulation $appEmulation,
+        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         array $data = []
     )
     {
@@ -111,6 +115,7 @@ class Product extends AbstractModel
         $this->csvWriter = $csvWriter;
         $this->directoryList = $directoryList;
         $this->appEmulation = $appEmulation;
+        $this->scopeConfig = $scopeConfig;
 
         parent::__construct(
             $context,
@@ -158,17 +163,33 @@ class Product extends AbstractModel
             'ImageUrl',
             'Price',
             'Manufacturer',
-            'Attributes',
             'CategoryPath',
             'Availability',
             'EAN',
             'MagentoEntityId'
         ];
+
+        $additionalAttributes = $this->getAdditionalAttributes($store);
+        if (!empty($additionalAttributes)) {
+            $attributes = \array_unique(\array_merge($attributes, explode(',', $additionalAttributes)));
+        }
+
         foreach ($attributes as $attribute) {
             $row[$attribute] = $this->helperProduct->get($attribute, $product, $store);
         }
 
         return $row;
+    }
+
+    /**
+     * Get the additional attribute fields for the store
+     *
+     * @param \Magento\Store\Api\Data\StoreInterface $store
+     * @return mixed
+     */
+    protected function getAdditionalAttributes($store)
+    {
+        return $this->scopeConfig->getValue(\Omikron\Factfinder\Helper\Product::PATH_DATA_TRANSFER_ADDITIONAL_ATTRIBUTES, 'store', $store->getId());
     }
 
     /**
