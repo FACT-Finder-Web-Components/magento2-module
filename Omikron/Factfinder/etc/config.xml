@@ -52,6 +52,7 @@
                 <ff_cron_enabled>0</ff_cron_enabled>
                 <ff_cron_import>1</ff_cron_import>
                 <ff_product_visibility>3,4</ff_product_visibility>
+                <ff_additional_attributes_separate_columns>0</ff_additional_attributes_separate_columns>
             </data_transfer>
         </factfinder>
     </default>

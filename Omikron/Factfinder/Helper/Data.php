@@ -400,6 +400,18 @@ class Data extends AbstractHelper
     }
 
     /**
+     * Get configuration options telling if additional attributes should be merged and exported as single column or each attribute
+     * should be exported in separate column
+     *
+     * @param $store
+     * @return bool
+     */
+    protected function getAdditionalAttributesExportedInSeparateColumns($store)
+    {
+        return boolval($this->scopeConfig->getValue(self::PATH_DATA_TRANSFER_ATTRIBUTES_SEPARATE_COLUMNS, 'store', $store->getId()));
+    }
+
+    /**
      * Private Getter
      */
 

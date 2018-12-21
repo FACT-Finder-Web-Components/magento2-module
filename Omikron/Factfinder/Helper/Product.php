@@ -20,10 +20,11 @@ class Product extends AbstractHelper
     const ATTRIBUTE_LIMIT     = 1000;
     const ATTRIBUTE_DELIMITER = '|';
 
-    const PATH_DATA_TRANSFER_MANUFACTURER          = "factfinder/data_transfer/ff_manufacturer";
-    const PATH_DATA_TRANSFER_EAN                   = "factfinder/data_transfer/ff_ean";
-    const PATH_DATA_TRANSFER_ADDITIONAL_ATTRIBUTES = "factfinder/data_transfer/ff_additional_attributes";
-    const PATH_DATA_TRANSFER_PRODUCT_VISIBILITY    = "factfinder/data_transfer/ff_product_visibility";
+    const PATH_DATA_TRANSFER_MANUFACTURER                   = "factfinder/data_transfer/ff_manufacturer";
+    const PATH_DATA_TRANSFER_EAN                            = "factfinder/data_transfer/ff_ean";
+    const PATH_DATA_TRANSFER_ADDITIONAL_ATTRIBUTES          = "factfinder/data_transfer/ff_additional_attributes";
+    const PATH_DATA_TRANSFER_ATTRIBUTES_SEPARATE_COLUMNS    = "factfinder/data_transfer/ff_additional_attributes_separate_columns";
+    const PATH_DATA_TRANSFER_PRODUCT_VISIBILITY             = "factfinder/data_transfer/ff_product_visibility";
 
     /** @var \Magento\Catalog\Helper\Image */
     protected $imageHelperFactory;
@@ -94,6 +95,7 @@ class Product extends AbstractHelper
 
             case "ImageUrl":
             case "Manufacturer":
+            case "Attributes":
             case "EAN":
                 $method = 'get' . $attribute;
                 return call_user_func(array($this, $method), $product, $store);
@@ -358,9 +360,58 @@ class Product extends AbstractHelper
      * @param \Magento\Store\Api\Data\StoreInterface $store
      * @return mixed
      */
-    protected function getAdditionalAttributes($store)
+    public function getAdditionalAttributes($store)
     {
         return $this->scopeConfig->getValue(self::PATH_DATA_TRANSFER_ADDITIONAL_ATTRIBUTES, 'store', $store->getId());
+    }
+
+    /**
+     * Get configuration options telling if additional attributes should be merged and exported as single column or each attribute
+     * should be exported in separate column
+     *
+     * @param $store
+     * @return bool
+     */
+    public function getAdditionalAttributesExportedInSeparateColumns($store)
+    {
+        return boolval($this->scopeConfig->getValue(self::PATH_DATA_TRANSFER_ATTRIBUTES_SEPARATE_COLUMNS, 'store', $store->getId()));
+    }
+    /**
+     * Get all the attributes for a given product and store
+     *
+     * @param \Magento\Catalog\Model\ResourceModel\Product $product
+     * @param \Magento\Store\Api\Data\StoreInterface $store
+     * @return string
+     */
+    protected function getAttributes($product, $store)
+    {
+        $attributesString = "";
+        $additionalAttributes = $this->getAdditionalAttributes($store);
+        if (!empty($additionalAttributes)) {
+            $attributeCodes = explode(',', $additionalAttributes);
+
+            foreach ($attributeCodes as $attributeCode) {
+                $label = $attributeCode;
+                $attribute = $product->getResource()->getAttribute($attributeCode);
+                if ($attribute && $attribute->getStoreLabel()) {
+                    $label = $attribute->getStoreLabel();
+                }
+
+                $label =  __($this->cleanValue($label, true));
+                $value = $this->getData($product, $attributeCode);
+                $attributeLabelPrefix =  "$label=";
+
+                if ($value != '') {
+                    $attributesString .= self::ATTRIBUTE_DELIMITER . $attributeLabelPrefix. str_replace(self::ATTRIBUTE_DELIMITER, self::ATTRIBUTE_DELIMITER . $attributeLabelPrefix, $value);
+                }
+            }
+        }
+
+        if ($attributesString != '') {
+            $attributesString .= self::ATTRIBUTE_DELIMITER;
+        }
+
+        return $attributesString;
     }
 
     /**
@@ -375,7 +426,6 @@ class Product extends AbstractHelper
     {
         $data = [];
         $attributesString = '';
-        $attrCount = 0;
 
         $attribute = $this->eavConfig->getAttribute('catalog_product', $attributeCode);
         $attributeValue = $product->getData($attribute->getAttributeCode());
@@ -405,7 +455,7 @@ class Product extends AbstractHelper
         if (!empty($data)) {
             $attributesString = implode(self::ATTRIBUTE_DELIMITER, $data);
         }
-        
+
         return $attributesString;
     }
 

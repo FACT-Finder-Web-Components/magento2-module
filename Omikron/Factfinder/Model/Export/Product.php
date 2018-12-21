@@ -14,10 +14,11 @@ use Magento\Store\Api\Data\StoreInterface;
  */
 class Product extends AbstractModel
 {
-    const FEED_PATH = 'factfinder/';
-    const FEED_FILE = 'export.';
-    const FEED_FILE_FILETYPE = 'csv';
-    const BATCH_SIZE = 3000;
+    const FEED_PATH                         = 'factfinder/';
+    const FEED_FILE                         = 'export.';
+    const FEED_FILE_FILETYPE                = 'csv';
+    const BATCH_SIZE                        = 3000;
+    const ADDITIONAL_ATTRIBUTES_COLUMN_NAME = 'Attributes';
 
     /** @var \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory */
     protected $productCollectionFactory;
@@ -169,9 +170,13 @@ class Product extends AbstractModel
             'MagentoEntityId'
         ];
 
-        $additionalAttributes = $this->getAdditionalAttributes($store);
-        if (!empty($additionalAttributes)) {
-            $attributes = \array_unique(\array_merge($attributes, explode(',', $additionalAttributes)));
+        if ($this->helperProduct->getAdditionalAttributesExportedInSeparateColumns($store)) {
+            $additionalAttributes = $this->helperProduct->getAdditionalAttributes($store);
+            if (!empty($additionalAttributes)) {
+                $attributes = \array_unique(\array_merge($attributes, explode(',', $additionalAttributes)));
+            }
+        } else {
+            $attributes[]= self::ADDITIONAL_ATTRIBUTES_COLUMN_NAME;
         }
 
         foreach ($attributes as $attribute) {
@@ -179,17 +184,6 @@ class Product extends AbstractModel
         }
 
         return $row;
-    }
-
-    /**
-     * Get the additional attribute fields for the store
-     *
-     * @param \Magento\Store\Api\Data\StoreInterface $store
-     * @return mixed
-     */
-    protected function getAdditionalAttributes($store)
-    {
-        return $this->scopeConfig->getValue(\Omikron\Factfinder\Helper\Product::PATH_DATA_TRANSFER_ADDITIONAL_ATTRIBUTES, 'store', $store->getId());
     }
 
     /**
