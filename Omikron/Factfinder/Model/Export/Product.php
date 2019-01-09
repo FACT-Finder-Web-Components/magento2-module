@@ -290,7 +290,7 @@ class Product extends AbstractModel
      * @param StoreInterface $store
      * @return Collection
      */
-    private function getFilteredProductCollection($store)
+    protected function getFilteredProductCollection($store)
     {
         /** @var Collection $collection */
         return $this->productCollectionFactory
