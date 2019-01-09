@@ -80,11 +80,6 @@
                     <label>add-tracking-params</label>
                     <comment>With this property you can deliver standard parameters which are attached to every tracking request. Example: param1=abc,param2=xyz.</comment>
                 </field>
-                <field id="keep_filters" translate="label" type="select" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>keep-filters</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    <comment>With this property you can determine if filters (which where set before the search, e.g. via ASN) should be kept or discarded.</comment>
-                </field>
                 <field id="keep_url_params" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>keep-url-params</label>
                     <comment>Determines if parameters which are written into the URL should be kept.</comment>

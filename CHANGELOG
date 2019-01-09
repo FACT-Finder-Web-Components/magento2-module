@@ -3,6 +3,9 @@
 - Add missing title to `factfinder_result_index` site
 - Exclude FACT-Finder Web Components js script from minification
 
+## CHANGE
+- Remove 'keep-filters' parameter from module configuration
+
 #ADD
 - Added possibility to export additional attributes in separate columns
 - Adds possibility to configure frequency of feed file generation by Cron

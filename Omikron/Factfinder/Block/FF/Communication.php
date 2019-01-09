@@ -104,11 +104,6 @@ class Communication extends Template
                 'type' => 'string',
                 'defaultValue' => $defaultValues['advanced']['add_tracking_params']
             ],
-            'keep-filters' => [
-                'value' => $this->_helper->getKeepFilters(),
-                'type' => 'boolean',
-                'defaultValue' => $defaultValues['advanced']['keep_filters']
-            ],
             'keep-url-params' => [
                 'value' => $this->_helper->getKeepUrlParams(),
                 'type' => 'string',

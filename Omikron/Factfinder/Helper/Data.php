@@ -244,15 +244,6 @@ class Data extends AbstractHelper
     }
 
     /**
-     * Returns the keep-filters configuration
-     * @return mixed
-     */
-    public function getKeepFilters()
-    {
-        return $this->scopeConfig->getValue('factfinder/advanced/keep_filters', 'store');
-    }
-
-    /**
      * Returns the keep-url-params configuration
      * @return mixed
      */
