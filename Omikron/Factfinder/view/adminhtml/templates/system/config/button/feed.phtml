@@ -20,7 +20,7 @@
                 $('load_message_span').update('<?php echo __('Generating export file'); ?>');
             }
 
-            new Ajax.Request('<?php echo $this->getUrl('factfinder/export/feed') ?>', {
+            new Ajax.Request('<?php echo $block->getUrl('factfinder/export/feed') ?>', {
                 parameters:     {},
                 loaderArea:     false,
                 asynchronous:   true,
@@ -33,7 +33,7 @@
 
                         $('load_spinner').hide();
                         $('load_message_span').update(response.message);
-                        
+
                         enableFeedButton();
                     } catch (e) {
                         response = {};

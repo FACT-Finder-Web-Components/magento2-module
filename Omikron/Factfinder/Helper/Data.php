@@ -3,8 +3,8 @@
 namespace Omikron\Factfinder\Helper;
 
 use Magento\Framework\App\Helper\AbstractHelper;
-use Magento\Framework\Registry;
 use Magento\Framework\Encryption\EncryptorInterface;
+use Magento\Framework\Registry;
 
 /**
  * Class Data
@@ -13,9 +13,9 @@ use Magento\Framework\Encryption\EncryptorInterface;
  */
 class Data extends AbstractHelper
 {
-    const FRONT_NAME = "FACT-Finder";
+    const FRONT_NAME = 'FACT-Finder';
     const EXPORT_PAGE = 'export';
-    const CUSTOM_RESULT_PAGE = "result";
+    const CUSTOM_RESULT_PAGE = 'result';
     const SESSION_ID_LENGTH = 30;
 
     const PATH_TRACKING_PRODUCT_NUMBER_FIELD_ROLE = 'factfinder/general/tracking_product_number_field_role';
@@ -97,8 +97,8 @@ class Data extends AbstractHelper
         $registeredAuthData = $this->getRegisteredAuthParams();
         $url = $registeredAuthData['serverUrl'] ? $registeredAuthData['serverUrl'] : $this->scopeConfig->getValue(self::PATH_ADDRESS, 'store');
 
-        if (substr(rtrim($url), -1) != "/") {
-            $url .= "/";
+        if (substr(rtrim($url), -1) != '/') {
+            $url .= '/';
         }
 
         return $url;
@@ -137,7 +137,7 @@ class Data extends AbstractHelper
         if(is_array($fr) && array_key_exists($fieldRoleName, $fr)) {
             return $fr[$fieldRoleName];
         } else {
-            return "";
+            return '';
         }
     }
 
@@ -400,18 +400,6 @@ class Data extends AbstractHelper
     }
 
     /**
-     * Get configuration options telling if additional attributes should be merged and exported as single column or each attribute
-     * should be exported in separate column
-     *
-     * @param $store
-     * @return bool
-     */
-    protected function getAdditionalAttributesExportedInSeparateColumns($store)
-    {
-        return boolval($this->scopeConfig->getValue(self::PATH_DATA_TRANSFER_ATTRIBUTES_SEPARATE_COLUMNS, 'store', $store->getId()));
-    }
-
-    /**
      * Private Getter
      */
 
@@ -463,7 +451,7 @@ class Data extends AbstractHelper
         $prefix = $this->getAuthenticationPrefix();
         $postfix = $this->getAuthenticationPostfix();
 
-        $hashPassword = md5($prefix . (string)$time . md5($password) . $postfix);
+        $hashPassword = md5($prefix . (string) $time . md5($password) . $postfix);
 
         $authArray['password'] = $hashPassword;
         $authArray['timestamp'] = $time;

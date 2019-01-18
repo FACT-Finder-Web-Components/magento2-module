@@ -43,7 +43,8 @@ class Frequency extends \Magento\Framework\App\Config\Value
     }
 
     /**
-     * @return \Magento\Framework\App\Config\Value|void
+     * @return \Magento\Framework\App\Config\Value
+     * @throws \Exception
      */
     public function afterSave()
     {
@@ -53,19 +54,19 @@ class Frequency extends \Magento\Framework\App\Config\Value
         $frequencyWeekly  = \Magento\Cron\Model\Config\Source\Frequency::CRON_WEEKLY;
         $frequencyMonthly = \Magento\Cron\Model\Config\Source\Frequency::CRON_MONTHLY;
 
-        $cronExprArray  = array(
+        $cronExprArray  = [
             intval($time[1]),
             intval($time[0]),
             ($frequency == $frequencyMonthly) ? '1' : '*',
             '*',
             ($frequency == $frequencyWeekly) ? '1' : '*',
-        );
+        ];
         $cronExprString = join(' ', $cronExprArray);
 
         try {
             $this->configWriter->save(self::CRON_STRING_PATH, $cronExprString);
-        } catch (Exception $e) {
-            throw new Exception('Unable to save the cron expression.');
+        } catch (\Exception $e) {
+            throw new \Exception('Unable to save the cron expression.');
         }
 
         return $this;

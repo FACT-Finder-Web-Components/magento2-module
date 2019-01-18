@@ -13,19 +13,19 @@ class BlockClassManager extends \Magento\Framework\View\Element\Template
     /**
      * Replaces the block class with the default searchbox
      *
-     * @param $block
+     * @param string $block
      */
     public function setBlockSearchbox($block)
     {
-        $this->setBlockClass($block, "top.search", "ff/searchbox.phtml");
+        $this->setBlockClass($block, 'top.search', 'ff/searchbox.phtml');
     }
 
     /**
      * Replace the block class and set a default template for a given block
      *
-     * @param $block
-     * @param $name
-     * @param $template
+     * @param string $block
+     * @param string $name
+     * @param string $template
      */
     protected function setBlockClass($block, $name, $template)
     {

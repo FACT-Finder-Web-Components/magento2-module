@@ -9,7 +9,7 @@
 namespace Omikron\Factfinder\Block\FF;
 
 use Magento\Catalog\Model\Product;
-use \Magento\Framework\View\Element\Template;
+use Magento\Framework\View\Element\Template;
 
 class Recommendation extends Template
 {

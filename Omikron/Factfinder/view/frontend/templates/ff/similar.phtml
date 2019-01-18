@@ -1,7 +1,7 @@
 <ff-similar-products record-id="<?= $block->getProduct()->getSku() ?>" unresolved>
     <div class="block upsell" data-limit="0" data-shuffle="0">
         <div class="block-title title">
-            <strong id="block-upsell-heading" role="heading" aria-level="2"><?= __("Similar Products") ?></strong>
+            <strong id="block-upsell-heading" role="heading" aria-level="2"><?= __('Similar Products') ?></strong>
         </div>
         <div class="block-content content" aria-labelledby="block-upsell-heading">
             <div class="products wrapper grid products-grid products-upsell">
@@ -15,7 +15,7 @@
                                             <span class="product-image-wrapper">
                                             <img class="product-image-photo" src="{{record.ImageUrl}}"
                                                  data-image="{{record.ImageUrl}}"
-                                                 data-image-onerror="<?php echo $this->getProductImagePlaceholder(); ?>"/>
+                                                 data-image-onerror="<?php echo $block->getProductImagePlaceholder(); ?>"/>
                                             </span>
                                         </span>
                                     </a>
@@ -31,7 +31,7 @@
                                                 <span id="product-price-{{record.MagentoEntityId}}"
                                                       data-price-amount="{{record.Price}}"
                                                       data-price-type="finalPrice" class="price-wrapper ">
-                                                    <span class="price">{{record.Price}}<?php echo $this->getCurrentCurrencySymbol(); ?></span>
+                                                    <span class="price">{{record.Price}}<?php echo $block->getCurrentCurrencySymbol(); ?></span>
                                                 </span>
                                             </span>
                                         </div>

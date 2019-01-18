@@ -37,7 +37,7 @@ class Export extends \Magento\Framework\App\Action\Action
 
     public function execute()
     {
-        $validPasswords = array($this->_dataHelper->getUploadUrlUser() => $this->_dataHelper->getUploadUrlPassword());
+        $validPasswords = [$this->_dataHelper->getUploadUrlUser() => $this->_dataHelper->getUploadUrlPassword()];
         $validUsers = array_keys($validPasswords);
 
         $phpAuthUser = $_SERVER['PHP_AUTH_USER'];
