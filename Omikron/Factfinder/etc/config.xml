@@ -4,6 +4,7 @@
         <factfinder>
             <general>
                 <is_enabled>0</is_enabled>
+                <logging_enabled>0</logging_enabled>
                 <address></address>
                 <channel></channel>
                 <username></username>
@@ -50,7 +51,8 @@
             </components>
             <data_transfer>
                 <ff_cron_enabled>0</ff_cron_enabled>
-                <ff_cron_import>1</ff_cron_import>
+                <ff_push_import_enabled>1</ff_push_import_enabled>
+                <ff_push_import_type>suggest</ff_push_import_type>
                 <ff_product_visibility>3,4</ff_product_visibility>
                 <ff_additional_attributes_separate_columns>0</ff_additional_attributes_separate_columns>
             </data_transfer>

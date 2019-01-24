@@ -256,9 +256,10 @@ class Product extends AbstractModel
             return $result;
         }
 
-        if ($this->helperData->isPushImportEnabled($store->getId())) {
+        $storeId = $store->getId();
+        if ($this->helperData->isPushImportEnabled($storeId)) {
 
-            if ($this->helperCommunication->pushImport($this->helperData->getChannel($store->getId()))) {
+            if ($this->helperCommunication->pushImport($this->helperData->getChannel($storeId), $storeId)) {
                 $result['message'] .= ' ' . __('Import successfully pushed.');
             } else {
                 $result['message'] .= ' ' . __('Import not successful.');

@@ -4,4 +4,18 @@
     <type name="Magento\Framework\View\Asset\Minification">
         <plugin name="omikron.factfinder.excludefilesfromminification" type="Omikron\Factfinder\Plugin\ExcludeFilesFromMinification" />
     </type>
+    <type name="Omikron\Factfinder\Logger\Logger">
+        <arguments>
+            <argument name="name" xsi:type="string">factFinderLogger</argument>
+            <argument name="handlers" xsi:type="array">
+                <item name="error" xsi:type="object">Omikron\Factfinder\Logger\Handler\Error</item>
+                <item name="info" xsi:type="object">Omikron\Factfinder\Logger\Handler\Info</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Omikron\Factfinder\Helper\Communication">
+        <arguments>
+            <argument name="logger" xsi:type="object">Omikron\Factfinder\Logger\Logger</argument>
+        </arguments>
+    </type>
 </config>

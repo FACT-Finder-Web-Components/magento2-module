@@ -3,12 +3,14 @@
 namespace Omikron\Factfinder\Helper;
 
 use Magento\Framework\App\Helper\AbstractHelper;
+use Magento\Framework\App\Helper\Context;
+use Omikron\Factfinder\Helper\Data as ConfigHelper;
+use Psr\Log\LoggerInterface;
+use Magento\Framework\Serialize\SerializerInterface;
 
 /**
  * Class Communication
- * Helper Class for communicating with the Factfinder API
- *
- * @package Omikron\Factfinder\Helper
+ * Helper Class for communicating with the FACT-Finder API
  */
 class Communication extends AbstractHelper
 {
@@ -16,27 +18,39 @@ class Communication extends AbstractHelper
     const API_NAME = 'Search.ff';
     const API_QUERY = 'FACT-Finder version';
 
-    /** @var \Omikron\Factfinder\Helper\Data */
-    protected $_helper;
+    /**
+     * @var Data
+     */
+    protected $configHelper;
 
-    /** @var \Magento\Config\Model\ResourceModel\Config */
-    protected $_resourceConfig;
+    /**
+     * @var LoggerInterface
+     */
+    protected $logger;
+
+    /**
+     * @var SerializerInterface
+     */
+    protected $jsonSerializer;
 
     /**
      * Communication constructor.
      *
-     * @param \Magento\Framework\App\Helper\Context $context
-     * @param \Magento\Config\Model\ResourceModel\Config $resourceConfig
-     * @param \Omikron\Factfinder\Helper\Data $helper
+     * @param Context             $context
+     * @param Data                $helper
+     * @param SerializerInterface $jsonSerializer
+     * @param LoggerInterface     $logger
      */
     public function __construct(
-        \Magento\Framework\App\Helper\Context $context,
-        \Magento\Config\Model\ResourceModel\Config $resourceConfig,
-        \Omikron\Factfinder\Helper\Data $helper
+        Context $context,
+        ConfigHelper $helper,
+        SerializerInterface $jsonSerializer,
+        LoggerInterface $logger
     )
     {
-        $this->_helper = $helper;
-        $this->_resourceConfig = $resourceConfig;
+        $this->configHelper = $helper;
+        $this->logger = $logger;
+        $this->jsonSerializer = $jsonSerializer;
         parent::__construct($context);
     }
 
@@ -49,10 +63,10 @@ class Communication extends AbstractHelper
      */
     public function sendToFF($apiName, $params)
     {
-        $authentication = $this->_helper->getAuthArray();
-        $address = $this->_helper->getAddress();
+        $authentication = $this->configHelper->getAuthArray();
+        $address = $this->configHelper->getAddress();
 
-        $url = $address . $apiName . "?format=json&" . http_build_query($authentication) . "&";
+        $url = $address . $apiName . '?format=json&' . http_build_query($authentication) . '&';
 
         if (is_array($params)) {
             $url .= http_build_query($params);
@@ -84,10 +98,10 @@ class Communication extends AbstractHelper
     {
         $result = [];
         $result['success'] = true;
-        $result['ff_error_response'] = "";
-        $result['ff_error_stacktrace'] = "";
-        $result['ff_response_decoded'] = json_decode($this->sendToFF(self::API_NAME, ['query' =>  self::API_QUERY, 'channel' => $this->_helper->getChannel($store->getId()), 'verbose' => 'true']), true);
-        
+        $result['ff_error_response'] = '';
+        $result['ff_error_stacktrace'] = '';
+        $result['ff_response_decoded'] = $this->jsonSerializer->unserialize($this->sendToFF(self::API_NAME, ['query' =>  self::API_QUERY, 'channel' => $this->configHelper->getChannel($store->getId()), 'verbose' => 'true']), true);
+
         if (!is_array($result['ff_response_decoded'])) {
             $result['ff_response_decoded'] = [];
             $result['success'] = false;
@@ -99,7 +113,7 @@ class Communication extends AbstractHelper
         }
         if($result['success'] && isset($result['ff_response_decoded']['searchResult']) && isset($result['ff_response_decoded']['searchResult']['fieldRoles'])) {
             $result['hasFieldRoles'] = true;
-            $result['fieldRoles'] = json_encode($result['ff_response_decoded']['searchResult']['fieldRoles']);
+            $result['fieldRoles'] = $this->jsonSerializer->serialize($result['ff_response_decoded']['searchResult']['fieldRoles']);
         }
         else {
             $result['hasFieldRoles'] = false;
@@ -118,7 +132,7 @@ class Communication extends AbstractHelper
     {
         $conCheck = $this->checkConnection($store);
         if($conCheck['hasFieldRoles']) {
-            $this->_helper->setFieldRoles($conCheck['fieldRoles'], $store);
+            $this->configHelper->setFieldRoles($conCheck['fieldRoles'], $store);
         }
         return $conCheck;
     }
@@ -127,12 +141,22 @@ class Communication extends AbstractHelper
      * Triggers an ff import on the pushed data
      *
      * @param string $channelName
+     * @param int|null $storeId
      * @return bool
      */
-    public function pushImport($channelName)
+    public function pushImport($channelName, $storeId = null)
     {
-        $response_json = json_decode($this->sendToFF('Import.ff', ['channel' => $channelName, 'type' => 'suggest', 'format' => 'json' , 'quiet' => 'true', 'download' => 'true']), true);
-
+        $importTypes = $this->configHelper->getPushImportTypes($storeId);
+        if (empty($importTypes)) {
+            return false;
+        }
+        $response_json = [];
+        foreach ($importTypes as $type) {
+            $response_json = array_merge_recursive($response_json, $this->jsonSerializer->unserialize($this->sendToFF('Import.ff', ['channel' => $channelName, 'type' => $type, 'format' => 'json' , 'quiet' => 'true', 'download' => 'true']), true));
+        }
+        $this->logger->addInfo(
+            __('[PUSH IMPORT]:: Push for store %1. Response from FACT-Finder server  : %2', $storeId, $this->jsonSerializer->serialize($response_json))
+        );
         if (is_array($response_json)) {
             if (isset($response_json['errors']) && !empty($response_json['errors'])) {
                 return false;
