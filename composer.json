@@ -4,7 +4,9 @@
   "type": "magento2-module",
   "license": "FACT-Finder",
   "require": {
-    "php": "7.*"
+    "php": "7.*",
+    "ext-curl": "*",
+    "ext-libxml": "*"
   },
   "require-dev": {
     "magento-ecg/coding-standard": "^3.1",
