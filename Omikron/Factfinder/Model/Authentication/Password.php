@@ -2,7 +2,7 @@
 
 namespace Omikron\Factfinder\Model\Authentication;
 
-use \Magento\Framework\App\Config\Value;
+use Magento\Framework\App\Config\Value;
 
 class Password extends Value
 {

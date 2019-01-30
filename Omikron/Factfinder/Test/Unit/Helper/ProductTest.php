@@ -3,14 +3,14 @@
 
 namespace Omikron\Factfinder\Test\Unit\Helper;
 
+use Magento\Catalog\Api\CategoryRepositoryInterface;
+use Magento\Catalog\Helper\Image;
 use Magento\Catalog\Model\Entity\Attribute;
+use Magento\Catalog\Model\ProductRepository;
+use Magento\ConfigurableProduct\Model\ResourceModel\Product\Type\Configurable;
+use Magento\Eav\Model\Config;
 use Magento\Framework\App\Config\ScopeConfigInterface;
-use \Magento\Framework\App\Helper\Context;
-use \Magento\Catalog\Helper\Image;
-use \Magento\Eav\Model\Config;
-use \Magento\Catalog\Model\ProductRepository;
-use \Magento\ConfigurableProduct\Model\ResourceModel\Product\Type\Configurable;
-use \Magento\Catalog\Api\CategoryRepositoryInterface;
+use Magento\Framework\App\Helper\Context;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Phrase;
 use Magento\Framework\TestFramework\Unit\Helper\ObjectManager;
@@ -112,7 +112,7 @@ class ProductTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @param \Magento\Catalog\Model\Product  | \PHPUnit_Framework_MockObject_MockObject $productMock
-     * @param \Magento\Catalog\Model\Entity\Attributt  | \PHPUnit_Framework_MockObject_MockObject $attributeMock
+     * @param \Magento\Catalog\Model\Entity\Attribute  | \PHPUnit_Framework_MockObject_MockObject $attributeMock
      * @param \Magento\Framework\App\Config\ScopeConfigInterface | \PHPUnit_Framework_MockObject_MockObject $scopeConfigMock
      *
      * @dataProvider manufacturerProductDataProvider
@@ -152,7 +152,7 @@ class ProductTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @param \Magento\Catalog\Model\Product  | \PHPUnit_Framework_MockObject_MockObject $productMock
-     * @param \Magento\Catalog\Model\Entity\Attributt  | \PHPUnit_Framework_MockObject_MockObject $attributeMock
+     * @param \Magento\Catalog\Model\Entity\Attribute  | \PHPUnit_Framework_MockObject_MockObject $attributeMock
      * @param \Magento\Framework\App\Config\ScopeConfigInterface | \PHPUnit_Framework_MockObject_MockObject $scopeConfigMock
      *
      * @dataProvider eanProductDataProvider
@@ -198,7 +198,7 @@ class ProductTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @param \Magento\Catalog\Model\Product  | \PHPUnit_Framework_MockObject_MockObject $productMock
-     * @param \Magento\Catalog\Model\Entity\Attributt  | \PHPUnit_Framework_MockObject_MockObject $attributeMock
+     * @param \Magento\Catalog\Model\Entity\Attribute  | \PHPUnit_Framework_MockObject_MockObject $attributeMock
      * @param \Magento\Framework\App\Config\ScopeConfigInterface | \PHPUnit_Framework_MockObject_MockObject $scopeConfigMock
      *
      * @dataProvider manufacturerProductDataProvider
@@ -238,7 +238,7 @@ class ProductTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @param \Magento\Catalog\Model\Product  | \PHPUnit_Framework_MockObject_MockObject $productMock
-     * @param \Magento\Catalog\Model\Entity\Attributt  | \PHPUnit_Framework_MockObject_MockObject $attributeMock
+     * @param \Magento\Catalog\Model\Entity\Attribute  | \PHPUnit_Framework_MockObject_MockObject $attributeMock
      * @param \Magento\Framework\App\Config\ScopeConfigInterface | \PHPUnit_Framework_MockObject_MockObject $scopeConfigMock
      *
      * @dataProvider manufacturerProductDataProvider
@@ -278,7 +278,7 @@ class ProductTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @param \Magento\Catalog\Model\Product  | \PHPUnit_Framework_MockObject_MockObject $productMock
-     * @param \Magento\Catalog\Model\Entity\Attributt  | \PHPUnit_Framework_MockObject_MockObject $attributeMock
+     * @param \Magento\Catalog\Model\Entity\Attribute  | \PHPUnit_Framework_MockObject_MockObject $attributeMock
      * @param \Magento\Framework\App\Config\ScopeConfigInterface | \PHPUnit_Framework_MockObject_MockObject $scopeConfigMock
      *
      * @dataProvider eanProductDataProvider
@@ -322,7 +322,7 @@ class ProductTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @param \Magento\Catalog\Model\Product  | \PHPUnit_Framework_MockObject_MockObject $productMock
-     * @param \Magento\Catalog\Model\Entity\Attributt  | \PHPUnit_Framework_MockObject_MockObject $attributeMock
+     * @param \Magento\Catalog\Model\Entity\Attribute  | \PHPUnit_Framework_MockObject_MockObject $attributeMock
      * @param \Magento\Framework\App\Config\ScopeConfigInterface | \PHPUnit_Framework_MockObject_MockObject $scopeConfigMock
      *
      * @dataProvider emptyProductDataProvider

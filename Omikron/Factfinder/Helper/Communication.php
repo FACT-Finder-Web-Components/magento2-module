@@ -43,8 +43,8 @@ class Communication extends AbstractHelper
     /**
      * Sends HTTP GET request to FACT-Finder. Returns the server response.
      *
-     * @param $apiName string
-     * @param $params string|array
+     * @param string $apiName
+     * @param string|array $params
      * @return mixed
      */
     public function sendToFF($apiName, $params)
@@ -52,7 +52,7 @@ class Communication extends AbstractHelper
         $authentication = $this->_helper->getAuthArray();
         $address = $this->_helper->getAddress();
 
-        $url = $address . $apiName . "?format=json&" . http_build_query($authentication) . "&";
+        $url = $address . $apiName . '?format=json&' . http_build_query($authentication) . '&';
 
         if (is_array($params)) {
             $url .= http_build_query($params);
@@ -84,10 +84,10 @@ class Communication extends AbstractHelper
     {
         $result = [];
         $result['success'] = true;
-        $result['ff_error_response'] = "";
-        $result['ff_error_stacktrace'] = "";
+        $result['ff_error_response'] = '';
+        $result['ff_error_stacktrace'] = '';
         $result['ff_response_decoded'] = json_decode($this->sendToFF(self::API_NAME, ['query' =>  self::API_QUERY, 'channel' => $this->_helper->getChannel($store->getId()), 'verbose' => 'true']), true);
-        
+
         if (!is_array($result['ff_response_decoded'])) {
             $result['ff_response_decoded'] = [];
             $result['success'] = false;

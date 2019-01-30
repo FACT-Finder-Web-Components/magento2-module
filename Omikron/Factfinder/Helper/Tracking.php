@@ -2,7 +2,7 @@
 
 namespace Omikron\Factfinder\Helper;
 
-use \Magento\Framework\App\Helper\AbstractHelper;
+use Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Sales\Model\Order;
 
 /**
@@ -13,9 +13,9 @@ use Magento\Sales\Model\Order;
  */
 class Tracking extends AbstractHelper
 {
-    const API_NAME = "Tracking.ff";
-    const EVENT_TYPE_CART = "cart";
-    const EVENT_TYPE_CHECKOUT = "checkout";
+    const API_NAME = 'Tracking.ff';
+    const EVENT_TYPE_CART = 'cart';
+    const EVENT_TYPE_CHECKOUT = 'checkout';
 
     /** @var Communication */
     protected $_communication;
@@ -88,13 +88,13 @@ class Tracking extends AbstractHelper
     /**
      * Sends tracking events for checkout to FF
      *
-     * @param $order Order
+     * @param Order $order
      */
     public function checkout($order)
     {
         $baseParams = [
-            "event" => self::EVENT_TYPE_CHECKOUT,
-            "channel" => $this->getChannel(),
+            'event' => self::EVENT_TYPE_CHECKOUT,
+            'channel' => $this->getChannel(),
         ];
 
         // start with mandatory get parameters
@@ -111,11 +111,11 @@ class Tracking extends AbstractHelper
             $product = $item->getProduct();
 
             $paramsItem = [
-                "sid" => $sid,
-                "id" => $this->_product->get($trackingProductNumberFieldRole, $product, $this->_store),
+                'sid' => $sid,
+                'id' => $this->_product->get($trackingProductNumberFieldRole, $product, $this->_store),
                 'masterId' => $this->_product->get($masterArticleNumberFieldRole, $product, $this->_store),
-                "count" => (int)$item->getQtyOrdered(),
-                "price" => $this->_product->get("Price", $product, $this->_store),
+                'count' => (int) $item->getQtyOrdered(),
+                'price' => $this->_product->get('Price', $product, $this->_store),
             ];
 
             // build query for current article
@@ -123,7 +123,7 @@ class Tracking extends AbstractHelper
         }
 
         // concatenate get parameters of ordered articles
-        $params .= '&' .implode("&", $paramsCollection);
+        $params .= '&' .implode('&', $paramsCollection);
 
         // track checkout event
         $this->_communication->sendToFF(self::API_NAME, $params);
@@ -146,7 +146,7 @@ class Tracking extends AbstractHelper
      */
     public function getUserId()
     {
-        return $this->_session->isLoggedIn() ? (string)$this->_session->getCustomerId() : null;
+        return $this->_session->isLoggedIn() ? (string) $this->_session->getCustomerId() : null;
     }
 
     /**

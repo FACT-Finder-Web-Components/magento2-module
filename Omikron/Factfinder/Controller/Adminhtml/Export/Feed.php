@@ -10,7 +10,7 @@ namespace Omikron\Factfinder\Controller\Adminhtml\Export;
  */
 class Feed extends \Magento\Backend\App\Action
 {
-    /** @var \Magento\Framework\View\Result\Page */
+    /** @var \Magento\Framework\View\Result\PageFactory */
     protected $resultPageFactory;
 
     /** @var \Magento\Framework\Controller\Result\JsonFactory */
@@ -38,12 +38,12 @@ class Feed extends \Magento\Backend\App\Action
         \Omikron\Factfinder\Model\Export\Product $productExporter
     )
     {
+        parent::__construct($context);
+
         $this->resultPageFactory = $resultPageFactory;
         $this->resultJsonFactory = $resultJsonFactory;
         $this->_storeManager = $storeManager;
         $this->productExporter = $productExporter;
-
-        parent::__construct($context);
     }
 
     /**
@@ -63,7 +63,7 @@ class Feed extends \Magento\Backend\App\Action
 
         /** @var \Magento\Store\Api\Data\StoreInterface $store */
         if (isset($result[1])) {
-            $store = $this->_storeManager->getStore((int)$result[1]);
+            $store = $this->_storeManager->getStore((int) $result[1]);
         } else {
             $store = $this->_storeManager->getStore();
         }

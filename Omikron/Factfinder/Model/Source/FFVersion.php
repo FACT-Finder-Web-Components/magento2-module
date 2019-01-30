@@ -34,4 +34,3 @@ class FFVersion implements \Magento\Framework\Option\ArrayInterface
         ];
     }
 }
-
