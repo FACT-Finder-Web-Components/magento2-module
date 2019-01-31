@@ -3,7 +3,6 @@
 namespace Omikron\Factfinder\Helper;
 
 use Magento\Framework\App\Helper\AbstractHelper;
-use Magento\Framework\Encryption\EncryptorInterface;
 use Magento\Framework\Registry;
 
 /**
@@ -32,12 +31,8 @@ class Data extends AbstractHelper
     const PATH_DATATRANSFER_IMPORT = 'factfinder/data_transfer/ff_cron_import';
     const PATH_CONFIGURABLE_CRON_IS_ENABLED = 'factfinder/configurable_cron/ff_cron_enabled';
 
-    // Data Transfer
-    const PATH_FF_UPLOAD_URL_USER = 'factfinder/basic_auth_data_transfer/ff_upload_url_user';
-    const PATH_FF_UPLOAD_URL_PASSWORD = 'factfinder/basic_auth_data_transfer/ff_upload_url_password';
-
     /** @var \Magento\Config\Model\ResourceModel\Config */
-    protected $_resourceConfig;
+    protected $resourceConfig;
 
     /**
      * @var Registry
@@ -45,28 +40,20 @@ class Data extends AbstractHelper
     protected $registry;
 
     /**
-     * @var EncryptorInterface
-     */
-    protected $encryptor;
-
-    /**
      * Data constructor.
      * @param \Magento\Framework\App\Helper\Context $context
      * @param \Magento\Config\Model\ResourceModel\Config $resourceConfig
      * @param Registry $registry
-     * @param EncryptorInterface $encryptor
      */
     public function __construct(
         \Magento\Framework\App\Helper\Context $context,
         \Magento\Config\Model\ResourceModel\Config $resourceConfig,
-        Registry $registry,
-        EncryptorInterface $encryptor
+        Registry $registry
     )
     {
         parent::__construct($context);
-        $this->_resourceConfig = $resourceConfig;
+        $this->resourceConfig = $resourceConfig;
         $this->registry = $registry;
-        $this->encryptor = $encryptor;
     }
 
     /**
@@ -411,7 +398,7 @@ class Data extends AbstractHelper
     {
         $registeredAuthData = $this->getRegisteredAuthParams();
 
-        return $registeredAuthData['password'] ? $registeredAuthData['password'] : $this->encryptor->decrypt($this->scopeConfig->getValue(self::PATH_PASSWORD, 'store'));
+        return $registeredAuthData['password'] ? $registeredAuthData['password'] : $this->scopeConfig->getValue(self::PATH_PASSWORD, 'store');
     }
 
     /**
@@ -467,7 +454,7 @@ class Data extends AbstractHelper
      */
     public function setFieldRoles($value, $store)
     {
-        return $this->_resourceConfig->saveConfig(self::PATH_TRACKING_PRODUCT_NUMBER_FIELD_ROLE, $value, 'stores', $store->getId());
+        return $this->resourceConfig->saveConfig(self::PATH_TRACKING_PRODUCT_NUMBER_FIELD_ROLE, $value, 'stores', $store->getId());
     }
 
     /**
@@ -486,26 +473,6 @@ class Data extends AbstractHelper
         }
 
         return $sessionId;
-    }
-
-    /**
-     * Returns the upload username for external url
-     *
-     * @return string
-     */
-    public function getUploadUrlUser()
-    {
-        return $this->scopeConfig->getValue(self::PATH_FF_UPLOAD_URL_USER, 'store');
-    }
-
-    /**
-     * Returns the upload password for external url
-     *
-     * @return string
-     */
-    public function getUploadUrlPassword()
-    {
-        return $this->scopeConfig->getValue(self::PATH_FF_UPLOAD_URL_PASSWORD, 'store');
     }
 
     /**
