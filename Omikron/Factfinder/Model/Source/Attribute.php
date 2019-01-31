@@ -2,50 +2,27 @@
 
 namespace Omikron\Factfinder\Model\Source;
 
-/**
- * Class Attribute
- * @package Omikron\Factfinder\Model\Source
- */
-class Attribute
-{
-    /* @var \Magento\Eav\Model\ResourceModel\Entity\Attribute\Collection */
-    protected $_attributeCollection;
+use Magento\Eav\Model\Entity\Attribute\AbstractAttribute as EavAttribute;
+use Magento\Eav\Model\ResourceModel\Entity\Attribute\CollectionFactory as AttributeCollectionFactory;
+use Magento\Framework\Data\OptionSourceInterface;
 
-    /**
-     * Attribute constructor.
-     * @param \Magento\Eav\Model\ResourceModel\Entity\Attribute\Collection $attributeCollection
-     */
-    public function __construct(
-        \Magento\Eav\Model\ResourceModel\Entity\Attribute\Collection $attributeCollection
-    )
+class Attribute implements OptionSourceInterface
+{
+    /** @var AttributeCollectionFactory */
+    private $collectionFactory;
+
+    public function __construct(AttributeCollectionFactory $collectionFactory)
     {
-        $this->_attributeCollection = $attributeCollection;
+        $this->collectionFactory = $collectionFactory;
     }
 
-    /**
-     * Generate an array of option attributes
-     * @return array
-     */
     public function toOptionArray()
     {
-        $options = [
-            [
-                'value' => '',
-                'label' => ''
-            ]
-        ];
-
-        $attributeCollection = $this->_attributeCollection->load()->getItems();
-
-        foreach ($attributeCollection as $attribute) {
-            $options[] = [
-                'value' => $attribute->getAttributeCode(),
-                'label' => $attribute->getAttributeCode()
-            ];
-        }
-
-        asort($options);
-
-        return $options;
+        $collection = $this->collectionFactory->create();
+        $collection->setOrder('attribute_code', 'ASC');
+        $options = array_map(function (EavAttribute $attribute): array {
+            return ['value' => $attribute->getAttributeCode(), 'label' => $attribute->getAttributeCode()];
+        }, $collection->getItems());
+        return array_merge([['value' => '', 'label' => '']], $options);
     }
 }
