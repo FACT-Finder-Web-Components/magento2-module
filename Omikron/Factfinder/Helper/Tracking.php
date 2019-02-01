@@ -1,15 +1,20 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Omikron\Factfinder\Helper;
 
+use Magento\Framework\App\Helper\Context;
+use Magento\Store\Model\StoreManagerInterface;
+use Magento\Store\Api\Data\StoreInterface;
 use Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Sales\Model\Order;
+use Omikron\Factfinder\Api\ClientInterface;
+use Magento\Customer\Model\Session;
 
 /**
  * Class Tracking
  * Helper Class for sending tracking events to FF
- *
- * @package Omikron\Factfinder\Helper
  */
 class Tracking extends AbstractHelper
 {
@@ -17,44 +22,38 @@ class Tracking extends AbstractHelper
     const EVENT_TYPE_CART = 'cart';
     const EVENT_TYPE_CHECKOUT = 'checkout';
 
-    /** @var Communication */
-    protected $_communication;
+    protected $factFinderClient;
 
     /** @var Product */
-    protected $_product;
+    protected $product;
 
-    /** @var \Magento\Store\Model\Store */
-    protected $_store;
+    /** @var StoreInterface */
+    protected $store;
 
-    /** @var \Magento\Customer\Model\Session */
-    protected $_session;
+    /** @var Session  */
+    protected $session;
 
     /** @var Data */
-    protected $_helper;
+    protected $configHelper;
 
-    /**
-     * Tracking constructor.
-     * @param \Magento\Framework\App\Helper\Context $context
-     * @param Communication $communication
-     * @param Product $product
-     * @param \Magento\Store\Model\Store $store
-     * @param \Magento\Customer\Model\Session $session
-     * @param Data $helper
-     */
+    /** @var Communication */
+    protected $communicationHelper;
+
     public function __construct(
-        \Magento\Framework\App\Helper\Context $context,
-        Communication $communication,
+        Context $context,
+        ClientInterface $factFinderClient,
         Product $product,
-        \Magento\Store\Model\Store $store,
-        \Magento\Customer\Model\Session $session,
-        Data $helper
-    )
-    {
-        $this->_communication = $communication;
-        $this->_product = $product;
-        $this->_session = $session;
-        $this->_helper = $helper;
-        $this->_store = $store;
+        StoreManagerInterface $storeManager,
+        Session $session,
+        Data $configHelper,
+        Communication $communicationHelper
+    ) {
+        $this->factFinderClient    = $factFinderClient;
+        $this->product             = $product;
+        $this->session             = $session;
+        $this->configHelper        = $configHelper;
+        $this->communicationHelper = $communicationHelper;
+        $this->store               = $storeManager->getStore();
 
         parent::__construct($context);
     }
@@ -69,9 +68,9 @@ class Tracking extends AbstractHelper
     {
         $params = [
             'event' => self::EVENT_TYPE_CART,
-            'id' => $this->_product->get($this->_helper->getFieldRole('trackingProductNumber'), $product, $this->_store),
-            'masterId' => $this->_product->get($this->_helper->getFieldRole('masterArticleNumber'), $product, $this->_store),
-            'price' => $this->_product->get('Price', $product, $this->_store),
+            'id' => $this->product->get($this->configHelper->getFieldRole('trackingProductNumber'), $product, $this->store),
+            'masterId' => $this->product->get($this->configHelper->getFieldRole('masterArticleNumber'), $product, $this->store),
+            'price' => $this->product->get('Price', $product, $this->store),
             'count' => (int) round($amount),
             'sid' => $this->getSessionId(),
             'channel' => $this->getChannel(),
@@ -82,7 +81,7 @@ class Tracking extends AbstractHelper
         }
 
         // track cart event
-        $this->_communication->sendToFF(self::API_NAME, $params);
+        $this->factFinderClient->sendToFF(self::API_NAME, http_build_query($params));
     }
 
     /**
@@ -92,17 +91,15 @@ class Tracking extends AbstractHelper
      */
     public function checkout($order)
     {
-        $baseParams = [
+        // start with mandatory get parameters
+        $params = http_build_query([
             'event' => self::EVENT_TYPE_CHECKOUT,
             'channel' => $this->getChannel(),
-        ];
-
-        // start with mandatory get parameters
-        $params = http_build_query($baseParams);
+        ]);
 
         $sid = $this->getSessionId();
-        $trackingProductNumberFieldRole = $this->_helper->getFieldRole('trackingProductNumber');
-        $masterArticleNumberFieldRole = $this->_helper->getFieldRole('masterArticleNumber');
+        $trackingProductNumberFieldRole = $this->configHelper->getFieldRole('trackingProductNumber');
+        $masterArticleNumberFieldRole = $this->configHelper->getFieldRole('masterArticleNumber');
 
         $paramsCollection = [];
         // collect all ordered articles
@@ -112,10 +109,10 @@ class Tracking extends AbstractHelper
 
             $paramsItem = [
                 'sid' => $sid,
-                'id' => $this->_product->get($trackingProductNumberFieldRole, $product, $this->_store),
-                'masterId' => $this->_product->get($masterArticleNumberFieldRole, $product, $this->_store),
+                'id' => $this->product->get($trackingProductNumberFieldRole, $product, $this->store),
+                'masterId' => $this->product->get($masterArticleNumberFieldRole, $product, $this->store),
                 'count' => (int) $item->getQtyOrdered(),
-                'price' => $this->_product->get('Price', $product, $this->_store),
+                'price' => $this->product->get('Price', $product, $this->store),
             ];
 
             // build query for current article
@@ -126,7 +123,7 @@ class Tracking extends AbstractHelper
         $params .= '&' .implode('&', $paramsCollection);
 
         // track checkout event
-        $this->_communication->sendToFF(self::API_NAME, $params);
+        $this->factFinderClient->sendToFF(self::API_NAME, $params);
     }
 
     /**
@@ -136,7 +133,7 @@ class Tracking extends AbstractHelper
      */
     public function getSessionId()
     {
-        return $this->_session->getSessionId();
+        return $this->session->getSessionId();
     }
 
     /**
@@ -146,7 +143,7 @@ class Tracking extends AbstractHelper
      */
     public function getUserId()
     {
-        return $this->_session->isLoggedIn() ? (string) $this->_session->getCustomerId() : null;
+        return $this->session->isLoggedIn() ? (string) $this->session->getCustomerId() : null;
     }
 
     /**
@@ -156,6 +153,6 @@ class Tracking extends AbstractHelper
      */
     public function getChannel()
     {
-        return $this->_helper->getChannel();
+        return $this->communicationHelper->getChannel($this->store->getId());
     }
 }

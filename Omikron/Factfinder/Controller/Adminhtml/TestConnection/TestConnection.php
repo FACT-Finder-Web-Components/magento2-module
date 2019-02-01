@@ -1,56 +1,47 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Omikron\Factfinder\Controller\Adminhtml\TestConnection;
 
-use Magento\Framework\App\RequestInterface;
 use Magento\Framework\Registry;
+use Magento\Framework\App\RequestInterface;
+use Magento\Framework\Controller\Result\JsonFactory;
+use Magento\Store\Model\StoreManagerInterface;
+use Magento\Backend\App\Action\Context;
+use Omikron\Factfinder\Helper\Communication;
+use Omikron\Factfinder\Api\ClientInterface;
 
 /**
  * Class TestConnection
- * Handles requests for Testing the connection to FF
- *
- * @package Omikron\Factfinder\Controller\Adminhtml\TestConnection
+ * Handles requests for Testing the connection to FACT-Finder
  */
 class TestConnection extends \Magento\Backend\App\Action
 {
-    /** @var \Magento\Framework\Controller\Result\JsonFactory */
-    protected $_resultJsonFactory;
+    const OBSCURED_VALUE = '******';
 
-    /** @var \Omikron\Factfinder\Helper\Communication */
-    protected $_communicationHelper;
+    /** @var JsonFactory  */
+    protected $resultJsonFactory;
 
-    /** @var \Magento\Store\Model\StoreManagerInterface */
-    protected $_storeManager;
+    /** @var ClientInterface  */
+    protected $factFinderClient;
 
-    /**
-     * @var Registry
-     */
+    /** @var StoreManagerInterface  */
+    protected $storeManager;
+
+ /** @var Registry  */
     protected $registry;
 
-    /**
-     * @var string
-     */
-    protected $obscuredValue = '******';
-
-    /**
-     * TestConnection constructor.
-     * @param \Magento\Backend\App\Action\Context $context
-     * @param \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
-     * @param \Magento\Store\Model\StoreManagerInterface $storeManager
-     * @param \Omikron\Factfinder\Helper\Communication $communication
-     * @param Registry $registry
-     */
     public function __construct(
-        \Magento\Backend\App\Action\Context $context,
-        \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
-        \Magento\Store\Model\StoreManagerInterface $storeManager,
-        \Omikron\Factfinder\Helper\Communication $communication,
+        Context $context,
+        JsonFactory $resultJsonFactory,
+        StoreManagerInterface $storeManager,
+        ClientInterface $communication,
         Registry $registry
-    )
-    {
-        $this->_resultJsonFactory = $resultJsonFactory;
-        $this->_communicationHelper = $communication;
-        $this->_storeManager = $storeManager;
+    ) {
+        $this->resultJsonFactory = $resultJsonFactory;
+        $this->factFinderClient = $communication;
+        $this->storeManager = $storeManager;
         $this->registry = $registry;
         parent::__construct($context);
     }
@@ -64,7 +55,7 @@ class TestConnection extends \Magento\Backend\App\Action
     public function execute()
     {
         $authData = $this->getAuthFromRequest();
-        $this->registry->register('ff-auth', $authData, true);
+        $this->registry->register(Communication::FF_AUTH_REGISTRY_KEY, $authData, true);
 
         // get current store view from HTTP_REFERER
         $result = [];
@@ -76,21 +67,26 @@ class TestConnection extends \Magento\Backend\App\Action
 
         /** @var \Magento\Store\Api\Data\StoreInterface $store */
         if (isset($result[1])) {
-            $store = $this->_storeManager->getStore((int) $result[1]);
+            $store = $this->storeManager->getStore((int) $result[1]);
         } else {
-            $store = $this->_storeManager->getStore();
+            $store = $this->storeManager->getStore();
         }
 
-        $conCheck = $this->_communicationHelper->checkConnection($store);
-        if ($conCheck['success']) {
-            $message = (string) __('Success! Connection successfully tested!');
-        } else {
-            $message = (string) __('Error! Connection could not be established. Please check your setup.');
-            if(strlen($conCheck['ff_error_stacktrace'])) {
-                $message .= ' ' . __('FACT-Finder error message:') . ' ' . $conCheck['ff_error_stacktrace'];
+        try {
+            $conCheck = $this->factFinderClient->updateFieldRoles($store->getId());
+            if ($conCheck['success']) {
+                $message = __('Success! Connection successfully tested!');
+            } else {
+                $message = __('Error! Connection could not be established. Please check your setup.');
+                if ($conCheck['ff_error_stacktrace'] ?? []) {
+                    $message .= ' ' . __('FACT-Finder error message:') . ' ' . $conCheck['ff_error_stacktrace'];
+                }
             }
+        } catch (\Exception $e) {
+            $message = $e->getMessage();
         }
-        return $this->_resultJsonFactory->create()->setData(['message' => $message]);
+
+        return $this->resultJsonFactory->create()->setData(['message' => $message]);
     }
 
     /**
@@ -101,7 +97,7 @@ class TestConnection extends \Magento\Backend\App\Action
         /** @var RequestInterface $request */
         $request = $this->getRequest();
         $password = $request->getParam('password');
-        if ($password == $this->obscuredValue) {
+        if ($password == self::OBSCURED_VALUE) {
             $password = null;
         }
 

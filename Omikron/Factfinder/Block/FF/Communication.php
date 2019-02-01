@@ -1,66 +1,65 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Omikron\Factfinder\Block\FF;
 
 use Magento\Framework\Module\Dir\Reader;
 use Magento\Framework\View\Element\Template;
+use Magento\Framework\View\Element\Template\Context;
 use Magento\Framework\Xml\Parser;
+use Omikron\Factfinder\Helper\Communication as CommunicationHelper;
 use Omikron\Factfinder\Helper\Data;
 use Omikron\Factfinder\Helper\Tracking;
 
-/**
- * Block Class FF Communication
- * @package Omikron\Factfinder\Block\FF
- */
 class Communication extends Template
 {
-    /** @var \Magento\Framework\Module\Dir\Reader */
-    protected $_moduleDirReader;
-    /** @var Data */
-    private $_helper;
-    /** @var array */
-    private $_configData;
-    /** @var array */
-    private $_requiredAttributes;
-    /** @var \Magento\Framework\Xml\Parser */
-    private $_parser;
+    /** @var Reader */
+    protected $moduleDirReader;
 
-    /**
-     * Communication constructor.
-     *
-     * @param Template\Context $context
-     * @param Data $helper
-     * @param Reader $moduleDirReader
-     * @param Parser $parser
-     * @param Tracking $tracking
-     * @param array $data
-     */
+    /** @var Data */
+    protected $configHelper;
+
+    /** @var array */
+    protected$configData;
+
+    /** @var array */
+    protected $requiredAttributes;
+
+    /** @var \Magento\Framework\Xml\Parser */
+    protected $parser;
+
+   /** @var CommunicationHelper  */
+    protected $communicationHelper;
+
     public function __construct(
-        Template\Context $context,
+        Context $context,
         Data $helper,
         Reader $moduleDirReader,
         Parser $parser,
-        Tracking $tracking, $data = []
+        Tracking $tracking,
+        CommunicationHelper $communicationHelper,
+        $data = []
     ) {
         parent::__construct($context, $data);
-        $this->_helper = $helper;
+        $this->configHelper        = $helper;
+        $this->communicationHelper = $communicationHelper;
+        $this->moduleDirReader     = $moduleDirReader;
+        $this->parser              = $parser;
 
-        $this->_moduleDirReader = $moduleDirReader;
-        $this->_parser = $parser;
+        $filePath = $this->moduleDirReader->getModuleDir('etc', 'Omikron_Factfinder') . '/config.xml';
+        $defaultValues = $this->parser->load($filePath)->xmlToArray()['config']['_value']['default']['factfinder'];
 
-        $filePath = $this->_moduleDirReader->getModuleDir('etc', 'Omikron_Factfinder') . '/config.xml';
-        $defaultValues = $this->_parser->load($filePath)->xmlToArray()['config']['_value']['default']['factfinder'];
+        $this->requiredAttributes = ['url', 'channel', 'sid', 'version'];
 
-        $this->_requiredAttributes = ['url', 'channel', 'sid', 'version'];
-
-        $this->_configData = [
+        $this->configData = [
             'url' => [
-                'value' =>  ($this->_helper->isEnrichmentEnabled() ? '/' . Data::FRONT_NAME . '/' : $this->_helper->getAddress()),
+                'value' =>  ($this->configHelper->isEnrichmentEnabled() ? '/' . Data::FRONT_NAME . '/' : $this->communicationHelper->getAddress()),
                 'type' => 'string',
                 'defaultValue' => null
             ],
             'sid' => [
-                'value' => $this->_helper->getCorrectSessionId($tracking->getSessionId()),
+                'value' => $this->configHelper->getCorrectSessionId($tracking->getSessionId()),
                 'type' => 'string',
                 'defaultValue' => null
             ],
@@ -70,107 +69,107 @@ class Communication extends Template
                 'defaultValue' => null
             ],
             'version' => [
-                'value' => $this->_helper->getVersion(),
+                'value' => $this->configHelper->getVersion(),
                 'type' => 'string',
                 'defaultValue' => $defaultValues['advanced']['version']
             ],
             'default-query' => [
-                'value' => $this->_helper->getDefaultQuery(),
+                'value' => $this->configHelper->getDefaultQuery(),
                 'type' => 'string',
                 'defaultValue' => $defaultValues['advanced']['default_query']
             ],
             'channel' => [
-                'value' => $this->_helper->getChannel(),
+                'value' => $this->communicationHelper->getChannel(),
                 'type' => 'string',
                 'defaultValue' => $defaultValues['general']['channel']
             ],
             'use-url-parameter' => [
-                'value' => $this->_helper->getUseUrlParameter(),
+                'value' => $this->configHelper->getUseUrlParameter(),
                 'type' => 'boolean',
                 'defaultValue' => $defaultValues['advanced']['use_url_parameter']
             ],
             'use-cache' => [
-                'value' => $this->_helper->getUseCache(),
+                'value' => $this->configHelper->getUseCache(),
                 'type' => 'boolean',
                 'defaultValue' => $defaultValues['advanced']['use_cache']
             ],
             'add-params' => [
-                'value' => $this->_helper->getAddParams(),
+                'value' => $this->configHelper->getAddParams(),
                 'type' => 'string',
                 'defaultValue' => $defaultValues['advanced']['add_params']
             ],
             'add-tracking-params' => [
-                'value' => $this->_helper->getAddTrackingParams(),
+                'value' => $this->configHelper->getAddTrackingParams(),
                 'type' => 'string',
                 'defaultValue' => $defaultValues['advanced']['add_tracking_params']
             ],
             'keep-url-params' => [
-                'value' => $this->_helper->getKeepUrlParams(),
+                'value' => $this->configHelper->getKeepUrlParams(),
                 'type' => 'string',
                 'defaultValue' => $defaultValues['advanced']['keep_url_params']
             ],
             'use-asn' => [
-                'value' => $this->_helper->getUseAsn(),
+                'value' => $this->configHelper->getUseAsn(),
                 'type' => 'boolean',
                 'defaultValue' => $defaultValues['advanced']['use_asn']
             ],
             'use-found-words' => [
-                'value' => $this->_helper->getUseFoundWords(),
+                'value' => $this->configHelper->getUseFoundWords(),
                 'type' => 'boolean',
                 'defaultValue' => $defaultValues['advanced']['use_found_words']
             ],
             'use-campaigns' => [
-                'value' => $this->_helper->getUseCampaigns(),
+                'value' => $this->configHelper->getUseCampaigns(),
                 'type' => 'boolean',
                 'defaultValue' => $defaultValues['advanced']['use_campaigns']
             ],
             'generate-advisor-tree' => [
-                'value' => $this->_helper->getGenerateAdvisorTree(),
+                'value' => $this->configHelper->getGenerateAdvisorTree(),
                 'type' => 'boolean',
                 'defaultValue' => $defaultValues['advanced']['generate_advisor_tree']
             ],
             'disable-cache' => [
-                'value' => $this->_helper->getDisableCache(),
+                'value' => $this->configHelper->getDisableCache(),
                 'type' => 'boolean',
                 'defaultValue' => $defaultValues['advanced']['disable_cache']
             ],
             'use-personalization' => [
-                'value' => $this->_helper->getUsePersonalization(),
+                'value' => $this->configHelper->getUsePersonalization(),
                 'type' => 'boolean',
                 'defaultValue' => $defaultValues['advanced']['use_personalization']
             ],
             'use-semantic-enhancer' => [
-                'value' => $this->_helper->getUseSemanticEnhancer(),
+                'value' => $this->configHelper->getUseSemanticEnhancer(),
                 'type' => 'boolean',
                 'defaultValue' => $defaultValues['advanced']['use_semantic_enhancer']
             ],
             'use-aso' => [
-                'value' => $this->_helper->getUseAso(),
+                'value' => $this->configHelper->getUseAso(),
                 'type' => 'boolean',
                 'defaultValue' => $defaultValues['advanced']['use_aso']
             ],
             'use-browser-history' => [
-                'value' => $this->_helper->getUseBrowserHistory(),
+                'value' => $this->configHelper->getUseBrowserHistory(),
                 'type' => 'boolean',
                 'defaultValue' => $defaultValues['advanced']['use_browser_history']
             ],
             'use-seo' => [
-                'value' => $this->_helper->getUseSeo(),
+                'value' => $this->configHelper->getUseSeo(),
                 'type' => 'boolean',
                 'defaultValue' => $defaultValues['advanced']['use_seo']
             ],
             'seo-prefix' => [
-                'value' => $this->_helper->getSeoPrefix(),
+                'value' => $this->configHelper->getSeoPrefix(),
                 'type' => 'string',
                 'defaultValue' => $defaultValues['advanced']['seo_prefix']
             ],
             'search-immediate' => [
-                'value' => $this->_helper->getSearchImmediate(),
+                'value' => $this->configHelper->getSearchImmediate(),
                 'type' => 'boolean',
                 'defaultValue' => $defaultValues['advanced']['search_immediate']
             ],
             'disable-single-hit-redirect'=> [
-                'value' => $this->_helper->getDisableSingleHitRedirect(),
+                'value' => $this->configHelper->getDisableSingleHitRedirect(),
                 'type' => 'boolean',
                 'defaultValue' => $defaultValues['advanced']['disable_single_hit_redirect']
             ],
@@ -178,8 +177,8 @@ class Communication extends Template
 
         // always enable "search-immediate" when on result page
         if ($this->getRequest()->getControllerName() == Data::CUSTOM_RESULT_PAGE) {
-            $this->_configData['search-immediate']['value'] = 1;
-            $this->_configData['search-immediate']['defaultValue'] = 0;
+            $this->configData['search-immediate']['value'] = 1;
+            $this->configData['search-immediate']['defaultValue'] = 0;
         }
     }
 
@@ -190,7 +189,7 @@ class Communication extends Template
      */
     public function getWebComponent()
     {
-        return self::buildXMLElement('ff-communication', self::generateAttributes($this->_configData, $this->_requiredAttributes));
+        return self::buildXMLElement('ff-communication', self::generateAttributes($this->configData, $this->requiredAttributes));
     }
 
     /**
@@ -199,7 +198,7 @@ class Communication extends Template
      */
     public function getFieldRoles()
     {
-        return $this->_helper->getFieldRoles();
+        return $this->configHelper->getFieldRoles();
     }
 
     /**

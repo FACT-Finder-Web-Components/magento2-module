@@ -5,7 +5,6 @@
             <argument name="instanceName" xsi:type="string">Magento\Catalog\Model\ResourceModel\Product\Attribute\Collection</argument>
         </arguments>
     </virtualType>
-
     <type name="Magento\Framework\View\Asset\Minification">
         <plugin name="omikron.factfinder.excludefilesfromminification" type="Omikron\Factfinder\Plugin\ExcludeFilesFromMinification" />
     </type>
@@ -22,14 +21,11 @@
             <argument name="fileName" xsi:type="string">/var/log/factfinder.log</argument>
         </arguments>
     </virtualType>
-    <virtualType name="communicationContext" type="Magento\Framework\App\Helper\Context">
+    <type name="Omikron\Factfinder\Model\Client">
         <arguments>
+            <argument name="httpClient" xsi:type="object">Magento\Framework\HTTP\Client\Curl</argument>
             <argument name="logger" xsi:type="object">Omikron\Factfinder\Logger</argument>
         </arguments>
-    </virtualType>
-    <type name="Omikron\Factfinder\Helper\Communication">
-        <arguments>
-            <argument name="context" xsi:type="object">communicationContext</argument>
-        </arguments>
     </type>
+    <preference for="Omikron\Factfinder\Api\ClientInterface" type="Omikron\Factfinder\Model\Client"/>
 </config>

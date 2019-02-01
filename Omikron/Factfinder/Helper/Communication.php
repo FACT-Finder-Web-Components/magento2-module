@@ -1,184 +1,109 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Omikron\Factfinder\Helper;
 
-use Magento\Framework\App\Helper\AbstractHelper;
-use Magento\Framework\App\Helper\Context;
-use Magento\Framework\Serialize\SerializerInterface;
-use Omikron\Factfinder\Helper\Data as ConfigHelper;
+use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Framework\Registry;
 
-/**
- * Class Communication
- * Helper Class for communicating with the FACT-Finder API
- */
-class Communication extends AbstractHelper
+class Communication
 {
-    // API DATA
-    const API_NAME = 'Search.ff';
-    const API_QUERY = 'FACT-Finder version';
+    const PATH_CHANNEL                    = 'factfinder/general/channel';
+    const PATH_ADDRESS                    = 'factfinder/general/address';
+    const PATH_USERNAME                   = 'factfinder/general/username';
+    const PATH_PASSWORD                   = 'factfinder/general/password';
+    const PATH_AUTH_PREFIX                = 'factfinder/general/authentication_prefix';
+    const PATH_AUTH_POSTFIX               = 'factfinder/general/authentication_postfix';
+    const PATH_DATA_TRANSFER_IMPORT       = 'factfinder/data_transfer/ff_push_import_enabled';
+    const PATH_DATA_TRANSFER_IMPORT_TYPES = 'factfinder/data_transfer/ff_push_import_type';
+    const FF_AUTH_REGISTRY_KEY            = 'ff-auth';
 
-    /** @var Data  */
-    protected $configHelper;
+    /** @var ScopeConfigInterface  */
+    protected $scopeConfig;
 
-    /** @var SerializerInterface  */
-    protected $jsonSerializer;
+    /** @var Registry  */
+    protected $registry;
 
     public function __construct(
-        Context $context,
-        ConfigHelper $helper,
-        SerializerInterface $jsonSerializer
+        ScopeConfigInterface $scopeConfig,
+        Registry $registry
     ) {
-        parent::__construct($context);
-        $this->configHelper   = $helper;
-        $this->jsonSerializer = $jsonSerializer;
+        $this->scopeConfig = $scopeConfig;
+        $this->registry    = $registry;
     }
 
-    /**
-     * Sends HTTP GET request to FACT-Finder. Returns the server response.
-     *
-     * @param string $apiName
-     * @param string|array $params
-     * @return mixed
-     */
-    public function sendToFF($apiName, $params)
+    public function getAddress() : string
     {
-        $authentication = $this->configHelper->getAuthArray();
-        $address = $this->configHelper->getAddress();
+        $registeredAuthData = $this->getRegisteredAuthParams();
+        $url = $registeredAuthData['serverUrl'] ?? $this->scopeConfig->getValue(self::PATH_ADDRESS, 'store');
 
-        $url = $address . $apiName . '?format=json&' . http_build_query($authentication) . '&';
-
-        if (is_array($params)) {
-            $url .= http_build_query($params);
-        } else {
-            $url .= $params;
+        if (substr(rtrim($url), -1) != '/') {
+            $url .= '/';
         }
 
-        // Send HTTP GET with curl
-        $curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, $url);
-        curl_setopt($curl, CURLOPT_ENCODING, 'Accept-encoding: gzip, deflate');
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-
-        // Receive server response
-        $response = curl_exec($curl);
-
-        curl_close($curl);
-
-        return $response;
+        return $url;
     }
 
-    /**
-     * Checks the connection to FACT-Finder with verbose=true and returns an array with relevant information from the response
-     *
-     * @param \Magento\Store\Api\Data\StoreInterface $store
-     * @return array
-     */
-    public function checkConnection($store)
+    public function getChannel(string $storeId = null) : string
     {
-        $result = [];
-        $result['success'] = true;
-        $result['ff_error_response'] = '';
-        $result['ff_error_stacktrace'] = '';
-        $response = $this->sendToFF(self::API_NAME, ['query' =>  self::API_QUERY, 'channel' => $this->configHelper->getChannel($store->getId()), 'verbose' => 'true']);
-        try {
-            $result['ff_response_decoded'] = $this->jsonSerializer->unserialize($response, true);
-        } catch (\InvalidArgumentException $e) {
-            $this->logError($e, $response);
-            $result['success'] = false;
+        $registeredAuthData = $this->getRegisteredAuthParams();
 
-            return $result;
-        }
-
-        if (!is_array($result['ff_response_decoded'])) {
-            $result['ff_response_decoded'] = [];
-            $result['success'] = false;
-        }
-        if (isset($result['ff_response_decoded']['error'])) {
-            $result['ff_error_response'] = $result['ff_response_decoded']['error'];
-            if(isset($result['ff_response_decoded']['stacktrace'])) $result['ff_error_stacktrace'] = explode('at', $result['ff_response_decoded']['stacktrace'])[0];
-            $result['success'] = false;
-        }
-        if($result['success'] && isset($result['ff_response_decoded']['searchResult']) && isset($result['ff_response_decoded']['searchResult']['fieldRoles'])) {
-            $result['hasFieldRoles'] = true;
-            $result['fieldRoles'] = $this->jsonSerializer->serialize($result['ff_response_decoded']['searchResult']['fieldRoles']);
-        }
-        else {
-            $result['hasFieldRoles'] = false;
-            $result['fieldRoles'] = false;
-        }
-
-        return $result;
+        return $registeredAuthData['channel'] ?? $this->scopeConfig->getValue(self::PATH_CHANNEL, 'store', $storeId);
     }
 
-    /**
-     * Update trackingProductNumber field role
-     *
-     * @param \Magento\Store\Api\Data\StoreInterface $store
-     * @return array
-     */
-    public function updateFieldRoles($store)
+    public function getUsername() : string
     {
-        $conCheck = $this->checkConnection($store);
-        if($conCheck['hasFieldRoles']) {
-            $this->configHelper->setFieldRoles($conCheck['fieldRoles'], $store);
-        }
-        return $conCheck;
+        $registeredAuthData = $this->getRegisteredAuthParams();
+
+        return $registeredAuthData['username'] ?? $this->scopeConfig->getValue(self::PATH_USERNAME, 'store');
+    }
+
+    public function getPassword(): string
+    {
+        $registeredAuthData = $this->getRegisteredAuthParams();
+
+        return $registeredAuthData['password'] ?? $this->scopeConfig->getValue(self::PATH_PASSWORD, 'store');
+    }
+
+    public function getAuthenticationPrefix(): string
+    {
+        $registeredAuthData = $this->getRegisteredAuthParams();
+
+        return $registeredAuthData['authenticationPrefix'] ?? $this->scopeConfig->getValue(self::PATH_AUTH_PREFIX, 'store');
+    }
+
+    public function getAuthenticationPostfix(): string
+    {
+        $registeredAuthData = $this->getRegisteredAuthParams();
+
+        return $registeredAuthData['authenticationPostfix'] ?? $this->scopeConfig->getValue(self::PATH_AUTH_POSTFIX, 'store');
     }
 
     /**
-     * Triggers an ff import on the pushed data
+     * Checks if automatic import is enabled
      *
-     * @param string $channelName
-     * @param int|null $storeId
+     * @param null|int|string $scopeCode
      * @return bool
      */
-    public function pushImport($channelName, $storeId = null)
+    public function isPushImportEnabled($scopeCode = null) : bool
     {
-        $importTypes = $this->configHelper->getPushImportTypes($storeId);
-        if (empty($importTypes)) {
-            return false;
-        }
-        $responseJson = [];
-        foreach ($importTypes as $type) {
-            $response = $this->sendToFF('Import.ff', ['channel' => $channelName, 'type' => $type, 'format' => 'json' , 'quiet' => 'true', 'download' => 'true']);
-            try {
-                $responseJson = array_merge_recursive($responseJson, $this->jsonSerializer->unserialize($response, true));
-            } catch (\InvalidArgumentException $e) {
-                $this->logError($e, $response);
-
-                return false;
-            }
-        }
-
-        $this->logResponse($this->jsonSerializer->serialize($responseJson));
-
-        if ($responseJson['errors'] ?? $responseJson['error'] ?? []) {
-            return false;
-        }
-
-        return true;
-    }
-
-    private function logResponse(string $response)
-    {
-        if ($this->configHelper->isLoggingEnabled()) {
-            $this->_logger->info(__('FACT-Finder response : %1', $response));
-        }
+        return $this->scopeConfig->isSetFlag(self::PATH_DATA_TRANSFER_IMPORT, 'store', $scopeCode);
     }
 
     /**
-     * @param \Exception $exception
-     * @param string     $response
+     * Returns data types (Data and/or Suggest) which should be imported on push
+     *
+     * @param null|int|string $scopeCode
+     * @return array
      */
-    private function logError(\Exception $exception, string $response)
+    public function getPushImportTypes($scopeCode = null) : array
     {
-        if ($this->configHelper->isLoggingEnabled()) {
-            $this->_logger->error(
-                __(
-                    'Exception %1  thrown at %2. FACT-Finder response : %3',
-                    $exception->getMessage(), $exception->getTraceAsString(), $response
-                )
-            );
-        }
+        return explode(',', $this->scopeConfig->getValue(self::PATH_DATA_TRANSFER_IMPORT_TYPES, 'store', $scopeCode));
+    }
+
+    private function getRegisteredAuthParams(): ?array
+    {
+        return $this->registry->registry(self::FF_AUTH_REGISTRY_KEY);
     }
 }

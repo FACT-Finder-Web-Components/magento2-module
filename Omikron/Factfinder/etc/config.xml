@@ -3,6 +3,12 @@
     <default>
         <factfinder>
             <general>
+                <address></address>
+                <channel></channel>
+                <username></username>
+                <authentication_prefix></authentication_prefix>
+                <authentication_postfix></authentication_postfix>
+                <show_add_to_card_button>1</show_add_to_card_button>
                 <is_enabled>0</is_enabled>
                 <logging_enabled>0</logging_enabled>
                 <password backend_model="Magento\Config\Model\Config\Backend\Encrypted" />

@@ -2,10 +2,7 @@
 
 namespace Omikron\Factfinder\Helper;
 
-use Magento\Config\Model\ResourceModel\Config;
 use Magento\Framework\App\Helper\AbstractHelper;
-use Magento\Framework\App\Helper\Context;
-use Magento\Framework\Registry;
 
 /**
  * Class Data
@@ -13,46 +10,20 @@ use Magento\Framework\Registry;
  */
 class Data extends AbstractHelper
 {
-    const FRONT_NAME = 'FACT-Finder';
-    const EXPORT_PAGE = 'export';
+    const FRONT_NAME         = 'FACT-Finder';
+    const EXPORT_PAGE        = 'export';
     const CUSTOM_RESULT_PAGE = 'result';
-    const SESSION_ID_LENGTH = 30;
+    const SESSION_ID_LENGTH  = 30;
 
     const PATH_TRACKING_PRODUCT_NUMBER_FIELD_ROLE = 'factfinder/general/tracking_product_number_field_role';
-    const PATH_IS_ENABLED = 'factfinder/general/is_enabled';
-    const LOGGING_ENABLED = 'factfinder/general/logging_enabled';
-    const PATH_IS_ENRICHMENT_ENABLED = 'factfinder/general/ff_enrichment';
-    const PATH_ADDRESS = 'factfinder/general/address';
-    const PATH_CHANNEL = 'factfinder/general/channel';
-    const PATH_USERNAME = 'factfinder/general/username';
-    const PATH_PASSWORD = 'factfinder/general/password';
-    const PATH_SHOW_ADD_TO_CART_BUTTON = 'factfinder/general/show_add_to_card_button';
-    const PATH_AUTH_PREFIX = 'factfinder/general/authentication_prefix';
-    const PATH_AUTH_POSTFIX = 'factfinder/general/authentication_postfix';
-    const PATH_ADVANCED_VERSION = 'factfinder/advanced/version';
-    const PATH_DATATRANSFER_IMPORT = 'factfinder/data_transfer/ff_push_import_enabled';
-    const PATH_DATA_TRANSFER_IMPORT_TYPES ='factfinder/data_transfer/ff_push_import_type';
+
+    const PATH_IS_ENABLED                   = 'factfinder/general/is_enabled';
+    const LOGGING_ENABLED                   = 'factfinder/general/logging_enabled';
+    const PATH_IS_ENRICHMENT_ENABLED        = 'factfinder/general/ff_enrichment';
+    const PATH_SHOW_ADD_TO_CART_BUTTON      = 'factfinder/general/show_add_to_card_button';
+    const PATH_ADVANCED_VERSION             = 'factfinder/advanced/version';
+    const PATH_DATA_TRANSFER_IMPORT         = 'factfinder/data_transfer/ff_cron_import';
     const PATH_CONFIGURABLE_CRON_IS_ENABLED = 'factfinder/configurable_cron/ff_cron_enabled';
-
-    // Data Transfer
-    const PATH_FF_UPLOAD_URL_USER = 'factfinder/basic_auth_data_transfer/ff_upload_url_user';
-    const PATH_FF_UPLOAD_URL_PASSWORD = 'factfinder/basic_auth_data_transfer/ff_upload_url_password';
-
-    /** @var Config  */
-    protected $resourceConfig;
-
-   /** @var Registry  */
-    protected $registry;
-
-    public function __construct(
-        Context $context,
-        Config $resourceConfig,
-        Registry $registry
-    ) {
-        parent::__construct($context);
-        $this->resourceConfig = $resourceConfig;
-        $this->registry = $registry;
-    }
 
     /**
      * Public Getter
@@ -82,54 +53,6 @@ class Data extends AbstractHelper
     }
 
     /**
-     * Returns URL
-     * @return mixed
-     */
-    public function getAddress()
-    {
-        $registeredAuthData = $this->getRegisteredAuthParams();
-        $url = $registeredAuthData['serverUrl'] ? $registeredAuthData['serverUrl'] : $this->scopeConfig->getValue(self::PATH_ADDRESS, 'store');
-
-        if (substr(rtrim($url), -1) != '/') {
-            $url .= '/';
-        }
-
-        return $url;
-    }
-
-    /**
-     * Returns the FACT-Finder channel name
-     * @param null|int|string $scopeCode
-     * @return string
-     */
-    public function getChannel($scopeCode = null)
-    {
-        $registeredAuthData = $this->getRegisteredAuthParams();
-
-        return $registeredAuthData['channel'] ? $registeredAuthData['channel'] : $this->scopeConfig->getValue(self::PATH_CHANNEL, 'store', $scopeCode);
-    }
-
-    /**
-     * Returns pushImport Setting
-     * @param null|int|string $scopeCode
-     * @return bool
-     */
-    public function isPushImportEnabled($scopeCode = null)
-    {
-        return $this->scopeConfig->isSetFlag(self::PATH_DATATRANSFER_IMPORT, 'store', $scopeCode);
-    }
-
-    /**
-     * Returns pushImport types
-     * @param null|int|string $scopeCode
-     * @return array
-     */
-    public function getPushImportTypes($scopeCode = null)
-    {
-        return explode(',', $this->scopeConfig->getValue(self::PATH_DATA_TRANSFER_IMPORT_TYPES, 'store', $scopeCode));
-    }
-
-    /**
      * Returns the specific fields used as tracking id
      * @param string $fieldRoleName
      * @return string
@@ -153,16 +76,6 @@ class Data extends AbstractHelper
         return $this->scopeConfig->getValue(self::PATH_TRACKING_PRODUCT_NUMBER_FIELD_ROLE, 'store');
     }
 
-    /**
-     * Returns the FACT-Finder username
-     * @return mixed
-     */
-    public function getUsername()
-    {
-        $registeredAuthData = $this->getRegisteredAuthParams();
-
-        return  $registeredAuthData['username'] ? $registeredAuthData['username'] : $this->scopeConfig->getValue(self::PATH_USERNAME, 'store');
-    }
 
     /**
      * Returns the show_add_to_card_button configuration
@@ -394,83 +307,9 @@ class Data extends AbstractHelper
         return $this->scopeConfig->getValue('factfinder/components/ff_pushedproductscampaign', 'store');
     }
 
-    /**
-     * @return bool
-     */
     public function isCronEnabled()
     {
-        return (bool) $this->scopeConfig->getValue(self::PATH_CONFIGURABLE_CRON_IS_ENABLED);
-    }
-
-    /**
-     * Private Getter
-     */
-
-    /**
-     * Returns the FACT-Finder password
-     * @return mixed
-     */
-    protected function getPassword()
-    {
-        $registeredAuthData = $this->getRegisteredAuthParams();
-
-        return $registeredAuthData['password'] ? $registeredAuthData['password'] : $this->scopeConfig->getValue(self::PATH_PASSWORD, 'store');
-    }
-
-    /**
-     * Returns the authentication prefix
-     * @return mixed
-     */
-    protected function getAuthenticationPrefix()
-    {
-        $registeredAuthData = $this->getRegisteredAuthParams();
-
-        return $registeredAuthData['authenticationPrefix'] ? $registeredAuthData['authenticationPrefix'] : $this->scopeConfig->getValue(self::PATH_AUTH_PREFIX, 'store');
-    }
-
-    /**
-     * Returns the authentication postfix
-     * @return mixed
-     */
-    protected function getAuthenticationPostfix()
-    {
-        $registeredAuthData = $this->getRegisteredAuthParams();
-
-        return $registeredAuthData['authenticationPostfix'] ? $registeredAuthData['authenticationPostfix'] : $this->scopeConfig->getValue(self::PATH_AUTH_POSTFIX, 'store');
-    }
-
-    /**
-     * Returns the authentication values as array
-     *
-     * @return array
-     */
-    public function getAuthArray()
-    {
-        $authArray = [];
-        $authArray['username'] = $this->getUsername();
-
-        $time = round(microtime(true) * 1000);
-        $password = $this->getPassword();
-        $prefix = $this->getAuthenticationPrefix();
-        $postfix = $this->getAuthenticationPostfix();
-
-        $hashPassword = md5($prefix . (string) $time . md5($password) . $postfix);
-
-        $authArray['password'] = $hashPassword;
-        $authArray['timestamp'] = $time;
-
-        return $authArray;
-    }
-
-    /**
-     * Set field roles
-     * @param string $value
-     * @param \Magento\Store\Api\Data\StoreInterface $store
-     * @return mixed
-     */
-    public function setFieldRoles($value, $store)
-    {
-        return $this->resourceConfig->saveConfig(self::PATH_TRACKING_PRODUCT_NUMBER_FIELD_ROLE, $value, 'stores', $store->getId());
+        return $this->scopeConfig->isSetFlag(self::PATH_CONFIGURABLE_CRON_IS_ENABLED);
     }
 
     /**
@@ -489,13 +328,5 @@ class Data extends AbstractHelper
         }
 
         return $sessionId;
-    }
-
-    /**
-     * @return null|array
-     */
-    private function getRegisteredAuthParams()
-    {
-        return $this->registry->registry('ff-auth');
     }
 }

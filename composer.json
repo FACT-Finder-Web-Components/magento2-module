@@ -7,7 +7,8 @@
     "php": "7.*",
     "ext-curl": "*",
     "ext-json": "*",
-    "ext-libxml": "*"
+    "ext-libxml": "*",
+    "ext-http": "*"
   },
   "require-dev": {
     "magento-ecg/coding-standard": "^3.1",
