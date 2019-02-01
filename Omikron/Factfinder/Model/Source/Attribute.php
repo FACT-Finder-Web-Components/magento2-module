@@ -20,9 +20,11 @@ class Attribute implements OptionSourceInterface
     {
         $collection = $this->collectionFactory->create();
         $collection->setOrder('attribute_code', 'ASC');
+
         $options = array_map(function (EavAttribute $attribute): array {
             return ['value' => $attribute->getAttributeCode(), 'label' => $attribute->getAttributeCode()];
         }, $collection->getItems());
+
         return array_merge([['value' => '', 'label' => '']], $options);
     }
 }
