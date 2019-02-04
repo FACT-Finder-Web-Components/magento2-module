@@ -39,40 +39,20 @@ class Data extends AbstractHelper
     const PATH_FF_UPLOAD_URL_USER = 'factfinder/basic_auth_data_transfer/ff_upload_url_user';
     const PATH_FF_UPLOAD_URL_PASSWORD = 'factfinder/basic_auth_data_transfer/ff_upload_url_password';
 
-    /**
-     * @var Config
-     */
+    /** @var Config  */
     protected $resourceConfig;
 
-    /**
-     * @var Registry
-     */
+   /** @var Registry  */
     protected $registry;
 
-    /**
-     * @var EncryptorInterface
-     */
-    protected $encryptor;
-
-    /**
-     * Data constructor.
-     *
-     * @param Context            $context
-     * @param Config             $resourceConfig
-     * @param Registry           $registry
-     * @param EncryptorInterface $encryptor
-     */
     public function __construct(
         Context $context,
         Config $resourceConfig,
-        Registry $registry,
-        EncryptorInterface $encryptor
-    )
-    {
+        Registry $registry
+    ) {
         parent::__construct($context);
         $this->resourceConfig = $resourceConfig;
         $this->registry = $registry;
-        $this->encryptor = $encryptor;
     }
 
     /**
@@ -447,7 +427,7 @@ class Data extends AbstractHelper
     {
         $registeredAuthData = $this->getRegisteredAuthParams();
 
-        return $registeredAuthData['password'] ? $registeredAuthData['password'] : $this->encryptor->decrypt($this->scopeConfig->getValue(self::PATH_PASSWORD, 'store'));
+        return $registeredAuthData['password'] ? $registeredAuthData['password'] : $this->scopeConfig->getValue(self::PATH_PASSWORD, 'store');
     }
 
     /**
@@ -487,7 +467,7 @@ class Data extends AbstractHelper
         $prefix = $this->getAuthenticationPrefix();
         $postfix = $this->getAuthenticationPostfix();
 
-        $hashPassword = md5($prefix . (string)$time . md5($password) . $postfix);
+        $hashPassword = md5($prefix . (string) $time . md5($password) . $postfix);
 
         $authArray['password'] = $hashPassword;
         $authArray['timestamp'] = $time;
@@ -522,26 +502,6 @@ class Data extends AbstractHelper
         }
 
         return $sessionId;
-    }
-
-    /**
-     * Returns the upload username for external url
-     *
-     * @return string
-     */
-    public function getUploadUrlUser()
-    {
-        return $this->scopeConfig->getValue(self::PATH_FF_UPLOAD_URL_USER, 'store');
-    }
-
-    /**
-     * Returns the upload password for external url
-     *
-     * @return string
-     */
-    public function getUploadUrlPassword()
-    {
-        return $this->scopeConfig->getValue(self::PATH_FF_UPLOAD_URL_PASSWORD, 'store');
     }
 
     /**

@@ -2,7 +2,7 @@
 
 namespace Omikron\Factfinder\Helper;
 
-use \Magento\Framework\App\Helper\AbstractHelper;
+use Magento\Framework\App\Helper\AbstractHelper;
 
 /**
  * Class Upload
@@ -11,7 +11,7 @@ use \Magento\Framework\App\Helper\AbstractHelper;
  */
 class Upload extends AbstractHelper
 {
-    const CONFIG_PATH = "factfinder/data_transfer/";
+    const CONFIG_PATH = 'factfinder/data_transfer/';
 
     /** @var \Magento\Framework\Filesystem\Io\Ftp */
     protected $ftp;
@@ -41,7 +41,7 @@ class Upload extends AbstractHelper
     /**
      * Get the ff config data
      *
-     * @param $key
+     * @param string $key
      * @return mixed
      */
     protected function getConfig($key)
@@ -62,11 +62,11 @@ class Upload extends AbstractHelper
 
         if (empty($this->getConfig('ff_upload_host')) || empty($this->getConfig('ff_upload_user')) || empty($this->getConfig('ff_upload_password'))) {
             $result['success'] = false;
-            $result['message'] = __("Missing FTP data!");
+            $result['message'] = __('Missing FTP data!');
         } else {
             if (!$content = file_get_contents($this->directoryList->getPath('var') . '/' . $sourcePath)) {
                 $result['success'] = false;
-                $result['message'] = __("No export file found!");
+                $result['message'] = __('No export file found!');
             }
 
             try {

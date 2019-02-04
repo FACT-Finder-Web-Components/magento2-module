@@ -2,13 +2,13 @@
 
 namespace Omikron\Factfinder\Helper;
 
+use Magento\Catalog\Api\Data\ProductInterface;
 use Magento\Catalog\Model\Category;
 use Magento\ConfigurableProduct\Model\Product\Type\Configurable;
 use Magento\Framework\App\Helper\AbstractHelper;
-use Magento\Store\Api\Data\StoreInterface;
-use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Exception\LocalizedException;
-use Magento\Catalog\Api\Data\ProductInterface;
+use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Store\Api\Data\StoreInterface;
 
 /**
  * Class Product
@@ -20,13 +20,13 @@ class Product extends AbstractHelper
     const ATTRIBUTE_LIMIT     = 1000;
     const ATTRIBUTE_DELIMITER = '|';
 
-    const PATH_DATA_TRANSFER_MANUFACTURER                   = "factfinder/data_transfer/ff_manufacturer";
-    const PATH_DATA_TRANSFER_EAN                            = "factfinder/data_transfer/ff_ean";
-    const PATH_DATA_TRANSFER_ADDITIONAL_ATTRIBUTES          = "factfinder/data_transfer/ff_additional_attributes";
-    const PATH_DATA_TRANSFER_ATTRIBUTES_SEPARATE_COLUMNS    = "factfinder/data_transfer/ff_additional_attributes_separate_columns";
-    const PATH_DATA_TRANSFER_PRODUCT_VISIBILITY             = "factfinder/data_transfer/ff_product_visibility";
+    const PATH_DATA_TRANSFER_MANUFACTURER                   = 'factfinder/data_transfer/ff_manufacturer';
+    const PATH_DATA_TRANSFER_EAN                            = 'factfinder/data_transfer/ff_ean';
+    const PATH_DATA_TRANSFER_ADDITIONAL_ATTRIBUTES          = 'factfinder/data_transfer/ff_additional_attributes';
+    const PATH_DATA_TRANSFER_ATTRIBUTES_SEPARATE_COLUMNS    = 'factfinder/data_transfer/ff_additional_attributes_separate_columns';
+    const PATH_DATA_TRANSFER_PRODUCT_VISIBILITY             = 'factfinder/data_transfer/ff_product_visibility';
 
-    /** @var \Magento\Catalog\Helper\Image */
+    /** @var \Magento\Catalog\Helper\ImageFactory */
     protected $imageHelperFactory;
 
     /** @var \Magento\Eav\Model\Config */
@@ -44,7 +44,7 @@ class Product extends AbstractHelper
     /**
      * Product constructor.
      * @param \Magento\Framework\App\Helper\Context $context
-     * @param \Magento\Catalog\Helper\Image $imageHelperFactory
+     * @param \Magento\Catalog\Helper\ImageFactory $imageHelperFactory
      * @param \Magento\Eav\Model\Config $eavConfig
      * @param \Magento\Catalog\Model\ProductRepository $productRepository
      * @param \Magento\ConfigurableProduct\Model\ResourceModel\Product\Type\Configurable $catalogProductTypeConfigurable
@@ -59,19 +59,18 @@ class Product extends AbstractHelper
         \Magento\Catalog\Api\CategoryRepositoryInterface $categoryRepository
     )
     {
+        parent::__construct($context);
         $this->imageHelperFactory = $imageHelperFactory;
         $this->eavConfig = $eavConfig;
         $this->productRepository = $productRepository;
         $this->catalogProductTypeConfigurable = $catalogProductTypeConfigurable;
         $this->categoryRepository = $categoryRepository;
-
-        parent::__construct($context);
     }
 
     /**
      * Get the attribute value from magento product in corresponding store
      *
-     * @param $attribute
+     * @param string $attribute
      * @param \Magento\Catalog\Model\Product $product
      * @param \Magento\Store\Api\Data\StoreInterface $store
      * @return mixed|null
@@ -79,26 +78,26 @@ class Product extends AbstractHelper
     public function get($attribute, $product, $store)
     {
         //max field number is 128. No Check implemented because number is fixed in this case.
-        switch ((string)$attribute) {
-            case "ProductNumber":
-            case "MasterProductNumber":
-            case "Name":
-            case "Description":
-            case "Short":
-            case "ProductUrl":
-            case "Price":
-            case "CategoryPath":
-            case "Availability":
-            case "MagentoEntityId":
+        switch ((string) $attribute) {
+            case 'ProductNumber':
+            case 'MasterProductNumber':
+            case 'Name':
+            case 'Description':
+            case 'Short':
+            case 'ProductUrl':
+            case 'Price':
+            case 'CategoryPath':
+            case 'Availability':
+            case 'MagentoEntityId':
                 $method = 'get' . $attribute;
-                return call_user_func(array($this, $method), $product);
+                return call_user_func([$this, $method], $product);
 
-            case "ImageUrl":
-            case "Manufacturer":
-            case "Attributes":
-            case "EAN":
+            case 'ImageUrl':
+            case 'Manufacturer':
+            case 'Attributes':
+            case 'EAN':
                 $method = 'get' . $attribute;
-                return call_user_func(array($this, $method), $product, $store);
+                return call_user_func([$this, $method], $product, $store);
 
             default:
                 return $this->getData($product, $attribute);
@@ -108,7 +107,7 @@ class Product extends AbstractHelper
     /**
      * @param StoreInterface $store
      *
-     * @return reutrn array
+     * @return array
      */
     public function getProductVisibility($store)
     {
@@ -247,8 +246,9 @@ class Product extends AbstractHelper
     /**
      * Get the product category
      *
-     * @param $product
+     * @param \Magento\Catalog\Model\Product $product
      * @return string
+     * @throws NoSuchEntityException
      */
     protected function getCategoryPath($product)
     {
@@ -293,7 +293,7 @@ class Product extends AbstractHelper
      */
     protected function getAvailability($product)
     {
-        return (int)$product->isAvailable();
+        return (int) $product->isAvailable();
     }
 
     /**
@@ -369,7 +369,7 @@ class Product extends AbstractHelper
      * Get configuration options telling if additional attributes should be merged and exported as single column or each attribute
      * should be exported in separate column
      *
-     * @param $store
+     * @param StoreInterface $store
      * @return bool
      */
     public function getAdditionalAttributesExportedInSeparateColumns($store)
@@ -385,7 +385,7 @@ class Product extends AbstractHelper
      */
     protected function getAttributes($product, $store)
     {
-        $attributesString = "";
+        $attributesString = '';
         $additionalAttributes = $this->getAdditionalAttributes($store);
         if (!empty($additionalAttributes)) {
             $attributeCodes = explode(',', $additionalAttributes);
@@ -417,10 +417,10 @@ class Product extends AbstractHelper
     /**
      * For custom attributes defined in the attributes array in export model
      *
-     * @param \Magento\Catalog\Model\Product
-     * @param string
-     *
+     * @param \Magento\Catalog\Model\Product $product
+     * @param string $attributeCode
      * @return string (empty if attribute not found)
+     * @throws LocalizedException
      */
     protected function getData($product, string $attributeCode)
     {
@@ -436,14 +436,14 @@ class Product extends AbstractHelper
         $values = [];
         if (in_array($frontendInput, ['select', 'multiselect'])) {
             // value holds single or multiple options IDs
-            foreach (explode(",", $attributeValue) as $optionId) {
+            foreach (explode(',', $attributeValue) as $optionId) {
                 $optionLabel = $attribute->getSource()->getOptionText($optionId);
                 $values[] = $optionLabel;
             }
         } else if ($frontendInput == 'price') {
             $values[] = number_format(round(floatval($attributeValue), 2), 2);
         } else if ($frontendInput == 'boolean') {
-            $values[] = $attributeValue ? "Yes" : "No";
+            $values[] = $attributeValue ? 'Yes' : 'No';
         } else {
             $values[] = $attributeValue;
         }
@@ -463,7 +463,7 @@ class Product extends AbstractHelper
     /**
      * Cleanup a value for export
      *
-     * @param $value
+     * @param string $value
      * @param boolean $isMultiAttributeValue
      *
      * @return string
@@ -471,7 +471,7 @@ class Product extends AbstractHelper
     protected function cleanValue($value, $isMultiAttributeValue = false)
     {
         $value = strip_tags(nl2br($value));
-        $value = preg_replace("/\r|\n/", "", $value);
+        $value = preg_replace("/\r|\n/", '', $value);
         $value = addcslashes($value, '\\');
 
         if ($isMultiAttributeValue) {

@@ -56,6 +56,9 @@
                 <ff_product_visibility>3,4</ff_product_visibility>
                 <ff_additional_attributes_separate_columns>0</ff_additional_attributes_separate_columns>
             </data_transfer>
+            <basic_auth_data_transfer>
+                <ff_upload_url_password backend_model="Magento\Config\Model\Config\Backend\Encrypted" />
+            </basic_auth_data_transfer>
         </factfinder>
     </default>
 </config>

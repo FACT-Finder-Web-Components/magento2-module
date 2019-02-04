@@ -57,8 +57,8 @@ class Communication extends AbstractHelper
     /**
      * Sends HTTP GET request to FACT-Finder. Returns the server response.
      *
-     * @param $apiName string
-     * @param $params string|array
+     * @param string $apiName
+     * @param string|array $params
      * @return mixed
      */
     public function sendToFF($apiName, $params)

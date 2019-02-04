@@ -178,8 +178,8 @@ class Communication extends Template
 
         // always enable "search-immediate" when on result page
         if ($this->getRequest()->getControllerName() == Data::CUSTOM_RESULT_PAGE) {
-            $this->_configData["search-immediate"]["value"] = 1;
-            $this->_configData["search-immediate"]["defaultValue"] = 0;
+            $this->_configData['search-immediate']['value'] = 1;
+            $this->_configData['search-immediate']['defaultValue'] = 0;
         }
     }
 
@@ -233,11 +233,11 @@ class Communication extends Template
      */
     private static function generateAttributes($configData, $requiredAttributes)
     {
-        $result = array();
+        $result = [];
         foreach ($configData as $name => $info) {
             if ($info['value'] !== $info['defaultValue'] || in_array($name, $requiredAttributes)) {
                 if ($info['type'] === 'boolean') {
-                    $result[$name] = (int)$configData[$name]['value'] ? 'true' : 'false';
+                    $result[$name] = (int) $configData[$name]['value'] ? 'true' : 'false';
                 } else {
                     $result[$name] = $configData[$name]['value'];
                 }

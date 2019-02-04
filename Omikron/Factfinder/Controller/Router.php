@@ -48,7 +48,7 @@ class Router implements \Magento\Framework\App\RouterInterface
 
         // check if URL matches = FACT-Finder/result
         $identifier = trim($request->getPathInfo(), '/');
-        $pos = strpos($identifier, "/");
+        $pos = strpos($identifier, '/');
         $path = substr($identifier, $pos + 1);
 
         if ($path == Data::CUSTOM_RESULT_PAGE) {
@@ -59,10 +59,7 @@ class Router implements \Magento\Framework\App\RouterInterface
             $request->setModuleName('factfinder')->setControllerName('proxy')->setActionName('call');
         }
 
-        return $this->actionFactory->create(
-            'Magento\Framework\App\Action\Forward',
-            ['request' => $request]
-        );
+        return $this->actionFactory->create(\Magento\Framework\App\Action\Forward::class);
     }
 
     /**
@@ -72,7 +69,7 @@ class Router implements \Magento\Framework\App\RouterInterface
      * @return bool
      */
     protected function isValidRequest(\Magento\Framework\App\RequestInterface $request) {
-        $pathRegex = "/^(\/" . Data::FRONT_NAME . "\/)/";
+        $pathRegex = '/^(\/' . Data::FRONT_NAME . '\/)/';
         // don't match if controller name is already set
         // also check if URL matches FACT-Finder front name defined in Data helper
         return is_null($request->getControllerName()) && preg_match($pathRegex, $request->getPathInfo());

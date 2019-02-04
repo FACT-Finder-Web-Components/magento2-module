@@ -14,7 +14,6 @@ class Attribute
     /**
      * Attribute constructor.
      * @param \Magento\Eav\Model\ResourceModel\Entity\Attribute\Collection $attributeCollection
-     * @param \Psr\Log\LoggerInterface $logger
      */
     public function __construct(
         \Magento\Eav\Model\ResourceModel\Entity\Attribute\Collection $attributeCollection
@@ -38,7 +37,7 @@ class Attribute
 
         $attributeCollection = $this->_attributeCollection->load()->getItems();
 
-        foreach ($attributeCollection AS $attribute) {
+        foreach ($attributeCollection as $attribute) {
             $options[] = [
                 'value' => $attribute->getAttributeCode(),
                 'label' => $attribute->getAttributeCode()
