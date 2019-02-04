@@ -6,7 +6,6 @@ use Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Framework\App\Helper\Context;
 use Magento\Framework\Serialize\SerializerInterface;
 use Omikron\Factfinder\Helper\Data as ConfigHelper;
-use Psr\Log\LoggerInterface;
 
 /**
  * Class Communication

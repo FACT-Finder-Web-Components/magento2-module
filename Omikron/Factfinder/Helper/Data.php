@@ -2,11 +2,10 @@
 
 namespace Omikron\Factfinder\Helper;
 
-use Magento\Framework\App\Helper\AbstractHelper;
-use Magento\Framework\Registry;
-use Magento\Framework\Encryption\EncryptorInterface;
 use Magento\Config\Model\ResourceModel\Config;
+use Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Framework\App\Helper\Context;
+use Magento\Framework\Registry;
 
 /**
  * Class Data
