@@ -374,7 +374,7 @@ class Product extends AbstractHelper
      */
     public function getAdditionalAttributesExportedInSeparateColumns($store)
     {
-        return $this->scopeConfig->isSetFlag($this->scopeConfig->getValue(self::PATH_DATA_TRANSFER_ATTRIBUTES_SEPARATE_COLUMNS, 'store', $store->getId()));
+        return $this->scopeConfig->isSetFlag(self::PATH_DATA_TRANSFER_ATTRIBUTES_SEPARATE_COLUMNS, 'store', $store->getId());
     }
     /**
      * Get all the attributes for a given product and store
