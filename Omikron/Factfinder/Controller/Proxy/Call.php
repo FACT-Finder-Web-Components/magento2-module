@@ -50,7 +50,7 @@ class Call extends \Magento\Framework\App\Action\Action
     {
         // extract api name from path
         $identifier = trim($this->getRequest()->getPathInfo(), '/');
-        $pos = strpos($identifier, "/");
+        $pos = strpos($identifier, '/');
         $path = substr($identifier, $pos+1);
         $apiNameRegex = '/^[A-Z][A-z]+(.ff)$/';
         $matches = [];

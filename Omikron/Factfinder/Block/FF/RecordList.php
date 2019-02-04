@@ -2,7 +2,7 @@
 
 namespace Omikron\Factfinder\Block\FF;
 
-use \Magento\Framework\View\Element\Template;
+use Magento\Framework\View\Element\Template;
 
 /**
  * Block Class FF RecordList

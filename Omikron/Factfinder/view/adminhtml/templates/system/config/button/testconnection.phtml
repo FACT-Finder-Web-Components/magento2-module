@@ -20,7 +20,7 @@
                 $('ff_testconnection_load_message_span').update('<?php echo __('Testing connection...'); ?>');
             }
 
-            new Ajax.Request('<?php echo $this->getUrl('factfinder/testconnection/testconnection') ?>', {
+            new Ajax.Request('<?php echo $block->getUrl('factfinder/testconnection/testconnection') ?>', {
                 method: 'post',
                 parameters: {
                     serverUrl: document.getElementById('factfinder_general_address').value,

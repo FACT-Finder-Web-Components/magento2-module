@@ -1,36 +1,36 @@
-<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <head>
         <link src="Omikron_Factfinder::webcomponentsjs/webcomponents-lite.min.js"/>
         <link src="Omikron_Factfinder::js/search-redirect.js"/>
-        <css src="Omikron_Factfinder::css/ff/searchbox.css"/>
-        <css src="Omikron_Factfinder::css/ff/suggest.css"/>
     </head>
 
-    <referenceContainer name="after.body.start">
-        <block ifconfig="factfinder/general/is_enabled" name="prevent.fouc.css" template="Omikron_Factfinder::ff/styles.phtml"/>
-        <block ifconfig="factfinder/general/is_enabled" class="Omikron\Factfinder\Block\FF\Communication" name="factfinder.communication" before="-" template="Omikron_Factfinder::ff/communication.phtml"/>
-    </referenceContainer>
+    <body>
+        <referenceContainer name="after.body.start">
+            <block ifconfig="factfinder/general/is_enabled" name="prevent.fouc.css" template="Omikron_Factfinder::ff/styles.phtml"/>
+            <block ifconfig="factfinder/general/is_enabled" class="Omikron\Factfinder\Block\FF\Communication" name="factfinder.communication" before="-" template="Omikron_Factfinder::ff/communication.phtml"/>
+        </referenceContainer>
 
-    <!-- init BlockClassManager -->
-    <referenceContainer name="header-wrapper">
-        <block ifconfig="factfinder/general/is_enabled" after="top.search" class="Omikron\Factfinder\Block\BlockClassManager" name="factfinder.top.search"/>
-    </referenceContainer>
+        <!-- init BlockClassManager -->
+        <referenceContainer name="header-wrapper">
+            <block ifconfig="factfinder/general/is_enabled" after="top.search" class="Omikron\Factfinder\Block\BlockClassManager" name="factfinder.top.search"/>
+        </referenceContainer>
 
-    <!-- Replace result/record list -->
-    <referenceBlock name="factfinder.top.search">
-        <action ifconfig="factfinder/general/is_enabled" method="setBlockSearchbox">
-            <argument name="block" xsi:type="string">Searchbox</argument>
-        </action>
-    </referenceBlock>
+        <!-- Replace result/record list -->
+        <referenceBlock name="factfinder.top.search">
+            <action ifconfig="factfinder/general/is_enabled" method="setBlockSearchbox">
+                <argument name="block" xsi:type="string">Searchbox</argument>
+            </action>
+        </referenceBlock>
 
-    <!-- Remove the search links from footer -->
-    <referenceBlock name="footer_links">
-        <action ifconfig="factfinder/general/is_enabled" method="unsetChild">
-            <argument name="block" xsi:type="string">catalog-search-advanced-link</argument>
-        </action>
-        <action ifconfig="factfinder/general/is_enabled" method="unsetChild">
-            <argument name="block" xsi:type="string">search-term-popular-link</argument>
-        </action>
-    </referenceBlock>
+        <!-- Remove the search links from footer -->
+        <referenceBlock name="footer_links">
+            <action ifconfig="factfinder/general/is_enabled" method="unsetChild">
+                <argument name="block" xsi:type="string">catalog-search-advanced-link</argument>
+            </action>
+            <action ifconfig="factfinder/general/is_enabled" method="unsetChild">
+                <argument name="block" xsi:type="string">search-term-popular-link</argument>
+            </action>
+        </referenceBlock>
+    </body>
 </page>

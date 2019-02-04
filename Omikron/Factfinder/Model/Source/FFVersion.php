@@ -2,11 +2,9 @@
 
 namespace Omikron\Factfinder\Model\Source;
 
-/**
- * Class FFVersion
- * @package Omikron\Factfinder\Model\Source
- */
-class FFVersion implements \Magento\Framework\Option\ArrayInterface
+use Magento\Framework\Data\OptionSourceInterface;
+
+class FFVersion implements OptionSourceInterface
 {
     /**
      * Options getter
@@ -17,7 +15,7 @@ class FFVersion implements \Magento\Framework\Option\ArrayInterface
     {
         return [
             ['value' => '7.2', 'label' => __('7.2')],
-            ['value' => '7.3', 'label' => __('7.3')]
+            ['value' => '7.3', 'label' => __('7.3')],
         ];
     }
 
@@ -30,8 +28,7 @@ class FFVersion implements \Magento\Framework\Option\ArrayInterface
     {
         return [
             '7.2' => __('7.2'),
-            '7.3' => __('7.3')
+            '7.3' => __('7.3'),
         ];
     }
 }
-

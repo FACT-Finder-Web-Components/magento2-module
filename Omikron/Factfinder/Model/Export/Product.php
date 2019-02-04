@@ -4,8 +4,8 @@ namespace Omikron\Factfinder\Model\Export;
 
 use Magento\Catalog\Model\Product\Attribute\Source\Status;
 use Magento\Catalog\Model\ResourceModel\Product\Collection;
-use Magento\Framework\Model\AbstractModel;
 use Magento\Framework\App\Filesystem\DirectoryList;
+use Magento\Framework\Model\AbstractModel;
 use Magento\Store\Api\Data\StoreInterface;
 
 /**
@@ -256,9 +256,10 @@ class Product extends AbstractModel
             return $result;
         }
 
-        if ($this->helperData->isPushImportEnabled($store->getId())) {
+        $storeId = $store->getId();
+        if ($this->helperData->isPushImportEnabled($storeId)) {
 
-            if ($this->helperCommunication->pushImport($this->helperData->getChannel($store->getId()))) {
+            if ($this->helperCommunication->pushImport($this->helperData->getChannel($storeId), $storeId)) {
                 $result['message'] .= ' ' . __('Import successfully pushed.');
             } else {
                 $result['message'] .= ' ' . __('Import not successful.');
@@ -280,17 +281,17 @@ class Product extends AbstractModel
         $filename = self::FEED_FILE . $this->helperData->getChannel($store->getId()) . '.' . self::FEED_FILE_FILETYPE;
         $output = $this->buildFeed($store);
 
-        return array(
+        return [
             'filename' => $filename,
             'data' => $output
-        );
+        ];
     }
 
     /**
      * @param StoreInterface $store
      * @return Collection
      */
-    private function getFilteredProductCollection($store)
+    protected function getFilteredProductCollection($store)
     {
         /** @var Collection $collection */
         return $this->productCollectionFactory
@@ -375,8 +376,9 @@ class Product extends AbstractModel
     /**
      * Delete the specified feed file
      *
-     * @param $filename
+     * @param string $filename
      * @return bool
+     * @throws \Magento\Framework\Exception\FileSystemException
      */
     protected function deleteFeedFile($filename)
     {

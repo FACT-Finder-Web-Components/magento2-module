@@ -1,5 +1,5 @@
 <?php
-/** @var $this \Omikron\Factfinder\Block\FF\RecordList */
+/** @var $block \Omikron\Factfinder\Block\FF\RecordList */
 ?>
 <script type="text/x-magento-init">
     {
@@ -12,7 +12,7 @@
 </script>
 <ff-record-list unresolved>
     <ff-record>
-        <img data-image data-image-onerror="<?php echo $this->getProductImagePlaceholder(); ?>" />
+        <img data-image data-image-onerror="<?php echo $block->getProductImagePlaceholder(); ?>" />
         <br/>
         <div class="recordContent">
             <div class="brand">{{record.Manufacturer}}</div>
@@ -27,18 +27,18 @@
                 Product Page
             </a>
             <div class="productInfo">
-                <?php if($this->isAddToCartEnabled()): ?>
+                <?php if($block->isAddToCartEnabled()): ?>
                     <div class="addCartLink basketIcon">
-                        <form action="<?php echo $this->getAddToCartUrl(); ?>" method="post" class="product_addtocart_form" novalidate="novalidate">
+                        <form action="<?php echo $block->getAddToCartUrl(); ?>" method="post" class="product_addtocart_form" novalidate="novalidate">
                             <input type="hidden" name="product" value="{{record.MagentoEntityId}}">
-                            <?php echo $this->getBlockHtml('formkey') ?>
-                            <button data-track type="submit" title="<?php echo __("Add to Cart"); ?>" class="action primary tocart">
-                                <span><?php echo __("Add to Cart"); ?></span>
+                            <?php echo $block->getBlockHtml('formkey') ?>
+                            <button data-track type="submit" title="<?php echo __('Add to Cart'); ?>" class="action primary tocart">
+                                <span><?php echo __('Add to Cart'); ?></span>
                             </button>
                         </form>
                     </div>
                 <?php endif; ?>
-                <span class="price">{{record.Price}} <?php echo $this->getCurrentCurrencySymbol(); ?> </span>
+                <span class="price">{{record.Price}} <?php echo $block->getCurrentCurrencySymbol(); ?> </span>
             </div>
         </div>
     </ff-record>

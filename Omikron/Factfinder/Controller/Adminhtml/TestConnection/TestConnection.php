@@ -76,7 +76,7 @@ class TestConnection extends \Magento\Backend\App\Action
 
         /** @var \Magento\Store\Api\Data\StoreInterface $store */
         if (isset($result[1])) {
-            $store = $this->_storeManager->getStore((int)$result[1]);
+            $store = $this->_storeManager->getStore((int) $result[1]);
         } else {
             $store = $this->_storeManager->getStore();
         }
