@@ -2,13 +2,14 @@
 
 namespace Omikron\Factfinder\Helper;
 
+use Magento\Config\Model\ResourceModel\Config;
 use Magento\Framework\App\Helper\AbstractHelper;
+use Magento\Framework\App\Helper\Context;
 use Magento\Framework\Registry;
 
 /**
  * Class Data
  * Helper class to get the configuration of the factfinder module
- * @package Omikron\Factfinder\Helper
  */
 class Data extends AbstractHelper
 {
@@ -19,6 +20,7 @@ class Data extends AbstractHelper
 
     const PATH_TRACKING_PRODUCT_NUMBER_FIELD_ROLE = 'factfinder/general/tracking_product_number_field_role';
     const PATH_IS_ENABLED = 'factfinder/general/is_enabled';
+    const LOGGING_ENABLED = 'factfinder/general/logging_enabled';
     const PATH_IS_ENRICHMENT_ENABLED = 'factfinder/general/ff_enrichment';
     const PATH_ADDRESS = 'factfinder/general/address';
     const PATH_CHANNEL = 'factfinder/general/channel';
@@ -28,29 +30,25 @@ class Data extends AbstractHelper
     const PATH_AUTH_PREFIX = 'factfinder/general/authentication_prefix';
     const PATH_AUTH_POSTFIX = 'factfinder/general/authentication_postfix';
     const PATH_ADVANCED_VERSION = 'factfinder/advanced/version';
-    const PATH_DATATRANSFER_IMPORT = 'factfinder/data_transfer/ff_cron_import';
+    const PATH_DATATRANSFER_IMPORT = 'factfinder/data_transfer/ff_push_import_enabled';
+    const PATH_DATA_TRANSFER_IMPORT_TYPES ='factfinder/data_transfer/ff_push_import_type';
     const PATH_CONFIGURABLE_CRON_IS_ENABLED = 'factfinder/configurable_cron/ff_cron_enabled';
 
-    /** @var \Magento\Config\Model\ResourceModel\Config */
+    // Data Transfer
+    const PATH_FF_UPLOAD_URL_USER = 'factfinder/basic_auth_data_transfer/ff_upload_url_user';
+    const PATH_FF_UPLOAD_URL_PASSWORD = 'factfinder/basic_auth_data_transfer/ff_upload_url_password';
+
+    /** @var Config  */
     protected $resourceConfig;
 
-    /**
-     * @var Registry
-     */
+   /** @var Registry  */
     protected $registry;
 
-    /**
-     * Data constructor.
-     * @param \Magento\Framework\App\Helper\Context $context
-     * @param \Magento\Config\Model\ResourceModel\Config $resourceConfig
-     * @param Registry $registry
-     */
     public function __construct(
-        \Magento\Framework\App\Helper\Context $context,
-        \Magento\Config\Model\ResourceModel\Config $resourceConfig,
+        Context $context,
+        Config $resourceConfig,
         Registry $registry
-    )
-    {
+    ) {
         parent::__construct($context);
         $this->resourceConfig = $resourceConfig;
         $this->registry = $registry;
@@ -63,7 +61,15 @@ class Data extends AbstractHelper
      */
     public function isEnabled($scopeCode = null)
     {
-        return boolval($this->scopeConfig->getValue(self::PATH_IS_ENABLED, 'store', $scopeCode));
+        return $this->scopeConfig->isSetFlag(self::PATH_IS_ENABLED, 'store', $scopeCode);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isLoggingEnabled()
+    {
+        return $this->scopeConfig->isSetFlag(self::LOGGING_ENABLED);
     }
 
     /**
@@ -72,7 +78,7 @@ class Data extends AbstractHelper
      */
     public function isEnrichmentEnabled()
     {
-        return boolval($this->scopeConfig->getValue(self::PATH_IS_ENRICHMENT_ENABLED, 'store'));
+        return $this->scopeConfig->isSetFlag(self::PATH_IS_ENRICHMENT_ENABLED, 'store');
     }
 
     /**
@@ -110,7 +116,17 @@ class Data extends AbstractHelper
      */
     public function isPushImportEnabled($scopeCode = null)
     {
-        return boolval($this->scopeConfig->getValue(self::PATH_DATATRANSFER_IMPORT, 'store', $scopeCode));
+        return $this->scopeConfig->isSetFlag(self::PATH_DATATRANSFER_IMPORT, 'store', $scopeCode);
+    }
+
+    /**
+     * Returns pushImport types
+     * @param null|int|string $scopeCode
+     * @return array
+     */
+    public function getPushImportTypes($scopeCode = null)
+    {
+        return explode(',', $this->scopeConfig->getValue(self::PATH_DATA_TRANSFER_IMPORT_TYPES, 'store', $scopeCode));
     }
 
     /**

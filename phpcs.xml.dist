@@ -4,10 +4,14 @@
 
     <arg value="pw" />
     <arg name="extensions" value="php,phtml" />
+
     <config name="ignore_warnings_on_exit" value="1" />
     <config name="installed_paths" value="vendor/magento-ecg/coding-standard/EcgM2" />
 
     <rule ref="EcgM2" />
+    <rule ref="EcgM2.Plugins.Plugin.PluginWarning">
+        <include-pattern>*/Plugin/*</include-pattern>
+    </rule>
     <rule ref="Generic.Arrays.DisallowLongArraySyntax" />
     <rule ref="Generic.CodeAnalysis.UnusedFunctionParameter">
         <exclude-pattern>*/Observer/*</exclude-pattern>
@@ -15,6 +19,13 @@
         <exclude-pattern>*/Setup/*</exclude-pattern>
     </rule>
     <rule ref="Generic.Files.ByteOrderMark" />
+    <rule ref="Generic.Files.LineLength">
+        <exclude-pattern>*.phtml</exclude-pattern>
+        <properties>
+            <property name="lineLimit" value="120" />
+            <property name="absoluteLineLimit" value="0" />
+        </properties>
+    </rule>
     <rule ref="Generic.Formatting.SpaceAfterCast" />
     <rule ref="Generic.Metrics.CyclomaticComplexity">
         <exclude-pattern>*/Setup/*</exclude-pattern>

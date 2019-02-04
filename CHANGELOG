@@ -1,3 +1,10 @@
+# v0.9-beta.10
+## ADD
+- Added logging "push import" events. FACT-Finder server responses are saved in log file
+
+## Change
+- Added possibility to push data import to FACT-Finder. Previously, only suggest import was pushed
+
 # v0.9-beta.9
 ## FIX
 - Add missing title to `factfinder_result_index` site

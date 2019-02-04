@@ -4,7 +4,13 @@
         <factfinder>
             <general>
                 <is_enabled>0</is_enabled>
+                <logging_enabled>0</logging_enabled>
                 <password backend_model="Magento\Config\Model\Config\Backend\Encrypted" />
+                <address></address>
+                <channel></channel>
+                <username></username>
+                <authentication_prefix></authentication_prefix>
+                <authentication_postfix></authentication_postfix>
                 <show_add_to_card_button>1</show_add_to_card_button>
                 <ff_enrichment>0</ff_enrichment>
                 <tracking_product_number_field_role>{"brand":"Manufacturer","campaignProductNumber":"ProductNumber","deeplink":"ProductUrl","description":"Description","displayProductNumber":"ProductNumber","ean":"EAN","imageUrl":"ImageUrl","masterArticleNumber":"MasterProductNumber","price":"Price","productName":"Name","trackingProductNumber":"ProductNumber"}</tracking_product_number_field_role>
@@ -15,7 +21,10 @@
                 <use_url_parameter>1</use_url_parameter>
                 <use_cache>0</use_cache>
                 <default_query>*</default_query>
+                <add_params></add_params>
+                <add_tracking_params></add_tracking_params>
                 <keep_filters>0</keep_filters>
+                <keep_url_params></keep_url_params>
                 <use_asn>1</use_asn>
                 <use_found_words>0</use_found_words>
                 <use_campaigns>1</use_campaigns>
@@ -26,6 +35,7 @@
                 <use_aso>1</use_aso>
                 <use_browser_history>1</use_browser_history>
                 <use_seo>0</use_seo>
+                <seo_prefix></seo_prefix>
                 <disable_single_hit_redirect>0</disable_single_hit_redirect>
             </advanced>
             <components>
@@ -42,7 +52,8 @@
             </components>
             <data_transfer>
                 <ff_cron_enabled>0</ff_cron_enabled>
-                <ff_cron_import>1</ff_cron_import>
+                <ff_push_import_enabled>1</ff_push_import_enabled>
+                <ff_push_import_type>suggest</ff_push_import_type>
                 <ff_product_visibility>3,4</ff_product_visibility>
                 <ff_additional_attributes_separate_columns>0</ff_additional_attributes_separate_columns>
             </data_transfer>

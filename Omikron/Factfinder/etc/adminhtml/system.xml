@@ -12,6 +12,11 @@
                     <label>Activate FACT-Finder integration</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
+                <field id="logging_enabled" translate="label comment" type="select" sortOrder="1" showInDefault="1">
+                    <label>Activate Logging</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+
                 <field id="address" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Server URL</label>
                     <validate>required-entry validate-url</validate>
@@ -248,10 +253,17 @@
                     <frontend_model>Omikron\Factfinder\Block\Adminhtml\System\Config\Button\Feed</frontend_model>
                     <comment>On buttonclick CSV exports of all your products will be generated and uploaded to the specified FTP Server.</comment>
                 </field>
-                <field id="ff_cron_import" translate="label" type="select" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Automatic Import of productdata</label>
+                <field id="ff_push_import_enabled" translate="label" type="select" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Automatic Import of product data</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment>Runs an automatic import of the product data to the FACT-Finder servers, after the FTP upload is finished.</comment>
+                </field>
+                <field id="ff_push_import_type" translate="label" type="multiselect" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Pushed import types</label>
+                    <source_model>Omikron\Factfinder\Model\Source\ImportTypes</source_model>
+                        <depends>
+                            <field id="ff_push_import_enabled">1</field>
+                        </depends>
                 </field>
             </group>
             <group id="basic_auth_data_transfer" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">

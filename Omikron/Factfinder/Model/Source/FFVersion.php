@@ -2,12 +2,9 @@
 
 namespace Omikron\Factfinder\Model\Source;
 
-/**
- * Class FFVersion
- *
- * @package Omikron\Factfinder\Model\Source
- */
-class FFVersion implements \Magento\Framework\Option\ArrayInterface
+use Magento\Framework\Data\OptionSourceInterface;
+
+class FFVersion implements OptionSourceInterface
 {
     /**
      * Options getter
