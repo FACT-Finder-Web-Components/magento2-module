@@ -48,10 +48,10 @@ class Communication extends AbstractHelper
         LoggerInterface $logger
     )
     {
-        $this->configHelper = $helper;
-        $this->logger = $logger;
-        $this->jsonSerializer = $jsonSerializer;
         parent::__construct($context);
+        $this->configHelper   = $helper;
+        $this->logger         = $logger;
+        $this->jsonSerializer = $jsonSerializer;
     }
 
     /**
@@ -154,16 +154,13 @@ class Communication extends AbstractHelper
         foreach ($importTypes as $type) {
             $response_json = array_merge_recursive($response_json, $this->jsonSerializer->unserialize($this->sendToFF('Import.ff', ['channel' => $channelName, 'type' => $type, 'format' => 'json' , 'quiet' => 'true', 'download' => 'true']), true));
         }
-        $this->logger->addInfo(
+        $this->_logger->info(
             __('[PUSH IMPORT]:: Push for store %1. Response from FACT-Finder server  : %2', $storeId, $this->jsonSerializer->serialize($response_json))
         );
-        if (is_array($response_json)) {
-            if (isset($response_json['errors']) && !empty($response_json['errors'])) {
-                return false;
-            }
-            elseif (isset($response_json['error']) && !empty($response_json['error'])) {
-                return false;
-            }
+
+        if (is_array($response_json) && isset($response_json['errors']) &&
+            (!empty($response_json['errors']) || !empty($response_json['error']))) {
+            return false;
         }
 
         return true;

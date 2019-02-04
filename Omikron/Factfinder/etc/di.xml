@@ -4,18 +4,27 @@
     <type name="Magento\Framework\View\Asset\Minification">
         <plugin name="omikron.factfinder.excludefilesfromminification" type="Omikron\Factfinder\Plugin\ExcludeFilesFromMinification" />
     </type>
-    <type name="Omikron\Factfinder\Logger\Logger">
+    <virtualType name="Omikron\Factfinder\Logger" type="Monolog\Logger">
         <arguments>
-            <argument name="name" xsi:type="string">factFinderLogger</argument>
+            <argument name="name" xsi:type="string">FACT-Finder</argument>
             <argument name="handlers" xsi:type="array">
-                <item name="error" xsi:type="object">Omikron\Factfinder\Logger\Handler\Error</item>
-                <item name="info" xsi:type="object">Omikron\Factfinder\Logger\Handler\Info</item>
+                <item name="factfinder" xsi:type="object">Omikron\Factfinder\Logger\Handler</item>
             </argument>
         </arguments>
-    </type>
+    </virtualType>
+    <virtualType name="Omikron\Factfinder\Logger\Handler" type="Magento\Framework\Logger\Handler\Base">
+        <arguments>
+            <argument name="fileName" xsi:type="string">/var/log/factfinder.log</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="communicationContext" type="Magento\Framework\App\Helper\Context">
+        <arguments>
+            <argument name="logger" xsi:type="object">Omikron\Factfinder\Logger</argument>
+        </arguments>
+    </virtualType>
     <type name="Omikron\Factfinder\Helper\Communication">
         <arguments>
-            <argument name="logger" xsi:type="object">Omikron\Factfinder\Logger\Logger</argument>
+            <argument name="context" xsi:type="object">communicationContext</argument>
         </arguments>
     </type>
 </config>
