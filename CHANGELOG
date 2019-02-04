@@ -1,9 +1,16 @@
 # v0.9-beta.10
 ## ADD
-- Added logging "push import" events. FACT-Finder server responses are saved in log file
-
-## Change
+- Added possibility to enable FACT-Finder server responses logging
 - Added possibility to push data import to FACT-Finder. Previously, only suggest import was pushed
+- Added <ff-redirect campaign> web component support
+
+## CHANGE
+- Changed additional attributes source model to shows only products attributes
+- Replaced all .css files with .less
+- Removed hardcoded css files from page layout
+
+## FIX
+- Fixed authorization in HTTP export
 
 # v0.9-beta.9
 ## FIX
