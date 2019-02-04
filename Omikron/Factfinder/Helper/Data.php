@@ -62,7 +62,7 @@ class Data extends AbstractHelper
      */
     public function isEnabled($scopeCode = null)
     {
-        return boolval($this->scopeConfig->getValue(self::PATH_IS_ENABLED, 'store', $scopeCode));
+        return $this->scopeConfig->isSetFlag($this->scopeConfig->getValue(self::PATH_IS_ENABLED, 'store', $scopeCode));
     }
 
     /**
@@ -70,7 +70,7 @@ class Data extends AbstractHelper
      */
     public function isLoggingEnabled()
     {
-        return boolval($this->scopeConfig->getValue(self::LOGGING_ENABLED));
+        return $this->scopeConfig->isSetFlag($this->scopeConfig->getValue(self::LOGGING_ENABLED));
     }
 
     /**
@@ -79,7 +79,7 @@ class Data extends AbstractHelper
      */
     public function isEnrichmentEnabled()
     {
-        return boolval($this->scopeConfig->getValue(self::PATH_IS_ENRICHMENT_ENABLED, 'store'));
+        return $this->scopeConfig->isSetFlag($this->scopeConfig->getValue(self::PATH_IS_ENRICHMENT_ENABLED, 'store'));
     }
 
     /**
@@ -117,7 +117,7 @@ class Data extends AbstractHelper
      */
     public function isPushImportEnabled($scopeCode = null)
     {
-        return boolval($this->scopeConfig->getValue(self::PATH_DATATRANSFER_IMPORT, 'store', $scopeCode));
+        return $this->scopeConfig->isSetFlag($this->scopeConfig->getValue(self::PATH_DATATRANSFER_IMPORT, 'store', $scopeCode));
     }
 
     /**
