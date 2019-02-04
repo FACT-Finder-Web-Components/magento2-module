@@ -2,10 +2,9 @@
 
 namespace Omikron\Factfinder\Model\Source;
 
-/**
- * Class ImportTypes
- */
-class ImportTypes implements \Magento\Framework\Option\ArrayInterface
+use Magento\Framework\Data\OptionSourceInterface;
+
+class ImportTypes implements OptionSourceInterface
 {
     /**
      * @return array
@@ -14,7 +13,7 @@ class ImportTypes implements \Magento\Framework\Option\ArrayInterface
     {
         return [
             ['value' => 'data', 'label' => __('Data')],
-            ['value' => 'suggest', 'label' => __('Suggest')]
+            ['value' => 'suggest', 'label' => __('Suggest')],
         ];
     }
 }
