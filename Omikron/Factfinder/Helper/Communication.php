@@ -152,7 +152,7 @@ class Communication extends AbstractHelper
 
         $this->logResponse($this->jsonSerializer->serialize($responseJson));
 
-        if (!empty($responseJson['errors']) || !empty($responseJson['error'])) {
+        if ($responseJson['errors'] ?? $responseJson['error'] ?? []) {
             return false;
         }
 
