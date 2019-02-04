@@ -164,7 +164,7 @@ class Communication extends AbstractHelper
     private function logResponse(string $response)
     {
         if ($this->configHelper->isLoggingEnabled()) {
-            $this->_logger->info(__('[PUSH IMPORT]:: FACT-Finder response : %1', $response));
+            $this->_logger->info(__('FACT-Finder response : %1', $response));
         }
     }
 
@@ -177,7 +177,7 @@ class Communication extends AbstractHelper
         if ($this->configHelper->isLoggingEnabled()) {
             $this->_logger->error(
                 __(
-                    '[PUSH IMPORT]::Exception %1  thrown at %2. FACT-Finder response : %3',
+                    'Exception %1  thrown at %2. FACT-Finder response : %3',
                     $exception->getMessage(), $exception->getTraceAsString(), $response
                 )
             );
