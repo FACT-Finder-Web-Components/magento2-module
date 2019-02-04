@@ -4,9 +4,9 @@ namespace Omikron\Factfinder\Helper;
 
 use Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Framework\App\Helper\Context;
+use Magento\Framework\Serialize\SerializerInterface;
 use Omikron\Factfinder\Helper\Data as ConfigHelper;
 use Psr\Log\LoggerInterface;
-use Magento\Framework\Serialize\SerializerInterface;
 
 /**
  * Class Communication
@@ -18,39 +18,19 @@ class Communication extends AbstractHelper
     const API_NAME = 'Search.ff';
     const API_QUERY = 'FACT-Finder version';
 
-    /**
-     * @var Data
-     */
+    /** @var Data  */
     protected $configHelper;
 
-    /**
-     * @var LoggerInterface
-     */
-    protected $logger;
-
-    /**
-     * @var SerializerInterface
-     */
+    /** @var SerializerInterface  */
     protected $jsonSerializer;
 
-    /**
-     * Communication constructor.
-     *
-     * @param Context             $context
-     * @param Data                $helper
-     * @param SerializerInterface $jsonSerializer
-     * @param LoggerInterface     $logger
-     */
     public function __construct(
         Context $context,
         ConfigHelper $helper,
-        SerializerInterface $jsonSerializer,
-        LoggerInterface $logger
-    )
-    {
+        SerializerInterface $jsonSerializer
+    ) {
         parent::__construct($context);
         $this->configHelper   = $helper;
-        $this->logger         = $logger;
         $this->jsonSerializer = $jsonSerializer;
     }
 
@@ -100,7 +80,15 @@ class Communication extends AbstractHelper
         $result['success'] = true;
         $result['ff_error_response'] = '';
         $result['ff_error_stacktrace'] = '';
-        $result['ff_response_decoded'] = $this->jsonSerializer->unserialize($this->sendToFF(self::API_NAME, ['query' =>  self::API_QUERY, 'channel' => $this->configHelper->getChannel($store->getId()), 'verbose' => 'true']), true);
+        $response = $this->sendToFF(self::API_NAME, ['query' =>  self::API_QUERY, 'channel' => $this->configHelper->getChannel($store->getId()), 'verbose' => 'true']);
+        try {
+            $result['ff_response_decoded'] = $this->jsonSerializer->unserialize($response, true);
+        } catch (\InvalidArgumentException $e) {
+            $this->logError($e, $response);
+            $result['success'] = false;
+
+            return $result;
+        }
 
         if (!is_array($result['ff_response_decoded'])) {
             $result['ff_response_decoded'] = [];
@@ -119,6 +107,7 @@ class Communication extends AbstractHelper
             $result['hasFieldRoles'] = false;
             $result['fieldRoles'] = false;
         }
+
         return $result;
     }
 
@@ -150,19 +139,48 @@ class Communication extends AbstractHelper
         if (empty($importTypes)) {
             return false;
         }
-        $response_json = [];
+        $responseJson = [];
         foreach ($importTypes as $type) {
-            $response_json = array_merge_recursive($response_json, $this->jsonSerializer->unserialize($this->sendToFF('Import.ff', ['channel' => $channelName, 'type' => $type, 'format' => 'json' , 'quiet' => 'true', 'download' => 'true']), true));
-        }
-        $this->_logger->info(
-            __('[PUSH IMPORT]:: Push for store %1. Response from FACT-Finder server  : %2', $storeId, $this->jsonSerializer->serialize($response_json))
-        );
+            $response = $this->sendToFF('Import.ff', ['channel' => $channelName, 'type' => $type, 'format' => 'json' , 'quiet' => 'true', 'download' => 'true']);
+            try {
+                $responseJson = array_merge_recursive($responseJson, $this->jsonSerializer->unserialize($response, true));
+            } catch (\InvalidArgumentException $e) {
+                $this->logError($e, $response);
 
-        if (is_array($response_json) && isset($response_json['errors']) &&
-            (!empty($response_json['errors']) || !empty($response_json['error']))) {
+                return false;
+            }
+        }
+
+        $this->logResponse($this->jsonSerializer->serialize($responseJson));
+
+        if (is_array($responseJson) && isset($responseJson['errors']) &&
+            (!empty($responseJson['errors']) || !empty($responseJson['error']))) {
             return false;
         }
 
         return true;
+    }
+
+    private function logResponse(string $response)
+    {
+        if ($this->configHelper->isLoggingEnabled()) {
+            $this->_logger->info(__('[PUSH IMPORT]:: FACT-Finder response : %1', $response));
+        }
+    }
+
+    /**
+     * @param \Exception $exception
+     * @param string     $response
+     */
+    private function logError(\Exception $exception, string $response)
+    {
+        if ($this->configHelper->isLoggingEnabled()) {
+            $this->_logger->error(
+                __(
+                    '[PUSH IMPORT]::Exception %1  thrown at %2. FACT-Finder response : %3',
+                    $exception->getMessage(), $exception->getTraceAsString(), $response
+                )
+            );
+        }
     }
 }
