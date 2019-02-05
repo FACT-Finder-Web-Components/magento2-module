@@ -1,3 +1,7 @@
+# [Unreleased]
+## CHANGE
+- Remove core controller rewrites and perform redirects using event observers
+
 # v0.9-beta.10
 ## ADD
 - Added possibility to enable FACT-Finder server responses logging
@@ -64,9 +68,9 @@
 - divide product collection into batches in order to prevent memory exhaustion on product collection load
 
 # v0.9-beta.5
-##FIX
+## FIX
 - fix module structure and composer.json file allowing install module by composer
 - `ff-communication` component is now download by Magento Customer Sections mechanism, which allowed to turn FPC on
 
-##ADD
+## ADD
 - Feed Export: Export feed file is now available via separate link
