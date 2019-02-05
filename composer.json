@@ -5,12 +5,12 @@
   "license": "FACT-Finder",
   "require": {
     "php": "7.*",
-    "ext-curl": "*",
-    "ext-json": "*",
-    "ext-libxml": "*"
+    "magento/framework": ">=100.1.0",
+    "magento/module-store": ">=100.1.0"
   },
   "require-dev": {
     "magento-ecg/coding-standard": "^3.1",
+    "phpunit/phpunit": ">=6.0 <8.0",
     "squizlabs/php_codesniffer": "3.*"
   },
   "autoload": {
