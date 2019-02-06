@@ -4,7 +4,7 @@
   "type": "magento2-module",
   "license": "FACT-Finder",
   "require": {
-    "php": "7.*",
+    "php": "7.1",
     "ext-curl": "*",
     "ext-json": "*",
     "ext-libxml": "*",

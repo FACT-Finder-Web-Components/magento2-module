@@ -15,8 +15,6 @@ class Data extends AbstractHelper
     const CUSTOM_RESULT_PAGE = 'result';
     const SESSION_ID_LENGTH  = 30;
 
-    const PATH_TRACKING_PRODUCT_NUMBER_FIELD_ROLE = 'factfinder/general/tracking_product_number_field_role';
-
     const PATH_IS_ENABLED                   = 'factfinder/general/is_enabled';
     const LOGGING_ENABLED                   = 'factfinder/general/logging_enabled';
     const PATH_IS_ENRICHMENT_ENABLED        = 'factfinder/general/ff_enrichment';
@@ -24,6 +22,7 @@ class Data extends AbstractHelper
     const PATH_ADVANCED_VERSION             = 'factfinder/advanced/version';
     const PATH_DATA_TRANSFER_IMPORT         = 'factfinder/data_transfer/ff_cron_import';
     const PATH_CONFIGURABLE_CRON_IS_ENABLED = 'factfinder/configurable_cron/ff_cron_enabled';
+    const PATH_PRODUCT_FIELD_ROLE           = 'factfinder/general/tracking_product_number_field_role';
 
     /**
      * Public Getter
@@ -73,7 +72,7 @@ class Data extends AbstractHelper
      */
     public function getFieldRoles()
     {
-        return $this->scopeConfig->getValue(self::PATH_TRACKING_PRODUCT_NUMBER_FIELD_ROLE, 'store');
+        return $this->scopeConfig->getValue(self::PATH_PRODUCT_FIELD_ROLE, 'store');
     }
 
 
