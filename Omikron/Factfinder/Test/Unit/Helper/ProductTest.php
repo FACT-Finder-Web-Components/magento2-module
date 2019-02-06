@@ -1,10 +1,9 @@
 <?php
-// @codingStandardsIgnoreFile
 
 namespace Omikron\Factfinder\Test\Unit\Helper;
 
 use Magento\Catalog\Api\CategoryRepositoryInterface;
-use Magento\Catalog\Helper\Image;
+use Magento\Catalog\Helper\ImageFactory;
 use Magento\Catalog\Model\Entity\Attribute;
 use Magento\Catalog\Model\ProductRepository;
 use Magento\ConfigurableProduct\Model\ResourceModel\Product\Type\Configurable;
@@ -17,439 +16,207 @@ use Magento\Framework\TestFramework\Unit\Helper\ObjectManager;
 use Magento\Store\Api\Data\StoreInterface;
 use Omikron\Factfinder\Helper\Product;
 
-/**
- * Class ProductTest
- */
 class ProductTest extends \PHPUnit\Framework\TestCase
 {
-    const STORE_ID                       = 1;
-    const TEST_ATTRIBUTE_CODE            = 'test';
-    const VARCHAR_TEST_PRODUCT_VALUE     = 'test value';
-    const SELECT_TEST_PRODUCT_VALUE      = 'option label';
-    const MULTISELECT_TEST_PRODUCT_VALUE = 'option label1, option label2';
-    const SELECT_TEST_OPTION_ID          = 1;
-    const MULTISELECT_TEST_OPTION_ID     = '1,2';
-    const HTML_TAGS_ATTRIBUTE_VALUE      = '&lt;div class=&quot;test description&quot;&gt; This is test attribute value &lt;/div&gt;';
+    const STORE_ID                         = 1;
+    const TEST_ATTRIBUTE_CODE              = 'test';
+    const VARCHAR_TEST_PRODUCT_VALUE       = 'test value';
+    const SELECT_TEST_PRODUCT_VALUE        = 'option label';
+    const BOOLEAN_TEST_PRODUCT_VALUE_LABEL = 'Yes';
+    const BOOLEAN_TEST_PRODUCT_VALUE       = '1';
+    const MULTI_SELECT_TEST_PRODUCT_VALUE  = 'option label1, option label2';
+    const SELECT_TEST_OPTION_ID            = 1;
+    const MULTI_SELECT_TEST_OPTION_ID      = '1,2';
+    const HTML_TAGS_ATTRIBUTE_VALUE        = '&lt;div class=&quot;test description&quot;&gt; This is test attribute value &lt;/div&gt;';
 
-    /**
-     * @var \Magento\Framework\App\Helper\Context  | \PHPUnit_Framework_MockObject_MockObject
-     */
+    /** @var \Magento\Framework\App\Helper\Context | \PHPUnit_Framework_MockObject_MockObject */
     protected $contextMock;
 
-    /**
-     * @var \Magento\Catalog\Helper\Image  | \PHPUnit_Framework_MockObject_MockObject
-     */
+    /**  @var \Magento\Catalog\Helper\ImageFactory | \PHPUnit_Framework_MockObject_MockObject */
     protected $imageMock;
 
-    /**
-     * @var \Magento\Eav\Model\Config  | \PHPUnit_Framework_MockObject_MockObject
-     */
+    /** @var \Magento\Eav\Model\Config | \PHPUnit_Framework_MockObject_MockObject */
     protected $eavConfigMock;
 
-    /**
-     * @var \Magento\Catalog\Model\ProductRepository  | \PHPUnit_Framework_MockObject_MockObject
-     */
+    /** @var \Magento\Catalog\Model\ProductRepository | \PHPUnit_Framework_MockObject_MockObject */
     protected $productRepositoryMock;
 
-    /**
-     * @var \Magento\ConfigurableProduct\Model\ResourceModel\Product\Type\Configurable | \PHPUnit_Framework_MockObject_MockObject
-     */
+    /** @var \Magento\ConfigurableProduct\Model\ResourceModel\Product\Type\Configurable | \PHPUnit_Framework_MockObject_MockObject */
     protected $configurableMock;
 
-    /**
-     * @var \Magento\Catalog\Api\CategoryRepositoryInterface  | \PHPUnit_Framework_MockObject_MockObject
-     */
+    /** @var \Magento\Catalog\Api\CategoryRepositoryInterface | \PHPUnit_Framework_MockObject_MockObject */
     protected $categoryRepositoryMock;
 
-    /**
-     * @var Magento\Store\Model\Store  | \PHPUnit_Framework_MockObject_MockObject
-     */
+    /** @var Magento\Store\Model\Store  | \PHPUnit_Framework_MockObject_MockObject */
     protected $storeMock;
 
-    /**
-     * @var \Omikron\Factfinder\Helper\Product
-     */
+    /** @var ScopeConfigInterface | \PHPUnit_Framework_MockObject_MockObject */
+    protected $scopeConfigMock;
+
+    /** @var Attribute | \PHPUnit_Framework_MockObject_MockObject */
+    protected $attributeMock;
+
+    /** @var ScopeConfigInterface | \PHPUnit_Framework_MockObject_MockObject */
+    protected $productMock;
+
+    /** @var Magento\Catalog\Model\Product */
     protected $productHelper;
 
-    /**
-     * Setup the test
-     */
-    public function setUp()
+    public function testGetAttributeValueWhenAttributeIsSelect()
     {
-        $this->contextMock = $this->getMockBuilder(Context::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $this->scopeConfigMock->method('getValue')->with(
+            Product::PATH_DATA_TRANSFER_MANUFACTURER, 'store', self::STORE_ID
+        )->willReturn(self::TEST_ATTRIBUTE_CODE);
+        $this->productMock->method('getAttributeText')->with(self::TEST_ATTRIBUTE_CODE)->willReturn(
+            self::SELECT_TEST_PRODUCT_VALUE
+        );
+        $this->productMock->expects($this->once())->method('getAttributeText');
+        $this->eavConfigMock->method('getAttribute')->with('catalog_product', self::TEST_ATTRIBUTE_CODE)->willReturn(
+            $this->attributeMock
+        );
+        $this->contextMock->method('getScopeConfig')->willReturn($this->scopeConfigMock);
+        $this->attributeMock->method('getFrontendInput')->willReturn('select');
+        $this->attributeMock->expects($this->once())->method('getFrontendInput');
 
-        $this->imageMock = $this->getMockBuilder(Image::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $this->configurableMock = $this->getMockBuilder(Configurable::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $this->categoryRepositoryMock = $this->getMockBuilder(CategoryRepositoryInterface::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $this->storeMock = $this->getMockBuilder(StoreInterface::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $this->storeMock->method('getId')
-            ->willReturn(self::STORE_ID);
-
-        $this->productRepositoryMock = $this->getMockBuilder(ProductRepository::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $this->eavConfigMock = $this->getMockBuilder(Config::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $this->createTestProductHelperInstance();
-    }
-
-    /**
-     * @param \Magento\Catalog\Model\Product  | \PHPUnit_Framework_MockObject_MockObject $productMock
-     * @param \Magento\Catalog\Model\Entity\Attribute  | \PHPUnit_Framework_MockObject_MockObject $attributeMock
-     * @param \Magento\Framework\App\Config\ScopeConfigInterface | \PHPUnit_Framework_MockObject_MockObject $scopeConfigMock
-     *
-     * @dataProvider manufacturerProductDataProvider
-     */
-    public function testGetAttributeValueWhenAttributeIsSelect($productMock, $attributeMock, $scopeConfigMock)
-    {
-        $attributeMock->method('getFrontendInput')
-            ->willReturn('select');
-
-        $productMock->method('getAttributeText')
-            ->with(self::TEST_ATTRIBUTE_CODE)
-            ->willReturn(self::SELECT_TEST_PRODUCT_VALUE);
-
-        $this->eavConfigMock->method('getAttribute')
-            ->with(
-                'catalog_product',
-                self::TEST_ATTRIBUTE_CODE
-            )
-            ->willReturn($attributeMock);
-
-        $this->contextMock->method('getScopeConfig')
-            ->willReturn($scopeConfigMock);
-
-        $this->createTestProductHelperInstance();
-
-        $productMock->expects($this->once())
-            ->method('getAttributeText');
-
-        $attributeMock->expects($this->once())
-            ->method('getFrontendInput');
-
-        $result = $this->productHelper->get('Manufacturer', $productMock, $this->storeMock);
+        $result = $this->productHelper->get('Manufacturer', $this->productMock, $this->storeMock);
 
         $this->assertNotEquals(self::SELECT_TEST_OPTION_ID, $result);
         $this->assertEquals(self::SELECT_TEST_PRODUCT_VALUE, $result);
     }
 
-    /**
-     * @param \Magento\Catalog\Model\Product  | \PHPUnit_Framework_MockObject_MockObject $productMock
-     * @param \Magento\Catalog\Model\Entity\Attribute  | \PHPUnit_Framework_MockObject_MockObject $attributeMock
-     * @param \Magento\Framework\App\Config\ScopeConfigInterface | \PHPUnit_Framework_MockObject_MockObject $scopeConfigMock
-     *
-     * @dataProvider eanProductDataProvider
-     */
-    public function testGetAttributeValueWhenAttributeIsVarchar($productMock, $attributeMock, $scopeConfigMock)
+    public function testGetAttributeValueWhenAttributeIsVarchar()
     {
-        $attributeMock->method('getFrontendInput')
-            ->willReturn('text');
+        $this->scopeConfigMock->method('getValue')->with(Product::PATH_DATA_TRANSFER_EAN, 'store', self::STORE_ID)
+            ->willReturn(self::TEST_ATTRIBUTE_CODE);
+        $this->attributeMock->method('getFrontendInput')->willReturn('text');
+        $this->productMock->method('getData')->with(self::TEST_ATTRIBUTE_CODE)->willReturn(
+            self::VARCHAR_TEST_PRODUCT_VALUE
+        );
+        $this->eavConfigMock->method('getAttribute')->with('catalog_product', self::TEST_ATTRIBUTE_CODE)->willReturn(
+            $this->attributeMock
+        );
+        $this->contextMock->method('getScopeConfig')->willReturn($this->scopeConfigMock);
+        $this->productMock->method('getData')->with(self::TEST_ATTRIBUTE_CODE)->willReturn(
+            self::VARCHAR_TEST_PRODUCT_VALUE
+        );
+        $this->attributeMock->expects($this->once())->method('getFrontendInput');
+        $this->productMock->expects($this->never())->method('getAttributeText');
+        $this->productMock->expects($this->once())->method('getData');
 
-        $productMock->method('getData')
-            ->with(self::TEST_ATTRIBUTE_CODE)
-            ->willReturn(self::VARCHAR_TEST_PRODUCT_VALUE);
-
-        $this->eavConfigMock->method('getAttribute')
-            ->with(
-                'catalog_product',
-                self::TEST_ATTRIBUTE_CODE
-            )
-            ->willReturn($attributeMock);
-
-        $this->contextMock->method('getScopeConfig')
-            ->willReturn($scopeConfigMock);
-
-        $productMock->method('getData')
-            ->with(self::TEST_ATTRIBUTE_CODE)
-            ->willReturn(self::VARCHAR_TEST_PRODUCT_VALUE);
-
-        $this->createTestProductHelperInstance();
-
-        $attributeMock->expects($this->once())
-            ->method('getFrontendInput');
-
-        $productMock->expects($this->never())
-            ->method('getAttributeText');
-
-        $productMock->expects($this->once())
-            ->method('getData');
-
-        $result = $this->productHelper->get('EAN', $productMock, $this->storeMock);
+        $result = $this->productHelper->get('EAN', $this->productMock, $this->storeMock);
 
         $this->assertEquals(self::VARCHAR_TEST_PRODUCT_VALUE, $result);
     }
 
-    /**
-     * @param \Magento\Catalog\Model\Product  | \PHPUnit_Framework_MockObject_MockObject $productMock
-     * @param \Magento\Catalog\Model\Entity\Attribute  | \PHPUnit_Framework_MockObject_MockObject $attributeMock
-     * @param \Magento\Framework\App\Config\ScopeConfigInterface | \PHPUnit_Framework_MockObject_MockObject $scopeConfigMock
-     *
-     * @dataProvider manufacturerProductDataProvider
-     */
-    public function testGetAttributeValueWhenAttributeIsMultiselect($productMock, $attributeMock, $scopeConfigMock)
+    public function testGetAttributeValueWhenAttributeIsMultiselect()
     {
-        $attributeMock->method('getFrontendInput')
-            ->willReturn('multiselect');
+        $this->scopeConfigMock->method('getValue')->with(
+            Product::PATH_DATA_TRANSFER_MANUFACTURER, 'store', self::STORE_ID
+        )->willReturn(self::TEST_ATTRIBUTE_CODE);
+        $this->attributeMock->method('getFrontendInput')->willReturn('multiselect');
+        $this->productMock->method('getAttributeText')->with(self::TEST_ATTRIBUTE_CODE)->willReturn(
+            self::MULTI_SELECT_TEST_PRODUCT_VALUE
+        );
+        $this->eavConfigMock->method('getAttribute')->with('catalog_product', self::TEST_ATTRIBUTE_CODE)->willReturn(
+            $this->attributeMock
+        );
+        $this->contextMock->method('getScopeConfig')->willReturn($this->scopeConfigMock);
+        $this->productMock->expects($this->once())->method('getAttributeText');
+        $this->attributeMock->expects($this->once())->method('getFrontendInput');
 
-        $productMock->method('getAttributeText')
-            ->with(self::TEST_ATTRIBUTE_CODE)
-            ->willReturn(self::MULTISELECT_TEST_PRODUCT_VALUE);
+        $result = $this->productHelper->get('Manufacturer', $this->productMock, $this->storeMock);
 
-        $this->eavConfigMock->method('getAttribute')
-            ->with(
-                'catalog_product',
-                self::TEST_ATTRIBUTE_CODE
-            )
-            ->willReturn($attributeMock);
-
-        $this->contextMock->method('getScopeConfig')
-            ->willReturn($scopeConfigMock);
-
-        $this->createTestProductHelperInstance();
-
-        $productMock->expects($this->once())
-            ->method('getAttributeText');
-
-        $attributeMock->expects($this->once())
-            ->method('getFrontendInput');
-
-        $result = $this->productHelper->get('Manufacturer', $productMock, $this->storeMock);
-
-        $this->assertNotEquals(self::MULTISELECT_TEST_OPTION_ID, $result);
-        $this->assertEquals(self::MULTISELECT_TEST_PRODUCT_VALUE, $result);
+        $this->assertNotEquals(self::MULTI_SELECT_TEST_OPTION_ID, $result);
+        $this->assertEquals(self::MULTI_SELECT_TEST_PRODUCT_VALUE, $result);
     }
 
-    /**
-     * @param \Magento\Catalog\Model\Product  | \PHPUnit_Framework_MockObject_MockObject $productMock
-     * @param \Magento\Catalog\Model\Entity\Attribute  | \PHPUnit_Framework_MockObject_MockObject $attributeMock
-     * @param \Magento\Framework\App\Config\ScopeConfigInterface | \PHPUnit_Framework_MockObject_MockObject $scopeConfigMock
-     *
-     * @dataProvider manufacturerProductDataProvider
-     */
-    public function testGetAttributeValueWhenAttributeIsBoolean($productMock, $attributeMock, $scopeConfigMock)
+    public function testGetAttributeValueWhenAttributeIsBoolean()
     {
-        $attributeMock->method('getFrontendInput')
-            ->willReturn('boolean');
+        $this->scopeConfigMock->method('getValue')->with(
+            Product::PATH_DATA_TRANSFER_MANUFACTURER, 'store', self::STORE_ID
+        )->willReturn(self::TEST_ATTRIBUTE_CODE);
+        $this->attributeMock->method('getFrontendInput')->willReturn('boolean');
+        $this->productMock->method('getAttributeText')->with(self::TEST_ATTRIBUTE_CODE)->willReturn(
+            self::BOOLEAN_TEST_PRODUCT_VALUE_LABEL
+        );
+        $this->eavConfigMock->method('getAttribute')->with('catalog_product', self::TEST_ATTRIBUTE_CODE)->willReturn(
+            $this->attributeMock
+        );
+        $this->contextMock->method('getScopeConfig')->willReturn($this->scopeConfigMock);
+        $this->productMock->expects($this->once())->method('getAttributeText');
+        $this->attributeMock->expects($this->once())->method('getFrontendInput');
 
-        $productMock->method('getAttributeText')
-            ->with(self::TEST_ATTRIBUTE_CODE)
-            ->willReturn(self::BOOLEAN_TEST_PRODUCT_VALUE_LABEL);
-
-        $this->eavConfigMock->method('getAttribute')
-            ->with(
-                'catalog_product',
-                self::TEST_ATTRIBUTE_CODE
-            )
-            ->willReturn($attributeMock);
-
-        $this->contextMock->method('getScopeConfig')
-            ->willReturn($scopeConfigMock);
-
-        $this->createTestProductHelperInstance();
-
-        $productMock->expects($this->once())
-            ->method('getAttributeText');
-
-        $attributeMock->expects($this->once())
-            ->method('getFrontendInput');
-
-        $result = $this->productHelper->get('Manufacturer', $productMock, $this->storeMock);
+        $result = $this->productHelper->get('Manufacturer', $this->productMock, $this->storeMock);
 
         $this->assertNotEquals(self::BOOLEAN_TEST_PRODUCT_VALUE, $result);
         $this->assertEquals(self::BOOLEAN_TEST_PRODUCT_VALUE_LABEL, $result);
     }
 
-    /**
-     * @param \Magento\Catalog\Model\Product  | \PHPUnit_Framework_MockObject_MockObject $productMock
-     * @param \Magento\Catalog\Model\Entity\Attribute  | \PHPUnit_Framework_MockObject_MockObject $attributeMock
-     * @param \Magento\Framework\App\Config\ScopeConfigInterface | \PHPUnit_Framework_MockObject_MockObject $scopeConfigMock
-     *
-     * @dataProvider eanProductDataProvider
-     */
-    public function testAttributeValueHTMLTagsAreDecoded($productMock, $attributeMock, $scopeConfigMock)
+    public function testAttributeValueHTMLTagsAreDecoded()
     {
-        $attributeMock->method('getFrontendInput')
-            ->willReturn('text');
+        $this->scopeConfigMock->method('getValue')->with(Product::PATH_DATA_TRANSFER_EAN, 'store', self::STORE_ID)
+            ->willReturn(self::TEST_ATTRIBUTE_CODE);
+        $this->attributeMock->method('getFrontendInput')->willReturn('text');
+        $this->productMock->method('getData')->with(self::TEST_ATTRIBUTE_CODE)->willReturn(
+            self::HTML_TAGS_ATTRIBUTE_VALUE
+        );
+        $this->eavConfigMock->method('getAttribute')->with('catalog_product', self::TEST_ATTRIBUTE_CODE)->willReturn(
+            $this->attributeMock
+        );
+        $this->contextMock->method('getScopeConfig')->willReturn($this->scopeConfigMock);
+        $this->attributeMock->expects($this->once())->method('getFrontendInput');
+        $this->productMock->expects($this->never())->method('getAttributeText');
+        $this->productMock->expects($this->once())->method('getData');
 
-        $productMock->method('getData')
-            ->with(self::TEST_ATTRIBUTE_CODE)
-            ->willReturn(self::HTML_TAGS_ATTRIBUTE_VALUE);
-
-        $this->eavConfigMock->method('getAttribute')
-            ->with(
-                'catalog_product',
-                self::TEST_ATTRIBUTE_CODE
-            )
-            ->willReturn($attributeMock);
-
-        $this->contextMock->method('getScopeConfig')
-            ->willReturn($scopeConfigMock);
-
-        $this->createTestProductHelperInstance();
-
-        $attributeMock->expects($this->once())
-            ->method('getFrontendInput');
-
-        $productMock->expects($this->never())
-            ->method('getAttributeText');
-
-        $productMock->expects($this->once())
-            ->method('getData');
-
-        $result = $this->productHelper->get('EAN', $productMock, $this->storeMock);
+        $result   = $this->productHelper->get('EAN', $this->productMock, $this->storeMock);
         $expected = \html_entity_decode(self::HTML_TAGS_ATTRIBUTE_VALUE);
 
         $this->assertNotEquals(self::VARCHAR_TEST_PRODUCT_VALUE, $result);
-        $this->assertEquals($expected, $result);
+        $this->assertEquals($expected, $result, 'Attribute value should be decoded');
     }
 
-    /**
-     * @param \Magento\Catalog\Model\Product  | \PHPUnit_Framework_MockObject_MockObject $productMock
-     * @param \Magento\Catalog\Model\Entity\Attribute  | \PHPUnit_Framework_MockObject_MockObject $attributeMock
-     * @param \Magento\Framework\App\Config\ScopeConfigInterface | \PHPUnit_Framework_MockObject_MockObject $scopeConfigMock
-     *
-     * @dataProvider emptyProductDataProvider
-     */
-    public function testGetAttributeValueWhenNoAttributeIsConfigured($productMock, $attributeMock, $scopeConfigMock)
+    public function testGetAttributeValueWhenNoAttributeIsConfigured()
     {
-        $productMock->method('getData')
-            ->with(self::TEST_ATTRIBUTE_CODE)
-            ->willReturn(self::VARCHAR_TEST_PRODUCT_VALUE);
+        $this->scopeConfigMock->method('getValue')->with(Product::PATH_DATA_TRANSFER_EAN, 'store', self::STORE_ID)
+            ->willReturn(null);
+        $this->productMock->method('getData')->with(self::TEST_ATTRIBUTE_CODE)->willReturn(
+            self::VARCHAR_TEST_PRODUCT_VALUE
+        );
+        $this->contextMock->method('getScopeConfig')->willReturn($this->scopeConfigMock);
+        $this->productMock->expects($this->never())->method('getAttributeText');
+        $this->eavConfigMock->expects($this->once())->method('getAttribute')->with('catalog_product', null)
+            ->willThrowException(new LocalizedException(new Phrase('')));
 
-        $this->contextMock->method('getScopeConfig')
-            ->willReturn($scopeConfigMock);
+        $result = $this->productHelper->get('EAN', $this->productMock, $this->storeMock);
 
-        $this->createTestProductHelperInstance();
-
-        $productMock->expects($this->never())
-            ->method('getAttributeText');
-
-        $productMock->expects($this->once())
-            ->method('getData');
-
-        $this->eavConfigMock->expects($this->once())
-            ->method('getAttribute')
-            ->with(
-                'catalog_product',
-                null
-            )
-            ->willThrowException( new LocalizedException(new Phrase("")));
-
-        $result = $this->productHelper->get('EAN', $productMock, $this->storeMock);
         $this->assertNull($result);
     }
 
-    /**
-     * @return array
-     */
-    public function manufacturerProductDataProvider()
+    protected function setUp()
     {
-        $base = $this->baseProductDataProvider();
-        $base[0]['scopeConfigMock']->method('getValue')
-            ->with(
-                Product::PATH_DATA_TRANSFER_MANUFACTURER,
-                'store',
-                self::STORE_ID
-            )
-            ->willReturn(self::TEST_ATTRIBUTE_CODE);
+        $this->contextMock            = $this->createMock(Context::class);
+        $this->imageMock              = $this->createMock(ImageFactory::class);
+        $this->configurableMock       = $this->createMock(Configurable::class);
+        $this->categoryRepositoryMock = $this->createMock(CategoryRepositoryInterface::class);
+        $this->storeMock              = $this->createMock(StoreInterface::class);
+        $this->productRepositoryMock  = $this->createMock(ProductRepository::class);
+        $this->eavConfigMock          = $this->createMock(Config::class);
+        $this->scopeConfigMock        = $this->createMock(ScopeConfigInterface::class);
+        $this->attributeMock          = $this->createMock(Attribute::class);
+        $this->productMock            = $this->createMock(\Magento\Catalog\Model\Product::class);
 
-        return $base;
-    }
-
-    /**
-     * @return array
-     */
-    public function eanProductDataProvider()
-    {
-        $base = $this->baseProductDataProvider();
-        $base[0]['scopeConfigMock']->method('getValue')
-            ->with(
-                Product::PATH_DATA_TRANSFER_EAN,
-                'store',
-                self::STORE_ID
-            )
-            ->willReturn(self::TEST_ATTRIBUTE_CODE);
-
-        return $base;
-    }
-
-    /**
-     * @return array
-     */
-    public function emptyProductDataProvider()
-    {
-        $base = $this->baseProductDataProvider();
-        $base[0]['scopeConfigMock']->method('getValue')
-            ->with(
-                Product::PATH_DATA_TRANSFER_EAN,
-                'store',
-                self::STORE_ID
-            )
-            ->willReturn(null);
-
-        return $base;
-    }
-
-    /**
-     * @return array
-     */
-    public function baseProductDataProvider()
-    {
-        $attributeMock = $this->getMockBuilder(Attribute::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $scopeConfigMock = $this->getMockBuilder(ScopeConfigInterface::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $productMock = $this->getMockBuilder(\Magento\Catalog\Model\Product::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        return [
-            [
-                'productMock'     => $productMock,
-                'attributeMock'   => $attributeMock,
-                'scopeConfigMock' => $scopeConfigMock
-            ]
-        ];
-    }
-
-
-    /**
-     * Create Omikron\Factfinder\Helper\Product instance
-     */
-    protected function createTestProductHelperInstance()
-    {
-        $this->productHelper = (new ObjectManager($this))
-            ->getObject(
-                \Omikron\Factfinder\Helper\Product::class,
-                [
-                    'context'                        => $this->contextMock,
-                    'imageHelperFactory'             => $this->imageMock,
-                    'eavConfig'                      => $this->eavConfigMock,
-                    'productRepository'              => $this->productRepositoryMock,
-                    'catalogProductTypeConfigurable' => $this->configurableMock,
-                    'categoryRepository'             => $this->categoryRepositoryMock
-                ]
-            );
+        $this->storeMock->method('getId')->willReturn(self::STORE_ID);
+        $this->contextMock->method('getScopeConfig')->willReturn($this->scopeConfigMock);
+        $this->productHelper = (new ObjectManager($this))->getObject(
+        \Omikron\Factfinder\Helper\Product::class,
+        [
+            'context'                        => $this->contextMock,
+            'imageHelperFactory'             => $this->imageMock,
+            'eavConfig'                      => $this->eavConfigMock,
+            'productRepository'              => $this->productRepositoryMock,
+            'catalogProductTypeConfigurable' => $this->configurableMock,
+            'categoryRepository'             => $this->categoryRepositoryMock
+        ]
+    );
     }
 }
