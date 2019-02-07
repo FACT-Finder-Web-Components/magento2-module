@@ -2,12 +2,9 @@
 
 namespace Omikron\Factfinder\Test\Unit\Helper;
 
-use Magento\Catalog\Api\CategoryRepositoryInterface;
 use Magento\Catalog\Helper\ImageFactory;
 use Magento\Catalog\Model\Entity\Attribute;
 use Magento\Catalog\Model\Product;
-use Magento\Catalog\Model\ProductRepository;
-use Magento\ConfigurableProduct\Model\ResourceModel\Product\Type\Configurable;
 use Magento\Eav\Model\Config as EavConfig;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\App\Helper\Context;
@@ -32,23 +29,8 @@ class ProductTest extends TestCase
     const MULTI_SELECT_TEST_OPTION_ID      = '1,2';
     const HTML_TAGS_ATTRIBUTE_VALUE        = '&lt;div class=&quot;test description&quot;&gt; This is test attribute value &lt;/div&gt;';
 
-    /** @var MockObject|Context */
-    private $contextMock;
-
-    /** @var MockObject|ImageFactory */
-    private $imageMock;
-
     /** @var MockObject|EavConfig */
     private $eavConfigMock;
-
-    /** @var MockObject|ProductRepository */
-    private $productRepositoryMock;
-
-    /** @var MockObject|Configurable */
-    private $configurableMock;
-
-    /** @var MockObject|CategoryRepositoryInterface */
-    private $categoryRepositoryMock;
 
     /** @var MockObject|StoreInterface */
     private $storeMock;
@@ -80,7 +62,6 @@ class ProductTest extends TestCase
             ->with('catalog_product', self::TEST_ATTRIBUTE_CODE)
             ->willReturn($this->attributeMock);
 
-        $this->contextMock->method('getScopeConfig')->willReturn($this->scopeConfigMock);
         $this->attributeMock->method('getFrontendInput')->willReturn('select');
         $this->attributeMock->expects($this->once())->method('getFrontendInput');
 
@@ -105,7 +86,6 @@ class ProductTest extends TestCase
             ->with('catalog_product', self::TEST_ATTRIBUTE_CODE)
             ->willReturn($this->attributeMock);
 
-        $this->contextMock->method('getScopeConfig')->willReturn($this->scopeConfigMock);
         $this->productMock->method('getData')
             ->with(self::TEST_ATTRIBUTE_CODE)->willReturn(self::VARCHAR_TEST_PRODUCT_VALUE);
 
@@ -133,7 +113,6 @@ class ProductTest extends TestCase
             ->with('catalog_product', self::TEST_ATTRIBUTE_CODE)
             ->willReturn($this->attributeMock);
 
-        $this->contextMock->method('getScopeConfig')->willReturn($this->scopeConfigMock);
         $this->productMock->expects($this->once())->method('getAttributeText');
         $this->attributeMock->expects($this->once())->method('getFrontendInput');
 
@@ -158,7 +137,6 @@ class ProductTest extends TestCase
             ->with('catalog_product', self::TEST_ATTRIBUTE_CODE)
             ->willReturn($this->attributeMock);
 
-        $this->contextMock->method('getScopeConfig')->willReturn($this->scopeConfigMock);
         $this->productMock->expects($this->once())->method('getAttributeText');
         $this->attributeMock->expects($this->once())->method('getFrontendInput');
 
@@ -183,7 +161,6 @@ class ProductTest extends TestCase
             ->with('catalog_product', self::TEST_ATTRIBUTE_CODE)
             ->willReturn($this->attributeMock);
 
-        $this->contextMock->method('getScopeConfig')->willReturn($this->scopeConfigMock);
         $this->attributeMock->expects($this->once())->method('getFrontendInput');
         $this->productMock->expects($this->never())->method('getAttributeText');
         $this->productMock->expects($this->once())->method('getData');
@@ -205,7 +182,6 @@ class ProductTest extends TestCase
             ->with(self::TEST_ATTRIBUTE_CODE)
             ->willReturn(self::VARCHAR_TEST_PRODUCT_VALUE);
 
-        $this->contextMock->method('getScopeConfig')->willReturn($this->scopeConfigMock);
         $this->productMock->expects($this->never())->method('getAttributeText');
         $this->eavConfigMock->expects($this->once())
             ->method('getAttribute')
@@ -219,31 +195,25 @@ class ProductTest extends TestCase
 
     protected function setUp()
     {
-        $this->imageMock = $this->getMockBuilder(ImageFactory::class)
+        $imageMock = $this->getMockBuilder(ImageFactory::class)
             ->disableOriginalConstructor()
             ->setMethods(['create'])
             ->getMock();
 
-        $this->contextMock            = $this->createMock(Context::class);
-        $this->configurableMock       = $this->createMock(Configurable::class);
-        $this->categoryRepositoryMock = $this->createMock(CategoryRepositoryInterface::class);
-        $this->storeMock              = $this->createMock(StoreInterface::class);
-        $this->productRepositoryMock  = $this->createMock(ProductRepository::class);
-        $this->eavConfigMock          = $this->createMock(EavConfig::class);
-        $this->scopeConfigMock        = $this->createMock(ScopeConfigInterface::class);
-        $this->attributeMock          = $this->createMock(Attribute::class);
-        $this->productMock            = $this->createMock(Product::class);
+        $this->storeMock       = $this->createMock(StoreInterface::class);
+        $this->eavConfigMock   = $this->createMock(EavConfig::class);
+        $this->scopeConfigMock = $this->createMock(ScopeConfigInterface::class);
+        $this->attributeMock   = $this->createMock(Attribute::class);
+        $this->productMock     = $this->createMock(Product::class);
+
+        $contextMock = $this->createMock(Context::class);
+        $contextMock->method('getScopeConfig')->willReturn($this->scopeConfigMock);
 
         $this->storeMock->method('getId')->willReturn(self::STORE_ID);
-        $this->contextMock->method('getScopeConfig')->willReturn($this->scopeConfigMock);
-
         $this->productHelper = (new ObjectManager($this))->getObject(ProductHelper::class, [
-            'context'                        => $this->contextMock,
-            'imageHelperFactory'             => $this->imageMock,
-            'eavConfig'                      => $this->eavConfigMock,
-            'productRepository'              => $this->productRepositoryMock,
-            'catalogProductTypeConfigurable' => $this->configurableMock,
-            'categoryRepository'             => $this->categoryRepositoryMock,
+            'context'            => $contextMock,
+            'imageHelperFactory' => $imageMock,
+            'eavConfig'          => $this->eavConfigMock,
         ]);
     }
 }
