@@ -102,8 +102,8 @@ class Communication
         return explode(',', $this->scopeConfig->getValue(self::PATH_DATA_TRANSFER_IMPORT_TYPES, 'store', $scopeCode));
     }
 
-    private function getRegisteredAuthParams(): ?array
+    private function getRegisteredAuthParams(): array
     {
-        return $this->registry->registry(self::FF_AUTH_REGISTRY_KEY);
+        return (array) $this->registry->registry(self::FF_AUTH_REGISTRY_KEY);
     }
 }

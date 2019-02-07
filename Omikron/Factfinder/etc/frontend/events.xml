@@ -1,5 +1,18 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="controller_action_predispatch_catalogsearch_result_index">
+        <observer name="ff_redirect_search" instance="Omikron\Factfinder\Observer\RedirectSearch" />
+    </event>
+    <event name="controller_action_predispatch_catalogsearch_advanced_index">
+        <observer name="ff_redirect_search" instance="Omikron\Factfinder\Observer\RedirectSearch" />
+    </event>
+    <event name="controller_action_predispatch_catalogsearch_advanced_result">
+        <observer name="ff_redirect_search" instance="Omikron\Factfinder\Observer\RedirectSearch" />
+    </event>
+    <event name="controller_action_predispatch_search_term_popular">
+        <observer name="ff_redirect_search" instance="Omikron\Factfinder\Observer\RedirectSearch" />
+    </event>
+
     <event name="controller_action_predispatch_factfinder_export_export">
         <observer name="ff_export_authentication" instance="Omikron\Factfinder\Observer\ExportAuthentication" />
     </event>
