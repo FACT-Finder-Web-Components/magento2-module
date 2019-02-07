@@ -8,6 +8,7 @@ use Magento\Framework\App\Action\Context;
 use Magento\Framework\Webapi\Exception;
 use Magento\Framework\Controller\Result\JsonFactory ;
 use Omikron\Factfinder\Api\ClientInterface;
+use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
 use Omikron\Factfinder\Helper\ResultRefiner ;
 
 /**
@@ -25,17 +26,21 @@ class Call extends \Magento\Framework\App\Action\Action
     /** @var ClientInterface  */
     protected $factFinderClient;
 
+    /** @var CommunicationConfigInterface */
+    protected $communicationConfig;
+
     public function __construct(
         Context $context,
         JsonFactory $jsonResultFactory,
         ResultRefiner $resultRefiner,
-        ClientInterface $factFinderClient
-    )
-    {
+        ClientInterface $factFinderClient,
+        CommunicationConfigInterface $communicationConfig
+    ) {
         parent::__construct($context);
-        $this->jsonResultFactory = $jsonResultFactory;
-        $this->resultRefiner = $resultRefiner;
-        $this->factFinderClient = $factFinderClient;
+        $this->jsonResultFactory   = $jsonResultFactory;
+        $this->resultRefiner       = $resultRefiner;
+        $this->factFinderClient    = $factFinderClient;
+        $this->communicationConfig = $communicationConfig;
     }
 
     /**
@@ -63,7 +68,7 @@ class Call extends \Magento\Framework\App\Action\Action
         // get api name from regex matches
         $apiName = $matches[0];
 
-        $ffResponse = $this->factFinderClient->sendToFF($apiName, http_build_query($this->getRequest()->getParams()));
+        $ffResponse = $this->factFinderClient->sendToFF($this->communicationConfig->getAddress() . $this->$apiName, $this->getRequest()->getParams());
 
         return $result->setJsonData($this->resultRefiner->refine($ffResponse));
     }

@@ -43,37 +43,35 @@ class Client implements FactFinderClientInterface
     public function sendRequest(string $endpoint, array $params) : array
     {
         try {
-            $params         = ['format' => 'json'] + $params + $this->getAuthArray();
-            $curlClient     = $this->httpClientFactory->create();
-
-            $curlClient->addHeader('Accept-encoding: gzip', 'deflate');
-            $curlClient->get($endpoint . http_build_query($params));
+            $params     = ['format' => 'json'] + $this->getAuthArray($params) + $params;
+            $curlClient = $this->httpClientFactory->create();
+            $curlClient->get($endpoint . '?' . http_build_query($params));
 
             if ($curlClient->getStatus() != 200) {
-                throw  new RequestException($curlClient->getBody(), $curlClient->getStatus());
+                throw new RequestException($curlClient->getBody(), $curlClient->getStatus());
             }
-            // Receive server response
-            return $this->serializer->unserialize($this->httpClient->getBody());
+
+            return $this->serializer->unserialize($curlClient->getBody());
         } catch (\Exception $e) {
-            throw  new RequestException($curlClient->getBody(), $curlClient->getStatus(), $e);
+            throw new RequestException($curlClient->getBody(), $curlClient->getStatus(), $e);
         }
     }
 
     /**
      * Returns the authentication values as array
-     *
+     * @param array $params
      * @return array
      */
-    protected function getAuthArray() : array
+    protected function getAuthArray(array $params = []) : array
     {
         $time         = round(microtime(true) * 1000);
-        $password     = $this->authConfig->getPassword();
-        $prefix       = $this->authConfig->getAuthenticationPrefix();
-        $postfix      = $this->authConfig->getAuthenticationPostfix();
+        $password     = $params['password'] ?? $this->authConfig->getPassword();
+        $prefix       = $params['authenticationPrefix'] ?? $this->authConfig->getAuthenticationPrefix();
+        $postfix      = $params['authenticationPostfix'] ?? $this->authConfig->getAuthenticationPostfix();
         $hashPassword = md5($prefix . (string) $time . md5($password) . $postfix);
 
         $authArray = [
-            'username'  => $this->authConfig->getUsername(),
+            'username'  => $params['username'] ?? $this->authConfig->getUsername(),
             'timestamp' => $time,
             'password'  => $hashPassword
         ];

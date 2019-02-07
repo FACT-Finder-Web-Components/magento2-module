@@ -1,36 +1,24 @@
 <?php
 
 namespace Omikron\Factfinder\Observer;
+use Magento\Sales\Api\Data\OrderInterface;
+use Omikron\Factfinder\Model\Consumer\Tracking\OrderTracking;
 
-/**
- * Observer Class for Checkout Event Tracking
- * @package Omikron\Factfinder\Observer
- */
 class TrackingCheckout implements \Magento\Framework\Event\ObserverInterface
 {
+    /** @var OrderTracking  */
+    protected $tracking;
 
-    /** @var \Omikron\Factfinder\Helper\Tracking */
-    protected $_tracking;
-
-    /**
-     * TrackingCheckout constructor.
-     * @param \Omikron\Factfinder\Helper\Tracking $tracking
-     */
     public function __construct(
-        \Omikron\Factfinder\Helper\Tracking $tracking
-    )
-    {
-        $this->_tracking = $tracking;
+        OrderTracking $tracking
+    ) {
+        $this->tracking = $tracking;
     }
 
-    /**
-     * Called on checkout events for tracking
-     * @param \Magento\Framework\Event\Observer $observer
-     */
     public function execute(\Magento\Framework\Event\Observer $observer)
     {
-        /* @var \Magento\Sales\Model\Order $order */
+        /** @var OrderInterface $order */
         $order = $observer->getEvent()->getData('order');
-        $this->_tracking->checkout($order);
+        $this->tracking->execute($order);
     }
 }

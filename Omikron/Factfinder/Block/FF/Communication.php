@@ -8,7 +8,7 @@ use Magento\Framework\Module\Dir\Reader;
 use Magento\Framework\View\Element\Template;
 use Magento\Framework\View\Element\Template\Context;
 use Magento\Framework\Xml\Parser;
-use Omikron\Factfinder\Helper\Communication as CommunicationHelper;
+use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
 use Omikron\Factfinder\Helper\Data;
 use Omikron\Factfinder\Helper\Tracking;
 
@@ -29,8 +29,8 @@ class Communication extends Template
     /** @var \Magento\Framework\Xml\Parser */
     protected $parser;
 
-   /** @var CommunicationHelper  */
-    protected $communicationHelper;
+   /** @var CommunicationConfigInterface */
+    protected $communicationConfig;
 
     public function __construct(
         Context $context,
@@ -38,12 +38,12 @@ class Communication extends Template
         Reader $moduleDirReader,
         Parser $parser,
         Tracking $tracking,
-        CommunicationHelper $communicationHelper,
+        CommunicationConfigInterface $communicationConfig,
         $data = []
     ) {
         parent::__construct($context, $data);
         $this->configHelper        = $helper;
-        $this->communicationHelper = $communicationHelper;
+        $this->communicationConfig = $communicationConfig;
         $this->moduleDirReader     = $moduleDirReader;
         $this->parser              = $parser;
 
@@ -54,7 +54,7 @@ class Communication extends Template
 
         $this->configData = [
             'url' => [
-                'value' =>  ($this->configHelper->isEnrichmentEnabled() ? '/' . Data::FRONT_NAME . '/' : $this->communicationHelper->getAddress()),
+                'value' =>  ($this->configHelper->isEnrichmentEnabled() ? '/' . Data::FRONT_NAME . '/' : $this->communicationConfig->getAddress()),
                 'type' => 'string',
                 'defaultValue' => null
             ],
@@ -79,7 +79,7 @@ class Communication extends Template
                 'defaultValue' => $defaultValues['advanced']['default_query']
             ],
             'channel' => [
-                'value' => $this->communicationHelper->getChannel(),
+                'value' => $this->communicationConfig->getChannel(),
                 'type' => 'string',
                 'defaultValue' => $defaultValues['general']['channel']
             ],

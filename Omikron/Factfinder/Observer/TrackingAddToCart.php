@@ -1,46 +1,35 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Omikron\Factfinder\Observer;
 
-/**
- * Observer Class for AddToCart Events
- *
- * @package Omikron\Factfinder\Observer
- */
+use Magento\Framework\App\RequestInterface;
+use Magento\Catalog\Api\Data\ProductInterface;
+use Omikron\Factfinder\Model\Consumer\Tracking\AddToCartTracking;
+
 class TrackingAddToCart implements \Magento\Framework\Event\ObserverInterface
 {
-    /** @var \Omikron\Factfinder\Helper\Tracking */
-    protected $_tracking;
+    /** @var AddToCartTracking */
+    protected $tracking;
 
-    /**
-     * TrackingAddToCart constructor.
-     * @param \Omikron\Factfinder\Helper\Tracking $tracking
-     */
-    public function __construct(
-        \Omikron\Factfinder\Helper\Tracking $tracking
-    )
+    public function __construct(AddToCartTracking $tracking)
     {
-        $this->_tracking = $tracking;
+        $this->tracking = $tracking;
     }
 
-    /**
-     * Called on AddToCart events for tracking
-     *
-     * @param \Magento\Framework\Event\Observer $observer
-     */
     public function execute(\Magento\Framework\Event\Observer $observer)
     {
-        /** @var \Magento\Catalog\Model\Product $product */
+        /** @var ProductInterface $product */
         $product = $observer->getData('product');
-
-        /** @var \Magento\Framework\App\RequestInterface $request */
+        /** @var RequestInterface $request */
         $request = $observer->getData('request');
 
         $qty = $request->getParam('qty');
-        if (empty($qty)) {
+        if (!$qty) {
             $qty = 1;
         }
 
-        $this->_tracking->addToCart($product, $qty);
+        $this->tracking->execute($product, $qty);
     }
 }

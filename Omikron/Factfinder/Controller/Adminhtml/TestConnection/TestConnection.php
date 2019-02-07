@@ -9,8 +9,8 @@ use Magento\Framework\App\RequestInterface;
 use Magento\Framework\Controller\Result\JsonFactory;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\Backend\App\Action\Context;
-use Omikron\Factfinder\Helper\Communication;
-use Omikron\Factfinder\Api\ClientInterface;
+use Omikron\Factfinder\Exception\RequestException;
+use Omikron\Factfinder\Model\Consumer\UpdateFieldRoles;
 
 /**
  * Class TestConnection
@@ -23,26 +23,21 @@ class TestConnection extends \Magento\Backend\App\Action
     /** @var JsonFactory  */
     protected $resultJsonFactory;
 
-    /** @var ClientInterface  */
-    protected $factFinderClient;
+    /** @var UpdateFieldRoles  */
+    protected $updateFieldRoles;
 
     /** @var StoreManagerInterface  */
     protected $storeManager;
-
- /** @var Registry  */
-    protected $registry;
 
     public function __construct(
         Context $context,
         JsonFactory $resultJsonFactory,
         StoreManagerInterface $storeManager,
-        ClientInterface $communication,
-        Registry $registry
+        UpdateFieldRoles $updateFieldRoles
     ) {
         $this->resultJsonFactory = $resultJsonFactory;
-        $this->factFinderClient = $communication;
+        $this->updateFieldRoles = $updateFieldRoles;
         $this->storeManager = $storeManager;
-        $this->registry = $registry;
         parent::__construct($context);
     }
 
@@ -55,10 +50,9 @@ class TestConnection extends \Magento\Backend\App\Action
     public function execute()
     {
         $authData = $this->getAuthFromRequest();
-        $this->registry->register(Communication::FF_AUTH_REGISTRY_KEY, $authData, true);
 
         // get current store view from HTTP_REFERER
-        $result = [];
+        $result      = [];
         $httpReferer = $this->_redirect->getRefererUrl();
 
         if(isset($httpReferer)) {
@@ -73,7 +67,7 @@ class TestConnection extends \Magento\Backend\App\Action
         }
 
         try {
-            $conCheck = $this->factFinderClient->updateFieldRoles($store->getId());
+            $conCheck = $this->updateFieldRoles->execute((int) $store->getId(), $authData);
             if ($conCheck['success']) {
                 $message = __('Success! Connection successfully tested!');
             } else {
@@ -82,7 +76,7 @@ class TestConnection extends \Magento\Backend\App\Action
                     $message .= ' ' . __('FACT-Finder error message:') . ' ' . $conCheck['ff_error_stacktrace'];
                 }
             }
-        } catch (\Exception $e) {
+        } catch (RequestException $e) {
             $message = $e->getMessage();
         }
 

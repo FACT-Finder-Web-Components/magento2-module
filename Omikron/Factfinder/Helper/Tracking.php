@@ -11,6 +11,7 @@ use Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Sales\Model\Order;
 use Omikron\Factfinder\Api\ClientInterface;
 use Magento\Customer\Model\Session;
+use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
 
 /**
  * Class Tracking
@@ -37,7 +38,7 @@ class Tracking extends AbstractHelper
     protected $configHelper;
 
     /** @var Communication */
-    protected $communicationHelper;
+    protected $communicationConfig;
 
     public function __construct(
         Context $context,
@@ -46,13 +47,13 @@ class Tracking extends AbstractHelper
         StoreManagerInterface $storeManager,
         Session $session,
         Data $configHelper,
-        Communication $communicationHelper
+        CommunicationConfigInterface $communicationConfig
     ) {
         $this->factFinderClient    = $factFinderClient;
         $this->product             = $product;
         $this->session             = $session;
         $this->configHelper        = $configHelper;
-        $this->communicationHelper = $communicationHelper;
+        $this->communicationConfig = $communicationConfig;
         $this->store               = $storeManager->getStore();
 
         parent::__construct($context);
@@ -81,7 +82,7 @@ class Tracking extends AbstractHelper
         }
 
         // track cart event
-        $this->factFinderClient->sendToFF(self::API_NAME, http_build_query($params));
+        $this->factFinderClient->sendRequest($this->communicationConfig->getAddress() . self::API_NAME, $params);
     }
 
     /**
@@ -123,7 +124,7 @@ class Tracking extends AbstractHelper
         $params .= '&' .implode('&', $paramsCollection);
 
         // track checkout event
-        $this->factFinderClient->sendToFF(self::API_NAME, $params);
+        $this->factFinderClient->sendRequest($this->communicationConfig->getAddress() . self::API_NAME, $params);
     }
 
     /**
@@ -153,6 +154,6 @@ class Tracking extends AbstractHelper
      */
     public function getChannel()
     {
-        return $this->communicationHelper->getChannel($this->store->getId());
+        return $this->communicationConfig->getChannel($this->store->getId());
     }
 }

@@ -18,8 +18,10 @@ class PushImport
     /** @var CommunicationConfigInterface  */
     protected $communicationConfig;
 
+    /** @var string  */
     protected $apiName = 'Import.ff';
 
+    /** @var ScopeConfigInterface  */
     protected $scopeConfig;
 
     public function __construct(
@@ -32,22 +34,12 @@ class PushImport
         $this->scopeConfig         = $scopeConfig;
     }
 
-    /**
-     * {@inheritdoc}
-     *
-     * @param string $storeId
-     * @return bool
-     */
-    public function execute(array $params = [], string $scopeId = null) : bool
+    public function execute(int $scopeId = null, array $params = []) : bool
     {
         $channel     = $this->communicationConfig->getChannel($scopeId);
         $importTypes = $this->getPushImportDataTypes($scopeId);
-        $endpoint    = $this->communicationConfig->getAddress() . $this->apiName;
+        $endpoint    = $this->communicationConfig->getAddress() . '/' . $this->apiName;
         $response    = [];
-
-        if (empty($importTypes)) {
-            return false;
-        }
 
         $params = [
                 'channel'  => $channel,
@@ -68,7 +60,7 @@ class PushImport
         return true;
     }
 
-    private function getPushImportDataTypes(string $scopeId = null) : array
+    private function getPushImportDataTypes(int $scopeId = null) : array
     {
         return explode(',', $this->scopeConfig->getValue('factfinder/data_transfer/ff_push_import_type', ScopeInterface::SCOPE_STORE, $scopeId));
     }

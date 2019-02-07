@@ -6,7 +6,7 @@ namespace Omikron\Factfinder\Api;
 
 interface RequestExceptionInterface
 {
-    public function setResponseBody(string $body) : RequestExceptionInterface;
+    public function setResponseBody(string $body = '') : RequestExceptionInterface;
 
     public function getResponseBody() : string;
 }

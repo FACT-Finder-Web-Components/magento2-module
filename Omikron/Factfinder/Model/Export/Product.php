@@ -6,18 +6,18 @@ use Magento\Catalog\Model\Product\Attribute\Source\Status;
 use Magento\Catalog\Model\ResourceModel\Product\Collection;
 use Magento\Framework\App\Filesystem\DirectoryList;
 use Magento\Store\Api\Data\StoreInterface;
-use Omikron\Factfinder\Api\ClientInterface;
 use Magento\Catalog\Model\ResourceModel\Product\CollectionFactory;
 use Magento\Catalog\Model\Product\Visibility;
-use Magento\Framework\Pricing\PriceCurrencyInterface;
 use Magento\Framework\Filesystem;
-use Omikron\Factfinder\Helper\Communication;
-use Omikron\Factfinder\Helper\Upload;
-use Omikron\Factfinder\Helper\Data;
-use Magento\Store\Model\StoreManagerInterface;
 use Magento\Framework\File\Csv;
 use Magento\Store\Model\App\Emulation;
+use Magento\Store\Model\StoreManagerInterface;
+use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
+use Omikron\Factfinder\Helper\Upload;
+use Omikron\Factfinder\Helper\Data;
 use Omikron\Factfinder\Helper\Product as ProductHelper;
+use Omikron\Factfinder\Model\Consumer\PushImport;
+use Omikron\Factfinder\Model\Consumer\UpdateFieldRoles;
 
 class Product
 {
@@ -30,12 +30,6 @@ class Product
     /** @var CollectionFactory  */
     protected $productCollectionFactory;
 
-    /** @var Visibility  */
-    protected $catalogProductVisibility;
-
-    /** @var PriceCurrencyInterface  */
-    protected $priceCurrency;
-
     /** @var Filesystem  */
     protected $fileSystem;
 
@@ -45,14 +39,17 @@ class Product
     /** @var Data  */
     protected $helperData;
 
-    /** @var ClientInterface  */
-    protected $factFinderClient;
+    /** @var PushImport  */
+    protected $pushImport;
+
+    /** @var UpdateFieldRoles */
+    protected $updateFieldRoles;
 
     /** @var ProductHelper */
     protected $helperProduct;
 
-    /** @var Communication  */
-    protected $helperCommunication;
+    /** @var CommunicationConfigInterface  */
+    protected $communicationConfig;
 
     /** @var StoreManagerInterface  */
     protected $storeManager;
@@ -68,32 +65,30 @@ class Product
 
     public function __construct(
         CollectionFactory $productCollectionFactory,
-        Visibility $catalogProductVisibility,
-        PriceCurrencyInterface $priceCurrency,
         Filesystem $fileSystem,
         Upload $helperUpload,
         Data $helperData,
-        ClientInterface $factFinderClient,
+        PushImport $pushImport,
+        UpdateFieldRoles $updateFieldRoles,
         ProductHelper $helperProduct,
-        Communication $communication,
+        CommunicationConfigInterface $communicationConfig,
         StoreManagerInterface $storeManager,
         Csv $csvWriter,
         DirectoryList $directoryList,
         Emulation $appEmulation
     ) {
         $this->productCollectionFactory = $productCollectionFactory;
-        $this->catalogProductVisibility = $catalogProductVisibility;
-        $this->priceCurrency = $priceCurrency;
-        $this->fileSystem = $fileSystem;
-        $this->helperUpload = $helperUpload;
-        $this->helperData = $helperData;
-        $this->factFinderClient = $factFinderClient;
-        $this->helperProduct = $helperProduct;
-        $this->storeManager = $storeManager;
-        $this->csvWriter = $csvWriter;
-        $this->directoryList = $directoryList;
-        $this->appEmulation = $appEmulation;
-        $this->helperCommunication = $communication;
+        $this->fileSystem               = $fileSystem;
+        $this->helperUpload             = $helperUpload;
+        $this->helperData               = $helperData;
+        $this->pushImport               = $pushImport;
+        $this->updateFieldRoles         = $updateFieldRoles;
+        $this->helperProduct            = $helperProduct;
+        $this->storeManager             = $storeManager;
+        $this->csvWriter                = $csvWriter;
+        $this->directoryList            = $directoryList;
+        $this->appEmulation             = $appEmulation;
+        $this->communicationConfig      = $communicationConfig;
     }
 
     /**
@@ -186,7 +181,7 @@ class Product
 
         foreach ($stores as $store) {
             $storeId = $store->getId();
-            $currChannel = $this->helperCommunication->getChannel($storeId);
+            $currChannel = $this->communicationConfig->getChannel($storeId);
             if (in_array($currChannel, $exportedChannels) || !$this->helperData->isEnabled($storeId)) {
                 continue;
             }
@@ -199,7 +194,7 @@ class Product
             }
 
             if ($updateFieldRoles) {
-                $this->factFinderClient->updateFieldRoles($storeId);
+                $this->updateFieldRoles->execute($storeId);
             }
         }
         return $result;
@@ -214,7 +209,7 @@ class Product
     public function exportProduct($store)
     {
         $storeId  = $store->getId();
-        $channel  = $this->helperCommunication->getChannel($storeId);
+        $channel  = $this->communicationConfig->getChannel($storeId);
         $filename = self::FEED_FILE . $channel . '.' . self::FEED_FILE_FILETYPE;
 
         $output = $this->buildFeed($store);
@@ -227,9 +222,9 @@ class Product
         $result = $this->uploadFeed($filename);
         $this->deleteFeedFile($filename);
 
-        if ($this->helperCommunication->isPushImportEnabled($storeId)) {
+        if ($this->helperData->isPushImportEnabled($storeId)) {
 
-            if ($this->factFinderClient->pushImport($storeId)) {
+            if ($this->pushImport->execute([], $storeId)) {
                 $result['message'] .= ' ' . __('Import successfully pushed.');
             } else {
                 $result['message'] .= ' ' . __('Import not successful.');
@@ -248,7 +243,7 @@ class Product
      */
     public function exportProductWithExternalUrl($store)
     {
-        $filename = self::FEED_FILE . $this->helperCommunication->getChannel($store->getId()) . '.' . self::FEED_FILE_FILETYPE;
+        $filename = self::FEED_FILE . $this->communicationConfig->getChannel($store->getId()) . '.' . self::FEED_FILE_FILETYPE;
         $output = $this->buildFeed($store);
 
         return [
@@ -352,7 +347,6 @@ class Product
      */
     protected function deleteFeedFile($filename)
     {
-
         $filePath = self::FEED_PATH . $filename;
         $writer = $this->fileSystem->getDirectoryWrite(DirectoryList::VAR_DIR);
         if ($writer->isExist($filePath)) {

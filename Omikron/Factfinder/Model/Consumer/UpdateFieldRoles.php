@@ -43,7 +43,7 @@ class UpdateFieldRoles
         $this->serializer          = $serializer;
     }
 
-    public function execute(array $params = [], string $scopeId = null) : array
+    public function execute(int $scopeId, array $params = []) : array
     {
         $response = [
             'success'             => false,
@@ -58,29 +58,14 @@ class UpdateFieldRoles
                 'verbose' => true
             ] + $params;
 
-        $endpoint = $this->communicationConfig->getAddress() . $this->apiName;
+        $endpoint                        = $this->communicationConfig->getAddress() . '/' . $this->apiName;
         $response['ff_response_decoded'] = $this->factFinderClient->sendRequest($endpoint, $params);
+        $this->processResponseHasErrors($response);
 
-        if (!$this->processResponseErrors($response)) {
-            return $response;
-        }
-
-        if ($response['ff_response_decoded']['searchResult']['fieldRoles'] ?? []) {
-            $response['fieldRoles'] = $this->serializer->serialize($response['ff_response_decoded']['searchResult']['fieldRoles']);
-            $this->configResource->saveConfig(Data::PATH_PRODUCT_FIELD_ROLE, $response['fieldRoles'], ScopeInterface::SCOPE_STORES, $scopeId);
-            $response['success']    = true;
-        } else {
-            throw new \Exception(__('FACT-Finder response does not contain all required fields. Response %1', $this->serializer->serialize($response)));
-        }
-
-        return $response;
+        return $this->processUpdateFieldRoles($response, $scopeId);
     }
 
-    /**
-     * @param array $response
-     * @return bool
-     */
-    private function processResponseErrors(array &$response) : bool
+    private function processResponseHasErrors(array &$response) : void
     {
         $valid = true;
         if ($response['ff_response_decoded']['error'] ?? []) {
@@ -92,6 +77,21 @@ class UpdateFieldRoles
             }
         }
 
-        return $valid;
+        if (!$valid) {
+            throw new \Exception(__('FACT-Finder response conatins errors. Response %1', $this->serializer->serialize($response)));
+        }
+    }
+
+    private function processUpdateFieldRoles(array $response, int $scopeId) : array
+    {
+        if ($response['ff_response_decoded']['searchResult']['fieldRoles'] ?? []) {
+            $response['fieldRoles'] = $this->serializer->serialize($response['ff_response_decoded']['searchResult']['fieldRoles']);
+            $this->configResource->saveConfig(Data::PATH_PRODUCT_FIELD_ROLE, $response['fieldRoles'], ScopeInterface::SCOPE_STORES, $scopeId);
+            $response['success']    = true;
+
+            return $response;
+        } else {
+            throw new \Exception(__('FACT-Finder response does not field roles. Response %1', $this->serializer->serialize($response)));
+        }
     }
 }

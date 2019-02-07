@@ -16,11 +16,10 @@ class Data extends AbstractHelper
     const SESSION_ID_LENGTH  = 30;
 
     const PATH_IS_ENABLED                   = 'factfinder/general/is_enabled';
-    const LOGGING_ENABLED                   = 'factfinder/general/logging_enabled';
     const PATH_IS_ENRICHMENT_ENABLED        = 'factfinder/general/ff_enrichment';
     const PATH_SHOW_ADD_TO_CART_BUTTON      = 'factfinder/general/show_add_to_card_button';
     const PATH_ADVANCED_VERSION             = 'factfinder/advanced/version';
-    const PATH_DATA_TRANSFER_IMPORT         = 'factfinder/data_transfer/ff_cron_import';
+    const PATH_DATA_TRANSFER_IMPORT         = 'factfinder/data_transfer/ff_push_import_enabled';
     const PATH_CONFIGURABLE_CRON_IS_ENABLED = 'factfinder/configurable_cron/ff_cron_enabled';
     const PATH_PRODUCT_FIELD_ROLE           = 'factfinder/general/tracking_product_number_field_role';
 
@@ -35,20 +34,23 @@ class Data extends AbstractHelper
     }
 
     /**
-     * @return bool
-     */
-    public function isLoggingEnabled()
-    {
-        return $this->scopeConfig->isSetFlag(self::LOGGING_ENABLED);
-    }
-
-    /**
      * Public Getter
      * @return bool
      */
     public function isEnrichmentEnabled()
     {
         return $this->scopeConfig->isSetFlag(self::PATH_IS_ENRICHMENT_ENABLED, 'store');
+    }
+
+    /**
+     * Checks if automatic import is enabled
+     *
+     * @param null|int|string $scopeCode
+     * @return bool
+     */
+    public function isPushImportEnabled($scopeCode = null) : bool
+    {
+        return $this->scopeConfig->isSetFlag(self::PATH_DATA_TRANSFER_IMPORT, 'store', $scopeCode);
     }
 
     /**

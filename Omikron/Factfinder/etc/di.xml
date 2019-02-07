@@ -28,4 +28,7 @@
         </arguments>
     </type>
     <preference for="Omikron\Factfinder\Api\ClientInterface" type="Omikron\Factfinder\Model\Client"/>
+    <preference for="Omikron\Factfinder\Api\Config\AuthConfigInterface" type="Omikron\Factfinder\Model\Config\AuthConfig"/>
+    <preference for="Omikron\Factfinder\Api\Config\CommunicationConfigInterface" type="Omikron\Factfinder\Model\Config\CommunicationConfig"/>
+    <preference for="Omikron\Factfinder\Api\Config\RequestExceptionInterface" type="Omikron\Factfinder\Exception\RequestExceptionInterface"/>
 </config>
