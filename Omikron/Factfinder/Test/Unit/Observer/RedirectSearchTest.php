@@ -46,8 +46,9 @@ class RedirectSearchTest extends TestCase
         $request->method('getParam')->with('q', '*')->willReturn('Foobar');
 
         // Test search query forwarding
-        $query = ['_query' => ['query' => 'Foobar']];
-        $this->redirect->expects($this->once())->method('redirect')->with($this->response, 'FACT-Finder/result', $query);
+        $this->redirect->expects($this->once())
+            ->method('redirect')
+            ->with($this->response, 'FACT-Finder/result', ['_query' => ['query' => 'Foobar']]);
 
         // Run!
         $this->observer->execute(new Observer(['request' => $request]));
