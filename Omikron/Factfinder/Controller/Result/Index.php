@@ -2,33 +2,23 @@
 
 namespace Omikron\Factfinder\Controller\Result;
 
+use Magento\Framework\App\Action\Action;
+use Magento\Framework\App\Action\Context;
+use Magento\Framework\View\Result\PageFactory;
 
-/**
- * Class Index
- * Rendering the ff search result page
- * @package Omikron\Factfinder\Controller\Result
- */
-class Index extends \Magento\Framework\App\Action\Action
+class Index extends Action
 {
-    protected $_resultPageFactory;
+    /** @var PageFactory */
+    private $resultPageFactory;
 
-    /**
-     * Index constructor.
-     * @param \Magento\Framework\App\Action\Context $context
-     * @param \Magento\Framework\View\Result\PageFactory $resultPageFactory
-     */
-    public function __construct(\Magento\Framework\App\Action\Context $context, \Magento\Framework\View\Result\PageFactory $resultPageFactory)
+    public function __construct(Context $context, PageFactory $resultPageFactory)
     {
-        $this->_resultPageFactory = $resultPageFactory;
         parent::__construct($context);
+        $this->resultPageFactory = $resultPageFactory;
     }
 
-    /**
-     * Render the ff search result page
-     * @return \Magento\Framework\View\Result\Page
-     */
     public function execute()
     {
-        return $this->_resultPageFactory->create();
+        return $this->resultPageFactory->create();
     }
 }
