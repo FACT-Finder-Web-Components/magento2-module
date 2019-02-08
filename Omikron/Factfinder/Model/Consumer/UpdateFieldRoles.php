@@ -10,6 +10,7 @@ use Magento\Store\Model\ScopeInterface;
 use Omikron\Factfinder\Api\ClientInterface;
 use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
 use Omikron\Factfinder\Exception\ApiCallException;
+use Omikron\Factfinder\Exception\ResponseException;
 use Omikron\Factfinder\Helper\Data;
 
 class UpdateFieldRoles
@@ -68,7 +69,7 @@ class UpdateFieldRoles
         $endpoint = ($params['serverUrl'] ?? $this->communicationConfig->getAddress()) . '/' . $this->apiName;
         try {
             $response['ff_response_decoded'] = $this->factFinderClient->sendRequest($endpoint, $params);
-        } catch (ApiCallException $e) {
+        } catch (ResponseException $e) {
             throw new ApiCallException(__('Update Field roles failed'),null, $e);
         }
         $this->processResponseHasErrors($response);
