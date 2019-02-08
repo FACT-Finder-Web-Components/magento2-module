@@ -39,6 +39,6 @@ class CreateOrder extends AbstractTracking
             }
         }
 
-        $this->trackEvent($this->communicationConfig->getAddress() . '/' . $this->apiName, $params);
+        $this->pushEvent($this->communicationConfig->getAddress() . '/' . $this->apiName, $params);
     }
 }

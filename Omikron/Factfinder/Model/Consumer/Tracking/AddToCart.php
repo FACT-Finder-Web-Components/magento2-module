@@ -29,6 +29,6 @@ class AddToCart extends AbstractTracking
             $params['userId'] = $userId;
         }
 
-        $this->trackEvent($this->communicationConfig->getAddress() . '/' . $this->apiName, $params);
+        $this->pushEvent($this->communicationConfig->getAddress() . '/' . $this->apiName, $params);
     }
 }

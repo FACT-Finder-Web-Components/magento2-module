@@ -61,7 +61,7 @@ abstract class AbstractTracking
         $this->helper              = $data;
     }
 
-    protected function trackEvent(string $endpoint, array $params)
+    protected function pushEvent(string $endpoint, array $params)
     {
         try {
             $this->factFinderClient->sendRequest($endpoint, $params);
