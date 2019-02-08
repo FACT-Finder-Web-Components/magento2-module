@@ -16,20 +16,23 @@ class RedirectSearchTest extends TestCase
     /** @var RedirectSearch */
     private $observer;
 
-    /** @var Config|MockObject */
+    /** @var MockObject|Config */
     private $config;
 
-    /** @var RedirectInterface|MockObject */
+    /** @var MockObject|RedirectInterface */
     private $redirect;
 
-    /** @var ResponseInterface|MockObject */
+    /** @var MockObject|ResponseInterface */
     private $response;
 
-    public function testIsObserver()
+    public function test_it_is_an_observer()
     {
         $this->assertInstanceOf(ObserverInterface::class, $this->observer);
     }
 
+    /**
+     * @testdox no redirect takes place if FACT-Finder is disabled
+     */
     public function testNoRedirectIfDisabled()
     {
         $this->config->method('isEnabled')->willReturn(false);
@@ -37,6 +40,9 @@ class RedirectSearchTest extends TestCase
         $this->observer->execute(new Observer());
     }
 
+    /**
+     * @testdox redirect to FACT-Finder search result if enabled
+     */
     public function testRedirectIfEnabled()
     {
         $this->config->method('isEnabled')->willReturn(true);

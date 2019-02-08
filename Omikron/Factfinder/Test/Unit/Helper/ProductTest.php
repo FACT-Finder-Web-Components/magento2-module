@@ -1,6 +1,6 @@
 <?php
 
-namespace Omikron\Factfinder\Test\Unit\Helper;
+namespace Omikron\Factfinder\Helper;
 
 use Magento\Catalog\Helper\ImageFactory;
 use Magento\Catalog\Model\Entity\Attribute;

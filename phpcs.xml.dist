@@ -38,6 +38,9 @@
     <rule ref="PSR2.Classes.PropertyDeclaration.Underscore" />
     <rule ref="PSR2.Files.EndFileNewline" />
     <rule ref="PSR2.Methods.MethodDeclaration.Underscore" />
+    <rule ref="Squiz.Functions.GlobalFunction">
+        <exclude-pattern>*/Test/*</exclude-pattern>
+    </rule>
     <rule ref="Squiz.Strings.DoubleQuoteUsage.NotRequired" />
     <rule ref="Zend.Files.ClosingTag" />
 </ruleset>

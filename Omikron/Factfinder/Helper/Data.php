@@ -313,21 +313,10 @@ class Data extends AbstractHelper
         return $this->scopeConfig->isSetFlag(self::PATH_CONFIGURABLE_CRON_IS_ENABLED);
     }
 
-    /**
-     * Get correct sessionId
-     * @param string $sessionId
-     * @return string
-     */
-    public function getCorrectSessionId($sessionId)
+    public function getCorrectSessionId(string $sessionId): string
     {
-        while (strlen($sessionId) !== self::SESSION_ID_LENGTH) {
-            if (strlen($sessionId) < self::SESSION_ID_LENGTH) {
-                $sessionId = $sessionId . substr($sessionId, 0, (self::SESSION_ID_LENGTH - strlen($sessionId)));
-            } else if (strlen($sessionId) > self::SESSION_ID_LENGTH) {
-                $sessionId = substr($sessionId, 0, self::SESSION_ID_LENGTH);
-            }
-        }
-
-        return $sessionId;
+        $sessionId = $sessionId ?: md5(uniqid('', true));
+        $sessionId = str_repeat($sessionId, intdiv(self::SESSION_ID_LENGTH, strlen($sessionId)) + 1);
+        return substr($sessionId, 0, self::SESSION_ID_LENGTH);
     }
 }

@@ -6,6 +6,7 @@ use Magento\Framework\App\ActionFlag;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\HTTP\Authentication;
 use Omikron\Factfinder\Model\Export\BasicAuth;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class ExportAuthenticationTest extends TestCase
@@ -13,23 +14,23 @@ class ExportAuthenticationTest extends TestCase
     /** @var ExportAuthentication */
     private $observer;
 
-    /** @var ActionFlag */
+    /** @var MockObject|ActionFlag */
     private $flagMock;
 
-    /** @var Authentication */
+    /** @var MockObject|Authentication */
     private $authMock;
 
-    public function testPreventDispatch()
-    {
-        $this->authMock->method('authenticate')->willReturn(false);
-        $this->flagMock->expects($this->once())->method('set')->with('', 'no-dispatch', true);
-        $this->observer->execute(new Observer());
-    }
-
-    public function testAuthenticateUserAndDispatch()
+    public function test_it_checks_user_authentication_before_dispatch()
     {
         $this->authMock->method('authenticate')->willReturn(true);
         $this->flagMock->expects($this->never())->method('set');
+        $this->observer->execute(new Observer());
+    }
+
+    public function test_it_prevents_dispatch_if_the_user_is_not_authorized()
+    {
+        $this->authMock->method('authenticate')->willReturn(false);
+        $this->flagMock->expects($this->once())->method('set')->with('', 'no-dispatch', true);
         $this->observer->execute(new Observer());
     }
 

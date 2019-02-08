@@ -1,53 +1,39 @@
 <?php
+
 namespace Omikron\Factfinder\CustomerData\FF;
 
 use Magento\Customer\CustomerData\SectionSourceInterface;
-use Omikron\Factfinder\Helper\Data as FactfinderHelper;
+use Omikron\Factfinder\Helper\Data as DataHelper;
 use Omikron\Factfinder\Helper\Tracking;
 
-/**
- * Class Communication
- */
 class Communication implements SectionSourceInterface
 {
-    /**
-     * @var Tracking
-     */
-    protected $tracking;
+    /** @var DataHelper */
+    private $helper;
 
-    /**
-     * @var FactfinderHelper
-     */
-    protected $factfinderHelper;
+    /** @var Tracking */
+    private $tracking;
 
-    /**
-     * Comunication constructor.
-     * @param FactfinderHelper $factfinderHelper
-     * @param Tracking $tracking
-     */
     public function __construct(
-        FactfinderHelper $factfinderHelper,
+        DataHelper $dataHelper,
         Tracking $tracking
-    )
-    {
-        $this->factfinderHelper = $factfinderHelper;
-        $this->tracking         = $tracking;
+    ) {
+        $this->helper   = $dataHelper;
+        $this->tracking = $tracking;
     }
 
     /**
-     * Provide current session and user id
+     * Provide current session and user ID
      *
      * @return array
      */
     public function getSectionData()
     {
-        return
-            [
-                'attributes' =>
-                    [
-                        'uid' => $this->tracking->getUserId(),
-                        'sid' => $this->factfinderHelper->getCorrectSessionId($this->tracking->getSessionId())
-                    ]
-            ];
+        return [
+            'attributes' => [
+                'uid' => $this->tracking->getUserId(),
+                'sid' => $this->helper->getCorrectSessionId($this->tracking->getSessionId()),
+            ],
+        ];
     }
 }
