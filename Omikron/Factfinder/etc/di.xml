@@ -29,4 +29,7 @@
     <type name="Magento\Framework\View\Asset\Minification">
         <plugin name="omikron.factfinder.excludefilesfromminification" type="Omikron\Factfinder\Plugin\ExcludeFilesFromMinification" />
     </type>
+    <type name="Omikron\Factfinder\Model\Consumer\PushImport">
+        <plugin name="logPushImportExceptions" type="Omikron\Factfinder\Plugin\LogExceptions" />
+    </type>
 </config>

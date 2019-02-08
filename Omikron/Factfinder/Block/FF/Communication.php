@@ -4,13 +4,13 @@ declare(strict_types = 1);
 
 namespace Omikron\Factfinder\Block\FF;
 
+use Magento\Customer\Model\Session as CustomerSession;
 use Magento\Framework\Module\Dir\Reader;
 use Magento\Framework\View\Element\Template;
 use Magento\Framework\View\Element\Template\Context;
 use Magento\Framework\Xml\Parser;
 use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
 use Omikron\Factfinder\Helper\Data;
-use Omikron\Factfinder\Helper\Tracking;
 
 class Communication extends Template
 {
@@ -29,15 +29,18 @@ class Communication extends Template
     /** @var \Magento\Framework\Xml\Parser */
     protected $parser;
 
-   /** @var CommunicationConfigInterface */
+    /** @var CommunicationConfigInterface */
     protected $communicationConfig;
+
+    /** @var CustomerSession */
+    protected $customerSession;
 
     public function __construct(
         Context $context,
         Data $helper,
         Reader $moduleDirReader,
         Parser $parser,
-        Tracking $tracking,
+        CustomerSession $customerSession,
         CommunicationConfigInterface $communicationConfig,
         $data = []
     ) {
@@ -46,6 +49,7 @@ class Communication extends Template
         $this->communicationConfig = $communicationConfig;
         $this->moduleDirReader     = $moduleDirReader;
         $this->parser              = $parser;
+        $this->customerSession     = $customerSession;
 
         $filePath = $this->moduleDirReader->getModuleDir('etc', 'Omikron_Factfinder') . '/config.xml';
         $defaultValues = $this->parser->load($filePath)->xmlToArray()['config']['_value']['default']['factfinder'];
@@ -59,12 +63,12 @@ class Communication extends Template
                 'defaultValue' => null
             ],
             'sid' => [
-                'value' => $this->configHelper->getCorrectSessionId($tracking->getSessionId()),
+                'value' => $this->configHelper->getCorrectSessionId($this->customerSession->getSessionId()),
                 'type' => 'string',
                 'defaultValue' => null
             ],
             'user-id' => [
-                'value' => $tracking->getUserId(),
+                'value' => $this->customerSession->getCustomerId(),
                 'type' => 'string',
                 'defaultValue' => null
             ],

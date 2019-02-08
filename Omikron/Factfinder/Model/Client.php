@@ -51,7 +51,7 @@ class Client implements FactFinderClientInterface
 
         try {
             return $this->serializer->unserialize($curlClient->getBody());
-        } catch (\Exception $e) {
+        } catch (\InvalidArgumentException $e) {
             throw new ResponseException($curlClient->getBody(), $curlClient->getStatus(), $e);
         }
     }

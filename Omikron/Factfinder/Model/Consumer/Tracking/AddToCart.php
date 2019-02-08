@@ -7,7 +7,7 @@ namespace Omikron\Factfinder\Model\Consumer\Tracking;
 use Magento\Catalog\Api\Data\ProductInterface;
 use Omikron\Factfinder\Model\Consumer\AbstractTracking;
 
-class AddToCartTracking extends AbstractTracking
+class AddToCart extends AbstractTracking
 {
     /** @var string  */
     protected $eventType = 'cart';
@@ -29,6 +29,6 @@ class AddToCartTracking extends AbstractTracking
             $params['userId'] = $userId;
         }
 
-        $this->factFinderClient->sendRequest($this->communicationConfig->getAddress() . '/' . $this->apiName, $params);
+        $this->trackEvent($this->communicationConfig->getAddress() . '/' . $this->apiName, $params);
     }
 }
