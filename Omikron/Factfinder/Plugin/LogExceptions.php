@@ -5,11 +5,10 @@ declare(strict_types = 1);
 namespace Omikron\Factfinder\Plugin;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
-use Omikron\Factfinder\Exception\RequestException;
-use Omikron\Factfinder\Model\Consumer\PushImport;
+use Omikron\Factfinder\Exception\ResponseException;
 use Psr\Log\LoggerInterface;
 
-class PushImportLogging
+class LogExceptions
 {
     /** @var ScopeConfigInterface  */
     protected $scopeConfig;
@@ -23,20 +22,22 @@ class PushImportLogging
         $this->logger      = $logger;
     }
 
-    public function aroundExecute(PushImport $subject, callable $proceed, array $params = [], string $scopeId = null)
+    public function aroundExecute($subject, callable $proceed, ... $params)
     {
         try {
-            $result = $proceed($params, $scopeId);
+            $result = $proceed(...$params);
 
             return $result;
-        } catch (RequestException $e) {
+        } catch (ResponseException $e) {
             if ($this->scopeConfig->isSetFlag('factfinder/general/logging_enabled')) {
                 $this->logger->error(__(
-                        'Exception %1  thrown at %2. FACT-Finder response : %3',
-                        $e->getMessage(), $e->getTraceAsString(), $e->getResponseBody()
+                        'FACT-Finder response exception: %1, thrown at %2',
+                        $e->getMessage(), $e->getTraceAsString()
                     )
                 );
             }
+
+            return false;
         }
     }
 }

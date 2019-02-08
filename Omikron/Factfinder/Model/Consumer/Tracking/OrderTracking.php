@@ -40,10 +40,6 @@ class OrderTracking extends AbstractTracking
             }
         }
 
-        // concatenate get parameters of ordered articles
-        $params .= '&' . implode('&', $paramsCollection);
-
-        // track checkout event
-        $this->factFinderClient->sendRequest($this->communicationConfig->getAddress() . $this->apiName, $params);
+        $this->factFinderClient->sendRequest($this->communicationConfig->getAddress() . '/' . $this->apiName, $params);
     }
 }

@@ -8,7 +8,7 @@ use Magento\Framework\Serialize\SerializerInterface;
 use Magento\Framework\HTTP\ClientFactory;
 use Magento\Framework\HTTP\ClientInterface;
 use Omikron\Factfinder\Api\Config\AuthConfigInterface;
-use Omikron\Factfinder\Exception\RequestException;
+use Omikron\Factfinder\Exception\ResponseException;
 use Omikron\Factfinder\Model\Client;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -47,11 +47,11 @@ class ClientTest extends TestCase
 
     public function testSendRequestShouldThrowExceptionWhenResponseIsNotSerializable()
     {
-        $this->serializerMock->expects($this->once())->method('unserialize')->willThrowException(new RequestException());
+        $this->serializerMock->expects($this->once())->method('unserialize')->willThrowException(new ResponseException());
         $this->curlClientMock->method('getStatus')->willReturn(200);
         $this->curlClientMock->method('getBody')->willReturn('unserializable string');
 
-        $this->expectException('Omikron\Factfinder\Exception\RequestException');
+        $this->expectException('Omikron\Factfinder\Exception\ResponseException');
 
         $this->client->sendRequest('http://fake-ff-server.com/Search.ff', []);
     }
@@ -61,7 +61,7 @@ class ClientTest extends TestCase
         $this->curlClientMock->method('getStatus')->willReturn(500);
         $this->curlClientMock->method('getBody')->willReturn('unserializable string');
 
-        $this->expectException('Omikron\Factfinder\Exception\RequestException');
+        $this->expectException('Omikron\Factfinder\Exception\ResponseException');
 
         $this->client->sendRequest('http://fake-ff-server.com/Search.ff', []);
     }

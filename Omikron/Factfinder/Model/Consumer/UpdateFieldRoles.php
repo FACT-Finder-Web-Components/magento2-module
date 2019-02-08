@@ -9,6 +9,7 @@ use Magento\Config\Model\ResourceModel\Config;
 use Magento\Store\Model\ScopeInterface;
 use Omikron\Factfinder\Api\ClientInterface;
 use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
+use Omikron\Factfinder\Exception\ApiCallException;
 use Omikron\Factfinder\Helper\Data;
 
 class UpdateFieldRoles
@@ -43,6 +44,12 @@ class UpdateFieldRoles
         $this->serializer          = $serializer;
     }
 
+    /**
+     * @param int   $scopeId
+     * @param array $params
+     * @return array
+     * @throws ApiCallException
+     */
     public function execute(int $scopeId, array $params = []) : array
     {
         $response = [
@@ -54,12 +61,16 @@ class UpdateFieldRoles
 
         $params = [
                 'query'   => $this->apiQuery,
-                'channel' => $this->communicationConfig->getChannel($scopeId),
+                'channel' => $params['channel'] ?? $this->communicationConfig->getChannel($scopeId),
                 'verbose' => true
             ] + $params;
 
-        $endpoint                        = $this->communicationConfig->getAddress() . '/' . $this->apiName;
-        $response['ff_response_decoded'] = $this->factFinderClient->sendRequest($endpoint, $params);
+        $endpoint = ($params['serverUrl'] ?? $this->communicationConfig->getAddress()) . '/' . $this->apiName;
+        try {
+            $response['ff_response_decoded'] = $this->factFinderClient->sendRequest($endpoint, $params);
+        } catch (ApiCallException $e) {
+            throw new ApiCallException(__('Update Field roles failed'),null, $e);
+        }
         $this->processResponseHasErrors($response);
 
         return $this->processUpdateFieldRoles($response, $scopeId);
@@ -78,7 +89,7 @@ class UpdateFieldRoles
         }
 
         if (!$valid) {
-            throw new \Exception(__('FACT-Finder response conatins errors. Response %1', $this->serializer->serialize($response)));
+            throw new ApiCallException(__('FACT-Finder response contains errors. Response %1', $this->serializer->serialize($response)));
         }
     }
 
@@ -91,7 +102,7 @@ class UpdateFieldRoles
 
             return $response;
         } else {
-            throw new \Exception(__('FACT-Finder response does not field roles. Response %1', $this->serializer->serialize($response)));
+            throw new ApiCallException(__('FACT-Finder response does not field roles. Response %1', $this->serializer->serialize($response)));
         }
     }
 }

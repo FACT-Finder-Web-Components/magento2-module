@@ -9,8 +9,8 @@ use Magento\Framework\App\RequestInterface;
 use Magento\Framework\Controller\Result\JsonFactory;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\Backend\App\Action\Context;
-use Omikron\Factfinder\Exception\RequestException;
-use Omikron\Factfinder\Model\Consumer\UpdateFieldRoles;
+use Omikron\Factfinder\Exception\ApiCallException;
+use Omikron\Factfinder\Model\Consumer\TestConnection as TestConnectionApiCall;
 
 /**
  * Class TestConnection
@@ -23,8 +23,8 @@ class TestConnection extends \Magento\Backend\App\Action
     /** @var JsonFactory  */
     protected $resultJsonFactory;
 
-    /** @var UpdateFieldRoles  */
-    protected $updateFieldRoles;
+    /** @var TestConnectionApiCall  */
+    protected $testConnection;
 
     /** @var StoreManagerInterface  */
     protected $storeManager;
@@ -33,10 +33,10 @@ class TestConnection extends \Magento\Backend\App\Action
         Context $context,
         JsonFactory $resultJsonFactory,
         StoreManagerInterface $storeManager,
-        UpdateFieldRoles $updateFieldRoles
+        TestConnectionApiCall $testConnection
     ) {
         $this->resultJsonFactory = $resultJsonFactory;
-        $this->updateFieldRoles = $updateFieldRoles;
+        $this->testConnection = $testConnection;
         $this->storeManager = $storeManager;
         parent::__construct($context);
     }
@@ -67,17 +67,14 @@ class TestConnection extends \Magento\Backend\App\Action
         }
 
         try {
-            $conCheck = $this->updateFieldRoles->execute((int) $store->getId(), $authData);
-            if ($conCheck['success']) {
+            $connected = $this->testConnection->execute((int) $store->getId(), $authData);
+            if ($connected) {
                 $message = __('Success! Connection successfully tested!');
             } else {
-                $message = __('Error! Connection could not be established. Please check your setup.');
-                if ($conCheck['ff_error_stacktrace'] ?? []) {
-                    $message .= ' ' . __('FACT-Finder error message:') . ' ' . $conCheck['ff_error_stacktrace'];
-                }
+                $message = __('Connection failed. Check factfinder.log for mor information');
             }
-        } catch (RequestException $e) {
-            $message = $e->getMessage();
+        } catch (ApiCallException $e) {
+            $message = "{$e->getCode()} : {$e->getMessage()}";
         }
 
         return $this->resultJsonFactory->create()->setData(['message' => $message]);

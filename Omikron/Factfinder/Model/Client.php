@@ -8,8 +8,7 @@ use Magento\Framework\HTTP\ClientFactory;
 use Magento\Framework\Serialize\SerializerInterface;
 use Omikron\Factfinder\Api\ClientInterface as FactFinderClientInterface;
 use Omikron\Factfinder\Api\Config\AuthConfigInterface;
-use Omikron\Factfinder\Exception\RequestException;
-use Omikron\Factfinder\Api\RequestExceptionInterface;
+use Omikron\Factfinder\Exception\ResponseException;
 
 class Client implements FactFinderClientInterface
 {
@@ -38,22 +37,22 @@ class Client implements FactFinderClientInterface
      * @param string $apiName
      * @param array $params
      * @return array
-     * @throws RequestExceptionInterface
+     * @throws ResponseException
      */
     public function sendRequest(string $endpoint, array $params) : array
     {
+        $params     = ['format' => 'json'] + $this->getAuthArray($params) + $params;
+        $curlClient = $this->httpClientFactory->create();
+        $curlClient->get($endpoint . '?' . preg_replace('#products%5B\d+%5D%5B(.+?)%5D=#', '\1=', http_build_query($params)));
+
+        if ($curlClient->getStatus() != 200) {
+            throw new ResponseException($curlClient->getBody(), $curlClient->getStatus());
+        }
+
         try {
-            $params     = ['format' => 'json'] + $this->getAuthArray($params) + $params;
-            $curlClient = $this->httpClientFactory->create();
-            $curlClient->get($endpoint . '?' . http_build_query($params));
-
-            if ($curlClient->getStatus() != 200) {
-                throw new RequestException($curlClient->getBody(), $curlClient->getStatus());
-            }
-
             return $this->serializer->unserialize($curlClient->getBody());
         } catch (\Exception $e) {
-            throw new RequestException($curlClient->getBody(), $curlClient->getStatus(), $e);
+            throw new ResponseException($curlClient->getBody(), $curlClient->getStatus(), $e);
         }
     }
 

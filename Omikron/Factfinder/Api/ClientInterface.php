@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace Omikron\Factfinder\Api;
 
+use Omikron\Factfinder\Exception\ResponseException;
+
 /**
  * @api
  * Interface for communicating with the FACT-Finder API
@@ -16,7 +18,7 @@ interface ClientInterface
      * @param string $endpoint
      * @param array $params
      * @return array
-     * @throws RequestExceptionInterface
+     * @throws ResponseException
      */
     public function sendRequest(string $endpoint, array $params) : array;
 }

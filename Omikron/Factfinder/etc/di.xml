@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Omikron\Factfinder\Api\ClientInterface" type="Omikron\Factfinder\Model\Client"/>
+    <preference for="Omikron\Factfinder\Api\Config\AuthConfigInterface" type="Omikron\Factfinder\Model\Config\AuthConfig"/>
+    <preference for="Omikron\Factfinder\Api\Config\CommunicationConfigInterface" type="Omikron\Factfinder\Model\Config\CommunicationConfig"/>
     <virtualType name="Omikron\Factfinder\Model\Product\Attribute\CollectionFactory" type="Magento\Eav\Model\ResourceModel\Entity\Attribute\CollectionFactory">
         <arguments>
             <argument name="instanceName" xsi:type="string">Magento\Catalog\Model\ResourceModel\Product\Attribute\Collection</argument>
         </arguments>
     </virtualType>
-    <type name="Magento\Framework\View\Asset\Minification">
-        <plugin name="omikron.factfinder.excludefilesfromminification" type="Omikron\Factfinder\Plugin\ExcludeFilesFromMinification" />
-    </type>
     <virtualType name="Omikron\Factfinder\Logger" type="Monolog\Logger">
         <arguments>
             <argument name="name" xsi:type="string">FACT-Finder</argument>
@@ -21,14 +21,12 @@
             <argument name="fileName" xsi:type="string">/var/log/factfinder.log</argument>
         </arguments>
     </virtualType>
-    <type name="Omikron\Factfinder\Model\Client">
+    <type name="Omikron\Factfinder\Plugin\LogExceptions">
         <arguments>
-            <argument name="httpClient" xsi:type="object">Magento\Framework\HTTP\Client\Curl</argument>
             <argument name="logger" xsi:type="object">Omikron\Factfinder\Logger</argument>
         </arguments>
     </type>
-    <preference for="Omikron\Factfinder\Api\ClientInterface" type="Omikron\Factfinder\Model\Client"/>
-    <preference for="Omikron\Factfinder\Api\Config\AuthConfigInterface" type="Omikron\Factfinder\Model\Config\AuthConfig"/>
-    <preference for="Omikron\Factfinder\Api\Config\CommunicationConfigInterface" type="Omikron\Factfinder\Model\Config\CommunicationConfig"/>
-    <preference for="Omikron\Factfinder\Api\Config\RequestExceptionInterface" type="Omikron\Factfinder\Exception\RequestExceptionInterface"/>
+    <type name="Magento\Framework\View\Asset\Minification">
+        <plugin name="omikron.factfinder.excludefilesfromminification" type="Omikron\Factfinder\Plugin\ExcludeFilesFromMinification" />
+    </type>
 </config>
