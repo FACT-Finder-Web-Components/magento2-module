@@ -8,8 +8,8 @@ use Magento\Framework\App\Config\ScopeConfigInterface;
 use Omikron\Factfinder\Api\ClientInterface;
 use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
 use Omikron\Factfinder\Model\Consumer\PushImport;
-use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 
 class PushImportTest extends TestCase
 {

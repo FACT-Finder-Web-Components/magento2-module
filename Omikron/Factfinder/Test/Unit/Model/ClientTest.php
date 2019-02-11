@@ -2,18 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Omikron\Factfinder\Test\Unit\Model;
+namespace Omikron\Factfinder\Model;
 
-use Magento\Framework\Serialize\SerializerInterface;
 use Magento\Framework\HTTP\ClientFactory;
 use Magento\Framework\HTTP\ClientInterface;
+use Magento\Framework\Serialize\SerializerInterface;
 use Omikron\Factfinder\Api\Config\AuthConfigInterface;
 use Omikron\Factfinder\Exception\ResponseException;
 use Omikron\Factfinder\Model\Api\Credentials;
 use Omikron\Factfinder\Model\Api\CredentialsFactory;
-use Omikron\Factfinder\Model\Client;
-use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 
 class ClientTest extends TestCase
 {
@@ -52,7 +51,7 @@ class ClientTest extends TestCase
     }
 
     /**
-     * @testdox correct response should be an associative array with 'searchResult' key
+     * @testdox Correct response should be an associative array with 'searchResult' key
      */
     public function test_send_correct_request()
     {
@@ -67,7 +66,7 @@ class ClientTest extends TestCase
     }
 
     /**
-     * @testdox the API credentials can be overwritten using request params
+     * @testdox The API credentials can be overwritten using request params
      */
     public function test_override_params()
     {

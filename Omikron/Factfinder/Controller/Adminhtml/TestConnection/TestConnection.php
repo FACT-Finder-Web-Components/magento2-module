@@ -4,98 +4,63 @@ declare(strict_types=1);
 
 namespace Omikron\Factfinder\Controller\Adminhtml\TestConnection;
 
-use Magento\Backend\App\Action\Context;
+use Magento\Backend\App\Action;
 use Magento\Framework\Controller\Result\JsonFactory;
-use Magento\Store\Model\StoreManagerInterface;
-use Omikron\Factfinder\Exception\ApiCallException;
-use Omikron\Factfinder\Model\Consumer\TestConnection as TestConnectionApiCall;
+use Omikron\Factfinder\Api\Config\AuthConfigInterface;
+use Omikron\Factfinder\Model\Api\CredentialsFactory;
+use Omikron\Factfinder\Model\Consumer\TestConnection as ApiConnectionTest;
 
-/**
- * Class TestConnection
- * Handles requests for Testing the connection to FACT-Finder
- */
-class TestConnection extends \Magento\Backend\App\Action
+class TestConnection extends Action
 {
-    const OBSCURED_VALUE = '******';
+    /** @var string */
+    private $obscuredValue = '******';
 
     /** @var JsonFactory */
-    protected $resultJsonFactory;
+    private $jsonResultFactory;
 
-    /** @var TestConnectionApiCall */
-    protected $testConnection;
+    /** @var CredentialsFactory */
+    private $credentialsFactory;
 
-    /** @var StoreManagerInterface */
-    protected $storeManager;
+    /** @var ApiConnectionTest */
+    private $testConnection;
+
+    /** @var AuthConfigInterface */
+    private $authConfig;
 
     public function __construct(
-        Context $context,
-        JsonFactory $resultJsonFactory,
-        StoreManagerInterface $storeManager,
-        TestConnectionApiCall $testConnection
+        Action\Context $context,
+        JsonFactory $jsonResultFactory,
+        CredentialsFactory $credentialsFactory,
+        AuthConfigInterface $authConfig,
+        ApiConnectionTest $testConnection
     ) {
         parent::__construct($context);
-        $this->resultJsonFactory = $resultJsonFactory;
-        $this->testConnection    = $testConnection;
-        $this->storeManager      = $storeManager;
+        $this->jsonResultFactory  = $jsonResultFactory;
+        $this->credentialsFactory = $credentialsFactory;
+        $this->testConnection     = $testConnection;
+        $this->authConfig         = $authConfig;
     }
 
-    /**
-     * Gets called on request from test-connection button in the backend
-     *
-     * @return \Magento\Framework\Controller\Result\Json
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
-     */
     public function execute()
     {
-        $authData = $this->getAuthFromRequest();
-
-        // get current store view from HTTP_REFERER
-        $result      = [];
-        $httpReferer = $this->_redirect->getRefererUrl();
-
-        if (isset($httpReferer)) {
-            preg_match('@/store/([0-9]+)/@', $httpReferer, $result);
-        }
-
-        /** @var \Magento\Store\Api\Data\StoreInterface $store */
-        if (isset($result[1])) {
-            $store = $this->storeManager->getStore((int) $result[1]);
-        } else {
-            $store = $this->storeManager->getStore();
-        }
+        $message = __('Connection successfully established.');
 
         try {
-            $connected = $this->testConnection->execute((int) $store->getId(), $authData);
-            if ($connected) {
-                $message = __('Success! Connection successfully tested!');
-            } else {
-                $message = __('Connection failed. Check factfinder.log for mor information');
-            }
-        } catch (ApiCallException $e) {
-            $message = "{$e->getCode()} : {$e->getMessage()}";
+            $request = $this->getRequest();
+            $params  = $this->getCredentials($request->getParams()) + ['channel' => $request->getParam('channel')];
+            $this->testConnection->execute($request->getParam('serverUrl'), $params);
+        } catch (\Exception $e) {
+            // phpcs:ignore
+            $message = __('Connection failed. Check factfinder.log for more information');
         }
 
-        return $this->resultJsonFactory->create()->setData(['message' => $message]);
+        return $this->jsonResultFactory->create()->setData(['message' => $message]);
     }
 
-    /**
-     * @return array
-     */
-    private function getAuthFromRequest()
+    private function getCredentials(array $params): array
     {
-        $request  = $this->getRequest();
-        $password = $request->getParam('password');
-        if ($password == self::OBSCURED_VALUE) {
-            $password = null;
-        }
-
-        return [
-            'serverUrl'             => $request->getParam('serverUrl'),
-            'channel'               => $request->getParam('channel'),
-            'password'              => $password,
-            'username'              => $request->getParam('username'),
-            'authenticationPrefix'  => $request->getParam('authenticationPrefix'),
-            'authenticationPostfix' => $request->getParam('authenticationPostfix'),
-        ];
+        // The password wasn't edited, load it from config
+        if ($params['password'] === $this->obscuredValue) $params['password'] = $this->authConfig->getPassword();
+        return $this->credentialsFactory->create($params)->toArray();
     }
 }

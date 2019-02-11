@@ -31,7 +31,7 @@ class RedirectSearchTest extends TestCase
     }
 
     /**
-     * @testdox no redirect takes place if FACT-Finder is disabled
+     * @testdox No redirect takes place if FACT-Finder is disabled
      */
     public function testNoRedirectIfDisabled()
     {
@@ -41,7 +41,7 @@ class RedirectSearchTest extends TestCase
     }
 
     /**
-     * @testdox redirect to FACT-Finder search result if enabled
+     * @testdox Redirect to FACT-Finder search result if enabled
      */
     public function testRedirectIfEnabled()
     {

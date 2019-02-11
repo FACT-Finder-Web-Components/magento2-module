@@ -146,7 +146,7 @@ class ProductTest extends TestCase
         $this->assertEquals(self::BOOLEAN_TEST_PRODUCT_VALUE_LABEL, $result);
     }
 
-    public function testAttributeValueHTMLTagsAreDecoded()
+    public function testAttributeValueHtmlTagsAreDecoded()
     {
         $this->scopeConfigMock->method('getValue')
             ->with(ProductHelper::PATH_DATA_TRANSFER_EAN, 'store', self::STORE_ID)

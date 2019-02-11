@@ -6,13 +6,13 @@ namespace Omikron\Factfinder\Model;
 
 use Magento\Framework\HTTP\ClientFactory;
 use Magento\Framework\Serialize\SerializerInterface;
-use Omikron\Factfinder\Api\ClientInterface as FactFinderClientInterface;
+use Omikron\Factfinder\Api\ClientInterface as ApiClientInterface;
 use Omikron\Factfinder\Api\Config\AuthConfigInterface;
 use Omikron\Factfinder\Exception\ResponseException;
 use Omikron\Factfinder\Model\Api\Credentials;
 use Omikron\Factfinder\Model\Api\CredentialsFactory;
 
-class Client implements FactFinderClientInterface
+class Client implements ApiClientInterface
 {
     /** @var ClientFactory */
     private $httpClientFactory;

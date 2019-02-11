@@ -14,8 +14,8 @@ use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
 use Omikron\Factfinder\Helper\Data;
 use Omikron\Factfinder\Helper\Product;
 use Omikron\Factfinder\Model\Consumer\Tracking\AddToCart;
-use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 
 class AddToCartTest extends TestCase
 {

@@ -38,7 +38,7 @@ class ExportAuthenticationTest extends TestCase
     {
         $this->authMock = $this->createMock(BasicAuth::class);
         $this->flagMock = $this->createMock(ActionFlag::class);
-        $credentials = $this->createMock(Authentication::class);
+        $credentials    = $this->createMock(Authentication::class);
         $credentials->method('getCredentials')->willReturn(['Aladdin', 'OpenSesame']);
         $this->observer = new ExportAuthentication($this->flagMock, $this->authMock, $credentials);
     }

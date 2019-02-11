@@ -4,61 +4,32 @@ declare(strict_types=1);
 
 namespace Omikron\Factfinder\Model\Consumer;
 
-use Magento\Framework\Serialize\SerializerInterface;
 use Omikron\Factfinder\Api\ClientInterface;
-use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
-use Omikron\Factfinder\Exception\ApiCallException;
 use Omikron\Factfinder\Exception\ResponseException;
 
 class TestConnection
 {
-    /** @var ClientInterface  */
-    protected $factFinderClient;
+    /** @var ClientInterface */
+    private $apiClient;
 
-    /** @var CommunicationConfigInterface  */
-    protected $communicationConfig;
+    /** @var string */
+    private $apiQuery = 'FACT-Finder version';
 
-    /** @var SerializerInterface\ */
-    protected $serializer;
-
-    /** @var string  */
-    protected $apiQuery = 'FACT-Finder version';
-
-    /** @var string  */
-    protected $apiName = 'Search.ff';
-
-    public function __construct(
-        ClientInterface $factFinderClient,
-        CommunicationConfigInterface $communicationConfig,
-        SerializerInterface $serializer
-    ) {
-        $this->factFinderClient    = $factFinderClient;
-        $this->communicationConfig = $communicationConfig;
-        $this->serializer          = $serializer;
+    public function __construct(ClientInterface $apiClient)
+    {
+        $this->apiClient = $apiClient;
     }
 
     /**
-     * @param int   $scopeId
-     * @param array $params
+     * @param string $serverUrl
+     * @param array  $params
+     *
      * @return bool
-     * @throws ApiCallException
+     * @throws ResponseException
      */
-    public function execute(int $scopeId, array $params = []) : bool
+    public function execute(string $serverUrl, array $params): bool
     {
-        $params = [
-                'query'   => $this->apiQuery,
-                'channel' => $params['channel'] ?? $this->communicationConfig->getChannel($scopeId),
-                'verbose' => true
-            ] + $params;
-
-        $endpoint = ($params['serverUrl'] ?? $this->communicationConfig->getAddress()) . '/' . $this->apiName;
-
-        try {
-            $this->factFinderClient->sendRequest($endpoint, $params);
-
-            return true;
-        } catch (ResponseException $e) {
-            throw new ApiCallException('Test connection failed', $e);
-        }
+        $this->apiClient->sendRequest(rtrim($serverUrl, '/') . '/Search.ff', $params + ['query' => $this->apiQuery]);
+        return true;
     }
 }

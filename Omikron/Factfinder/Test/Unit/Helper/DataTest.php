@@ -12,7 +12,7 @@ class DataTest extends TestCase
     private $helper;
 
     /**
-     * @testdox the session ID should be 30 characters long
+     * @testdox The session ID should be 30 characters long
      */
     public function testCorrectSessionId()
     {
