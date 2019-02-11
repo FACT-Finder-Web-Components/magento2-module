@@ -40,6 +40,7 @@ class PushImport
         $importTypes = $this->getPushImportDataTypes($scopeId);
         $endpoint    = $this->communicationConfig->getAddress() . '/' . $this->apiName;
         $response    = [];
+        $result      = false;
 
         $params = [
                 'channel'  => $channel,
@@ -50,18 +51,20 @@ class PushImport
 
         foreach ($importTypes as $type) {
             $params['type'] = $type;
-            $response = array_merge_recursive($response, $this->factFinderClient->sendRequest($endpoint, $params));
+            $response       = array_merge_recursive($response, $this->factFinderClient->sendRequest($endpoint, $params));
         }
 
-        if ($responseJson['errors'] ?? $responseJson['error'] ?? []) {
-            return false;
+        if ($response && !(isset($response['errors']) || isset($response['error']))) {
+            $result = true;
         }
 
-        return true;
+        return $result;
     }
 
     private function getPushImportDataTypes(int $scopeId = null) : array
     {
-        return explode(',', $this->scopeConfig->getValue('factfinder/data_transfer/ff_push_import_type', ScopeInterface::SCOPE_STORE, $scopeId));
+        $dataTypes = $this->scopeConfig->getValue('factfinder/data_transfer/ff_push_import_type', ScopeInterface::SCOPE_STORE, $scopeId);
+
+        return !empty($dataTypes) ? explode(',', $dataTypes) : [];
     }
 }
