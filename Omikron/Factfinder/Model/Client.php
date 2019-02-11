@@ -26,9 +26,9 @@ class Client implements FactFinderClientInterface
         SerializerInterface $serializer,
         AuthConfigInterface $authConfig
     ) {
-        $this->httpClientFactory   = $clientFactory;
-        $this->serializer          = $serializer;
-        $this->authConfig = $authConfig;
+        $this->httpClientFactory = $clientFactory;
+        $this->serializer        = $serializer;
+        $this->authConfig        = $authConfig;
     }
 
     /**

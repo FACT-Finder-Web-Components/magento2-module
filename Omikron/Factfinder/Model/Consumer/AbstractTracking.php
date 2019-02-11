@@ -13,12 +13,9 @@ use Omikron\Factfinder\Api\ClientInterface;
 use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
 use Omikron\Factfinder\Helper\Product;
 use Omikron\Factfinder\Helper\Data;
-use Omikron\Factfinder\Exception\ResponseException;
 
 abstract class AbstractTracking
 {
-    const EVENT_TRACKING_SUCCESS_RESPONSE = 'The event was successfully tracked';
-
     /** @var StoreManagerInterface */
     protected $storeManager;
 
@@ -59,23 +56,6 @@ abstract class AbstractTracking
         $this->communicationConfig = $communicationConfig;
         $this->productHelper       = $product;
         $this->helper              = $data;
-    }
-
-    protected function pushEvent(string $endpoint, array $params)
-    {
-        try {
-            $this->factFinderClient->sendRequest($endpoint, $params);
-        } catch (ResponseException $e) {
-            /**
-             * Tracking an event returns plaintext which make client thrown an exception.
-             * If previous exception was instance of InvalidArgumentException and message is equal
-             * to value stored in constant it means that event was pushed successfully
-             */
-            if ($e->getPrevious() instanceof \InvalidArgumentException && $e->getMessage() == self::EVENT_TRACKING_SUCCESS_RESPONSE) {
-                return;
-            }
-            throw $e;
-        }
     }
 
     protected function getSessionId(): string

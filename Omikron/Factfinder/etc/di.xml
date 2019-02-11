@@ -32,4 +32,19 @@
     <type name="Omikron\Factfinder\Model\Consumer\PushImport">
         <plugin name="logPushImportExceptions" type="Omikron\Factfinder\Plugin\LogExceptions" />
     </type>
+    <virtualType name="Omikron\Factfinder\Model\TrackingEventClient" type="Omikron\Factfinder\Model\Client">
+        <arguments>
+            <argument name="serializer" xsi:type="object">Omikron\Factfinder\Model\Serializer\PlainTextSerializer</argument>
+        </arguments>
+    </virtualType>
+    <type name="Omikron\Factfinder\Model\Consumer\Tracking\AddToCart">
+        <arguments>
+            <argument name="factFinderClient" xsi:type="object">Omikron\Factfinder\Model\TrackingEventClient</argument>
+        </arguments>
+    </type>
+    <type name="Omikron\Factfinder\Model\Consumer\Tracking\CreateOrder">
+        <arguments>
+            <argument name="factFinderClient" xsi:type="object">Omikron\Factfinder\Model\TrackingEventClient</argument>
+        </arguments>
+    </type>
 </config>
