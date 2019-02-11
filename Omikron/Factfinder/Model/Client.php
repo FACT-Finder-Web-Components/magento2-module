@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Omikron\Factfinder\Model;
 
@@ -9,72 +9,61 @@ use Magento\Framework\Serialize\SerializerInterface;
 use Omikron\Factfinder\Api\ClientInterface as FactFinderClientInterface;
 use Omikron\Factfinder\Api\Config\AuthConfigInterface;
 use Omikron\Factfinder\Exception\ResponseException;
+use Omikron\Factfinder\Model\Api\Credentials;
+use Omikron\Factfinder\Model\Api\CredentialsFactory;
 
 class Client implements FactFinderClientInterface
 {
     /** @var ClientFactory */
-    protected $httpClientFactory;
+    private $httpClientFactory;
 
     /** @var SerializerInterface */
-    protected $serializer;
+    private $serializer;
 
-    /** @var AuthConfigInterface  */
-    protected $authConfig;
+    /** @var AuthConfigInterface */
+    private $authConfig;
+
+    /** @var CredentialsFactory */
+    private $credentialsFactory;
 
     public function __construct(
         ClientFactory $clientFactory,
         SerializerInterface $serializer,
-        AuthConfigInterface $authConfig
+        AuthConfigInterface $authConfig,
+        CredentialsFactory $credentialsFactory
     ) {
-        $this->httpClientFactory = $clientFactory;
-        $this->serializer        = $serializer;
-        $this->authConfig        = $authConfig;
+        $this->httpClientFactory  = $clientFactory;
+        $this->serializer         = $serializer;
+        $this->authConfig         = $authConfig;
+        $this->credentialsFactory = $credentialsFactory;
     }
 
-    /**
-     * {@inheritdoc}
-     *
-     * @param string $apiName
-     * @param array $params
-     * @return array
-     * @throws ResponseException
-     */
-    public function sendRequest(string $endpoint, array $params) : array
+    public function sendRequest(string $endpoint, array $params): array
     {
-        $params     = ['format' => 'json'] + $this->getAuthArray($params) + $params;
-        $curlClient = $this->httpClientFactory->create();
-        $curlClient->get($endpoint . '?' . preg_replace('#products%5B\d+%5D%5B(.+?)%5D=#', '\1=', http_build_query($params)));
-
-        if ($curlClient->getStatus() != 200) {
-            throw new ResponseException($curlClient->getBody(), $curlClient->getStatus());
-        }
+        $httpClient = $this->httpClientFactory->create();
 
         try {
-            return $this->serializer->unserialize($curlClient->getBody());
+            $params = ['format' => 'json'] + $params + $this->getCredentials($this->authConfig)->toArray();
+            $query  = preg_replace('#products%5B\d+%5D%5B(.+?)%5D=#', '\1=', http_build_query($params));
+
+            $httpClient->get($endpoint . '?' . $query);
+            if ($httpClient->getStatus() >= 200 && $httpClient->getStatus() < 300) {
+                return $this->serializer->unserialize($httpClient->getBody());
+            }
+
+            throw new ResponseException($httpClient->getBody(), $httpClient->getStatus());
         } catch (\InvalidArgumentException $e) {
-            throw new ResponseException($curlClient->getBody(), $curlClient->getStatus(), $e);
+            throw new ResponseException($httpClient->getBody(), $httpClient->getStatus(), $e);
         }
     }
 
-    /**
-     * Returns the authentication values as array
-     * @param array $params
-     * @return array
-     */
-    protected function getAuthArray(array $params = []) : array
+    private function getCredentials(AuthConfigInterface $config): Credentials
     {
-        $time         = round(microtime(true) * 1000);
-        $password     = $params['password'] ?? $this->authConfig->getPassword();
-        $prefix       = $params['authenticationPrefix'] ?? $this->authConfig->getAuthenticationPrefix();
-        $postfix      = $params['authenticationPostfix'] ?? $this->authConfig->getAuthenticationPostfix();
-        $hashPassword = md5($prefix . (string) $time . md5($password) . $postfix);
-
-        $authArray = [
-            'username'  => $params['username'] ?? $this->authConfig->getUsername(),
-            'timestamp' => $time,
-            'password'  => $hashPassword
-        ];
-
-        return $authArray;
+        return $this->credentialsFactory->create([
+            'username' => $config->getUsername(),
+            'password' => $config->getPassword(),
+            'prefix'   => $config->getAuthenticationPrefix(),
+            'postfix'  => $config->getAuthenticationPostfix(),
+        ]);
     }
 }

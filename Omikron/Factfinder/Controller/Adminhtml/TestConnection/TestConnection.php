@@ -1,14 +1,12 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Omikron\Factfinder\Controller\Adminhtml\TestConnection;
 
-use Magento\Framework\Registry;
-use Magento\Framework\App\RequestInterface;
+use Magento\Backend\App\Action\Context;
 use Magento\Framework\Controller\Result\JsonFactory;
 use Magento\Store\Model\StoreManagerInterface;
-use Magento\Backend\App\Action\Context;
 use Omikron\Factfinder\Exception\ApiCallException;
 use Omikron\Factfinder\Model\Consumer\TestConnection as TestConnectionApiCall;
 
@@ -20,13 +18,13 @@ class TestConnection extends \Magento\Backend\App\Action
 {
     const OBSCURED_VALUE = '******';
 
-    /** @var JsonFactory  */
+    /** @var JsonFactory */
     protected $resultJsonFactory;
 
-    /** @var TestConnectionApiCall  */
+    /** @var TestConnectionApiCall */
     protected $testConnection;
 
-    /** @var StoreManagerInterface  */
+    /** @var StoreManagerInterface */
     protected $storeManager;
 
     public function __construct(
@@ -35,10 +33,10 @@ class TestConnection extends \Magento\Backend\App\Action
         StoreManagerInterface $storeManager,
         TestConnectionApiCall $testConnection
     ) {
-        $this->resultJsonFactory = $resultJsonFactory;
-        $this->testConnection = $testConnection;
-        $this->storeManager = $storeManager;
         parent::__construct($context);
+        $this->resultJsonFactory = $resultJsonFactory;
+        $this->testConnection    = $testConnection;
+        $this->storeManager      = $storeManager;
     }
 
     /**
@@ -55,7 +53,7 @@ class TestConnection extends \Magento\Backend\App\Action
         $result      = [];
         $httpReferer = $this->_redirect->getRefererUrl();
 
-        if(isset($httpReferer)) {
+        if (isset($httpReferer)) {
             preg_match('@/store/([0-9]+)/@', $httpReferer, $result);
         }
 
@@ -85,19 +83,18 @@ class TestConnection extends \Magento\Backend\App\Action
      */
     private function getAuthFromRequest()
     {
-        /** @var RequestInterface $request */
-        $request = $this->getRequest();
+        $request  = $this->getRequest();
         $password = $request->getParam('password');
         if ($password == self::OBSCURED_VALUE) {
             $password = null;
         }
 
         return [
-            'serverUrl' => $request->getParam('serverUrl'),
-            'channel' => $request->getParam('channel'),
-            'password' => $password,
-            'username' => $request->getParam('username'),
-            'authenticationPrefix' => $request->getParam('authenticationPrefix'),
+            'serverUrl'             => $request->getParam('serverUrl'),
+            'channel'               => $request->getParam('channel'),
+            'password'              => $password,
+            'username'              => $request->getParam('username'),
+            'authenticationPrefix'  => $request->getParam('authenticationPrefix'),
             'authenticationPostfix' => $request->getParam('authenticationPostfix'),
         ];
     }

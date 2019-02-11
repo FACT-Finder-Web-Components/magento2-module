@@ -3,6 +3,7 @@
     <preference for="Omikron\Factfinder\Api\ClientInterface" type="Omikron\Factfinder\Model\Client"/>
     <preference for="Omikron\Factfinder\Api\Config\AuthConfigInterface" type="Omikron\Factfinder\Model\Config\AuthConfig"/>
     <preference for="Omikron\Factfinder\Api\Config\CommunicationConfigInterface" type="Omikron\Factfinder\Model\Config\CommunicationConfig"/>
+
     <virtualType name="Omikron\Factfinder\Model\Product\Attribute\CollectionFactory" type="Magento\Eav\Model\ResourceModel\Entity\Attribute\CollectionFactory">
         <arguments>
             <argument name="instanceName" xsi:type="string">Magento\Catalog\Model\ResourceModel\Product\Attribute\Collection</argument>
@@ -21,6 +22,12 @@
             <argument name="fileName" xsi:type="string">/var/log/factfinder.log</argument>
         </arguments>
     </virtualType>
+    <virtualType name="Omikron\Factfinder\Model\TrackingEventClient" type="Omikron\Factfinder\Model\Client">
+        <arguments>
+            <argument name="serializer" xsi:type="object">Omikron\Factfinder\Model\Serializer\PlainTextSerializer</argument>
+        </arguments>
+    </virtualType>
+
     <type name="Omikron\Factfinder\Plugin\LogExceptions">
         <arguments>
             <argument name="logger" xsi:type="object">Omikron\Factfinder\Logger</argument>
@@ -32,11 +39,6 @@
     <type name="Omikron\Factfinder\Model\Consumer\PushImport">
         <plugin name="logPushImportExceptions" type="Omikron\Factfinder\Plugin\LogExceptions" />
     </type>
-    <virtualType name="Omikron\Factfinder\Model\TrackingEventClient" type="Omikron\Factfinder\Model\Client">
-        <arguments>
-            <argument name="serializer" xsi:type="object">Omikron\Factfinder\Model\Serializer\PlainTextSerializer</argument>
-        </arguments>
-    </virtualType>
     <type name="Omikron\Factfinder\Model\Consumer\Tracking\AddToCart">
         <arguments>
             <argument name="factFinderClient" xsi:type="object">Omikron\Factfinder\Model\TrackingEventClient</argument>
