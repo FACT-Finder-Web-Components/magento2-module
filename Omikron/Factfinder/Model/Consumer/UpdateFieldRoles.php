@@ -9,7 +9,6 @@ use Magento\Config\Model\ResourceModel\Config;
 use Magento\Store\Model\ScopeInterface;
 use Omikron\Factfinder\Api\ClientInterface;
 use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
-use Omikron\Factfinder\Exception\ApiCallException;
 use Omikron\Factfinder\Exception\ResponseException;
 use Omikron\Factfinder\Helper\Data;
 
@@ -49,7 +48,7 @@ class UpdateFieldRoles
      * @param int   $scopeId
      * @param array $params
      * @return array
-     * @throws ApiCallException
+     * @throws ResponseException
      */
     public function execute(int $scopeId, array $params = []) : array
     {
@@ -67,11 +66,7 @@ class UpdateFieldRoles
             ] + $params;
 
         $endpoint = ($params['serverUrl'] ?? $this->communicationConfig->getAddress()) . '/' . $this->apiName;
-        try {
-            $response['ff_response_decoded'] = $this->factFinderClient->sendRequest($endpoint, $params);
-        } catch (ResponseException $e) {
-            throw new ApiCallException(__('Update Field roles failed'),null, $e);
-        }
+        $response['ff_response_decoded'] = $this->factFinderClient->sendRequest($endpoint, $params);
         $this->processResponseHasErrors($response);
 
         return $this->processUpdateFieldRoles($response, $scopeId);
@@ -90,7 +85,7 @@ class UpdateFieldRoles
         }
 
         if (!$valid) {
-            throw new ApiCallException(__('FACT-Finder response contains errors. Response %1', $this->serializer->serialize($response)));
+            throw new ResponseException(__('FACT-Finder response contains errors. Response body is %1', $this->serializer->serialize($response)));
         }
     }
 
@@ -103,7 +98,7 @@ class UpdateFieldRoles
 
             return $response;
         } else {
-            throw new ApiCallException(__('FACT-Finder response does not field roles. Response %1', $this->serializer->serialize($response)));
+            throw new ResponseException(__('FACT-Finder response does not field roles. Response body is %1', $this->serializer->serialize($response)));
         }
     }
 }
