@@ -28,6 +28,11 @@
         </arguments>
     </virtualType>
 
+    <type name="Omikron\Factfinder\Model\SessionData">
+        <arguments>
+            <argument name="customerSession" xsi:type="object">Magento\Customer\Model\Session\Proxy</argument>
+        </arguments>
+    </type>
     <type name="Omikron\Factfinder\Plugin\LogExceptions">
         <arguments>
             <argument name="logger" xsi:type="object">Omikron\Factfinder\Logger</argument>
