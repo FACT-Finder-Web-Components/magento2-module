@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace Omikron\Factfinder\Model;
 
+use Magento\Customer\CustomerData\SectionSourceInterface;
 use Magento\Customer\Model\Session as CustomerSession;
 use Omikron\Factfinder\Api\SessionDataInterface;
 
-class SessionData implements SessionDataInterface
+class SessionData implements SessionDataInterface, SectionSourceInterface
 {
     /** @var CustomerSession */
     private $customerSession;
@@ -24,7 +25,18 @@ class SessionData implements SessionDataInterface
 
     public function getSessionId(): string
     {
-        return $this->getCorrectSessionId($this->customerSession->getSessionId());
+        return $this->getCorrectSessionId((string) $this->customerSession->getSessionId());
+    }
+
+    /**
+     * @return array
+     */
+    public function getSectionData()
+    {
+        return [
+            'uid' => $this->getUserId(),
+            'sid' => $this->getSessionId(),
+        ];
     }
 
     private function getCorrectSessionId(string $sessionId, int $length = 30): string

@@ -50,7 +50,6 @@ class TestConnection extends Action
             $params  = $this->getCredentials($request->getParams()) + ['channel' => $request->getParam('channel')];
             $this->testConnection->execute($request->getParam('serverUrl'), $params);
         } catch (\Exception $e) {
-            // phpcs:ignore
             $message = __('Connection failed. Check factfinder.log for more information');
         }
 

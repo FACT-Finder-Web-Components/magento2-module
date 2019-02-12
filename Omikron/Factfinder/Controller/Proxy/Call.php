@@ -68,7 +68,7 @@ class Call extends \Magento\Framework\App\Action\Action
         // get api name from regex matches
         $apiName = $matches[0];
 
-        $ffResponse = $this->factFinderClient->sendToFF($this->communicationConfig->getAddress() . $this->$apiName, $this->getRequest()->getParams());
+        $ffResponse = $this->factFinderClient->sendRequest($this->communicationConfig->getAddress() . $this->$apiName, $this->getRequest()->getParams());
 
         return $result->setJsonData($this->resultRefiner->refine($ffResponse));
     }

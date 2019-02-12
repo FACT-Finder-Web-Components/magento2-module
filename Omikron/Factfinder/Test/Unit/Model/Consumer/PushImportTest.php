@@ -2,12 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Omikron\Factfinder\Test\Unit\Model\Consumer;
+namespace Omikron\Factfinder\Model\Consumer;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Omikron\Factfinder\Api\ClientInterface;
 use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
-use Omikron\Factfinder\Model\Consumer\PushImport;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
