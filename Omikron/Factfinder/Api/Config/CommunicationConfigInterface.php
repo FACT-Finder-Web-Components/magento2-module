@@ -8,5 +8,4 @@ interface CommunicationConfigInterface
 
     public function getAddress(): string;
 
-    public function getPushImportTypes(string $scopeId = null): array;
 }
