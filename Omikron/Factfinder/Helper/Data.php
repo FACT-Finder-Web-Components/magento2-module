@@ -21,7 +21,7 @@ class Data extends AbstractHelper
     const PATH_ADVANCED_VERSION             = 'factfinder/advanced/version';
     const PATH_DATA_TRANSFER_IMPORT         = 'factfinder/data_transfer/ff_push_import_enabled';
     const PATH_CONFIGURABLE_CRON_IS_ENABLED = 'factfinder/configurable_cron/ff_cron_enabled';
-    const PATH_PRODUCT_FIELD_ROLE           = 'factfinder/general/tracking_product_number_field_role';
+    const PATH_PRODUCT_FIELD_ROLE           = 'factfinder/general/tracking_product_number_field_role'; //@todo remove
 
     /**
      * Public Getter

@@ -3,6 +3,9 @@
     <preference for="Omikron\Factfinder\Api\ClientInterface" type="Omikron\Factfinder\Model\Client"/>
     <preference for="Omikron\Factfinder\Api\Config\AuthConfigInterface" type="Omikron\Factfinder\Model\Config\AuthConfig"/>
     <preference for="Omikron\Factfinder\Api\Config\CommunicationConfigInterface" type="Omikron\Factfinder\Model\Config\CommunicationConfig"/>
+    <preference for="Omikron\Factfinder\Api\FieldRolesInterface" type="Omikron\Factfinder\Model\FieldRoles"/>
+    <preference for="Omikron\Factfinder\Api\SessionDataInterface" type="Omikron\Factfinder\Model\SessionData"/>
+    <preference for="Omikron\Factfinder\Api\Data\TrackingProductInterface" type="Omikron\Factfinder\Model\Data\TrackingProduct"/>
 
     <virtualType name="Omikron\Factfinder\Model\Product\Attribute\CollectionFactory" type="Magento\Eav\Model\ResourceModel\Entity\Attribute\CollectionFactory">
         <arguments>
@@ -44,12 +47,7 @@
     <type name="Omikron\Factfinder\Model\Consumer\PushImport">
         <plugin name="logPushImportExceptions" type="Omikron\Factfinder\Plugin\LogExceptions" />
     </type>
-    <type name="Omikron\Factfinder\Model\Consumer\Tracking\AddToCart">
-        <arguments>
-            <argument name="factFinderClient" xsi:type="object">Omikron\Factfinder\Model\TrackingEventClient</argument>
-        </arguments>
-    </type>
-    <type name="Omikron\Factfinder\Model\Consumer\Tracking\CreateOrder">
+    <type name="Omikron\Factfinder\Model\Consumer\Tracking">
         <arguments>
             <argument name="factFinderClient" xsi:type="object">Omikron\Factfinder\Model\TrackingEventClient</argument>
         </arguments>
