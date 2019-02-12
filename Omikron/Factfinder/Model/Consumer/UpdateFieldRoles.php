@@ -50,7 +50,7 @@ class UpdateFieldRoles
      * @return array
      * @throws ResponseException
      */
-    public function execute(int $scopeId, array $params = []) : array
+    public function execute(int $scopeId, array $params = []): array
     {
         $response = [
             'success'             => false,
@@ -72,7 +72,7 @@ class UpdateFieldRoles
         return $this->processUpdateFieldRoles($response, $scopeId);
     }
 
-    private function processResponseHasErrors(array &$response) : void
+    private function processResponseHasErrors(array &$response): void
     {
         $valid = true;
         if ($response['ff_response_decoded']['error'] ?? []) {
@@ -89,7 +89,7 @@ class UpdateFieldRoles
         }
     }
 
-    private function processUpdateFieldRoles(array $response, int $scopeId) : array
+    private function processUpdateFieldRoles(array $response, int $scopeId): array
     {
         if ($response['ff_response_decoded']['searchResult']['fieldRoles'] ?? []) {
             $response['fieldRoles'] = $this->serializer->serialize($response['ff_response_decoded']['searchResult']['fieldRoles']);

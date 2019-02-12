@@ -34,7 +34,7 @@ class PushImport
         $this->scopeConfig         = $scopeConfig;
     }
 
-    public function execute(int $scopeId = null, array $params = []) : bool
+    public function execute(int $scopeId = null, array $params = []): bool
     {
         $channel     = $this->communicationConfig->getChannel($scopeId);
         $importTypes = $this->getPushImportDataTypes($scopeId);
@@ -61,7 +61,7 @@ class PushImport
         return $result;
     }
 
-    private function getPushImportDataTypes(int $scopeId = null) : array
+    private function getPushImportDataTypes(int $scopeId = null): array
     {
         $dataTypes = $this->scopeConfig->getValue('factfinder/data_transfer/ff_push_import_type', ScopeInterface::SCOPE_STORE, $scopeId);
 

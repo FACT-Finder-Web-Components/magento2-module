@@ -63,17 +63,17 @@ abstract class AbstractTracking
         return $this->session->getSessionId();
     }
 
-    protected function getTrackingProductNumber(ProductInterface $product, StoreInterface $store) : string
+    protected function getTrackingProductNumber(ProductInterface $product, StoreInterface $store): string
     {
         return (string) $this->productHelper->get($this->helper->getFieldRole('trackingProductNumber'), $product, $store);
     }
 
-    protected function getMasterArticleNumber(ProductInterface $product, StoreInterface $store) : string
+    protected function getMasterArticleNumber(ProductInterface $product, StoreInterface $store): string
     {
         return (string) $this->productHelper->get($this->helper->getFieldRole('masterArticleNumber'), $product, $store);
     }
 
-    protected function getProductPrice(ProductInterface $product, StoreInterface $store) : string
+    protected function getProductPrice(ProductInterface $product, StoreInterface $store): string
     {
         return (string) $this->productHelper->get('Price', $product, $store);
     }

@@ -19,7 +19,7 @@ class AddToCart extends AbstractTracking
      * @return void
      * @throws ResponseException
      */
-    public function execute(ProductInterface $product, int $amount) : void
+    public function execute(ProductInterface $product, int $amount): void
     {
         $store  = $this->storeManager->getStore();
         $params = [

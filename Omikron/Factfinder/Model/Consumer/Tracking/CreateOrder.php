@@ -20,7 +20,7 @@ class CreateOrder extends AbstractTracking
      * @return void
      * @throws ResponseException
      */
-    public function execute(Order $order) : void
+    public function execute(Order $order): void
     {
         $params = [
             'event'   => $this->eventType,
