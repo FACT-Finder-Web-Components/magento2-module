@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Omikron\Factfinder\Model;
 
-use Magento\Framework\Serialize\SerializerInterface;
-use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Config\Model\ResourceModel\Config as ConfigResource;
+use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Framework\Serialize\SerializerInterface;
 use Magento\Store\Model\ScopeInterface;
 use Omikron\Factfinder\Api\FieldRolesInterface;
 

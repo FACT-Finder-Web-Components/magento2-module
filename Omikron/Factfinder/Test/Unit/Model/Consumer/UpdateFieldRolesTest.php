@@ -9,8 +9,8 @@ use Omikron\Factfinder\Api\ClientInterface;
 use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
 use Omikron\Factfinder\Api\FieldRolesInterface;
 use Omikron\Factfinder\Exception\ResponseException;
-use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 
 class UpdateFieldRolesTest extends TestCase
 {

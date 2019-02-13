@@ -4,18 +4,17 @@ namespace Omikron\Factfinder\Model\Export;
 
 use Magento\Catalog\Model\Product\Attribute\Source\Status;
 use Magento\Catalog\Model\ResourceModel\Product\Collection;
-use Magento\Framework\App\Filesystem\DirectoryList;
-use Magento\Store\Api\Data\StoreInterface;
 use Magento\Catalog\Model\ResourceModel\Product\CollectionFactory;
-use Magento\Catalog\Model\Product\Visibility;
-use Magento\Framework\Filesystem;
+use Magento\Framework\App\Filesystem\DirectoryList;
 use Magento\Framework\File\Csv;
+use Magento\Framework\Filesystem;
+use Magento\Store\Api\Data\StoreInterface;
 use Magento\Store\Model\App\Emulation;
 use Magento\Store\Model\StoreManagerInterface;
 use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
-use Omikron\Factfinder\Helper\Upload;
 use Omikron\Factfinder\Helper\Data;
 use Omikron\Factfinder\Helper\Product as ProductHelper;
+use Omikron\Factfinder\Helper\Upload;
 use Omikron\Factfinder\Model\Consumer\PushImport;
 use Omikron\Factfinder\Model\Consumer\UpdateFieldRoles;
 

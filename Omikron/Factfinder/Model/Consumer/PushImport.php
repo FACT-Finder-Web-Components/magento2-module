@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Omikron\Factfinder\Model\Consumer;
 
-use Omikron\Factfinder\Api\ClientInterface;
-use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Store\Model\ScopeInterface;
+use Omikron\Factfinder\Api\ClientInterface;
+use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
 
 class PushImport
 {

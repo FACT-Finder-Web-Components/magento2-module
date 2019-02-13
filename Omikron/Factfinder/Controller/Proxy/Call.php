@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Omikron\Factfinder\Controller\Proxy;
 
 use Magento\Framework\App\Action\Context;
+use Magento\Framework\Controller\Result\JsonFactory;
 use Magento\Framework\Webapi\Exception;
-use Magento\Framework\Controller\Result\JsonFactory ;
 use Omikron\Factfinder\Api\ClientInterface;
 use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
-use Omikron\Factfinder\Helper\ResultRefiner ;
+use Omikron\Factfinder\Helper\ResultRefiner;
 
 /**
  * Class Call

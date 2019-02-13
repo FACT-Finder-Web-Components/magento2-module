@@ -4,22 +4,22 @@ declare(strict_types=1);
 
 namespace Omikron\Factfinder\Model;
 
-use Magento\Framework\Serialize\SerializerInterface;
-use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Config\Model\ResourceModel\Config as ConfigResource;
+use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Framework\Serialize\SerializerInterface;
 use Omikron\Factfinder\Api\FieldRolesInterface;
-use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 
 class FieldRolesTest extends TestCase
 {
-    /** @var MockObject\SerializerInterface */
+    /** @var MockObject|SerializerInterface */
     private $serializerMock;
 
-    /** @var MockObject\ScopeConfigInterface */
+    /** @var MockObject|ScopeConfigInterface */
     private $scopeConfigMock;
 
-    /** @var MockObject\ConfigResource */
+    /** @var MockObject|ConfigResource */
     private $configResourceMock;
 
     /** @var FieldRolesInterface */

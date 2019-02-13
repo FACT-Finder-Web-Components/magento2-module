@@ -6,8 +6,8 @@ namespace Omikron\Factfinder\Model\Consumer;
 
 use Omikron\Factfinder\Api\ClientInterface;
 use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
-use Omikron\Factfinder\Api\SessionDataInterface;
 use Omikron\Factfinder\Api\Data\TrackingProductInterface;
+use Omikron\Factfinder\Api\SessionDataInterface;
 
 class Tracking
 {
