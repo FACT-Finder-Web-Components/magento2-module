@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Omikron\Factfinder\Block\FF;
 
 use Magento\Framework\Module\Dir\Reader;
+use Magento\Framework\Serialize\SerializerInterface;
 use Magento\Framework\View\Element\Template;
 use Magento\Framework\View\Element\Template\Context;
 use Magento\Framework\Xml\Parser;
@@ -21,23 +22,26 @@ class Communication extends Template
     /** @var Data */
     private $configHelper;
 
-    /** @var Parser  */
+    /** @var Parser */
     private $parser;
 
     /** @var CommunicationConfigInterface */
     private $communicationConfig;
 
-    /** @var CustomerSession */
+    /** @var SessionDataInterface */
     private $sessionData;
 
     /** @var FieldRolesInterface */
     private $fieldRoles;
 
-        /** @var array */
-    private $configData;
+    /** @var SerializerInterface */
+    private $serializer;
 
     /** @var array */
-    private $requiredAttributes;
+    private $configData = [];
+
+    /** @var array */
+    private $requiredAttributes = ['url', 'channel', 'sid', 'version'];
 
     public function __construct(
         Context $context,
@@ -47,6 +51,7 @@ class Communication extends Template
         SessionDataInterface $sessionData,
         FieldRolesInterface $fieldRoles,
         CommunicationConfigInterface $communicationConfig,
+        SerializerInterface $serializer,
         $data = []
     ) {
         parent::__construct($context, $data);
@@ -56,11 +61,13 @@ class Communication extends Template
         $this->parser              = $parser;
         $this->sessionData         = $sessionData;
         $this->fieldRoles          = $fieldRoles;
+        $this->serializer          = $serializer;
+    }
 
+    protected function _beforeToHtml()
+    {
         $filePath = $this->moduleDirReader->getModuleDir('etc', 'Omikron_Factfinder') . '/config.xml';
         $defaultValues = $this->parser->load($filePath)->xmlToArray()['config']['_value']['default']['factfinder'];
-
-        $this->requiredAttributes = ['url', 'channel', 'sid', 'version'];
 
         $this->configData = [
             'url' => [
@@ -69,12 +76,12 @@ class Communication extends Template
                 'defaultValue' => null
             ],
             'sid' => [
-                'value' => $this->configHelper->getCorrectSessionId($this->customerSession->getSessionId()),
+                'value' => $this->sessionData->getSessionId(),
                 'type' => 'string',
                 'defaultValue' => null
             ],
             'user-id' => [
-                'value' => $this->customerSession->getCustomerId(),
+                'value' => $this->sessionData->getUserId() ?: null,
                 'type' => 'string',
                 'defaultValue' => null
             ],
@@ -174,7 +181,7 @@ class Communication extends Template
                 'defaultValue' => $defaultValues['advanced']['seo_prefix']
             ],
             'search-immediate' => [
-                'value' => $this->configHelper->getSearchImmediate(),
+                'value' => $this->getData('search_immediate') ?: $this->configHelper->getSearchImmediate(),
                 'type' => 'boolean',
                 'defaultValue' => $defaultValues['advanced']['search_immediate']
             ],
@@ -184,12 +191,6 @@ class Communication extends Template
                 'defaultValue' => $defaultValues['advanced']['disable_single_hit_redirect']
             ],
         ];
-
-        // always enable "search-immediate" when on result page
-        if ($this->getRequest()->getControllerName() == Data::CUSTOM_RESULT_PAGE) {
-            $this->configData['search-immediate']['value'] = 1;
-            $this->configData['search-immediate']['defaultValue'] = 0;
-        }
     }
 
     /**
@@ -202,13 +203,9 @@ class Communication extends Template
         return self::buildXMLElement('ff-communication', self::generateAttributes($this->configData, $this->requiredAttributes));
     }
 
-    /**
-     * Returns all fields used as tracking id
-     * @return string
-     */
-    public function getFieldRoles()
+    public function getFieldRoles(): string
     {
-        return $this->fieldRoles->getFieldRoles();
+        return $this->serializer->serialize($this->fieldRoles->getFieldRoles());
     }
 
     /**
@@ -226,7 +223,7 @@ class Communication extends Template
         $writer->startElement($rootElement);
         foreach ($attributes as $key => $value) {
             $writer->startAttribute($key);
-            $writer->text($value);
+            $writer->text((string) $value);
             $writer->endAttribute();
         }
         $writer->fullEndElement();
