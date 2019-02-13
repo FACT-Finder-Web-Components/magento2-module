@@ -15,10 +15,10 @@ class PushImportTest extends TestCase
     /** @var MockObject|ClientInterface */
     private $factFinderClientMock;
 
-    /** @var MockObject|CommunicationConfigInterface*/
+    /** @var MockObject|CommunicationConfigInterface */
     private $communicationConfigMock;
 
-    /** @var MockObject|ScopeConfigInterface*/
+    /** @var MockObject|ScopeConfigInterface */
     private $scopeConfigMock;
 
     /** @var PushImport */
@@ -39,10 +39,14 @@ class PushImportTest extends TestCase
         $this->assertTrue($this->pushImport->execute(1));
     }
 
-    public function test_execute_should_return_false_if_response_contains_errors()
+    /**
+     * @testWith ["errors"]
+     *           ["error"]
+     */
+    public function test_execute_should_return_false_if_response_contains_errors(string $param)
     {
         $this->scopeConfigMock->method('getValue')->with('factfinder/data_transfer/ff_push_import_type', 'store', 1)->willReturn('data,suggest');
-        $this->factFinderClientMock->expects($this->exactly(2))->method('sendRequest')->willReturn(['error' => 'There were an error during push import']);
+        $this->factFinderClientMock->expects($this->exactly(2))->method('sendRequest')->willReturn([$param => 'There were an error during push import']);
         $this->assertFalse($this->pushImport->execute(1));
     }
 

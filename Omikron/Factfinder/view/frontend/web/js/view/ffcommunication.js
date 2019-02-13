@@ -16,7 +16,7 @@ define([
 
                 communication.attr('sid', sid);
                 if (!!uid) {
-                    communication.attr('uid', uid);
+                    communication.attr('user-id', uid);
                 }
             });
         }

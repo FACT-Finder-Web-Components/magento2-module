@@ -46,6 +46,7 @@ abstract class BaseTracking
     protected function getProductData(string $attribute, Product $product): string
     {
         try {
+            $attribute = $this->fieldRoles->getFieldRole($attribute);
             return (string) $this->productHelper->get($attribute, $product, $this->storeManager->getStore());
         } catch (NoSuchEntityException $e) {
             return '';

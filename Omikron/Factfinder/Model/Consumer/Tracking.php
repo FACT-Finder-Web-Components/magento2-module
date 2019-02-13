@@ -17,7 +17,7 @@ class Tracking
     /** @var ClientInterface */
     private $factFinderClient;
 
-    /** @var SessionDataInterface  */
+    /** @var SessionDataInterface */
     private $sessionData;
 
     /** @var string */
@@ -38,17 +38,15 @@ class Tracking
         $params = [
             'event'    => $event,
             'channel'  => $this->communicationConfig->getChannel(),
-            'products' => array_map(
-                function (TrackingProductInterface $trackingProduct) {
-                    return [
-                        'id'       => $trackingProduct->getTrackingNumber(),
-                        'masterId' => $trackingProduct->getMasterArticleNumber(),
-                        'price'    => $trackingProduct->getPrice(),
-                        'count'    => $trackingProduct->getCount(),
-                        'sid'      => $this->sessionData->getSessionId(),
-                    ];
-                }, $trackingProducts
-            )
+            'products' => array_map(function (TrackingProductInterface $trackingProduct) {
+                return [
+                    'id'       => $trackingProduct->getTrackingNumber(),
+                    'masterId' => $trackingProduct->getMasterArticleNumber(),
+                    'price'    => $trackingProduct->getPrice(),
+                    'count'    => $trackingProduct->getCount(),
+                    'sid'      => $this->sessionData->getSessionId(),
+                ];
+            }, $trackingProducts),
         ];
 
         $this->factFinderClient->sendRequest($this->communicationConfig->getAddress() . '/' . $this->apiName, $params);

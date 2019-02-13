@@ -11,59 +11,51 @@ use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
 
 class PushImport
 {
-    /** @var ClientInterface  */
-    protected $factFinderClient;
+    /** @var ClientInterface */
+    protected $apiClient;
 
-    /** @var CommunicationConfigInterface  */
+    /** @var CommunicationConfigInterface */
     protected $communicationConfig;
 
-    /** @var string  */
+    /** @var string */
     protected $apiName = 'Import.ff';
 
-    /** @var ScopeConfigInterface  */
+    /** @var ScopeConfigInterface */
     protected $scopeConfig;
 
     public function __construct(
-        ClientInterface $factFinderClient,
+        ClientInterface $apiClient,
         CommunicationConfigInterface $communicationConfig,
         ScopeConfigInterface $scopeConfig
     ) {
-        $this->factFinderClient    = $factFinderClient;
+        $this->apiClient           = $apiClient;
         $this->communicationConfig = $communicationConfig;
         $this->scopeConfig         = $scopeConfig;
     }
 
     public function execute(int $scopeId = null, array $params = []): bool
     {
-        $channel     = $this->communicationConfig->getChannel($scopeId);
-        $importTypes = $this->getPushImportDataTypes($scopeId);
-        $endpoint    = $this->communicationConfig->getAddress() . '/' . $this->apiName;
-        $response    = [];
-        $result      = false;
+        $endpoint = $this->communicationConfig->getAddress() . '/' . $this->apiName;
 
-        $params = [
-                'channel'  => $channel,
-                'format'   => 'json',
-                'quiet'    => 'true',
-                'download' => 'true'
-            ] + $params;
+        $params += [
+            'channel'  => $this->communicationConfig->getChannel($scopeId),
+            'quiet'    => 'true',
+            'download' => 'true',
+        ];
 
-        foreach ($importTypes as $type) {
+        $response = [];
+        foreach ($this->getPushImportDataTypes($scopeId) as $type) {
             $params['type'] = $type;
-            $response       = array_merge_recursive($response, $this->factFinderClient->sendRequest($endpoint, $params));
+            $response       = array_merge_recursive($response, $this->apiClient->sendRequest($endpoint, $params));
         }
 
-        if ($response && !(isset($response['errors']) || isset($response['error']))) {
-            $result = true;
-        }
-
-        return $result;
+        return $response && !(isset($response['errors']) || isset($response['error']));
     }
 
     private function getPushImportDataTypes(int $scopeId = null): array
     {
-        $dataTypes = $this->scopeConfig->getValue('factfinder/data_transfer/ff_push_import_type', ScopeInterface::SCOPE_STORE, $scopeId);
-
-        return !empty($dataTypes) ? explode(',', $dataTypes) : [];
+        $configPath = 'factfinder/data_transfer/ff_push_import_type';
+        $dataTypes  = (string) $this->scopeConfig->getValue($configPath, ScopeInterface::SCOPE_STORE, $scopeId);
+        return $dataTypes ? explode(',', $dataTypes) : [];
     }
 }
