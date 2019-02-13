@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Omikron\Factfinder\Observer\Tracking;
 
 use Magento\Framework\Event\Observer;
-use \Magento\Framework\Event\ObserverInterface;
+use Magento\Framework\Event\ObserverInterface;
 use Magento\Quote\Model\Quote;
 use Magento\Quote\Model\Quote\Item;
 use Omikron\Factfinder\Observer\BaseTracking;

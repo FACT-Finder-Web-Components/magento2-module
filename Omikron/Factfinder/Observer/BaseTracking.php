@@ -14,10 +14,10 @@ use Omikron\Factfinder\Model\Api\Tracking;
 
 abstract class BaseTracking
 {
-    /** @var  Tracking */
+    /** @var Tracking */
     protected $tracking;
 
-    /** @var TrackingProductInterfaceFactory  */
+    /** @var TrackingProductInterfaceFactory */
     protected $trackingProductFactory;
 
     /** @var FieldRolesInterface */
