@@ -15,8 +15,8 @@ use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
 use Omikron\Factfinder\Helper\Data;
 use Omikron\Factfinder\Helper\Product as ProductHelper;
 use Omikron\Factfinder\Helper\Upload;
-use Omikron\Factfinder\Model\Consumer\PushImport;
-use Omikron\Factfinder\Model\Consumer\UpdateFieldRoles;
+use Omikron\Factfinder\Model\Api\PushImport;
+use Omikron\Factfinder\Model\Api\UpdateFieldRoles;
 
 class Product
 {

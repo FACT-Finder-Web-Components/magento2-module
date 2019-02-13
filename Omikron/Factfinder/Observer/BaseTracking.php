@@ -10,7 +10,7 @@ use Magento\Store\Model\StoreManagerInterface;
 use Omikron\Factfinder\Api\Data\TrackingProductInterfaceFactory;
 use Omikron\Factfinder\Api\FieldRolesInterface;
 use Omikron\Factfinder\Helper\Product as ProductHelper;
-use Omikron\Factfinder\Model\Consumer\Tracking;
+use Omikron\Factfinder\Model\Api\Tracking;
 
 abstract class BaseTracking
 {

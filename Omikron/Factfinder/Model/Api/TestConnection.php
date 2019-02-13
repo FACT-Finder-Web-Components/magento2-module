@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Omikron\Factfinder\Model\Consumer;
+namespace Omikron\Factfinder\Model\Api;
 
 use Omikron\Factfinder\Api\ClientInterface;
 use Omikron\Factfinder\Exception\ResponseException;

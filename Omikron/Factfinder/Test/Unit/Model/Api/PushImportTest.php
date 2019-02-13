@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Omikron\Factfinder\Model\Consumer;
+namespace Omikron\Factfinder\Model\Api;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Omikron\Factfinder\Api\ClientInterface;

@@ -44,10 +44,10 @@
     <type name="Magento\Framework\View\Asset\Minification">
         <plugin name="omikron.factfinder.excludefilesfromminification" type="Omikron\Factfinder\Plugin\ExcludeFilesFromMinification" />
     </type>
-    <type name="Omikron\Factfinder\Model\Consumer\PushImport">
+    <type name="Omikron\Factfinder\Model\Api\PushImport">
         <plugin name="logPushImportExceptions" type="Omikron\Factfinder\Plugin\LogExceptions" />
     </type>
-    <type name="Omikron\Factfinder\Model\Consumer\Tracking">
+    <type name="Omikron\Factfinder\Model\Api\Tracking">
         <arguments>
             <argument name="factFinderClient" xsi:type="object">Omikron\Factfinder\Model\TrackingEventClient</argument>
         </arguments>

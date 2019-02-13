@@ -8,7 +8,7 @@ use Magento\Backend\App\Action;
 use Magento\Framework\Controller\Result\JsonFactory;
 use Omikron\Factfinder\Api\Config\AuthConfigInterface;
 use Omikron\Factfinder\Model\Api\CredentialsFactory;
-use Omikron\Factfinder\Model\Consumer\TestConnection as ApiConnectionTest;
+use Omikron\Factfinder\Model\Api\TestConnection as ApiConnectionTest;
 
 class TestConnection extends Action
 {
