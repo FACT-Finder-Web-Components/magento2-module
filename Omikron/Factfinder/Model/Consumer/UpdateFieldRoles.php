@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Omikron\Factfinder\Model\Consumer;
 
 use Magento\Framework\Serialize\SerializerInterface;
-use Magento\Store\Model\ScopeInterface;
 use Omikron\Factfinder\Api\ClientInterface;
 use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
 use Omikron\Factfinder\Api\FieldRolesInterface;

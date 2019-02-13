@@ -6,7 +6,6 @@ namespace Omikron\Factfinder\Model\Consumer;
 
 use Omikron\Factfinder\Api\ClientInterface;
 use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
-use Omikron\Factfinder\Api\ConsumerInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Store\Model\ScopeInterface;
 
