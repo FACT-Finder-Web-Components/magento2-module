@@ -205,7 +205,7 @@ class Communication extends Template
 
     public function getFieldRoles(): string
     {
-        return $this->serializer->serialize($this->fieldRoles->getFieldRoles());
+        return (string) $this->serializer->serialize($this->fieldRoles->getFieldRoles());
     }
 
     /**

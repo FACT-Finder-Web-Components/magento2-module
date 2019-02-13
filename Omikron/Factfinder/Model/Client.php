@@ -48,7 +48,7 @@ class Client implements ApiClientInterface
 
             $httpClient->get($endpoint . '?' . $query);
             if ($httpClient->getStatus() >= 200 && $httpClient->getStatus() < 300) {
-                return $this->serializer->unserialize($httpClient->getBody());
+                return (array) $this->serializer->unserialize($httpClient->getBody());
             }
 
             throw new ResponseException($httpClient->getBody(), $httpClient->getStatus());

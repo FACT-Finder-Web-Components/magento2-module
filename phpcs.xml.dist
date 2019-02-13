@@ -4,6 +4,7 @@
 
     <arg value="pw" />
     <arg name="extensions" value="php,phtml" />
+    <arg name="ignore" value="*/vendor/*" />
 
     <config name="ignore_warnings_on_exit" value="1" />
     <config name="installed_paths" value="vendor/magento-ecg/coding-standard/EcgM2" />
