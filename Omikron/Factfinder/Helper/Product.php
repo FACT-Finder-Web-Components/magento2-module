@@ -476,7 +476,7 @@ class Product extends AbstractHelper
 
         if ($isMultiAttributeValue) {
             // do not allow special chars in values
-            $value = preg_replace('/([^\pL0-9 -])+/', '', $value);
+            $value = preg_replace('/([^\pL0-9 -])+/u', '', $value);
             // reduce multiple spaces to one
             $value = preg_replace('/\s\s+/', ' ', $value);
         }
