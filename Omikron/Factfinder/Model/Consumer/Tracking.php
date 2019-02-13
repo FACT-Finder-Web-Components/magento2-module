@@ -17,10 +17,11 @@ class Tracking
     /** @var ClientInterface */
     private $factFinderClient;
 
+    /** @var SessionDataInterface  */
     private $sessionData;
 
     /** @var string */
-    protected $apiName = 'Tracking.ff';
+    private $apiName = 'Tracking.ff';
 
     public function __construct(
         ClientInterface $factFinderClient,

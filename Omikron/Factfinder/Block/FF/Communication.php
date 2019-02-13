@@ -4,43 +4,48 @@ declare(strict_types=1);
 
 namespace Omikron\Factfinder\Block\FF;
 
-use Magento\Customer\Model\Session as CustomerSession;
 use Magento\Framework\Module\Dir\Reader;
 use Magento\Framework\View\Element\Template;
 use Magento\Framework\View\Element\Template\Context;
 use Magento\Framework\Xml\Parser;
 use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
+use Omikron\Factfinder\Api\FieldRolesInterface;
+use Omikron\Factfinder\Api\SessionDataInterface;
 use Omikron\Factfinder\Helper\Data;
 
 class Communication extends Template
 {
     /** @var Reader */
-    protected $moduleDirReader;
+    private $moduleDirReader;
 
     /** @var Data */
-    protected $configHelper;
+    private $configHelper;
 
-    /** @var array */
-    protected$configData;
-
-    /** @var array */
-    protected $requiredAttributes;
-
-    /** @var \Magento\Framework\Xml\Parser */
-    protected $parser;
+    /** @var Parser  */
+    private $parser;
 
     /** @var CommunicationConfigInterface */
-    protected $communicationConfig;
+    private $communicationConfig;
 
     /** @var CustomerSession */
-    protected $customerSession;
+    private $sessionData;
+
+    /** @var FieldRolesInterface */
+    private $fieldRoles;
+
+        /** @var array */
+    private $configData;
+
+    /** @var array */
+    private $requiredAttributes;
 
     public function __construct(
         Context $context,
         Data $helper,
         Reader $moduleDirReader,
         Parser $parser,
-        CustomerSession $customerSession,
+        SessionDataInterface $sessionData,
+        FieldRolesInterface $fieldRoles,
         CommunicationConfigInterface $communicationConfig,
         $data = []
     ) {
@@ -49,7 +54,8 @@ class Communication extends Template
         $this->communicationConfig = $communicationConfig;
         $this->moduleDirReader     = $moduleDirReader;
         $this->parser              = $parser;
-        $this->customerSession     = $customerSession;
+        $this->sessionData         = $sessionData;
+        $this->fieldRoles          = $fieldRoles;
 
         $filePath = $this->moduleDirReader->getModuleDir('etc', 'Omikron_Factfinder') . '/config.xml';
         $defaultValues = $this->parser->load($filePath)->xmlToArray()['config']['_value']['default']['factfinder'];
@@ -202,7 +208,7 @@ class Communication extends Template
      */
     public function getFieldRoles()
     {
-        return $this->configHelper->getFieldRoles();
+        return $this->fieldRoles->getFieldRoles();
     }
 
     /**

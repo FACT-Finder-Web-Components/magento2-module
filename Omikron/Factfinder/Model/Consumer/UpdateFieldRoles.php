@@ -5,40 +5,39 @@ declare(strict_types=1);
 namespace Omikron\Factfinder\Model\Consumer;
 
 use Magento\Framework\Serialize\SerializerInterface;
-use Magento\Config\Model\ResourceModel\Config;
 use Magento\Store\Model\ScopeInterface;
 use Omikron\Factfinder\Api\ClientInterface;
 use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
+use Omikron\Factfinder\Api\FieldRolesInterface;
 use Omikron\Factfinder\Exception\ResponseException;
-use Omikron\Factfinder\Helper\Data;
 
 class UpdateFieldRoles
 {
-    /** @var Config  */
-    protected $configResource;
+    /** @var FieldRolesInterface  */
+    private $fieldRoles;
 
     /** @var ClientInterface  */
-    protected $factFinderClient;
+    private $factFinderClient;
 
     /** @var CommunicationConfigInterface  */
-    protected $communicationConfig;
+    private $communicationConfig;
 
     /** @var SerializerInterface\ */
-    protected $serializer;
+    private $serializer;
 
     /** @var string  */
-    protected $apiQuery = 'FACT-Finder version';
+    private $apiQuery = 'FACT-Finder version';
 
     /** @var string  */
-    protected $apiName = 'Search.ff';
+    private $apiName = 'Search.ff';
 
     public function __construct(
-        Config $configResource,
+        FieldRolesInterface $fieldRoles,
         ClientInterface $factFinderClient,
         CommunicationConfigInterface $communicationConfig,
         SerializerInterface $serializer
     ) {
-        $this->configResource      = $configResource;
+        $this->fieldRoles          = $fieldRoles;
         $this->factFinderClient    = $factFinderClient;
         $this->communicationConfig = $communicationConfig;
         $this->serializer          = $serializer;
@@ -47,18 +46,11 @@ class UpdateFieldRoles
     /**
      * @param int   $scopeId
      * @param array $params
-     * @return array
+     * @return bool
      * @throws ResponseException
      */
-    public function execute(int $scopeId, array $params = []): array
+    public function execute(int $scopeId, array $params = []): bool
     {
-        $response = [
-            'success'             => false,
-            'ff_error_response'   => '',
-            'ff_error_stacktrace' => '',
-            'ff_response_decoded' => ''
-        ];
-
         $params = [
                 'query'   => $this->apiQuery,
                 'channel' => $params['channel'] ?? $this->communicationConfig->getChannel($scopeId),
@@ -66,39 +58,15 @@ class UpdateFieldRoles
             ] + $params;
 
         $endpoint = ($params['serverUrl'] ?? $this->communicationConfig->getAddress()) . '/' . $this->apiName;
-        $response['ff_response_decoded'] = $this->factFinderClient->sendRequest($endpoint, $params);
-        $this->processResponseHasErrors($response);
+        $response = $this->factFinderClient->sendRequest($endpoint, $params);
 
-        return $this->processUpdateFieldRoles($response, $scopeId);
-    }
+        if ($response['searchResult']['fieldRoles'] ?? []) {
+            $fieldRoles =  $this->serializer->serialize($response['searchResult']['fieldRoles']);
+            $this->fieldRoles->saveFieldRoles($fieldRoles, $scopeId);
 
-    private function processResponseHasErrors(array &$response): void
-    {
-        $valid = true;
-        if ($response['ff_response_decoded']['error'] ?? []) {
-            $response['ff_error_response'] = $response['ff_response_decoded']['error'];
-            $valid = false;
-
-            if ($response['ff_response_decoded']['stacktrace'] ?? []) {
-                $response['ff_error_stacktrace'] = explode('at', $response['ff_response_decoded']['stacktrace'])[0];
-            }
+            return true;
         }
 
-        if (!$valid) {
-            throw new ResponseException(__('FACT-Finder response contains errors. Response body is %1', $this->serializer->serialize($response)));
-        }
-    }
-
-    private function processUpdateFieldRoles(array $response, int $scopeId): array
-    {
-        if ($response['ff_response_decoded']['searchResult']['fieldRoles'] ?? []) {
-            $response['fieldRoles'] = $this->serializer->serialize($response['ff_response_decoded']['searchResult']['fieldRoles']);
-            $this->configResource->saveConfig(Data::PATH_PRODUCT_FIELD_ROLE, $response['fieldRoles'], ScopeInterface::SCOPE_STORES, $scopeId);
-            $response['success']    = true;
-
-            return $response;
-        } else {
-            throw new ResponseException(__('FACT-Finder response does not field roles. Response body is %1', $this->serializer->serialize($response)));
-        }
+        throw new ResponseException('FACT-Finder Response does not contain field roles information');
     }
 }

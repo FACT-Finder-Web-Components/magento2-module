@@ -51,8 +51,15 @@ class FieldRoles implements FieldRolesInterface
         return $roles[$roleName] ?? '';
     }
 
-    public function saveFieldRoles(string $fieldRoles, int $scopeId = null): void
+    public function saveFieldRoles(string $fieldRoles, int $scopeId = null): bool
     {
-        $this->configResource->saveConfig(self::PATH_PRODUCT_FIELD_ROLE, $fieldRoles, ScopeInterface::SCOPE_STORES, $scopeId);
+        try {
+            $this->serializer->unserialize($fieldRoles);
+            $this->configResource->saveConfig(self::PATH_PRODUCT_FIELD_ROLE, $fieldRoles, ScopeInterface::SCOPE_STORES, $scopeId);
+
+            return true;
+        } catch (\InvalidArgumentException $e) {
+            return false;
+        }
     }
 }

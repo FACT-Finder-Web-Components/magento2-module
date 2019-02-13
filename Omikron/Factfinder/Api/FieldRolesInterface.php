@@ -30,6 +30,7 @@ interface FieldRolesInterface
      *
      * @param string $fieldRoles
      * @param int|null $scopeId
+     * @return bool
      */
-    public function saveFieldRoles(string $fieldRoles, int $scopeId): void;
+    public function saveFieldRoles(string $fieldRoles, int $scopeId): bool;
 }
