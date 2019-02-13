@@ -48,7 +48,7 @@ class FieldRoles implements FieldRolesInterface
         return (string) ($this->getFieldRoles($scopeId)[$roleName] ?? '');
     }
 
-    public function saveFieldRoles(array $fieldRoles, int $scopeId = null): bool
+    public function saveFieldRoles(array $fieldRoles, int $scopeId): bool
     {
         try {
             $roles = (string) $this->serializer->serialize($fieldRoles);

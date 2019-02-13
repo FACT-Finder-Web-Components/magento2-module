@@ -31,8 +31,8 @@ interface FieldRolesInterface
     /**
      * Store fields in storage
      *
-     * @param array    $fieldRoles
-     * @param int|null $scopeId
+     * @param array $fieldRoles
+     * @param int   $scopeId
      *
      * @return bool
      */
