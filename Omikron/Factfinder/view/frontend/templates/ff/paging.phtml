@@ -1,11 +1,9 @@
-<?php
-/** @var $block \Omikron\Factfinder\Block\FF\Paging */
-?>
+<?php /** @var $block \Omikron\Factfinder\Block\FF\Paging */ ?>
 <div class="ff-paging">
     <ff-paging unresolved>
         <ff-paging-set state="currentPage <= 3 && pageCount-currentPage < 3">
             <ff-paging-item type="previousLink">
-                <input type="image" class="padd" src="<?php echo $block->getViewFileUrl('Omikron_Factfinder::images/paging_prev_page.png'); ?>">
+                <input type="image" class="padd" src="<?= $block->escapeUrl($block->getViewFileUrl('Omikron_Factfinder::images/paging_prev_page.png')) ?>">
             </ff-paging-item>
 
             <ff-paging-item type="currentLink -2">{{caption}}</ff-paging-item>
@@ -14,13 +12,13 @@
             <ff-paging-item type="currentLink +1">{{caption}}</ff-paging-item>
             <ff-paging-item type="currentLink +2">{{caption}}</ff-paging-item>
             <ff-paging-item type="nextLink">
-                <input type="image" class="padd" src="<?php echo $block->getViewFileUrl('Omikron_Factfinder::images/paging_next_page.png'); ?>">
+                <input type="image" class="padd" src="<?= $block->escapeUrl($block->getViewFileUrl('Omikron_Factfinder::images/paging_next_page.png')) ?>">
             </ff-paging-item>
         </ff-paging-set>
 
         <ff-paging-set state="currentPage <= 3 && pageCount-currentPage >= 3">
             <ff-paging-item type="previousLink">
-                <input type="image" class="padd" src="<?php echo $block->getViewFileUrl('Omikron_Factfinder::images/paging_prev_page.png'); ?>">
+                <input type="image" class="padd" src="<?= $block->escapeUrl($block->getViewFileUrl('Omikron_Factfinder::images/paging_prev_page.png')) ?>">
             </ff-paging-item>
 
             <ff-paging-item type="currentLink -2">{{caption}}</ff-paging-item>
@@ -30,13 +28,13 @@
             ...
             <ff-paging-item type="lastLink">{{caption}}</ff-paging-item>
             <ff-paging-item type="nextLink">
-                <input type="image" class="padd" src="<?php echo $block->getViewFileUrl('Omikron_Factfinder::images/paging_next_page.png'); ?>">
+                <input type="image" class="padd" src="<?= $block->escapeUrl($block->getViewFileUrl('Omikron_Factfinder::images/paging_next_page.png')) ?>">
             </ff-paging-item>
         </ff-paging-set>
 
         <ff-paging-set state="currentPage > 3 && pageCount-currentPage >= 3">
             <ff-paging-item type="previousLink">
-                <input type="image" class="padd" src="<?php echo $block->getViewFileUrl('Omikron_Factfinder::images/paging_prev_page.png'); ?>">
+                <input type="image" class="padd" src="<?= $block->escapeUrl($block->getViewFileUrl('Omikron_Factfinder::images/paging_prev_page.png')) ?>">
             </ff-paging-item>
 
             <ff-paging-item type="firstLink">{{caption}}</ff-paging-item>
@@ -48,13 +46,13 @@
             <ff-paging-item type="lastLink">{{caption}}</ff-paging-item>
 
             <ff-paging-item type="nextLink">
-                <input type="image" class="padd" src="<?php echo $block->getViewFileUrl('Omikron_Factfinder::images/paging_next_page.png'); ?>">
+                <input type="image" class="padd" src="<?= $block->escapeUrl($block->getViewFileUrl('Omikron_Factfinder::images/paging_next_page.png')) ?>">
             </ff-paging-item>
         </ff-paging-set>
 
         <ff-paging-set state="pageCount-currentPage < 3 && currentPage > 3">
             <ff-paging-item type="previousLink">
-                <input type="image" class="padd" src="<?php echo $block->getViewFileUrl('Omikron_Factfinder::images/paging_prev_page.png'); ?>">
+                <input type="image" class="padd" src="<?= $block->escapeUrl($block->getViewFileUrl('Omikron_Factfinder::images/paging_prev_page.png')) ?>">
             </ff-paging-item>
             <ff-paging-item type="firstLink">{{caption}}</ff-paging-item>
             ...
@@ -64,7 +62,7 @@
             <ff-paging-item type="currentLink +2">{{caption}}</ff-paging-item>
 
             <ff-paging-item type="nextLink">
-                <input type="image" class="padd" src="<?php echo $block->getViewFileUrl('Omikron_Factfinder::images/paging_next_page.png'); ?>">
+                <input type="image" class="padd" src="<?= $block->escapeUrl($block->getViewFileUrl('Omikron_Factfinder::images/paging_next_page.png')) ?>">
             </ff-paging-item>
         </ff-paging-set>
     </ff-paging>
