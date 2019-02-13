@@ -21,6 +21,7 @@
     <rule ref="Generic.Files.ByteOrderMark" />
     <rule ref="Generic.Files.LineLength">
         <exclude-pattern>*.phtml</exclude-pattern>
+        <exclude-pattern>*Test.php</exclude-pattern>
         <properties>
             <property name="lineLimit" value="120" />
             <property name="absoluteLineLimit" value="0" />
