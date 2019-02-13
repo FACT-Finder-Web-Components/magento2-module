@@ -29,6 +29,6 @@ class CommunicationConfig implements CommunicationConfigInterface
 
     public function getAddress(): string
     {
-       return (string) $this->scopeConfig->getValue(self::PATH_ADDRESS);
+        return (string) $this->scopeConfig->getValue(self::PATH_ADDRESS);
     }
 }

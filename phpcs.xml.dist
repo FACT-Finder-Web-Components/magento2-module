@@ -34,9 +34,6 @@
     </rule>
     <rule ref="Generic.PHP.LowerCaseConstant" />
     <rule ref="Generic.PHP.LowerCaseKeyword" />
-    <rule ref="Internal.NoCodeFound">
-        <severity>0</severity>
-    </rule>
     <rule ref="PSR2.Classes.PropertyDeclaration.Underscore" />
     <rule ref="PSR2.Files.EndFileNewline" />
     <rule ref="PSR2.Methods.MethodDeclaration.Underscore" />
