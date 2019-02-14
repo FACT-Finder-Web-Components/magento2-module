@@ -41,7 +41,7 @@ class SessionData implements SessionDataInterface, SectionSourceInterface
 
     private function getCorrectSessionId(string $sessionId, int $length = 30): string
     {
-        $sessionId = $sessionId ?: md5(uniqid('', true));
+        $sessionId = $sessionId ?: sha1(uniqid('', true));
         $sessionId = str_repeat($sessionId, intdiv($length, strlen($sessionId)) + 1);
         return substr($sessionId, 0, $length);
     }

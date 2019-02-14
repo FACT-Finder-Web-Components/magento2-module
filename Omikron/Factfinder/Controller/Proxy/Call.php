@@ -6,10 +6,10 @@ namespace Omikron\Factfinder\Controller\Proxy;
 
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\Controller\Result\JsonFactory;
-use Magento\Framework\Webapi\Exception;
+use Magento\Framework\Exception\NotFoundException;
 use Omikron\Factfinder\Api\ClientInterface;
 use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
-use Omikron\Factfinder\Helper\ResultRefiner;
+use Omikron\Factfinder\Exception\ResponseException;
 
 /**
  * Class Call
@@ -17,58 +17,48 @@ use Omikron\Factfinder\Helper\ResultRefiner;
  */
 class Call extends \Magento\Framework\App\Action\Action
 {
-    /** @var JsonFactory  */
-    protected $jsonResultFactory;
+    /** @var JsonFactory */
+    private $jsonResultFactory;
 
-    /** @var ResultRefiner  */
-    protected $resultRefiner;
-
-    /** @var ClientInterface  */
-    protected $factFinderClient;
+    /** @var ClientInterface */
+    private $apiClient;
 
     /** @var CommunicationConfigInterface */
-    protected $communicationConfig;
+    private $communicationConfig;
 
     public function __construct(
         Context $context,
         JsonFactory $jsonResultFactory,
-        ResultRefiner $resultRefiner,
-        ClientInterface $factFinderClient,
+        ClientInterface $apiClient,
         CommunicationConfigInterface $communicationConfig
     ) {
         parent::__construct($context);
         $this->jsonResultFactory   = $jsonResultFactory;
-        $this->resultRefiner       = $resultRefiner;
-        $this->factFinderClient    = $factFinderClient;
+        $this->apiClient           = $apiClient;
         $this->communicationConfig = $communicationConfig;
     }
 
-    /**
-     * Forward the ff-api calls to factfinder and return the response of factfinder as response
-     * @return \Magento\Framework\Controller\Result\Json
-     */
     public function execute()
     {
         // extract api name from path
         $identifier = trim($this->getRequest()->getPathInfo(), '/');
-        $pos = strpos($identifier, '/');
-        $path = substr($identifier, $pos+1);
-        $apiNameRegex = '/^[A-Z][A-z]+(.ff)$/';
-        $matches = [];
-        preg_match($apiNameRegex, $path, $matches);
+        $endpoint   = substr($identifier, strpos($identifier, '/') + 1);
+
+        // return 404 if api name schema does not match
+        if (!preg_match('#^[A-Z][A-z]+\.ff$#', $endpoint)) {
+            throw new NotFoundException(__('Endpoint missing'));
+        }
 
         $result = $this->jsonResultFactory->create();
 
-        // return 404 if api name schema does not match
-        if (empty($matches)) {
-            $result->setHttpResponseCode(Exception::HTTP_NOT_FOUND);
-            return $result;
+        try {
+            $endpoint   = $this->communicationConfig->getAddress() . '/' . $endpoint;
+            $ffResponse = $this->apiClient->sendRequest($endpoint, $this->getRequest()->getParams());
+            $result->setData($ffResponse);
+        } catch (ResponseException $e) {
+            $result->setJsonData($e->getMessage());
         }
 
-        // get api name from regex matches
-        $endpoint   = $this->communicationConfig->getAddress() . '/' . $matches[0];
-        $ffResponse = $this->factFinderClient->sendRequest($endpoint, $this->getRequest()->getParams());
-
-        return $result->setJsonData($this->resultRefiner->refine($ffResponse));
+        return $result;
     }
 }
