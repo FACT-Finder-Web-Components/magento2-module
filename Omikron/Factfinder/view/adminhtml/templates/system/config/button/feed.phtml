@@ -17,10 +17,10 @@
 
             if ($('load_span').hasClassName('no-display')) {
                 $('load_span').removeClassName('no-display');
-                $('load_message_span').update('<?php echo __('Generating export file'); ?>');
+                $('load_message_span').update('<?= $block->escapeJs(__('Generating export file')) ?>');
             }
 
-            new Ajax.Request('<?php echo $block->getUrl('factfinder/export/feed') ?>', {
+            new Ajax.Request('<?= $block->escapeUrl($block->getUrl('factfinder/export/feed')) ?>', {
                 parameters:     {},
                 loaderArea:     false,
                 asynchronous:   true,
@@ -46,8 +46,8 @@
     });
 </script>
 
-<?php echo $block->getButtonHtml(); ?>
+<?= /* @noEscape */ $block->getButtonHtml() ?>
 <div class="sync-indicator no-display" id="load_span">
-    <img alt="Loading" id="load_spinner" style="margin:0 5px" src="<?php echo $block->getViewFileUrl('images/process_spinner.gif') ?>"/>
+    <img alt="Loading" id="load_spinner" style="margin:0 5px" src="<?= $block->escapeUrl($block->getViewFileUrl('images/process_spinner.gif')) ?>"/>
     <span id="load_message_span"></span>
 </div>

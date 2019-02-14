@@ -1,9 +1,7 @@
-<?php
-/** @var $block \Omikron\Factfinder\Block\FF\Breadcrumb */
-?>
+<?php /** @var $block \Omikron\Factfinder\Block\FF\Breadcrumb */ ?>
 
 <div class="ff-breadcrumb-trail">
-    <span class="description"><?php echo __('Your Search for:') ?></span>
+    <span class="description"><?= $block->escapeHtml(__('Your Search for:')) ?></span>
     <ff-breadcrumb-trail unresolved>
         <!-- The search item is the content of the search query-->
         <ff-breadcrumb-trail-item type="search">
@@ -21,7 +19,6 @@
         </ff-breadcrumb-trail-item>
     </ff-breadcrumb-trail>
     <ff-template scope="result" unresolved>
-        <span style="padding-left: 15px"><?php echo __('produced {{resultCount}} Hits') ?></span>
+        <span style="padding-left: 15px"><?= $block->escapeHtml(__('produced {{resultCount}} Hits')) ?></span>
     </ff-template>
 </div>
-

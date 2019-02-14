@@ -1,11 +1,6 @@
-<?php
-/** @var $block \Omikron\Factfinder\Block\FF\ProductsPerPage */
-?>
+<?php /** @var $block \Omikron\Factfinder\Block\FF\ProductsPerPage */ ?>
 <div class="ff-products-per-page">
-    <!-- <span class="description"><?php echo __('Products per Page:'); ?></span> -->
     <ff-products-per-page-dropdown unresolved>
-        <ff-products-per-page-item>
-            <?php echo __('Products:&nbsp;{{value}}'); ?>
-        </ff-products-per-page-item>
+        <ff-products-per-page-item><?= $block->escapeHtml(__('Products: {{value}}')) ?></ff-products-per-page-item>
     </ff-products-per-page-dropdown>
 </div>

@@ -1,23 +1,11 @@
-<?php
-/** @var $block \Omikron\Factfinder\Block\FF\Sortbox */
-?>
+<?php /** @var $block \Omikron\Factfinder\Block\FF\Sortbox */ ?>
 <div class="ff-sortbox">
     <ff-sortbox collapse-onblur="true" unresolved>
         <!--override relevance layout -->
-        <ff-sortbox-item key="null.desc">
-            <?php echo __('Relevance'); ?>
-        </ff-sortbox-item>
-        <ff-sortbox-item key="Name.asc">
-            <?php echo __('Name (Ascending)'); ?>
-        </ff-sortbox-item>
-        <ff-sortbox-item key="Name.desc">
-            <?php echo __('Name (Descending)'); ?>
-        </ff-sortbox-item>
-        <ff-sortbox-item key="Price.asc">
-            <?php echo __('Price (Ascending)'); ?>
-        </ff-sortbox-item>
-        <ff-sortbox-item key="Price.desc">
-            <?php echo __('Price (Descending)'); ?>
-        </ff-sortbox-item>
+        <ff-sortbox-item key="null.desc"><?= $block->escapeHtml(__('Relevance')) ?></ff-sortbox-item>
+        <ff-sortbox-item key="Name.asc"><?= $block->escapeHtml(__('Name (Ascending)')) ?></ff-sortbox-item>
+        <ff-sortbox-item key="Name.desc"><?= $block->escapeHtml(__('Name (Descending)')) ?></ff-sortbox-item>
+        <ff-sortbox-item key="Price.asc"><?= $block->escapeHtml(__('Price (Ascending)')) ?></ff-sortbox-item>
+        <ff-sortbox-item key="Price.desc"><?= $block->escapeHtml(__('Price (Descending)')) ?></ff-sortbox-item>
     </ff-sortbox>
 </div>

@@ -18,7 +18,7 @@
 
             if ($('ff_testconnection_load_span').hasClassName('no-display')) {
                 $('ff_testconnection_load_span').removeClassName('no-display');
-                $('ff_testconnection_load_message_span').update('<?= $block->escapeJs(__('Testing connection...')) ?>');
+                $('ff_testconnection_load_message_span').update('<?= $block->escapeJs(__('Testing connection…')) ?>');
             }
 
             new Ajax.Request('<?= $block->escapeJs($block->getUrl('factfinder/testconnection/testconnection')) ?>', {
