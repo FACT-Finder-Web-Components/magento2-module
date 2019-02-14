@@ -326,7 +326,7 @@ class Product extends AbstractHelper
      * @param StoreInterface $store
      * @return mixed
      */
-    protected function getEAN(ProductInterface$product, StoreInterface $store)
+    protected function getEAN(ProductInterface $product, StoreInterface $store)
     {
         return $this->getConfiguredAttributeValue($product, $this->scopeConfig->getValue(self::PATH_DATA_TRANSFER_EAN, 'store', $store->getId()));
     }

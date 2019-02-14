@@ -1,3 +1,4 @@
+<?php /** @var $block \Magento\Framework\View\Element\Template */?>
 <script>
     require([
         'jquery'
@@ -17,47 +18,35 @@
 
             if ($('ff_testconnection_load_span').hasClassName('no-display')) {
                 $('ff_testconnection_load_span').removeClassName('no-display');
-                $('ff_testconnection_load_message_span').update('<?php echo __('Testing connection...'); ?>');
+                $('ff_testconnection_load_message_span').update('<?= $block->escapeJs(__('Testing connection...')) ?>');
             }
 
-            new Ajax.Request('<?php echo $block->getUrl('factfinder/testconnection/testconnection') ?>', {
+            new Ajax.Request('<?= $block->escapeJs($block->getUrl('factfinder/testconnection/testconnection')) ?>', {
                 method: 'post',
                 parameters: {
                     serverUrl: document.getElementById('factfinder_general_address').value,
-                    channel:  document.getElementById('factfinder_general_channel').value,
+                    channel: document.getElementById('factfinder_general_channel').value,
                     username: document.getElementById('factfinder_general_username').value,
                     password: document.getElementById('factfinder_general_password').value,
-                    authenticationPrefix: document.getElementById('factfinder_general_authentication_prefix').value,
-                    authenticationPostfix: document.getElementById('factfinder_general_authentication_postfix').value
+                    prefix: document.getElementById('factfinder_general_authentication_prefix').value,
+                    postfix: document.getElementById('factfinder_general_authentication_postfix').value
                 },
-                loaderArea:     false,
-                asynchronous:   true,
-
-                onSuccess: function(transport) {
-                    var response;
-
-                    try {
-                        response = JSON.parse(transport.responseText);
-
-                        $('ff_testconnection_load_spinner').hide();
-                        $('ff_testconnection_load_message_span').update(response.message);
-
-                        enableButton();
-                    } catch (e) {
-                        response = {};
-                    }
+                loaderArea: false,
+                asynchronous: true,
+                onCreate: disableButton,
+                onComplete: enableButton,
+                onSuccess: function (transport) {
+                    var response = JSON.parse(transport.responseText);
+                    $('ff_testconnection_load_spinner').hide();
+                    $('ff_testconnection_load_message_span').update(response.message);
                 }
             });
-
-            disableButton();
         });
     });
 </script>
 
-<?php echo $block->getButtonHtml(); ?>
+<?= /* @noEscape */ $block->getButtonHtml() ?>
 <div class="sync-indicator no-display" id="ff_testconnection_load_span">
-    <img alt="Loading" id="ff_testconnection_load_spinner" style="margin:0 5px" src="<?php echo $block->getViewFileUrl('images/process_spinner.gif') ?>"/>
-    <span id="ff_testconnection_load_message_span">
-
-    </span>
+    <img alt="Loading" id="ff_testconnection_load_spinner" style="margin:0 5px" src="<?= $block->escapeUrl($block->getViewFileUrl('images/process_spinner.gif')) ?>"/>
+    <span id="ff_testconnection_load_message_span"></span>
 </div>

@@ -1,45 +1,46 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Omikron\Factfinder\Controller\Proxy;
 
+use Magento\Framework\App\Action\Context;
+use Magento\Framework\Controller\Result\JsonFactory;
 use Magento\Framework\Webapi\Exception;
+use Omikron\Factfinder\Api\ClientInterface;
+use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
+use Omikron\Factfinder\Helper\ResultRefiner;
 
 /**
  * Class Call
  * Forward the ff-api calls to factfinder
- *
- * @package Omikron\Factfinder\Controller\Proxy
  */
 class Call extends \Magento\Framework\App\Action\Action
 {
-    /** @var \Magento\Framework\Controller\Result\JsonFactory */
-    protected $_jsonResultFactory;
+    /** @var JsonFactory  */
+    protected $jsonResultFactory;
 
-    /** @var \Omikron\Factfinder\Helper\ResultRefiner */
-    protected $_resultRefiner;
+    /** @var ResultRefiner  */
+    protected $resultRefiner;
 
-    /** @var \Omikron\Factfinder\Helper\Communication */
-    protected $_communication;
+    /** @var ClientInterface  */
+    protected $factFinderClient;
 
-    /**
-     * Call constructor.
-     *
-     * @param \Magento\Framework\App\Action\Context $context
-     * @param \Magento\Framework\Controller\Result\JsonFactory $jsonResultFactory
-     * @param \Omikron\Factfinder\Helper\ResultRefiner $resultRefiner
-     * @param \Omikron\Factfinder\Helper\Communication $communication
-     */
+    /** @var CommunicationConfigInterface */
+    protected $communicationConfig;
+
     public function __construct(
-        \Magento\Framework\App\Action\Context $context,
-        \Magento\Framework\Controller\Result\JsonFactory $jsonResultFactory,
-        \Omikron\Factfinder\Helper\ResultRefiner $resultRefiner,
-        \Omikron\Factfinder\Helper\Communication $communication
-    )
-    {
+        Context $context,
+        JsonFactory $jsonResultFactory,
+        ResultRefiner $resultRefiner,
+        ClientInterface $factFinderClient,
+        CommunicationConfigInterface $communicationConfig
+    ) {
         parent::__construct($context);
-        $this->_jsonResultFactory = $jsonResultFactory;
-        $this->_resultRefiner = $resultRefiner;
-        $this->_communication = $communication;
+        $this->jsonResultFactory   = $jsonResultFactory;
+        $this->resultRefiner       = $resultRefiner;
+        $this->factFinderClient    = $factFinderClient;
+        $this->communicationConfig = $communicationConfig;
     }
 
     /**
@@ -56,7 +57,7 @@ class Call extends \Magento\Framework\App\Action\Action
         $matches = [];
         preg_match($apiNameRegex, $path, $matches);
 
-        $result = $this->_jsonResultFactory->create();
+        $result = $this->jsonResultFactory->create();
 
         // return 404 if api name schema does not match
         if (empty($matches)) {
@@ -65,10 +66,9 @@ class Call extends \Magento\Framework\App\Action\Action
         }
 
         // get api name from regex matches
-        $apiName = $matches[0];
+        $endpoint   = $this->communicationConfig->getAddress() . '/' . $matches[0];
+        $ffResponse = $this->factFinderClient->sendRequest($endpoint, $this->getRequest()->getParams());
 
-        $ffResponse = $this->_communication->sendToFF($apiName, $this->getRequest()->getParams());
-
-        return $result->setJsonData($this->_resultRefiner->refine($ffResponse));
+        return $result->setJsonData($this->resultRefiner->refine($ffResponse));
     }
 }

@@ -9,6 +9,12 @@
         <referenceContainer name="factfinder.top.search" remove="true" />
         <referenceContainer name="top.search" remove="true" />
 
+        <referenceBlock name="factfinder.communication">
+            <arguments>
+                <argument name="search_immediate" xsi:type="boolean">true</argument>
+            </arguments>
+        </referenceBlock>
+
         <!-- Add asn to sidebar -->
         <referenceContainer name="sidebar.additional">
             <block class="Omikron\Factfinder\Block\FF\ASN" name="factfinder.asn" ifconfig="factfinder/components/ff_asn" template="Omikron_Factfinder::ff/asn.phtml"  before="-" />

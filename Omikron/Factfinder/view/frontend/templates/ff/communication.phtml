@@ -1,28 +1,25 @@
 <?php
 /** @var $block \Omikron\Factfinder\Block\FF\Communication */
-echo $block->getWebComponent(); ?>
+echo /* @noEscape */ $block->getWebComponent(); ?>
 <!-- Set FieldRoles -->
 <script>
     document.addEventListener("ffReady", function () {
-        factfinder.communication.fieldRoles =
-        <?php echo $block->getFieldRoles(); ?>
-        ;
+        factfinder.communication.fieldRoles = <?= /* @noEscape */ $block->getFieldRoles() ?>;
     });
 </script>
-<div data-bind="scope: 'ffcommunication'">
-    <script type="text/x-magento-init">
-            {
-                "*": {
-                    "Magento_Ui/js/core/app": {
-                        "components": {
-                            "ffcommunication": {
-                                "component": "Omikron_Factfinder/js/view/ffcommunication"
-                            }
-                        }
+<div data-bind="scope: 'ffcommunication'"></div>
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_Ui/js/core/app": {
+                "components": {
+                    "ffcommunication": {
+                        "component": "Omikron_Factfinder/js/view/ffcommunication"
                     }
                 }
             }
-    </script>
-</div>
+        }
+    }
+</script>
 <!-- Import WebComponents -->
-<link rel="import" href="<?php echo $block->getViewFileUrl('Omikron_Factfinder::ff-web-components/dist/elements.build_with_dependencies.html'); ?>"/>
+<link rel="import" href="<?= $block->escapeUrl($block->getViewFileUrl('Omikron_Factfinder::ff-web-components/dist/elements.build_with_dependencies.html')) ?>"/>

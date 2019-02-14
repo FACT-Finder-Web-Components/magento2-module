@@ -10,7 +10,7 @@ class BasicAuthTest extends TestCase
     /** @var BasicAuth */
     private $basicAuth;
 
-    public function testUserAuthentication()
+    public function test_it_authenticates_the_user_with_valid_credentials()
     {
         $this->assertFalse(
             $this->basicAuth->authenticate('UnknownUser', 'OpenSesame'),

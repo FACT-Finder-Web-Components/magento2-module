@@ -7,8 +7,8 @@ use Magento\Store\Model\ScopeInterface;
 
 class BasicAuth
 {
-    /** @var string */
-    private $basePath = 'factfinder/basic_auth_data_transfer/ff_upload_url_';
+    private const CONFIG_PATH_USERNAME = 'factfinder/basic_auth_data_transfer/ff_upload_url_user';
+    private const CONFIG_PATH_PASSWORD = 'factfinder/basic_auth_data_transfer/ff_upload_url_password';
 
     /** @var ScopeConfigInterface */
     private $scopeConfig;
@@ -25,11 +25,11 @@ class BasicAuth
 
     private function getUsername(): string
     {
-        return (string) $this->scopeConfig->getValue($this->basePath . 'user', ScopeInterface::SCOPE_STORE);
+        return (string) $this->scopeConfig->getValue(self::CONFIG_PATH_USERNAME, ScopeInterface::SCOPE_STORE);
     }
 
     private function getPassword(): string
     {
-        return (string) $this->scopeConfig->getValue($this->basePath . 'password', ScopeInterface::SCOPE_STORE);
+        return (string) $this->scopeConfig->getValue(self::CONFIG_PATH_PASSWORD, ScopeInterface::SCOPE_STORE);
     }
 }

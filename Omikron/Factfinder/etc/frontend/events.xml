@@ -16,4 +16,7 @@
     <event name="controller_action_predispatch_factfinder_export_export">
         <observer name="ff_export_authentication" instance="Omikron\Factfinder\Observer\ExportAuthentication" />
     </event>
+    <event name="checkout_cart_add_product_complete">
+        <observer name="ff_add_to_cart" instance="Omikron\Factfinder\Observer\Tracking\AddToCart" />
+    </event>
 </config>

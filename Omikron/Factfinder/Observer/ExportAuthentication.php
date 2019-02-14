@@ -2,8 +2,8 @@
 
 namespace Omikron\Factfinder\Observer;
 
-use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\ActionFlag;
+use Magento\Framework\App\ActionInterface as Action;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Framework\HTTP\Authentication as Credentials;
@@ -25,9 +25,9 @@ class ExportAuthentication implements ObserverInterface
         Authentication $authentication,
         Credentials $credentials
     ) {
-        $this->actionFlag = $actionFlag;
+        $this->actionFlag     = $actionFlag;
         $this->authentication = $authentication;
-        $this->credentials = $credentials;
+        $this->credentials    = $credentials;
     }
 
     public function execute(Observer $observer)
