@@ -8,17 +8,16 @@ use Omikron\Factfinder\Api\ClientInterface;
 use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
 use Omikron\Factfinder\Api\SessionDataInterface;
 use Omikron\Factfinder\Model\Data\TrackingProduct;
+use PHPUnit\Framework\Constraint\ArraySubset;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class TrackingTest extends TestCase
 {
-    /** @var CommunicationConfigInterface|\PHPUnit_Framework_MockObject_MockObject */
-    private $communicationConfigMock;
-
-    /** @var ClientInterface|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var MockObject|ClientInterface */
     private $factFinderClientMock;
 
-    /** @var SessionDataInterface|\PHPUnit_Framework_MockObject_MockObject  */
+    /** @var MockObject|SessionDataInterface */
     private $sessionDataMock;
 
     /** @var Tracking */
@@ -29,33 +28,45 @@ class TrackingTest extends TestCase
      */
     public function test_execute_should_create_params_from_all_passed_products(...$trackingProducts)
     {
-        $this->communicationConfigMock->method('getChannel')->willReturn('test-channel');
-        $this->communicationConfigMock->method('getAddress')->willReturn('http://fake-factfinder.com/FACT-Finder-7.3');
-        $this->sessionDataMock->method('getSessionId')->willReturn('some-session-id');
+        $this->sessionDataMock->method('getUserId')->willReturn(42);
+
         $this->factFinderClientMock->expects($this->once())->method('sendRequest')
-            ->with(
-                'http://fake-factfinder.com/FACT-Finder-7.3/Tracking.ff',
-                [
-                    'event'    => 'checkout',
-                    'channel'  => 'test-channel',
-                    'products' => [
-                        [
-                            'id'       => '1',
-                            'masterId' => '1',
-                            'price'    => '39.99',
-                            'count'    => 2,
-                            'sid'      => 'some-session-id'
-                        ],
-                        [
-                            'id'       => '2',
-                            'masterId' => '2',
-                            'price'    => '49.99',
-                            'count'    => 2,
-                            'sid'      => 'some-session-id'
-                        ]
-                    ]
-                ]
-            );
+            ->with('http://fake-factfinder.com/FACT-Finder-7.3/Tracking.ff', [
+                'event'    => 'checkout',
+                'channel'  => 'test-channel',
+                'products' => [
+                    [
+                        'id'       => '1',
+                        'masterId' => '1',
+                        'price'    => '39.99',
+                        'count'    => 2,
+                        'sid'      => 'some-session-id',
+                        'userId'   => 42,
+                    ],
+                    [
+                        'id'       => '2',
+                        'masterId' => '2',
+                        'price'    => '49.99',
+                        'count'    => 2,
+                        'sid'      => 'some-session-id',
+                        'userId'   => 42,
+                    ],
+                ],
+            ]);
+
+        $this->tracking->execute('checkout', ...$trackingProducts);
+    }
+
+    /**
+     * @dataProvider trackingProductProvider
+     */
+    public function test_no_user_id_is_passed_when_the_customer_is_not_logged_in(...$trackingProducts)
+    {
+        $this->sessionDataMock->method('getUserId')->willReturn(0);
+
+        $this->factFinderClientMock->expects($this->once())
+            ->method('sendRequest')
+            ->with($this->anything(), $this->logicalNot(new ArraySubset(['products' => [['userId' => 0]]])));
 
         $this->tracking->execute('checkout', ...$trackingProducts);
     }
@@ -63,22 +74,26 @@ class TrackingTest extends TestCase
     public function trackingProductProvider(): array
     {
         $trackingProducts = [
-            new TrackingProduct('1', '1', '39.99',2),
-            new TrackingProduct('2', '2', '49.99',2)
+            new TrackingProduct('1', '1', '39.99', 2),
+            new TrackingProduct('2', '2', '49.99', 2),
         ];
-
         return [$trackingProducts];
     }
-    
+
     protected function setUp()
     {
-        $this->communicationConfigMock = $this->createMock(CommunicationConfigInterface::class);
-        $this->factFinderClientMock    = $this->createMock(ClientInterface::class);
-        $this->sessionDataMock         = $this->createMock(SessionDataInterface::class);
+        $this->factFinderClientMock = $this->createMock(ClientInterface::class);
+        $this->sessionDataMock      = $this->createMock(SessionDataInterface::class);
+        $this->sessionDataMock->method('getSessionId')->willReturn('some-session-id');
+
+        $communicationConfig = $this->createConfiguredMock(CommunicationConfigInterface::class, [
+            'getChannel' => 'test-channel',
+            'getAddress' => 'http://fake-factfinder.com/FACT-Finder-7.3',
+        ]);
 
         $this->tracking = new Tracking(
             $this->factFinderClientMock,
-            $this->communicationConfigMock,
+            $communicationConfig,
             $this->sessionDataMock
         );
     }

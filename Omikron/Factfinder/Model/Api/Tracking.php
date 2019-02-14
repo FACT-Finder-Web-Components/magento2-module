@@ -39,13 +39,14 @@ class Tracking
             'event'    => $event,
             'channel'  => $this->communicationConfig->getChannel(),
             'products' => array_map(function (TrackingProductInterface $trackingProduct) {
-                return [
+                return array_filter([
                     'id'       => $trackingProduct->getTrackingNumber(),
                     'masterId' => $trackingProduct->getMasterArticleNumber(),
                     'price'    => $trackingProduct->getPrice(),
                     'count'    => $trackingProduct->getCount(),
                     'sid'      => $this->sessionData->getSessionId(),
-                ];
+                    'userId'   => $this->sessionData->getUserId(),
+                ]);
             }, $trackingProducts),
         ];
 
