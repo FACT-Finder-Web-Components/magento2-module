@@ -24,21 +24,21 @@ class AuthConfig implements AuthConfigInterface
 
     public function getUsername(): string
     {
-        return $this->scopeConfig->getValue(self::PATH_USERNAME);
+        return (string) $this->scopeConfig->getValue(self::PATH_USERNAME);
     }
 
     public function getPassword(): string
     {
-        return $this->scopeConfig->getValue(self::PATH_PASSWORD);
+        return (string) $this->scopeConfig->getValue(self::PATH_PASSWORD);
     }
 
     public function getAuthenticationPrefix(): string
     {
-        return $this->scopeConfig->getValue(self::PATH_AUTH_PREFIX);
+        return (string) $this->scopeConfig->getValue(self::PATH_AUTH_PREFIX);
     }
 
     public function getAuthenticationPostfix(): string
     {
-        return $this->scopeConfig->getValue(self::PATH_AUTH_POSTFIX);
+        return (string) $this->scopeConfig->getValue(self::PATH_AUTH_POSTFIX);
     }
 }
