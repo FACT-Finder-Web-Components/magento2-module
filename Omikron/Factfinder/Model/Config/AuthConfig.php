@@ -10,10 +10,10 @@ use Omikron\Factfinder\Api\Config\AuthConfigInterface;
 
 class AuthConfig implements AuthConfigInterface
 {
-    const PATH_USERNAME     = 'factfinder/general/username';
-    const PATH_PASSWORD     = 'factfinder/general/password';
-    const PATH_AUTH_PREFIX  = 'factfinder/general/authentication_prefix';
-    const PATH_AUTH_POSTFIX = 'factfinder/general/authentication_postfix';
+    private const PATH_USERNAME     = 'factfinder/general/username';
+    private const PATH_PASSWORD     = 'factfinder/general/password';
+    private const PATH_AUTH_PREFIX  = 'factfinder/general/authentication_prefix';
+    private const PATH_AUTH_POSTFIX = 'factfinder/general/authentication_postfix';
 
     /** @var ScopeConfigInterface */
     private $scopeConfig;

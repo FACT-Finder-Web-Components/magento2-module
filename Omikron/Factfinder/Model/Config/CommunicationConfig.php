@@ -10,9 +10,8 @@ use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
 
 class CommunicationConfig implements CommunicationConfigInterface
 {
-    const PATH_CHANNEL                    = 'factfinder/general/channel';
-    const PATH_ADDRESS                    = 'factfinder/general/address';
-    const PATH_DATA_TRANSFER_IMPORT       = 'factfinder/data_transfer/ff_push_import_enabled';
+    private const PATH_CHANNEL                    = 'factfinder/general/channel';
+    private const PATH_ADDRESS                    = 'factfinder/general/address';
 
     /** @var ScopeConfigInterface  */
     protected $scopeConfig;
