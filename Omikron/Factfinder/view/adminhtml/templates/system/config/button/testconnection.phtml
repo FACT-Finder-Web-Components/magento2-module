@@ -47,6 +47,6 @@
 
 <?= /* @noEscape */ $block->getButtonHtml() ?>
 <div class="sync-indicator no-display" id="ff_testconnection_load_span">
-    <img alt="Loading" id="ff_testconnection_load_spinner" style="margin:0 5px" src="<?= $block->escapeHtmlAttr($block->getViewFileUrl('images/process_spinner.gif')) ?>"/>
+    <img alt="Loading" id="ff_testconnection_load_spinner" style="margin:0 5px" src="<?= $block->escapeUrl($block->getViewFileUrl('images/process_spinner.gif')) ?>"/>
     <span id="ff_testconnection_load_message_span"></span>
 </div>
