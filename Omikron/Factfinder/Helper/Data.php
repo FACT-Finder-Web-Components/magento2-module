@@ -13,7 +13,6 @@ class Data extends AbstractHelper
     const FRONT_NAME         = 'FACT-Finder';
     const EXPORT_PAGE        = 'export';
     const CUSTOM_RESULT_PAGE = 'result';
-    const SESSION_ID_LENGTH  = 30;
 
     const PATH_IS_ENABLED                   = 'factfinder/general/is_enabled';
     const PATH_IS_ENRICHMENT_ENABLED        = 'factfinder/general/ff_enrichment';
@@ -285,12 +284,5 @@ class Data extends AbstractHelper
     public function isCronEnabled()
     {
         return $this->scopeConfig->isSetFlag(self::PATH_CONFIGURABLE_CRON_IS_ENABLED);
-    }
-
-    public function getCorrectSessionId(string $sessionId): string
-    {
-        $sessionId = $sessionId ?: md5(uniqid('', true));
-        $sessionId = str_repeat($sessionId, intdiv(self::SESSION_ID_LENGTH, strlen($sessionId)) + 1);
-        return substr($sessionId, 0, self::SESSION_ID_LENGTH);
     }
 }
