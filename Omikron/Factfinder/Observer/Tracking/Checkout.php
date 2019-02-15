@@ -15,7 +15,7 @@ class Checkout extends BaseTracking implements ObserverInterface
     public function execute(Observer $observer)
     {
         /** @var Quote $cart */
-        $cart = $observer->getEvent()->getData('quote');
+        $cart = $observer->getData('quote');
 
         $trackingProducts = array_map(function (Item $item) {
             return $this->trackingProductFactory->create([
