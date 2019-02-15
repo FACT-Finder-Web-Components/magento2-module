@@ -25,7 +25,7 @@
                 Product Page
             </a>
             <div class="productInfo">
-                <?php if($block->isAddToCartEnabled()): ?>
+                <?php if ($block->isAddToCartEnabled()): ?>
                     <div class="addCartLink basketIcon">
                         <form action="<?= $block->escapeUrl($block->getAddToCartUrl()) ?>" method="post" class="product_addtocart_form" novalidate="novalidate">
                             <input type="hidden" name="product" value="{{record.MagentoEntityId}}">

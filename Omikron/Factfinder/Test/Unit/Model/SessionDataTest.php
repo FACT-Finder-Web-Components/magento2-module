@@ -67,7 +67,7 @@ class SessionDataTest extends TestCase
         return [
             ['shorter', 'shortershortershortershortersh'],
             [sha1('longer'), substr(sha1('longer'), 0, 30)],
-            ['', '7ddf32e17a6ac5ce04a8ecbf782ca5'],
+            ['', 'a415ab5cc17c8c093c015ccdb7e552'],
         ];
     }
 

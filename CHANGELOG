@@ -1,5 +1,6 @@
 # [Unreleased]
 ## CHANGE
+- Deprecate ResultRefiner: Use DI or plugins to edit the JSON result
 - Drop support for PHP 7.0
 - Replace Communication helper with dedicated models
 - Remove core controller rewrites and perform redirects using event observers
