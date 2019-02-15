@@ -66,12 +66,12 @@ class Communication extends Template
 
     protected function _beforeToHtml()
     {
-        $filePath = $this->moduleDirReader->getModuleDir('etc', 'Omikron_Factfinder') . '/config.xml';
+        $filePath      = $this->moduleDirReader->getModuleDir('etc', 'Omikron_Factfinder') . '/config.xml';
         $defaultValues = $this->parser->load($filePath)->xmlToArray()['config']['_value']['default']['factfinder'];
 
         $this->configData = [
             'url' => [
-                'value' =>  ($this->configHelper->isEnrichmentEnabled() ? '/' . Data::FRONT_NAME . '/' : $this->communicationConfig->getAddress()),
+                'value' => $this->getServerUrl(),
                 'type' => 'string',
                 'defaultValue' => null
             ],
@@ -193,12 +193,7 @@ class Communication extends Template
         ];
     }
 
-    /**
-     * Return the FF WebComponent
-     *
-     * @return string
-     */
-    public function getWebComponent()
+    public function getWebComponent(): string
     {
         return self::buildXMLElement('ff-communication', self::generateAttributes($this->configData, $this->requiredAttributes));
     }
@@ -230,13 +225,6 @@ class Communication extends Template
         return $writer->outputMemory();
     }
 
-    /**
-     * Export the configData to attributes for the FF-WebComponent
-     *
-     * @param array $configData - $configData array
-     * @param array $requiredAttributes - attributes that are put into component even if they are empty or use default value
-     * @return array
-     */
     private static function generateAttributes($configData, $requiredAttributes)
     {
         $result = [];
@@ -250,5 +238,13 @@ class Communication extends Template
             }
         }
         return $result;
+    }
+
+    private function getServerUrl(): string
+    {
+        if ($this->configHelper->isEnrichmentEnabled()) {
+            return $this->getUrl('', ['_direct' => Data::FRONT_NAME]);
+        }
+        return $this->communicationConfig->getAddress();
     }
 }
