@@ -16,27 +16,21 @@ class RecordList extends Template
     /** @var \Omikron\Factfinder\Helper\Data */
     protected $_helper;
 
-    /** @var \Magento\Directory\Model\Currency */
-    protected $_currency;
-
     /**
      * RecordList constructor.
      *
      * @param Template\Context $context
-     * @param \Magento\Directory\Model\Currency $currency
      * @param \Magento\Catalog\Helper\Image $imageHelper
      * @param \Omikron\Factfinder\Helper\Data $helper
      * @param array $data
      */
     public function __construct(
         Template\Context $context,
-        \Magento\Directory\Model\Currency $currency,
         \Magento\Catalog\Helper\Image $imageHelper,
         \Omikron\Factfinder\Helper\Data $helper,
         $data = []
     )
     {
-        $this->_currency = $currency;
         $this->_imageHelper = $imageHelper;
         $this->_helper = $helper;
         parent::__construct($context, $data);
@@ -71,26 +65,4 @@ class RecordList extends Template
     {
         return $this->_helper->getShowAddToCartButton();
     }
-
-    /**
-     * Get current store currency code
-     *
-     * @return string
-     */
-    public function getCurrentCurrencyCode()
-    {
-
-        return $this->_storeManager->getStore()->getCurrentCurrencyCode();
-    }
-
-    /**
-     * Get currency symbol for current locale and currency code
-     *
-     * @return string
-     */
-    public function getCurrentCurrencySymbol()
-    {
-        return $this->_currency->getCurrencySymbol();
-    }
-
 }

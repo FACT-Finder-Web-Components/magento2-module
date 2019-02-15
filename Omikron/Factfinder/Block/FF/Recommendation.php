@@ -31,9 +31,6 @@ class Recommendation extends Template
     /** @var \Omikron\Factfinder\Helper\Data */
     protected $_helper;
 
-    /** @var \Magento\Directory\Model\Currency */
-    protected $_currency;
-
     /**
      * Recommendation constructor.
      * @param Template\Context $context
@@ -43,14 +40,12 @@ class Recommendation extends Template
     public function __construct(
         Template\Context $context,
         \Magento\Framework\Registry $registry,
-        \Magento\Directory\Model\Currency $currency,
         \Magento\Catalog\Helper\Image $imageHelper,
         \Omikron\Factfinder\Helper\Data $helper,
         array $data = []
     )
     {
         $this->_coreRegistry = $registry;
-        $this->_currency = $currency;
         $this->_imageHelper = $imageHelper;
         $this->_helper = $helper;
         parent::__construct($context, $data);
@@ -96,26 +91,4 @@ class Recommendation extends Template
     {
         return $this->_helper->getShowAddToCartButton();
     }
-
-    /**
-     * Get current store currency code
-     *
-     * @return string
-     */
-    public function getCurrentCurrencyCode()
-    {
-
-        return $this->_storeManager->getStore()->getCurrentCurrencyCode();
-    }
-
-    /**
-     * Get currency symbol for current locale and currency code
-     *
-     * @return string
-     */
-    public function getCurrentCurrencySymbol()
-    {
-        return $this->_currency->getCurrencySymbol();
-    }
-
 }

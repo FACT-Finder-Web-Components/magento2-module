@@ -7,6 +7,7 @@ use Magento\Framework\App\Response\RedirectInterface;
 use Magento\Framework\App\ResponseInterface;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
+use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
 use Omikron\Factfinder\Helper\Data as Config;
 
 class RedirectSearch implements ObserverInterface
@@ -23,7 +24,7 @@ class RedirectSearch implements ObserverInterface
     public function __construct(
         RedirectInterface $redirect,
         ResponseInterface $response,
-        Config $config
+        CommunicationConfigInterface $config
     ) {
         $this->redirect = $redirect;
         $this->response = $response;

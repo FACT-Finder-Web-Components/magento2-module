@@ -11,7 +11,9 @@
 
         <referenceBlock name="factfinder.communication">
             <arguments>
-                <argument name="search_immediate" xsi:type="boolean">true</argument>
+                <argument name="communication_parameters" xsi:type="array">
+                    <item name="search-immediate" xsi:type="string">true</item>
+                </argument>
             </arguments>
         </referenceBlock>
 
