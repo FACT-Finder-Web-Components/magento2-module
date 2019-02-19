@@ -57,7 +57,7 @@ class Feed extends \Magento\Backend\App\Action
         $result = [];
         $httpReferer = $this->_redirect->getRefererUrl();
 
-        if(isset($httpReferer)) {
+        if (isset($httpReferer)) {
             preg_match('@/store/([0-9]+)/@', $httpReferer, $result);
         }
 

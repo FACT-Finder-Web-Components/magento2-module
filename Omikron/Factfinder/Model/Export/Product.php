@@ -319,7 +319,7 @@ class Product
         try {
             $fileDirectoryPath = $this->directoryList->getPath(DirectoryList::VAR_DIR);
 
-            if(!is_dir($fileDirectoryPath)) {
+            if (!is_dir($fileDirectoryPath)) {
                 mkdir($fileDirectoryPath, 0777, true);
             }
 

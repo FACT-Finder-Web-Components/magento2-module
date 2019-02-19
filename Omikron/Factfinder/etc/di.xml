@@ -31,6 +31,18 @@
         </arguments>
     </virtualType>
 
+    <type name="Omikron\Factfinder\Model\Export\Catalog\DataProvider">
+        <arguments>
+            <argument name="entityTypes" xsi:type="array">
+                <item name="simple" xsi:type="string">Omikron\Factfinder\Model\Export\Catalog\Product\SimpleDataProvider</item>
+                <item name="virtual" xsi:type="string">Omikron\Factfinder\Model\Export\Catalog\Product\SimpleDataProvider</item>
+                <item name="downloadable" xsi:type="string">Omikron\Factfinder\Model\Export\Catalog\Product\SimpleDataProvider</item>
+                <item name="configurable" xsi:type="string">Omikron\Factfinder\Model\Export\Catalog\Product\SimpleDataProvider</item>
+                <item name="grouped" xsi:type="string">Omikron\Factfinder\Model\Export\Catalog\Product\SimpleDataProvider</item>
+                <item name="bundle" xsi:type="string">Omikron\Factfinder\Model\Export\Catalog\Product\SimpleDataProvider</item>
+            </argument>
+        </arguments>
+    </type>
     <type name="Omikron\Factfinder\Model\SessionData">
         <arguments>
             <argument name="customerSession" xsi:type="object">Magento\Customer\Model\Session\Proxy</argument>

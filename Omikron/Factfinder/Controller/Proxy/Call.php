@@ -11,10 +11,6 @@ use Omikron\Factfinder\Api\ClientInterface;
 use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
 use Omikron\Factfinder\Exception\ResponseException;
 
-/**
- * Class Call
- * Forward the ff-api calls to factfinder
- */
 class Call extends \Magento\Framework\App\Action\Action
 {
     /** @var JsonFactory */
@@ -40,17 +36,13 @@ class Call extends \Magento\Framework\App\Action\Action
 
     public function execute()
     {
-        // extract api name from path
-        $identifier = trim($this->getRequest()->getPathInfo(), '/');
-        $endpoint   = substr($identifier, strpos($identifier, '/') + 1);
-
-        // return 404 if api name schema does not match
-        if (!preg_match('#^[A-Z][A-z]+\.ff$#', $endpoint)) {
+        // Extract API name from path
+        $endpoint = $this->getEndpoint($this->_url->getCurrentUrl());
+        if (!$endpoint) {
             throw new NotFoundException(__('Endpoint missing'));
         }
 
         $result = $this->jsonResultFactory->create();
-
         try {
             $endpoint   = $this->communicationConfig->getAddress() . '/' . $endpoint;
             $ffResponse = $this->apiClient->sendRequest($endpoint, $this->getRequest()->getParams());
@@ -60,5 +52,11 @@ class Call extends \Magento\Framework\App\Action\Action
         }
 
         return $result;
+    }
+
+    private function getEndpoint(string $currentUrl): string
+    {
+        preg_match('#/([A-Z][a-z]+\.ff)#', $currentUrl, $match);
+        return $match[1] ?? '';
     }
 }
