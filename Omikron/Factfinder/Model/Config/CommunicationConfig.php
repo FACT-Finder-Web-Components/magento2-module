@@ -9,6 +9,7 @@ use Magento\Framework\UrlInterface;
 use Magento\Store\Model\ScopeInterface;
 use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
 use Omikron\Factfinder\Api\Config\ParametersSourceInterface;
+use Omikron\Factfinder\Helper\Data;
 
 class CommunicationConfig implements CommunicationConfigInterface, ParametersSourceInterface
 {

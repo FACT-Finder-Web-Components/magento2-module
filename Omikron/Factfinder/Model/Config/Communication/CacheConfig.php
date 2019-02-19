@@ -10,8 +10,8 @@ use Omikron\Factfinder\Api\Config\ParametersSourceInterface;
 
 class CacheConfig implements ParametersSourceInterface
 {
-    private const  PATH_USE_CACHE     = 'factfinder/advanced/use_cache';
-    private const  PATH_DISABLE_CACHE = 'factfinder/advanced/disable_cache';
+    private const PATH_USE_CACHE     = 'factfinder/advanced/use_cache';
+    private const PATH_DISABLE_CACHE = 'factfinder/advanced/disable_cache';
 
     /** @var ScopeConfigInterface */
     private $scopeConfig;
@@ -24,8 +24,8 @@ class CacheConfig implements ParametersSourceInterface
     public function getParameters(): array
     {
         return [
-            'use-cache'     =>  $this->scopeConfig->isSetFlag(self::PATH_USE_CACHE, ScopeInterface::SCOPE_STORES),
-            'disable-cache' =>  $this->scopeConfig->getValue(self::PATH_DISABLE_CACHE, ScopeInterface::SCOPE_STORES),
+            'use-cache'     => $this->scopeConfig->isSetFlag(self::PATH_USE_CACHE, ScopeInterface::SCOPE_STORES),
+            'disable-cache' => $this->scopeConfig->getValue(self::PATH_DISABLE_CACHE, ScopeInterface::SCOPE_STORES),
         ];
     }
 }

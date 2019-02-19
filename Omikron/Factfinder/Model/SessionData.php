@@ -44,7 +44,7 @@ class SessionData implements SessionDataInterface, SectionSourceInterface, Param
     {
         return [
             'sid'     => $this->getSessionId(),
-            'user-id' => $this->getUserId() ?: null
+            'user-id' => $this->getUserId() ?: null,
         ];
     }
 

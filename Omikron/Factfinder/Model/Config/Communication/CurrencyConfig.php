@@ -12,9 +12,9 @@ use Omikron\Factfinder\Api\Config\ParametersSourceInterface;
 
 class CurrencyConfig implements ParametersSourceInterface
 {
-    private const  PATH_CURRENCY_MIN_DIGITS = 'factfinder/currency/min_digits';
-    private const  PATH_CURRENCY_MAX_DIGITS = 'factfinder/currency/max_digits';
-    private const  PATH_CURRENCY_FIELDS     = 'factfinder/currency/fields';
+    private const PATH_CURRENCY_MIN_DIGITS = 'factfinder/currency/min_digits';
+    private const PATH_CURRENCY_MAX_DIGITS = 'factfinder/currency/max_digits';
+    private const PATH_CURRENCY_FIELDS     = 'factfinder/currency/fields';
 
     /** @var ScopeConfigInterface */
     private $scopeConfig;
@@ -42,7 +42,7 @@ class CurrencyConfig implements ParametersSourceInterface
             'currency-country-code' => $this->getCurrencyCountryCode(),
             'currency-fields'       => $this->getCurrencyFields(),
             'currency-min-digits'   => $this->getCurrencyMinDigits(),
-            'currency-max-digits'   => $this->getCurrencyMaxDigits()
+            'currency-max-digits'   => $this->getCurrencyMaxDigits(),
         ];
     }
 

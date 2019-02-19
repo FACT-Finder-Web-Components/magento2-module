@@ -1,17 +1,10 @@
 <?php
-/** @var Magento\Framework\View\Element\Template $block  */
+/** @var Magento\Framework\View\Element\Template $block */
 /** @var Omikron\Factfinder\ViewModel\Communication $viewModel */
-$viewModel = $block->getViewModel();
-$parameters = $viewModel->getParameters() + (array) $block->getData('communication_parameters');
-
-echo '<ff-communication ' . implode(' ', array_map(
-    function ($key, $value) { return sprintf("%s='%s'", $key, $value); },
-    array_keys($parameters),
-    $parameters
-)) . '></ff-communication>'
+$viewModel  = $block->getViewModel();
+$parameters = ((array) $block->getData('communication_parameters')) + $viewModel->getParameters();
 ?>
-
-
+<ff-communication<?php foreach ($parameters as $key => $value) echo /** @noEscape */ sprintf(' %s="%s"', $key, $block->escapeHtmlAttr($value)) ?> />
 <!-- Set FieldRoles -->
 <script>
     document.addEventListener("ffReady", function () {

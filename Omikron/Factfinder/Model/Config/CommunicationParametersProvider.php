@@ -8,24 +8,18 @@ use Omikron\Factfinder\Api\Config\ParametersSourceInterface;
 
 class CommunicationParametersProvider implements ParametersSourceInterface
 {
-    /** @var array  */
-    private $parameterSources;
+    /** @var ParametersSourceInterface[] */
+    private $sources;
 
     public function __construct(array $parametersSource = [])
     {
-        $this->parameterSources = $parametersSource;
+        $this->sources = $parametersSource;
     }
 
     public function getParameters(): array
     {
-        $params = [];
-        foreach ($this->parameterSources as $source) {
-            if (!$source instanceof ParametersSourceInterface) {
-                throw new \InvalidArgumentException(sprintf('Parameters source does not implement %s interface',ParametersSourceInterface::class));
-            }
-            $params = array_merge($params, $source->getParameters());
-        }
-
-        return $params;
+        return array_reduce($this->sources, function (array $params, ParametersSourceInterface $source): array {
+            return array_merge($params, $source->getParameters());
+        }, []);
     }
 }
