@@ -49,27 +49,16 @@ class Communication extends Template
 
     public function getWebComponent(): string
     {
-        $attributes = $this->collectAttributes() + $this->getLayoutOverrides();
+        $parameters = array_filter($this->communicationParametersProvider->getParameters(), function($element) {
+            return (bool) $element;
+        }) + $this->getLayoutOverrides();
 
-        return $this->componentBuilder->buildComponent('ff-communication', $attributes);
+        return $this->componentBuilder->buildComponent('ff-communication', $parameters);
     }
 
     public function getFieldRoles(): string
     {
         return (string) $this->serializer->serialize($this->fieldRoles->getFieldRoles());
-    }
-
-    private function collectAttributes(): array
-    {
-        $configData = $this->communicationParametersProvider->getParameters();
-        $result = [];
-        foreach ($configData as $name => $info) {
-            if ((bool) $info['value']) {
-                $result[$name] = $info['value'];
-            }
-        }
-
-        return $result;
     }
 
     private function getLayoutOverrides(): array

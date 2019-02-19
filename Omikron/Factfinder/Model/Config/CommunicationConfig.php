@@ -54,23 +54,10 @@ class CommunicationConfig implements CommunicationConfigInterface, ParametersSou
     public function getParameters(): array
     {
         return [
-            'url'               => [
-                'value'        => $this->getServerUrl(),
-                'type'         => 'string',
-                'defaultValue' => null
-            ],
-            'version'           => [
-                'value' => $this->scopeConfig->getValue(self::PATH_VERSION),
-                'type'  => 'string'
-            ],
-            'default-query'     => [
-                'value' => $this->getDefaultQuery(),
-                'type'  => 'string'
-            ],
-            'channel'           => [
-                'value' => $this->getChannel(),
-                'type'  => 'string',
-            ],
+            'url'           => $this->getServerUrl(),
+            'version'       => $this->scopeConfig->getValue(self::PATH_VERSION),
+            'default-query' => $this->getDefaultQuery(),
+            'channel'       => $this->getChannel(),
         ];
     }
 

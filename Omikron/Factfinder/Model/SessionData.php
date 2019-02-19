@@ -43,14 +43,8 @@ class SessionData implements SessionDataInterface, SectionSourceInterface, Param
     public function getParameters(): array
     {
         return [
-            'sid'     => [
-                'value'        => $this->getSessionId(),
-                'type'         => 'string'
-            ],
-            'user-id' => [
-                'value'        => $this->getUserId() ?: null,
-                'type'         => 'string'
-            ]
+            'sid'     => $this->getSessionId(),
+            'user-id' => $this->getUserId() ?: null
         ];
     }
 

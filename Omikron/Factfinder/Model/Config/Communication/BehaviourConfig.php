@@ -30,38 +30,14 @@ class BehaviourConfig implements ParametersSourceInterface
     public function getParameters(): array
     {
         return [
-            'use-url-parameter'           => [
-                'value' => $this->scopeConfig->getValue(self::PATH_USE_URL_PARAMETER, ScopeInterface::SCOPE_STORES),
-                'type'  => 'string',
-            ],
-            'add-params'                  => [
-                'value' => $this->scopeConfig->getValue(self::PATH_ADD_PARAMS, ScopeInterface::SCOPE_STORES),
-                'type'  => 'string',
-            ],
-            'add-tracking-params'         => [
-                'value' => $this->scopeConfig->getValue(self::PATH_ADD_TRACKING_PARAMS, ScopeInterface::SCOPE_STORES),
-                'type'  => 'string',
-            ],
-            'keep-url-params'             => [
-                'value' => $this->scopeConfig->getValue(self::PATH_KEEP_URL_PARAMS, ScopeInterface::SCOPE_STORES),
-                'type'  => 'string',
-            ],
-            'only-search-params'          => [
-                'value' => $this->scopeConfig->isSetFlag(self::PATH_ONLY_SEARCH_PARAMS, ScopeInterface::SCOPE_STORES),
-                'type'  => 'boolean'
-            ],
-            'parameter-whitelist'         => [
-                'value' => $this->scopeConfig->getValue(self::PATH_PARAMETER_WHITELIST, ScopeInterface::SCOPE_STORES),
-                'type'  => 'string',
-            ],
-            'search-immediate'            => [
-                'value' => $this->scopeConfig->isSetFlag(self::PATH_SEARCH_IMMEDIATE, ScopeInterface::SCOPE_STORES),
-                'type'  => 'boolean',
-            ],
-            'disable-single-hit-redirect' => [
-                'value' => $this->scopeConfig->getValue(self::PATH_DISABLE_SINGLE_HIT_REDIRECT, ScopeInterface::SCOPE_STORES),
-                'type'  => 'string'
-            ],
+            'use-url-parameter'             => $this->scopeConfig->getValue(self::PATH_USE_URL_PARAMETER, ScopeInterface::SCOPE_STORES),
+            'add-params'                    => $this->scopeConfig->getValue(self::PATH_ADD_PARAMS, ScopeInterface::SCOPE_STORES),
+            'add-tracking-params'           => $this->scopeConfig->getValue(self::PATH_ADD_TRACKING_PARAMS, ScopeInterface::SCOPE_STORES),
+            'keep-url-params'               => $this->scopeConfig->getValue(self::PATH_KEEP_URL_PARAMS, ScopeInterface::SCOPE_STORES),
+            'only-search-params'            => $this->scopeConfig->isSetFlag(self::PATH_ONLY_SEARCH_PARAMS, ScopeInterface::SCOPE_STORES),
+            'parameter-whitelist'           =>  $this->scopeConfig->getValue(self::PATH_PARAMETER_WHITELIST, ScopeInterface::SCOPE_STORES),
+            'search-immediate'              => $this->scopeConfig->isSetFlag(self::PATH_SEARCH_IMMEDIATE, ScopeInterface::SCOPE_STORES),
+            'disable-single-hit-redirect'   => $this->scopeConfig->getValue(self::PATH_DISABLE_SINGLE_HIT_REDIRECT, ScopeInterface::SCOPE_STORES),
         ];
     }
 }

@@ -32,46 +32,16 @@ class PersonalizationConfig implements ParametersSourceInterface
     public function getParameters(): array
     {
         return [
-            'use-found-words'             => [
-                'value' => $this->scopeConfig->getValue(self::PATH_USE_FOUND_WORDS, ScopeInterface::SCOPE_STORES),
-                'type'  => 'string',
-            ],
-            'use-aso'                     => [
-                'value' => $this->scopeConfig->getValue(self::PATH_USE_ASO, ScopeInterface::SCOPE_STORES),
-                'type'  => 'string'
-            ],
-            'use-browser-history'         => [
-                'value' => $this->scopeConfig->getValue(self::PATH_USE_BROWSER_HISTORY, ScopeInterface::SCOPE_STORES),
-                'type'  => 'string'
-            ],
-            'use-personalization'   => [
-                'value' => $this->scopeConfig->getValue(self::PATH_USE_PERSONALIZATION, ScopeInterface::SCOPE_STORES),
-                'type'  => 'string'
-            ],
-            'use-semantic-enhancer'       => [
-                'value' => $this->scopeConfig->getValue(self::PATH_USE_SEMANTIC_ENHANCER, ScopeInterface::SCOPE_STORES),
-                'type'  => 'string'
-            ],
-            'use-campaigns'         => [
-                'value' => $this->scopeConfig->getValue(self::PATH_USE_CAMPAIGNS, ScopeInterface::SCOPE_STORES),
-                'type'  => 'string'
-            ],
-            'generate-advisor-tree' => [
-                'value' => $this->scopeConfig->getValue(self::PATH_GENERATE_ADVISOR_TREE, ScopeInterface::SCOPE_STORES),
-                'type'  => 'string'
-            ],
-            'use-seo'               => [
-                'value' => $this->scopeConfig->getValue(self::PATH_USE_SEO, ScopeInterface::SCOPE_STORES),
-                'type'  => 'string'
-            ],
-            'seo-prefix'            => [
-                'value' => $this->scopeConfig->getValue(self::PATH_SEO_PREFIX, ScopeInterface::SCOPE_STORES),
-                'type'  => 'string'
-            ],
-            'use-asn'               => [
-                'value' => $this->scopeConfig->getValue(self::PATH_USE_ASN, ScopeInterface::SCOPE_STORES),
-                'type'  => 'string'
-            ],
+            'use-found-words'       =>  $this->scopeConfig->getValue(self::PATH_USE_FOUND_WORDS, ScopeInterface::SCOPE_STORES),
+            'use-aso'               =>  $this->scopeConfig->getValue(self::PATH_USE_ASO, ScopeInterface::SCOPE_STORES),
+            'use-browser-history'   =>  $this->scopeConfig->getValue(self::PATH_USE_BROWSER_HISTORY, ScopeInterface::SCOPE_STORES),
+            'use-personalization'   =>  $this->scopeConfig->getValue(self::PATH_USE_PERSONALIZATION, ScopeInterface::SCOPE_STORES),
+            'use-semantic-enhancer' =>  $this->scopeConfig->getValue(self::PATH_USE_SEMANTIC_ENHANCER, ScopeInterface::SCOPE_STORES),
+            'use-campaigns'         =>  $this->scopeConfig->getValue(self::PATH_USE_CAMPAIGNS, ScopeInterface::SCOPE_STORES),
+            'generate-advisor-tree' => $this->scopeConfig->getValue(self::PATH_GENERATE_ADVISOR_TREE, ScopeInterface::SCOPE_STORES),
+            'use-seo'               => $this->scopeConfig->getValue(self::PATH_USE_SEO, ScopeInterface::SCOPE_STORES),
+            'seo-prefix'            => $this->scopeConfig->getValue(self::PATH_SEO_PREFIX, ScopeInterface::SCOPE_STORES),
+            'use-asn'               =>  $this->scopeConfig->getValue(self::PATH_USE_ASN, ScopeInterface::SCOPE_STORES),
         ];
     }
 }

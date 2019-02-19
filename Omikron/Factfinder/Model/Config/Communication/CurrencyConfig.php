@@ -38,26 +38,11 @@ class CurrencyConfig implements ParametersSourceInterface
     public function getParameters(): array
     {
         return [
-            'currency-code'         => [
-                'value' => $this->getCurrencyCode(),
-                'type'  => 'string',
-            ],
-            'currency-country-code' => [
-                'value' => $this->getCurrencyCountryCode(),
-                'type'  => 'string',
-            ],
-            'currency-fields'       => [
-                'value' => $this->getCurrencyFields(),
-                'type'  => 'string',
-            ],
-            'currency-min-digits'   => [
-                'value' => $this->getCurrencyMinDigits(),
-                'type'  => 'string',
-            ],
-            'currency-max-digits'   => [
-                'value' => $this->getCurrencyMaxDigits(),
-                'type'  => 'string',
-            ]
+            'currency-code'         => $this->getCurrencyCode(),
+            'currency-country-code' => $this->getCurrencyCountryCode(),
+            'currency-fields'       => $this->getCurrencyFields(),
+            'currency-min-digits'   => $this->getCurrencyMinDigits(),
+            'currency-max-digits'   => $this->getCurrencyMaxDigits()
         ];
     }
 

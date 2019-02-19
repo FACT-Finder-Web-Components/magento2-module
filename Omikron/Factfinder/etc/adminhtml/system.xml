@@ -182,7 +182,6 @@
                     <comment>Specify the minimum number of digits. Defaults to 2</comment>
                 </field>
                 <field id="max_digits" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Currency max digits</label>
                     <label>Specify the maximum number of digits for all prices. Defaults to 2.</label>
                     <validate>validate-digits validate-digits-range digits-range-1-4</validate>
                 </field>

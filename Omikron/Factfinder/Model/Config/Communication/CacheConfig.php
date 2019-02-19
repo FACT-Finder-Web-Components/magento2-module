@@ -24,14 +24,8 @@ class CacheConfig implements ParametersSourceInterface
     public function getParameters(): array
     {
         return [
-            'use-cache'     => [
-                'value' => $this->scopeConfig->isSetFlag(self::PATH_USE_CACHE, ScopeInterface::SCOPE_STORES),
-                'type'  => 'boolean',
-            ],
-            'disable-cache' => [
-                'value' => $this->scopeConfig->getValue(self::PATH_DISABLE_CACHE, ScopeInterface::SCOPE_STORES),
-                'type'  => 'string'
-            ],
+            'use-cache'     =>  $this->scopeConfig->isSetFlag(self::PATH_USE_CACHE, ScopeInterface::SCOPE_STORES),
+            'disable-cache' =>  $this->scopeConfig->getValue(self::PATH_DISABLE_CACHE, ScopeInterface::SCOPE_STORES),
         ];
     }
 }
