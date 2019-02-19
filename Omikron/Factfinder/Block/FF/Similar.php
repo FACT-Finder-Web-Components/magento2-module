@@ -5,6 +5,9 @@ namespace Omikron\Factfinder\Block\FF;
 use Magento\Catalog\Model\Product;
 use Magento\Framework\View\Element\Template;
 
+/**
+ * @todo remove this class
+ */
 class Similar extends Template
 {
     /**

@@ -5,8 +5,7 @@ namespace Omikron\Factfinder\Block\FF;
 use Magento\Framework\View\Element\Template;
 
 /**
- * Block Class FF RecordList
- * @package Omikron\Factfinder\Block\FF
+ * @todo remove this class
  */
 class RecordList extends Template
 {
