@@ -163,24 +163,6 @@
                     <comment>If true, disables the automatic redirect to the product detail page if only one record is found.</comment>
                 </field>
             </group>
-            <group id="currency" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
-                <label>Currency</label>
-                <field id="min_digits" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Currency min digits</label>
-                    <validate>validate-digits validate-digits-range digits-range-1-4</validate>
-                    <comment>Specify the minimum number of digits. Defaults to 2</comment>
-                </field>
-                <field id="max_digits" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Specify the maximum number of digits for all prices. Defaults to 2.</label>
-                    <validate>validate-digits validate-digits-range digits-range-1-4</validate>
-                </field>
-                <field id="fields" translate="label comment" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Currency fields</label>
-                    <tooltip>Comma separated fields</tooltip>
-                    <comment>If you are importing multiple price fields like discount prices or something similar it's not sufficient to specify only the currency-country-code and the currency-code.
-                        In order to format additional price fields you have to tell Web Components which fields should be processed. You can do that by setting the currency-fields attribute accordingly.</comment>
-                </field>
-            </group>
             <group id="components" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>Activated Web-Components</label>
                 <comment>Please always save the config in the upper right corner after making changes.</comment>

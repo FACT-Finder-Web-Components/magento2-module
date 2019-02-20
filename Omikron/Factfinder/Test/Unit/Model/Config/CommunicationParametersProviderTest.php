@@ -2,10 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Omikron\Factfinder\Test\Unit\Model\Config;
+namespace Omikron\Factfinder\Model\Config;
 
 use Omikron\Factfinder\Api\Config\ParametersSourceInterface;
-use Omikron\Factfinder\Model\Config\CommunicationParametersProvider;
 use PHPUnit\Framework\TestCase;
 
 class CommunicationParametersProviderTest extends TestCase

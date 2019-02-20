@@ -12,7 +12,6 @@ use Magento\Store\Api\Data\StoreInterface;
 use Magento\Store\Model\App\Emulation;
 use Magento\Store\Model\StoreManagerInterface;
 use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
-use Omikron\Factfinder\Helper\Data;
 use Omikron\Factfinder\Helper\Product as ProductHelper;
 use Omikron\Factfinder\Helper\Upload;
 use Omikron\Factfinder\Model\Api\PushImport;
@@ -34,9 +33,6 @@ class Product
 
     /** @var Upload  */
     protected $helperUpload;
-
-    /** @var Data  */
-    protected $helperData;
 
     /** @var PushImport  */
     protected $pushImport;
@@ -66,7 +62,6 @@ class Product
         CollectionFactory $productCollectionFactory,
         Filesystem $fileSystem,
         Upload $helperUpload,
-        Data $helperData,
         PushImport $pushImport,
         UpdateFieldRoles $updateFieldRoles,
         ProductHelper $helperProduct,
@@ -79,7 +74,6 @@ class Product
         $this->productCollectionFactory = $productCollectionFactory;
         $this->fileSystem               = $fileSystem;
         $this->helperUpload             = $helperUpload;
-        $this->helperData               = $helperData;
         $this->pushImport               = $pushImport;
         $this->updateFieldRoles         = $updateFieldRoles;
         $this->helperProduct            = $helperProduct;
@@ -181,7 +175,7 @@ class Product
         foreach ($stores as $store) {
             $storeId = $store->getId();
             $currChannel = $this->communicationConfig->getChannel($storeId);
-            if (in_array($currChannel, $exportedChannels) || !$this->helperData->isEnabled($storeId)) {
+            if (in_array($currChannel, $exportedChannels) || !$this->communicationConfig->isEnabled($storeId)) {
                 continue;
             }
 
@@ -221,7 +215,7 @@ class Product
         $result = $this->uploadFeed($filename);
         $this->deleteFeedFile($filename);
 
-        if ($this->helperData->isPushImportEnabled($storeId)) {
+        if ($this->communicationConfig->isPushImportEnabled($storeId)) {
 
             if ($this->pushImport->execute([], $storeId)) {
                 $result['message'] .= ' ' . __('Import successfully pushed.');

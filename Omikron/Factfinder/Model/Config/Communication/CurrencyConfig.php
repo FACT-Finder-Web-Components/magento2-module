@@ -12,10 +12,6 @@ use Omikron\Factfinder\Api\Config\ParametersSourceInterface;
 
 class CurrencyConfig implements ParametersSourceInterface
 {
-    private const PATH_CURRENCY_MIN_DIGITS = 'factfinder/currency/min_digits';
-    private const PATH_CURRENCY_MAX_DIGITS = 'factfinder/currency/max_digits';
-    private const PATH_CURRENCY_FIELDS     = 'factfinder/currency/fields';
-
     /** @var ScopeConfigInterface */
     private $scopeConfig;
 
@@ -40,9 +36,6 @@ class CurrencyConfig implements ParametersSourceInterface
         return [
             'currency-code'         => $this->getCurrencyCode(),
             'currency-country-code' => $this->getCurrencyCountryCode(),
-            'currency-fields'       => $this->getCurrencyFields(),
-            'currency-min-digits'   => $this->getCurrencyMinDigits(),
-            'currency-max-digits'   => $this->getCurrencyMaxDigits(),
         ];
     }
 
@@ -54,20 +47,5 @@ class CurrencyConfig implements ParametersSourceInterface
     private function getCurrencyCountryCode(): string
     {
         return str_replace('_', '-', $this->localeResolver->getLocale());
-    }
-
-    private function getCurrencyFields(): string
-    {
-        return (string) $this->scopeConfig->getValue(self::PATH_CURRENCY_FIELDS, ScopeInterface::SCOPE_STORES);
-    }
-
-    private function getCurrencyMinDigits(): int
-    {
-        return (int) $this->scopeConfig->getValue(self::PATH_CURRENCY_MIN_DIGITS, ScopeInterface::SCOPE_STORES);
-    }
-
-    private function getCurrencyMaxDigits(): int
-    {
-        return (int) $this->scopeConfig->getValue(self::PATH_CURRENCY_MAX_DIGITS, ScopeInterface::SCOPE_STORES);
     }
 }

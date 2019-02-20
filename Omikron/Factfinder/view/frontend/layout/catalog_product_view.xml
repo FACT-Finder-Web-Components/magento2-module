@@ -2,8 +2,16 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
         <referenceContainer name="content">
-            <block class="Omikron\Factfinder\Block\FF\Recommendation" name="factfinder.recommendation" ifconfig="factfinder/components/ff_recommendation" template="Omikron_Factfinder::ff/recommendation.phtml" />
-            <block class="Omikron\Factfinder\Block\FF\Similar" name="factfinder.similar" ifconfig="factfinder/components/ff_similar" template="Omikron_Factfinder::ff/similar.phtml" />
+            <block class="Magento\Framework\View\Element\Template" name="factfinder.recommendation" ifconfig="factfinder/components/ff_recommendation" template="Omikron_Factfinder::ff/recommendation.phtml">
+                <arguments>
+                    <argument name="view_model" xsi:type="object">Omikron\Factfinder\ViewModel\ProductBasedComponent</argument>
+                </arguments>
+            </block>
+            <block class="Magento\Framework\View\Element\Template" name="factfinder.similar" ifconfig="factfinder/components/ff_similar" template="Omikron_Factfinder::ff/similar.phtml" >
+                <arguments>
+                    <argument name="view_model" xsi:type="object">Omikron\Factfinder\ViewModel\ProductBasedComponent</argument>
+                </arguments>
+            </block>
         </referenceContainer>
     </body>
 </page>

@@ -1,4 +1,7 @@
-<?php /** @var $block \Omikron\Factfinder\Block\FF\RecordList */ ?>
+<?php
+/** @var Omikron\Factfinder\ViewModel\ProductBasedComponent $viewModel */
+$viewModel = $block->getViewModel();
+?>
 <script type="text/x-magento-init">
     {
         ".product_addtocart_form": {
@@ -10,7 +13,7 @@
 </script>
 <ff-record-list unresolved>
     <ff-record>
-        <img data-image data-image-onerror="<?= $block->escapeUrl($block->getProductImagePlaceholder()) ?>" />
+        <img data-image data-image-onerror="<?= $block->escapeUrl($viewModel->getProductImagePlaceholder()) ?>" />
         <br/>
         <div class="recordContent">
             <div class="brand">{{record.Manufacturer}}</div>
@@ -25,9 +28,9 @@
                 Product Page
             </a>
             <div class="productInfo">
-                <?php if ($block->isAddToCartEnabled()): ?>
+                <?php if ($viewModel->isAddToCartEnabled()): ?>
                     <div class="addCartLink basketIcon">
-                        <form action="<?= $block->escapeUrl($block->getAddToCartUrl()) ?>" method="post" class="product_addtocart_form" novalidate="novalidate">
+                        <form action="<?= $block->escapeUrl($viewModel->getAddToCartUrl()) ?>" method="post" class="product_addtocart_form" novalidate="novalidate">
                             <input type="hidden" name="product" value="{{record.MagentoEntityId}}">
                             <?= /* @noEscape */ $block->getBlockHtml('formkey') ?>
                             <button data-track type="submit" title="<?= $block->escapeHtmlAttr(__('Add to Cart')) ?>" class="action primary tocart">

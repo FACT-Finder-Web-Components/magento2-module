@@ -9,7 +9,7 @@ use Magento\Framework\UrlInterface;
 use Magento\Store\Model\ScopeInterface;
 use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
 use Omikron\Factfinder\Api\Config\ParametersSourceInterface;
-use Omikron\Factfinder\Helper\Data;
+use Omikron\Factfinder\Controller\Router;
 
 class CommunicationConfig implements CommunicationConfigInterface, ParametersSourceInterface
 {
@@ -19,6 +19,7 @@ class CommunicationConfig implements CommunicationConfigInterface, ParametersSou
     private const PATH_DEFAULT_QUERY         = 'factfinder/advanced/default_query';
     private const PATH_IS_ENABLED            = 'factfinder/general/is_enabled';
     private const PATH_IS_ENRICHMENT_ENABLED = 'factfinder/general/ff_enrichment';
+    private const PATH_DATA_TRANSFER_IMPORT  = 'factfinder/data_transfer/ff_push_import_enabled';
 
     /** @var ScopeConfigInterface */
     private $scopeConfig;
@@ -52,6 +53,11 @@ class CommunicationConfig implements CommunicationConfigInterface, ParametersSou
         return $this->scopeConfig->isSetFlag(self::PATH_IS_ENABLED, 'store', $scopeId);
     }
 
+    public function isPushImportEnabled($scopeCode = null): bool
+    {
+        return $this->scopeConfig->isSetFlag(self::PATH_DATA_TRANSFER_IMPORT, 'store', $scopeCode);
+    }
+
     public function getParameters(): array
     {
         return [
@@ -65,7 +71,7 @@ class CommunicationConfig implements CommunicationConfigInterface, ParametersSou
     private function getServerUrl(): string
     {
         if ($this->scopeConfig->isSetFlag(self::PATH_IS_ENRICHMENT_ENABLED, 'store')) {
-            return $this->urlBuilder->getUrl('', ['_direct' => Data::FRONT_NAME]);
+            return $this->urlBuilder->getUrl('', ['_direct' => Router::FRONT_NAME]);
         }
 
         return $this->getAddress();

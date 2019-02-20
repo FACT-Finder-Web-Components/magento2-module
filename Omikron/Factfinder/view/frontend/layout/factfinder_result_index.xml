@@ -33,7 +33,11 @@
                 <block class="Magento\Framework\View\Element\Template" name="factfinder.paging.top" ifconfig="factfinder/components/ff_paging" template="Omikron_Factfinder::ff/paging.phtml" />
                 <block class="Magento\Framework\View\Element\Template" name="factfinder.productsperpage" ifconfig="factfinder/components/ff_productspp" template="Omikron_Factfinder::ff/products-per-page.phtml" />
             </container>
-            <block class="Omikron\Factfinder\Block\FF\RecordList" name="factfinder.recordlist" template="Omikron_Factfinder::ff/record-list.phtml" />
+            <block class="Magento\Framework\View\Element\Template" name="factfinder.recordlist" template="Omikron_Factfinder::ff/record-list.phtml">
+                <arguments>
+                    <argument name="view_model" xsi:type="object">Omikron\Factfinder\ViewModel\ProductBasedComponent</argument>
+                </arguments>
+            </block>
             <container name="ff-navigation-bottom" htmlTag="div" htmlClass="ff-navigation">
                 <block class="Magento\Framework\View\Element\Template" name="factfinder.paging.bottom" ifconfig="factfinder/components/ff_paging" template="Omikron_Factfinder::ff/paging.phtml" />
             </container>

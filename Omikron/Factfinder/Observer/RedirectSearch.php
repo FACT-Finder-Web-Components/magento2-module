@@ -8,7 +8,6 @@ use Magento\Framework\App\ResponseInterface;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
 use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
-use Omikron\Factfinder\Helper\Data as Config;
 
 class RedirectSearch implements ObserverInterface
 {

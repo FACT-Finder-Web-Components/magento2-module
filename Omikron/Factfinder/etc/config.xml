@@ -31,11 +31,6 @@
                 <use_seo>true</use_seo>
                 <disable_single_hit_redirect>0</disable_single_hit_redirect>
             </advanced>
-            <currency>
-                <fields>discountPrice</fields>
-                <min_digits>2</min_digits>
-                <max_digits>2</max_digits>
-            </currency>
             <components>
                 <ff_suggest>0</ff_suggest>
                 <ff_asn>0</ff_asn>

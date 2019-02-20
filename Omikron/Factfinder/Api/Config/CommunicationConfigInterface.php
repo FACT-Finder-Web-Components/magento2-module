@@ -11,4 +11,6 @@ interface CommunicationConfigInterface
     public function getDefaultQuery(): string;
 
     public function isEnabled(int $scopeId = null): bool;
+
+    public function isPushImportEnabled($scopeCode = null): bool;
 }
