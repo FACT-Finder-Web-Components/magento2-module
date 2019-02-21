@@ -31,10 +31,10 @@ class LogExceptions
         } catch (ResponseException $e) {
             if ($this->scopeConfig->isSetFlag('factfinder/general/logging_enabled')) {
                 $this->logger->error(__(
-                        'FACT-Finder response exception: %1, thrown at %2',
-                        $e->getMessage(), $e->getTraceAsString()
-                    )
-                );
+                    'FACT-Finder response exception: %1, thrown at %2',
+                    $e->getMessage(),
+                    $e->getTraceAsString()
+                ));
             }
 
             return false;

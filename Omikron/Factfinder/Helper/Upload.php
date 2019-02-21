@@ -30,8 +30,7 @@ class Upload extends AbstractHelper
         \Magento\Framework\App\Helper\Context $context,
         \Magento\Framework\Filesystem\Io\Ftp $ftp,
         \Magento\Framework\App\Filesystem\DirectoryList $directoryList
-    )
-    {
+    ) {
         $this->ftp = $ftp;
         $this->logger = $context->getLogger();
         $this->directoryList = $directoryList;
