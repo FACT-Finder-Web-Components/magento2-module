@@ -12,9 +12,9 @@ use Magento\Framework\App\RouterInterface;
 
 class Router implements RouterInterface
 {
-    public const   FRONT_NAME         = 'FACT-Finder';
-    private const  EXPORT_PAGE        = 'export';
-    private const  CUSTOM_RESULT_PAGE = 'result';
+    public const  FRONT_NAME         = 'FACT-Finder';
+    private const EXPORT_PAGE        = 'export';
+    private const CUSTOM_RESULT_PAGE = 'result';
 
     /** @var ActionFactory */
     private $actionFactory;
@@ -28,6 +28,7 @@ class Router implements RouterInterface
      * Test the incoming requests for matches to the factfinder url pattern
      *
      * @param RequestInterface $request
+     *
      * @return bool|ActionInterface
      */
     public function match(RequestInterface $request)
@@ -43,7 +44,7 @@ class Router implements RouterInterface
 
         if ($path == self::CUSTOM_RESULT_PAGE) {
             $request->setModuleName('factfinder')->setControllerName('result')->setActionName('index');
-        } else if ($path == self::EXPORT_PAGE) {
+        } elseif ($path == self::EXPORT_PAGE) {
             $request->setModuleName('factfinder')->setControllerName('export')->setActionName('export');
         } else {
             $request->setModuleName('factfinder')->setControllerName('proxy')->setActionName('call');
@@ -58,7 +59,6 @@ class Router implements RouterInterface
          * Don't match if controller name is already set
          * also check if URL matches FACT-Finder front name
          */
-        return is_null($request->getControllerName()) &&
-            preg_match('/^(\/' . self::FRONT_NAME . '\/)/', $request->getPathInfo());
+        return !$request->getControllerName() && preg_match('#^(/' . self::FRONT_NAME . '/)#', $request->getPathInfo());
     }
 }

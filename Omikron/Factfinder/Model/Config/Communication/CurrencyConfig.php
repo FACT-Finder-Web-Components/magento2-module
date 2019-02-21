@@ -7,7 +7,6 @@ namespace Omikron\Factfinder\Model\Config\Communication;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\CurrencyInterface;
 use Magento\Framework\Locale\ResolverInterface;
-use Magento\Store\Model\ScopeInterface;
 use Omikron\Factfinder\Api\Config\ParametersSourceInterface;
 
 class CurrencyConfig implements ParametersSourceInterface

@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace Omikron\Factfinder\Test\Unit\ViewModel;
 
-use PHPUnit\Framework\TestCase;
 use Magento\Framework\Serialize\SerializerInterface;
 use Omikron\Factfinder\Api\FieldRolesInterface;
 use Omikron\Factfinder\Model\Config\CommunicationParametersProvider;
+use Omikron\Factfinder\ViewModel\Communication;
 use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 
 class CommunicationTest extends TestCase
 {
@@ -21,22 +22,19 @@ class CommunicationTest extends TestCase
     /** @var MockObject|CommunicationParametersProvider */
     private $parametersProviderMock;
 
+    /** @var Communication */
     private $communication;
 
     public function test_get_parameters_filter_null_values()
     {
-        $this->parametersProviderMock->method('getParameters')->willReturn(
-            [
-                'url'     => 'http://some-url',
-                'version' => '7.3',
-                'user-id' => null,
-                'channel' => 'some-channel'
-            ]
-        );
+        $this->parametersProviderMock->method('getParameters')->willReturn([
+            'url'     => 'http://some-url',
+            'version' => '7.3',
+            'user-id' => null,
+            'channel' => 'some-channel',
+        ]);
 
-        $parameters = $this->communication->getParameters();
-
-        $this->assertArrayNotHasKey('user-sid', $parameters);
+        $this->assertArrayNotHasKey('user-sid', $this->communication->getParameters());
     }
 
     protected function setUp()
@@ -44,7 +42,8 @@ class CommunicationTest extends TestCase
         $this->parametersProviderMock = $this->createMock(CommunicationParametersProvider::class);
         $this->fieldRolesMock         = $this->createMock(FieldRolesInterface::class);
         $this->serializerMock         = $this->createMock(SerializerInterface::class);
-        $this->communication          = new \Omikron\Factfinder\ViewModel\Communication(
+
+        $this->communication = new Communication(
             $this->fieldRolesMock,
             $this->serializerMock,
             $this->parametersProviderMock

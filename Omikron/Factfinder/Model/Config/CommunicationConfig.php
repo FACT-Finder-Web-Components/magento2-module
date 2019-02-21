@@ -50,12 +50,12 @@ class CommunicationConfig implements CommunicationConfigInterface, ParametersSou
 
     public function isEnabled(int $scopeId = null): bool
     {
-        return $this->scopeConfig->isSetFlag(self::PATH_IS_ENABLED, 'store', $scopeId);
+        return $this->scopeConfig->isSetFlag(self::PATH_IS_ENABLED, ScopeInterface::SCOPE_STORES, $scopeId);
     }
 
-    public function isPushImportEnabled($scopeCode = null): bool
+    public function isPushImportEnabled(int $scopeId = null): bool
     {
-        return $this->scopeConfig->isSetFlag(self::PATH_DATA_TRANSFER_IMPORT, 'store', $scopeCode);
+        return $this->scopeConfig->isSetFlag(self::PATH_DATA_TRANSFER_IMPORT, ScopeInterface::SCOPE_STORES, $scopeId);
     }
 
     public function getParameters(): array
@@ -70,10 +70,9 @@ class CommunicationConfig implements CommunicationConfigInterface, ParametersSou
 
     private function getServerUrl(): string
     {
-        if ($this->scopeConfig->isSetFlag(self::PATH_IS_ENRICHMENT_ENABLED, 'store')) {
+        if ($this->scopeConfig->isSetFlag(self::PATH_IS_ENRICHMENT_ENABLED, ScopeInterface::SCOPE_STORES)) {
             return $this->urlBuilder->getUrl('', ['_direct' => Router::FRONT_NAME]);
         }
-
         return $this->getAddress();
     }
 }

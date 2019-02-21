@@ -7,9 +7,9 @@ namespace Omikron\Factfinder\ViewModel;
 use Magento\Catalog\Api\Data\ProductInterface;
 use Magento\Catalog\Helper\Image;
 use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Framework\Registry;
 use Magento\Framework\UrlInterface;
 use Magento\Framework\View\Element\Block\ArgumentInterface;
-use Magento\Framework\Registry;
 
 class ProductBasedComponent implements ArgumentInterface
 {
