@@ -5,7 +5,7 @@ namespace Omikron\Factfinder\Api\Export;
 /**
  * @api
  */
-interface DataProvider
+interface DataProviderInterface
 {
     /**
      * @return ExportEntity[]

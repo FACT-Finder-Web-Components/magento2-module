@@ -32,7 +32,7 @@ class Credentials
         return [
             'timestamp' => $timestamp,
             'username'  => $this->username,
-            'password'  => md5(sprintf('%s%d%s%s', $this->prefix, $timestamp, md5($this->password), $this->postfix)),
+            'password'  => md5($this->prefix . $timestamp . md5($this->password) . $this->postfix), // phpcs:ignore
         ];
     }
 

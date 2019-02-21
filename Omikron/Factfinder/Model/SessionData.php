@@ -14,7 +14,7 @@ class SessionData implements SessionDataInterface, SectionSourceInterface, Param
     /** @var CustomerSession */
     private $customerSession;
 
-    public function __construct(CustomerSession $customerSession)
+    public function __construct(CustomerSession $customerSession) // phpcs:ignore
     {
         $this->customerSession = $customerSession;
     }

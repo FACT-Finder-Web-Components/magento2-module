@@ -459,7 +459,6 @@ class Product extends AbstractHelper
         return $attributesString;
     }
 
-
     /**
      * Cleanup a value for export
      *

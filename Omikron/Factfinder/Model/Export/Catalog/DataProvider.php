@@ -6,7 +6,7 @@ namespace Omikron\Factfinder\Model\Export\Catalog;
 
 use Magento\Catalog\Api\Data\ProductInterface;
 use Magento\Framework\ObjectManagerInterface;
-use Omikron\Factfinder\Api\Export\DataProvider as DataProviderInterface;
+use Omikron\Factfinder\Api\Export\DataProviderInterface;
 use Omikron\Factfinder\Api\Export\ExportEntity;
 
 class DataProvider implements DataProviderInterface
