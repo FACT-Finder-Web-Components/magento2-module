@@ -22,13 +22,13 @@ class AddToCartTest extends TestCase
     /** @var  MockObject|Tracking */
     private $trackingMock;
 
-    /** @var MockObject|TrackingProductInterfaceFactory  */
+    /** @var MockObject|TrackingProductInterfaceFactory */
     private $trackingProductFactoryMock;
 
     /** @var MockObject|FieldRolesInterface */
     private $fieldRolesMock;
 
-    /** @var MockObject|ProductHelper  */
+    /** @var MockObject|ProductHelper */
     private $productHelperMock;
 
     /** @var MockObject|Observer */
@@ -37,10 +37,10 @@ class AddToCartTest extends TestCase
     /** @var MockObject|RequestInterface */
     private $requestMock;
 
-    /** @var MockObject\ProductInterface */
+    /** @var MockObject|Product */
     private $productMock;
 
-    /** @var MockObject\StoreInterface  */
+    /** @var MockObject|StoreInterface */
     private $storeMock;
 
     /** @var AddToCart */
@@ -51,19 +51,19 @@ class AddToCartTest extends TestCase
         $this->requestMock->method('getParam')->with('qty')->willReturn(0);
         $this->productMock->method('getFinalPrice')->with(1)->willReturn(9.99);
         $this->productHelperMock->expects($this->exactly(2))
-            ->method('get')->willReturnMap(
-                [
-                    ['id', $this->productMock, $this->storeMock, 1],
-                    ['sku', $this->productMock, $this->storeMock, 'product-sku-1'],
-                ]
-            );
+            ->method('get')->willReturnMap([
+                ['id', $this->productMock, $this->storeMock, 1],
+                ['sku', $this->productMock, $this->storeMock, 'product-sku-1'],
+            ]);
 
-        $this->trackingProductFactoryMock->expects($this->once())->method('create')->with([
-            'trackingNumber'      => '1',
-            'masterArticleNumber' => 'product-sku-1',
-            'price'               => 9.99,
-            'count'               => 1
-        ])->willReturn($this->createMock(TrackingProductInterface::class));
+        $this->trackingProductFactoryMock->expects($this->once())
+            ->method('create')
+            ->with([
+                'trackingNumber'      => '1',
+                'masterArticleNumber' => 'product-sku-1',
+                'price'               => 9.99,
+                'count'               => 1,
+            ])->willReturn($this->createMock(TrackingProductInterface::class));
 
         $this->trackingMock->expects($this->once())->method('execute')
             ->with($this->isType('string'), $this->isInstanceOf(TrackingProductInterface::class));
@@ -73,35 +73,31 @@ class AddToCartTest extends TestCase
 
     protected function setUp()
     {
-        $this->storeMock = $this->createMock(StoreInterface::class);
+        $this->storeMock                  = $this->createMock(StoreInterface::class);
         $this->trackingMock               = $this->createMock(Tracking::class);
         $this->fieldRolesMock             = $this->createMock(FieldRolesInterface::class);
         $this->trackingProductFactoryMock = $this->createMock(TrackingProductInterfaceFactory::class);
-        $this->productHelperMock = $this->createMock(ProductHelper::class);
-        $this->requestMock = $this->createMock(RequestInterface::class);
-        $this->productMock = $this->createMock(Product::class);
-        $this->observerMock = $this->createMock(Observer::class);
-        $this->fieldRolesMock->method('getFieldRole')->willReturnMap(
-            [
-                ['trackingProductNumber', null, 'id'],
-                ['masterArticleNumber', null,  'sku'],
-            ]
-        );
-        $this->observerMock->method('getData')->willReturnMap(
-            [
-                ['request', null, $this->requestMock],
-                ['product', null, $this->productMock]
-             ]
-        );
+        $this->productHelperMock          = $this->createMock(ProductHelper::class);
+        $this->requestMock                = $this->createMock(RequestInterface::class);
+        $this->productMock                = $this->createMock(Product::class);
+        $this->observerMock               = $this->createMock(Observer::class);
+
+        $this->fieldRolesMock->method('getFieldRole')->willReturnMap([
+            ['trackingProductNumber', null, 'id'],
+            ['masterArticleNumber', null, 'sku'],
+        ]);
+
+        $this->observerMock->method('getData')->willReturnMap([
+            ['request', null, $this->requestMock],
+            ['product', null, $this->productMock],
+        ]);
 
         $this->addToCart = new AddToCart(
             $this->trackingMock,
             $this->trackingProductFactoryMock,
             $this->productHelperMock,
             $this->fieldRolesMock,
-            $this->createConfiguredMock(StoreManagerInterface::class,
-                ['getStore' => $this->storeMock]
-            )
+            $this->createConfiguredMock(StoreManagerInterface::class, ['getStore' => $this->storeMock])
         );
     }
 }
