@@ -1,5 +1,8 @@
 <?php
+
 namespace Omikron\Factfinder\Model\Adminhtml\System\Config\Backend\Feed;
+
+use Magento\Framework\Exception\LocalizedException;
 
 /**
  * Class Frequency
@@ -55,8 +58,8 @@ class Frequency extends \Magento\Framework\App\Config\Value
         $frequencyMonthly = \Magento\Cron\Model\Config\Source\Frequency::CRON_MONTHLY;
 
         $cronExprArray  = [
-            intval($time[1]),
-            intval($time[0]),
+            (int) $time[1],
+            (int) $time[0],
             ($frequency == $frequencyMonthly) ? '1' : '*',
             '*',
             ($frequency == $frequencyWeekly) ? '1' : '*',
@@ -66,7 +69,7 @@ class Frequency extends \Magento\Framework\App\Config\Value
         try {
             $this->configWriter->save(self::CRON_STRING_PATH, $cronExprString);
         } catch (\Exception $e) {
-            throw new \Exception('Unable to save the cron expression.');
+            throw new LocalizedException(__('Unable to save the cron expression.'), $e);
         }
 
         return $this;

@@ -16,7 +16,6 @@
                     <label>Activate Logging</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
-
                 <field id="address" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Server URL</label>
                     <validate>required-entry validate-url</validate>
@@ -54,7 +53,7 @@
                     <comment>Data enrichment enables you to refine the data coming back from FACT-Finder inside the SDK code. Please refer the documentation for more infos (last chapter about data-communication).</comment>
                 </field>
             </group>
-            <group id="advanced" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+            <group id="advanced" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>Advanced Settings</label>
                 <comment>The advanced settings can change how the search works. Please edit them with caution and only if you know what they are doing.</comment>
                 <field id="version" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
@@ -65,9 +64,14 @@
                         <option label="7.3">7.3</option>
                     </options>
                 </field>
+                <field id="search_immediate" translate="label" type="select" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>search-immediate</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>If this property is present, Web Components will start searching as soon as they are loaded.</comment>
+                </field>
                 <field id="use_url_parameter" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>use-url-parameter</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <source_model>Omikron\Factfinder\Model\Adminhtml\System\Config\TrueFalse</source_model>
                     <comment>If set to true, the http parameters of the current search are pushed to the browser url.</comment>
                 </field>
                 <field id="use_cache" translate="label" type="select" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
@@ -79,6 +83,16 @@
                     <label>default-query</label>
                     <validate>required-entry</validate>
                     <comment>Determines which search term should be used by default. Default is '*'</comment>
+                </field>
+                <field id="only_search_params" translate="label comment" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <label>only-search-params</label>
+                    <comment>If present, URL parameters like 'channel' and 'sid' are omitted in the URL. This can be used in conjunction with parameter-whitelist</comment>
+                </field>
+                <field id="parameter_whitelist" translate="label comment" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>parameter-whitelist</label>
+                    <comment>If any URL parameters are omitted through other attributes like use-url-parameter="false" or only-search-params you can add specific important parameters manually. Just use a comma separated list like: parameter-whitelist="param1,myParam"</comment>
+                    <tooltip>Comma separated field!</tooltip>
                 </field>
                 <field id="add_params" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>add-params</label>
@@ -94,52 +108,52 @@
                 </field>
                 <field id="use_asn" translate="label" type="select" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>use-asn</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <source_model>Omikron\Factfinder\Model\Adminhtml\System\Config\TrueFalse</source_model>
                     <comment>Determines if the the ASN is returned. Can be set to false to save performance, if the ASN is not required. Default is true.</comment>
                 </field>
                 <field id="use_found_words" translate="label" type="select" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>use-found-words</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <source_model>Omikron\Factfinder\Model\Adminhtml\System\Config\TrueFalse</source_model>
                     <comment>For found records, FACT-Finder is capable of returning the words which lead to the find. The determination of these words costs performance. It is therefore deactivated by default. If true, words are created. If false, words are not created.</comment>
                 </field>
                 <field id="use_campaigns" translate="label" type="select" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>use-campaigns</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <source_model>Omikron\Factfinder\Model\Adminhtml\System\Config\TrueFalse</source_model>
                     <comment>Use this parameter if you want to prevent the campaign manager from checking if there is a campaign for this search request.If true, campaigns are analyzed and returned. If false, campaigns are ignored. Default is true.</comment>
                 </field>
                 <field id="generate_advisor_tree" translate="label" type="select" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>generate-advisor-tree</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <source_model>Omikron\Factfinder\Model\Adminhtml\System\Config\TrueFalse</source_model>
                     <comment>Is used with advisor campaigns. Please refer the campaign manager documentation. If true, the whole question-answer-tree is returned with the advisor campaign. If false, only the currently active questions and their answers are returned. Default is false.</comment>
                 </field>
                 <field id="disable_cache" translate="label" type="select" sortOrder="140" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>disable-cache</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <source_model>Omikron\Factfinder\Model\Adminhtml\System\Config\TrueFalse</source_model>
                     <comment>Controls the usage of search result caches. If true, cache is ignored. If false, cache is used. Default is false.</comment>
                 </field>
                 <field id="use_personalization" translate="label" type="select" sortOrder="150" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>use-personalization</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <source_model>Omikron\Factfinder\Model\Adminhtml\System\Config\TrueFalse</source_model>
                     <comment>Allows activating/deactivating of request personalization. If true, the search result is personalized if the personalization module is active and all other requirements are met. If false, the search result is not personalized. Default is true.</comment>
                 </field>
                 <field id="use_semantic_enhancer" translate="label" type="select" sortOrder="160" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>use-semantic_enhancer</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <source_model>Omikron\Factfinder\Model\Adminhtml\System\Config\TrueFalse</source_model>
                     <comment>Allows activating/deactivating of the semantic enrichment of requests. If true, the search result is semantically enriched if the enhanced module is activated and all other requirements are met. If false, the search result is not semantically enriched. Default value is true.</comment>
                 </field>
                 <field id="use_aso" translate="label" type="select" sortOrder="170" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>use-aso</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <source_model>Omikron\Factfinder\Model\Adminhtml\System\Config\TrueFalse</source_model>
                     <comment>Allows activating/deactivating of automated search optimization. If true, the search result is automatically optimized. If false, the search result is not optimized. Default is true.</comment>
                 </field>
                 <field id="use_browser_history" translate="label" type="select" sortOrder="180" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>use-browser-history</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <source_model>Omikron\Factfinder\Model\Adminhtml\System\Config\TrueFalse</source_model>
                     <comment>If true, the search history is pushed to the browser history, even without using url parameter. Default is true.</comment>
                 </field>
                 <field id="use_seo" translate="label" type="select" sortOrder="190" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>use-seo</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <source_model>Omikron\Factfinder\Model\Adminhtml\System\Config\TrueFalse</source_model>
                     <comment>If true, web components will use the FACT-Finder SEO API. Set this only to true if the module is active in FACT-Finder.</comment>
                 </field>
                 <field id="seo_prefix" translate="label" type="text" sortOrder="200" showInDefault="1" showInWebsite="1" showInStore="1">
@@ -152,7 +166,7 @@
                     <comment>If true, disables the automatic redirect to the product detail page if only one record is found.</comment>
                 </field>
             </group>
-            <group id="components" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+            <group id="components" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>Activated Web-Components</label>
                 <comment>Please always save the config in the upper right corner after making changes.</comment>
                 <field id="ff_suggest" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
@@ -206,7 +220,7 @@
                     <comment>TODO Description Pushed Products</comment>
                 </field>
             </group>
-            <group id="data_transfer" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+            <group id="data_transfer" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>Data export</label>
                 <comment><![CDATA[<div class="message message-notice notice"><div data-ui-id="messages-message-success">Please always save the config in the upper right corner after making changes. Especially before using the export-button.</div></div>]]></comment>
                 <field id="ff_upload_host" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
@@ -272,7 +286,7 @@
                     </depends>
                 </field>
             </group>
-            <group id="basic_auth_data_transfer" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+            <group id="basic_auth_data_transfer" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>Export via Basic Auth</label>
                 <field id="ff_upload_url_user" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Basic Auth User</label>
@@ -282,7 +296,7 @@
                     <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
                 </field>
             </group>
-            <group id="configurable_cron" translate="label" type="text" sortOrder="130" showInDefault="1" showInWebsite="0" showInStore="0">
+            <group id="configurable_cron" translate="label" type="text" sortOrder="70" showInDefault="1" showInWebsite="0" showInStore="0">
                 <label>Cron Schedule</label>
                 <field id="ff_cron_enabled" translate="label" type="select" sortOrder="120" showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Generate Export Files(s) automatically</label>

@@ -1,8 +1,6 @@
-<?php /** @var $block \Omikron\Factfinder\Block\FF\Searchbox */ ?>
-<div class="search-wrapper">
-    <div class="top-search-box">
-        <input is="ff-searchbox" placeholder="<?= $block->escapeHtmlAttr(__('Search…')) ?>" suggest-onfocus="false" hidesuggest-onblur="true" />
-        <button is="ff-searchbutton"><?= $block->escapeHtmlAttr(__('Search')) ?></button>
-    </div>
-    <?php echo $block->getLayout()->createBlock('Omikron\Factfinder\Block\FF\Suggest')->setTemplate('Omikron_Factfinder::ff/suggest.phtml')->toHtml() ?>
+<?php /** @var $block Magento\Framework\View\Element\Template */ ?>
+<div class="top-search-box">
+    <input is="ff-searchbox" placeholder="<?= $block->escapeHtmlAttr(__('Search…')) ?>" suggest-onfocus="false"
+           hidesuggest-onblur="true"/>
+    <button is="ff-searchbutton"><?= $block->escapeHtmlAttr(__('Search')) ?></button>
 </div>

@@ -59,7 +59,9 @@ class TestConnection extends Action
     private function getCredentials(array $params): array
     {
         // The password wasn't edited, load it from config
-        if ($params['password'] === $this->obscuredValue) $params['password'] = $this->authConfig->getPassword();
+        if ($params['password'] === $this->obscuredValue) {
+            $params['password'] = $this->authConfig->getPassword();
+        }
         return $this->credentialsFactory->create($params)->toArray();
     }
 }

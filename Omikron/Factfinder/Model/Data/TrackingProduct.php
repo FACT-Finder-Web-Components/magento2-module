@@ -8,16 +8,16 @@ use Omikron\Factfinder\Api\Data\TrackingProductInterface;
 
 class TrackingProduct implements TrackingProductInterface
 {
-    /** @var string  */
+    /** @var string */
     private $trackingNumber;
 
-    /** @var string  */
+    /** @var string */
     private $masterArticleNumber;
 
-    /** @var string  */
+    /** @var string */
     private $price;
 
-    /** @var int  */
+    /** @var int */
     private $count;
 
     public function __construct(string $trackingNumber, string $masterArticleNumber, string $price, int $count)
