@@ -20,5 +20,6 @@
                 <block class="Magento\Framework\View\Element\Template" name="factfinder.suggest" ifconfig="factfinder/components/ff_suggest" template="Omikron_Factfinder::ff/suggest.phtml" />
             </container>
         </referenceContainer>
+        <referenceBlock name="top.search" remove="true" />
     </body>
 </page>
