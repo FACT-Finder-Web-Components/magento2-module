@@ -36,8 +36,7 @@ class Feed extends \Magento\Backend\App\Action
         \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \Omikron\Factfinder\Model\Export\Product $productExporter
-    )
-    {
+    ) {
         parent::__construct($context);
 
         $this->resultPageFactory = $resultPageFactory;
@@ -57,7 +56,7 @@ class Feed extends \Magento\Backend\App\Action
         $result = [];
         $httpReferer = $this->_redirect->getRefererUrl();
 
-        if(isset($httpReferer)) {
+        if (isset($httpReferer)) {
             preg_match('@/store/([0-9]+)/@', $httpReferer, $result);
         }
 

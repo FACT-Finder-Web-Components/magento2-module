@@ -1,9 +1,14 @@
-<?php /** @var $block \Omikron\Factfinder\Block\FF\Communication */ ?>
-<?= /* @noEscape */ $block->getWebComponent(); ?>
+<?php
+/** @var Magento\Framework\View\Element\Template $block */
+/** @var Omikron\Factfinder\ViewModel\Communication $viewModel */
+$viewModel  = $block->getViewModel();
+$parameters = ((array) $block->getData('communication_parameters')) + $viewModel->getParameters();
+?>
+<ff-communication<?php foreach ($parameters as $key => $value) echo /** @noEscape */ sprintf(' %s="%s"', $key, $block->escapeHtmlAttr($value)) ?> />
 <!-- Set FieldRoles -->
 <script>
     document.addEventListener("ffReady", function () {
-        factfinder.communication.fieldRoles = <?= /* @noEscape */ $block->getFieldRoles() ?>;
+        factfinder.communication.fieldRoles = <?= /* @noEscape */ $viewModel->getFieldRoles() ?>;
     });
 </script>
 <div data-bind="scope: 'ffcommunication'"></div>

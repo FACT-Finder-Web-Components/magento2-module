@@ -1,6 +1,9 @@
-<?php /** @var $block \Magento\Catalog\Block\Product\View */ ?>
-
-<ff-recommendation record-id="<?= $block->escapeHtmlAttr($block->getProduct()->getSku()) ?>" unresolved>
+<?php
+/** @var Magento\Framework\View\Element\Template $block */
+/** @var Omikron\Factfinder\ViewModel\ProductBasedComponent $viewModel */
+$viewModel = $block->getViewModel();
+?>
+<ff-recommendation record-id="<?= $block->escapeHtmlAttr($viewModel->getProduct()->getSku()) ?>" unresolved>
     <div class="block upsell" data-limit="0" data-shuffle="0">
         <div class="block-title title">
             <strong id="block-upsell-heading" role="heading" aria-level="2"><?= $block->escapeHtml(__('Recommendations')) ?></strong>
@@ -17,7 +20,7 @@
                                             <span class="product-image-wrapper">
                                             <img class="product-image-photo" src="{{record.ImageUrl}}"
                                                  data-image="{{record.ImageUrl}}"
-                                                 data-image-onerror="<?= $block->escapeUrl($block->getProductImagePlaceholder()) ?>"/>
+                                                 data-image-onerror="<?= $block->escapeUrl($viewModel->getProductImagePlaceholder()) ?>"/>
                                             </span>
                                         </span>
                                     </a>
@@ -33,7 +36,7 @@
                                                 <span id="product-price-{{record.MagentoEntityId}}"
                                                       data-price-amount="{{record.Price}}"
                                                       data-price-type="finalPrice" class="price-wrapper ">
-                                                    <span class="price">{{record.Price}}<?= $block->escapeHtml($block->getCurrentCurrencySymbol()) ?></span>
+                                                    <span class="price">{{record.Price}}</span>
                                                 </span>
                                             </span>
                                         </div>

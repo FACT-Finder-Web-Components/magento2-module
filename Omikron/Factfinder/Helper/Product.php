@@ -57,8 +57,7 @@ class Product extends AbstractHelper
         \Magento\Catalog\Model\ProductRepository $productRepository,
         \Magento\ConfigurableProduct\Model\ResourceModel\Product\Type\Configurable $catalogProductTypeConfigurable,
         \Magento\Catalog\Api\CategoryRepositoryInterface $categoryRepository
-    )
-    {
+    ) {
         parent::__construct($context);
         $this->imageHelperFactory = $imageHelperFactory;
         $this->eavConfig = $eavConfig;
@@ -275,7 +274,8 @@ class Product extends AbstractHelper
      * @param \Magento\Catalog\Api\Data\CategoryInterface $category
      * @return string
      */
-    protected function getCategoryPathByCategory($category) {
+    protected function getCategoryPathByCategory($category)
+    {
         if (in_array($category->getParentId(), [Category::ROOT_CATEGORY_ID, Category::TREE_ROOT_ID])) {
             return '';
         }
@@ -440,9 +440,9 @@ class Product extends AbstractHelper
                 $optionLabel = $attribute->getSource()->getOptionText($optionId);
                 $values[] = $optionLabel;
             }
-        } else if ($frontendInput == 'price') {
+        } elseif ($frontendInput == 'price') {
             $values[] = number_format(round(floatval($attributeValue), 2), 2);
-        } else if ($frontendInput == 'boolean') {
+        } elseif ($frontendInput == 'boolean') {
             $values[] = $attributeValue ? 'Yes' : 'No';
         } else {
             $values[] = $attributeValue;
@@ -483,5 +483,4 @@ class Product extends AbstractHelper
 
         return trim($value);
     }
-
 }

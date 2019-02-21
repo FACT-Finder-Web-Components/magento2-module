@@ -1,35 +1,33 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Omikron\Factfinder\Cron;
+
+use Magento\Framework\App\Config\ScopeConfigInterface;
+use Omikron\Factfinder\Model\Export\Product;
 
 class Feed
 {
-    /** @var \Omikron\Factfinder\Model\Export\Product */
-    protected $productExport;
+    private const PATH_CONFIGURABLE_CRON_IS_ENABLED = 'factfinder/configurable_cron/ff_cron_enabled';
 
-    /** @var \Omikron\Factfinder\Helper\Data */
-    protected $configHelper;
+    /** @var Product  */
+    private $productExport;
 
-    /**
-     * Feed constructor.
-     *
-     * @param \Omikron\Factfinder\Model\Export\Product $productExport
-     * @param \Omikron\Factfinder\Helper\Data          $configHelper
-     */
+    /** @var ScopeConfigInterface  */
+    private $scopeConfig;
+
     public function __construct(
-        \Omikron\Factfinder\Model\Export\Product $productExport,
-        \Omikron\Factfinder\Helper\Data $configHelper
+        Product $productExport,
+        ScopeConfigInterface $scopeConfig
     ) {
         $this->productExport = $productExport;
-        $this->configHelper  = $configHelper;
+        $this->scopeConfig   = $scopeConfig;
     }
 
-    /**
-     * Executed on Cron Run
-     */
     public function execute()
     {
-        if ($this->configHelper->isCronEnabled()) {
+        if ($this->scopeConfig->isSetFlat(self::PATH_CONFIGURABLE_CRON_IS_ENABLED)) {
             $this->productExport->exportProducts(true);
         }
     }
