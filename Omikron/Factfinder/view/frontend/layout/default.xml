@@ -14,15 +14,11 @@
                 </arguments>
             </block>
         </referenceContainer>
-
-
         <referenceContainer name="header-wrapper">
             <container name="factfinder.search" htmlTag="div" htmlClass="search-wrapper">
                 <block class="Magento\Framework\View\Element\Template" name="factfinder.searchbox" ifconfig="factfinder/general/is_enabled" template="Omikron_Factfinder::ff/searchbox.phtml" />
                 <block class="Magento\Framework\View\Element\Template" name="factfinder.suggest" ifconfig="factfinder/components/ff_suggest" template="Omikron_Factfinder::ff/suggest.phtml" />
             </container>
         </referenceContainer>
-
-        <referenceBlock name="top.search" remove="true" />
     </body>
 </page>
