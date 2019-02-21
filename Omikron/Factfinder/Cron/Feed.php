@@ -11,23 +11,21 @@ class Feed
 {
     private const PATH_CONFIGURABLE_CRON_IS_ENABLED = 'factfinder/configurable_cron/ff_cron_enabled';
 
-    /** @var Product  */
+    /** @var Product */
     private $productExport;
 
-    /** @var ScopeConfigInterface  */
+    /** @var ScopeConfigInterface */
     private $scopeConfig;
 
-    public function __construct(
-        Product $productExport,
-        ScopeConfigInterface $scopeConfig
-    ) {
+    public function __construct(Product $productExport, ScopeConfigInterface $scopeConfig)
+    {
         $this->productExport = $productExport;
         $this->scopeConfig   = $scopeConfig;
     }
 
     public function execute()
     {
-        if ($this->scopeConfig->isSetFlat(self::PATH_CONFIGURABLE_CRON_IS_ENABLED)) {
+        if ($this->scopeConfig->isSetFlag(self::PATH_CONFIGURABLE_CRON_IS_ENABLED)) {
             $this->productExport->exportProducts(true);
         }
     }

@@ -216,7 +216,7 @@ class Product
         $this->deleteFeedFile($filename);
 
         if ($this->communicationConfig->isPushImportEnabled($storeId)) {
-            if ($this->pushImport->execute([], $storeId)) {
+            if ($this->pushImport->execute($storeId, [])) {
                 $result['message'] .= ' ' . __('Import successfully pushed.');
             } else {
                 $result['message'] .= ' ' . __('Import not successful.');

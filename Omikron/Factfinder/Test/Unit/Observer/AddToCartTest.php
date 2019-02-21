@@ -73,14 +73,18 @@ class AddToCartTest extends TestCase
 
     protected function setUp()
     {
-        $this->storeMock                  = $this->createMock(StoreInterface::class);
-        $this->trackingMock               = $this->createMock(Tracking::class);
-        $this->fieldRolesMock             = $this->createMock(FieldRolesInterface::class);
-        $this->trackingProductFactoryMock = $this->createMock(TrackingProductInterfaceFactory::class);
-        $this->productHelperMock          = $this->createMock(ProductHelper::class);
-        $this->requestMock                = $this->createMock(RequestInterface::class);
-        $this->productMock                = $this->createMock(Product::class);
-        $this->observerMock               = $this->createMock(Observer::class);
+        $this->storeMock         = $this->createMock(StoreInterface::class);
+        $this->trackingMock      = $this->createMock(Tracking::class);
+        $this->fieldRolesMock    = $this->createMock(FieldRolesInterface::class);
+        $this->productHelperMock = $this->createMock(ProductHelper::class);
+        $this->requestMock       = $this->createMock(RequestInterface::class);
+        $this->productMock       = $this->createMock(Product::class);
+        $this->observerMock      = $this->createMock(Observer::class);
+
+        $this->trackingProductFactoryMock = $this->getMockBuilder(TrackingProductInterfaceFactory::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['create'])
+            ->getMock();
 
         $this->fieldRolesMock->method('getFieldRole')->willReturnMap([
             ['trackingProductNumber', null, 'id'],

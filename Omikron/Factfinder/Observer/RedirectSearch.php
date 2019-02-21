@@ -17,7 +17,7 @@ class RedirectSearch implements ObserverInterface
     /** @var ResponseInterface */
     private $response;
 
-    /** @var Config */
+    /** @var CommunicationConfigInterface */
     private $config;
 
     public function __construct(
@@ -27,7 +27,7 @@ class RedirectSearch implements ObserverInterface
     ) {
         $this->redirect = $redirect;
         $this->response = $response;
-        $this->config = $config;
+        $this->config   = $config;
     }
 
     public function execute(Observer $observer)
