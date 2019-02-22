@@ -3,7 +3,7 @@
 /** @var Omikron\Factfinder\ViewModel\ProductBasedComponent $viewModel */
 $viewModel = $block->getViewModel();
 ?>
-<ff-recommendation record-id="<?= $block->escapeHtml($viewModel->getProduct()->getSku()) ?>" unresolved>
+<ff-recommendation record-id="<?= $block->escapeHtmlAttr($viewModel->getProduct()->getSku()) ?>" unresolved>
     <div class="block upsell" data-limit="0" data-shuffle="0">
         <div class="block-title title">
             <strong id="block-upsell-heading" role="heading" aria-level="2"><?= $block->escapeHtml(__('Recommendations')) ?></strong>
