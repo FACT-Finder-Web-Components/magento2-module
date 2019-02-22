@@ -16,18 +16,17 @@ $parameters = ((array) $block->getData('communication_parameters')) + $viewModel
         factfinder.communication.fieldRoles = <?= /* @noEscape */ $viewModel->getFieldRoles() ?>;
     });
 </script>
-<div data-bind="scope: 'ffcommunication'">
-    <script type="text/x-magento-init">
-            {
-                "*": {
-                    "Magento_Ui/js/core/app": {
-                        "components": {
-                            "ffcommunication": {
-                                "component": "Omikron_Factfinder/js/view/ffcommunication"
-                            }
+<div data-bind="scope: 'ffcommunication'"></div>
+<script type="text/x-magento-init">
+        {
+            "*": {
+                "Magento_Ui/js/core/app": {
+                    "components": {
+                        "ffcommunication": {
+                            "component": "Omikron_Factfinder/js/view/ffcommunication"
                         }
                     }
                 }
             }
-    </script>
-</div>
+        }
+</script>
