@@ -29,7 +29,7 @@
                 <use_aso>true</use_aso>
                 <use_browser_history>true</use_browser_history>
                 <use_seo>true</use_seo>
-                <disable_single_hit_redirect>0</disable_single_hit_redirect>
+                <disable_single_hit_redirect>false</disable_single_hit_redirect>
             </advanced>
             <components>
                 <ff_suggest>0</ff_suggest>

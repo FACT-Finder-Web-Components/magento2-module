@@ -7,6 +7,7 @@
 
     <body>
         <referenceContainer name="after.body.start">
+            <block ifconfig="factfinder/general/is_enabled" name="prevent.fouc.css" template="Omikron_Factfinder::ff/styles.phtml"/>
             <block ifconfig="factfinder/general/is_enabled" class="Magento\Framework\View\Element\Template" name="factfinder.communication" before="-" template="Omikron_Factfinder::ff/communication.phtml">
                 <arguments>
                     <argument name="view_model" xsi:type="object">Omikron\Factfinder\ViewModel\Communication</argument>
