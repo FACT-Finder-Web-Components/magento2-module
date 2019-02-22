@@ -1,11 +1,9 @@
-<?php
-/** @var Magento\Framework\View\Element\Template $block */
-?>
+<?php /** @var Magento\Framework\View\Element\Template $block */ ?>
 <div class="top-search-box">
     <ff-searchbox class="ff-searchbox" suggest-onfocus="true"
                   use-suggest="true"
                   select-onclick="true">
-        <input placeholder="<?= $block->escapeHtml(__('Search...')) ?>"/>
+        <input placeholder="<?= $block->escapeHtmlAttr(__('Search…')) ?>"/>
     </ff-searchbox>
 
     <ff-searchbutton>
