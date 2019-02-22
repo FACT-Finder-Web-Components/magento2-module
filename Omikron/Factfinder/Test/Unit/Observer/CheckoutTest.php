@@ -48,8 +48,12 @@ class CheckoutTest extends TestCase
 
     protected function setUp()
     {
-        $this->trackingMock               = $this->createMock(Tracking::class);
-        $this->trackingProductFactoryMock = $this->createMock(TrackingProductInterfaceFactory::class);
+        $this->trackingMock = $this->createMock(Tracking::class);
+
+        $this->trackingProductFactoryMock = $this->getMockBuilder(TrackingProductInterfaceFactory::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['create'])
+            ->getMock();
 
         $this->checkoutObserver = new Checkout(
             $this->trackingMock,
