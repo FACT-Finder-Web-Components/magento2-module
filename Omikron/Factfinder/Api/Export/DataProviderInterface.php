@@ -8,7 +8,7 @@ namespace Omikron\Factfinder\Api\Export;
 interface DataProviderInterface
 {
     /**
-     * @return ExportEntity[]
+     * @return ExportEntityInterface[]
      */
     public function getEntities(): iterable;
 }

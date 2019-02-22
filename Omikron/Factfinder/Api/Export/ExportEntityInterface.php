@@ -5,7 +5,7 @@ namespace Omikron\Factfinder\Api\Export;
 /**
  * @api
  */
-interface ExportEntity
+interface ExportEntityInterface
 {
     /**
      * Convert entity data to associative array

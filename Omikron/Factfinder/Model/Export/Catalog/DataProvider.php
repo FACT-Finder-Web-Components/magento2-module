@@ -7,7 +7,7 @@ namespace Omikron\Factfinder\Model\Export\Catalog;
 use Magento\Catalog\Api\Data\ProductInterface;
 use Magento\Framework\ObjectManagerInterface;
 use Omikron\Factfinder\Api\Export\DataProviderInterface;
-use Omikron\Factfinder\Api\Export\ExportEntity;
+use Omikron\Factfinder\Api\Export\ExportEntityInterface;
 
 class DataProvider implements DataProviderInterface
 {
@@ -28,7 +28,7 @@ class DataProvider implements DataProviderInterface
     }
 
     /**
-     * @return ExportEntity[]
+     * @return ExportEntityInterface[]
      */
     public function getEntities(): iterable
     {

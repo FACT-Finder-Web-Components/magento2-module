@@ -2,28 +2,27 @@
 
 namespace Omikron\Factfinder\Controller\Adminhtml\Export;
 
-/**
- * Class Feed
- * Used to handle manual export requests
- *
- * @package Omikron\Factfinder\Controller\Adminhtml\Export
- */
-class Feed extends \Magento\Backend\App\Action
+use Magento\Backend\App\Action;
+use Magento\Framework\Controller\Result\JsonFactory;
+use Magento\Store\Model\StoreManagerInterface;
+use Omikron\Factfinder\Model\Export\Product;
+
+class Feed extends Action
 {
-    /** @var \Magento\Framework\Controller\Result\JsonFactory */
+    /** @var JsonFactory */
     protected $resultJsonFactory;
 
-    /** @var \Omikron\Factfinder\Model\Export\Product */
+    /** @var Product */
     protected $productExporter;
 
-    /** @var \Magento\Store\Model\StoreManagerInterface */
+    /** @var StoreManagerInterface */
     protected $storeManager;
 
     public function __construct(
-        \Magento\Backend\App\Action\Context $context,
-        \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
-        \Magento\Store\Model\StoreManagerInterface $storeManager,
-        \Omikron\Factfinder\Model\Export\Product $productExporter
+        Action\Context $context,
+        JsonFactory $resultJsonFactory,
+        StoreManagerInterface $storeManager,
+        Product $productExporter
     ) {
         parent::__construct($context);
         $this->resultJsonFactory = $resultJsonFactory;
