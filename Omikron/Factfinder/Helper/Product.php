@@ -214,7 +214,7 @@ class Product extends AbstractHelper
     /**
      * Retrieve product thumbnail url
      *
-     * @param \Magento\Catalog\Model\ResourceModel\Product $product
+     * @param \Magento\Catalog\Model\Product $product
      * @return string
      */
     protected function getImageUrl($product, $store)
@@ -376,12 +376,15 @@ class Product extends AbstractHelper
     {
         return $this->scopeConfig->isSetFlag(self::PATH_DATA_TRANSFER_ATTRIBUTES_SEPARATE_COLUMNS, 'store', $store->getId());
     }
+
     /**
      * Get all the attributes for a given product and store
      *
-     * @param \Magento\Catalog\Model\ResourceModel\Product $product
+     * @param \Magento\Catalog\Model\Product         $product
      * @param \Magento\Store\Api\Data\StoreInterface $store
+     *
      * @return string
+     * @throws LocalizedException
      */
     protected function getAttributes($product, $store)
     {
@@ -458,7 +461,6 @@ class Product extends AbstractHelper
 
         return $attributesString;
     }
-
 
     /**
      * Cleanup a value for export
