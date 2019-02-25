@@ -7,7 +7,7 @@
                     <argument name="view_model" xsi:type="object">Omikron\Factfinder\ViewModel\ProductBasedComponent</argument>
                 </arguments>
             </block>
-            <block class="Magento\Framework\View\Element\Template" name="factfinder.similar" ifconfig="factfinder/components/ff_similar" template="Omikron_Factfinder::ff/similar.phtml" >
+            <block class="Magento\Framework\View\Element\Template" name="factfinder.similar" ifconfig="factfinder/components/ff_similar" template="Omikron_Factfinder::ff/similar.phtml">
                 <arguments>
                     <argument name="view_model" xsi:type="object">Omikron\Factfinder\ViewModel\ProductBasedComponent</argument>
                 </arguments>
