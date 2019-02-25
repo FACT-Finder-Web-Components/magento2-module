@@ -1,0 +1,13 @@
+parameters:
+  excludes_analyse:
+    - %currentWorkingDirectory%/Omikron/Factfinder/Test
+    - %currentWorkingDirectory%/vendor
+
+  fileExtensions:
+    - php
+    - phtml
+
+  ignoreErrors:
+    - '#unknown class ([^\s]+)Factory#'
+    - '#invalid typehint type ([^\s]+)Factory#'
+    - '#Undefined variable: \$block#'

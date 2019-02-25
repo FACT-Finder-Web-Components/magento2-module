@@ -1,24 +1,24 @@
 <?php
-/** @var $block Magento\Framework\View\Element\Template */
+/** @var Magento\Framework\View\Element\Template $block */
 ?>
 <ff-suggest layout="block" unresolved>
     <section id="searchContainer" class="searchTermContainer">
         <div data-container="searchTerm">
-            <p class="containerCaption">Suchvorschläge</p>
+            <p class="containerCaption"><?= $block->escapeHtml(__('Search suggestions')) ?></p>
             <ff-suggest-item type="searchTerm">
                 <span>{{{name}}}</span>
             </ff-suggest-item>
         </div>
 
         <div data-container="category">
-            <p class="containerCaption">Kategorievorschläge</p>
+            <p class="containerCaption"><?= $block->escapeHtml(__('Category suggestions')) ?></p>
             <ff-suggest-item type="category">
                 <span>{{{name}}}</span>
             </ff-suggest-item>
         </div>
 
         <div data-container="brand">
-            <p class="containerCaption">Marken</p>
+            <p class="containerCaption"><?= $block->escapeHtml(__('Brands')) ?></p>
             <ff-suggest-item type="brand">
                 <span>{{{name}}}</span>
             </ff-suggest-item>
@@ -27,15 +27,15 @@
 
     <section id="productContainer" class="productsContainer">
         <div data-container="productName">
-            <p class="containerCaption">Vorgeschlagene Produkte</p>
+            <p class="containerCaption"><?= $block->escapeHtml(__('Suggested products')) ?></p>
             <div>
                 <ff-suggest-item type="productName">
                     <a href="{{attributes.deeplink}}" data-redirect="{{attributes.deeplink}}" data-redirect-target="_blank">
                         <img data-image="{{{suggestions.image}}}">
                         <div class="product-center">
-                            <div class="ff-product-name">{{{name}}}</div>
-                            <div>Shipping</div>
-                            <div>Rating</div>
+                            <div class="product-name">{{{name}}}</div>
+                            <div><?= $block->escapeHtml(__('Shipping')) ?></div>
+                            <div><?= $block->escapeHtml(__('Rating')) ?> </div>
                         </div>
                         <div class="product-right">
                             <div class="product-price">{{attributes.Price}}</div>
