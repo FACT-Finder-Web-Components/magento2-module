@@ -40,6 +40,6 @@ class DataProvider implements DataProviderInterface
 
     private function entitiesFrom(ProductInterface $product): DataProviderInterface
     {
-        return $this->objectManager->create($this->entityTypes[$product->getTypeId()], ['product' => $product]);
+        return $this->objectManager->create($this->entityTypes[$product->getTypeId()], ['product' => $product]); // phpcs:ignore
     }
 }

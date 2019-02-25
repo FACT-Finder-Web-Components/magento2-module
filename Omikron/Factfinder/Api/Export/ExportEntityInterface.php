@@ -8,11 +8,16 @@ namespace Omikron\Factfinder\Api\Export;
 interface ExportEntityInterface
 {
     /**
-     * Convert entity data to associative array
+     * Get entity ID
      *
-     * @param array $attributes Optionally specify which attributes should be exported
+     * @return int
+     */
+    public function getId(): int;
+
+    /**
+     * Convert entity data to associative array
      *
      * @return array
      */
-    public function toArray(array $attributes = []): array;
+    public function toArray(): array;
 }
