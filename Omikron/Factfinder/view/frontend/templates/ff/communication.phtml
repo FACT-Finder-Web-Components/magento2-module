@@ -9,10 +9,10 @@ $parameters = ((array) $block->getData('communication_parameters')) + $viewModel
 <script src="<?= $block->escapeUrl($block->getViewFileUrl('Omikron_Factfinder::ff-web-components/dist/vendor/webcomponents-loader.min.js')) ?>"></script>
 <script src="<?= $block->escapeUrl($block->getViewFileUrl('Omikron_Factfinder::ff-web-components/dist/bundle.min.js')) ?>" defer></script>
 
-<ff-communication<?php foreach ($parameters as $key => $value) echo /** @noEscape */ sprintf(' %s="%s"', $key, $block->escapeHtmlAttr($value)) ?> />
+<ff-communication<?php foreach ($parameters as $key => $value) echo /* @noEscape */ sprintf(' %s="%s"', $key, $block->escapeHtmlAttr($value)) ?> />
 <!-- Set FieldRoles -->
 <script>
-    document.addEventListener("ffReady", function () {
+    document.addEventListener('ffReady', function () {
         factfinder.communication.fieldRoles = <?= /* @noEscape */ $viewModel->getFieldRoles() ?>;
     });
 </script>
