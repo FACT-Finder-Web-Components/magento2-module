@@ -5,9 +5,9 @@ $viewModel  = $block->getViewModel();
 $parameters = ((array) $block->getData('communication_parameters')) + $viewModel->getParameters();
 ?>
 
-<script src="<?= $block->escapeUrl($block->getViewFileUrl('Omikron_Factfinder::ff-web-components/dist/vendor/custom-elements-es5-adapter.js')) ?>"></script>
-<script src="<?= $block->escapeUrl($block->getViewFileUrl('Omikron_Factfinder::ff-web-components/dist/vendor/webcomponents-loader.js')) ?>"></script>
-<script src="<?= $block->escapeUrl($block->getViewFileUrl('Omikron_Factfinder::ff-web-components/dist/bundle.js')) ?>" defer></script>
+<script src="<?= $block->escapeUrl($block->getViewFileUrl('Omikron_Factfinder::ff-web-components/dist/vendor/custom-elements-es5-adapter.min.js')) ?>"></script>
+<script src="<?= $block->escapeUrl($block->getViewFileUrl('Omikron_Factfinder::ff-web-components/dist/vendor/webcomponents-loader.min.js')) ?>"></script>
+<script src="<?= $block->escapeUrl($block->getViewFileUrl('Omikron_Factfinder::ff-web-components/dist/bundle.min.js')) ?>" defer></script>
 
 <ff-communication<?php foreach ($parameters as $key => $value) echo /** @noEscape */ sprintf(' %s="%s"', $key, $block->escapeHtmlAttr($value)) ?> />
 <!-- Set FieldRoles -->
