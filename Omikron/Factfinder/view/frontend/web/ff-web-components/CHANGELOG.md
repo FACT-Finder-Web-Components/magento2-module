@@ -1,13 +1,199 @@
-# 1.2.14
+# 3.0.0
+## New Boilerplate
+```html
+...
+    <script src="../bower_components/ff-web-components/dist/vendor/custom-elements-es5-adapter.js"></script>
+    <script src="../bower_components/ff-web-components/dist/vendor/webcomponents-loader.js"></script>
+    <script defer src="../bower_components/ff-web-components/dist/bundle.js"></script>
+</head>
+```
+
+We already migrated our demos project in the release/3.0 branch: https://github.com/FACT-Finder-Web-Components/demos/tree/release/3.0
+
+## ADD
+- `ff-communication`'s boolean properties with `false` value can be declared as DOM element's attributes explicitly: `<ff-communication />` is equivalent to `<ff-communication search-immediate="false" />`
+
 ## FIX
-- up/down arrow navigation fix for ff-onfocus-suggest and ff-suggest component
-- fixed erroneous filtering when filter name contains unrelated substring "sort"
-- infinite scrolling of `ff-record-list` doesn't work reliably due to race condition on page load
-- fixed rendering of ff-slider buttons when detached and attached to dom
+- `ff-onfocus-suggest` left arrow navigation fix for rows that contain more than 2 elements (the closest element is now selected)
 
 ## CHANGE
-- new `--nav-element-a` mixin to allow anchor elements in `ff-header-navigation` to be styled even in shadow DOM
+- internal rewrite from [Polymer 1](https://www.polymer-project.org/1.0/docs/devguide/feature-overview) to [Polymer 3](https://www.polymer-project.org/3.0/docs/devguide/feature-overview)
+- internal rewrite to use [LitElement](https://lit-element.polymer-project.org) as a base class instead of PolymerElement in the WebComponents
+- logging format improvements
+- replaced all `tap` events with `click` events
+- removed all CSS mixins, use regular CSS selectors instead. See migration guide for details
 
+## BREAKING
+- The way of including the Web Components scripts has changed. See [Installation](https://web-components.fact-finder.de/documentation/install-dist) for the right way to include the scripts
+- Aligning with the current trend we no longer support [Bower](https://bower.io/). As a replacement you can use [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/lang/en/)
+- `ff-searchbox`
+    - extending built-in HTML elements is not supported anymore. Hence use `<ff-searchbox>` tag with mandatory `<input />` tag inside instead of `<input is="ff-searchbox" />`
+    - if you don't want to use the first `input` tag within `<ff-searchbox>`, you can use `SearchBox.resetInput(selector)` to set the input field
+- `ff-searchbutton`
+    - extending built-in HTML elements is not supported anymore. Hence use `<ff-searchbutton>` tag with mandatory `<button />` tag inside instead of `<button is="ff-searchutton" />`
+    - if you don't want to use the first `button` tag within `<ff-searchbutton>`, you can use `SearchButton.resetInput(selector)` to set the button
+- `ff-asn-group`
+    - use `<div slot="groupCaption" ...>` instead of `<div data-container="groupCaption" ...>`
+- `ff-asn-group-element`
+    - use `<div slot="selected" ...>` instead of `<div data-selected ...>`
+    - use `<div slot="unselected" ...>` instead of `<div data-unselected ...>`
+- `ff-asn-group-slider`
+    - use `<div slot="groupCaption" ...>` instead of `<div data-container="groupCaption" ...>`
+- `ff-slider`
+    - use `<div slot="slider1" id="slider1" ...></div>` instead of `<div data-slider="1" ...></div>`
+    - use `<div slot="slider2" id="slider2" ...></div>` instead of `<div data-slider="2" ...></div>`
+- `ff-carousel`
+    - removed `getCurrentSlide` method, use `currentSlide` property directly instead
+    - removed `getMaxSlides` method, use `maxSlides` property directly instead
+- `ff-asn-group`
+    - deprecated attribute `laszy-load` was replaced by `lazy-load`
+    - `ff-asn-group-element` no longer replace `<div data-content="detailedLinks">`, but instead get nested inside now
+    - `ff-asn-group-element` no longer replace `<div data-content="hiddenLinks">`, but instead get nested inside now
+- `ff-products-per-page-item`
+    - removed `clone` method
+- `ff-sortbox`
+    - introduced new container `<div class="ffw-selected-container">`. This container is always visible and contains the selected `ff-sortbox-item`
+    - `key` for _Relevance_ changed from `key="null.desc"` to `key="ff.relevance"`
+- `ff-sortbox-item`
+    - renamed CSS class `selected` to `ffw-selected`
+    - renamed CSS class `showSelected` to `ffw-showSelected`
+- `ff-paging-item`
+    - `productsPerPageItem` property was renamed to `pagingItem`
+- `ff-paging-set`
+    - removed `hide()` and `show()` functions, use `hideSelf()` and `showSelf()` instead
+- `ff-navigation`
+    - removed shadow DOM
+- removed `ff-carousel` from the library
+
+## KNOWN ISSUES
+- `ff-asn`
+    - "removeFilter" element does not work in some scenarios
+    - no default templates for group and slider. Omitting `ff-asn-group` and `ff-asn-group-slider` causes errors. Always specify them for correct functioning
+    - the following minimal setup is recommended
+        ```html
+        <ff-asn>
+            <ff-asn-group for-group="all" opened>
+
+                <ff-asn-group-element>
+                    <div slot="selected">
+                        <span>{{element.name}}</span>
+                    </div>
+                    <div slot="unselected">
+                        <span>{{element.name}}</span>
+                    </div>
+                </ff-asn-group-element>
+
+                <div slot="groupCaption" class="groupCaption">{{group.name}}</div>
+
+                <div data-container="detailedLinks">
+                    <div data-content="detailedLinks"></div>
+                </div>
+                <div data-container="showMore">Show More</div>
+
+                <div data-container="hiddenLinks">
+                    <div data-content="hiddenLinks"></div>
+                </div>
+                <div data-container="showLess">Show Less</div>
+
+                <div class="resetFilter" data-container="removeFilter">Reset Filter</div>
+            </ff-asn-group>
+
+            <ff-asn-group-slider opened>
+                <div slot="groupCaption" class="groupCaption">{{group.name}}</div>
+
+                <ff-slider-control submit-on-input="true">
+
+                    <ff-slider step-size="1" submit-on-release="true">
+                        <div slot="slider1" class="sliderBtn cursorPointer"></div>
+                        <div slot="slider2" class="sliderBtn cursorPointer"></div>
+                    </ff-slider>
+
+                    <div slot="sliderControls" style="display: flex;justify-content: space-around;align-items: center">
+                        <input data-control='1' style="width: 60px;">
+                        <span style=" width: 20px; height: 2px; background-color: black;display: inline-block"></span>
+                        <input data-control='2' style="width: 60px;">
+                    </div>
+
+                    <div class="resetFilter" data-container="removeFilter">Reset Filter</div>
+                </ff-slider-control>
+            </ff-asn-group-slider>
+        </ff-asn>
+        ```
+
+# 3.0.0-pre-release-2
+## ADD
+- `ff-communication`'s boolean properties with `false` value can be declared as DOM element's attributes explicitly: `<ff-communication />` is equivalent to `<ff-communication search-immediate="false" />`
+
+## FIX
+- `ff-onfocus-suggest` left arrow navigation fix for rows that contain more than 2 elements (the closest element is now selected)
+
+## CHANGE
+- internal rewrite to use [LitElement](https://lit-element.polymer-project.org) as a base class instead of PolymerElement in the WebComponents
+- logging format improvements
+- replaced all `tap` events with `click` events
+- removed all CSS mixins, use regular CSS selectors instead. See migration guide for details
+
+## BREAKING
+- `ff-asn-group`
+    - deprecated attribute `laszy-load` was replaced by `lazy-load`
+    - `ff-asn-group-element` no longer replace `<div data-content="detailedLinks">`, but instead get nested inside now
+    - `ff-asn-group-element` no longer replace `<div data-content="hiddenLinks">`, but instead get nested inside now
+- `ff-products-per-page-item`
+    - removed `clone` method
+- `ff-sortbox`
+    - introduced new container `<div class="ffw-selected-container">`. This container is always visible and contains the selected `ff-sortbox-item`
+    - `key` for _Relevance_ changed from `key="null.desc"` to `key="ff.relevance"`
+- `ff-sortbox-item`
+    - renamed CSS class `selected` to `ffw-selected`
+    - renamed CSS class `showSelected` to `ffw-showSelected`
+- `ff-paging-item`
+    - `productsPerPageItem` property was renamed to `pagingItem`
+- `ff-paging-set`
+    - removed `hide()` and `show()` functions, use `hideSelf()` and `showSelf()` instead
+- `ff-navigation`
+    - removed shadow DOM
+- removed `ff-carousel` from the library
+
+# 3.0.0-pre-release-1
+This the preview release of our next major update. During the next couple of weeks we are going to upgrade all our internal projects to use our 3.0.0 release.
+We expect possible bug fixes during this process but our 3.0 release is feature complete compared to our current version 1.2.13 (31.10.2018). The main difference is that we are now compatible with the current native implementation of Webcomponents and therefore we have a smaller JS bundle and a faster execution.
+
+## New Boilerplate
+```html
+...
+    <script src="../bower_components/ff-web-components/dist/vendor/custom-elements-es5-adapter.js"></script>
+    <script src="../bower_components/ff-web-components/dist/vendor/webcomponents-loader.js"></script>
+    <script defer src="../bower_components/ff-web-components/dist/bundle.js"></script>
+</head>
+```
+
+We already migrated our demos project in the release/3.0 branch: https://github.com/FACT-Finder-Web-Components/demos/tree/release/3.0
+
+## CHANGE
+- internal rewrite from [Polymer 1](https://www.polymer-project.org/1.0/docs/devguide/feature-overview) to [Polymer 3](https://www.polymer-project.org/3.0/docs/devguide/feature-overview)
+
+## BREAKING
+- The way of including the Web Components scripts has changed. See [Installation](https://web-components.fact-finder.de/documentation/install-dist) for the right way to include the scripts
+- Aligning with the current trend we no longer support [Bower](https://bower.io/). As a replacement you can use [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/lang/en/)
+- `ff-searchbox`
+    - extending built-in HTML elements is not supported anymore. Hence use `<ff-searchbox>` tag with mandatory `<input />` tag inside instead of `<input is="ff-searchbox" />`
+    - if you don't want to use the first `input` tag within `<ff-searchbox>`, you can use `SearchBox.resetInput(selector)` to set the input field
+- `ff-searchbutton`
+    - extending built-in HTML elements is not supported anymore. Hence use `<ff-searchbutton>` tag with mandatory `<button />` tag inside instead of `<button is="ff-searchutton" />`
+    - if you don't want to use the first `button` tag within `<ff-searchbutton>`, you can use `SearchButton.resetInput(selector)` to set the button
+- `ff-asn-group`
+    - use `<div slot="groupCaption" ...>` instead of `<div data-container="groupCaption" ...>`
+- `ff-asn-group-element`
+    - use `<div slot="selected" ...>` instead of `<div data-selected ...>`
+    - use `<div slot="unselected" ...>` instead of `<div data-unselected ...>`
+- `ff-asn-group-slider`
+    - use `<div slot="groupCaption" ...>` instead of `<div data-container="groupCaption" ...>`
+- `ff-slider`
+    - use `<div slot="slider1" id="slider1" ...></div>` instead of `<div data-slider="1" ...></div>`
+    - use `<div slot="slider2" id="slider2" ...></div>` instead of `<div data-slider="2" ...></div>`
+- `ff-carousel`
+    - removed `getCurrentSlide` method, use `currentSlide` property directly instead
+    - removed `getMaxSlides` method, use `maxSlides` property directly instead
 
 #1.2.13
 ## ADD

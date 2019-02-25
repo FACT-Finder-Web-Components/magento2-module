@@ -6,9 +6,6 @@
     </head>
     <body>
         <!-- Remove the search box from the header -->
-        <referenceContainer name="factfinder.top.search" remove="true" />
-        <referenceContainer name="top.search" remove="true" />
-
         <referenceBlock name="factfinder.communication">
             <arguments>
                 <argument name="communication_parameters" xsi:type="array">
@@ -22,7 +19,6 @@
             <block class="Magento\Framework\View\Element\Template" name="factfinder.asn" ifconfig="factfinder/components/ff_asn" template="Omikron_Factfinder::ff/asn.phtml"  before="-" />
         </referenceContainer>
 
-        <move element="product.info.stock.sku" destination="product.info.price" after="product.price.final"/>
         <!-- Add remaining web-components -->
         <referenceContainer name="content">
             <block class="Magento\Framework\View\Element\Template" name="factfinder.breadcrumb" ifconfig="factfinder/components/ff_breadcrumb" template="Omikron_Factfinder::ff/breadcrumb.phtml" />
@@ -42,6 +38,8 @@
                 <block class="Magento\Framework\View\Element\Template" name="factfinder.paging.bottom" ifconfig="factfinder/components/ff_paging" template="Omikron_Factfinder::ff/paging.phtml" />
             </container>
         </referenceContainer>
-        <move element="factfinder.search" destination="content" before="factfinder.breadcrumb"/>
+
+        <move element="product.info.stock.sku" destination="product.info.price" after="product.price.final" />
+        <move element="top.search" destination="content" before="factfinder.breadcrumb" />
     </body>
 </page>

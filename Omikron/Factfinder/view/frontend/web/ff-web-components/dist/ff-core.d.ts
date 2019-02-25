@@ -382,8 +382,6 @@ declare module scope.communication {
          */
         function handleSeoSearch(event: any): void;
         function replaceHistoryState(result: any, urlString: string, ffEvent: any): void;
-        /** This wrapper enables mocking of readonly documentation.location.replace for testing suppose */
-        function replaceDocumentLocation(newLocation: any): void;
         /**
          * Push the result to the browser history and set's the url params according to the settings in global.
          * Has no effect on a suggest or tracking result.

@@ -4,6 +4,7 @@
 - Drop support for PHP 7.0
 - Replace Communication helper with dedicated models
 - Remove core controller rewrites and perform redirects using event observers
+- Upgraded Web Components version to 3.0
 
 # v0.9-beta.10
 ## ADD

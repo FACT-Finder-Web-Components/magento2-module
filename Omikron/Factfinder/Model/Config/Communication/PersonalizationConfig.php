@@ -17,8 +17,6 @@ class PersonalizationConfig implements ParametersSourceInterface
     private const PATH_USE_SEMANTIC_ENHANCER = 'factfinder/advanced/use_semantic_enhancer';
     private const PATH_USE_CAMPAIGNS         = 'factfinder/advanced/use_campaigns';
     private const PATH_GENERATE_ADVISOR_TREE = 'factfinder/advanced/generate_advisor_tree';
-    private const PATH_USE_SEO               = 'factfinder/advanced/use_seo';
-    private const PATH_SEO_PREFIX            = 'factfinder/advanced/seo_prefix';
     private const PATH_USE_ASN               = 'factfinder/advanced/use_asn';
 
     /** @var ScopeConfigInterface */
@@ -39,8 +37,6 @@ class PersonalizationConfig implements ParametersSourceInterface
             'use-semantic-enhancer' => $this->scopeConfig->getValue(self::PATH_USE_SEMANTIC_ENHANCER, ScopeInterface::SCOPE_STORES),
             'use-campaigns'         => $this->scopeConfig->getValue(self::PATH_USE_CAMPAIGNS, ScopeInterface::SCOPE_STORES),
             'generate-advisor-tree' => $this->scopeConfig->getValue(self::PATH_GENERATE_ADVISOR_TREE, ScopeInterface::SCOPE_STORES),
-            'use-seo'               => $this->scopeConfig->getValue(self::PATH_USE_SEO, ScopeInterface::SCOPE_STORES),
-            'seo-prefix'            => $this->scopeConfig->getValue(self::PATH_SEO_PREFIX, ScopeInterface::SCOPE_STORES),
             'use-asn'               => $this->scopeConfig->getValue(self::PATH_USE_ASN, ScopeInterface::SCOPE_STORES),
         ];
     }

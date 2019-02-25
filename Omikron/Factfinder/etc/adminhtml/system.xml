@@ -64,11 +64,6 @@
                         <option label="7.3">7.3</option>
                     </options>
                 </field>
-                <field id="search_immediate" translate="label" type="select" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>search-immediate</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    <comment>If this property is present, Web Components will start searching as soon as they are loaded.</comment>
-                </field>
                 <field id="use_url_parameter" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>use-url-parameter</label>
                     <source_model>Omikron\Factfinder\Model\Adminhtml\System\Config\TrueFalse</source_model>
@@ -85,7 +80,7 @@
                     <comment>Determines which search term should be used by default. Default is '*'</comment>
                 </field>
                 <field id="only_search_params" translate="label comment" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <source_model>Omikron\Factfinder\Model\Adminhtml\System\Config\TrueFalse</source_model>
                     <label>only-search-params</label>
                     <comment>If present, URL parameters like 'channel' and 'sid' are omitted in the URL. This can be used in conjunction with parameter-whitelist</comment>
                 </field>
@@ -151,18 +146,9 @@
                     <source_model>Omikron\Factfinder\Model\Adminhtml\System\Config\TrueFalse</source_model>
                     <comment>If true, the search history is pushed to the browser history, even without using url parameter. Default is true.</comment>
                 </field>
-                <field id="use_seo" translate="label" type="select" sortOrder="190" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>use-seo</label>
-                    <source_model>Omikron\Factfinder\Model\Adminhtml\System\Config\TrueFalse</source_model>
-                    <comment>If true, web components will use the FACT-Finder SEO API. Set this only to true if the module is active in FACT-Finder.</comment>
-                </field>
-                <field id="seo_prefix" translate="label" type="text" sortOrder="200" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>seo-prefix</label>
-                    <comment>The seo-prefix is used to show a piece of path between your domain the actual seo-path. E.g. domain.com/prefix/seoPath</comment>
-                </field>
                 <field id="disable_single_hit_redirect" translate="label" type="select" sortOrder="210" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>disable-single-hit-redirect</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <source_model>Omikron\Factfinder\Model\Adminhtml\System\Config\TrueFalse</source_model>
                     <comment>If true, disables the automatic redirect to the product detail page if only one record is found.</comment>
                 </field>
             </group>

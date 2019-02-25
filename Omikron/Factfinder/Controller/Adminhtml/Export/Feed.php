@@ -10,13 +10,13 @@ use Omikron\Factfinder\Model\Export\Product;
 class Feed extends Action
 {
     /** @var JsonFactory */
-    protected $resultJsonFactory;
+    private $resultJsonFactory;
 
     /** @var Product */
-    protected $productExporter;
+    private $productExporter;
 
     /** @var StoreManagerInterface */
-    protected $storeManager;
+    private $storeManager;
 
     public function __construct(
         Action\Context $context,

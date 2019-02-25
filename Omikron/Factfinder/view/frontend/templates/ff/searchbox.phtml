@@ -1,6 +1,13 @@
-<?php /** @var $block Magento\Framework\View\Element\Template */ ?>
-<div class="top-search-box">
-    <input is="ff-searchbox" placeholder="<?= $block->escapeHtmlAttr(__('Search…')) ?>" suggest-onfocus="false"
-           hidesuggest-onblur="true"/>
-    <button is="ff-searchbutton"><?= $block->escapeHtmlAttr(__('Search')) ?></button>
+<?php /** @var Magento\Framework\View\Element\Template $block */ ?>
+<div class="search-wrapper">
+    <div class="top-search-box">
+        <ff-searchbox class="ff-searchbox" suggest-onfocus="true" use-suggest="true" select-onclick="true">
+            <input placeholder="<?= $block->escapeHtmlAttr(__('Search…')) ?>" />
+        </ff-searchbox>
+
+        <ff-searchbutton>
+            <button><?= $block->escapeHtml(__('Search…')) ?></button>
+        </ff-searchbutton>
+    </div>
+    <?= /* @noEscape */ $block->getChildHtml('suggest') ?>
 </div>
