@@ -33,7 +33,7 @@
 - Load stylesheets via LESS
 - Drop support for PHP 5.6
 
-# Added
+### Added
 - Added possibility to export additional attributes in separate columns
 - Adds possibility to configure frequency of feed file generation by Cron
 - Introduce coding standards based on the Magento ECG one
