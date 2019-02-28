@@ -1,4 +1,4 @@
-# [Unreleased]
+# v0.9-beta.11
 ## CHANGE
 - Deprecate ResultRefiner: Use DI or plugins to edit the JSON result
 - Drop support for PHP 7.0
