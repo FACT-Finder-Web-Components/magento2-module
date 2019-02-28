@@ -1,28 +1,32 @@
 <?php
-/** @var $block \Omikron\Factfinder\Block\FF\Communication */
-echo $block->getWebComponent(); ?>
+/** @var Magento\Framework\View\Element\Template $block */
+/** @var Omikron\Factfinder\ViewModel\Communication $viewModel */
+$viewModel  = $block->getViewModel();
+$parameters = ((array) $block->getData('communication_parameters')) + $viewModel->getParameters();
+?>
+
+<script src="<?= $block->escapeUrl($block->getViewFileUrl('Omikron_Factfinder::ff-web-components/dist/vendor/custom-elements-es5-adapter.min.js')) ?>"></script>
+<script src="<?= $block->escapeUrl($block->getViewFileUrl('Omikron_Factfinder::ff-web-components/dist/vendor/webcomponents-loader.min.js')) ?>"></script>
+<script src="<?= $block->escapeUrl($block->getViewFileUrl('Omikron_Factfinder::ff-web-components/dist/bundle.min.js')) ?>" defer></script>
+
+<ff-communication<?php foreach ($parameters as $key => $value) echo /* @noEscape */ sprintf(' %s="%s"', $key, $block->escapeHtmlAttr($value)) ?> />
 <!-- Set FieldRoles -->
 <script>
-    document.addEventListener("ffReady", function () {
-        factfinder.communication.fieldRoles =
-        <?php echo $block->getFieldRoles(); ?>
-        ;
+    document.addEventListener('ffReady', function () {
+        factfinder.communication.fieldRoles = <?= /* @noEscape */ $viewModel->getFieldRoles() ?>;
     });
 </script>
-<div data-bind="scope: 'ffcommunication'">
-    <script type="text/x-magento-init">
-            {
-                "*": {
-                    "Magento_Ui/js/core/app": {
-                        "components": {
-                            "ffcommunication": {
-                                "component": "Omikron_Factfinder/js/view/ffcommunication"
-                            }
-                        }
+<div data-bind="scope: 'ffcommunication'"></div>
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_Ui/js/core/app": {
+                "components": {
+                    "ffcommunication": {
+                        "component": "Omikron_Factfinder/js/view/ffcommunication"
                     }
                 }
             }
-    </script>
-</div>
-<!-- Import WebComponents -->
-<link rel="import" href="<?php echo $block->getViewFileUrl('Omikron_Factfinder::ff-web-components/dist/elements.build_with_dependencies.html'); ?>"/>
+        }
+    }
+</script>

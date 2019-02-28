@@ -1,74 +1,62 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Omikron\Factfinder\Controller\Proxy;
 
-use Magento\Framework\Webapi\Exception;
+use Magento\Framework\App\Action\Context;
+use Magento\Framework\Controller\Result\JsonFactory;
+use Magento\Framework\Exception\NotFoundException;
+use Omikron\Factfinder\Api\ClientInterface;
+use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
+use Omikron\Factfinder\Exception\ResponseException;
 
-/**
- * Class Call
- * Forward the ff-api calls to factfinder
- *
- * @package Omikron\Factfinder\Controller\Proxy
- */
 class Call extends \Magento\Framework\App\Action\Action
 {
-    /** @var \Magento\Framework\Controller\Result\JsonFactory */
-    protected $_jsonResultFactory;
+    /** @var JsonFactory */
+    private $jsonResultFactory;
 
-    /** @var \Omikron\Factfinder\Helper\ResultRefiner */
-    protected $_resultRefiner;
+    /** @var ClientInterface */
+    private $apiClient;
 
-    /** @var \Omikron\Factfinder\Helper\Communication */
-    protected $_communication;
+    /** @var CommunicationConfigInterface */
+    private $communicationConfig;
 
-    /**
-     * Call constructor.
-     *
-     * @param \Magento\Framework\App\Action\Context $context
-     * @param \Magento\Framework\Controller\Result\JsonFactory $jsonResultFactory
-     * @param \Omikron\Factfinder\Helper\ResultRefiner $resultRefiner
-     * @param \Omikron\Factfinder\Helper\Communication $communication
-     */
     public function __construct(
-        \Magento\Framework\App\Action\Context $context,
-        \Magento\Framework\Controller\Result\JsonFactory $jsonResultFactory,
-        \Omikron\Factfinder\Helper\ResultRefiner $resultRefiner,
-        \Omikron\Factfinder\Helper\Communication $communication
-    )
-    {
+        Context $context,
+        JsonFactory $jsonResultFactory,
+        ClientInterface $apiClient,
+        CommunicationConfigInterface $communicationConfig
+    ) {
         parent::__construct($context);
-        $this->_jsonResultFactory = $jsonResultFactory;
-        $this->_resultRefiner = $resultRefiner;
-        $this->_communication = $communication;
+        $this->jsonResultFactory   = $jsonResultFactory;
+        $this->apiClient           = $apiClient;
+        $this->communicationConfig = $communicationConfig;
     }
 
-    /**
-     * Forward the ff-api calls to factfinder and return the response of factfinder as response
-     * @return \Magento\Framework\Controller\Result\Json
-     */
     public function execute()
     {
-        // extract api name from path
-        $identifier = trim($this->getRequest()->getPathInfo(), '/');
-        $pos = strpos($identifier, '/');
-        $path = substr($identifier, $pos+1);
-        $apiNameRegex = '/^[A-Z][A-z]+(.ff)$/';
-        $matches = [];
-        preg_match($apiNameRegex, $path, $matches);
-
-        $result = $this->_jsonResultFactory->create();
-
-        // return 404 if api name schema does not match
-        if (empty($matches)) {
-            $result->setHttpResponseCode(Exception::HTTP_NOT_FOUND);
-            return $result;
+        // Extract API name from path
+        $endpoint = $this->getEndpoint($this->_url->getCurrentUrl());
+        if (!$endpoint) {
+            throw new NotFoundException(__('Endpoint missing'));
         }
 
-        // get api name from regex matches
-        $apiName = $matches[0];
+        $result = $this->jsonResultFactory->create();
+        try {
+            $endpoint   = $this->communicationConfig->getAddress() . '/' . $endpoint;
+            $ffResponse = $this->apiClient->sendRequest($endpoint, $this->getRequest()->getParams());
+            $result->setData($ffResponse);
+        } catch (ResponseException $e) {
+            $result->setJsonData($e->getMessage());
+        }
 
-        $ffResponse = $this->_communication->sendToFF($apiName, $this->getRequest()->getParams());
+        return $result;
+    }
 
-        return $result->setJsonData($this->_resultRefiner->refine($ffResponse));
+    private function getEndpoint(string $currentUrl): string
+    {
+        preg_match('#/([A-Z][a-z]+\.ff)#', $currentUrl, $match);
+        return $match[1] ?? '';
     }
 }

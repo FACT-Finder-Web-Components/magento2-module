@@ -1,0 +1,607 @@
+/* ---- ff-products-per-page ---- */
+
+ff-products-per-page-dropdown {
+    display: inline-block;
+    outline: none;
+}
+
+ff-products-per-page-dropdown .ffw-ppp-dropdown-closed {
+    display: none;
+}
+
+ff-products-per-page-dropdown .ffw-ppp-dropdown-container {
+    position: absolute;
+    background-color: white;
+    outline: none;
+    z-index: 1001;
+
+    -webkit-transition: height .4s;
+    -moz-transition: height .4s;
+    -ms-transition: height .4s;
+    -o-transition: height .4s;
+    transition: height .4s;
+    box-sizing: border-box;
+}
+
+ff-products-per-page-item {
+    display: block;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+ff-products-per-page-list {
+    display: inline-block;
+    outline: none;
+}
+
+ff-products-per-page-list ff-products-per-page-item {
+    display: inline-block;
+}
+
+ff-products-per-page-select {
+    display: inline-block;
+}
+
+
+/* ---- ff-header-navigation ---- */
+
+ff-header-navigation .ffw-header-nav {
+    position: relative;
+}
+
+ff-header-navigation .ffw-header {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+}
+
+ff-header-navigation .ffw-body {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-direction: column;
+
+    /* necessary for hover */
+    position: absolute;
+    z-index: 1;
+    width: inherit;
+    left: 0;
+    right: 0;
+
+    background-color: white;
+}
+
+ff-header-navigation .ffw-body-middle {
+    display: flex;
+    flex-direction: row;
+}
+
+ff-header-navigation .ffw-body-center {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-grow: 1;
+
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+
+ff-header-navigation .ffw-nav-group {
+    -webkit-box-flex: 0;
+    -ms-flex-positive: 0;
+
+    flex-grow: 0;
+    -ms-flex-negative: 0;
+
+    flex-shrink: 0;
+    -ms-flex-preferred-size: 300px;
+    flex-basis: 300px;
+
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+}
+
+ff-nav-element.ffw-nav-item {
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+}
+
+ff-nav-element a {
+    color: inherit;
+    cursor: inherit;
+    text-decoration: inherit;
+}
+
+
+/* ---- ff-record ---- */
+
+ff-record {
+    display: inline-block;
+    vertical-align: top;
+}
+
+
+/* ---- ff-sortbox ---- */
+
+ff-sortbox {
+    display: inline-block;
+    outline: none;
+}
+
+ff-sortbox .ffw-closed {
+    display: none;
+}
+
+ff-sortbox .ffw-dropdown-container {
+    position: absolute;
+    background-color: white;
+    z-index: 1001;
+
+    -webkit-transition: height .4s;
+    -moz-transition: height .4s;
+    -ms-transition: height .4s;
+    -o-transition: height .4s;
+    transition: height .4s;
+
+    box-sizing: border-box;
+}
+
+ff-sortbox-item {
+    display: none;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+
+/* ---- ff-paging ---- */
+
+ff-paging,
+ff-paging-item,
+ff-paging-set,
+ff-paging-dropdown {
+    display: inline-block;
+}
+
+ff-paging-item .ffw-cursor {
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+ff-paging-dropdown {
+    outline: none;
+}
+
+ff-paging-dropdown .ffw-paging-dropdown-container {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    outline: none;
+    z-index: 1001;
+
+    -webkit-transition: height .4s;
+    -moz-transition: height .4s;
+    -ms-transition: height .4s;
+    -o-transition: height .4s;
+    transition: height .4s;
+    box-sizing: border-box;
+}
+
+ff-paging-dropdown .ffw-paging-dropdown-closed {
+    display: none;
+}
+
+
+/* ---- ff-recommendation, ff-similar-products ---- */
+
+ff-recommendation,
+ff-similar-products {
+    display: block;
+}
+
+
+/* ---- ff-onfocus-suggest ---- */
+
+ff-onfocus-suggest {
+    display: block;
+    z-index: 9999;
+}
+
+ff-onfocus-suggest .ffw-blockLayout {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+
+    flex-wrap: nowrap;
+    -ms-flex-wrap: nowrap;
+    -webkit-flex-wrap: nowrap;
+
+    flex-direction: row;
+    -ms-flex-direction: row;
+    -webkit-flex-direction: row;
+}
+
+ff-onfocus-suggest .ffw-suggestContainer {
+    position: relative;
+    z-index: 9999;
+    background-color: #ffffff;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+ff-onfocus-suggest .ffw-suggestContainerWrapper {
+    position: absolute;
+}
+
+ff-onfocus-suggest .ffw-suggestContainerPositioning {
+    position: relative;
+    width: 100%;
+}
+
+ff-onfocus-suggest .ffw-suggestContainerWrapperHidden {
+    display: none;
+}
+/* ---- ff-suggest ---- */
+
+ff-suggest-item {
+    display: block;
+    word-wrap: break-word;
+}
+
+ff-suggest-item:hover {
+    text-decoration: underline;
+}
+
+ff-suggest {
+    display: block;
+    z-index: 9999;
+}
+
+ff-suggest .ffw-blockLayout {
+    display: flex;
+
+    flex-wrap: nowrap;
+    -ms-flex-wrap: nowrap;
+    -webkit-flex-wrap: nowrap;
+
+    flex-direction: row;
+    -ms-flex-direction: row;
+    -webkit-flex-direction: row;
+}
+
+ff-suggest .ffw-listLayout {
+    display: block;
+
+}
+
+ff-suggest .ffw-suggestContainer {
+    position: relative;
+    z-index: 9999;
+    background-color: #ffffff;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+ff-suggest .ffw-suggestContainerWrapper {
+    position: absolute;
+}
+
+ff-suggest .ffw-hideSuggestContainerWrapper {
+    display: none;
+}
+
+
+/* ---- ff-navigation ---- */
+
+ff-navigation {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+}
+
+ff-navigation .ffw-menu-items {
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    width: 100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+}
+
+ff-navigation[layout="vertical"] > .ffw-menu-items {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+}
+
+ff-navigation[layout="horizontal"] > .ffw-menu-items {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+}
+
+ff-navigation .ffw-navigation-label {
+    display: none;
+}
+
+ff-navigation #navigation-menu {
+    display: none;
+    border-bottom: 1px solid black;
+    cursor: pointer;
+    padding: 5px;
+    background-color: #b9ecff;
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    width: 100%;
+}
+
+ff-navigation[mobile="true"] > .ffw-navigation-label {
+  display: block;
+}
+
+ff-navigation[mobile="true"] > #navigation-menu:checked + label + .ffw-menu-items {
+    display: -webkit-box !important;
+    display: -ms-flexbox !important;
+    display: flex !important;
+    -webkit-box-orient: vertical !important;
+    -webkit-box-direction: normal !important;
+    -ms-flex-direction: column !important;
+    flex-direction: column !important;
+}
+
+ff-navigation[mobile="true"] > .ffw-menu-items {
+    display: none;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+}
+
+ff-navigation[mobile="true"] {
+    -webkit-box-orient: vertical !important;
+    -webkit-box-direction: normal !important;
+    -ms-flex-direction: column !important;
+    flex-direction: column !important;
+    width: 100%;
+}
+
+/* ---- ff-navigation-item ---- */
+ff-navigation-item {
+     -webkit-box-flex: 1;
+     -ms-flex-positive: 1;
+     flex-grow: 1;
+     position: relative;
+     display: -webkit-box;
+     display: -ms-flexbox;
+     display: flex;
+     cursor: pointer;
+ }
+
+ff-navigation-item .ffw-item-caption {
+    width: 100%;
+}
+
+/* for better initial performance */
+ff-navigation-item .ffw-container-hidden {
+    display: none !important;
+}
+
+ff-navigation-item .ffw-item-container {
+    display: none;
+    -webkit-transition: 0.1s all linear;
+    transition: 0.1s all linear;
+    -webkit-transition-delay: 0.3s;
+    transition-delay: 0.3s;
+    position: absolute;
+    z-index: 1;
+    background-color: white;
+}
+
+ff-navigation-item[direction="down"][flyout="true"] > .ffw-item-container {
+    top: 100%;
+}
+
+ff-navigation-item[direction="down"] > .ffw-item-container {
+    top: 100%;
+    left: 0;
+}
+
+/* ---- ff-navigation-item mobile mode ---- */
+
+/* only hover when not minimized */
+ff-navigation-item[flyout="false"][selected] > .ffw-item-container {
+
+    /* always container down and no z-index */
+    top: 0;
+    z-index: 0;
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+}
+
+ff-navigation-item[flyout="false"] > .ffw-item-container {
+    display: none;
+}
+
+ff-navigation-item[flyout="false"][direction="down"][selected] > .ffw-item-container {
+    top: 0;
+}
+
+ff-navigation-item[flyout="false"] {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+}
+
+ff-navigation-item[flyout="false"][selected] .ffw-navigation-link {
+    display: none !important;
+    top: 0;
+}
+
+ff-navigation-item[flyout="false"] .ffw-navigation-link {
+    display: none !important;
+}
+
+/* desktop-mode */
+ff-navigation-item[flyout="true"][direction="right"] > .ffw-item-container {
+    top: 0;
+    left: 100%;
+}
+
+ff-navigation-item[flyout="true"][direction="left"] > .ffw-item-container {
+    top: 0;
+    right: 100%;
+}
+
+ff-navigation-item[flyout="true"]:hover > .ffw-item-container {
+    display:inline-block;
+}
+
+
+/* ---- ff-asn ---- */
+
+ff-asn {
+    outline: none;
+    transition: opacity 600ms;
+    display: block;
+}
+
+ff-asn[align="horizontal"]  {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+}
+
+ff-asn-group {
+    opacity: 0;
+    transition: opacity 400ms;
+    outline: none;
+    display: block;
+    min-width: 180px;
+    max-width: 220px;
+}
+
+ff-asn-group[align="horizontal"] #wrapper {
+    position: absolute;
+    width: 100%;
+}
+
+ff-asn-group .ffw-asn-group-container {
+    position: relative;
+}
+
+ff-asn-group .ffw-wrapper {
+    position: relative;
+    transition-duration: 350ms;
+}
+
+ff-asn-group-element {
+    display: block;
+    outline: none;
+}
+
+ff-asn-group-slider {
+    opacity: 0;
+    transition: opacity 400ms;
+    outline: none;
+    display: block;
+    min-width: 180px;
+    max-width: 220px;
+}
+
+ff-asn[align="horizontal"] ff-asn-group-slider .ffw-wrapper {
+    position: absolute;
+    width: 100%;
+}
+
+ff-asn-group-slider .ffw-container {
+    position: relative;
+    /*TODO document @apply(--ff-asn-group-container);*/
+}
+
+ff-asn-group-slider .ffw-wrapper {
+    position: relative;
+    transition-duration: 400ms;
+    /*TODO document @apply(--all-links-container);*/
+}
+
+ff-slider-control {
+    display: block;
+    opacity: 0;
+    transition: opacity 800ms;
+    padding: 10px 0 10px 0;
+}
+
+ff-slider-control .ffw-sliderSection {
+    margin-top: 10px;
+    /*@apply(--ff-slider-section); TODO document */
+}
+
+ff-slider {
+    height: 5px;
+    background-color: #336;
+    margin: 5px auto;
+    display: block;
+    opacity: 0;
+    transition: opacity 800ms;
+}
+
+ff-slider .ffw-sliderWrapper {
+    min-width: 1px;
+    /*TODO document @apply(--slider-wrapper);*/
+}
+
+/*ff-slider .ff_slidebar {
+    !*TODO document @apply(--slidebar-mixin);*!
+}*/
+
+/* ---- generic ---- */
+
+/* ffw-hidden is applied by FACTFinderLitElement to all elements deriving from it so it cannot be prefixed with an element selector */
+.ffw-hidden {
+    display: none !important;
+}

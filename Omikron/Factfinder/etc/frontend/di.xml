@@ -11,14 +11,22 @@
             </argument>
         </arguments>
     </type>
-    <preference for="Magento\CatalogSearch\Controller\Result\Index" type="Omikron\Factfinder\Controller\Forwarder\CatalogSearchResult" />
-    <preference for="Magento\CatalogSearch\Controller\Advanced\Index" type="Omikron\Factfinder\Controller\Forwarder\CatalogSearchAdvanced" />
-    <preference for="Magento\CatalogSearch\Controller\Advanced\Result" type="Omikron\Factfinder\Controller\Forwarder\CatalogSearchAdvancedResult" />
-    <preference for="Magento\Search\Controller\Term\Popular" type="Omikron\Factfinder\Controller\Forwarder\SearchTerm" />
     <type name="Magento\Customer\CustomerData\SectionPoolInterface">
         <arguments>
             <argument name="sectionSourceMap" xsi:type="array">
-                <item name="ffcommunication" xsi:type="string">Omikron\Factfinder\CustomerData\FF\Communication</item>
+                <item name="ffcommunication" xsi:type="string">Omikron\Factfinder\Model\SessionData</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Omikron\Factfinder\Model\Config\CommunicationParametersProvider">
+        <arguments>
+            <argument name="parametersSource" xsi:type="array">
+                <item name="user" xsi:type="object">Omikron\Factfinder\Model\SessionData</item>
+                <item name="communication" xsi:type="object">Omikron\Factfinder\Model\Config\CommunicationConfig</item>
+                <item name="behaviour" xsi:type="object">Omikron\Factfinder\Model\Config\Communication\BehaviourConfig</item>
+                <item name="personalization" xsi:type="object">Omikron\Factfinder\Model\Config\Communication\PersonalizationConfig</item>
+                <item name="cache" xsi:type="object">Omikron\Factfinder\Model\Config\Communication\CacheConfig</item>
+                <item name="currency" xsi:type="object">Omikron\Factfinder\Model\Config\Communication\CurrencyConfig</item>
             </argument>
         </arguments>
     </type>

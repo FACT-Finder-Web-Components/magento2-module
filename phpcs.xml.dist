@@ -4,6 +4,7 @@
 
     <arg value="pw" />
     <arg name="extensions" value="php,phtml" />
+    <arg name="ignore" value="*/vendor/*" />
 
     <config name="ignore_warnings_on_exit" value="1" />
     <config name="installed_paths" value="vendor/magento-ecg/coding-standard/EcgM2" />
@@ -21,6 +22,7 @@
     <rule ref="Generic.Files.ByteOrderMark" />
     <rule ref="Generic.Files.LineLength">
         <exclude-pattern>*.phtml</exclude-pattern>
+        <exclude-pattern>*Test.php</exclude-pattern>
         <properties>
             <property name="lineLimit" value="120" />
             <property name="absoluteLineLimit" value="0" />
@@ -32,12 +34,12 @@
     </rule>
     <rule ref="Generic.PHP.LowerCaseConstant" />
     <rule ref="Generic.PHP.LowerCaseKeyword" />
-    <rule ref="Internal.NoCodeFound">
-        <severity>0</severity>
-    </rule>
     <rule ref="PSR2.Classes.PropertyDeclaration.Underscore" />
     <rule ref="PSR2.Files.EndFileNewline" />
     <rule ref="PSR2.Methods.MethodDeclaration.Underscore" />
+    <rule ref="Squiz.Functions.GlobalFunction">
+        <exclude-pattern>*Test.php</exclude-pattern>
+    </rule>
     <rule ref="Squiz.Strings.DoubleQuoteUsage.NotRequired" />
     <rule ref="Zend.Files.ClosingTag" />
 </ruleset>

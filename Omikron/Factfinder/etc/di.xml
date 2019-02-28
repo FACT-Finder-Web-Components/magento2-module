@@ -1,14 +1,17 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Omikron\Factfinder\Api\ClientInterface" type="Omikron\Factfinder\Model\Client"/>
+    <preference for="Omikron\Factfinder\Api\Config\AuthConfigInterface" type="Omikron\Factfinder\Model\Config\AuthConfig"/>
+    <preference for="Omikron\Factfinder\Api\Config\CommunicationConfigInterface" type="Omikron\Factfinder\Model\Config\CommunicationConfig"/>
+    <preference for="Omikron\Factfinder\Api\FieldRolesInterface" type="Omikron\Factfinder\Model\FieldRoles"/>
+    <preference for="Omikron\Factfinder\Api\SessionDataInterface" type="Omikron\Factfinder\Model\SessionData"/>
+    <preference for="Omikron\Factfinder\Api\Data\TrackingProductInterface" type="Omikron\Factfinder\Model\Data\TrackingProduct"/>
+
     <virtualType name="Omikron\Factfinder\Model\Product\Attribute\CollectionFactory" type="Magento\Eav\Model\ResourceModel\Entity\Attribute\CollectionFactory">
         <arguments>
             <argument name="instanceName" xsi:type="string">Magento\Catalog\Model\ResourceModel\Product\Attribute\Collection</argument>
         </arguments>
     </virtualType>
-
-    <type name="Magento\Framework\View\Asset\Minification">
-        <plugin name="omikron.factfinder.excludefilesfromminification" type="Omikron\Factfinder\Plugin\ExcludeFilesFromMinification" />
-    </type>
     <virtualType name="Omikron\Factfinder\Logger" type="Monolog\Logger">
         <arguments>
             <argument name="name" xsi:type="string">FACT-Finder</argument>
@@ -22,14 +25,28 @@
             <argument name="fileName" xsi:type="string">/var/log/factfinder.log</argument>
         </arguments>
     </virtualType>
-    <virtualType name="communicationContext" type="Magento\Framework\App\Helper\Context">
+    <virtualType name="Omikron\Factfinder\Model\TrackingEventClient" type="Omikron\Factfinder\Model\Client">
+        <arguments>
+            <argument name="serializer" xsi:type="object">Omikron\Factfinder\Model\Serializer\PlainTextSerializer</argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Omikron\Factfinder\Model\SessionData">
+        <arguments>
+            <argument name="customerSession" xsi:type="object">Magento\Customer\Model\Session\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Omikron\Factfinder\Plugin\LogExceptions">
         <arguments>
             <argument name="logger" xsi:type="object">Omikron\Factfinder\Logger</argument>
         </arguments>
-    </virtualType>
-    <type name="Omikron\Factfinder\Helper\Communication">
+    </type>
+    <type name="Omikron\Factfinder\Model\Api\PushImport">
+        <plugin name="logPushImportExceptions" type="Omikron\Factfinder\Plugin\LogExceptions" />
+    </type>
+    <type name="Omikron\Factfinder\Model\Api\Tracking">
         <arguments>
-            <argument name="context" xsi:type="object">communicationContext</argument>
+            <argument name="factFinderClient" xsi:type="object">Omikron\Factfinder\Model\TrackingEventClient</argument>
         </arguments>
     </type>
 </config>

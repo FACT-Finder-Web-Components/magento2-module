@@ -4,15 +4,20 @@ namespace Omikron\Factfinder\Model\Export;
 
 use Magento\Catalog\Model\Product\Attribute\Source\Status;
 use Magento\Catalog\Model\ResourceModel\Product\Collection;
+use Magento\Catalog\Model\ResourceModel\Product\CollectionFactory;
 use Magento\Framework\App\Filesystem\DirectoryList;
-use Magento\Framework\Model\AbstractModel;
+use Magento\Framework\File\Csv;
+use Magento\Framework\Filesystem;
 use Magento\Store\Api\Data\StoreInterface;
+use Magento\Store\Model\App\Emulation;
+use Magento\Store\Model\StoreManagerInterface;
+use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
+use Omikron\Factfinder\Helper\Product as ProductHelper;
+use Omikron\Factfinder\Helper\Upload;
+use Omikron\Factfinder\Model\Api\PushImport;
+use Omikron\Factfinder\Model\Api\UpdateFieldRoles;
 
-/**
- * Class Product
- * @package Omikron\Factfinder\Model\Export
- */
-class Product extends AbstractModel
+class Product
 {
     const FEED_PATH                         = 'factfinder/';
     const FEED_FILE                         = 'export.';
@@ -20,111 +25,63 @@ class Product extends AbstractModel
     const BATCH_SIZE                        = 3000;
     const ADDITIONAL_ATTRIBUTES_COLUMN_NAME = 'Attributes';
 
-    /** @var \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory */
+    /** @var CollectionFactory  */
     protected $productCollectionFactory;
 
-    /** @var \Magento\Catalog\Model\Product\Visibility */
-    protected $catalogProductVisibility;
-
-    /** @var \Magento\Catalog\Model\ResourceModel\Product */
-    protected $productResource;
-
-    /** @var \Magento\Framework\Pricing\PriceCurrencyInterface */
-    protected $priceCurrency;
-
-    /** @var \Magento\Framework\Filesystem */
+    /** @var Filesystem  */
     protected $fileSystem;
 
-    /** @var  \Omikron\Factfinder\Helper\Upload */
+    /** @var Upload  */
     protected $helperUpload;
 
-    /** @var  \Omikron\Factfinder\Helper\Data */
-    protected $helperData;
+    /** @var PushImport  */
+    protected $pushImport;
 
-    /** @var  \Omikron\Factfinder\Helper\Communication */
-    protected $helperCommunication;
+    /** @var UpdateFieldRoles */
+    protected $updateFieldRoles;
 
-    /** @var \Omikron\Factfinder\Helper\Product */
+    /** @var ProductHelper */
     protected $helperProduct;
 
-    /** @var  \Magento\Store\Model\StoreManagerInterface */
+    /** @var CommunicationConfigInterface  */
+    protected $communicationConfig;
+
+    /** @var StoreManagerInterface  */
     protected $storeManager;
 
-    /** @var \Magento\Framework\File\Csv */
+    /** @var Csv  */
     protected $csvWriter;
 
-    /** @var \Magento\Framework\App\Filesystem\DirectoryList */
+    /** @var DirectoryList  */
     protected $directoryList;
 
-    /** @var  \Magento\Store\Model\App\Emulation */
+    /** @var Emulation  */
     protected $appEmulation;
 
-    /** @var  \Magento\Framework\App\Config\ScopeConfigInterface */
-    protected $scopeConfig;
-
-    /**
-     * Product constructor.
-     * @param \Magento\Framework\Model\Context $context
-     * @param \Magento\Framework\Registry $registry
-     * @param \Magento\Catalog\Model\ResourceModel\Product $productResource
-     * @param \Magento\Catalog\Model\ResourceModel\Product\Collection $resourceCollection
-     * @param \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory $productCollectionFactory
-     * @param \Magento\Catalog\Model\Product\Visibility $catalogProductVisibility
-     * @param \Magento\Framework\Pricing\PriceCurrencyInterface $priceCurrency
-     * @param \Magento\Framework\Filesystem $fileSystem
-     * @param \Omikron\Factfinder\Helper\Upload $helperUpload
-     * @param \Omikron\Factfinder\Helper\Data $helperData
-     * @param \Omikron\Factfinder\Helper\Communication $helperCommunication
-     * @param \Omikron\Factfinder\Helper\Product $helperProduct
-     * @param \Magento\Store\Model\StoreManagerInterface $storeManager
-     * @param \Magento\Framework\File\Csv $csvWriter
-     * @param \Magento\Framework\App\Filesystem\DirectoryList $directoryList
-     * @param \Magento\Store\Model\App\Emulation $appEmulation
-     * @param array $data
-     */
     public function __construct(
-        \Magento\Framework\Model\Context $context,
-        \Magento\Framework\Registry $registry,
-        \Magento\Catalog\Model\ResourceModel\Product $productResource,
-        \Magento\Catalog\Model\ResourceModel\Product\Collection $resourceCollection,
-        \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory $productCollectionFactory,
-        \Magento\Catalog\Model\Product\Visibility $catalogProductVisibility,
-        \Magento\Framework\Pricing\PriceCurrencyInterface $priceCurrency,
-        \Magento\Framework\Filesystem $fileSystem,
-        \Omikron\Factfinder\Helper\Upload $helperUpload,
-        \Omikron\Factfinder\Helper\Data $helperData,
-        \Omikron\Factfinder\Helper\Communication $helperCommunication,
-        \Omikron\Factfinder\Helper\Product $helperProduct,
-        \Magento\Store\Model\StoreManagerInterface $storeManager,
-        \Magento\Framework\File\Csv $csvWriter,
-        \Magento\Framework\App\Filesystem\DirectoryList $directoryList,
-        \Magento\Store\Model\App\Emulation $appEmulation,
-        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
-        array $data = []
-    )
-    {
+        CollectionFactory $productCollectionFactory,
+        Filesystem $fileSystem,
+        Upload $helperUpload,
+        PushImport $pushImport,
+        UpdateFieldRoles $updateFieldRoles,
+        ProductHelper $helperProduct,
+        CommunicationConfigInterface $communicationConfig,
+        StoreManagerInterface $storeManager,
+        Csv $csvWriter,
+        DirectoryList $directoryList,
+        Emulation $appEmulation
+    ) {
         $this->productCollectionFactory = $productCollectionFactory;
-        $this->catalogProductVisibility = $catalogProductVisibility;
-        $this->productResource = $productResource;
-        $this->priceCurrency = $priceCurrency;
-        $this->fileSystem = $fileSystem;
-        $this->helperUpload = $helperUpload;
-        $this->helperData = $helperData;
-        $this->helperCommunication = $helperCommunication;
-        $this->helperProduct = $helperProduct;
-        $this->storeManager = $storeManager;
-        $this->csvWriter = $csvWriter;
-        $this->directoryList = $directoryList;
-        $this->appEmulation = $appEmulation;
-        $this->scopeConfig = $scopeConfig;
-
-        parent::__construct(
-            $context,
-            $registry,
-            $productResource,
-            $resourceCollection,
-            $data
-        );
+        $this->fileSystem               = $fileSystem;
+        $this->helperUpload             = $helperUpload;
+        $this->pushImport               = $pushImport;
+        $this->updateFieldRoles         = $updateFieldRoles;
+        $this->helperProduct            = $helperProduct;
+        $this->storeManager             = $storeManager;
+        $this->csvWriter                = $csvWriter;
+        $this->directoryList            = $directoryList;
+        $this->appEmulation             = $appEmulation;
+        $this->communicationConfig      = $communicationConfig;
     }
 
     /**
@@ -216,8 +173,9 @@ class Product extends AbstractModel
         $result = [];
 
         foreach ($stores as $store) {
-            $currChannel = $this->helperData->getChannel($store->getId());
-            if (in_array($currChannel, $exportedChannels) || !$this->helperData->isEnabled($store->getId())) {
+            $storeId = $store->getId();
+            $currChannel = $this->communicationConfig->getChannel($storeId);
+            if (in_array($currChannel, $exportedChannels) || !$this->communicationConfig->isEnabled($storeId)) {
                 continue;
             }
 
@@ -229,7 +187,7 @@ class Product extends AbstractModel
             }
 
             if ($updateFieldRoles) {
-                $this->helperCommunication->updateFieldRoles($store);
+                $this->updateFieldRoles->execute($storeId);
             }
         }
         return $result;
@@ -243,23 +201,22 @@ class Product extends AbstractModel
      */
     public function exportProduct($store)
     {
-        $filename = self::FEED_FILE . $this->helperData->getChannel($store->getId()) . '.' . self::FEED_FILE_FILETYPE;
+        $storeId  = $store->getId();
+        $channel  = $this->communicationConfig->getChannel($storeId);
+        $filename = self::FEED_FILE . $channel . '.' . self::FEED_FILE_FILETYPE;
 
         $output = $this->buildFeed($store);
         $result = $this->writeFeedToFile($filename, $output);
-        if (isset($result['has_errors']) && $result['has_errors']) {
+
+        if ($result['has_errors'] ?? []) {
             return $result;
         }
+
         $result = $this->uploadFeed($filename);
         $this->deleteFeedFile($filename);
-        if (isset($result['has_errors']) && $result['has_errors']) {
-            return $result;
-        }
 
-        $storeId = $store->getId();
-        if ($this->helperData->isPushImportEnabled($storeId)) {
-
-            if ($this->helperCommunication->pushImport($this->helperData->getChannel($storeId), $storeId)) {
+        if ($this->communicationConfig->isPushImportEnabled($storeId)) {
+            if ($this->pushImport->execute($storeId, [])) {
                 $result['message'] .= ' ' . __('Import successfully pushed.');
             } else {
                 $result['message'] .= ' ' . __('Import not successful.');
@@ -278,7 +235,7 @@ class Product extends AbstractModel
      */
     public function exportProductWithExternalUrl($store)
     {
-        $filename = self::FEED_FILE . $this->helperData->getChannel($store->getId()) . '.' . self::FEED_FILE_FILETYPE;
+        $filename = self::FEED_FILE . $this->communicationConfig->getChannel($store->getId()) . '.' . self::FEED_FILE_FILETYPE;
         $output = $this->buildFeed($store);
 
         return [
@@ -355,7 +312,7 @@ class Product extends AbstractModel
         try {
             $fileDirectoryPath = $this->directoryList->getPath(DirectoryList::VAR_DIR);
 
-            if(!is_dir($fileDirectoryPath)) {
+            if (!is_dir($fileDirectoryPath)) {
                 mkdir($fileDirectoryPath, 0777, true);
             }
 
@@ -382,7 +339,6 @@ class Product extends AbstractModel
      */
     protected function deleteFeedFile($filename)
     {
-
         $filePath = self::FEED_PATH . $filename;
         $writer = $this->fileSystem->getDirectoryWrite(DirectoryList::VAR_DIR);
         if ($writer->isExist($filePath)) {
