@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Omikron\Factfinder\Model\Export\Catalog\ProductType;
 
 use Magento\Catalog\Model\Product;
-use Omikron\Factfinder\Api\Export\Catalog\ProductEntityInterface;
 use Omikron\Factfinder\Api\Export\Catalog\ProductFieldInterface;
 use Omikron\Factfinder\Api\Export\DataProviderInterface;
 use Omikron\Factfinder\Api\Export\ExportEntityInterface;
@@ -57,7 +56,7 @@ class SimpleDataProvider implements DataProviderInterface, ExportEntityInterface
             'Description'   => (string) $this->product->getData('description'),
             'Short'         => (string) $this->product->getData('short_description'),
             'ProductURL'    => (string) $this->product->getUrlInStore(),
-            'Price'         => $this->numberFormatter->format((float) $this->product->getPrice()),
+            'Price'         => $this->numberFormatter->format((float) $this->product->getFinalPrice()),
             'Brand'         => (string) $this->product->getAttributeText('manufacturer'),
             'Availability'  => (int) $this->product->isAvailable(),
         ];

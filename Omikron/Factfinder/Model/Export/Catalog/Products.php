@@ -41,7 +41,7 @@ class Products implements \IteratorAggregate
             $query = $this->getQuery($page)->create();
             $list  = $this->productRepository->getList($query);
             yield from $list->getItems();
-            if ($page * $this->batchSize > $list->getTotalCount()) {
+            if ($page * $this->batchSize >= $list->getTotalCount()) {
                 break;
             }
             $page++;

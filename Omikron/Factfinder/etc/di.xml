@@ -49,7 +49,13 @@
             <argument name="productFields" xsi:type="array">
                 <item name="ImageURL" xsi:type="object">Omikron\Factfinder\Model\Export\Catalog\ProductField\ProductImage</item>
                 <item name="CategoryPath" xsi:type="object">Omikron\Factfinder\Model\Export\Catalog\ProductField\CategoryPath</item>
+                <item name="Attributes" xsi:type="object">Omikron\Factfinder\Model\Export\Catalog\ProductField\Attributes</item>
             </argument>
+        </arguments>
+    </type>
+    <type name="Omikron\Factfinder\Model\Export\Catalog\ProductField\Attributes">
+        <arguments>
+            <argument name="filter" xsi:type="object">Omikron\Factfinder\Model\Filter\ExtendedTextFilter</argument>
         </arguments>
     </type>
     <type name="Omikron\Factfinder\Model\SessionData">
