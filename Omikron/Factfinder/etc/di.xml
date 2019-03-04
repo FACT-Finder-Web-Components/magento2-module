@@ -38,7 +38,7 @@
                 <item name="simple" xsi:type="string">Omikron\Factfinder\Model\Export\Catalog\ProductType\SimpleDataProvider</item>
                 <item name="virtual" xsi:type="string">Omikron\Factfinder\Model\Export\Catalog\ProductType\SimpleDataProvider</item>
                 <item name="downloadable" xsi:type="string">Omikron\Factfinder\Model\Export\Catalog\ProductType\SimpleDataProvider</item>
-                <item name="configurable" xsi:type="string">Omikron\Factfinder\Model\Export\Catalog\ProductType\SimpleDataProvider</item>
+                <item name="configurable" xsi:type="string">Omikron\Factfinder\Model\Export\Catalog\ProductType\ConfigurableDataProvider</item>
                 <item name="grouped" xsi:type="string">Omikron\Factfinder\Model\Export\Catalog\ProductType\SimpleDataProvider</item>
                 <item name="bundle" xsi:type="string">Omikron\Factfinder\Model\Export\Catalog\ProductType\SimpleDataProvider</item>
             </argument>
@@ -54,6 +54,11 @@
         </arguments>
     </type>
     <type name="Omikron\Factfinder\Model\Export\Catalog\ProductField\Attributes">
+        <arguments>
+            <argument name="filter" xsi:type="object">Omikron\Factfinder\Model\Filter\ExtendedTextFilter</argument>
+        </arguments>
+    </type>
+    <type name="Omikron\Factfinder\Model\Export\Catalog\ProductType\ConfigurableDataProvider">
         <arguments>
             <argument name="filter" xsi:type="object">Omikron\Factfinder\Model\Filter\ExtendedTextFilter</argument>
         </arguments>

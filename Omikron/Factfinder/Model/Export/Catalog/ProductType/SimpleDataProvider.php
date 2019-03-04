@@ -16,7 +16,7 @@ class SimpleDataProvider implements DataProviderInterface, ExportEntityInterface
     protected $numberFormatter;
 
     /** @var Product */
-    private $product;
+    protected $product;
 
     /** @var ProductFieldInterface[] */
     private $productFields;
