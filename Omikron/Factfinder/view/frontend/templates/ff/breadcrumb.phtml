@@ -1,7 +1,7 @@
 <?php /** @var Magento\Framework\View\Element\Template $block */ ?>
 
 <div class="ff-breadcrumb-trail">
-    <span class="description"><?= $block->escapeHtml(__('Your Search for:')) ?></span>
+    <span class="description"><?= $block->escapeHtml(__('Your search for:')) ?></span>
     <ff-breadcrumb-trail unresolved>
         <!-- The search item is the content of the search query-->
         <ff-breadcrumb-trail-item type="search">
@@ -19,6 +19,6 @@
         </ff-breadcrumb-trail-item>
     </ff-breadcrumb-trail>
     <ff-template scope="result" unresolved>
-        <span style="padding-left: 15px"><?= $block->escapeHtml(__('produced {{resultCount}} Hits')) ?></span>
+        <span style="padding-left: 15px"><?= $block->escapeHtml(__('produced {{resultCount}} results')) ?></span>
     </ff-template>
 </div>

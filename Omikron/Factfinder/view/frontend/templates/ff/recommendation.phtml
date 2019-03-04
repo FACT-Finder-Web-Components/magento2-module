@@ -15,25 +15,24 @@ $viewModel = $block->getViewModel();
                         <ff-record>
                             <li class="item product product-item" style="">
                                 <div class="product-item-info ">
-                                    <a href="{{record.ProductUrl}}" class="product photo product-item-photo">
+                                    <a href="{{record.ProductURL}}" class="product photo product-item-photo">
                                         <span class="product-image-container">
                                             <span class="product-image-wrapper">
-                                            <img class="product-image-photo" src="{{record.ImageUrl}}"
-                                                 data-image="{{record.ImageUrl}}"
+                                            <img class="product-image-photo" src="{{record.ImageURL}}" data-image="{{record.ImageURL}}"
                                                  data-image-onerror="<?= $block->escapeUrl($viewModel->getProductImagePlaceholder()) ?>"/>
                                             </span>
                                         </span>
                                     </a>
                                     <div class="product details product-item-details">
-                                        <strong class="product name product-item-name"><a class="product-item-link"
-                                                                                          title="Compete Track Tote"
-                                                                                          href="{{record.ProductUrl}}">
-                                                {{{record.Name}}}{{{record.Title}}}</a>
-                                        </strong>
+                                        <a class="product name product-item-name product-item-link"
+                                           title="{{record.Name}}"
+                                           href="{{record.ProductURL}}">
+                                            {{record.Name}}</a>
+
                                         <div class="price-box price-final_price" data-role="priceBox"
-                                             data-product-id="{{record.MagentoEntityId}}">
+                                             data-product-id="{{record.MagentoId}}">
                                             <span class="price-container price-final_price tax weee">
-                                                <span id="product-price-{{record.MagentoEntityId}}"
+                                                <span id="product-price-{{record.MagentoId}}"
                                                       data-price-amount="{{record.Price}}"
                                                       data-price-type="finalPrice" class="price-wrapper ">
                                                     <span class="price">{{record.Price}}</span>

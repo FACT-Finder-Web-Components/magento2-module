@@ -9,6 +9,7 @@ use Magento\ConfigurableProduct\Model\LinkManagement;
 use Magento\ConfigurableProduct\Model\Product\Type\Configurable as ConfigurableProductType;
 use Omikron\Factfinder\Api\Export\ExportEntityInterface;
 use Omikron\Factfinder\Api\Filter\FilterInterface;
+use Omikron\Factfinder\Model\Export\Catalog\Entity\ProductVariationFactory;
 use Omikron\Factfinder\Model\Formatter\NumberFormatter;
 
 class ConfigurableDataProvider extends SimpleDataProvider
@@ -22,73 +23,53 @@ class ConfigurableDataProvider extends SimpleDataProvider
     /** @var FilterInterface */
     private $filter;
 
+    /** @var ProductVariationFactory */
+    private $variationFactory;
+
     public function __construct(
         Product $product,
         NumberFormatter $numberFormatter,
         LinkManagement $linkManagement,
         ConfigurableProductType $productType,
         FilterInterface $filter,
+        ProductVariationFactory $variationFactory,
         array $productFields = []
     ) {
         parent::__construct($product, $numberFormatter, $productFields);
-        $this->linkManagement = $linkManagement;
-        $this->productType    = $productType;
-        $this->filter         = $filter;
+        $this->linkManagement   = $linkManagement;
+        $this->productType      = $productType;
+        $this->filter           = $filter;
+        $this->variationFactory = $variationFactory;
     }
 
     public function getEntities(): iterable
     {
         yield from parent::getEntities();
-        yield from array_map($this->childEntity($this->product), $this->getChildren($this->product->getSku()));
+        yield from array_map($this->productVariation($this->product), $this->getChildren($this->product->getSku()));
     }
 
-    private function childEntity(Product $product): callable
+    public function toArray(): array
+    {
+        $data = parent::toArray();
+
+        $options = array_merge([], ...array_values($this->getOptions($this->product)));
+        if ($options) {
+            $data = ['Attributes' => ($data['Attributes'] ?? '|') . implode('|', $options) . '|'] + $data;
+        }
+
+        return $data;
+    }
+
+    private function productVariation(Product $product): callable
     {
         $options = $this->getOptions($product);
-        return function (Product $option) use ($options): ExportEntityInterface {
-            return new class($option, $this->product, $this->numberFormatter, $options) implements ExportEntityInterface
-            {
-                /** @var Product */
-                private $product;
+        $data    = parent::toArray();
 
-                /** @var Product */
-                private $parent;
-
-                /** @var NumberFormatter */
-                private $numberFormatter;
-
-                /** @var array */
-                private $attributes;
-
-                public function __construct(
-                    Product $product,
-                    Product $parent,
-                    NumberFormatter $numberFormatter,
-                    array $attributes
-                ) {
-                    $this->product         = $product;
-                    $this->parent          = $parent;
-                    $this->numberFormatter = $numberFormatter;
-                    $this->attributes      = $attributes;
-                }
-
-                public function getId(): int
-                {
-                    return $this->product->getId();
-                }
-
-                public function toArray(): array
-                {
-                    $attributes = implode('|', $this->attributes[$this->product->getSku()] ?? []);
-                    return [
-                        'ProductNumber' => (string) $this->product->getSku(),
-                        'Master'        => (string) $this->parent->getSku(),
-                        'Price'         => $this->numberFormatter->format((float) $this->product->getFinalPrice()),
-                        'Availability'  => (int) $this->product->isAvailable(),
-                        'Attributes'    => $attributes ? "|{$attributes}|" : '',
-                    ];
-                }
-            };
+        return function (Product $variation) use ($options, $data): ExportEntityInterface {
+            return $this->variationFactory->create([
+                'product' => $variation,
+                'data'    => ['Attributes' => '|' . implode('|', $options[$variation->getSku()] ?? []) . '|'] + $data,
+            ]);
         };
     }
 

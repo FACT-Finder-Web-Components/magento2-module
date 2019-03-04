@@ -15,25 +15,21 @@ $viewModel = $block->getViewModel();
 <ff-record-list unresolved>
     <ff-record>
         <img data-image data-image-onerror="<?= $block->escapeUrl($viewModel->getProductImagePlaceholder()) ?>" />
-        <br/>
         <div class="recordContent">
             <div class="brand">{{record.Manufacturer}}</div>
-            <a class="productDetailLink"
-               data-redirect="{{record.ProductUrl}}" data-redirect-target="_blank" data-anchor="{{record.ProductUrl}}">
-                {{{record.Name}}}
+            <a class="productDetailLink" data-redirect="{{record.ProductURL}}" data-redirect-target="_blank" data-anchor="{{record.ProductURL}}">
+                {{record.Name}}
             </a>
-            <div class="description">
-                {{{record.Description}}}
-            </div>
-            <a class="toProduct" data-redirect="{{record.ProductUrl}}" data-redirect-target="_blank" data-anchor="{{record.ProductUrl}}">
-                Product Page
+            <div class="description">{{record.Description}}</div>
+            <a class="toProduct" data-redirect="{{record.ProductURL}}" data-redirect-target="_blank" data-anchor="{{record.ProductURL}}">
+                <?= $block->escapeHtml(__('Product Page')) ?>
             </a>
             <div class="productInfo">
                 <?php if ($viewModel->isAddToCartEnabled()): ?>
                     <div class="addCartLink basketIcon">
                         <form action="<?= $block->escapeUrl($viewModel->getAddToCartUrl()) ?>" method="post" class="product_addtocart_form" novalidate="novalidate">
-                            <input type="hidden" name="product" value="{{record.MagentoEntityId}}">
                             <?= /* @noEscape */ $block->getBlockHtml('formkey') ?>
+                            <input type="hidden" name="product" value="{{record.MagentoId}}" />
                             <button data-track type="submit" title="<?= $block->escapeHtmlAttr(__('Add to Cart')) ?>" class="action primary tocart">
                                 <span><?= $block->escapeHtml(__('Add to Cart')) ?></span>
                             </button>
