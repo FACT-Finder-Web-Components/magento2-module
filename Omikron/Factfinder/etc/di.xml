@@ -7,7 +7,7 @@
     <preference for="Omikron\Factfinder\Api\FieldRolesInterface" type="Omikron\Factfinder\Model\FieldRoles"/>
     <preference for="Omikron\Factfinder\Api\Filter\FilterInterface" type="Omikron\Factfinder\Model\Filter\TextFilter"/>
     <preference for="Omikron\Factfinder\Api\SessionDataInterface" type="Omikron\Factfinder\Model\SessionData"/>
-    <preference for="Omikron\Factfinder\Api\ExporterInterface" type="Omikron\Factfinder\Model\Api\Export"/>
+    <preference for="Omikron\Factfinder\Api\ExporterInterface" type="Omikron\Factfinder\Model\Exporter"/>
 
     <virtualType name="Omikron\Factfinder\Model\Product\Attribute\CollectionFactory" type="Magento\Eav\Model\ResourceModel\Entity\Attribute\CollectionFactory">
         <arguments>
@@ -96,5 +96,23 @@
         <arguments>
             <argument name="decoratedStream" xsi:type="object">Omikron\Factfinder\Model\Export\Stream\Csv</argument>
         </arguments>
+    </type>
+    <type name="Omikron\Factfinder\Plugin\Export\AddPageColumns">
+        <arguments>
+            <argument name="columns" xsi:type="array">
+                <item name="PageId" xsi:type="string">PageId</item>
+                <item name="PageIdentifier" xsi:type="string">PageIdentifier</item>
+                <item name="PageTitle" xsi:type="string">PageTitle</item>
+                <item name="PageContentHeading" xsi:type="string">PageContentHeading</item>
+                <item name="PageContent" xsi:type="string">PageContent</item>
+                <item name="PageMetaKeywords" xsi:type="string">PageMetaKeywords</item>
+                <item name="PageMetaDescription" xsi:type="string">PageMetaDescription</item>
+                <item name="PageUrl" xsi:type="string">PageUrl</item>
+                <item name="PageImage" xsi:type="string">PageImage</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Omikron\Factfinder\Model\Exporter">
+        <plugin name="addPageColumns" type="Omikron\Factfinder\Plugin\Export\AddPageColumns" />
     </type>
 </config>

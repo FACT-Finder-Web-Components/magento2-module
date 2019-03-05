@@ -3,45 +3,47 @@
 namespace Omikron\Factfinder\Controller\Adminhtml\Export;
 
 use Magento\Backend\App\Action;
+use Magento\Backend\App\Action\Context;
+use Magento\Framework\Controller\Result\Json;
 use Magento\Framework\Controller\Result\JsonFactory;
-use Magento\Store\Model\StoreManagerInterface;
-use Omikron\Factfinder\Model\Export\Product;
+use Omikron\Factfinder\Api\ExporterInterface;
+use Omikron\Factfinder\Model\Export\DataProvidersFactory;
+use Omikron\Factfinder\Model\Export\Stream\CsvFactory;
 
 class Feed extends Action
 {
     /** @var JsonFactory */
     private $resultJsonFactory;
 
-    /** @var Product */
-    private $productExporter;
+    /** @var ExporterInterface */
+    private $productExport;
 
-    /** @var StoreManagerInterface */
-    private $storeManager;
+    /** @var DataProvidersFactory */
+    private $dataProvidersFactory;
+
+    /** @var CsvFactory */
+    private $streamWriterFactory;
 
     public function __construct(
-        Action\Context $context,
+        Context $context,
         JsonFactory $resultJsonFactory,
-        StoreManagerInterface $storeManager,
-        Product $productExporter
+        DataProvidersFactory $dataProvidersFactory,
+        CsvFactory $streamFactory,
+        ExporterInterface $export
     ) {
         parent::__construct($context);
-        $this->resultJsonFactory = $resultJsonFactory;
-        $this->storeManager      = $storeManager;
-        $this->productExporter   = $productExporter;
+        $this->resultJsonFactory    = $resultJsonFactory;
+        $this->productExport        = $export;
+        $this->dataProvidersFactory = $dataProvidersFactory;
+        $this->streamWriterFactory  = $streamFactory;
     }
 
-    /**
-     * Get called through export button in the backend
-     *
-     * @return \Magento\Framework\Controller\Result\Json
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
-     */
-    public function execute()
+    public function execute(): Json
     {
-        // get current store view from HTTP_REFERER
-        preg_match('@/store/([0-9]+)/@', (string) $this->_redirect->getRefererUrl(), $result);
-        $store  = $this->storeManager->getStore($result[1] ?? null);
-        $result = $this->productExporter->exportProduct($store);
-        return $this->resultJsonFactory->create()->setData($result);
+        $streamWriter = $this->streamWriterFactory->create(['fileName' => 'product_export.csv']);
+        $this->productExport->exportEntities($streamWriter, $this->dataProvidersFactory->create());
+        $resultJson = $this->resultJsonFactory->create();
+
+        return $resultJson->setData(['message' => __('Feed was sucessfully exported')]);
     }
 }

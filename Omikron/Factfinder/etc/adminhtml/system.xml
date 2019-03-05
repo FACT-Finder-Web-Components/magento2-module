@@ -320,9 +320,9 @@
                     <label>Main article number</label>
                     <comment>Choose column which is used as main article number in order to merge cms page identifier</comment>
                     <options>
-                        <option label="MagentoEntityId">MagentoEntityId</option>
-                        <option label="MasterProductNumber">MasterProductNumber</option>
                         <option label="ProductNumber">ProductNumber</option>
+                        <option label="Master">Master</option>
+                        <option label="MagentoId">MagentoId</option>
                     </options>
                     <depends>
                         <field id="ff_cms_use_separate_channel">0</field>

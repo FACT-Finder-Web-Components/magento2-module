@@ -11,9 +11,9 @@ use Omikron\Factfinder\Api\Export\StreamInterface;
 interface ExporterInterface
 {
     /**
-     * @param StreamInterface       $stream
-     * @param DataProviderInterface $dataProvider
-     * @param string[]              $columns
+     * @param StreamInterface         $stream
+     * @param DataProviderInterface[] $dataProviders
+     * @param string[]                $columns
      */
-    public function exportEntities(StreamInterface $stream, DataProviderInterface $dataProvider, array $columns): void;
+    public function exportEntities(StreamInterface $stream, array $dataProviders, array $columns): void;
 }

@@ -6,60 +6,46 @@ namespace Omikron\Factfinder\Controller\Adminhtml\Export;
 
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
-use Magento\Framework\Controller\Result\JsonFactory;
-use Magento\Framework\View\Result\PageFactory;
-use Magento\Store\Model\StoreManagerInterface;
-use Omikron\Factfinder\Model\Export\Stream\FtpFactory;
-use Omikron\Factfinder\Api\ExporterInterface;
-use Omikron\Factfinder\Model\Export\Cms\DataProvider;
-use Omikron\Factfinder\Model\Exporter;
 use Magento\Framework\Controller\Result\Json;
+use Magento\Framework\Controller\Result\JsonFactory;
+use Omikron\Factfinder\Api\ExporterInterface;
+use Omikron\Factfinder\Model\Export\DataProvidersFactory;
+use Omikron\Factfinder\Model\Export\Stream\CsvFactory;
 
 class CmsFeed extends Action
 {
-    /** @var PageFactory */
-    private $resultPageFactory;
-
     /** @var JsonFactory */
     private $resultJsonFactory;
 
-    /** @var Exporter */
-    private $cmsExporter;
+    /** @var ExporterInterface */
+    private $cmsExport;
 
-    /** @var StoreManagerInterface */
-    private $storeManager;
+    /** @var DataProvidersFactory */
+    private $dataProvidersFactory;
 
-    /** @var DataProvider */
-    private $dataProvider;
-
-    /** @var FtpFactory */
+    /** @var CsvFactory */
     private $streamWriterFactory;
 
     public function __construct(
         Context $context,
-        PageFactory $resultPageFactory,
         JsonFactory $resultJsonFactory,
-        StoreManagerInterface $storeManager,
-        DataProvider $dataProvider,
-        FtpFactory $streamFactory,
-        ExporterInterface $cmsExporter
+        DataProvidersFactory $dataProvidersFactory,
+        CsvFactory $streamFactory,
+        ExporterInterface $export
     ) {
-        $this->resultPageFactory   = $resultPageFactory;
-        $this->resultJsonFactory   = $resultJsonFactory;
-        $this->storeManager        = $storeManager;
-        $this->cmsExporter         = $cmsExporter;
-        $this->dataProvider        = $dataProvider;
-        $this->streamWriterFactory = $streamFactory;
-
         parent::__construct($context);
+        $this->resultJsonFactory    = $resultJsonFactory;
+        $this->cmsExport            = $export;
+        $this->dataProvidersFactory = $dataProvidersFactory;
+        $this->streamWriterFactory  = $streamFactory;
     }
 
     public function execute(): Json
     {
-        preg_match('@/store/([0-9]+)/@', (string) $this->_redirect->getRefererUrl(), $result);
         $streamWriter = $this->streamWriterFactory->create(['fileName' => 'cms_export.csv']);
-        $this->cmsExporter->exportEntities($streamWriter, $this->dataProvider);
+        $this->cmsExport->exportEntities($streamWriter, $this->dataProvidersFactory->create());
         $resultJson = $this->resultJsonFactory->create();
+
         return $resultJson->setData(['message' => __('Feed was sucessfully exported')]);
     }
 }

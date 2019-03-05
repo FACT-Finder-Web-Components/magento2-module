@@ -13,11 +13,14 @@ class Exporter implements ExporterInterface
     /**
      * @inheritdoc
      */
-    public function exportEntities(StreamInterface $stream, DataProviderInterface $dataProvider, array $columns): void
+    public function exportEntities(StreamInterface $stream, array $dataProviders, array $columns): void
     {
         $entityData = array_combine($columns, array_fill(0, count($columns), ''));
-        foreach ($dataProvider->getEntities() as $entity) {
-            $stream->addEntity(array_merge($entityData, array_intersect_key($entity->toArray(), $entityData)));
+        /** @var DataProviderInterface $dataProvider */
+        foreach ($dataProviders as $dataProvider ) {
+            foreach ($dataProvider->getEntities() as $entity) {
+                $stream->addEntity(array_merge($entityData, array_intersect_key($entity->toArray(), $entityData)));
+            }
         }
     }
 }
