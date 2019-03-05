@@ -7,6 +7,7 @@
     <preference for="Omikron\Factfinder\Api\FieldRolesInterface" type="Omikron\Factfinder\Model\FieldRoles"/>
     <preference for="Omikron\Factfinder\Api\Filter\FilterInterface" type="Omikron\Factfinder\Model\Filter\TextFilter"/>
     <preference for="Omikron\Factfinder\Api\SessionDataInterface" type="Omikron\Factfinder\Model\SessionData"/>
+    <preference for="Omikron\Factfinder\Api\ExporterInterface" type="Omikron\Factfinder\Model\Api\Export"/>
 
     <virtualType name="Omikron\Factfinder\Model\Product\Attribute\CollectionFactory" type="Magento\Eav\Model\ResourceModel\Entity\Attribute\CollectionFactory">
         <arguments>
@@ -79,6 +80,21 @@
     <type name="Omikron\Factfinder\Model\Api\Tracking">
         <arguments>
             <argument name="factFinderClient" xsi:type="object">Omikron\Factfinder\Model\TrackingEventClient</argument>
+        </arguments>
+    </type>
+    <type name="Omikron\Factfinder\Model\Export\Cms\Page">
+        <arguments>
+            <argument name="pageFields" xsi:type="array">
+                <item name="PageId" xsi:type="object">Omikron\Factfinder\Model\Export\Cms\Field\Id</item>
+                <item name="PageContent" xsi:type="object">Omikron\Factfinder\Model\Export\Cms\Field\Content</item>
+                <item name="PageUrl" xsi:type="object">Omikron\Factfinder\Model\Export\Cms\Field\Url</item>
+                <item name="PageImage" xsi:type="object">Omikron\Factfinder\Model\Export\Cms\Field\Image</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Omikron\Factfinder\Model\Export\Stream\Ftp">
+        <arguments>
+            <argument name="decoratedStream" xsi:type="object">Omikron\Factfinder\Model\Export\Stream\Csv</argument>
         </arguments>
     </type>
 </config>

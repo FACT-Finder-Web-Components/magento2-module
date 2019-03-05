@@ -1,0 +1,53 @@
+<script>
+    require([
+        'jquery'
+    ], function(jQuery){
+
+        function enableCmsFeedButton() {
+            Form.Element.enable('cms_feed_button');
+            $('feed_button').removeClassName('disabled');
+        }
+
+        function disableCmsFeedButton() {
+            Form.Element.disable('cms_feed_button');
+            $('feed_button').addClassName('disabled');
+        }
+
+        jQuery('#cms_feed_button').click(function () {
+
+            if ($('load_span_cms').hasClassName('no-display')) {
+                $('load_span_cms').removeClassName('no-display');
+                $('load_message_span_cms').update('<?php echo __('Generating CMS export file'); ?>');
+            }
+
+            new Ajax.Request('<?php echo $this->getUrl('factfinder/export/cmsfeed') ?>', {
+                parameters:     {},
+                loaderArea:     false,
+                asynchronous:   true,
+                onCreate: disableCmsFeedButton,
+                onComplete: function(transport) {
+                    var response;
+
+                    try {
+                        response = JSON.parse(transport.responseText);
+
+                        $('load_spinner_cms').hide();
+                        $('load_message_span_cms').update(response.message);
+                        
+                        enableFeedButton();
+                    } catch (e) {
+                        response = {};
+                    }
+                }
+            });
+
+            enableCmsFeedButton();
+        });
+    });
+</script>
+
+<?php echo $block->getButtonHtml(); ?>
+<div class="sync-indicator no-display" id="load_span_cms">
+    <img alt="Loading" id="load_spinner_cms" style="margin:0 5px" src="<?php echo $block->getViewFileUrl('images/process_spinner.gif') ?>"/>
+    <span id="load_message_span_cms"></span>
+</div>
