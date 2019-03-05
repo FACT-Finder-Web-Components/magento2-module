@@ -18,12 +18,13 @@ class Attribute implements OptionSourceInterface
 
     public function toOptionArray()
     {
-        $collection = $this->collectionFactory->create();
-        $collection->setOrder('attribute_code', 'ASC');
-
         $options = array_map(function (EavAttribute $attribute): array {
-            return ['value' => $attribute->getAttributeCode(), 'label' => $attribute->getAttributeCode()];
-        }, $collection->getItems());
+            return ['value' => $attribute->getAttributeCode(), 'label' => $attribute->getDefaultFrontendLabel()];
+        }, $this->collectionFactory->create()->getItems());
+
+        usort($options, function (array $a, array $b): int {
+            return strtolower($a['label']) <=> strtolower($b['label']);
+        });
 
         return array_merge([['value' => '', 'label' => '']], $options);
     }

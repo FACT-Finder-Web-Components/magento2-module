@@ -34,11 +34,11 @@
                 loaderArea: false,
                 asynchronous: true,
                 onCreate: disableButton,
-                onComplete: enableButton,
-                onSuccess: function (transport) {
+                onComplete: function (transport) {
                     var response = JSON.parse(transport.responseText);
                     $('ff_testconnection_load_spinner').hide();
                     $('ff_testconnection_load_message_span').update(response.message);
+                    enableButton();
                 }
             });
         });

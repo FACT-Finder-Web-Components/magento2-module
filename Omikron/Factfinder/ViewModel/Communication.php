@@ -32,9 +32,7 @@ class Communication implements ArgumentInterface
 
     public function getParameters(): array
     {
-        return array_filter($this->parametersProvider->getParameters(), function ($param) {
-            return (bool) $param;
-        });
+        return array_filter($this->parametersProvider->getParameters(), 'boolval');
     }
 
     public function getFieldRoles(): string

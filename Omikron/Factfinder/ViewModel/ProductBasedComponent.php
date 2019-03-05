@@ -41,7 +41,7 @@ class ProductBasedComponent implements ArgumentInterface
 
     public function getProduct(): ProductInterface
     {
-        $this->registry->registry('product');
+        return $this->registry->registry('product');
     }
 
     public function getProductImagePlaceholder(): string

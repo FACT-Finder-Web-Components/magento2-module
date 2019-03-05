@@ -17,10 +17,8 @@ class Feed
     /** @var ScopeConfigInterface */
     private $scopeConfig;
 
-    public function __construct(
-        Product $productExport,
-        ScopeConfigInterface $scopeConfig
-    ) {
+    public function __construct(Product $productExport, ScopeConfigInterface $scopeConfig)
+    {
         $this->productExport = $productExport;
         $this->scopeConfig   = $scopeConfig;
     }

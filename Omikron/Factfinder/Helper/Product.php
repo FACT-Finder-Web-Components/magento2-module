@@ -175,7 +175,7 @@ class Product extends AbstractHelper
      */
     protected function getName($product)
     {
-        return $product->getData('name');
+        return $this->cleanValue($product->getData('name'));
     }
 
     /**

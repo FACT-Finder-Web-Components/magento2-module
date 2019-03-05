@@ -10,11 +10,11 @@ use Psr\Log\LoggerInterface;
 
 class LogExceptions
 {
-    /** @var ScopeConfigInterface  */
-    protected $scopeConfig;
+    /** @var ScopeConfigInterface */
+    private $scopeConfig;
 
-    /** @var LoggerInterface  */
-    protected $logger;
+    /** @var LoggerInterface */
+    private $logger;
 
     public function __construct(ScopeConfigInterface $scopeConfig, LoggerInterface $logger)
     {
@@ -22,12 +22,10 @@ class LogExceptions
         $this->logger      = $logger;
     }
 
-    public function aroundExecute($subject, callable $proceed, ... $params)
+    public function aroundExecute($subject, callable $proceed, ...$params)
     {
         try {
-            $result = $proceed(...$params);
-
-            return $result;
+            return $proceed(...$params);
         } catch (ResponseException $e) {
             if ($this->scopeConfig->isSetFlag('factfinder/general/logging_enabled')) {
                 $this->logger->error(__(
@@ -36,7 +34,6 @@ class LogExceptions
                     $e->getTraceAsString()
                 ));
             }
-
             return false;
         }
     }

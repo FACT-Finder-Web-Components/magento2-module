@@ -58,8 +58,11 @@
                 <comment>The advanced settings can change how the search works. Please edit them with caution and only if you know what they are doing.</comment>
                 <field id="version" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>API version</label>
-                    <source_model>Omikron\Factfinder\Model\Source\FFVersion</source_model>
                     <comment>FACT-Finder version.</comment>
+                    <options>
+                        <option label="7.2">7.2</option>
+                        <option label="7.3">7.3</option>
+                    </options>
                 </field>
                 <field id="use_url_parameter" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>use-url-parameter</label>
@@ -260,10 +263,13 @@
                 </field>
                 <field id="ff_push_import_type" translate="label" type="multiselect" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Pushed import types</label>
-                    <source_model>Omikron\Factfinder\Model\Source\ImportTypes</source_model>
-                        <depends>
-                            <field id="ff_push_import_enabled">1</field>
-                        </depends>
+                    <options>
+                        <option label="Data">data</option>
+                        <option label="Suggest">suggest</option>
+                    </options>
+                    <depends>
+                        <field id="ff_push_import_enabled">1</field>
+                    </depends>
                 </field>
             </group>
             <group id="basic_auth_data_transfer" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">

@@ -30,14 +30,19 @@ class PersonalizationConfig implements ParametersSourceInterface
     public function getParameters(): array
     {
         return [
-            'use-found-words'       => $this->scopeConfig->getValue(self::PATH_USE_FOUND_WORDS, ScopeInterface::SCOPE_STORES),
-            'use-aso'               => $this->scopeConfig->getValue(self::PATH_USE_ASO, ScopeInterface::SCOPE_STORES),
-            'use-browser-history'   => $this->scopeConfig->getValue(self::PATH_USE_BROWSER_HISTORY, ScopeInterface::SCOPE_STORES),
-            'use-personalization'   => $this->scopeConfig->getValue(self::PATH_USE_PERSONALIZATION, ScopeInterface::SCOPE_STORES),
-            'use-semantic-enhancer' => $this->scopeConfig->getValue(self::PATH_USE_SEMANTIC_ENHANCER, ScopeInterface::SCOPE_STORES),
-            'use-campaigns'         => $this->scopeConfig->getValue(self::PATH_USE_CAMPAIGNS, ScopeInterface::SCOPE_STORES),
-            'generate-advisor-tree' => $this->scopeConfig->getValue(self::PATH_GENERATE_ADVISOR_TREE, ScopeInterface::SCOPE_STORES),
-            'use-asn'               => $this->scopeConfig->getValue(self::PATH_USE_ASN, ScopeInterface::SCOPE_STORES),
+            'use-found-words'       => $this->getConfig(self::PATH_USE_FOUND_WORDS),
+            'use-aso'               => $this->getConfig(self::PATH_USE_ASO),
+            'use-browser-history'   => $this->getConfig(self::PATH_USE_BROWSER_HISTORY),
+            'use-personalization'   => $this->getConfig(self::PATH_USE_PERSONALIZATION),
+            'use-semantic-enhancer' => $this->getConfig(self::PATH_USE_SEMANTIC_ENHANCER),
+            'use-campaigns'         => $this->getConfig(self::PATH_USE_CAMPAIGNS),
+            'generate-advisor-tree' => $this->getConfig(self::PATH_GENERATE_ADVISOR_TREE),
+            'use-asn'               => $this->getConfig(self::PATH_USE_ASN),
         ];
+    }
+
+    private function getConfig(string $path): string
+    {
+        return (string) $this->scopeConfig->getValue($path, ScopeInterface::SCOPE_STORES);
     }
 }

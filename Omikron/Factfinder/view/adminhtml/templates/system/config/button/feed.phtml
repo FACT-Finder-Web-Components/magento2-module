@@ -1,7 +1,7 @@
 <script>
     require([
         'jquery'
-    ], function(jQuery){
+    ], function (jQuery) {
 
         function enableFeedButton() {
             Form.Element.enable('feed_button');
@@ -21,27 +21,17 @@
             }
 
             new Ajax.Request('<?= $block->escapeUrl($block->getUrl('factfinder/export/feed')) ?>', {
-                parameters:     {},
-                loaderArea:     false,
-                asynchronous:   true,
-
-                onSuccess: function(transport) {
-                    var response;
-
-                    try {
-                        response = JSON.parse(transport.responseText);
-
-                        $('load_spinner').hide();
-                        $('load_message_span').update(response.message);
-
-                        enableFeedButton();
-                    } catch (e) {
-                        response = {};
-                    }
+                parameters: {},
+                loaderArea: false,
+                asynchronous: true,
+                onCreate: disableFeedButton,
+                onComplete: function (transport) {
+                    var response = JSON.parse(transport.responseText);
+                    $('load_message_span').update(response.message);
+                    $('load_spinner').hide();
+                    enableFeedButton();
                 }
             });
-
-            disableFeedButton();
         });
     });
 </script>
