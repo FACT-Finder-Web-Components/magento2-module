@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Omikron\Factfinder\Model\Export\Catalog\ProductField;
 
 use Magento\Catalog\Model\Product;
+use Magento\Catalog\Model\ResourceModel\Eav\Attribute;
 use Magento\Catalog\Model\ResourceModel\Product as ProductResource;
-use Magento\Eav\Model\Entity\Attribute\AbstractAttribute as Attribute;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Store\Model\ScopeInterface as Scope;
 use Omikron\Factfinder\Api\Export\Catalog\ProductFieldInterface;

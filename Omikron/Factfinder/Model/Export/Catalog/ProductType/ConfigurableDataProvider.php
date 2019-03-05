@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Omikron\Factfinder\Model\Export\Catalog\ProductType;
 
+use Magento\Catalog\Api\Data\ProductInterface;
 use Magento\Catalog\Model\Product;
 use Magento\ConfigurableProduct\Model\LinkManagement;
 use Magento\ConfigurableProduct\Model\Product\Type\Configurable as ConfigurableProductType;
@@ -86,7 +87,7 @@ class ConfigurableDataProvider extends SimpleDataProvider
     /**
      * @param string $sku
      *
-     * @return Product[]
+     * @return ProductInterface[]
      */
     private function getChildren(string $sku): array
     {
