@@ -115,4 +115,7 @@
     <type name="Omikron\Factfinder\Model\Exporter">
         <plugin name="addPageColumns" type="Omikron\Factfinder\Plugin\Export\AddPageColumns" />
     </type>
+    <type name="Omikron\Factfinder\Model\Export\Cms\Page">
+        <plugin name="addPageIdToMainArticleNumberColumn" type="Omikron\Factfinder\Plugin\Export\Cms\FillMainArticleNumber" />
+    </type>
 </config>
