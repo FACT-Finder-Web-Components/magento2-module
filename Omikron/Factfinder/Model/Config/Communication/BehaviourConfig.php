@@ -29,13 +29,18 @@ class BehaviourConfig implements ParametersSourceInterface
     public function getParameters(): array
     {
         return [
-            'use-url-parameter'           => $this->scopeConfig->getValue(self::PATH_USE_URL_PARAMETER, ScopeInterface::SCOPE_STORES),
-            'add-params'                  => $this->scopeConfig->getValue(self::PATH_ADD_PARAMS, ScopeInterface::SCOPE_STORES),
-            'add-tracking-params'         => $this->scopeConfig->getValue(self::PATH_ADD_TRACKING_PARAMS, ScopeInterface::SCOPE_STORES),
-            'keep-url-params'             => $this->scopeConfig->getValue(self::PATH_KEEP_URL_PARAMS, ScopeInterface::SCOPE_STORES),
-            'only-search-params'          => $this->scopeConfig->getValue(self::PATH_ONLY_SEARCH_PARAMS, ScopeInterface::SCOPE_STORES),
-            'parameter-whitelist'         => $this->scopeConfig->getValue(self::PATH_PARAMETER_WHITELIST, ScopeInterface::SCOPE_STORES),
-            'disable-single-hit-redirect' => $this->scopeConfig->getValue(self::PATH_DISABLE_SINGLE_HIT_REDIRECT, ScopeInterface::SCOPE_STORES),
+            'use-url-parameter'           => $this->getConfig(self::PATH_USE_URL_PARAMETER),
+            'add-params'                  => $this->getConfig(self::PATH_ADD_PARAMS),
+            'add-tracking-params'         => $this->getConfig(self::PATH_ADD_TRACKING_PARAMS),
+            'keep-url-params'             => $this->getConfig(self::PATH_KEEP_URL_PARAMS),
+            'only-search-params'          => $this->getConfig(self::PATH_ONLY_SEARCH_PARAMS),
+            'parameter-whitelist'         => $this->getConfig(self::PATH_PARAMETER_WHITELIST),
+            'disable-single-hit-redirect' => $this->getConfig(self::PATH_DISABLE_SINGLE_HIT_REDIRECT),
         ];
+    }
+
+    private function getConfig(string $path): string
+    {
+        return (string) $this->scopeConfig->getValue($path, ScopeInterface::SCOPE_STORES);
     }
 }
