@@ -22,6 +22,13 @@ class LogExceptions
         $this->logger      = $logger;
     }
 
+    /**
+     * @param          $subject
+     * @param callable $proceed
+     * @param mixed    ...$params
+     * @return bool
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
     public function aroundExecute($subject, callable $proceed, ...$params)
     {
         try {

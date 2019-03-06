@@ -315,21 +315,6 @@
                         <field id="ff_cms_export_enabled">1</field>
                     </depends>
                 </field>
-
-                <field id="ff_cms_merge_identiefier" translate="label comment" type="select" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="4">
-                    <label>Main article number</label>
-                    <comment>Choose column which is used as main article number in order to merge cms page identifier</comment>
-                    <options>
-                        <option label="ProductNumber">ProductNumber</option>
-                        <option label="Master">Master</option>
-                        <option label="MagentoId">MagentoId</option>
-                    </options>
-                    <depends>
-                        <field id="ff_cms_use_separate_channel">0</field>
-                        <field id="ff_cms_export_enabled">1</field>
-                    </depends>
-                </field>
-
                 <field id="ff_cms_createfeed" translate="label comment" type="button" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="5">
                     <depends>
                         <field id="ff_cms_export_enabled">1</field>
