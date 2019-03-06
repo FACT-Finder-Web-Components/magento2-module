@@ -11,10 +11,10 @@ use Omikron\Factfinder\Model\Export\Cms\DataProvider as CmsDataProvider;
 
 class DataProvidersFactory
 {
-    /** @var ObjectManagerInterface  */
+    /** @var ObjectManagerInterface */
     private $objectManager;
 
-    /** @var CmsConfig  */
+    /** @var CmsConfig */
     private $cmsConfig;
 
     public function __construct(ObjectManagerInterface $objectManager, CmsConfig $cmsConfig)
@@ -26,8 +26,7 @@ class DataProvidersFactory
     public function create(): array
     {
         $providers = [$this->objectManager->create(ProductDataProvider::class)];
-        if ($this->cmsConfig->isCmsExportEnabled() && !$this->cmsConfig->useSeparateCmsChannel())
-        {
+        if ($this->cmsConfig->isCmsExportEnabled() && !$this->cmsConfig->useSeparateCmsChannel()) {
             $providers[] = $this->objectManager->create(CmsDataProvider::class);
         }
         return $providers;

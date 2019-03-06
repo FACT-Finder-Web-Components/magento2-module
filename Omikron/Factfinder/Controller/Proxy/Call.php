@@ -49,10 +49,9 @@ class Call extends \Magento\Framework\App\Action\Action
             $this->_eventManager->dispatch('ff_proxy_post_dispatch', [
                 'endpoint' => $endpoint,
                 'params'   => $this->getRequest()->getParams(),
-                'response' => &$response
+                'response' => &$response,
             ]);
             $result->setData($response);
-
         } catch (ResponseException $e) {
             $result->setJsonData($e->getMessage());
         }

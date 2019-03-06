@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Omikron\Factfinder\Model\Export\Cms;
 
+use Magento\Cms\Api\Data\PageInterface;
 use Magento\Cms\Api\PageRepositoryInterface;
 use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Framework\Exception\LocalizedException;
@@ -17,7 +18,7 @@ class Pages implements \IteratorAggregate
     /** @var SearchCriteriaBuilder */
     private $searchCriteriaBuilder;
 
-    /** @var CmsConfig  */
+    /** @var CmsConfig */
     private $cmsConfig;
 
     public function __construct(
@@ -31,14 +32,13 @@ class Pages implements \IteratorAggregate
     }
 
     /**
-     * @return \Traversable|PageInterface\[]
+     * @return \Traversable|PageInterface[]
      * @throws LocalizedException
      */
     public function getIterator()
     {
         $query = $this->getQuery()->create();
-        $list  = $this->pageRepository->getList($query);
-        yield from $list->getItems();
+        yield from $this->pageRepository->getList($query)->getItems();
     }
 
     protected function getQuery(): SearchCriteriaBuilder

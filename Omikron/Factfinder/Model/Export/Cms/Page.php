@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace Omikron\Factfinder\Model\Export\Cms;
 
 use Magento\Cms\Api\Data\PageInterface;
-use Magento\Framework\UrlInterface;
-use Magento\Store\Api\Data\StoreInterface;
 use Omikron\Factfinder\Api\Export\Cms\PageFieldInterface;
 use Omikron\Factfinder\Api\Export\ExportEntityInterface;
 
@@ -15,13 +13,11 @@ class Page implements ExportEntityInterface
     /** @var PageInterface */
     private $page;
 
-    /** @var array */
+    /** @var PageFieldInterface[] */
     private $pageFields;
 
-    public function __construct(
-        PageInterface $page,
-        array $pageFields = []
-    ) {
+    public function __construct(PageInterface $page, array $pageFields = [])
+    {
         $this->page       = $page;
         $this->pageFields = $pageFields;
     }
@@ -34,6 +30,8 @@ class Page implements ExportEntityInterface
     public function toArray(): array
     {
         $data = [
+            'PageId'              => "P{$this->getId()}",
+            'Master'              => "P{$this->getId()}",
             'PageIdentifier'      => (string) $this->page->getIdentifier(),
             'PageTitle'           => (string) $this->page->getTitle(),
             'PageContentHeading'  => (string) $this->page->getContentHeading(),

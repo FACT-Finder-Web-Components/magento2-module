@@ -26,7 +26,6 @@ class Url implements PageFieldInterface
     public function getValue(PageInterface $page): string
     {
         $this->urlBuilder->setScope($this->storeManager->getStore()->getId());
-
         return $this->urlBuilder->getUrl(null, ['_direct' => $page->getIdentifier()]);
     }
 }

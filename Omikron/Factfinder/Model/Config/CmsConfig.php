@@ -31,13 +31,14 @@ class CmsConfig
         return $this->scopeConfig->isSetFlag(self::PATH_USE_SEPARATE_CHANNEL, 'store', $scopeCode);
     }
 
-    public function getCmsBlacklist(int $scopeCode = null): string
+    public function getCmsBlacklist(int $scopeCode = null): array
     {
-        return $this->scopeConfig->getValue(self::PATH_DISABLE_CMS_PAGES, 'store', $scopeCode);
+        $pages = (string) $this->scopeConfig->getValue(self::PATH_DISABLE_CMS_PAGES, 'store', $scopeCode);
+        return array_filter(explode(',', $pages));
     }
 
     public function getChannel(int $scopeCode = null): string
     {
-        return $this->scopeConfig->getValue(self::PATH_ADDITIONAL_CMS_CHANNEL, 'store', $scopeCode);
+        return (string) $this->scopeConfig->getValue(self::PATH_ADDITIONAL_CMS_CHANNEL, 'store', $scopeCode);
     }
 }

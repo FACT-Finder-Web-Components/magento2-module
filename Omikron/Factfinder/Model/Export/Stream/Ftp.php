@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Omikron\Factfinder\Model\Export\Stream;
 
-use Omikron\Factfinder\Api\Export\StreamInterface;
-use Magento\Framework\Filesystem\Io\Ftp as FtpClient;
 use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Framework\Filesystem\Io\Ftp as FtpClient;
+use Omikron\Factfinder\Api\Export\StreamInterface;
 
 class Ftp extends StreamDecorator
 {

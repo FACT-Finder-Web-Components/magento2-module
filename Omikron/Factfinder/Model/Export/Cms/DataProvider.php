@@ -6,20 +6,17 @@ namespace Omikron\Factfinder\Model\Export\Cms;
 
 use Omikron\Factfinder\Api\Export\DataProviderInterface;
 use Omikron\Factfinder\Api\Export\ExportEntityInterface;
-use Omikron\Factfinder\Model\Export\Cms\PageFactory;
 
 class DataProvider implements DataProviderInterface
 {
     /** @var Pages */
     private $pages;
 
-    /** @var PageFactory  */
+    /** @var PageFactory */
     private $pageFactory;
 
-    public function __construct(
-        Pages $pages,
-        PageFactory $pageFactory
-    ) {
+    public function __construct(Pages $pages, PageFactory $pageFactory)
+    {
         $this->pages       = $pages;
         $this->pageFactory = $pageFactory;
     }

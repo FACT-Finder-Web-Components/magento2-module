@@ -16,7 +16,7 @@ class Csv implements StreamInterface
     /** @var Filesystem */
     private $fileSystem;
 
-    /** @var FileWriteInterface */
+    /** @var FileWriteInterface|null */
     private $stream;
 
     /** @var string */
@@ -46,7 +46,7 @@ class Csv implements StreamInterface
     {
         $fileDirectoryPath = $this->fileSystem->getDirectoryWrite(DirectoryList::VAR_DIR);
         $fileDirectoryPath->create(self::FEED_DIRECTORY_PATH);
-        $this->stream  = $fileDirectoryPath->openFile($fileDirectoryPath->getAbsolutePath(self::FEED_DIRECTORY_PATH) . '/' . $this->fileName, 'w+');
+        $this->stream = $fileDirectoryPath->openFile($fileDirectoryPath->getAbsolutePath(self::FEED_DIRECTORY_PATH) . '/' . $this->fileName, 'w+');
         $this->stream->lock();
     }
 }
