@@ -1,17 +1,37 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
-    <preference for="Omikron\Factfinder\Api\ClientInterface" type="Omikron\Factfinder\Model\Client"/>
-    <preference for="Omikron\Factfinder\Api\Config\AuthConfigInterface" type="Omikron\Factfinder\Model\Config\AuthConfig"/>
-    <preference for="Omikron\Factfinder\Api\Config\CommunicationConfigInterface" type="Omikron\Factfinder\Model\Config\CommunicationConfig"/>
-    <preference for="Omikron\Factfinder\Api\Data\TrackingProductInterface" type="Omikron\Factfinder\Model\Data\TrackingProduct"/>
-    <preference for="Omikron\Factfinder\Api\FieldRolesInterface" type="Omikron\Factfinder\Model\FieldRoles"/>
-    <preference for="Omikron\Factfinder\Api\Filter\FilterInterface" type="Omikron\Factfinder\Model\Filter\TextFilter"/>
-    <preference for="Omikron\Factfinder\Api\SessionDataInterface" type="Omikron\Factfinder\Model\SessionData"/>
-    <preference for="Omikron\Factfinder\Api\ExporterInterface" type="Omikron\Factfinder\Model\Exporter"/>
+    <preference for="Omikron\Factfinder\Api\ClientInterface" type="Omikron\Factfinder\Model\Client" />
+    <preference for="Omikron\Factfinder\Api\Config\AuthConfigInterface" type="Omikron\Factfinder\Model\Config\AuthConfig" />
+    <preference for="Omikron\Factfinder\Api\Config\CommunicationConfigInterface" type="Omikron\Factfinder\Model\Config\CommunicationConfig" />
+    <preference for="Omikron\Factfinder\Api\Data\TrackingProductInterface" type="Omikron\Factfinder\Model\Data\TrackingProduct" />
+    <preference for="Omikron\Factfinder\Api\ExporterInterface" type="Omikron\Factfinder\Model\Exporter" />
+    <preference for="Omikron\Factfinder\Api\FieldRolesInterface" type="Omikron\Factfinder\Model\FieldRoles" />
+    <preference for="Omikron\Factfinder\Api\Filter\FilterInterface" type="Omikron\Factfinder\Model\Filter\TextFilter" />
+    <preference for="Omikron\Factfinder\Api\SessionDataInterface" type="Omikron\Factfinder\Model\SessionData" />
 
     <virtualType name="Omikron\Factfinder\Model\Product\Attribute\CollectionFactory" type="Magento\Eav\Model\ResourceModel\Entity\Attribute\CollectionFactory">
         <arguments>
             <argument name="instanceName" xsi:type="string">Magento\Catalog\Model\ResourceModel\Product\Attribute\Collection</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Omikron\Factfinder\Model\Export\CatalogFeed" type="Omikron\Factfinder\Model\Export\Feed">
+        <arguments>
+            <argument name="dataProvider" xsi:type="object">Omikron\Factfinder\Model\Export\Catalog\DataProvider</argument>
+            <argument name="columns" xsi:type="array">
+                <item name="ProductNumber" xsi:type="string">ProductNumber</item>
+                <item name="Master" xsi:type="string">Master</item>
+                <item name="Name" xsi:type="string">Name</item>
+                <item name="Description" xsi:type="string">Description</item>
+                <item name="Short" xsi:type="string">Short</item>
+                <item name="ProductURL" xsi:type="string">ProductURL</item>
+                <item name="Price" xsi:type="string">Price</item>
+                <item name="Brand" xsi:type="string">Brand</item>
+                <item name="Availability" xsi:type="string">Availability</item>
+                <item name="MagentoId" xsi:type="string">MagentoId</item>
+                <item name="ImageURL" xsi:type="string">ImageURL</item>
+                <item name="CategoryPath" xsi:type="string">CategoryPath</item>
+                <item name="Attributes" xsi:type="string">Attributes</item>
+            </argument>
         </arguments>
     </virtualType>
     <virtualType name="Omikron\Factfinder\Logger" type="Monolog\Logger">
@@ -111,11 +131,5 @@
                 <item name="PageImage" xsi:type="string">PageImage</item>
             </argument>
         </arguments>
-    </type>
-    <type name="Omikron\Factfinder\Model\Exporter">
-        <plugin name="addPageColumns" type="Omikron\Factfinder\Plugin\Export\AddPageColumns" />
-    </type>
-    <type name="Omikron\Factfinder\Model\Export\Cms\Page">
-        <plugin name="addPageIdToMainArticleNumberColumn" type="Omikron\Factfinder\Plugin\Export\Cms\FillMainArticleNumber" />
     </type>
 </config>

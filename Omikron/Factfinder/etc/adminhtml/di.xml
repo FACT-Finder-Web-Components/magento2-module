@@ -46,7 +46,7 @@
     </type>
     <type name="Omikron\Factfinder\Controller\Adminhtml\Export\Feed">
         <arguments>
-            <argument name="export" xsi:type="object">ProductExporter</argument>
+            <argument name="feedGenerator" xsi:type="object">Omikron\Factfinder\Model\Export\CatalogFeed</argument>
         </arguments>
     </type>
 </config>

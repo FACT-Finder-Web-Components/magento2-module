@@ -4,46 +4,63 @@ namespace Omikron\Factfinder\Controller\Adminhtml\Export;
 
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
-use Magento\Framework\Controller\Result\Json;
 use Magento\Framework\Controller\Result\JsonFactory;
-use Omikron\Factfinder\Api\ExporterInterface;
-use Omikron\Factfinder\Model\Export\DataProvidersFactory;
-use Omikron\Factfinder\Model\Export\Stream\CsvFactory;
+use Magento\Store\Model\Store;
+use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
+use Omikron\Factfinder\Model\Export\Feed as FeedGenerator;
+use Omikron\Factfinder\Model\StoreEmulation;
+use Omikron\Factfinder\Model\Stream\CsvFactory;
 
 class Feed extends Action
 {
     /** @var JsonFactory */
-    private $resultJsonFactory;
+    private $jsonResultFactory;
 
-    /** @var ExporterInterface */
-    private $productExport;
+    /** @var CommunicationConfigInterface */
+    private $config;
 
-    /** @var DataProvidersFactory */
-    private $dataProvidersFactory;
+    /** @var StoreEmulation */
+    private $storeEmulation;
+
+    /** @var FeedGenerator */
+    private $feedGenerator;
 
     /** @var CsvFactory */
-    private $streamWriterFactory;
+    private $csvFactory;
 
     public function __construct(
         Context $context,
-        JsonFactory $resultJsonFactory,
-        DataProvidersFactory $dataProvidersFactory,
-        CsvFactory $streamFactory,
-        ExporterInterface $export
+        JsonFactory $jsonResultFactory,
+        CommunicationConfigInterface $config,
+        StoreEmulation $storeEmulation,
+        FeedGenerator $feedGenerator,
+        CsvFactory $csvFactory
     ) {
         parent::__construct($context);
-        $this->resultJsonFactory    = $resultJsonFactory;
-        $this->productExport        = $export;
-        $this->dataProvidersFactory = $dataProvidersFactory;
-        $this->streamWriterFactory  = $streamFactory;
+        $this->jsonResultFactory = $jsonResultFactory;
+        $this->config            = $config;
+        $this->storeEmulation    = $storeEmulation;
+        $this->feedGenerator     = $feedGenerator;
+        $this->csvFactory        = $csvFactory;
     }
 
-    public function execute(): Json
+    public function execute()
     {
-        $streamWriter = $this->streamWriterFactory->create(['fileName' => 'product_export.csv']);
-        $this->productExport->exportEntities($streamWriter, $this->dataProvidersFactory->create());
-        $resultJson = $this->resultJsonFactory->create();
+        $result = $this->jsonResultFactory->create();
 
-        return $resultJson->setData(['message' => __('Feed was sucessfully exported')]);
+        try {
+            preg_match('@/store/([0-9]+)/@', (string) $this->_redirect->getRefererUrl(), $match);
+            $this->storeEmulation->runInStore($match[1] ?? Store::DEFAULT_STORE_ID, function () {
+                $channel  = $this->config->getChannel();
+                $filename = "factfinder/export.{$channel}.csv";
+                $this->feedGenerator->generate($this->csvFactory->create(['filename' => $filename]));
+            });
+
+            $result->setData(['message' => __('Feed successfully generated')]);
+        } catch (\Exception $e) {
+            $result->setData(['message' => $e->getMessage()]);
+        }
+
+        return $result;
     }
 }

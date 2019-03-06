@@ -2,7 +2,7 @@
   "name": "omikron/magento2-factfinder",
   "description": "FACTFinder Webcomponents SDK",
   "type": "magento2-module",
-  "license": "FACT-Finder",
+  "license": "proprietary",
   "require": {
     "php": "^7.1",
     "magento/framework": ">=101.0.0",
