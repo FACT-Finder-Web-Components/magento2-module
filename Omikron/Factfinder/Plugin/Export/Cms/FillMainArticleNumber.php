@@ -17,11 +17,16 @@ class FillMainArticleNumber
         $this->cmsConfig = $cmsConfig;
     }
 
+    /**
+     * @param Page  $subject
+     * @param array $entityData
+     * @return array
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
     public function afterToArray(Page $subject, array $entityData)
     {
         if ($this->cmsConfig->isCmsExportEnabled() && !$this->cmsConfig->useSeparateCmsChannel()) {
-            $mainArticleNumber = $this->cmsConfig->getMainProductArticle();
-            $entityData[$mainArticleNumber] = $entityData['PageId'];
+            $entityData['Master'] = $entityData['PageId'];
         }
         return $entityData;
     }

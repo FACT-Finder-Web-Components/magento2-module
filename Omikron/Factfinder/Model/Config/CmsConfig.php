@@ -12,8 +12,6 @@ class CmsConfig
     private const PATH_USE_SEPARATE_CHANNEL   = 'factfinder/cms_export/ff_cms_use_separate_channel';
     private const PATH_ADDITIONAL_CMS_CHANNEL = 'factfinder/cms_export/ff_cms_channel';
     private const PATH_DISABLE_CMS_PAGES      = 'factfinder/cms_export/ff_cms_blacklist';
-    private const PATH_MAIN_PRODUCT_ARTICLE   = 'factfinder/cms_export/ff_cms_merge_identiefier';
-
 
     /** @var ScopeConfigInterface */
     private $scopeConfig;
@@ -33,19 +31,13 @@ class CmsConfig
         return $this->scopeConfig->isSetFlag(self::PATH_USE_SEPARATE_CHANNEL, 'store', $scopeCode);
     }
 
-
     public function getCmsBlacklist(int $scopeCode = null): string
     {
         return $this->scopeConfig->getValue(self::PATH_DISABLE_CMS_PAGES, 'store', $scopeCode);
     }
 
-    public function getChannel(int $scopeCode = null): bool
+    public function getChannel(int $scopeCode = null): string
     {
-        return $this->scopeConfig->isSetFlag(self::PATH_ADDITIONAL_CMS_CHANNEL, 'store', $scopeCode);
-    }
-
-    public function getMainProductArticle(int $scopeCode = null): string
-    {
-        return $this->scopeConfig->getValue(self::PATH_MAIN_PRODUCT_ARTICLE, 'store', $scopeCode);
+        return $this->scopeConfig->getValue(self::PATH_ADDITIONAL_CMS_CHANNEL, 'store', $scopeCode);
     }
 }

@@ -26,6 +26,6 @@ class Content implements PageFieldInterface
         $returns          = '#<br\s?\/?>#';
         $whitespaces      = '#(\s|&nbsp;)+#s';
 
-        return preg_replace([$stylesAndScripts, $variables, $returns, $whitespaces], '', $filteredContent);
+        return preg_replace([$stylesAndScripts, $variables, $returns, $whitespaces], ' ', $filteredContent);
     }
 }
