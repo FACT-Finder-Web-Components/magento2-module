@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Omikron\Factfinder\Model\Export\Cms\Field;
 
-use Magento\Store\Api\Data\StoreInterface;
-use PHPUnit\Framework\TestCase;
-use PHPUnit\Framework\MockObject\MockObject;
 use Magento\Cms\Api\Data\PageInterface;
 use Magento\Framework\UrlInterface;
+use Magento\Store\Api\Data\StoreInterface;
 use Magento\Store\Model\StoreManagerInterface;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 
 class UrlTest extends TestCase
 {

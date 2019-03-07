@@ -11,13 +11,13 @@ class FeedFactory
     /** @var ObjectManagerInterface */
     private $objectManager;
 
-    /** @var array  */
+    /** @var string[] */
     private $feedPool;
 
     public function __construct(ObjectManagerInterface $objectManager, array $feedPool)
     {
         $this->objectManager = $objectManager;
-        $this->feedPool = $feedPool;
+        $this->feedPool      = $feedPool;
     }
 
     public function create(string $type): Feed
@@ -25,6 +25,6 @@ class FeedFactory
         if (!isset($this->feedPool[$type])) {
             throw new \InvalidArgumentException('There is no feed with given type');
         }
-        return $this->objectManager->create($this->feedPool[$type]);
+        return $this->objectManager->create($this->feedPool[$type]); // phpcs:ignore
     }
 }

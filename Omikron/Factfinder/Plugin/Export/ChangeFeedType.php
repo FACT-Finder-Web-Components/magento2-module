@@ -5,21 +5,20 @@ declare(strict_types=1);
 namespace Omikron\Factfinder\Plugin\Export;
 
 use Omikron\Factfinder\Model\Config\CmsConfig;
-use Omikron\Factfinder\Model\Export\FeedFactory;
 
 class ChangeFeedType
 {
-    /** @var CmsConfig  */
-    private $cmsConfig;
+    /** @var CmsConfig */
+    private $config;
 
-    public function __construct(CmsConfig $cmsConfig)
+    public function __construct(CmsConfig $config)
     {
-        $this->cmsConfig = $cmsConfig;
+        $this->config = $config;
     }
 
-    public function beforeCreate(FeedFactory $subject, string $type)
+    public function beforeCreate($_, string $type): array
     {
-        if ($type == 'product' && $this->cmsConfig->isCmsExportEnabled() && !$this->cmsConfig->useSeparateCmsChannel()) {
+        if ($type == 'product' && $this->config->isCmsExportEnabled() && !$this->config->useSeparateCmsChannel()) {
             $type = 'combined';
         }
         return [$type];

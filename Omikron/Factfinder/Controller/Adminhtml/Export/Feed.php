@@ -28,6 +28,7 @@ class Feed extends Action
     /** @var CsvFactory */
     private $csvFactory;
 
+    /** @var string */
     protected $feedType = 'product';
 
     public function __construct(
@@ -37,13 +38,13 @@ class Feed extends Action
         StoreEmulation $storeEmulation,
         FeedGeneratorFactory $feedGeneratorFactory,
         CsvFactory $csvFactory
-    ){
+    ) {
         parent::__construct($context);
-        $this->jsonResultFactory = $jsonResultFactory;
-        $this->channelProvider = $channelProvider;
-        $this->storeEmulation = $storeEmulation;
+        $this->jsonResultFactory    = $jsonResultFactory;
+        $this->channelProvider      = $channelProvider;
+        $this->storeEmulation       = $storeEmulation;
         $this->feedGeneratorFactory = $feedGeneratorFactory;
-        $this->csvFactory = $csvFactory;
+        $this->csvFactory           = $csvFactory;
     }
 
     public function execute()
@@ -51,11 +52,12 @@ class Feed extends Action
         $result = $this->jsonResultFactory->create();
 
         try {
-            preg_match('@/store/([0-9]+)/@', (string)$this->_redirect->getRefererUrl(), $match);
+            preg_match('@/store/([0-9]+)/@', (string) $this->_redirect->getRefererUrl(), $match);
             $this->storeEmulation->runInStore($match[1] ?? Store::DEFAULT_STORE_ID, function () {
-                $channel = $this->channelProvider->getChannel();
-                $filename = "factfinder/export.{$channel}.csv";
-                $this->feedGeneratorFactory->create($this->feedType)->generate($this->csvFactory->create(['filename' => $filename]));
+                $channel       = $this->channelProvider->getChannel();
+                $filename      = "factfinder/export.{$channel}.csv";
+                $feedGenerator = $this->feedGeneratorFactory->create($this->feedType);
+                $feedGenerator->generate($this->csvFactory->create(['filename' => $filename]));
             });
 
             $result->setData(['message' => __('Feed successfully generated')]);
