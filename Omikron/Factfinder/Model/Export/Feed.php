@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Omikron\Factfinder\Model\Export;
 
 use Omikron\Factfinder\Api\Export\DataProviderInterface;
-use Omikron\Factfinder\Api\Export\StreamInterface;
+use Omikron\Factfinder\Api\StreamInterface;
 use Omikron\Factfinder\Api\ExporterInterface;
 
 class Feed

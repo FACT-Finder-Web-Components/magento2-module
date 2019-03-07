@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Omikron\Factfinder\Model\Export\Stream;
+namespace Omikron\Factfinder\Model\Stream;
 
-use Omikron\Factfinder\Api\Export\StreamInterface;
+use Omikron\Factfinder\Api\StreamInterface;
 
 abstract class StreamDecorator implements StreamInterface
 {

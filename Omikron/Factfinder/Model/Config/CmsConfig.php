@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace Omikron\Factfinder\Model\Config;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
+use Omikron\Factfinder\Api\Config\ChannelProviderInterface;
 
-class CmsConfig
+class CmsConfig implements ChannelProviderInterface
 {
     private const PATH_CMS_EXPORT_ENABLED     = 'factfinder/cms_export/ff_cms_export_enabled';
     private const PATH_USE_SEPARATE_CHANNEL   = 'factfinder/cms_export/ff_cms_use_separate_channel';

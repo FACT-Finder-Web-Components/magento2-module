@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Omikron\Factfinder\Model\Export\Stream;
+namespace Omikron\Factfinder\Model\Stream;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Filesystem\Io\Ftp as FtpClient;
-use Omikron\Factfinder\Api\Export\StreamInterface;
+use Omikron\Factfinder\Api\StreamInterface;
 
 class Ftp extends StreamDecorator
 {
@@ -51,6 +51,7 @@ class Ftp extends StreamDecorator
 
     public function __destruct()
     {
+        $this->ftpClient->write($this->fileName);
         $this->ftpClient->close();
     }
 

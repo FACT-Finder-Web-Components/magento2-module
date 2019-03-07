@@ -3,7 +3,6 @@
 namespace Omikron\Factfinder\Api;
 
 use Omikron\Factfinder\Api\Export\DataProviderInterface;
-use Omikron\Factfinder\Api\Export\StreamInterface;
 
 /**
  * @api

@@ -26,6 +26,7 @@ class DataProvider implements DataProviderInterface
      */
     public function getEntities(): iterable
     {
+        yield from [];
         foreach ($this->pages as $page) {
             yield $this->pageFactory->create(['page' => $page]);
         }

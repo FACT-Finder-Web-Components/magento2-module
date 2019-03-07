@@ -6,8 +6,8 @@ use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
 use Magento\Framework\Controller\Result\JsonFactory;
 use Magento\Store\Model\Store;
-use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
-use Omikron\Factfinder\Model\Export\Feed as FeedGenerator;
+use Omikron\Factfinder\Api\Config\ChannelProviderInterface;
+use Omikron\Factfinder\Model\Export\FeedFactory as FeedGeneratorFactory;
 use Omikron\Factfinder\Model\StoreEmulation;
 use Omikron\Factfinder\Model\Stream\CsvFactory;
 
@@ -16,32 +16,34 @@ class Feed extends Action
     /** @var JsonFactory */
     private $jsonResultFactory;
 
-    /** @var CommunicationConfigInterface */
-    private $config;
+    /** @var ChannelProviderInterface */
+    private $channelProvider;
 
     /** @var StoreEmulation */
     private $storeEmulation;
 
-    /** @var FeedGenerator */
-    private $feedGenerator;
+    /** @var FeedGeneratorFactory */
+    private $feedGeneratorFactory;
 
     /** @var CsvFactory */
     private $csvFactory;
 
+    protected $feedType = 'product';
+
     public function __construct(
         Context $context,
         JsonFactory $jsonResultFactory,
-        CommunicationConfigInterface $config,
+        ChannelProviderInterface $channelProvider,
         StoreEmulation $storeEmulation,
-        FeedGenerator $feedGenerator,
+        FeedGeneratorFactory $feedGeneratorFactory,
         CsvFactory $csvFactory
-    ) {
+    ){
         parent::__construct($context);
         $this->jsonResultFactory = $jsonResultFactory;
-        $this->config            = $config;
-        $this->storeEmulation    = $storeEmulation;
-        $this->feedGenerator     = $feedGenerator;
-        $this->csvFactory        = $csvFactory;
+        $this->channelProvider = $channelProvider;
+        $this->storeEmulation = $storeEmulation;
+        $this->feedGeneratorFactory = $feedGeneratorFactory;
+        $this->csvFactory = $csvFactory;
     }
 
     public function execute()
@@ -49,11 +51,11 @@ class Feed extends Action
         $result = $this->jsonResultFactory->create();
 
         try {
-            preg_match('@/store/([0-9]+)/@', (string) $this->_redirect->getRefererUrl(), $match);
+            preg_match('@/store/([0-9]+)/@', (string)$this->_redirect->getRefererUrl(), $match);
             $this->storeEmulation->runInStore($match[1] ?? Store::DEFAULT_STORE_ID, function () {
-                $channel  = $this->config->getChannel();
+                $channel = $this->channelProvider->getChannel();
                 $filename = "factfinder/export.{$channel}.csv";
-                $this->feedGenerator->generate($this->csvFactory->create(['filename' => $filename]));
+                $this->feedGeneratorFactory->create($this->feedType)->generate($this->csvFactory->create(['filename' => $filename]));
             });
 
             $result->setData(['message' => __('Feed successfully generated')]);

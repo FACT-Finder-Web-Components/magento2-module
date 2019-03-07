@@ -1,6 +1,6 @@
 <?php
 
-namespace Omikron\Factfinder\Api\Export;
+namespace Omikron\Factfinder\Api;
 
 /**
  * @api

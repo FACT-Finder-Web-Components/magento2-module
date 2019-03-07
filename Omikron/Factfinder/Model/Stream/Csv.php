@@ -5,7 +5,7 @@ namespace Omikron\Factfinder\Model\Stream;
 use Magento\Framework\App\Filesystem\DirectoryList;
 use Magento\Framework\Filesystem;
 use Magento\Framework\Filesystem\File\WriteInterface;
-use Omikron\Factfinder\Api\Export\StreamInterface;
+use Omikron\Factfinder\Api\StreamInterface;
 
 class Csv implements StreamInterface
 {
