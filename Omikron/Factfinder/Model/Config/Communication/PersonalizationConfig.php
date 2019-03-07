@@ -17,7 +17,7 @@ class PersonalizationConfig implements ParametersSourceInterface
     private const PATH_USE_SEMANTIC_ENHANCER = 'factfinder/advanced/use_semantic_enhancer';
     private const PATH_USE_CAMPAIGNS         = 'factfinder/advanced/use_campaigns';
     private const PATH_GENERATE_ADVISOR_TREE = 'factfinder/advanced/generate_advisor_tree';
-    private const PATH_USE_ASN               = 'factfinder/advanced/use_asn';
+    private const PATH_USE_ASN               = 'factfinder/components/ff_asn';
 
     /** @var ScopeConfigInterface */
     private $scopeConfig;

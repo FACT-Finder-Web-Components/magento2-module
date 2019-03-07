@@ -100,11 +100,6 @@
                     <label>keep-url-params</label>
                     <comment>Determines if parameters which are written into the URL should be kept.</comment>
                 </field>
-                <field id="use_asn" translate="label" type="select" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>use-asn</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    <comment>Determines if the the ASN is returned. Can be set to false to save performance, if the ASN is not required. Default is true.</comment>
-                </field>
                 <field id="use_found_words" translate="label" type="select" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>use-found-words</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
