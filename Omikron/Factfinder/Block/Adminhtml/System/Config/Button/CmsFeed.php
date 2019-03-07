@@ -4,22 +4,21 @@ declare(strict_types=1);
 
 namespace Omikron\Factfinder\Block\Adminhtml\System\Config\Button;
 
+use Magento\Backend\Block\Widget\Button;
+
 class CmsFeed extends Feed
 {
-/** @var string  */
+    /** @var string */
     protected $_template = 'Omikron_Factfinder::system/config/button/cms-feed.phtml';
 
     public function getButtonHtml(): string
     {
-        $button = $this->getLayout()->createBlock(
-            'Magento\Backend\Block\Widget\Button'
-        )->setData(
-            [
-                'id' => 'cms_feed_button',
-                'label' => __('Generate CMS Export File(s) now')
-            ]
-        );
-
+        /** @var Button $button */
+        $button = $this->getLayout()->createBlock(Button::class);
+        $button->setData([
+            'id'    => 'cms_feed_button',
+            'label' => __('Generate CMS feed now'),
+        ]);
         return $button->toHtml();
     }
 }

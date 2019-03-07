@@ -9,7 +9,7 @@ use Omikron\Factfinder\Model\Config\CmsConfig;
 
 class Suggest implements ArgumentInterface
 {
-    /** @var CmsConfig  */
+    /** @var CmsConfig */
     private $cmsConfig;
 
     public function __construct(CmsConfig $cmsConfig)
