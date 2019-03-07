@@ -25,7 +25,12 @@ class CacheConfig implements ParametersSourceInterface
     {
         return [
             'use-cache'     => $this->scopeConfig->isSetFlag(self::PATH_USE_CACHE, ScopeInterface::SCOPE_STORES),
-            'disable-cache' => $this->scopeConfig->getValue(self::PATH_DISABLE_CACHE, ScopeInterface::SCOPE_STORES),
+            'disable-cache' => $this->getFlag(self::PATH_DISABLE_CACHE),
         ];
+    }
+
+    private function getFlag(string $path): string
+    {
+        return $this->scopeConfig->isSetFlag($path, ScopeInterface::SCOPE_STORES) ? 'true' : 'false';
     }
 }

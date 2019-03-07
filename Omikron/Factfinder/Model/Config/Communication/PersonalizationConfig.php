@@ -30,19 +30,19 @@ class PersonalizationConfig implements ParametersSourceInterface
     public function getParameters(): array
     {
         return [
-            'use-found-words'       => $this->getConfig(self::PATH_USE_FOUND_WORDS),
-            'use-aso'               => $this->getConfig(self::PATH_USE_ASO),
-            'use-browser-history'   => $this->getConfig(self::PATH_USE_BROWSER_HISTORY),
-            'use-personalization'   => $this->getConfig(self::PATH_USE_PERSONALIZATION),
-            'use-semantic-enhancer' => $this->getConfig(self::PATH_USE_SEMANTIC_ENHANCER),
-            'use-campaigns'         => $this->getConfig(self::PATH_USE_CAMPAIGNS),
-            'generate-advisor-tree' => $this->getConfig(self::PATH_GENERATE_ADVISOR_TREE),
-            'use-asn'               => $this->getConfig(self::PATH_USE_ASN),
+            'use-asn'               => $this->getFlag(self::PATH_USE_ASN),
+            'use-found-words'       => $this->getFlag(self::PATH_USE_FOUND_WORDS),
+            'use-campaigns'         => $this->getFlag(self::PATH_USE_CAMPAIGNS),
+            'generate-advisor-tree' => $this->getFlag(self::PATH_GENERATE_ADVISOR_TREE),
+            'use-personalization'   => $this->getFlag(self::PATH_USE_PERSONALIZATION),
+            'use-semantic-enhancer' => $this->getFlag(self::PATH_USE_SEMANTIC_ENHANCER),
+            'use-aso'               => $this->getFlag(self::PATH_USE_ASO),
+            'use-browser-history'   => $this->getFlag(self::PATH_USE_BROWSER_HISTORY),
         ];
     }
 
-    private function getConfig(string $path): string
+    private function getFlag(string $path): string
     {
-        return (string) $this->scopeConfig->getValue($path, ScopeInterface::SCOPE_STORES);
+        return $this->scopeConfig->isSetFlag($path, ScopeInterface::SCOPE_STORES) ? 'true' : 'false';
     }
 }
