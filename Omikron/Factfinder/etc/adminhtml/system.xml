@@ -1,18 +1,18 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
     <system>
-        <section id="factfinder" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+        <section id="factfinder" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
             <label>FACT-Finder</label>
             <tab>catalog</tab>
             <resource>Omikron_Factfinder::config</resource>
-            <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+            <group id="general" translate="label" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>Main Settings</label>
                 <comment><![CDATA[<div class="message message-notice notice"><div data-ui-id="messages-message-success">Please always save the config in the upper right corner after making changes.</div></div>]]></comment>
                 <field id="is_enabled" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Activate FACT-Finder integration</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
-                <field id="logging_enabled" translate="label comment" type="select" sortOrder="1" showInDefault="1">
+                <field id="logging_enabled" translate="label" type="select" sortOrder="1" showInDefault="1">
                     <label>Activate Logging</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
@@ -52,7 +52,7 @@
                     <comment>Data enrichment enables you to refine the data coming back from FACT-Finder inside the SDK code. Please refer the documentation for more infos (last chapter about data-communication).</comment>
                 </field>
             </group>
-            <group id="advanced" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+            <group id="advanced" translate="label" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>Advanced Settings</label>
                 <comment>The advanced settings can change how the search works. Please edit them with caution and only if you know what they are doing.</comment>
                 <field id="version" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
@@ -151,7 +151,7 @@
                     <comment>If true, disables the automatic redirect to the product detail page if only one record is found.</comment>
                 </field>
             </group>
-            <group id="components" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+            <group id="components" translate="label comment" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>Activated Web-Components</label>
                 <comment>Please always save the config in the upper right corner after making changes.</comment>
                 <field id="ff_suggest" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
@@ -205,7 +205,7 @@
                     <comment>TODO Description Pushed Products</comment>
                 </field>
             </group>
-            <group id="data_transfer" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+            <group id="data_transfer" translate="label" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>Data export</label>
                 <comment><![CDATA[<div class="message message-notice notice"><div data-ui-id="messages-message-success">Please always save the config in the upper right corner after making changes. Especially before using the export-button.</div></div>]]></comment>
                 <field id="ff_upload_host" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
@@ -264,7 +264,7 @@
                     </depends>
                 </field>
             </group>
-            <group id="basic_auth_data_transfer" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+            <group id="basic_auth_data_transfer" translate="label" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>Export via Basic Auth</label>
                 <field id="ff_upload_url_user" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Basic Auth User</label>
@@ -312,12 +312,12 @@
                         <field id="ff_cms_export_enabled">1</field>
                         <field id="ff_cms_use_separate_channel">1</field>
                     </depends>
-                    <label>Generate Export CMS File</label>
+                    <label>Generate CMS feed</label>
                     <frontend_model>Omikron\Factfinder\Block\Adminhtml\System\Config\Button\CmsFeed</frontend_model>
                     <comment>On buttonclick CSV exports of all of your CMS pages will be generated and uploaded to the specified FTP Server.</comment>
                 </field>
             </group>
-            <group id="configurable_cron" translate="label" type="text" sortOrder="70" showInDefault="1" showInWebsite="0" showInStore="0">
+            <group id="configurable_cron" translate="label" sortOrder="70" showInDefault="1" showInWebsite="0" showInStore="0">
                 <label>Cron Schedule</label>
                 <field id="ff_cron_enabled" translate="label" type="select" sortOrder="120" showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Generate Export Files(s) automatically</label>
