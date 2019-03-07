@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Omikron\Factfinder\Model\Stream;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Framework\Filesystem;
 use Magento\Framework\Filesystem\Io\Ftp as FtpClient;
-use Omikron\Factfinder\Api\StreamInterface;
 
-class Ftp extends StreamDecorator
+class Ftp extends Csv
 {
     private const FPT_UPLOAD_CONFIG_PATH = 'factfinder/data_transfer/ff_upload_';
 
@@ -18,46 +18,20 @@ class Ftp extends StreamDecorator
     /** @var ScopeConfigInterface */
     private $scopeConfig;
 
-    /** @var string */
-    private $fileName;
-
-    /** @var bool */
-    private $isOpen = false;
-
     public function __construct(
-        StreamInterface $decoratedStream,
+        Filesystem $filesystem,
         FtpClient $ftpClient,
         ScopeConfigInterface $scopeConfig,
-        string $fileName = 'export.csv'
+        string $filename = 'factfinder/export.csv'
     ) {
-        parent::__construct($decoratedStream);
-        $this->ftpClient   = $ftpClient;
+        parent::__construct($filesystem, $filename);
         $this->scopeConfig = $scopeConfig;
-        $this->fileName    = $fileName;
-    }
-
-    public function addEntity(array $entity): void
-    {
-        if (!$this->isOpen) {
-            $this->openConnection();
-        }
-
-        $result = $this->ftpClient->write($this->fileName, $this->toCsvLine($entity));
-        if (!$result) {
-            throw new \InvalidArgumentException('Unable to save entity to remote file');
-        }
-        $this->decoratedStream->addEntity($entity);
+        $this->ftpClient   = $ftpClient;
     }
 
     public function __destruct()
     {
-        $this->ftpClient->write($this->fileName);
-        $this->ftpClient->close();
-    }
-
-    private function openConnection()
-    {
-        $this->isOpen = $this->ftpClient->open(
+        $this->ftpClient->open(
             [
                 'host'     => $this->getConfig('host'),
                 'user'     => $this->getConfig('user'),
@@ -67,15 +41,13 @@ class Ftp extends StreamDecorator
                 'port'     => 21,
             ]
         );
+        $this->ftpClient->write($this->fileName, $this->stream->readAll());
+        $this->ftpClient->close();
+        parent::__destruct();
     }
 
     private function getConfig(string $field): string
     {
         return (string) $this->scopeConfig->getValue(self::FPT_UPLOAD_CONFIG_PATH . $field);
-    }
-
-    private function toCsvLine(array $data): string
-    {
-        return implode(';', $data) . PHP_EOL;
     }
 }

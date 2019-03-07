@@ -13,7 +13,7 @@ class Csv implements StreamInterface
     private $filesystem;
 
     /** @var WriteInterface|null */
-    private $stream;
+    protected $stream;
 
     /** @var string */
     private $filename;
