@@ -26,6 +26,7 @@ class Exporter implements ExporterInterface
             $entityData = array_merge($emptyRecord, array_intersect_key($entity->toArray(), $emptyRecord));
             $stream->addEntity($this->prepare($entityData));
         }
+        $stream->dispose();
     }
 
     private function prepare(array $data): array

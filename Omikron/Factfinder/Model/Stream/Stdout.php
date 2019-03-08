@@ -12,4 +12,14 @@ class Stdout implements StreamInterface
     {
         fputcsv(STDOUT, array_values($entity), ';', '"');
     }
+
+    public function getContent(): string
+    {
+        throw new \BadMethodCallException('Not implemented');
+    }
+
+    public function dispose(): bool
+    {
+        return true;
+    }
 }

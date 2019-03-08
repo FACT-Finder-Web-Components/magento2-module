@@ -13,10 +13,10 @@ class Csv implements StreamInterface
     private $filesystem;
 
     /** @var WriteInterface|null */
-    protected $stream;
+    private $stream;
 
     /** @var string */
-    private $filename;
+    protected $filename;
 
     public function __construct(Filesystem $filesystem, string $filename = 'factfinder/export.csv')
     {
@@ -34,6 +34,22 @@ class Csv implements StreamInterface
         $this->getStream()->writeCsv($entity, ';', '"');
     }
 
+    public function getContent(): string
+    {
+        return $this->getStream()->readAll();
+    }
+
+    public function dispose(): bool
+    {
+        if ($this->stream) {
+            $this->stream->unlock();
+            $this->stream->close();
+            $this->stream = null;
+            return true;
+        }
+        return false;
+    }
+
     private function getStream(): WriteInterface
     {
         if (!$this->stream) {
@@ -42,14 +58,5 @@ class Csv implements StreamInterface
             $this->stream->lock();
         }
         return $this->stream;
-    }
-
-    public function __destruct()
-    {
-        if ($this->stream) {
-            $this->stream->unlock();
-            $this->stream->close();
-            $this->stream = null;
-        }
     }
 }

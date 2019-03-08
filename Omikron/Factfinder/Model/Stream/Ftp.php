@@ -7,50 +7,32 @@ namespace Omikron\Factfinder\Model\Stream;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Filesystem;
 use Magento\Framework\Filesystem\Io\Ftp as FtpClient;
+use Omikron\Factfinder\Model\Config\FtpConfig;
 
 class Ftp extends Csv
 {
-    private const FPT_UPLOAD_CONFIG_PATH = 'factfinder/data_transfer/ff_upload_';
-
     /** @var FtpClient */
-    private $ftpClient;
+    private $client;
 
-    /** @var ScopeConfigInterface */
-    private $scopeConfig;
+    /** @var FtpConfig */
+    private $config;
 
     public function __construct(
         Filesystem $filesystem,
-        FtpClient $ftpClient,
-        ScopeConfigInterface $scopeConfig,
+        FtpClient $client,
+        FtpConfig $config,
         string $filename = 'factfinder/export.csv'
     ) {
         parent::__construct($filesystem, $filename);
-        $this->scopeConfig = $scopeConfig;
-        $this->ftpClient   = $ftpClient;
-        $this->fileName    = $filename;
+        $this->config = $config;
+        $this->client = $client;
     }
 
-    public function __destruct()
+    public function dispose(): bool
     {
-        $this->ftpClient->open(
-            [
-                'host'     => $this->getConfig('host'),
-                'user'     => $this->getConfig('user'),
-                'password' => $this->getConfig('password'),
-                'ssl'      => true,
-                'passive'  => true,
-                'port'     => 21,
-            ]
-        );
-        $fileNameParts = explode('/', $this->fileName);
-        $fileName = array_pop($fileNameParts);
-        $this->ftpClient->write($fileName, $this->stream->readAll());
-        $this->ftpClient->close();
-        parent::__destruct();
-    }
-
-    private function getConfig(string $field): string
-    {
-        return (string) $this->scopeConfig->getValue(self::FPT_UPLOAD_CONFIG_PATH . $field);
+        $this->client->open($this->config->toArray());
+        $this->client->write(basename($this->filename), $this->getContent());
+        $this->client->close();
+        return parent::dispose();
     }
 }
