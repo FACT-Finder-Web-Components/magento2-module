@@ -27,6 +27,7 @@ class Ftp extends Csv
         parent::__construct($filesystem, $filename);
         $this->scopeConfig = $scopeConfig;
         $this->ftpClient   = $ftpClient;
+        $this->fileName    = $filename;
     }
 
     public function __destruct()
@@ -41,7 +42,9 @@ class Ftp extends Csv
                 'port'     => 21,
             ]
         );
-        $this->ftpClient->write($this->fileName, $this->stream->readAll());
+        $fileNameParts = explode('/', $this->fileName);
+        $fileName = array_pop($fileNameParts);
+        $this->ftpClient->write($fileName, $this->stream->readAll());
         $this->ftpClient->close();
         parent::__destruct();
     }

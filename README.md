@@ -12,6 +12,7 @@
     - [Activated Web-Components](#activated-web-components)
     - [Advanced Settings](#advanced-settings)
     - [Product Data Export](#product-data-export)
+    - [CMS Export](#cms-export)
 - [Web Component Integration](#web-component-integration)
     - [Overview of relevant Files](#overview-of-relevant-files)
     - [Searchbox Integration and Functions](#searchbox-integration-and-functions)
@@ -140,6 +141,53 @@ You can  set the program to generate the product data export automatically. Acti
  `<schedule>0 1 * * *</schedule>` is a default value however You can define your own cron expression in the module configuration at `Cron Schedule` section.
   
 ![Cron Configuration](docs/assets/cron-configuration_en.jpg "Cron Configuration")
+
+---
+## CMS Export
+You can export Your cms pages to FACT-Finder to present them in suggest results. You can specify whether You want to export cms pages content to separate channel, or using single channel, which You are using for standard products information export.
+Both ways offer same functionality but in different ways and are described below.
+### Configuration
+![CMS Configuration](docs/assets/cms-configuration.png "CMS Configuration - using single channel")
+* **Export Enabled** - determine if CMS content should be exported or not
+* **Use separate channel** - determine if exported CMS content should be exported to standard channel, or to the different one.
+If this option is set to "Yes", additional field "Channel" appears where You need provide the name of channel which will serve CMS suggest results.
+* **Channel** - Channel name used for CMS export. This field appears only if *Use separate channel* is turned on.
+* **Generate CMS Feed** - On button click all CMS data is exported and uploaded to configured FTP server
+* **Pages Blacklist** - allow user to filter out pages, which should not be exported, for example "404 Not Found page" should not be visible at suggested records
+
+Before You start exporting Your CMS content to FACT-Finder You need to prepare it for correctly serving this data to Your Magento application.
+### Create new suggest type
+At first You need to create a new suggest type named **cms**. I'ts because the new <ff-suggest-item> was added with type attribute equals to"cms"
+
+``  <ff-suggest-item type="cms">``
+
+![New Suggest Type](docs/assets/cms-suggest-type.png "FACT-Finder backend - new suggest type")
+
+It's also  required to configure the return data of newly created suggest type. It's recommended to set return data as it's shown 
+on screen, however You can also choose more fields to be returned. You should add page url to returned data to allow users directly 
+reaching them from suggest component. If You want to present also page images, it's also worth adding them to returned data
+![Suggest Type Return Data](docs/assets/cms-type-return-data.png "FACT-Finder cms suggest return")
+Please note that each field needs to be correctly bind to html tag using access path same as in the FACT-Finder JSON object. 
+The example below shows how to render page url
+
+ ```<a href="{{attributes.PageLink}}" data-redirect="{{attributes.PageLink}}"'```
+
+### Using Single Channel 
+Using single channel is recommended way of integrate Your CMS with FACT-Finder, however it requires additional configuration in FACT-Finder backend. In order to prevent CMS pages appears in search results
+You need to mark CMS related columns as no searchable (CMS results are displayed only in suggest component).
+![Columns searchability](docs/assets/columns-searchability.png "CMS related columns mark as no searchable")
+
+### Using Separate channel
+This solution does not require You to make any changes to channel configuration regarding columns searchability, however  You need to create a new channel.
+You need also to add new suggest type in Your newly created channel, as it is described in section [New Suggest Type](#create-new-suggest-type). Also You need to
+set configuration option **Activate Enrichment feature** to value **Yes** in module configuration.
+
+despite the fact that due to the use of separate channels, the products data will not be mixed up with CMS, and you do not need to perform any additional
+operations to prevent CMS from appearing in the search results, this solution has one drawback. Two requests to FACT-Finder, will be performed in order to recieve full response: one for products and
+one for CMS content. To merge them before returning to browser, module uses proxy to prepare final response from two separate FACT-Finder response. Because of that, the performance
+of this solution will be lower, since all request are passed through Http server of Your Magento application.
+
+![Example Suggest Result](docs/assets/example-suggest-cms.png "Example suggest result with cms")
 
 ---
 

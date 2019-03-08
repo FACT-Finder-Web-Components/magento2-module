@@ -9,7 +9,7 @@ use Magento\Store\Model\Store;
 use Omikron\Factfinder\Api\Config\ChannelProviderInterface;
 use Omikron\Factfinder\Model\Export\FeedFactory as FeedGeneratorFactory;
 use Omikron\Factfinder\Model\StoreEmulation;
-use Omikron\Factfinder\Model\Stream\CsvFactory;
+use Omikron\Factfinder\Model\Stream\FtpFactory;
 
 class Feed extends Action
 {
@@ -25,8 +25,8 @@ class Feed extends Action
     /** @var FeedGeneratorFactory */
     private $feedGeneratorFactory;
 
-    /** @var CsvFactory */
-    private $csvFactory;
+    /** @var FtpFactory */
+    private $ftpFactory;
 
     /** @var string */
     protected $feedType = 'product';
@@ -37,14 +37,14 @@ class Feed extends Action
         ChannelProviderInterface $channelProvider,
         StoreEmulation $storeEmulation,
         FeedGeneratorFactory $feedGeneratorFactory,
-        CsvFactory $csvFactory
+        FtpFactory $ftpFactory
     ) {
         parent::__construct($context);
         $this->jsonResultFactory    = $jsonResultFactory;
         $this->channelProvider      = $channelProvider;
         $this->storeEmulation       = $storeEmulation;
         $this->feedGeneratorFactory = $feedGeneratorFactory;
-        $this->csvFactory           = $csvFactory;
+        $this->ftpFactory           = $ftpFactory;
     }
 
     public function execute()
@@ -53,12 +53,14 @@ class Feed extends Action
 
         try {
             preg_match('@/store/([0-9]+)/@', (string) $this->_redirect->getRefererUrl(), $match);
-            $this->storeEmulation->runInStore($match[1] ?? Store::DEFAULT_STORE_ID, function () {
+            $this->storeEmulation->runInStore(
+                $match[1] ?? Store::DEFAULT_STORE_ID, function () {
                 $channel       = $this->channelProvider->getChannel();
                 $filename      = "factfinder/export.{$channel}.csv";
                 $feedGenerator = $this->feedGeneratorFactory->create($this->feedType);
-                $feedGenerator->generate($this->csvFactory->create(['filename' => $filename]));
-            });
+                $feedGenerator->generate($this->ftpFactory->create(['filename' => $filename]));
+            }
+            );
 
             $result->setData(['message' => __('Feed successfully generated')]);
         } catch (\Exception $e) {
