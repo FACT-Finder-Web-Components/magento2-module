@@ -8,7 +8,7 @@ use Omikron\Factfinder\Api\Export\DataProviderInterface;
 
 class DataProvider implements DataProviderInterface
 {
-    /** @var array */
+    /** @var DataProviderInterface[] */
     private $dataProviders;
 
     public function __construct(array $dataProviders)
@@ -18,10 +18,9 @@ class DataProvider implements DataProviderInterface
 
     public function getEntities(): iterable
     {
-        $combined = new \AppendIterator();
+        yield from [];
         foreach ($this->dataProviders as $provider) {
-            $combined->append($provider->getEntities());
+            yield from $provider->getEntities();
         }
-        yield from $combined;
     }
 }

@@ -186,11 +186,9 @@ class ProductTest extends TestCase
         $this->eavConfigMock->expects($this->once())
             ->method('getAttribute')
             ->with('catalog_product', null)
-            ->willThrowException(new LocalizedException(new Phrase('')));
+            ->willThrowException(new LocalizedException(__('No')));
 
-        $result = $this->productHelper->get('EAN', $this->productMock, $this->storeMock);
-
-        $this->assertNull($result);
+        $this->assertNull($this->productHelper->get('EAN', $this->productMock, $this->storeMock));
     }
 
     protected function setUp()

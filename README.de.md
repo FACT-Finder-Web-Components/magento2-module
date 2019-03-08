@@ -75,7 +75,7 @@ Am Ende der allgemeinen Einstellungen gibt es die Option *Show 'Add to Cart' But
 Wichtig: Die eindeutige Identifizierung eines Produktes, das in den Warenkorb hinzugefügt werden kann, erfolgt über die Variable "MasterProductNumber". Damit dieses Feature funktioniert, muss sichergestellt sein, dass beim Import der Produktdaten im FACT-Finder Backend (bei fact-finder.de) das Feld "MasterProduktNumber" importiert wird.
 
 
-![Allgemeine Einstellungen](Omikron/Factfinder/view/frontend/web/images/documentation/general-settings.jpg "Allgemeine Einstellungen")
+![Allgemeine Einstellungen](docs/assets/general-settings.jpg "Allgemeine Einstellungen")
 
 ## Aktivierte Web-Komponenten
 
@@ -119,7 +119,7 @@ Omikron/Factfinder/etc/crontab.xml
 
 Dort können Sie den Eintrag `<schedule>0 1 * * *</schedule>` Ihren Bedürfnissen nach anpassen. Die Zeit wird mit einen Cron-Ausdruck definiert. Falls Sie mehr über Cron-Ausdrücke erfahren wollen, empfiehlt sich z.B. die [Wikipedia Seite](https://de.wikipedia.org/wiki/Cron) zu dem Thema. 
 
-![Produktdaten Export](Omikron/Factfinder/view/frontend/web/images/documentation/export-settings.jpg "Produktdaten Export")
+![Produktdaten Export](docs/assets/export-settings.jpg "Produktdaten Export")
 
 
 ---
@@ -257,4 +257,4 @@ Omikron/Factfinder/Helper/ResultRefiner.php
 
 Dort können Sie in der Methode `refine($jsonString)` den von FACT-Finder zurückkommenden JSON-String anreichern bzw. weiterverarbeiten, bevor er mit `return $jsonString` zurückgegeben wird.
 
-![Kommunikationsübersicht](Omikron/Factfinder/view/frontend/web/images/documentation/communication-overview.png "Kommunikationsübersicht")
+![Kommunikationsübersicht](docs/assets/communication-overview.png "Kommunikationsübersicht")

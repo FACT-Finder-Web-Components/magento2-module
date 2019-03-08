@@ -1,5 +1,5 @@
 # German readme
-[Readme](https://github.com/FACT-Finder-Web-Components/magento2-module/blob/master/GERMAN.md)
+[Readme](README.de.md)
 
 ---
 
@@ -98,7 +98,7 @@ At the end of the general settings section is an option *Show 'Add to Cart' Butt
 Warning: The product added to the cart is identified by the variable "MasterProductNumber". To allow this function to work correctly, the field "MasterProductNumber" must be imported to the FACT-Finder backend (on fact-finder.de).   
 
 
-![General Settings](Omikron/Factfinder/view/frontend/web/images/documentation/general-settings_en.jpg "General Settings")
+![General Settings](docs/assets/general-settings_en.jpg "General Settings")
 
 ## Activate Web Components
 
@@ -131,7 +131,7 @@ The *Select additional Attributes* option offers a multiple-choice list of attri
 
 Before starting the export by clicking *Generate Export File(s) now*, you need to commit all changes by clicking “Save Config”.
  
-![Product Data Export](Omikron/Factfinder/view/frontend/web/images/documentation/export-settings_en.jpg " Product Data Export")
+![Product Data Export](docs/assets/export-settings_en.jpg "Product Data Export")
 
 ## Cron configuration
 
@@ -139,7 +139,7 @@ You can  set the program to generate the product data export automatically. Acti
 
  `<schedule>0 1 * * *</schedule>` is a default value however You can define your own cron expression in the module configuration at `Cron Schedule` section.
   
-![Cron Configuration](Omikron/Factfinder/view/frontend/web/images/documentation/cron-configuration_en.jpg "Cron Configuration")
+![Cron Configuration](docs/assets/cron-configuration_en.jpg "Cron Configuration")
 
 ---
 
@@ -275,5 +275,5 @@ Omikron/Factfinder/Helper/ResultRefiner.php
 
 There you can enrich or process the returned JSON-string using the method `refine($jsonString)`, before it is returned with `return $jsonString`.
 
-![Kommunikationsübersicht](Omikron/Factfinder/view/frontend/web/images/documentation/communication-overview.png "Kommunikationsübersicht")
+![Communication Overview](docs/assets/communication-overview.png "Communication Overview")
 
