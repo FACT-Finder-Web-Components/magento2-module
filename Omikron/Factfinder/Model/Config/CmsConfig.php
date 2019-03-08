@@ -22,12 +22,22 @@ class CmsConfig implements ChannelProviderInterface
         $this->scopeConfig = $scopeConfig;
     }
 
-    public function isCmsExportEnabled(int $scopeCode = null): bool
+    public function getChannel(int $scopeCode = null): string
+    {
+        return (string) $this->scopeConfig->getValue(self::PATH_ADDITIONAL_CMS_CHANNEL, 'store', $scopeCode);
+    }
+
+    public function isChannelEnabled(int $scopeId = null): bool
+    {
+        return $this->isExportEnabled($scopeId) && $this->useSeparateChannel($scopeId);
+    }
+
+    public function isExportEnabled(int $scopeCode = null): bool
     {
         return $this->scopeConfig->isSetFlag(self::PATH_CMS_EXPORT_ENABLED, 'store', $scopeCode);
     }
 
-    public function useSeparateCmsChannel(int $scopeCode = null): bool
+    public function useSeparateChannel(int $scopeCode = null): bool
     {
         return $this->scopeConfig->isSetFlag(self::PATH_USE_SEPARATE_CHANNEL, 'store', $scopeCode);
     }
@@ -36,10 +46,5 @@ class CmsConfig implements ChannelProviderInterface
     {
         $pages = (string) $this->scopeConfig->getValue(self::PATH_DISABLE_CMS_PAGES, 'store', $scopeCode);
         return array_filter(explode(',', $pages));
-    }
-
-    public function getChannel(int $scopeCode = null): string
-    {
-        return (string) $this->scopeConfig->getValue(self::PATH_ADDITIONAL_CMS_CHANNEL, 'store', $scopeCode);
     }
 }

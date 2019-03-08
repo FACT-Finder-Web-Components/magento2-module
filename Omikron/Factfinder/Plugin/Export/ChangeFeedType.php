@@ -16,9 +16,16 @@ class ChangeFeedType
         $this->config = $config;
     }
 
+    /**
+     * @param        $_
+     * @param string $type
+     *
+     * @return array
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
     public function beforeCreate($_, string $type): array
     {
-        if ($type == 'product' && $this->config->isCmsExportEnabled() && !$this->config->useSeparateCmsChannel()) {
+        if ($type == 'product' && $this->config->isExportEnabled() && !$this->config->useSeparateChannel()) {
             $type = 'combined';
         }
         return [$type];

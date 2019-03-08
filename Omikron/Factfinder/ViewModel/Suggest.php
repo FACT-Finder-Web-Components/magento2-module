@@ -19,11 +19,11 @@ class Suggest implements ArgumentInterface
 
     public function isCmsEnabled(): bool
     {
-        return $this->cmsConfig->isCmsExportEnabled();
+        return $this->cmsConfig->isExportEnabled();
     }
 
     public function useSeparateChannelForCms(): bool
     {
-        return $this->cmsConfig->useSeparateCmsChannel();
+        return $this->cmsConfig->useSeparateChannel();
     }
 }

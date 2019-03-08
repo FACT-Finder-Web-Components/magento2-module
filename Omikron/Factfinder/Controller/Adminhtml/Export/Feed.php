@@ -59,8 +59,7 @@ class Feed extends Action
                 $filename      = "factfinder/export.{$channel}.csv";
                 $feedGenerator = $this->feedGeneratorFactory->create($this->feedType);
                 $feedGenerator->generate($this->ftpFactory->create(['filename' => $filename]));
-            }
-            );
+            });
 
             $result->setData(['message' => __('Feed successfully generated')]);
         } catch (\Exception $e) {

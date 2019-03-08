@@ -49,7 +49,7 @@ class CommunicationConfig implements CommunicationConfigInterface, ParametersSou
         return (string) $this->scopeConfig->getValue(self::PATH_DEFAULT_QUERY);
     }
 
-    public function isEnabled(int $scopeId = null): bool
+    public function isChannelEnabled(int $scopeId = null): bool
     {
         return $this->scopeConfig->isSetFlag(self::PATH_IS_ENABLED, ScopeInterface::SCOPE_STORES, $scopeId);
     }

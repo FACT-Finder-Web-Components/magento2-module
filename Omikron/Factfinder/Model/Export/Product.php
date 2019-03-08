@@ -175,7 +175,7 @@ class Product
         foreach ($stores as $store) {
             $storeId = $store->getId();
             $currChannel = $this->communicationConfig->getChannel($storeId);
-            if (in_array($currChannel, $exportedChannels) || !$this->communicationConfig->isEnabled($storeId)) {
+            if (in_array($currChannel, $exportedChannels) || !$this->communicationConfig->isChannelEnabled($storeId)) {
                 continue;
             }
 

@@ -30,7 +30,7 @@ class Suggest implements ObserverInterface
     {
         $endpoint = $observer->getData('endpoint');
         $params   = $observer->getData('params');
-        if ($this->cmsConfig->isCmsExportEnabled() && $this->cmsConfig->useSeparateCmsChannel() && strpos($endpoint, 'Suggest.ff') !== false) {
+        if ($this->cmsConfig->isExportEnabled() && $this->cmsConfig->useSeparateChannel() && strpos($endpoint, 'Suggest.ff') !== false) {
             $params['channel'] = $this->cmsConfig->getChannel();
             try {
                 $cmsSuggest = $this->factFinderClient->sendRequest($endpoint, $params);
