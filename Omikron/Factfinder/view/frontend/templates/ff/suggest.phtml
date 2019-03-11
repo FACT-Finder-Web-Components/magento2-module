@@ -6,21 +6,21 @@
         <div data-container="searchTerm">
             <p class="containerCaption"><?= $block->escapeHtml(__('Search suggestions')) ?></p>
             <ff-suggest-item type="searchTerm">
-                <span>{{name}}</span>
+                <span>{{{name}}}</span>
             </ff-suggest-item>
         </div>
 
         <div data-container="category">
             <p class="containerCaption"><?= $block->escapeHtml(__('Category suggestions')) ?></p>
             <ff-suggest-item type="category">
-                <span>{{name}}</span>
+                <span>{{{name}}}</span>
             </ff-suggest-item>
         </div>
 
         <div data-container="brand">
             <p class="containerCaption"><?= $block->escapeHtml(__('Brands')) ?></p>
             <ff-suggest-item type="brand">
-                <span>{{name}}</span>
+                <span>{{{name}}}</span>
             </ff-suggest-item>
         </div>
         <?= /* @noEscape */ $block->getChildHtml('suggest.cms') ?>
@@ -34,7 +34,7 @@
                     <a href="{{attributes.deeplink}}" data-redirect="{{attributes.deeplink}}" data-redirect-target="_blank">
                         <img data-image="{{{suggestions.image}}}">
                         <div class="product-center">
-                            <div class="product-name">{{name}}</div>
+                            <div class="product-name">{{{name}}}</div>
                             <div><?= $block->escapeHtml(__('Shipping')) ?></div>
                             <div><?= $block->escapeHtml(__('Rating')) ?> </div>
                         </div>
