@@ -35,7 +35,7 @@ class RedirectSearchTest extends TestCase
      */
     public function testNoRedirectIfDisabled()
     {
-        $this->config->method('isEnabled')->willReturn(false);
+        $this->config->method('isChannelEnabled')->willReturn(false);
         $this->redirect->expects($this->never())->method('redirect');
         $this->observer->execute(new Observer());
     }
@@ -45,7 +45,7 @@ class RedirectSearchTest extends TestCase
      */
     public function testRedirectIfEnabled()
     {
-        $this->config->method('isEnabled')->willReturn(true);
+        $this->config->method('isChannelEnabled')->willReturn(true);
         $this->config->method('getDefaultQuery')->willReturn('*');
 
         $request = $this->createMock(RequestInterface::class);
