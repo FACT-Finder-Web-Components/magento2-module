@@ -244,6 +244,11 @@
                     <frontend_model>Omikron\Factfinder\Block\Adminhtml\System\Config\Button\Feed</frontend_model>
                     <comment>On buttonclick CSV exports of all your products will be generated and uploaded to the specified FTP Server.</comment>
                 </field>
+                <field id="ff_update_field_roles" translate="label comment" type="button" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Update Field Roles</label>
+                    <frontend_model>Omikron\Factfinder\Block\Adminhtml\System\Config\Button\UpdateFieldRoles</frontend_model>
+                    <comment>On buttonclick Field Roles set in FACT-Finder backend will be stored in module configuration</comment>
+                </field>
                 <field id="ff_push_import_enabled" translate="label" type="select" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Automatic Import of product data</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>

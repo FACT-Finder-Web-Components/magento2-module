@@ -12,7 +12,6 @@ use Magento\Store\Model\StoreManagerInterface;
 use Omikron\Factfinder\Api\Data\TrackingProductInterface;
 use Omikron\Factfinder\Api\Data\TrackingProductInterfaceFactory;
 use Omikron\Factfinder\Api\FieldRolesInterface;
-use Omikron\Factfinder\Helper\Product as ProductHelper;
 use Omikron\Factfinder\Model\Api\Tracking;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -27,9 +26,6 @@ class AddToCartTest extends TestCase
 
     /** @var MockObject|FieldRolesInterface */
     private $fieldRolesMock;
-
-    /** @var MockObject|ProductHelper */
-    private $productHelperMock;
 
     /** @var MockObject|Observer */
     private $observerMock;
@@ -50,10 +46,10 @@ class AddToCartTest extends TestCase
     {
         $this->requestMock->method('getParam')->with('qty')->willReturn(0);
         $this->productMock->method('getFinalPrice')->with(1)->willReturn(9.99);
-        $this->productHelperMock->expects($this->exactly(2))
-            ->method('get')->willReturnMap([
-                ['id', $this->productMock, $this->storeMock, 1],
-                ['sku', $this->productMock, $this->storeMock, 'product-sku-1'],
+        $this->fieldRolesMock->expects($this->exactly(2))
+            ->method('fieldRoleToAttribute')->willReturnMap([
+                [$this->productMock, 'trackingProductNumber','1'],
+                [$this->productMock, 'masterArticleNumber', 'product-sku-1'],
             ]);
 
         $this->trackingProductFactoryMock->expects($this->once())
@@ -76,7 +72,6 @@ class AddToCartTest extends TestCase
         $this->storeMock         = $this->createMock(StoreInterface::class);
         $this->trackingMock      = $this->createMock(Tracking::class);
         $this->fieldRolesMock    = $this->createMock(FieldRolesInterface::class);
-        $this->productHelperMock = $this->createMock(ProductHelper::class);
         $this->requestMock       = $this->createMock(RequestInterface::class);
         $this->productMock       = $this->createMock(Product::class);
         $this->observerMock      = $this->createMock(Observer::class);
@@ -99,7 +94,6 @@ class AddToCartTest extends TestCase
         $this->addToCart = new AddToCart(
             $this->trackingMock,
             $this->trackingProductFactoryMock,
-            $this->productHelperMock,
             $this->fieldRolesMock,
             $this->createConfiguredMock(StoreManagerInterface::class, ['getStore' => $this->storeMock])
         );

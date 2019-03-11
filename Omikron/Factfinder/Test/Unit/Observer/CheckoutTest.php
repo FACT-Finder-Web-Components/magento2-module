@@ -12,7 +12,6 @@ use Magento\Store\Model\StoreManagerInterface;
 use Omikron\Factfinder\Api\Data\TrackingProductInterface;
 use Omikron\Factfinder\Api\Data\TrackingProductInterfaceFactory;
 use Omikron\Factfinder\Api\FieldRolesInterface;
-use Omikron\Factfinder\Helper\Product as ProductHelper;
 use Omikron\Factfinder\Model\Api\Tracking;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -58,7 +57,6 @@ class CheckoutTest extends TestCase
         $this->checkoutObserver = new Checkout(
             $this->trackingMock,
             $this->trackingProductFactoryMock,
-            $this->createMock(ProductHelper::class),
             $this->createMock(FieldRolesInterface::class),
             $this->createMock(StoreManagerInterface::class)
         );

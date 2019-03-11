@@ -1,0 +1,43 @@
+<script>
+    require([
+        'jquery'
+    ], function (jQuery) {
+
+        function enableUpdateButton() {
+            Form.Element.enable('updatefieldroles_button');
+            $('updatefieldroles_button').removeClassName('disabled');
+        }
+
+        function disableUpdateButton() {
+            Form.Element.disable('updatefieldroles_button');
+            $('updatefieldroles_button').addClassName('disabled');
+        }
+
+        jQuery('#updatefieldroles_button').click(function () {
+
+            if ($('load_span').hasClassName('no-display')) {
+                $('load_span').removeClassName('no-display');
+                $('load_message_span').update('<?= $block->escapeJs(__('Generating export file')) ?>');
+            }
+
+            new Ajax.Request('<?= $block->escapeUrl($block->getUrl('factfinder/fieldroles/update')) ?>', {
+                parameters: {},
+                loaderArea: false,
+                asynchronous: true,
+                onCreate: disableUpdateButton(),
+                onComplete: function (transport) {
+                    var response = JSON.parse(transport.responseText);
+                    $('load_message_span').update(response.message);
+                    $('load_spinner').hide();
+                    enableUpdateButton();
+                }
+            });
+        });
+    });
+</script>
+
+<?= /* @noEscape */ $block->getButtonHtml() ?>
+<div class="sync-indicator no-display" id="load_span">
+    <img alt="Loading" id="load_spinner" style="margin:0 5px" src="<?= $block->escapeUrl($block->getViewFileUrl('images/process_spinner.gif')) ?>"/>
+    <span id="load_message_span"></span>
+</div>

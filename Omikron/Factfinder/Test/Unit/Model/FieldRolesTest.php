@@ -29,7 +29,7 @@ class FieldRolesTest extends TestCase
     {
         $wantedRole = 'masterArticleNumber';
         $fieldRoles = '{"description":"Description","masterArticleNumber":"MasterProductNumber","price":"Price","productName":"Name","trackingProductNumber":"ProductNumber"}';
-        $this->scopeConfigMock->expects($this->once())->method('getValue')->with(FieldRoles::PATH_PRODUCT_FIELD_ROLE)->willReturn($fieldRoles);
+        $this->scopeConfigMock->expects($this->once())->method('getValue')->with('factfinder/general/tracking_product_number_field_role')->willReturn($fieldRoles);
         $this->assertSame('MasterProductNumber', $this->fieldRoles->getFieldRole($wantedRole));
     }
 
@@ -38,7 +38,7 @@ class FieldRolesTest extends TestCase
         $valueToSave = ['description' => 'Description', 'masterArticleNumber' => 'MasterProductNumber'];
         $this->configResourceMock->expects($this->once())
             ->method('saveConfig')
-            ->with(FieldRoles::PATH_PRODUCT_FIELD_ROLE, $this->serializer->serialize($valueToSave));
+            ->with('factfinder/general/tracking_product_number_field_role', $this->serializer->serialize($valueToSave));
         $this->assertTrue($this->fieldRoles->saveFieldRoles($valueToSave, 1));
     }
 
