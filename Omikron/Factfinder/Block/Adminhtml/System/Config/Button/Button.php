@@ -12,7 +12,7 @@ abstract class Button extends Field
 {
     public function render(AbstractElement $element): string
     {
-        $element->unsScope()->unsCanUseWebsiteValue()->unsCanUseDefaultValue();
+        $element->unsetData(['scope', 'can_use_website_value', 'can_use_default_value']);
         return parent::render($element);
     }
 
@@ -30,11 +30,12 @@ abstract class Button extends Field
 
     public function generateButtonHtml(string $id, string $label): string
     {
-        $button = $this->getLayout()->createBlock(ButtonWidget::class)->setData([
+        /** @var ButtonWidget $button */
+        $button = $this->getLayout()->createBlock(ButtonWidget::class);
+        $button->setData([
             'id'    => $id,
             'label' => __($label),
         ]);
-
         return $button->toHtml();
     }
 }
