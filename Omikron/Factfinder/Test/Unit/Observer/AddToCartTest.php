@@ -18,7 +18,7 @@ use PHPUnit\Framework\TestCase;
 
 class AddToCartTest extends TestCase
 {
-    /** @var  MockObject|Tracking */
+    /** @var MockObject|Tracking */
     private $trackingMock;
 
     /** @var MockObject|TrackingProductInterfaceFactory */
@@ -48,7 +48,7 @@ class AddToCartTest extends TestCase
         $this->productMock->method('getFinalPrice')->with(1)->willReturn(9.99);
         $this->fieldRolesMock->expects($this->exactly(2))
             ->method('fieldRoleToAttribute')->willReturnMap([
-                [$this->productMock, 'trackingProductNumber','1'],
+                [$this->productMock, 'trackingProductNumber', '1'],
                 [$this->productMock, 'masterArticleNumber', 'product-sku-1'],
             ]);
 
@@ -69,12 +69,12 @@ class AddToCartTest extends TestCase
 
     protected function setUp()
     {
-        $this->storeMock         = $this->createMock(StoreInterface::class);
-        $this->trackingMock      = $this->createMock(Tracking::class);
-        $this->fieldRolesMock    = $this->createMock(FieldRolesInterface::class);
-        $this->requestMock       = $this->createMock(RequestInterface::class);
-        $this->productMock       = $this->createMock(Product::class);
-        $this->observerMock      = $this->createMock(Observer::class);
+        $this->storeMock      = $this->createMock(StoreInterface::class);
+        $this->trackingMock   = $this->createMock(Tracking::class);
+        $this->fieldRolesMock = $this->createMock(FieldRolesInterface::class);
+        $this->requestMock    = $this->createMock(RequestInterface::class);
+        $this->productMock    = $this->createMock(Product::class);
+        $this->observerMock   = $this->createMock(Observer::class);
 
         $this->trackingProductFactoryMock = $this->getMockBuilder(TrackingProductInterfaceFactory::class)
             ->disableOriginalConstructor()

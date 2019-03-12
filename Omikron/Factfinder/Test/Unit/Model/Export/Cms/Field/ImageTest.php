@@ -6,6 +6,7 @@ namespace Omikron\Factfinder\Model\Export\Cms\Field;
 
 use Magento\Cms\Api\Data\PageInterface;
 use Magento\Email\Model\Template\Filter;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class ImageTest extends TestCase
@@ -16,8 +17,8 @@ class ImageTest extends TestCase
     /** @var Image */
     private $imageField;
 
-    /** @var string  */
-    private $content = 'Some Cms page with Image <img scr="http://magento-test.factfinder.de/media/image/cms.png';
+    /** @var string */
+    private $content = 'Some Cms page with Image <img scr="http://magento-test.factfinder.de/media/image/cms.png" />';
 
     public function test_image_url_should_be_extracted()
     {

@@ -40,7 +40,6 @@ interface FieldRolesInterface
      */
     public function saveFieldRoles(array $fieldRoles, int $scopeId = null): bool;
 
-
     /**
      * Gets mapped from Field Roles product attribute value
      *

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Omikron\Factfinder\Cron;
 
-use Magento\Api\Data\StoreInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Store\Model\StoreManagerInterface;
 use Omikron\Factfinder\Api\Config\ChannelProviderInterface;
@@ -57,18 +56,19 @@ class Feed
 
     public function execute(): void
     {
-        if ($this->scopeConfig->isSetFlag(self::PATH_CONFIGURABLE_CRON_IS_ENABLED)) {
-            /** @var StoreInterface $store */
-            foreach ($this->storeManager->getStores() as $store) {
-                $this->storeEmulation->runInStore((int) $store->getId(), function () use ($store) {
-                    if ($this->channelProvider->isChannelEnabled((int) $store->getId())) {
-                        $channel       = $this->channelProvider->getChannel();
-                        $filename      = "factfinder/export.{$channel}.csv";
-                        $feedGenerator = $this->feedGeneratorFactory->create($this->feedType);
-                        $feedGenerator->generate($this->ftpFactory->create(['filename' => $filename]));
-                    }
-                });
-            }
+        if (!$this->scopeConfig->isSetFlag(self::PATH_CONFIGURABLE_CRON_IS_ENABLED)) {
+            return;
+        }
+
+        foreach ($this->storeManager->getStores() as $store) {
+            $this->storeEmulation->runInStore((int) $store->getId(), function () use ($store) {
+                if ($this->channelProvider->isChannelEnabled((int) $store->getId())) {
+                    $channel       = $this->channelProvider->getChannel();
+                    $filename      = "factfinder/export.{$channel}.csv";
+                    $feedGenerator = $this->feedGeneratorFactory->create($this->feedType);
+                    $feedGenerator->generate($this->ftpFactory->create(['filename' => $filename]));
+                }
+            });
         }
     }
 }

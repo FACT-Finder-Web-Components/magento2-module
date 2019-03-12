@@ -17,7 +17,7 @@ class ContentTest extends TestCase
     /** @var Content */
     private $contentField;
 
-    /** @var string  */
+    /** @var string */
     private $content = '<style>some styles</style> Page Content&nbsp;<script type="text/javascript">javascript magic</script>{{}}';
 
     public function test_replace_unwanted_expressions()
@@ -32,7 +32,7 @@ class ContentTest extends TestCase
 
     protected function setUp()
     {
-        $this->filterMock = $this->createConfiguredMock(Filter::class, ['filter' => $this->content]);
+        $this->filterMock   = $this->createConfiguredMock(Filter::class, ['filter' => $this->content]);
         $this->contentField = new Content($this->filterMock);
     }
 }

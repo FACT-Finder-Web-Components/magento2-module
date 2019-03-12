@@ -8,7 +8,7 @@ use Omikron\Factfinder\Api\StreamInterface;
 
 class Browser implements StreamInterface
 {
-   /** @var resource */
+    /** @var null|resource */
     private $stream;
 
     public function __construct(string $fileName)

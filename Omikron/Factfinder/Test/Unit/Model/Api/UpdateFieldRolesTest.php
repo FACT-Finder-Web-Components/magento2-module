@@ -44,9 +44,9 @@ class UpdateFieldRolesTest extends TestCase
             'getAddress' => 'http://fake-fact-finder.com/Fact-Finder-7.3',
         ]);
 
-        $this->fieldRolesMock          = $this->createMock(FieldRolesInterface::class);
-        $this->factFinderClientMock    = $this->createMock(ClientInterface::class);
-        $this->updateFieldRoles = new UpdateFieldRoles(
+        $this->fieldRolesMock       = $this->createMock(FieldRolesInterface::class);
+        $this->factFinderClientMock = $this->createMock(ClientInterface::class);
+        $this->updateFieldRoles     = new UpdateFieldRoles(
             $this->fieldRolesMock,
             $this->factFinderClientMock,
             $communicationConfigMock

@@ -38,8 +38,8 @@ class Export extends Action
 
     public function execute()
     {
-        preg_match('@/store/([0-9]+)@', (string) $this->getRequest()->getPathInfo(), $match);
-        $this->storeEmulation->runInStore($match[1] ?? Store::DEFAULT_STORE_ID, function () {
+        $storeId = (int) $this->getRequest()->getParam('store', Store::DEFAULT_STORE_ID);
+        $this->storeEmulation->runInStore($storeId, function () {
             $feedGenerator = $this->feedGeneratorFactory->create($this->feedType);
             $feedGenerator->generate(new Browser("factfinder/export.{$this->channelProvider->getChannel()}.csv"));
         });

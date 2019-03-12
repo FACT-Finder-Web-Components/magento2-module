@@ -17,7 +17,7 @@ class ChangeFeedType
     }
 
     /**
-     * @param        $_
+     * @param mixed  $_
      * @param string $type
      *
      * @return array

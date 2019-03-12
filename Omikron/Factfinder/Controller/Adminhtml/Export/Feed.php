@@ -55,8 +55,7 @@ class Feed extends Action
 
         try {
             preg_match('@/store/([0-9]+)/@', (string) $this->_redirect->getRefererUrl(), $match);
-            $this->storeEmulation->runInStore(
-                $match[1] ?? Store::DEFAULT_STORE_ID, function () {
+            $this->storeEmulation->runInStore((int) ($match[1] ?? Store::DEFAULT_STORE_ID), function () {
                 $channel       = $this->channelProvider->getChannel();
                 $filename      = "factfinder/export.{$channel}.csv";
                 $feedGenerator = $this->feedGeneratorFactory->create($this->feedType);

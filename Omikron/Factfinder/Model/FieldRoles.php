@@ -73,11 +73,11 @@ class FieldRoles implements FieldRolesInterface
 
     public function fieldRoleToAttribute(ProductInterface $product, string $roleName): string
     {
-        $attribute = $this->getFieldRole($roleName);
-        if (!isset($this->dataProviders[$product->getSku()])) {
-            $this->dataProviders[$product->getSku()] = $this->dataProviderFactory->create(['product' => $product])->toArray();
+        $sku = $product->getSku();
+        if (!isset($this->dataProviders[$sku])) {
+            $this->dataProviders[$sku] = $this->dataProviderFactory->create(['product' => $product])->toArray();
         }
 
-        return (string) $this->dataProviders[$product->getSku()][$attribute] ?? '';
+        return (string) $this->dataProviders[$sku][$this->getFieldRole($roleName)] ?? '';
     }
 }

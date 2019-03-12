@@ -31,10 +31,10 @@ class UrlTest extends TestCase
 
     protected function setUp()
     {
-        $this->urlBuilderMock = $this->createMock(UrlInterface::class);
+        $this->urlBuilderMock   = $this->createMock(UrlInterface::class);
         $this->storeManagerMock = $this->createConfiguredMock(StoreManagerInterface::class, [
-            'getStore' => $this->createMock(StoreInterface::class)
+            'getStore' => $this->createMock(StoreInterface::class),
         ]);
-        $this->urlField = new Url($this->urlBuilderMock, $this->storeManagerMock);
+        $this->urlField         = new Url($this->urlBuilderMock, $this->storeManagerMock);
     }
 }
