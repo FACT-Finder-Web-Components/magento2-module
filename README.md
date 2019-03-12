@@ -201,12 +201,11 @@ The HTML code for the web components can be found in this folder:
 Omikron/Factfinder/view/frontend/templates/ff
 ```
 
-All web components are saved here as templates to be customised. CSS definitions can be put into this folder: 
+All web components are saved here as templates to be customised. 
 ```
-Omikron/Factfinder/view/frontend/web/css/ff
+Omikron/Factfinder/view/frontend/web/css/source/ff
 ```
-
-Most templates have a CSS file in there. Additionally, you have the following css file to which you can add, for example, higher-lever stylings:
+Since Magento 2 is using LESS, all source styles are written using LESS format
  
 ```
 Omikron/Factfinder/view/frontend/web/css/default.css
@@ -218,16 +217,25 @@ Warning: After changing static content like CSS styles, you need to restart the 
 php -f magento setup:upgrade setup:static-content:deploy  
 ```
 
-The PHP classes for the templates can be found in this folder:
- 
+You can integrate the templates anywhere within your shop system. Magento 2 offers several ways to do so, e.g. layer definitions in XML. The templates can be layered as needed.
+As an example, the `ff-suggest` element was integrated into the `ff-searchbox` template for this SDK: 
+```xml
+        <referenceBlock name="top.search">
+            <action method="setTemplate" ifconfig="factfinder/general/is_enabled">
+                <argument name="template" xsi:type="string">Omikron_Factfinder::ff/searchbox.phtml</argument>
+            </action>
+            <block class="Magento\Framework\View\Element\Template" name="factfinder.suggest" as="suggest" ifconfig="factfinder/components/ff_suggest" template="Omikron_Factfinder::ff/suggest.phtml">
+                <block class="Magento\Framework\View\Element\Template" ifconfig="factfinder/cms_export/ff_cms_export_enabled" name="factfinder.suggest.cms" as="suggest.cms" template="Omikron_Factfinder::ff/suggest-cms.phtml">
+                    <arguments>
+                        <argument name="view_model" xsi:type="object">Omikron\Factfinder\ViewModel\Suggest</argument>
+                    </arguments>
+                </block>
+            </block>
+        </referenceBlock>
 ```
-Omikron/Factfinder/Block/FF
-```
 
-There you can write your own functions which can be called from the template if needed.
 
-You can integrate the templates anywhere within your shop system. Magento 2 offers several ways to do so, e.g. layer definitions in XML. The templates can be layered as needed. As an example, the `ff-suggest` element was integrated into the `ff-searchbox` template for this SDK. Please check:
-
+You can also instantiate block in templates, but it's not a recommended way
 ```php
 Omikron/Factfinder/view/frontend/templates/ff/searchbox.phtml:7
 
@@ -245,26 +253,19 @@ This is an overview over the files and their locations. These files are all impo
 .
 `-- Omikron  
     `-- Factfinder  
-        |-- Block  
-        |   `-- FF  
-        |       |-- ASN.php  
-        |       |-- Breadcrumb.php  
-        |       |-- Campaign.php  
-        |       |-- Communication.php  
-        |       |-- Paging.php  
-        |       |-- ProductsPerPage.php  
-        |       |-- PushedProductsCampaign.php  
-        |       |-- RecordList.php  
-        |       |-- Searchbox.php  
-        |       |-- Sortbox.php  
-        |       `-- Suggest.php
-        |-- Helper  
-        |   `-- ResultRefinder.php
+        |-- ViewModel  
+        |    |-- Communication.php  
+        |    |-- ProductBasedComponent.php  
+        |    `-- Suggest.php  
         |-- etc
-        |   `-- crontab.xml
+        |   |--frontend
+        |      |--di.xml
+        |      |--events.xml
+        |      `--sections.xml
         `-- view  
             `-- frontend  
                 |-- layout  
+                |   |-- catalog_product_view.xml  
                 |   |-- default.xml  
                 |   `-- factfinder_result_index.xml  
                 |-- templates  
@@ -279,19 +280,42 @@ This is an overview over the files and their locations. These files are all impo
                 |       |-- record-list.phtml  
                 |       |-- searchbox.phtml  
                 |       |-- sortbox.phtml  
+                |       |-- styles.phtml  
                 |       `-- suggest.phtml  
+                |       `-- suggest-cms.phtml  
                 `-- web  
                     |-- css  
-                    |   |-- ff  
-                    |   |   |-- asn.css
-                    |   |   |-- breadcrumb-trail.css
-                    |   |   |-- paging.css
-                    |   |   |-- products-per-page-dropdown.css
-                    |   |   |-- record-list.css
-                    |   |   |-- sortbox.css
-                    |   `-- default.css 
-                    `-- images 
-                            `-- ... 
+                    |   |--_module.less
+                    |   |--source
+                    |       `-- ff  
+                    |           |-- _asn.less
+                    |           |-- _breadcrumb.less
+                    |           |-- _campaign.less
+                    |           |-- _paging.less
+                    |           |-- _products-per-page.less
+                    |           |-- _recommendation.less
+                    |           |-- _record_list.less
+                    |           |-- _searchbox.less
+                    |           |-- _shared_styles.less
+                    |           |-- _similiar.less
+                    |           |-- _sortbox.less
+                    |           |-- _suggest.less
+                    |           `-- _template.less
+                    |--ff-web-components
+                    |   |--bundle.min.js
+                    |   `--vendor
+                    |       |-- custom-elements-es5-adapter.js
+                    |       |-- webcomponents-bundle.js
+                    |       |-- webcomponents-loader.js
+                    |       `-- bundles
+                    |           `-- ...
+                    |--js
+                    |   |--view
+                    |   |   `-- ffcommunication.js
+                    |   `-- search-redirect.js   
+                    |-- images 
+                    |        `-- ... 
+                    `-- requirejs-config.js
 ```
 
 
@@ -312,16 +336,13 @@ Omikron/Factfinder/view/frontend/layout/factfinder_result_index.xml
 Several templates are already integrated into this layout, among others `ff-record-list`, which displays the search results.
  
 ## Process of Data Transfer between Shop and FACT-Finder
-
-Once a search query is sent, it does not immediately reach FACT-Finder, but is handed off to a specific controller, which hands the question to the FACT-Finder system, receives the answer, processes it and only then returns it to the frontend/web component.
-
-The answer is always processed in this PHP class:
-
+By default search/suggest requests are performed directly to FACT-Finder bypassing Magento backend. However if for some reason, You want to modify request parameters
+or want to modify the response before returning it to the front, You can enable **Enrichment feature**. By enabling this, once a search query is sent, it does not immediately reach FACT-Finder, but is handed off to a specific controller
 ```
-Omikron/Factfinder/Helper/ResultRefiner.php
+Omikron/Factfinder/Controller/Proxy/Call.php
 ```
-
-There you can enrich or process the returned JSON-string using the method `refine($jsonString)`, before it is returned with `return $jsonString`.
+which hands the question to the FACT-Finder system, receives the answer, processes it and only then returns it to the frontend/web component.
+Once response from FACT-Finder is available, proxy controller emits an **ff_proxy_post_dispatch** event which allows user to listen in order to modify and enrich recieved data
 
 ![Communication Overview](docs/assets/communication-overview.png "Communication Overview")
 
