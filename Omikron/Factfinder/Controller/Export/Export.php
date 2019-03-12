@@ -8,7 +8,7 @@ use Magento\Store\Model\Store;
 use Omikron\Factfinder\Api\Config\ChannelProviderInterface;
 use Omikron\Factfinder\Model\Export\FeedFactory as FeedGeneratorFactory;
 use Omikron\Factfinder\Model\StoreEmulation;
-use Omikron\Factfinder\Model\Stream\BrowserFactory;
+use Omikron\Factfinder\Model\Stream\Browser;
 
 class Export extends Action
 {
@@ -21,9 +21,6 @@ class Export extends Action
     /** @var FeedGeneratorFactory */
     private $feedGeneratorFactory;
 
-    /** @var BrowserFactory */
-    private $browserFactory;
-
     /** @var string */
     protected $feedType = 'product';
 
@@ -31,24 +28,20 @@ class Export extends Action
         Context $context,
         ChannelProviderInterface $channelProvider,
         StoreEmulation $storeEmulation,
-        FeedGeneratorFactory $feedGeneratorFactory,
-        BrowserFactory $browserFactory
+        FeedGeneratorFactory $feedGeneratorFactory
     ) {
         parent::__construct($context);
         $this->channelProvider      = $channelProvider;
         $this->storeEmulation       = $storeEmulation;
         $this->feedGeneratorFactory = $feedGeneratorFactory;
-        $this->browserFactory       = $browserFactory;
     }
 
     public function execute()
     {
-        preg_match('@/store/([0-9]+)/@', (string) $this->_redirect->getRefererUrl(), $match);
+        preg_match('@/store/([0-9]+)@', (string) $this->getRequest()->getPathInfo(), $match);
         $this->storeEmulation->runInStore($match[1] ?? Store::DEFAULT_STORE_ID, function () {
-            $channel       = $this->channelProvider->getChannel();
             $feedGenerator = $this->feedGeneratorFactory->create($this->feedType);
-            $output        = $this->browserFactory->create(['fileName ' => "factfinder/export.{$channel}.csv"]);
-            $feedGenerator->generate($output);
+            $feedGenerator->generate(new Browser("factfinder/export.{$this->channelProvider->getChannel()}.csv"));
         });
     }
 }

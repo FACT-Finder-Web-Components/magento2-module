@@ -2,6 +2,9 @@
 
 namespace Omikron\Factfinder\Api\Config;
 
+/**
+ * @api
+ */
 interface AuthConfigInterface
 {
     public function getUsername(): string;

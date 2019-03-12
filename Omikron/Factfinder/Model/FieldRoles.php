@@ -78,6 +78,6 @@ class FieldRoles implements FieldRolesInterface
             $this->dataProviders[$product->getSku()] = $this->dataProviderFactory->create(['product' => $product])->toArray();
         }
 
-        return $this->dataProviders[$product->getSku()][$attribute] ?? '';
+        return (string) $this->dataProviders[$product->getSku()][$attribute] ?? '';
     }
 }

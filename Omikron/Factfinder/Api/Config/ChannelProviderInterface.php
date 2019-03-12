@@ -2,6 +2,9 @@
 
 namespace Omikron\Factfinder\Api\Config;
 
+/**
+ * @api
+ */
 interface ChannelProviderInterface
 {
     public function getChannel(int $scopeId = null): string;
