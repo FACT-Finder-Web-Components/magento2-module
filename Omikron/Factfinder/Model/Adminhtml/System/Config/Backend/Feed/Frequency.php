@@ -37,6 +37,10 @@ class Frequency extends Value
         $this->configWriter = $configWriter;
     }
 
+    /**
+     * @return Value
+     * @throws LocalizedException
+     */
     public function afterSave()
     {
         $time             = $this->getFieldsetDataValue(self::PATH_CRON_TIME);
