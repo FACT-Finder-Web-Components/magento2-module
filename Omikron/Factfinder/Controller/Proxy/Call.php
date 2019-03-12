@@ -61,7 +61,7 @@ class Call extends \Magento\Framework\App\Action\Action
 
     private function getEndpoint(string $currentUrl): string
     {
-        preg_match('#/([A-Z][a-z]+\.ff)#', $currentUrl, $match);
+        preg_match('#/([A-Za-z]+\.ff)#', $currentUrl, $match);
         return $match[1] ?? '';
     }
 }
