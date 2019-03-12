@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<include xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_include.xsd">
+<group id="factfinder_information" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+    <label><![CDATA[Information]]></label>
+    <attribute type="expanded">1</attribute>
+    <frontend_model>Magento\Config\Block\System\Config\Form\Fieldset</frontend_model>
+    <group id="factfinder_version" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+        <frontend_model>Omikron\Factfinder\Block\Adminhtml\System\Config\Html\Information</frontend_model>
+    </group>
+</group>
+</include>

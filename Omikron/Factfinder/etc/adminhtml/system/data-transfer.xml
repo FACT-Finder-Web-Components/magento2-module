@@ -1,0 +1,99 @@
+<?xml version="1.0"?>
+<include xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_include.xsd">
+    <group id="data_transfer" translate="label" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+        <label>Data export</label>
+        <comment>
+            <![CDATA[<div class="message message-notice notice"><div data-ui-id="messages-message-success">Please always save the config in the upper right corner after making changes. Especially before using the export-button.</div></div>]]></comment>
+        <field id="ff_upload_host" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0"
+               showInStore="0">
+            <label>Upload Host</label>
+            <comment>Please specify the FTP server address, where the export file(s) should be uploaded. For example
+                shopname.fact-finder.de. This parameter shouldn't have any trailing slashes and shouldn't be prefixed
+                with ftp://.
+            </comment>
+        </field>
+        <field id="ff_upload_user" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="0"
+               showInStore="0">
+            <label>Upload User</label>
+        </field>
+        <field id="ff_upload_password" translate="label" type="password" sortOrder="30" showInDefault="1"
+               showInWebsite="0" showInStore="0">
+            <label>Upload Password</label>
+        </field>
+        <field id="ff_manufacturer" translate="label" type="select" sortOrder="40" showInDefault="1" showInWebsite="1"
+               showInStore="1">
+            <label>Manufacturer</label>
+            <source_model>Omikron\Factfinder\Model\Source\Attribute</source_model>
+            <comment>Select the Attribute which stores the manufacturer of a product.</comment>
+        </field>
+        <field id="ff_ean" translate="label" type="select" sortOrder="60" showInDefault="1" showInWebsite="1"
+               showInStore="1">
+            <label>EAN/ISBN</label>
+            <source_model>Omikron\Factfinder\Model\Source\Attribute</source_model>
+            <comment>Select the Attribute which stores the ean or isbn of a product.</comment>
+        </field>
+        <field id="ff_additional_attributes" translate="label" type="multiselect" sortOrder="70" showInDefault="1"
+               showInWebsite="1" showInStore="1">
+            <label>Select Additional Attributes</label>
+            <source_model>Omikron\Factfinder\Model\Source\Attribute</source_model>
+            <comment>Select all attributes which should be exported to the product feed.</comment>
+        </field>
+        <field id="ff_additional_attributes_separate_columns" translate="label" type="select" sortOrder="70"
+               showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Export additional attributes in separate columns</label>
+            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+            <comment>Set this option to 'Yes' If You want to have additional attributes exported in separate columns
+            </comment>
+        </field>
+        <field id="ff_product_visibility" translate="label comment" type="multiselect" sortOrder="70" showInDefault="1"
+               showInWebsite="1" showInStore="1">
+            <label>Select Product Visibility</label>
+            <comment>Visibility attribute values used in filtering product collection.</comment>
+            <source_model>Magento\Catalog\Model\Product\Visibility</source_model>
+        </field>
+        <field id="ff_createfeed" translate="label comment" type="button" sortOrder="100" showInDefault="1"
+               showInWebsite="1" showInStore="1">
+            <label>Generate Export File</label>
+            <frontend_model>Omikron\Factfinder\Block\Adminhtml\System\Config\Button\Feed</frontend_model>
+            <comment>On buttonclick CSV exports of all your products will be generated and uploaded to the specified FTP
+                Server.
+            </comment>
+        </field>
+        <field id="ff_update_field_roles" translate="label comment" type="button" sortOrder="100" showInDefault="1"
+               showInWebsite="1" showInStore="1">
+            <label>Update Field Roles</label>
+            <frontend_model>Omikron\Factfinder\Block\Adminhtml\System\Config\Button\UpdateFieldRoles</frontend_model>
+            <comment>On buttonclick Field Roles set in FACT-Finder backend will be stored in module configuration
+            </comment>
+        </field>
+        <field id="ff_push_import_enabled" translate="label" type="select" sortOrder="110" showInDefault="1"
+               showInWebsite="1" showInStore="1">
+            <label>Automatic Import of product data</label>
+            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+            <comment>Runs an automatic import of the product data to the FACT-Finder servers, after the FTP upload is
+                finished.
+            </comment>
+        </field>
+        <field id="ff_push_import_type" translate="label" type="multiselect" sortOrder="120" showInDefault="1"
+               showInWebsite="1" showInStore="1">
+            <label>Pushed import types</label>
+            <options>
+                <option label="Data">data</option>
+                <option label="Suggest">suggest</option>
+            </options>
+            <depends>
+                <field id="ff_push_import_enabled">1</field>
+            </depends>
+        </field>
+    </group>
+    <group id="basic_auth_data_transfer" translate="label" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+        <label>Export via Basic Auth</label>
+        <field id="ff_upload_url_user" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+            <label>Basic Auth User</label>
+        </field>
+        <field id="ff_upload_url_password" translate="label" type="obscure" sortOrder="30" showInDefault="1" showInWebsite="0" showInStore="0">
+            <label>Basic Auth Password</label>
+            <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+        </field>
+    </group>
+</include>

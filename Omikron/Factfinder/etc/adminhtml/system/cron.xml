@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<include xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_include.xsd">
+    <group id="configurable_cron" translate="label" sortOrder="70" showInDefault="1" showInWebsite="0" showInStore="0">
+        <label>Cron Schedule</label>
+        <field id="ff_cron_enabled" translate="label" type="select" sortOrder="120" showInDefault="1" showInWebsite="0" showInStore="0">
+            <label>Generate Export Files(s) automatically</label>
+            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+        </field>
+        <field id="ff_cron_time" translate="label comment" type="time" sortOrder="140" showInDefault="1" showInWebsite="0" showInStore="0">
+            <label>Start Time</label>
+            <depends>
+                <field id="ff_cron_enabled">1</field>
+            </depends>
+        </field>
+        <field id="ff_cron_frequency" translate="label comment" type="select" sortOrder="150" showInDefault="1" showInWebsite="0" showInStore="0">
+            <label>Cron execution frequency</label>
+            <source_model>Magento\Cron\Model\Config\Source\Frequency</source_model>
+            <backend_model>Omikron\Factfinder\Model\Adminhtml\System\Config\Backend\Feed\Frequency</backend_model>
+            <depends>
+                <field id="ff_cron_enabled">1</field>
+            </depends>
+        </field>
+    </group>
+</include>

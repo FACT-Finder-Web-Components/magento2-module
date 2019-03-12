@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<include xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_include.xsd">
+    <group id="general" translate="label" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+        <label>Main Settings</label>
+        <comment><![CDATA[<div class="message message-notice notice"><div data-ui-id="messages-message-success">Please always save the config in the upper right corner after making changes.</div></div>]]></comment>
+        <field id="is_enabled" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Activate FACT-Finder integration</label>
+            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+        </field>
+        <field id="logging_enabled" translate="label" type="select" sortOrder="1" showInDefault="1">
+            <label>Activate Logging</label>
+            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+        </field>
+        <field id="address" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Server URL</label>
+            <validate>required-entry validate-url</validate>
+        </field>
+        <field id="channel" translate="label" type="text" sortOrder="11" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Channel</label>
+            <validate>required-entry</validate>
+        </field>
+        <field id="username" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Username</label>
+            <validate>required-entry</validate>
+        </field>
+        <field id="password" translate="label" type="obscure" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Password</label>
+            <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+        </field>
+        <field id="authentication_prefix" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Authentication Prefix</label>
+        </field>
+        <field id="authentication_postfix" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Authentication Postfix</label>
+        </field>
+        <field id="ff_build_connection" translate="label comment" type="button" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Test Connection</label>
+            <frontend_model>Omikron\Factfinder\Block\Adminhtml\System\Config\Button\TestConnection</frontend_model>
+        </field>
+        <field id="show_add_to_card_button" translate="label" type="select" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Show 'Add to Cart' button in search results</label>
+            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+        </field>
+        <field id="ff_enrichment" translate="label" type="select" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Activate Enrichment feature</label>
+            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+            <comment>Data enrichment enables you to refine the data coming back from FACT-Finder inside the SDK code. Please refer the documentation for more infos (last chapter about data-communication).</comment>
+        </field>
+    </group>
+</include>
