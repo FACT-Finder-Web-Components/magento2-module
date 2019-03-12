@@ -17,7 +17,7 @@ class StoreEmulation
         $this->emulation = $emulation;
     }
 
-    public function runInStore(int $storeId, callable $proceed)
+    public function runInStore(string $storeId, callable $proceed)
     {
         try {
             $this->emulation->startEnvironmentEmulation($storeId, Area::AREA_FRONTEND, true);
