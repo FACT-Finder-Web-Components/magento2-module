@@ -6,12 +6,12 @@
             <tab>catalog</tab>
             <class>ff-config-tab</class>
             <resource>Omikron_Factfinder::config</resource>
-            <include path="Omikron_Factfinder::system/general.xml"/>
-            <include path="Omikron_Factfinder::system/advanced.xml"/>
-            <include path="Omikron_Factfinder::system/components.xml"/>
-            <include path="Omikron_Factfinder::system/data-transfer.xml"/>
-            <include path="Omikron_Factfinder::system/cms.xml"/>
-            <include path="Omikron_Factfinder::system/cron.xml"/>
+            <include path="Omikron_Factfinder::system/general.xml" />
+            <include path="Omikron_Factfinder::system/advanced.xml" />
+            <include path="Omikron_Factfinder::system/components.xml" />
+            <include path="Omikron_Factfinder::system/data_transfer.xml" />
+            <include path="Omikron_Factfinder::system/cms.xml" />
+            <include path="Omikron_Factfinder::system/cron.xml" />
         </section>
     </system>
 </config>
