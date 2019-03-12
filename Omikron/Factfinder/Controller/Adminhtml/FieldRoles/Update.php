@@ -7,9 +7,9 @@ namespace Omikron\Factfinder\Controller\Adminhtml\FieldRoles;
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
 use Magento\Framework\Controller\Result\JsonFactory;
+use Magento\Store\Model\Store;
 use Omikron\Factfinder\Exception\ResponseException;
 use Omikron\Factfinder\Model\Api\UpdateFieldRoles;
-use Magento\Store\Model\Store;
 
 class Update extends Action
 {

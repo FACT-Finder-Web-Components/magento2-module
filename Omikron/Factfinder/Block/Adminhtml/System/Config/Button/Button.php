@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Omikron\Factfinder\Block\Adminhtml\System\Config\Button;
 
+use Magento\Backend\Block\Widget\Button as ButtonWidget;
 use Magento\Config\Block\System\Config\Form\Field;
 use Magento\Framework\Data\Form\Element\AbstractElement;
-use Magento\Backend\Block\Widget\Button as ButtonWidget;
 
 abstract class Button extends Field
 {
@@ -17,13 +17,13 @@ abstract class Button extends Field
     }
 
     /**
-     * @param  AbstractElement $_e
+     * @param  AbstractElement $element
      *
      * @return string
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    protected function _getElementHtml(AbstractElement $_e): string
+    protected function _getElementHtml(AbstractElement $element): string
     {
         return $this->_toHtml();
     }
@@ -31,9 +31,9 @@ abstract class Button extends Field
     public function generateButtonHtml(string $id, string $label): string
     {
         $button = $this->getLayout()->createBlock(ButtonWidget::class)->setData([
-                'id'    => $id,
-                'label' => __($label)
-            ]);
+            'id'    => $id,
+            'label' => __($label),
+        ]);
 
         return $button->toHtml();
     }

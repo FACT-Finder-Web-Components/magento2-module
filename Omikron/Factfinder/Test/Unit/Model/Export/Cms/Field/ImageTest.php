@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Omikron\Factfinder\Model\Export\Cms\Field;
 
 use Magento\Cms\Api\Data\PageInterface;
-use PHPUnit\Framework\TestCase;
 use Magento\Email\Model\Template\Filter;
+use PHPUnit\Framework\TestCase;
 
 class ImageTest extends TestCase
 {

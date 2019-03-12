@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Omikron\Factfinder\Model\Stream;
 
-use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Filesystem;
 use Magento\Framework\Filesystem\Io\Ftp as FtpClient;
 use Omikron\Factfinder\Model\Config\FtpConfig;

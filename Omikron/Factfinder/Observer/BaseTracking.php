@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Omikron\Factfinder\Observer;
 
 use Magento\Catalog\Model\Product;
-use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Store\Model\StoreManagerInterface;
 use Omikron\Factfinder\Api\Data\TrackingProductInterfaceFactory;
 use Omikron\Factfinder\Api\FieldRolesInterface;
