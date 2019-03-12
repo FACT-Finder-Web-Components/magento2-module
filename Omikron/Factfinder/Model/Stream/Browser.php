@@ -8,7 +8,7 @@ use Omikron\Factfinder\Api\StreamInterface;
 
 class Browser implements StreamInterface
 {
-    /** @var  */
+   /** @var resource */
     private $stream;
 
     public function __construct(string $fileName)
@@ -31,6 +31,7 @@ class Browser implements StreamInterface
     {
         @fclose($this->stream);
         @flock($this->stream,LOCK_UN);
+        return true;
     }
 
     private function getStream()

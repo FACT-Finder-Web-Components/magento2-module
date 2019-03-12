@@ -58,7 +58,7 @@ class Feed
     public function execute(): void
     {
         if ($this->scopeConfig->isSetFlag(self::PATH_CONFIGURABLE_CRON_IS_ENABLED)) {
-            /** @var StoreInterface\ $store */
+            /** @var StoreInterface $store */
             foreach ($this->storeManager->getStores() as $store) {
                 $this->storeEmulation->runInStore((int) $store->getId(), function () use ($store) {
                     if ($this->channelProvider->isChannelEnabled((int) $store->getId())) {
