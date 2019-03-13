@@ -2,12 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Omikron\Factfinder\Test\Unit\ViewModel;
+namespace Omikron\Factfinder\ViewModel;
 
 use Magento\Framework\Serialize\SerializerInterface;
 use Omikron\Factfinder\Api\FieldRolesInterface;
 use Omikron\Factfinder\Model\Config\CommunicationParametersProvider;
-use Omikron\Factfinder\ViewModel\Communication;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
