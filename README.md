@@ -83,7 +83,7 @@ FACT-Finder using FTP. FACT-Finder needs to be up to date on the product data, t
 Enter an FTP-server to which the CSV file is uploaded automatically. The URL needs to be entered without the protocol
 prefix (ftp://) and without the slash at the end.
 
-The CSV file uses double quotes ‚“‘ for field enclosure and a semi-colon ‚;‘ as field delimiter.
+The CSV file uses double quotes `"` for field enclosure and a semi-colon `;` as field delimiter.
 
 For the option *Manufacturer*, choose the product attribute, which signifies the brand or manufacturer, the latter being
  the default field.
@@ -170,7 +170,7 @@ The module styles can be found in this folder
 
 Since Magento 2 is using Less, all source styles are written in this stylesheet language
  
-    Omikron/Factfinder/view/frontend/web/css/default.css
+    Omikron/Factfinder/view/frontend/web/css/source/_module.less
 
 Warning: After changing static content styles, you need to restart the Magento 2 environment, for Magento to be able to find them. Use this command:
 
@@ -199,7 +199,7 @@ You can also instantiate block in templates using the Magento Layout API, but it
 
 ```php
 <?php echo $this->getLayout()
-->createBlock('Magento\Framework\View\Element\Template')
+->createBlock(\Magento\Framework\View\Element\Template::class)
 ->setTemplate('Omikron_Factfinder::ff/suggest.phtml')
 ->toHtml(); ?>
 ```
@@ -224,8 +224,8 @@ or want to modify the response before returning it to the front, You can enable 
 
     Omikron/Factfinder/Controller/Proxy/Call.php
 
-which hands the question to the FACT-Finder system, receives the answer, processes it and only then returns it to the frontend/web component.
-Once response from FACT-Finder is available, proxy controller emits an **ff_proxy_post_dispatch** event which allows user to listen in order to modify and enrich recieved data
+which hands the request to the FACT-Finder system, receives the answer, processes it and only then returns it to the frontend/web component.
+Once response from FACT-Finder is available, proxy controller emits an `ff_proxy_post_dispatch` event which allows user to listen in order to modify and enrich recieved data
 
 ![Communication Overview](docs/assets/communication-overview.png "Communication Overview")
 
