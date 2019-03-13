@@ -1,94 +1,53 @@
-# German readme
-[Readme](README.de.md)
+# FACT-Finder® Web Components for Magento 2
 
----
+This document helps you integrate the FACT-Finder Web Components SDK into your Magento 2 Shop. In addition, it gives a
+concise overview of its primary functions. The first chapter *Installation* walks you through the suggested installation
+processes. The second chapter “Backend Configuration” explains the customisation options in the Magento 2 backend. The
+final chapter *Web Component Integration* describes how the web components interface with the shop system and how to
+customise them. 
 
-- [Introduction](#introduction)
-- [Installation](#installation)
-    - [Installing by Composer](#installing-by-composer)
-    - [Installing the Module from a compressed Archive](#installing-the-module-from-a-compressed-archive)
-    - [Activating the Module](#activating-the-module)
-- [Backend Configuration](#backend-configuration)
-    - [General Settings](#general-settings)
-    - [Activated Web-Components](#activated-web-components)
-    - [Advanced Settings](#advanced-settings)
-    - [Product Data Export](#product-data-export)
-    - [CMS Export](#cms-export)
-- [Web Component Integration](#web-component-integration)
-    - [Searchbox Integration and Functions](#searchbox-integration-and-functions)
-    - [Process of Data Transfer between Shop and FACT-Finder](#process-of-data-transfer-between-shop-and-fact-finder)
-- [License](#license)
+## Installation
 
+To install module, open your terminal and run the command:
 
-# Introduction
+    composer require omikron/magento2-factfinder
 
-This document helps you integrate the FACT-Finder Web Components SDK into your Magento 2 Shop. In addition, it gives a concise overview of its primary functions. The first chapter “Installation” walks you through the suggested installation processes. The second chapter “Backend Configuration” explains the customisation options in the Magento 2 backend. The final chapter “Web Component Integration” describes how the web components interface with the shop system and how to customise them. 
+Alternatively, you may want to add module reference to `composer.json` file:
 
----
-
-# Installation
-
-## Installation by Composer
-To install module, simply run command 
-```
-composer require omikron/magento2-factfinder
-```
-Module will be installed under the ```vendor``` directory by default.
-Alternatively You may want to add module reference to ```composer.json``` file
-```
-  "require": {
+    "require": {
+        ...
         "omikron/magento2-factfinder": "VERSION YOU WANT TO INSTALL"
-    },
-```
-and run command
-```
-composer update
-```
-If for some reason, composer is not available globally, You can install it by runing this command
-```
-curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
-```
+        ...
+    }
 
-## Installing the Module from a compressed Archive (Deprecated)
+and run command:
 
-You can install module by downloading compressed archive, decompress it and place ```Omikron``` directory to the app/code folder of your Magento 2 Installation. The file path must be ```app/code/Omikron/Factfinder```.
-In addition to this You need to create a registration.php file under mentioned directory. Copy and paste content below.
-```
-<?php
+    composer update
 
-use Magento\Framework\Component\ComponentRegistrar;
-
-ComponentRegistrar::register(ComponentRegistrar::MODULE, 'Omikron_Factfinder', __DIR__);
-```
+If, for some reason, `composer` is not available globally, proceed to install it following the instructions available
+on the [project website](https://getcomposer.org/doc/00-intro.md).
 
 ## Activating the Module
 
-On your server, go to the bin/ directory of your Magento 2 installation and enter these commands in sequence:
+From the root of your Magento 2 installation, enter these commands in sequence:
 
-```
-php -f magento setup:upgrade
-php -f magento setup:di:compile
-```
+    php bin/magento module:enable Omikron_Factfinder
+    php bin/magento setup:upgrade
 
-As a final step, check the modules activation with this command:
+As a final step, check the module activation by running:
 
-```
-php -f magento module:status
-```
+    php bin/magento module:status
 
 The module should now appear in the upper list *List of enabled modules*.
-
 
 Also, check in the Magento 2 backend "Stores → Configuration → Advanced → Advanced" if the module output is activated.
 ![Module configuration](docs/assets/admin-section.png "Module configuration")
 
----
-
-# Backend Configuration
+## Backend Configuration
 
 Once the FACT-Finder module is activated, you can find the configurations page under "Stores → Configuration → Catalog → FACT-Finder". Here you can customise the connection to the FACT-Finder service. You can also activate and deactivate single web components, as well as access many additional settings.
 
-## General Settings
+### General Settings
 
 At the top of the configurations page are the general settings. The information with which the shop connects to and authorises itself to the FACT-Finder Service are entered here. In the first line, activate your FACT-Finder integration. Before any changes become active, save them by clicking “Save Config”. In some cases, you need to manually empty the cache (*Configuration* and *Page Cache*).
 
@@ -100,7 +59,7 @@ Warning: The product added to the cart is identified by the variable "MasterProd
 
 ![General Settings](docs/assets/general-settings_en.jpg "General Settings")
 
-## Activate Web Components
+### Activate Web Components
 
 Here you can decide which web components are activated. Only active web components can be used and displayed in the shop.
 
@@ -113,11 +72,11 @@ Here you can decide which web components are activated. Only active web componen
  - **Campaigns** displays your active FACT-Finder campaigns, e.g. advisor and feedback campaigns.
  - **Pushed Products** displays your pushed products campaigns. 
 
-## Advanced Settings
+### Advanced Settings
 
-Advanced Settings contains additional parameters used for the `ff-communications` web component. Each setting is set to a default value and has a short explanatory text attached.  
+Advanced Settings contains additional parameters used for the `ff-communication` web component. Each setting is set to a default value and has a short explanatory text attached.  
 
-## Product Data Export
+### Product Data Export
 
 This option configures the connection with the FACT-Finder system via FTP. Shop data can be generated and transferred to FACT-Finder using FTP. FACT-Finder needs to be up to date on the product data, to ensure that components like the search work as intended.
 
@@ -133,19 +92,19 @@ Before starting the export by clicking *Generate Export File(s) now*, you need t
  
 ![Product Data Export](docs/assets/export-settings_en.jpg "Product Data Export")
 
-## Cron configuration
+### Cron configuration
 
 You can  set the program to generate the product data export automatically. Activate the option *Generate Export Files(s) automatically* and the export is generated every day at 01:00 server time.
 
- `<schedule>0 1 * * *</schedule>` is a default value however You can define your own cron expression in the module configuration at `Cron Schedule` section.
+`<schedule>0 1 * * *</schedule>` is a default value however You can define your own cron expression in the module configuration at `Cron Schedule` section.
   
 ![Cron Configuration](docs/assets/cron-configuration_en.jpg "Cron Configuration")
 
----
 ## CMS Export
+
 You can export Your cms pages to FACT-Finder to present them in suggest results. You can specify whether You want to export cms pages content to separate channel, or using single channel, which You are using for standard products information export.
 Both ways offer same functionality but in different ways and are described below.
-### Configuration
+
 ![CMS Configuration](docs/assets/cms-configuration.png "CMS Configuration - using single channel")
 * **Export Enabled** - determine if CMS content should be exported or not
 * **Use separate channel** - determine if exported CMS content should be exported to standard channel, or to the different one.
@@ -155,10 +114,11 @@ If this option is set to "Yes", additional field "Channel" appears where You nee
 * **Pages Blacklist** - allow user to filter out pages, which should not be exported, for example "404 Not Found page" should not be visible at suggested records
 
 Before You start exporting Your CMS content to FACT-Finder You need to prepare it for correctly serving this data to Your Magento application.
+
 ### Create new suggest type
 At first You need to create a new suggest type named **cms**. I'ts because the new <ff-suggest-item> was added with type attribute equals to"cms"
 
-``  <ff-suggest-item type="cms">``
+    <ff-suggest-item type="cms">
 
 ![New Suggest Type](docs/assets/cms-suggest-type.png "FACT-Finder backend - new suggest type")
 
@@ -169,7 +129,7 @@ reaching them from suggest component. If You want to present also page images, i
 Please note that each field needs to be correctly bind to html tag using access path same as in the FACT-Finder JSON object. 
 The example below shows how to render page url
 
- ```<a href="{{attributes.PageLink}}" data-redirect="{{attributes.PageLink}}"'```
+    <a href="{{attributes.PageLink}}" data-redirect="{{attributes.PageLink}}"'
 
 ### Using Single Channel 
 Using single channel is recommended way of integrate Your CMS with FACT-Finder, however it requires additional configuration in FACT-Finder backend. In order to prevent CMS pages appears in search results
@@ -188,36 +148,31 @@ of this solution will be lower, since all request are passed through Http server
 
 ![Example Suggest Result](docs/assets/example-suggest-cms.png "Example suggest result with cms")
 
----
 
-# Web Component Integration
+## Web Component Integration
 
 You can activate and deactivate any web components from the configurations page in the Magento 2 backend.
 
 The HTML code for the web components can be found in this folder:
 
-```
-Omikron/Factfinder/view/frontend/templates/ff
-```
+    Omikron/Factfinder/view/frontend/templates/ff
 
 The module styles can be found in this folder
-```
-Omikron/Factfinder/view/frontend/web/css/source/ff
-```
+
+    Omikron/Factfinder/view/frontend/web/css/source/ff
+
 Since Magento 2 is using Less, all source styles are written in this stylesheet language
  
-```
-Omikron/Factfinder/view/frontend/web/css/default.css
-```
+    Omikron/Factfinder/view/frontend/web/css/default.css
 
-Warning: After changing static content styles, you need to restart the Magento 2 environment, for Magento to be able to find them. Use this command (run from the bin/ directory):
+Warning: After changing static content styles, you need to restart the Magento 2 environment, for Magento to be able to find them. Use this command:
 
-```
-php -f magento setup:upgrade setup:static-content:deploy  
-```
+    php bin/magento setup:upgrade
+    php bin/magento setup:static-content:deploy  
 
 You can integrate the templates anywhere within your shop system. The recommended way is to use Magento2 layouts for that.
 As an example, the `ff-suggest` element was integrated into the `ff-searchbox` template for this SDK: 
+
 ```xml
 <referenceBlock name="top.search">
     <action method="setTemplate" ifconfig="factfinder/general/is_enabled">
@@ -242,28 +197,26 @@ You can also instantiate block in templates using the Magento Layout API, but it
 ->toHtml(); ?>
 ```
 
-## Search Box Integration and Functions
+### Search Box Integration and Functions
 
 As soon as the FACT-Finder-Integration is activated in the configuration, the search box web component is automatically activated. It replaces your standard search in Magenteo 2.
 
 You can find the template for the FACT-Finder Search at:
-```
-Omikron/Factfinder/view/frontend/templates/ff/searchbox.phtml
-```
+
+    Omikron/Factfinder/view/frontend/templates/ff/searchbox.phtml
 
 Once you perform a search, you will automatically be redirected to a new and improved version of the Magento 2 search result page, which works with FACT-Finder data. Additionally, FACT-Finder enriches the new search result page’s URL with relevant data, like the search’s FACT-Finder channel or the search query string. The module’s source code contains the search results’ layout definition in this XML file:
-```
-Omikron/Factfinder/view/frontend/layout/factfinder_result_index.xml
-```
+
+    Omikron/Factfinder/view/frontend/layout/factfinder_result_index.xml
 
 Several templates are already integrated into this layout, among others `ff-record-list`, which displays the search results.
  
-## Process of Data Transfer between Shop and FACT-Finder
+### Process of Data Transfer between Shop and FACT-Finder
 By default search/suggest requests are performed directly to FACT-Finder bypassing Magento backend. However if for some reason, You want to modify request parameters
 or want to modify the response before returning it to the front, You can enable **Enrichment feature**. By enabling this, once a search query is sent, it does not immediately reach FACT-Finder, but is handed off to a specific controller
-```
-Omikron/Factfinder/Controller/Proxy/Call.php
-```
+
+    Omikron/Factfinder/Controller/Proxy/Call.php
+
 which hands the question to the FACT-Finder system, receives the answer, processes it and only then returns it to the frontend/web component.
 Once response from FACT-Finder is available, proxy controller emits an **ff_proxy_post_dispatch** event which allows user to listen in order to modify and enrich recieved data
 
