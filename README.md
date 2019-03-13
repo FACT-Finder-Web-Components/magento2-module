@@ -15,9 +15,7 @@ To install module, open your terminal and run the command:
 Alternatively, you may want to add module reference to `composer.json` file:
 
     "require": {
-        ...
         "omikron/magento2-factfinder": "VERSION YOU WANT TO INSTALL"
-        ...
     }
 
 and run command:
@@ -41,6 +39,7 @@ As a final step, check the module activation by running:
 The module should now appear in the upper list *List of enabled modules*.
 
 Also, check in the Magento 2 backend "Stores → Configuration → Advanced → Advanced" if the module output is activated.
+
 ![Module configuration](docs/assets/admin-section.png "Module configuration")
 
 ## Backend Configuration
@@ -55,7 +54,6 @@ Click the button “Test Connection” to check the connection to the FACT-Finde
 
 At the end of the general settings section is an option *Show 'Add to Cart' Button in Search Results*. Activate this option to add a button to the products displayed on the search result page, which directly adds that product to the shopping cart.
 Warning: The product added to the cart is identified by the variable "MasterProductNumber". To allow this function to work correctly, the field "MasterProductNumber" must be imported to the FACT-Finder backend (on fact-finder.de).   
-
 
 ![General Settings](docs/assets/general-settings_en.jpg "General Settings")
 
@@ -74,17 +72,21 @@ Here you can decide which web components are activated. Only active web componen
 
 ### Advanced Settings
 
-Advanced Settings contains additional parameters used for the `ff-communication` web component. Each setting is set to a default value and has a short explanatory text attached.  
+Advanced Settings contains additional parameters used for the `ff-communication` web component. Each setting is set to a
+ default value and has a short explanatory text attached.  
 
 ### Product Data Export
 
-This option configures the connection with the FACT-Finder system via FTP. Shop data can be generated and transferred to FACT-Finder using FTP. FACT-Finder needs to be up to date on the product data, to ensure that components like the search work as intended.
+This option configures the connection with the FACT-Finder system via FTP. Shop data can be generated and transferred to
+FACT-Finder using FTP. FACT-Finder needs to be up to date on the product data, to ensure that components like the search work as intended.
 
-Enter an FTP-server to which the CSV file is uploaded automatically. The URL needs to be entered without the protocol prefix (ftp://) and without the slash at the end.
+Enter an FTP-server to which the CSV file is uploaded automatically. The URL needs to be entered without the protocol
+prefix (ftp://) and without the slash at the end.
 
 The CSV file uses double quotes ‚“‘ for field enclosure and a semi-colon ‚;‘ as field delimiter.
 
-For the option *Manufacturer*, choose the product attribute, which signifies the brand or manufacturer, the latter being the default field.
+For the option *Manufacturer*, choose the product attribute, which signifies the brand or manufacturer, the latter being
+ the default field.
 
 The *Select additional Attributes* option offers a multiple-choice list of attributes. Select all of those you want added to the CSV file.
 
@@ -106,6 +108,7 @@ You can export Your cms pages to FACT-Finder to present them in suggest results.
 Both ways offer same functionality but in different ways and are described below.
 
 ![CMS Configuration](docs/assets/cms-configuration.png "CMS Configuration - using single channel")
+
 * **Export Enabled** - determine if CMS content should be exported or not
 * **Use separate channel** - determine if exported CMS content should be exported to standard channel, or to the different one.
 If this option is set to "Yes", additional field "Channel" appears where You need provide the name of channel which will serve CMS suggest results.
@@ -125,15 +128,19 @@ At first You need to create a new suggest type named **cms**. I'ts because the n
 It's also  required to configure the return data of newly created suggest type. It's recommended to set return data as it's shown 
 on screen, however You can also choose more fields to be returned. You should add page url to returned data to allow users directly 
 reaching them from suggest component. If You want to present also page images, it's also worth adding them to returned data
+
 ![Suggest Type Return Data](docs/assets/cms-type-return-data.png "FACT-Finder cms suggest return")
+
 Please note that each field needs to be correctly bind to html tag using access path same as in the FACT-Finder JSON object. 
 The example below shows how to render page url
 
     <a href="{{attributes.PageLink}}" data-redirect="{{attributes.PageLink}}"'
 
 ### Using Single Channel 
-Using single channel is recommended way of integrate Your CMS with FACT-Finder, however it requires additional configuration in FACT-Finder backend. In order to prevent CMS pages appears in search results
+Using single channel is recommended way of integrate Your CMS with FACT-Finder, however it requires additional
+configuration in FACT-Finder backend. In order to prevent CMS pages appears in search results
 You need to mark CMS related columns as no searchable (CMS results are displayed only in suggest component).
+
 ![Columns searchability](docs/assets/columns-searchability.png "CMS related columns mark as no searchable")
 
 ### Using Separate channel
@@ -141,7 +148,7 @@ This solution does not require You to make any changes to channel configuration 
 You need also to add new suggest type in Your newly created channel, as it is described in section [New Suggest Type](#create-new-suggest-type). Also You need to
 set configuration option **Activate Enrichment feature** to value **Yes** in module configuration.
 
-despite the fact that due to the use of separate channels, the products data will not be mixed up with CMS, and you do not need to perform any additional
+Despite the fact that due to the use of separate channels, the products data will not be mixed up with CMS, and you do not need to perform any additional
 operations to prevent CMS from appearing in the search results, this solution has one drawback. Two requests to FACT-Finder, will be performed in order to recieve full response: one for products and
 one for CMS content. To merge them before returning to browser, module uses proxy to prepare final response from two separate FACT-Finder response. Because of that, the performance
 of this solution will be lower, since all request are passed through Http server of Your Magento application.
@@ -223,4 +230,4 @@ Once response from FACT-Finder is available, proxy controller emits an **ff_prox
 ![Communication Overview](docs/assets/communication-overview.png "Communication Overview")
 
 ## License
-FACT-Finder® Web Components License. For more information see the LICENSE file.
+FACT-Finder® Web Components License. For more information see the [LICENSE](LICENSE) file.
