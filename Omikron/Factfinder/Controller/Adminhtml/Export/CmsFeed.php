@@ -6,5 +6,6 @@ namespace Omikron\Factfinder\Controller\Adminhtml\Export;
 
 class CmsFeed extends Feed
 {
+    /** @var string */
     protected $feedType = 'cms';
 }
