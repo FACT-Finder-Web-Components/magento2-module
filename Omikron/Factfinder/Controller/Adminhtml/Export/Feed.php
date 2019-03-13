@@ -10,8 +10,9 @@ use Magento\Framework\Controller\Result\JsonFactory;
 use Magento\Store\Model\Store;
 use Omikron\Factfinder\Api\Config\ChannelProviderInterface;
 use Omikron\Factfinder\Model\Export\FeedFactory as FeedGeneratorFactory;
+use Omikron\Factfinder\Model\FtpUploader;
 use Omikron\Factfinder\Model\StoreEmulation;
-use Omikron\Factfinder\Model\Stream\FtpFactory;
+use Omikron\Factfinder\Model\Stream\CsvFactory;
 
 class Feed extends Action
 {
@@ -27,8 +28,11 @@ class Feed extends Action
     /** @var FeedGeneratorFactory */
     private $feedGeneratorFactory;
 
-    /** @var FtpFactory */
-    private $ftpFactory;
+    /** @var CsvFactory */
+    private $csvFactory;
+
+    /** @var FtpUploader */
+    private $ftpUploader;
 
     /** @var string */
     protected $feedType = 'product';
@@ -39,14 +43,16 @@ class Feed extends Action
         ChannelProviderInterface $channelProvider,
         StoreEmulation $storeEmulation,
         FeedGeneratorFactory $feedGeneratorFactory,
-        FtpFactory $ftpFactory
+        CsvFactory $csvFactory,
+        FtpUploader $ftpUploader
     ) {
         parent::__construct($context);
         $this->jsonResultFactory    = $jsonResultFactory;
         $this->channelProvider      = $channelProvider;
         $this->storeEmulation       = $storeEmulation;
         $this->feedGeneratorFactory = $feedGeneratorFactory;
-        $this->ftpFactory           = $ftpFactory;
+        $this->csvFactory           = $csvFactory;
+        $this->ftpUploader          = $ftpUploader;
     }
 
     public function execute()
@@ -56,10 +62,10 @@ class Feed extends Action
         try {
             preg_match('@/store/([0-9]+)/@', (string) $this->_redirect->getRefererUrl(), $match);
             $this->storeEmulation->runInStore((int) ($match[1] ?? Store::DEFAULT_STORE_ID), function () {
-                $channel       = $this->channelProvider->getChannel();
-                $filename      = "factfinder/export.{$channel}.csv";
-                $feedGenerator = $this->feedGeneratorFactory->create($this->feedType);
-                $feedGenerator->generate($this->ftpFactory->create(['filename' => $filename]));
+                $filename = "export.{$this->channelProvider->getChannel()}.csv";
+                $stream   = $this->csvFactory->create(['filename' => "factfinder/{$filename}"]);
+                $this->feedGeneratorFactory->create($this->feedType)->generate($stream);
+                $this->ftpUploader->upload($filename, $stream);
             });
 
             $result->setData(['message' => __('Feed successfully generated')]);

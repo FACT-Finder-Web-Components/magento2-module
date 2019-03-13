@@ -17,9 +17,4 @@ class Stdout implements StreamInterface
     {
         throw new \BadMethodCallException('Not implemented');
     }
-
-    public function dispose(): bool
-    {
-        return true;
-    }
 }

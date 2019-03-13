@@ -99,6 +99,19 @@
         </arguments>
     </virtualType>
 
+    <type name="Omikron\Factfinder\Controller\Export\Export">
+        <arguments>
+            <argument name="channelProvider" xsi:type="object">Omikron\Factfinder\Model\Config\CommunicationConfig</argument>
+        </arguments>
+    </type>
+    <type name="Omikron\Factfinder\Model\Api\PushImport">
+        <plugin name="logPushImportExceptions" type="Omikron\Factfinder\Plugin\LogExceptions" />
+    </type>
+    <type name="Omikron\Factfinder\Model\Api\Tracking">
+        <arguments>
+            <argument name="factFinderClient" xsi:type="object">Omikron\Factfinder\Model\TrackingEventClient</argument>
+        </arguments>
+    </type>
     <type name="Omikron\Factfinder\Model\Export\Catalog\DataProvider">
         <arguments>
             <argument name="entityTypes" xsi:type="array">
@@ -139,35 +152,12 @@
             </argument>
         </arguments>
     </type>
-    <type name="Omikron\Factfinder\Model\SessionData">
-        <arguments>
-            <argument name="customerSession" xsi:type="object">Magento\Customer\Model\Session\Proxy</argument>
-        </arguments>
-    </type>
-    <type name="Omikron\Factfinder\Plugin\LogExceptions">
-        <arguments>
-            <argument name="logger" xsi:type="object">Omikron\Factfinder\Logger</argument>
-        </arguments>
-    </type>
-    <type name="Omikron\Factfinder\Model\Api\PushImport">
-        <plugin name="logPushImportExceptions" type="Omikron\Factfinder\Plugin\LogExceptions" />
-    </type>
-    <type name="Omikron\Factfinder\Model\Api\Tracking">
-        <arguments>
-            <argument name="factFinderClient" xsi:type="object">Omikron\Factfinder\Model\TrackingEventClient</argument>
-        </arguments>
-    </type>
     <type name="Omikron\Factfinder\Model\Export\Combined\DataProvider">
         <arguments>
             <argument name="dataProviders" xsi:type="array">
                 <item name="products" xsi:type="object">Omikron\Factfinder\Model\Export\Catalog\DataProvider</item>
                 <item name="cms" xsi:type="object">Omikron\Factfinder\Model\Export\Cms\DataProvider</item>
             </argument>
-        </arguments>
-    </type>
-    <type name="Omikron\Factfinder\Controller\Export\Export">
-        <arguments>
-            <argument name="channelProvider" xsi:type="object">Omikron\Factfinder\Model\Config\CommunicationConfig</argument>
         </arguments>
     </type>
     <type name="Omikron\Factfinder\Model\Export\FeedFactory">
@@ -179,5 +169,20 @@
             </argument>
         </arguments>
         <plugin name="changeFeedType" type="Omikron\Factfinder\Plugin\Export\ChangeFeedType"/>
+    </type>
+    <type name="Omikron\Factfinder\Model\FtpUploader">
+        <arguments>
+            <argument name="client" xsi:type="object">Magento\Framework\Filesystem\Io\Ftp</argument>
+        </arguments>
+    </type>
+    <type name="Omikron\Factfinder\Model\SessionData">
+        <arguments>
+            <argument name="customerSession" xsi:type="object">Magento\Customer\Model\Session\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Omikron\Factfinder\Plugin\LogExceptions">
+        <arguments>
+            <argument name="logger" xsi:type="object">Omikron\Factfinder\Logger</argument>
+        </arguments>
     </type>
 </config>

@@ -12,7 +12,8 @@ interface StreamInterface
      */
     public function addEntity(array $entity): void;
 
+    /**
+     * @return string
+     */
     public function getContent(): string;
-
-    public function dispose(): bool;
 }
