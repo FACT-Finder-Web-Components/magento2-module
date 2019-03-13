@@ -1,6 +1,3 @@
-# German readme
-[Readme](README.de.md)
-
 ---
 
 - [Introduction](#introduction)
