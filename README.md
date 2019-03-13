@@ -5,6 +5,7 @@
 
 - [Introduction](#introduction)
 - [Installation](#installation)
+    - [Installing by Composer](#installing-by-composer)
     - [Installing the Module from a compressed Archive](#installing-the-module-from-a-compressed-archive)
     - [Activating the Module](#activating-the-module)
 - [Backend Configuration](#backend-configuration)
@@ -14,9 +15,9 @@
     - [Product Data Export](#product-data-export)
     - [CMS Export](#cms-export)
 - [Web Component Integration](#web-component-integration)
-    - [Overview of relevant Files](#overview-of-relevant-files)
     - [Searchbox Integration and Functions](#searchbox-integration-and-functions)
     - [Process of Data Transfer between Shop and FACT-Finder](#process-of-data-transfer-between-shop-and-fact-finder)
+- [License](#license)
 
 
 # Introduction
@@ -27,29 +28,38 @@ This document helps you integrate the FACT-Finder Web Components SDK into your M
 
 # Installation
 
-## Installing the Module from a compressed Archive
-
-If you have received the FACT-Finder Module as a compressed archive, decompress it to the app/code folder of your Magento 2 Installation. The file path must be app/code/Omikron/Factfinder. You can now integrate the module into your shop. Proceed to the next step: “Activating the Module”.
-
 ## Installation by Composer
-In order to allow Composer to install module, please add following line to your project composer.json on ```repositores``` segment:
+To install module, simply run command 
 ```
-    "repositories": [
-          {
-              "type": "git",
-              "url": "https://github.com/FACT-Finder-Web-Components/magento2-module.git"
-          }
-    ]
+composer require omikron/magento2-factfinder
 ```
-Then, add a module declaration in ```require``` segment:
+Module will be installed under the ```vendor``` directory by default.
+Alternatively You may want to add module reference to ```composer.json``` file
 ```
   "require": {
         "omikron/magento2-factfinder": "VERSION YOU WANT TO INSTALL"
     },
 ```
+and run command
+```
+composer update
+```
+If for some reason, composer is not available globally, You can install it by runing this command
+```
+curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
+```
 
+## Installing the Module from a compressed Archive (Deprecated)
 
+You can install module by downloading compressed archive, decompress it and place ```Omikron``` directory to the app/code folder of your Magento 2 Installation. The file path must be ```app/code/Omikron/Factfinder```.
+In addition to this You need to create a registration.php file under mentioned directory. Copy and paste content below.
+```
+<?php
 
+use Magento\Framework\Component\ComponentRegistrar;
+
+ComponentRegistrar::register(ComponentRegistrar::MODULE, 'Omikron_Factfinder', __DIR__);
+```
 
 ## Activating the Module
 
@@ -58,7 +68,6 @@ On your server, go to the bin/ directory of your Magento 2 installation and ente
 ```
 php -f magento setup:upgrade
 php -f magento setup:di:compile
-php -f magento cache:flush
 ```
 
 As a final step, check the modules activation with this command:
@@ -67,21 +76,11 @@ As a final step, check the modules activation with this command:
 php -f magento module:status
 ```
 
-The module should now appear in the upper list *List of enabled modules*. If this is not the case, activate the module with this command:
+The module should now appear in the upper list *List of enabled modules*.
 
-```
-php -f magento module:enable Omikron_Factfinder
-```
-
-After that, you have to enter the above-mentioned string of commands again:
-
-```
-php -f magento setup:upgrade
-php -f magento setup:di:compile
-php -f magento cache:flush
-```
 
 Also, check in the Magento 2 backend "Stores → Configuration → Advanced → Advanced" if the module output is activated.
+![Module configuration](docs/assets/admin-section.png "Module configuration")
 
 ---
 
@@ -201,123 +200,47 @@ The HTML code for the web components can be found in this folder:
 Omikron/Factfinder/view/frontend/templates/ff
 ```
 
-All web components are saved here as templates to be customised. 
+The module styles can be found in this folder
 ```
 Omikron/Factfinder/view/frontend/web/css/source/ff
 ```
-Since Magento 2 is using LESS, all source styles are written using LESS format
+Since Magento 2 is using Less, all source styles are written in this stylesheet language
  
 ```
 Omikron/Factfinder/view/frontend/web/css/default.css
 ```
 
-Warning: After changing static content like CSS styles, you need to restart the Magento 2 environment, for Magento to be able to find them. Use this command (run from the bin/ directory):
+Warning: After changing static content styles, you need to restart the Magento 2 environment, for Magento to be able to find them. Use this command (run from the bin/ directory):
 
 ```
 php -f magento setup:upgrade setup:static-content:deploy  
 ```
 
-You can integrate the templates anywhere within your shop system. Magento 2 offers several ways to do so, e.g. layer definitions in XML. The templates can be layered as needed.
+You can integrate the templates anywhere within your shop system. The recommended way is to use Magento2 layouts for that.
 As an example, the `ff-suggest` element was integrated into the `ff-searchbox` template for this SDK: 
 ```xml
-        <referenceBlock name="top.search">
-            <action method="setTemplate" ifconfig="factfinder/general/is_enabled">
-                <argument name="template" xsi:type="string">Omikron_Factfinder::ff/searchbox.phtml</argument>
-            </action>
-            <block class="Magento\Framework\View\Element\Template" name="factfinder.suggest" as="suggest" ifconfig="factfinder/components/ff_suggest" template="Omikron_Factfinder::ff/suggest.phtml">
-                <block class="Magento\Framework\View\Element\Template" ifconfig="factfinder/cms_export/ff_cms_export_enabled" name="factfinder.suggest.cms" as="suggest.cms" template="Omikron_Factfinder::ff/suggest-cms.phtml">
-                    <arguments>
-                        <argument name="view_model" xsi:type="object">Omikron\Factfinder\ViewModel\Suggest</argument>
-                    </arguments>
-                </block>
-            </block>
-        </referenceBlock>
+<referenceBlock name="top.search">
+    <action method="setTemplate" ifconfig="factfinder/general/is_enabled">
+        <argument name="template" xsi:type="string">Omikron_Factfinder::ff/searchbox.phtml</argument>
+    </action>
+    <block class="Magento\Framework\View\Element\Template" name="factfinder.suggest" as="suggest" ifconfig="factfinder/components/ff_suggest" template="Omikron_Factfinder::ff/suggest.phtml">
+        <block class="Magento\Framework\View\Element\Template" ifconfig="factfinder/cms_export/ff_cms_export_enabled" name="factfinder.suggest.cms" as="suggest.cms" template="Omikron_Factfinder::ff/suggest-cms.phtml">
+            <arguments>
+                <argument name="view_model" xsi:type="object">Omikron\Factfinder\ViewModel\Suggest</argument>
+            </arguments>
+        </block>
+    </block>
+</referenceBlock>
 ```
 
+You can also instantiate block in templates using the Magento Layout API, but it's not a recommended way
 
-You can also instantiate block in templates, but it's not a recommended way
 ```php
-Omikron/Factfinder/view/frontend/templates/ff/searchbox.phtml:7
-
 <?php echo $this->getLayout()
-->createBlock('Omikron\Factfinder\Block\FF\Suggest')
+->createBlock('Magento\Framework\View\Element\Template')
 ->setTemplate('Omikron_Factfinder::ff/suggest.phtml')
 ->toHtml(); ?>
 ```
-
-## Overview of relevant Files
-
-This is an overview over the files and their locations. These files are all important. Some of them have been explained in the preceding chapters, others are explained later.
-
-```
-.
-`-- Omikron  
-    `-- Factfinder  
-        |-- ViewModel  
-        |    |-- Communication.php  
-        |    |-- ProductBasedComponent.php  
-        |    `-- Suggest.php  
-        |-- etc
-        |   |--frontend
-        |      |--di.xml
-        |      |--events.xml
-        |      `--sections.xml
-        `-- view  
-            `-- frontend  
-                |-- layout  
-                |   |-- catalog_product_view.xml  
-                |   |-- default.xml  
-                |   `-- factfinder_result_index.xml  
-                |-- templates  
-                |   `-- ff  
-                |       |-- asn.phtml  
-                |       |-- breadcrumb.phtml  
-                |       |-- campaign.phtml  
-                |       |-- communication.phtml  
-                |       |-- paging.phtml  
-                |       |-- products-per-page.phtml  
-                |       |-- pushed-products-campaign.phtml  
-                |       |-- record-list.phtml  
-                |       |-- searchbox.phtml  
-                |       |-- sortbox.phtml  
-                |       |-- styles.phtml  
-                |       `-- suggest.phtml  
-                |       `-- suggest-cms.phtml  
-                `-- web  
-                    |-- css  
-                    |   |--_module.less
-                    |   |--source
-                    |       `-- ff  
-                    |           |-- _asn.less
-                    |           |-- _breadcrumb.less
-                    |           |-- _campaign.less
-                    |           |-- _paging.less
-                    |           |-- _products-per-page.less
-                    |           |-- _recommendation.less
-                    |           |-- _record_list.less
-                    |           |-- _searchbox.less
-                    |           |-- _shared_styles.less
-                    |           |-- _similiar.less
-                    |           |-- _sortbox.less
-                    |           |-- _suggest.less
-                    |           `-- _template.less
-                    |--ff-web-components
-                    |   |--bundle.min.js
-                    |   `--vendor
-                    |       |-- custom-elements-es5-adapter.js
-                    |       |-- webcomponents-bundle.js
-                    |       |-- webcomponents-loader.js
-                    |       `-- bundles
-                    |           `-- ...
-                    |--js
-                    |   |--view
-                    |   |   `-- ffcommunication.js
-                    |   `-- search-redirect.js   
-                    |-- images 
-                    |        `-- ... 
-                    `-- requirejs-config.js
-```
-
 
 ## Search Box Integration and Functions
 
@@ -346,3 +269,5 @@ Once response from FACT-Finder is available, proxy controller emits an **ff_prox
 
 ![Communication Overview](docs/assets/communication-overview.png "Communication Overview")
 
+## License
+FACT-Finder® Web Components License. For more information see the LICENSE file.
