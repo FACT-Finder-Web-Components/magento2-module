@@ -11,6 +11,6 @@ class CmsFeed extends Button
 
     public function getButtonHtml(): string
     {
-        return $this->generateButtonHtml('cms_feed_button','Generate CMS feed now');
+        return $this->generateButtonHtml('cms_feed_button', 'Generate CMS feed now');
     }
 }

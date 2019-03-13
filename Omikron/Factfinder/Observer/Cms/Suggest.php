@@ -28,21 +28,26 @@ class Suggest implements ObserverInterface
 
     public function execute(Observer $observer)
     {
+        if (!$this->cmsConfig->isExportEnabled() || !$this->cmsConfig->useSeparateChannel()) {
+            return;
+        }
+
         $endpoint = $observer->getData('endpoint');
-        $params   = $observer->getData('params');
-        if ($this->cmsConfig->isExportEnabled() && $this->cmsConfig->useSeparateChannel() && strpos($endpoint, 'Suggest.ff') !== false) {
-            $params['channel'] = $this->cmsConfig->getChannel();
-            try {
-                $cmsSuggest = $this->factFinderClient->sendRequest($endpoint, $params);
-                if (isset($cmsSuggest['suggestions'])) {
-                    array_walk($cmsSuggest['suggestions'], function (&$element) {
-                        $element['type'] = 'cms'; // Change search results type to CMS
-                    });
-                    $observer->setData('response', array_merge_recursive($observer->getData('response'), $cmsSuggest));
-                }
-            } catch (ResponseException $e) {
-                return;
+        if (strpos($endpoint, 'Suggest.ff') === false) {
+            return;
+        }
+
+        try {
+            $params     = ['channel' => $this->cmsConfig->getChannel()] + $observer->getData('params');
+            $cmsSuggest = $this->factFinderClient->sendRequest($endpoint, $params);
+            if (isset($cmsSuggest['suggestions'])) {
+                array_walk($cmsSuggest['suggestions'], function (&$element) {
+                    $element['type'] = 'cms'; // Change search results type to CMS
+                });
+                $observer->setData('response', array_merge_recursive($observer->getData('response'), $cmsSuggest));
             }
+        } catch (ResponseException $e) {
+            return;
         }
     }
 }

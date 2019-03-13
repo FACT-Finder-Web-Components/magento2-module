@@ -11,6 +11,6 @@ class Feed extends Button
 
     public function getButtonHtml(): string
     {
-        return $this->generateButtonHtml('feed_button','Generate Export File(s) now');
+        return $this->generateButtonHtml('feed_button', 'Generate Export File(s) now');
     }
 }
