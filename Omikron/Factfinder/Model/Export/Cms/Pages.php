@@ -8,6 +8,7 @@ use Magento\Cms\Api\Data\PageInterface;
 use Magento\Cms\Api\PageRepositoryInterface;
 use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Framework\Exception\LocalizedException;
+use Magento\Store\Model\StoreManagerInterface;
 use Omikron\Factfinder\Model\Config\CmsConfig;
 
 class Pages implements \IteratorAggregate
@@ -21,14 +22,19 @@ class Pages implements \IteratorAggregate
     /** @var CmsConfig */
     private $cmsConfig;
 
+    /** @var StoreManagerInterface  */
+    private $storeManager;
+
     public function __construct(
         PageRepositoryInterface $pageRepository,
         SearchCriteriaBuilder $searchCriteriaBuilder,
-        CmsConfig $cmsConfig
+        CmsConfig $cmsConfig,
+        StoreManagerInterface $storeManager
     ) {
         $this->pageRepository        = $pageRepository;
         $this->searchCriteriaBuilder = $searchCriteriaBuilder;
         $this->cmsConfig             = $cmsConfig;
+        $this->storeManager          = $storeManager;
     }
 
     /**
@@ -43,6 +49,8 @@ class Pages implements \IteratorAggregate
 
     protected function getQuery(): SearchCriteriaBuilder
     {
-        return $this->searchCriteriaBuilder->addFilter('identifier', $this->cmsConfig->getCmsBlacklist(), 'nin');
+        return $this->searchCriteriaBuilder
+            ->addFilter('identifier', $this->cmsConfig->getCmsBlacklist(), 'nin')
+            ->addFilter('store_id', $this->storeManager->getStore()->getId());
     }
 }
