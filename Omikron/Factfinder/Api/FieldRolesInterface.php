@@ -2,6 +2,8 @@
 
 namespace Omikron\Factfinder\Api;
 
+use Magento\Catalog\Api\Data\ProductInterface;
+
 /**
  * Field role provider interface
  *
@@ -32,9 +34,19 @@ interface FieldRolesInterface
      * Store fields in storage
      *
      * @param array $fieldRoles
-     * @param int   $scopeId
+     * @param null|int   $scopeId
      *
      * @return bool
      */
-    public function saveFieldRoles(array $fieldRoles, int $scopeId): bool;
+    public function saveFieldRoles(array $fieldRoles, int $scopeId = null): bool;
+
+    /**
+     * Gets mapped from Field Roles product attribute value
+     *
+     * @param ProductInterface $product
+     * @param string           $roleName
+     *
+     * @return string
+     */
+    public function fieldRoleToAttribute(ProductInterface $product, string $roleName): string;
 }

@@ -5,4 +5,15 @@
             <argument name="collectionFactory" xsi:type="object">Omikron\Factfinder\Model\Product\Attribute\CollectionFactory</argument>
         </arguments>
     </type>
+
+    <type name="Omikron\Factfinder\Controller\Adminhtml\Export\CmsFeed">
+        <arguments>
+            <argument name="channelProvider" xsi:type="object">Omikron\Factfinder\Model\Config\CmsConfig</argument>
+        </arguments>
+    </type>
+    <type name="Omikron\Factfinder\Controller\Adminhtml\Export\Feed">
+        <arguments>
+            <argument name="channelProvider" xsi:type="object">Omikron\Factfinder\Model\Config\CommunicationConfig</argument>
+        </arguments>
+    </type>
 </config>

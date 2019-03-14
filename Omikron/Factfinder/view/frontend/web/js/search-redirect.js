@@ -1,12 +1,9 @@
-document.addEventListener('ffReady', function () {
+define(['factfinder', 'mage/url'], function (factfinder, url) {
     factfinder.communication.FFCommunicationEventAggregator.addBeforeDispatchingCallback(function (event) {
-        var urlArr = window.location.href.split('/');
-        var domainUrl = urlArr[0] + '//' + urlArr[2];
-        var redirectPath = '/FACT-Finder/result/';
-
-        if (event.type === 'search' && window.location.href.match(/FACT-Finder\/result/) === null) {
+        var redirectPath = 'FACT-Finder/result';
+        if (event.type === 'search' && window.location.href.indexOf(redirectPath) < 0) {
             var params = factfinder.common.dictToParameterString(event);
-            window.location.href = domainUrl + redirectPath + params;
+            window.location = url.build(redirectPath + params);
         }
     });
 });

@@ -2,9 +2,12 @@
 
 namespace Omikron\Factfinder\Api\Config;
 
+/**
+ * @api
+ */
 interface CommunicationConfigInterface
 {
-    public function isEnabled(int $scopeId = null): bool;
+    public function isChannelEnabled(int $scopeId = null): bool;
 
     public function getAddress(): string;
 

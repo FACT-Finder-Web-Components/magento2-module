@@ -19,7 +19,7 @@ class TestConnectionTest extends TestCase
 
     protected function setUp()
     {
-        $clientMock = $this->createConfiguredMock(ClientInterface::class, ['sendRequest' => []]);
+        $clientMock           = $this->createConfiguredMock(ClientInterface::class, ['sendRequest' => []]);
         $this->testConnection = new TestConnection($clientMock);
     }
 }

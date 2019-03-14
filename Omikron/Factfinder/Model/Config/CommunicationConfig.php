@@ -7,11 +7,12 @@ namespace Omikron\Factfinder\Model\Config;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\UrlInterface;
 use Magento\Store\Model\ScopeInterface;
+use Omikron\Factfinder\Api\Config\ChannelProviderInterface;
 use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
 use Omikron\Factfinder\Api\Config\ParametersSourceInterface;
 use Omikron\Factfinder\Controller\Router;
 
-class CommunicationConfig implements CommunicationConfigInterface, ParametersSourceInterface
+class CommunicationConfig implements CommunicationConfigInterface, ParametersSourceInterface, ChannelProviderInterface
 {
     private const PATH_CHANNEL               = 'factfinder/general/channel';
     private const PATH_ADDRESS               = 'factfinder/general/address';
@@ -48,7 +49,7 @@ class CommunicationConfig implements CommunicationConfigInterface, ParametersSou
         return (string) $this->scopeConfig->getValue(self::PATH_DEFAULT_QUERY);
     }
 
-    public function isEnabled(int $scopeId = null): bool
+    public function isChannelEnabled(int $scopeId = null): bool
     {
         return $this->scopeConfig->isSetFlag(self::PATH_IS_ENABLED, ScopeInterface::SCOPE_STORES, $scopeId);
     }

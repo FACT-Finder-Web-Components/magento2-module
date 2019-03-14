@@ -6,6 +6,7 @@ namespace Omikron\Factfinder\Plugin;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Omikron\Factfinder\Exception\ResponseException;
+use Omikron\Factfinder\Model\Api\PushImport;
 use Psr\Log\LoggerInterface;
 
 class LogExceptions
@@ -22,6 +23,14 @@ class LogExceptions
         $this->logger      = $logger;
     }
 
+    /**
+     * @param PushImport $subject
+     * @param callable   $proceed
+     * @param mixed      ...$params
+     *
+     * @return bool
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
     public function aroundExecute($subject, callable $proceed, ...$params)
     {
         try {

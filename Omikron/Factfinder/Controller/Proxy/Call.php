@@ -44,9 +44,14 @@ class Call extends \Magento\Framework\App\Action\Action
 
         $result = $this->jsonResultFactory->create();
         try {
-            $endpoint   = $this->communicationConfig->getAddress() . '/' . $endpoint;
-            $ffResponse = $this->apiClient->sendRequest($endpoint, $this->getRequest()->getParams());
-            $result->setData($ffResponse);
+            $endpoint = $this->communicationConfig->getAddress() . '/' . $endpoint;
+            $response = $this->apiClient->sendRequest($endpoint, $this->getRequest()->getParams());
+            $this->_eventManager->dispatch('ff_proxy_post_dispatch', [
+                'endpoint' => $endpoint,
+                'params'   => $this->getRequest()->getParams(),
+                'response' => &$response,
+            ]);
+            $result->setData($response);
         } catch (ResponseException $e) {
             $result->setJsonData($e->getMessage());
         }
@@ -56,7 +61,7 @@ class Call extends \Magento\Framework\App\Action\Action
 
     private function getEndpoint(string $currentUrl): string
     {
-        preg_match('#/([A-Z][a-z]+\.ff)#', $currentUrl, $match);
+        preg_match('#/([A-Za-z]+\.ff)#', $currentUrl, $match);
         return $match[1] ?? '';
     }
 }

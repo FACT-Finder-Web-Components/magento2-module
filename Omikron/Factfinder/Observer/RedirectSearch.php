@@ -32,7 +32,7 @@ class RedirectSearch implements ObserverInterface
 
     public function execute(Observer $observer)
     {
-        if ($this->config->isEnabled()) {
+        if ($this->config->isChannelEnabled()) {
             $this->redirectRequest($observer->getData('request'));
         }
     }

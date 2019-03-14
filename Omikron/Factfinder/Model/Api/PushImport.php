@@ -35,7 +35,9 @@ class PushImport
 
     public function execute(int $scopeId = null, array $params = []): bool
     {
-        $endpoint = $this->communicationConfig->getAddress() . '/' . $this->apiName;
+        if (!$this->communicationConfig->isPushImportEnabled($scopeId)) {
+            return false;
+        }
 
         $params += [
             'channel'  => $this->communicationConfig->getChannel($scopeId),
@@ -44,6 +46,7 @@ class PushImport
         ];
 
         $response = [];
+        $endpoint = $this->communicationConfig->getAddress() . '/' . $this->apiName;
         foreach ($this->getPushImportDataTypes($scopeId) as $type) {
             $params['type'] = $type;
             $response       = array_merge_recursive($response, $this->apiClient->sendRequest($endpoint, $params));

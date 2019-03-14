@@ -43,7 +43,7 @@ class UpdateFieldRoles
      * @return bool
      * @throws ResponseException
      */
-    public function execute(int $scopeId, array $params = []): bool
+    public function execute(int $scopeId = null, array $params = []): bool
     {
         $default = [
             'query'   => $this->apiQuery,

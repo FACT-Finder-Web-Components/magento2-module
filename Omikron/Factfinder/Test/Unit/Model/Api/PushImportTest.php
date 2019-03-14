@@ -24,16 +24,23 @@ class PushImportTest extends TestCase
     /** @var PushImport */
     private $pushImport;
 
+    public function test_execute_should_not_trigger_import_if_PushImport_is_disabled()
+    {
+        $this->communicationConfigMock->method('isPushImportEnabled')->willReturn(false);
+        $this->factFinderClientMock->expects($this->never())->method('sendRequest');
+        $this->assertFalse($this->pushImport->execute(1));
+    }
+
     public function test_execute_should_not_trigger_import_if_no_data_type_is_configured()
     {
         $this->scopeConfigMock->method('getValue')->with('factfinder/data_transfer/ff_push_import_type', 'store', 1)->willReturn('');
         $this->factFinderClientMock->expects($this->never())->method('sendRequest');
-
         $this->assertFalse($this->pushImport->execute(1));
     }
 
     public function test_execute_should_return_true_if_no_error()
     {
+        $this->communicationConfigMock->method('isPushImportEnabled')->willReturn(true);
         $this->scopeConfigMock->method('getValue')->with('factfinder/data_transfer/ff_push_import_type', 'store', 1)->willReturn('data,suggest');
         $this->factFinderClientMock->expects($this->exactly(2))->method('sendRequest')->willReturn(['success' => true]);
         $this->assertTrue($this->pushImport->execute(1));
@@ -45,6 +52,7 @@ class PushImportTest extends TestCase
      */
     public function test_execute_should_return_false_if_response_contains_errors(string $param)
     {
+        $this->communicationConfigMock->method('isPushImportEnabled')->willReturn(true);
         $this->scopeConfigMock->method('getValue')->with('factfinder/data_transfer/ff_push_import_type', 'store', 1)->willReturn('data,suggest');
         $this->factFinderClientMock->expects($this->exactly(2))->method('sendRequest')->willReturn([$param => 'There were an error during push import']);
         $this->assertFalse($this->pushImport->execute(1));

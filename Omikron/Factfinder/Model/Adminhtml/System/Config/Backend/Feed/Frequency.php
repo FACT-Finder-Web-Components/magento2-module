@@ -1,44 +1,36 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Omikron\Factfinder\Model\Adminhtml\System\Config\Backend\Feed;
 
+use Magento\Cron\Model\Config\Source\Frequency as CoreFrequency;
+use Magento\Framework\App\Cache\TypeListInterface;
+use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Framework\App\Config\Storage\WriterInterface;
+use Magento\Framework\App\Config\Value;
+use Magento\Framework\Data\Collection\AbstractDb;
 use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\Model\Context;
+use Magento\Framework\Model\ResourceModel\AbstractResource;
+use Magento\Framework\Registry;
 
-/**
- * Class Frequency
- */
-class Frequency extends \Magento\Framework\App\Config\Value
+class Frequency extends Value
 {
-    const PATH_CRON_TIME       = 'ff_cron_time';
-    const PATH_CRON_IS_ENABLED = 'factfinder/configurable_cron/ff_cron_enabled';
-    const PATH_CRON_FREQUENCY  = 'factfinder/configurable_cron/ff_cron_frequency';
-    const CRON_STRING_PATH     = 'crontab/default/jobs/factfinder_feed_export/schedule/cron_expr';
+    private const PATH_CRON_TIME   = 'ff_cron_time';
+    private const CRON_STRING_PATH = 'crontab/default/jobs/factfinder_feed_export/schedule/cron_expr';
 
-    /**
-     * @var \Magento\Framework\App\Config\Storage\WriterInterface
-     */
+    /** @var WriterInterface */
     protected $configWriter;
 
-    /**
-     * Frequency constructor.
-     *
-     * @param \Magento\Framework\Model\Context                             $context
-     * @param \Magento\Framework\Registry                                  $registry
-     * @param \Magento\Framework\App\Config\ScopeConfigInterface           $config
-     * @param \Magento\Framework\App\Cache\TypeListInterface               $cacheTypeList
-     * @param \Magento\Framework\App\Config\Storage\WriterInterface        $configWriter
-     * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null $resource
-     * @param \Magento\Framework\Data\Collection\AbstractDb|null           $resourceCollection
-     * @param array                                                        $data
-     */
     public function __construct(
-        \Magento\Framework\Model\Context $context,
-        \Magento\Framework\Registry $registry,
-        \Magento\Framework\App\Config\ScopeConfigInterface $config,
-        \Magento\Framework\App\Cache\TypeListInterface $cacheTypeList,
-        \Magento\Framework\App\Config\Storage\WriterInterface $configWriter,
-        \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
-        \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
+        Context $context,
+        Registry $registry,
+        ScopeConfigInterface $config,
+        TypeListInterface $cacheTypeList,
+        WriterInterface $configWriter,
+        AbstractResource $resource = null,
+        AbstractDb $resourceCollection = null,
         array $data = []
     ) {
         parent::__construct($context, $registry, $config, $cacheTypeList, $resource, $resourceCollection, $data);
@@ -46,16 +38,15 @@ class Frequency extends \Magento\Framework\App\Config\Value
     }
 
     /**
-     * @return \Magento\Framework\App\Config\Value
-     * @throws \Exception
+     * @return Value
+     * @throws LocalizedException
      */
     public function afterSave()
     {
-        $time      = $this->getFieldsetDataValue(self::PATH_CRON_TIME);
-        $frequency = $this->getValue();
-
-        $frequencyWeekly  = \Magento\Cron\Model\Config\Source\Frequency::CRON_WEEKLY;
-        $frequencyMonthly = \Magento\Cron\Model\Config\Source\Frequency::CRON_MONTHLY;
+        $time             = $this->getFieldsetDataValue(self::PATH_CRON_TIME);
+        $frequency        = $this->getValue();
+        $frequencyWeekly  = CoreFrequency::CRON_WEEKLY;
+        $frequencyMonthly = CoreFrequency::CRON_MONTHLY;
 
         $cronExprArray  = [
             (int) $time[1],
