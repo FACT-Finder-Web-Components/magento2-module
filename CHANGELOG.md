@@ -5,6 +5,7 @@
 
 ### Changed
 - Refactor product export
+- Reorganize folder structure: source code is now found under `src`
 
 ## [v0.9-beta.11] - 2019.03.01
 ### Changed
