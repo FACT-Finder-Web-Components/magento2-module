@@ -22,7 +22,7 @@ class Pages implements \IteratorAggregate
     /** @var CmsConfig */
     private $cmsConfig;
 
-    /** @var StoreManagerInterface  */
+    /** @var StoreManagerInterface */
     private $storeManager;
 
     public function __construct(
