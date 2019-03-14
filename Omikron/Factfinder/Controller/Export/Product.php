@@ -7,11 +7,11 @@ namespace Omikron\Factfinder\Controller\Export;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\App\Response\Http\FileFactory;
+use Magento\Store\Model\StoreManagerInterface;
 use Omikron\Factfinder\Api\Config\ChannelProviderInterface;
 use Omikron\Factfinder\Model\Export\FeedFactory as FeedGeneratorFactory;
 use Omikron\Factfinder\Model\StoreEmulation;
 use Omikron\Factfinder\Model\Stream\CsvFactory;
-use Magento\Store\Model\StoreManagerInterface;
 
 class Product extends Action
 {
@@ -30,6 +30,7 @@ class Product extends Action
     /** @var CsvFactory */
     private $csvFactory;
 
+    /** @var StoreManagerInterface */
     private $storeManager;
 
     /** @var string */

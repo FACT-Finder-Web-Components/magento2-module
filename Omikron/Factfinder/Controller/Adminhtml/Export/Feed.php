@@ -7,13 +7,13 @@ namespace Omikron\Factfinder\Controller\Adminhtml\Export;
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
 use Magento\Framework\Controller\Result\JsonFactory;
+use Magento\Store\Model\StoreManagerInterface;
 use Omikron\Factfinder\Api\Config\ChannelProviderInterface;
 use Omikron\Factfinder\Model\Api\PushImport;
 use Omikron\Factfinder\Model\Export\FeedFactory as FeedGeneratorFactory;
 use Omikron\Factfinder\Model\FtpUploader;
 use Omikron\Factfinder\Model\StoreEmulation;
 use Omikron\Factfinder\Model\Stream\CsvFactory;
-use Magento\Store\Model\StoreManagerInterface;
 
 class Feed extends Action
 {
@@ -35,9 +35,10 @@ class Feed extends Action
     /** @var FtpUploader */
     private $ftpUploader;
 
-    /** @var PushImport  */
+    /** @var PushImport */
     private $pushImport;
 
+    /** @var StoreManagerInterface */
     private $storeManager;
 
     /** @var string */
