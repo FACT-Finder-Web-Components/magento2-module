@@ -62,7 +62,7 @@ Click the button “Test Connection” to check the connection to the FACT-Finde
 At the end of the general settings section is an option *Show 'Add to Cart' Button in Search Results*. Activate this option to add a button to the products displayed on the search result page, which directly adds that product to the shopping cart.
 Warning: The product added to the cart is identified by the variable "MasterProductNumber". To allow this function to work correctly, the field "MasterProductNumber" must be imported to the FACT-Finder backend (on fact-finder.de).   
 
-![General Settings](docs/assets/general-settings_en.jpg "General Settings")
+![General Settings](docs/assets/general-settings.jpg "General Settings")
 
 ### Activate Web Components
 
@@ -91,9 +91,6 @@ Enter an FTP-server to which the CSV file is uploaded automatically. The URL nee
 prefix (ftp://) and without the slash at the end.
 
 The CSV file uses double quotes `"` for field enclosure and a semi-colon `;` as field delimiter.
-
-For the option *Manufacturer*, choose the product attribute, which signifies the brand or manufacturer, the latter being
- the default field.
 
 The *Select additional Attributes* option offers a multiple-choice list of attributes. Select all of those you want added to the CSV file.
 
