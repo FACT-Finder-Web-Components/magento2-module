@@ -6,19 +6,19 @@
 
         function enableCmsFeedButton() {
             Form.Element.enable('cms_feed_button');
-            $('feed_button').removeClassName('disabled');
+            $('cms_feed_button').removeClassName('disabled');
         }
 
         function disableCmsFeedButton() {
             Form.Element.disable('cms_feed_button');
-            $('feed_button').addClassName('disabled');
+            $('cms_feed_button').addClassName('disabled');
         }
 
         jQuery('#cms_feed_button').click(function () {
 
-            if ($('load_span_cms').hasClassName('no-display')) {
-                $('load_span_cms').removeClassName('no-display');
-                $('load_message_span_cms').update('<?= $block->escapeJs(__('Generating CMS export file')) ?>');
+            if ($('cms_load_span').hasClassName('no-display')) {
+                $('cms_load_span').removeClassName('no-display');
+                $('cms_load_message_span').update('<?= $block->escapeJs(__('Generating CMS export file')) ?>');
             }
 
             new Ajax.Request('<?= $block->escapeUrl($block->getUrl('factfinder/export/cmsfeed')) ?>', {
@@ -28,8 +28,8 @@
                 onCreate: disableCmsFeedButton,
                 onComplete: function (transport) {
                     var response = JSON.parse(transport.responseText);
-                    $('load_message_span_cms').update(response.message);
-                    $('load_spinner_cms').hide();
+                    $('cms_load_message_span').update(response.message);
+                    $('cms_load_spinner').hide();
                     enableCmsFeedButton();
                 }
             });
@@ -38,7 +38,7 @@
 </script>
 
 <?= /* @noEscape */ $block->getButtonHtml() ?>
-<div class="sync-indicator no-display" id="load_span_cms">
-    <img alt="Loading" id="load_spinner_cms" style="margin:0 5px" src="<?= $block->escapeUrl($block->getViewFileUrl('images/process_spinner.gif')) ?>"/>
-    <span id="load_message_span_cms"></span>
+<div class="sync-indicator no-display" id="cms_load_span">
+    <img alt="Loading" id="cms_load_spinner" style="margin:0 5px" src="<?= $block->escapeUrl($block->getViewFileUrl('images/process_spinner.gif')) ?>"/>
+    <span id="cms_oad_message_span"></span>
 </div>

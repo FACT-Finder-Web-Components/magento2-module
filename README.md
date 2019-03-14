@@ -90,9 +90,24 @@ For the option *Manufacturer*, choose the product attribute, which signifies the
 
 The *Select additional Attributes* option offers a multiple-choice list of attributes. Select all of those you want added to the CSV file.
 
-Before starting the export by clicking *Generate Export File(s) now*, you need to commit all changes by clicking “Save Config”.
+Before starting the export by clicking *Generate Export File(s) now*, you need to commit all changes by clicking “Save Config”. 
+The exception from that rule is `Test Connection` function which always takes the actual values from the corresponding fields. 
  
-![Product Data Export](docs/assets/export-settings_en.jpg "Product Data Export")
+![Product Data Export](docs/assets/export-settings.png "Product Data Export")
+
+### Updating Field Roles
+Field roles are assigned while creating new channel in FACT-Finder application, however they can be changed anytime. In this situations, You need to update field roles which are being kept in Magento database for tracking purposes.
+To updates field roles, use the button `Update Field Roles`
+
+#### Http Export
+Feed export is also available to trigger by visiting specific URL, which is also able to be secured by Basic Auth (username and password configured at section Http Export). You can configure Your FACT-Finder application to download the feed directly from this location.
+
+Exports are available under following locations:
+* `https://YOUR_SHOP_URL/factfinder/export/product/store/YOUR_STORE_ID` - for exporting product feed (or combined feed if You have cms export enabled and You've chosen to export product and cms data in one file)
+* `https://YOUR_SHOP_URL/factfinder/export/store/store/YOUR_STORE_ID`- fore cms export
+
+If there's no `store id` provided, feed will be generated with the `store id` = 0
+
 
 ### Cron configuration
 

@@ -31,7 +31,7 @@ class Update extends Action
         $result = $this->jsonResultFactory->create();
         preg_match('@/store/([0-9]+)/@', (string) $this->_redirect->getRefererUrl(), $match);
         try {
-            $this->updateFieldRoles->execute((int) $match[1] ?? Store::DEFAULT_STORE_ID);
+            $this->updateFieldRoles->execute((int) ($match[1] ?? Store::DEFAULT_STORE_ID));
             $result->setData(['message' => __('Field roles updated successfully')]);
         } catch (ResponseException $e) {
             $result->setData(['message' => $e->getMessage()]);

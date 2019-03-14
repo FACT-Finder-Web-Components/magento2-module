@@ -11,7 +11,7 @@ use Omikron\Factfinder\Model\Export\FeedFactory as FeedGeneratorFactory;
 use Omikron\Factfinder\Model\StoreEmulation;
 use Omikron\Factfinder\Model\Stream\CsvFactory;
 
-class Export extends Action
+class Product extends Action
 {
     /** @var ChannelProviderInterface */
     private $channelProvider;

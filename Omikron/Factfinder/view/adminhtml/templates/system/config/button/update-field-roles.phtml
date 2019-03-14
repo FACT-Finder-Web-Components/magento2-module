@@ -16,9 +16,9 @@
 
         jQuery('#updatefieldroles_button').click(function () {
 
-            if ($('load_span').hasClassName('no-display')) {
-                $('load_span').removeClassName('no-display');
-                $('load_message_span').update('<?= $block->escapeJs(__('Generating export file')) ?>');
+            if ($('updatefieldroles_load_span').hasClassName('no-display')) {
+                $('updatefieldroles_load_span').removeClassName('no-display');
+                $('updatefieldroles_load_message_span').update('<?= $block->escapeJs(__('Updating field roles')) ?>');
             }
 
             new Ajax.Request('<?= $block->escapeUrl($block->getUrl('factfinder/fieldroles/update')) ?>', {
@@ -28,8 +28,8 @@
                 onCreate: disableUpdateButton(),
                 onComplete: function (transport) {
                     var response = JSON.parse(transport.responseText);
-                    $('load_message_span').update(response.message);
-                    $('load_spinner').hide();
+                    $('updatefieldroles_load_message_span').update(response.message);
+                    $('updatefieldroles_load_spinner').hide();
                     enableUpdateButton();
                 }
             });
@@ -38,7 +38,7 @@
 </script>
 
 <?= /* @noEscape */ $block->getButtonHtml() ?>
-<div class="sync-indicator no-display" id="load_span">
-    <img alt="Loading" id="load_spinner" style="margin:0 5px" src="<?= $block->escapeUrl($block->getViewFileUrl('images/process_spinner.gif')) ?>"/>
-    <span id="load_message_span"></span>
+<div class="sync-indicator no-display" id="updatefieldroles_load_span">
+    <img alt="Loading" id="updatefieldroles_load_spinner" style="margin:0 5px" src="<?= $block->escapeUrl($block->getViewFileUrl('images/process_spinner.gif')) ?>"/>
+    <span id="updatefieldroles_load_message_span"></span>
 </div>

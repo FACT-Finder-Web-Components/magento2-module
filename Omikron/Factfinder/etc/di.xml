@@ -99,9 +99,14 @@
         </arguments>
     </virtualType>
 
-    <type name="Omikron\Factfinder\Controller\Export\Export">
+    <type name="Omikron\Factfinder\Controller\Export\Product">
         <arguments>
             <argument name="channelProvider" xsi:type="object">Omikron\Factfinder\Model\Config\CommunicationConfig</argument>
+        </arguments>
+    </type>
+    <type name="Omikron\Factfinder\Controller\Export\Cms">
+        <arguments>
+            <argument name="channelProvider" xsi:type="object">Omikron\Factfinder\Model\Config\CmsConfig</argument>
         </arguments>
     </type>
     <type name="Omikron\Factfinder\Model\Api\PushImport">
