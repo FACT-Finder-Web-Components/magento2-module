@@ -7,13 +7,13 @@ namespace Omikron\Factfinder\Controller\Adminhtml\Export;
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
 use Magento\Framework\Controller\Result\JsonFactory;
-use Magento\Store\Model\Store;
 use Omikron\Factfinder\Api\Config\ChannelProviderInterface;
 use Omikron\Factfinder\Model\Api\PushImport;
 use Omikron\Factfinder\Model\Export\FeedFactory as FeedGeneratorFactory;
 use Omikron\Factfinder\Model\FtpUploader;
 use Omikron\Factfinder\Model\StoreEmulation;
 use Omikron\Factfinder\Model\Stream\CsvFactory;
+use Magento\Store\Model\StoreManagerInterface;
 
 class Feed extends Action
 {
@@ -38,6 +38,8 @@ class Feed extends Action
     /** @var PushImport  */
     private $pushImport;
 
+    private $storeManager;
+
     /** @var string */
     protected $feedType = 'product';
 
@@ -49,7 +51,8 @@ class Feed extends Action
         FeedGeneratorFactory $feedGeneratorFactory,
         CsvFactory $csvFactory,
         FtpUploader $ftpUploader,
-        PushImport $pushImport
+        PushImport $pushImport,
+        StoreManagerInterface $storeManager
     ) {
         parent::__construct($context);
         $this->jsonResultFactory    = $jsonResultFactory;
@@ -59,6 +62,7 @@ class Feed extends Action
         $this->csvFactory           = $csvFactory;
         $this->ftpUploader          = $ftpUploader;
         $this->pushImport           = $pushImport;
+        $this->storeManager         = $storeManager;
     }
 
     public function execute()
@@ -67,7 +71,7 @@ class Feed extends Action
 
         try {
             preg_match('@/store/([0-9]+)/@', (string) $this->_redirect->getRefererUrl(), $match);
-            $storeId = (int) ($match[1] ?? Store::DEFAULT_STORE_ID);
+            $storeId = (int) ($match[1] ?? $this->storeManager->getDefaultStoreView()->getId());
             $this->storeEmulation->runInStore($storeId, function () use ($storeId) {
                 $filename = "export.{$this->channelProvider->getChannel()}.csv";
                 $stream   = $this->csvFactory->create(['filename' => "factfinder/{$filename}"]);
