@@ -17,10 +17,10 @@
   },
   "autoload": {
     "files": [
-      "registration.php"
+      "src/registration.php"
     ],
     "psr-4": {
-      "Omikron\\Factfinder\\": "Omikron/Factfinder"
+      "Omikron\\Factfinder\\": "src"
     }
   }
 }

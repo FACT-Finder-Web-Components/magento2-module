@@ -181,15 +181,15 @@ You can activate and deactivate any web components from the configurations page 
 
 The HTML code for the web components can be found in this folder:
 
-    Omikron/Factfinder/view/frontend/templates/ff
+    src/view/frontend/templates/ff
 
 The module styles can be found in this folder
 
-    Omikron/Factfinder/view/frontend/web/css/source/ff
+    src/view/frontend/web/css/source/ff
 
 Since Magento 2 is using Less, all source styles are written in this stylesheet language
  
-    Omikron/Factfinder/view/frontend/web/css/source/_module.less
+    src/view/frontend/web/css/source/_module.less
 
 Warning: After changing static content styles, you need to restart the Magento 2 environment, for Magento to be able to find them. Use this command:
 
@@ -229,11 +229,11 @@ As soon as the FACT-Finder-Integration is activated in the configuration, the se
 
 You can find the template for the FACT-Finder Search at:
 
-    Omikron/Factfinder/view/frontend/templates/ff/searchbox.phtml
+    src/view/frontend/templates/ff/searchbox.phtml
 
 Once you perform a search, you will automatically be redirected to a new and improved version of the Magento 2 search result page, which works with FACT-Finder data. Additionally, FACT-Finder enriches the new search result page’s URL with relevant data, like the search’s FACT-Finder channel or the search query string. The module’s source code contains the search results’ layout definition in this XML file:
 
-    Omikron/Factfinder/view/frontend/layout/factfinder_result_index.xml
+    src/view/frontend/layout/factfinder_result_index.xml
 
 Several templates are already integrated into this layout, among others `ff-record-list`, which displays the search results.
  
@@ -241,7 +241,7 @@ Several templates are already integrated into this layout, among others `ff-reco
 By default search/suggest requests are performed directly to FACT-Finder bypassing Magento backend. However if for some reason, You want to modify request parameters
 or want to modify the response before returning it to the front, You can enable **Enrichment feature**. By enabling this, once a search query is sent, it does not immediately reach FACT-Finder, but is handed off to a specific controller
 
-    Omikron/Factfinder/Controller/Proxy/Call.php
+    src/Controller/Proxy/Call.php
 
 which hands the request to the FACT-Finder system, receives the answer, processes it and only then returns it to the frontend/web component.
 Once response from FACT-Finder is available, proxy controller emits an `ff_proxy_post_dispatch` event which allows user to listen in order to modify and enrich recieved data

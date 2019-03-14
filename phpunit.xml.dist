@@ -11,7 +11,7 @@
     </php>
 
     <testsuite name="unit">
-        <directory>Omikron/Factfinder/Test/Unit</directory>
+        <directory>src/Test/Unit</directory>
     </testsuite>
 
     <filter>
