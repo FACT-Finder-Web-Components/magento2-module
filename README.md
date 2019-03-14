@@ -6,6 +6,13 @@ processes. The second chapter “Backend Configuration” explains the customisa
 final chapter *Web Component Integration* describes how the web components interface with the shop system and how to
 customise them. 
 
+## Requirements
+This module supports:
+ * Magento 2 version 2.2 and higher 
+ * PHP version 7.1 and higher.
+ 
+Warning: PHP 7.0 is not supported
+
 ## Installation
 
 To install module, open your terminal and run the command:

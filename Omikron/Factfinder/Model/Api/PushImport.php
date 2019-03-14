@@ -35,6 +35,9 @@ class PushImport
 
     public function execute(int $scopeId = null, array $params = []): bool
     {
+        if (!$this->communicationConfig->isPushImportEnabled($scopeId)) {
+            return false;
+        }
         $endpoint = $this->communicationConfig->getAddress() . '/' . $this->apiName;
 
         $params += [

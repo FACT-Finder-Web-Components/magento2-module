@@ -9,6 +9,7 @@ use Magento\Backend\App\Action\Context;
 use Magento\Framework\Controller\Result\JsonFactory;
 use Magento\Store\Model\Store;
 use Omikron\Factfinder\Api\Config\ChannelProviderInterface;
+use Omikron\Factfinder\Model\Api\PushImport;
 use Omikron\Factfinder\Model\Export\FeedFactory as FeedGeneratorFactory;
 use Omikron\Factfinder\Model\FtpUploader;
 use Omikron\Factfinder\Model\StoreEmulation;
@@ -34,6 +35,9 @@ class Feed extends Action
     /** @var FtpUploader */
     private $ftpUploader;
 
+    /** @var PushImport  */
+    private $pushImport;
+
     /** @var string */
     protected $feedType = 'product';
 
@@ -44,7 +48,8 @@ class Feed extends Action
         StoreEmulation $storeEmulation,
         FeedGeneratorFactory $feedGeneratorFactory,
         CsvFactory $csvFactory,
-        FtpUploader $ftpUploader
+        FtpUploader $ftpUploader,
+        PushImport $pushImport
     ) {
         parent::__construct($context);
         $this->jsonResultFactory    = $jsonResultFactory;
@@ -53,6 +58,7 @@ class Feed extends Action
         $this->feedGeneratorFactory = $feedGeneratorFactory;
         $this->csvFactory           = $csvFactory;
         $this->ftpUploader          = $ftpUploader;
+        $this->pushImport           = $pushImport;
     }
 
     public function execute()
@@ -61,11 +67,13 @@ class Feed extends Action
 
         try {
             preg_match('@/store/([0-9]+)/@', (string) $this->_redirect->getRefererUrl(), $match);
-            $this->storeEmulation->runInStore((int) ($match[1] ?? Store::DEFAULT_STORE_ID), function () {
+            $storeId = (int) ($match[1] ?? Store::DEFAULT_STORE_ID);
+            $this->storeEmulation->runInStore($storeId, function () use ($storeId) {
                 $filename = "export.{$this->channelProvider->getChannel()}.csv";
                 $stream   = $this->csvFactory->create(['filename' => "factfinder/{$filename}"]);
                 $this->feedGeneratorFactory->create($this->feedType)->generate($stream);
                 $this->ftpUploader->upload($filename, $stream);
+                $this->pushImport->execute($storeId);
             });
 
             $result->setData(['message' => __('Feed successfully generated')]);

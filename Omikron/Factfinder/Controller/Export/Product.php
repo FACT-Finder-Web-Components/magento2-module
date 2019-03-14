@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Omikron\Factfinder\Controller\Export;
 
 use Magento\Framework\App\Action\Action;
