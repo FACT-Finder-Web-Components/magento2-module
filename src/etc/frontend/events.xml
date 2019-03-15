@@ -13,7 +13,10 @@
         <observer name="ff_redirect_search" instance="Omikron\Factfinder\Observer\RedirectSearch" />
     </event>
 
-    <event name="controller_action_predispatch_factfinder_export_export">
+    <event name="controller_action_predispatch_factfinder_export_cms">
+        <observer name="ff_export_authentication" instance="Omikron\Factfinder\Observer\ExportAuthentication" />
+    </event>
+    <event name="controller_action_predispatch_factfinder_export_product">
         <observer name="ff_export_authentication" instance="Omikron\Factfinder\Observer\ExportAuthentication" />
     </event>
     <event name="checkout_cart_add_product_complete">

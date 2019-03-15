@@ -10,7 +10,7 @@ class FtpConfig
 {
     private const FPT_UPLOAD_CONFIG_PATH = 'factfinder/data_transfer/ff_upload_';
 
-    /** @var ScopeConfigInterface  */
+    /** @var ScopeConfigInterface */
     private $scopeConfig;
 
     public function __construct(ScopeConfigInterface $scopeConfig)

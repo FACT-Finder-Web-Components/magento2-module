@@ -3,12 +3,19 @@
   "description": "FACTFinder Webcomponents SDK",
   "type": "magento2-module",
   "license": "proprietary",
+  "authors": [
+    {
+      "name": "Omikron Data Quality GmbH",
+      "homepage": "https://web-components.fact-finder.de"
+    }
+  ],
   "require": {
     "php": "^7.1",
-    "magento/framework": ">=101.0.4",
+    "magento/framework": ">=101.0.0",
     "magento/module-catalog": ">=102.0.0",
     "magento/module-configurable-product": ">=100.2.0",
-    "magento/module-store": ">=100.2.0"
+    "magento/module-store": ">=100.2.0",
+    "magento/zendframework1": "^1.13"
   },
   "require-dev": {
     "magento-ecg/coding-standard": "^3.1",

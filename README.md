@@ -7,11 +7,12 @@ final chapter *Web Component Integration* describes how the web components inter
 customise them. 
 
 ## Requirements
+
 This module supports:
- * Magento 2 version 2.2 and higher 
- * PHP version 7.1 and higher.
- 
-Warning: PHP 7.0 is not supported
+
+- Magento 2 version 2.2 and higher
+- PHP version 7.1 and higher  
+  **Warning**: PHP 7.0 is not supported
 
 ## Installation
 
@@ -68,14 +69,14 @@ Warning: The product added to the cart is identified by the variable "MasterProd
 
 Here you can decide which web components are activated. Only active web components can be used and displayed in the shop.
 
- - **Suggestions** activates loading and displaying suggestions while search terms are entered into the search bar.
- - **Filter / ASN** activates the functions to narrow down and refine search results.
- - **Paging** activates paging through the returned search results.
- - **Sorting** activates a sorting function for returned search results.
- - **Breadcrumb** activates displaying the current position during a search. Can be refined with the **Filter / ASN** component. 
- - **Products per Page** activates an option to limit the number of displayed search results per page.
- - **Campaigns** displays your active FACT-Finder campaigns, e.g. advisor and feedback campaigns.
- - **Pushed Products** displays your pushed products campaigns. 
+- **Suggestions** activates loading and displaying suggestions while search terms are entered into the search bar.
+- **Filter / ASN** activates the functions to narrow down and refine search results.
+- **Paging** activates paging through the returned search results.
+- **Sorting** activates a sorting function for returned search results.
+- **Breadcrumb** activates displaying the current position during a search. Can be refined with the **Filter / ASN** component.
+- **Products per Page** activates an option to limit the number of displayed search results per page.
+- **Campaigns** displays your active FACT-Finder campaigns, e.g. advisor and feedback campaigns.
+- **Pushed Products** displays your pushed products campaigns.
 
 ### Advanced Settings
 
@@ -94,7 +95,7 @@ The CSV file uses double quotes `"` for field enclosure and a semi-colon `;` as 
 
 The *Select additional Attributes* option offers a multiple-choice list of attributes. Select all of those you want added to the CSV file.
 
-Before starting the export by clicking *Generate Export File(s) now*, you need to commit all changes by clicking “Save Config”. 
+Before starting the export by clicking *Generate Export File(s) now*, you need to commit all changes by clicking "Save Config".
 The exception from that rule is `Test Connection` function which always takes the actual values from the corresponding fields. 
  
 ![Product Data Export](docs/assets/export-settings.png "Product Data Export")
@@ -107,8 +108,9 @@ To updates field roles, use the button `Update Field Roles`
 Feed export is also available to trigger by visiting specific URL, which is also able to be secured by Basic Auth (username and password configured at section Http Export). You can configure Your FACT-Finder application to download the feed directly from this location.
 
 Exports are available under following locations:
-* `https://YOUR_SHOP_URL/factfinder/export/product/store/YOUR_STORE_ID` - for exporting product feed (or combined feed if You have cms export enabled and You've chosen to export product and cms data in one file)
-* `https://YOUR_SHOP_URL/factfinder/export/store/store/YOUR_STORE_ID`- fore cms export
+
+- `https://YOUR_SHOP_URL/factfinder/export/product/store/YOUR_STORE_ID` - for exporting product feed (or combined feed if You have cms export enabled and You've chosen to export product and cms data in one file)
+- `https://YOUR_SHOP_URL/factfinder/export/cms/store/YOUR_STORE_ID`- for CMS export
 
 If there's no `store id` provided, feed will be generated with the default store (by default with id = 1)
 
@@ -128,12 +130,14 @@ Both ways offer same functionality but in different ways and are described below
 
 ![CMS Configuration](docs/assets/cms-configuration.png "CMS Configuration - using single channel")
 
-* **Export Enabled** - determine if CMS content should be exported or not
-* **Use separate channel** - determine if exported CMS content should be exported to standard channel, or to the different one.
-If this option is set to "Yes", additional field "Channel" appears where You need provide the name of channel which will serve CMS suggest results.
-* **Channel** - Channel name used for CMS export. This field appears only if *Use separate channel* is turned on.
-* **Generate CMS Feed** - On button click all CMS data is exported and uploaded to configured FTP server
-* **Pages Blacklist** - allow user to filter out pages, which should not be exported, for example "404 Not Found page" should not be visible at suggested records
+- **Export Enabled** - determine if CMS content should be exported or not
+- **Use separate channel** - determine if exported CMS content should be exported to standard channel, or to the
+  different one. If this option is set to "Yes", additional field "Channel" appears where You need provide the name of
+  channel which will serve CMS suggest results.
+- **Channel** - Channel name used for CMS export. This field appears only if *Use separate channel* is turned on.
+- **Generate CMS Feed** - On button click all CMS data is exported and uploaded to configured FTP server
+- **Pages Blacklist** - allow user to filter out pages, which should not be exported, for example "404 Not Found page"
+  should not be visible at suggested records
 
 Before You start exporting Your CMS content to FACT-Finder You need to prepare it for correctly serving this data to Your Magento application.
 
