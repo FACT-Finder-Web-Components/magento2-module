@@ -1,11 +1,13 @@
 # Changelog
-## [Unreleased]
+## [1.0.0] - 2019.03.18
 ### Added
 - Add CMS export
 
 ### Changed
 - Refactor product export
 - Reorganize folder structure: source code is now found under `src`
+- Upgraded Web Components version to 3.1.0
+- Serving javascript files via RequireJS
 
 ## [v0.9-beta.11] - 2019.03.01
 ### Changed
