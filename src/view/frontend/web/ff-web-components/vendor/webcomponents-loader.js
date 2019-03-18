@@ -107,7 +107,7 @@
   // Feature detect which polyfill needs to be imported.
   var polyfills = [];
   if (!('attachShadow' in Element.prototype && 'getRootNode' in Element.prototype) ||
-      (window.ShadyDOM && window.ShadyDOM.force)) {
+    (window.ShadyDOM && window.ShadyDOM.force)) {
     polyfills.push('sd');
   }
   if (!window.customElements || window.customElements.forcePolyfill) {
