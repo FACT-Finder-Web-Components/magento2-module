@@ -1,6 +1,6 @@
 parameters:
   excludes_analyse:
-    - %currentWorkingDirectory%/Omikron/Factfinder/Test
+    - %currentWorkingDirectory%/src/Test
     - %currentWorkingDirectory%/vendor
 
   fileExtensions:

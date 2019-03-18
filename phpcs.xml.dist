@@ -7,9 +7,8 @@
     <arg name="ignore" value="*/vendor/*" />
 
     <config name="ignore_warnings_on_exit" value="1" />
-    <config name="installed_paths" value="vendor/magento-ecg/coding-standard/EcgM2" />
 
-    <rule ref="EcgM2" />
+    <rule ref="vendor/magento-ecg/coding-standard/EcgM2" />
     <rule ref="EcgM2.Plugins.Plugin.PluginWarning">
         <include-pattern>*/Plugin/*</include-pattern>
     </rule>
@@ -34,9 +33,17 @@
     </rule>
     <rule ref="Generic.PHP.LowerCaseConstant" />
     <rule ref="Generic.PHP.LowerCaseKeyword" />
+    <rule ref="PSR1.Methods.CamelCapsMethodName.NotCamelCaps">
+        <exclude-pattern>*Test.php</exclude-pattern>
+    </rule>
     <rule ref="PSR2.Classes.PropertyDeclaration.Underscore" />
     <rule ref="PSR2.Files.EndFileNewline" />
     <rule ref="PSR2.Methods.MethodDeclaration.Underscore" />
+    <rule ref="Squiz.ControlStructures.ControlSignature">
+        <properties>
+            <property name="requiredSpacesBeforeColon" value="0" />
+        </properties>
+    </rule>
     <rule ref="Squiz.Functions.GlobalFunction">
         <exclude-pattern>*Test.php</exclude-pattern>
     </rule>
