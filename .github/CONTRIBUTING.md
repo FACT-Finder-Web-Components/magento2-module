@@ -2,7 +2,7 @@
 
 ## Did you find a bug?
 
-* **Do not open up a GitHub issue if the bug is a security vulnerability in FACT-Finder-Web-Components Magento2-Module.** Please forward your vulnerability findings to [Ronny Scheffelmeier](ronny.scheffelmeier@omikron.net).
+* **Do not open up a GitHub issue if the bug is a security vulnerability in FACT-Finder-Web-Components Magento2-Module.** Please forward your vulnerability findings to [Ronny Scheffelmeier](mailto:ronny.scheffelmeier@omikron.net).
 * **Ensure the bug was not already reported** by searching on GitHub under [Issues](https://github.com/FACT-Finder-Web-Components/magento2-module/issues).
 * If you're unable to find an open issue addressing the problem, [open a new one](https://github.com/FACT-Finder-Web-Components/magento2-module/issues/new). Be sure to include all relevant information just by filling the report template.
 
