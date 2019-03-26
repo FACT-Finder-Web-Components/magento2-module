@@ -1,6 +1,8 @@
 <?php
 
-namespace Omikron\Factfinder\Model\Source;
+declare(strict_types=1);
+
+namespace Omikron\Factfinder\Model\Config\Source;
 
 use Magento\Eav\Model\Entity\Attribute\AbstractAttribute as EavAttribute;
 use Magento\Eav\Model\ResourceModel\Entity\Attribute\CollectionFactory as AttributeCollectionFactory;
