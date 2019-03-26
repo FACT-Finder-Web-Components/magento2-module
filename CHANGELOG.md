@@ -1,5 +1,9 @@
 # Changelog
-## [1.0.0] - 2019.03.18
+## [Unreleased]
+### Fixed
+- Fix export attribute selection in system config
+
+## [v1.0.0] - 2019.03.18
 ### Added
 - Add CMS export
 
@@ -92,7 +96,8 @@
 ### Added
 - Feed Export: Export feed file is now available via separate link
 
-[Unreleased]:   https://github.com/FACT-Finder-Web-Components/magento2-module/compare/v0.9-beta.11...HEAD
+[Unreleased]:   https://github.com/FACT-Finder-Web-Components/magento2-module/compare/v1.0.0...HEAD
+[v1.0.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/compare/v0.9-beta.11...v1.0.0
 [v0.9-beta.11]: https://github.com/FACT-Finder-Web-Components/magento2-module/compare/v0.9-beta.10...v0.9-beta.11
 [v0.9-beta.10]: https://github.com/FACT-Finder-Web-Components/magento2-module/compare/v0.9-beta.9...v0.9-beta.10
 [v0.9-beta.9]:  https://github.com/FACT-Finder-Web-Components/magento2-module/compare/v0.9-beta.8...v0.9-beta.9
