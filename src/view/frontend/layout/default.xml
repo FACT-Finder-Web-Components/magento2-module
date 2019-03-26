@@ -21,5 +21,10 @@
                 </block>
             </block>
         </referenceBlock>
+        <referenceBlock name="catalog.topnav">
+            <action method="setTemplate" ifconfig="factfinder/components/ff_header_navigation">
+                <argument name="template" xsi:type="string">Omikron_Factfinder::ff/header-navigation.phtml</argument>
+            </action>
+        </referenceBlock>
     </body>
 </page>
