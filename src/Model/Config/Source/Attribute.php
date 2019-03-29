@@ -21,7 +21,10 @@ class Attribute implements OptionSourceInterface
     public function toOptionArray()
     {
         $options = array_map(function (EavAttribute $attribute): array {
-            return ['value' => $attribute->getAttributeCode(), 'label' => $attribute->getDefaultFrontendLabel()];
+            return [
+                'value' => (string) $attribute->getAttributeCode(),
+                'label' => (string) $attribute->getDefaultFrontendLabel(),
+            ];
         }, $this->collectionFactory->create()->getItems());
 
         usort($options, function (array $a, array $b): int {
