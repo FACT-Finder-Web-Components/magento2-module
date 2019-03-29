@@ -23,7 +23,7 @@ class Attribute implements OptionSourceInterface
         }, $this->collectionFactory->create()->getItems());
 
         usort($options, function (array $a, array $b): int {
-            return strtolower($a['label']) <=> strtolower($b['label']);
+            return strtolower((string) $a['label']) <=> strtolower((string) $b['label']);
         });
 
         return array_merge([['value' => '', 'label' => '']], $options);
