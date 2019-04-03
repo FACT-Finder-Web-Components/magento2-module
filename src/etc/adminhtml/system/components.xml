@@ -3,58 +3,47 @@
     <group id="components" translate="label comment" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
         <label>Activated Web-Components</label>
         <comment>Please always save the config in the upper right corner after making changes.</comment>
-        <field id="ff_suggest" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="1"
-               showInStore="1">
+        <field id="ff_suggest" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
             <label>Suggestions</label>
             <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
         </field>
-        <field id="ff_asn" translate="label" type="select" sortOrder="40" showInDefault="1" showInWebsite="1"
-               showInStore="1">
+        <field id="ff_asn" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
             <label>Filter / ASN</label>
             <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
         </field>
-        <field id="ff_paging" translate="label" type="select" sortOrder="50" showInDefault="1" showInWebsite="1"
-               showInStore="1">
+        <field id="ff_paging" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
             <label>Paging</label>
             <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
         </field>
-        <field id="ff_header_navigation" translate="label" type="select" sortOrder="50" showInDefault="1" showInWebsite="1"
-               showInStore="1">
+        <field id="ff_header_navigation" translate="label" type="select" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
             <label>Header Navigation</label>
             <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
         </field>
-        <field id="ff_sortbox" translate="label" type="select" sortOrder="60" showInDefault="1" showInWebsite="1"
-               showInStore="1">
+        <field id="ff_sortbox" translate="label" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
             <label>Sorting</label>
             <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
         </field>
-        <field id="ff_breadcrumb" translate="label" type="select" sortOrder="70" showInDefault="1" showInWebsite="1"
-               showInStore="1">
+        <field id="ff_breadcrumb" translate="label" type="select" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
             <label>Breadcrumb</label>
             <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
         </field>
-        <field id="ff_productspp" translate="label" type="select" sortOrder="80" showInDefault="1" showInWebsite="1"
-               showInStore="1">
+        <field id="ff_productspp" translate="label" type="select" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
             <label>Products per page</label>
             <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
         </field>
-        <field id="ff_campaign" translate="label" type="select" sortOrder="90" showInDefault="1" showInWebsite="1"
-               showInStore="1">
+        <field id="ff_campaign" translate="label" type="select" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
             <label>Campaigns</label>
             <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
         </field>
-        <field id="ff_pushedproductscampaign" translate="label" type="select" sortOrder="100" showInDefault="1"
-               showInWebsite="1" showInStore="1">
+        <field id="ff_pushedproductscampaign" translate="label" type="select" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
             <label>Pushed Products</label>
             <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
         </field>
-        <field id="ff_recommendation" translate="label" type="select" sortOrder="110" showInDefault="1"
-               showInWebsite="1" showInStore="1">
+        <field id="ff_recommendation" translate="label" type="select" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
             <label>Recommendation</label>
             <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
         </field>
-        <field id="ff_similar" translate="label" type="select" sortOrder="110" showInDefault="1" showInWebsite="1"
-               showInStore="1">
+        <field id="ff_similar" translate="label" type="select" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
             <label>Similar</label>
             <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
         </field>
