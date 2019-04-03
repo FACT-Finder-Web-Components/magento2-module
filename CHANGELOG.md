@@ -1,20 +1,24 @@
 # Changelog
-## [1.0.0] - 2019.03.18
+## [Unreleased]
+### Fixed
+- Fix export attribute selection in system config
+
+## [v1.0.0] - 2019.03.18
 ### Added
 - Add CMS export
 
 ### Changed
 - Refactor product export
 - Reorganize folder structure: source code is now found under `src`
-- Upgraded Web Components version to 3.1.0
-- Serving javascript files via RequireJS
+- Upgrade Web Components version to 3.1.0
+- Serve JS files using RequireJS
 
 ## [v0.9-beta.11] - 2019.03.01
 ### Changed
 - Drop support for PHP 7.0
 - Replace Communication helper with dedicated models
 - Remove core controller rewrites and perform redirects using event observers
-- Upgraded Web Components version to 3.0
+- Upgrade Web Components version to 3.0
 
 ### Removed
 - ResultRefiner: Use DI or plugins to edit the JSON result
@@ -92,7 +96,8 @@
 ### Added
 - Feed Export: Export feed file is now available via separate link
 
-[Unreleased]:   https://github.com/FACT-Finder-Web-Components/magento2-module/compare/v0.9-beta.11...HEAD
+[Unreleased]:   https://github.com/FACT-Finder-Web-Components/magento2-module/compare/v1.0.0...HEAD
+[v1.0.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/compare/v0.9-beta.11...v1.0.0
 [v0.9-beta.11]: https://github.com/FACT-Finder-Web-Components/magento2-module/compare/v0.9-beta.10...v0.9-beta.11
 [v0.9-beta.10]: https://github.com/FACT-Finder-Web-Components/magento2-module/compare/v0.9-beta.9...v0.9-beta.10
 [v0.9-beta.9]:  https://github.com/FACT-Finder-Web-Components/magento2-module/compare/v0.9-beta.8...v0.9-beta.9

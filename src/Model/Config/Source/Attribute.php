@@ -1,6 +1,8 @@
 <?php
 
-namespace Omikron\Factfinder\Model\Source;
+declare(strict_types=1);
+
+namespace Omikron\Factfinder\Model\Config\Source;
 
 use Magento\Eav\Model\Entity\Attribute\AbstractAttribute as EavAttribute;
 use Magento\Eav\Model\ResourceModel\Entity\Attribute\CollectionFactory as AttributeCollectionFactory;
@@ -19,7 +21,10 @@ class Attribute implements OptionSourceInterface
     public function toOptionArray()
     {
         $options = array_map(function (EavAttribute $attribute): array {
-            return ['value' => $attribute->getAttributeCode(), 'label' => $attribute->getDefaultFrontendLabel()];
+            return [
+                'value' => (string) $attribute->getAttributeCode(),
+                'label' => (string) $attribute->getDefaultFrontendLabel(),
+            ];
         }, $this->collectionFactory->create()->getItems());
 
         usort($options, function (array $a, array $b): int {
