@@ -7,27 +7,30 @@ define(['factfinder', 'mage/url'], function (factfinder, url) {
         }
     });
 
-    document.addEventListener(`ffReady`, () => {
-        factfinder.communication.ResultDispatcher.subscribe(`navigation`, (navData, e) => {
+    document.addEventListener('ffReady', function () {
+        factfinder.communication.ResultDispatcher.subscribe('navigation', function (navData, e) {
             if (window.location.href.match(/FACT-Finder\/result/) === null) {
-                navData.forEach(navSection => navSection.forEach(navEl => {
-                        let url = navEl.__TARGET_URL__.url.split('?');
+                navData.forEach(function (navSection) {
+                    navSection.forEach(function (navEl) {
+                        var url = navEl.__TARGET_URL__.url.split('?');
                         url.splice(1, 0, 'FACT-Finder/result?');
                         navEl.__TARGET_URL__.setUrl(url.join(''));
-                    }
-                ))
+                    });
+                });
             }
         });
     });
 
-    window.addEventListener("resize", function (evt) {
-        let navigation = document.querySelector("ff-navigation");
+    window.addEventListener('resize', function () {
+        var navigation = document.querySelector('ff-navigation');
         if (window.innerWidth < 768) {
-            navigation.setAttribute("layout", "vertical");
-            navigation.setAttribute("flyout", "false");
+            navigation.setAttribute('layout', 'vertical');
+            navigation.setAttribute('flyout', 'false');
         } else {
-            navigation.setAttribute("layout", "horizontal");
-            navigation.setAttribute("flyout", "true");
+            navigation.setAttribute('layout', 'horizontal');
+            navigation.setAttribute('flyout', 'true');
         }
     });
+
+    window.dispatchEvent(new Event('resize'));
 });

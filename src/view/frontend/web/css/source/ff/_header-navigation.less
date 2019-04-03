@@ -1,70 +1,118 @@
+ff-navigation, ff-navigation-item {
+  display: block;
+  flex-grow: unset;
+}
+
 ff-navigation-item {
-  &[cluster-level="0"] {
-    background-color: #f0f0f0;
-    font-weight: bold;
-    padding: 5px;
-  }
-
-  &[has-subelements] {
-
-  }
-
-  .ffw-nav-item:hover {
-    background-color: #ff692c;
-  }
-
-  .ffw-item-caption {
-    background-color: #f0f0f0;
-  }
-
-  .ff-navigation-item {
-    background-color: #f0f0f0;
-    padding: 5px;
-    width: 200px;
-    text-decoration: none;
-    min-width: 150px;
-
-    &:hover {
-      background-color: #ff692c;
-    }
-  }
-
-  .parent-item {
-    font-weight: bold;
-  }
-
   .ffw-item-container {
-    left: 80px !important;
-    background-color: #f0f0f0;
+    background: transparent;
   }
 
-  .ffw-nav-item {
-    cursor: pointer;
-
-    & a {
-      cursor: pointer;
-    }
+  &.level0 {
+    border: 0 !important;
   }
 
-  .ff-nav-group-caption {
-    cursor: pointer;
-
-    & a {
-      cursor: pointer;
-    }
+  &:not(:last-child) li.level0:last-child {
+    border-bottom: 0 !important;
   }
 
+  &:not([has-subelements]) .parent .level-top:after {
+    content: unset;
+  }
 
-  .ffw-nav-link {
-    cursor: pointer;
-    & a {
-      cursor: pointer;
-    }
-    &:visited {
-      color: black;
-    }
+  &[cluster-level="2"] {
+    padding-left: 15px;
   }
 }
 
+//
+//  Desktop
+//  _____________________________________________
 
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+  .navigation {
+    min-height: 47px;
+  }
 
+  ff-navigation-item {
+    &[cluster-level="0"]:not(:last-child) {
+      margin: 0 10px 0 0;
+    }
+
+    &[cluster-level="2"] {
+      padding-left: 0;
+    }
+
+    &:not([has-subelements]) a {
+      padding-right: 10px !important;
+
+      .ui-menu-icon {
+        display: none !important;
+      }
+    }
+  }
+
+  .level-top .ffw-item-container {
+    .lib-css(background, @submenu-desktop__background);
+    .lib-css(border, @submenu-desktop__border-width @submenu-desktop__border-style @submenu-desktop__border-color);
+    .lib-css(box-shadow, @submenu-desktop__box-shadow);
+    .lib-css(font-size, @submenu-desktop__font-size);
+    .lib-css(font-weight, @submenu-desktop__font-weight);
+    .lib-css(min-width, @submenu-desktop__min-width);
+    .lib-css(padding, @submenu-desktop__padding);
+    display: none;
+    left: 0;
+    margin: 0 !important;
+    padding: 0;
+    position: absolute;
+    z-index: 1;
+
+    ._lib-submenu-arrow(
+            @submenu-desktop-arrow,
+      @_bg: @submenu-desktop__background,
+      @_border: @submenu-desktop__border-color,
+      @_size: @submenu-desktop-arrow__size,
+      @_left: @submenu-desktop-arrow__left
+    );
+
+    a {
+      display: block;
+      line-height: inherit;
+      .lib-css(background, @submenu-desktop-item__background);
+      .lib-css(border, @submenu-desktop-item__border);
+      .lib-css(color, @submenu-desktop-item__color);
+      .lib-css(padding, @submenu-desktop-item__padding);
+      .lib-css(text-decoration, @submenu-desktop-item__text-decoration);
+
+      &:hover,
+      &.ui-state-focus {
+        .lib-css(background, @submenu-desktop-item__hover__background);
+        .lib-css(border, @submenu-desktop-item__hover__border);
+        .lib-css(color, @submenu-desktop-item__hover__color);
+        .lib-css(text-decoration, @submenu-desktop-item__hover__text-decoration);
+      }
+    }
+
+    .ffw-item-container {
+      top: 0 !important;
+      left: 100% !important;
+    }
+
+    li {
+      margin: 0;
+    }
+
+    [has-subelements] .ui-menu-icon {
+      position: absolute;
+      right: 3px;
+
+      .lib-icon-font(
+              @icon-next,
+        @_icon-font-size: 12px,
+        @_icon-font-line-height: 20px,
+        @_icon-font-text-hide: true,
+        @_icon-font-position: after
+      );
+    }
+  }
+}

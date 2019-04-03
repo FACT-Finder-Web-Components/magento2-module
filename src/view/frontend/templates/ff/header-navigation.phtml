@@ -1,17 +1,20 @@
 <nav class="navigation" data-action="navigation">
     <ul data-mage-init='{"menu":{"responsive":true, "expanded":true, "position":{"my":"left top","at":"left bottom"}}}'>
         <ff-navigation unresolved layout="horizontal" flyout="true" mobile="false">
-            <ff-navigation-item class="ff-nav-container">
-                <li class="ff-navigation-item">
-                    <a class="ffw-nav-link" onclick="event.preventDefault()" href="{{__TARGET_URL__.url}}">
-                        {{name}}
+            <ff-navigation-item type="header" class="level0 level-top">
+                <li class="level0 level-top parent">
+                    <a class="level-top" onclick="event.preventDefault()" href="{{__TARGET_URL__.url}}">
+                        <span class="ui-menu-icon ui-icon ui-icon-carat-1-e"></span>
+                        <span>{{name}}</span>
                     </a>
                 </li>
             </ff-navigation-item>
-            <ff-navigation-item class="ff-nav-container" type="parent">
-                <li class="ff-navigation-item parent-item">
-                    <a class="ffw-nav-link" onclick="event.preventDefault()" href="{{__TARGET_URL__.url}}">
-                        {{name}}
+
+            <ff-navigation-item>
+                <li>
+                    <a onclick="event.preventDefault()" href="{{__TARGET_URL__.url}}">
+                        <span class="ui-menu-icon ui-icon ui-icon-carat-1-e"></span>
+                        <span>{{name}}</span>
                     </a>
                 </li>
             </ff-navigation-item>
