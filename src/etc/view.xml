@@ -8,4 +8,7 @@
             </image>
         </images>
     </media>
+    <exclude>
+        <item type="file">Omikron_Factfinder::ff-web-components/vendor/webcomponents-loader.min.js</item>
+    </exclude>
 </view>
