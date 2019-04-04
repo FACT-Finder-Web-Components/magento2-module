@@ -17,24 +17,26 @@ abstract class Button extends Field
     }
 
     /**
-     * @param  AbstractElement $element
+     * @param AbstractElement $element
      *
      * @return string
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     * @throws \Magento\Framework\Exception\LocalizedException
      */
-    protected function _getElementHtml(AbstractElement $element): string
-    {
-        return $this->_toHtml();
-    }
-
-    public function generateButtonHtml(string $id, string $label): string
+    protected function _getElementHtml(AbstractElement $element): string // phpcs:ignore
     {
         /** @var ButtonWidget $button */
         $button = $this->getLayout()->createBlock(ButtonWidget::class);
         $button->setData([
-            'id'    => $id,
-            'label' => __($label),
+            'label'          => $this->getLabel(),
+            'data_attribute' => [
+                'mage-init' => ['Omikron_Factfinder/js/ajax-button' => ['url' => $this->getTargetUrl()]],
+            ],
         ]);
         return $button->toHtml();
     }
+
+    abstract protected function getLabel(): string;
+
+    abstract protected function getTargetUrl(): string;
 }
