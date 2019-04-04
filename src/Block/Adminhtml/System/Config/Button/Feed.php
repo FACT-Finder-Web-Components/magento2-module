@@ -6,11 +6,13 @@ namespace Omikron\Factfinder\Block\Adminhtml\System\Config\Button;
 
 class Feed extends Button
 {
-    /** @var string */
-    protected $_template = 'Omikron_Factfinder::system/config/button/feed.phtml';
-
-    public function getButtonHtml(): string
+    protected function getLabel(): string
     {
-        return $this->generateButtonHtml('feed_button', 'Generate Export File(s) now');
+        return (string) __('Generate Export File(s) now');
+    }
+
+    protected function getTargetUrl(): string
+    {
+        return $this->getUrl('factfinder/export/feed');
     }
 }

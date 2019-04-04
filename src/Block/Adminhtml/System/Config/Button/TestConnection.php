@@ -6,11 +6,13 @@ namespace Omikron\Factfinder\Block\Adminhtml\System\Config\Button;
 
 class TestConnection extends Button
 {
-    /** @var string */
-    protected $_template = 'Omikron_Factfinder::system/config/button/test-connection.phtml';
-
-    public function getButtonHtml(): string
+    protected function getLabel(): string
     {
-        return $this->generateButtonHtml('testconnection_button', 'Test Connection now');
+        return (string) __('Test Connection now');
+    }
+
+    protected function getTargetUrl(): string
+    {
+        return $this->getUrl('factfinder/testconnection/testconnection');
     }
 }
