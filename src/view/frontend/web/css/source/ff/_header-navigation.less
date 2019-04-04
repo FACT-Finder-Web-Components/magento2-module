@@ -31,7 +31,7 @@ ff-navigation-item {
 
 .media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
   .navigation {
-    min-height: 47px;
+    min-height: @navigation-desktop-level0-item__line-height;
   }
 
   ff-navigation-item {
