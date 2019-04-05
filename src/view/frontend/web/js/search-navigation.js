@@ -1,6 +1,5 @@
 define(['factfinder', 'mage/url', 'matchMedia', 'jquery'], function (factfinder, url, matchMedia, $) {
-    var redirectPath = 'FACT-Finder/result',
-        html = $('html');
+    var redirectPath = 'FACT-Finder/result';
 
     factfinder.communication.FFCommunicationEventAggregator.addBeforeDispatchingCallback(function (event) {
         if ((event.type === 'search' || event.type === 'navigation-search') && !isSearchResultPage()) {
@@ -10,46 +9,42 @@ define(['factfinder', 'mage/url', 'matchMedia', 'jquery'], function (factfinder,
         hideMenu();
     });
 
-    document.addEventListener('ffReady', function () {
-        factfinder.communication.ResultDispatcher.subscribe('navigation', function (navData, e) {
-            navData.forEach(function (navSection) {
-                navSection.forEach(function (navEl) {
-                    var url = navEl.__TARGET_URL__.url.split('?');
-                    url = BASE_URL + 'FACT-Finder/result?' + (url[1] ? url[1] : '');
-                    navEl.__TARGET_URL__.setUrl(url);
-                });
+    factfinder.communication.ResultDispatcher.subscribe('navigation', function (navData) {
+        navData.forEach(function (navSection) {
+            navSection.forEach(function (navEl) {
+                var queryString = navEl.__TARGET_URL__.url.split('?')[1] || '';
+                navEl.__TARGET_URL__.setUrl(BASE_URL + redirectPath + '?' + queryString);
             });
-            applyMediaMatch();
         });
+        applyMediaMatch();
     });
 
     function isSearchResultPage() {
-        return window.location.href.indexOf(redirectPath) > 0;
+        return window.location.href.indexOf(redirectPath) >= 0;
     }
 
     function applyMediaMatch() {
         matchMedia({
             media: '(min-width: 768px)',
-            navigation: jQuery("ff-navigation"),
+            navigation: document.querySelector('ff-navigation'),
             entry: function () {
-                this.navigation.attr("layout", "horizontal");
-                this.navigation.attr("flyout", "true");
+                this.navigation.flyout = 'true';
+                this.navigation.layout = 'horizontal';
             },
             exit: function () {
-                this.navigation.attr("layout", "vertical");
-                this.navigation.attr("flyout", "false");
+                this.navigation.flyout = 'false';
+                this.navigation.layout = 'vertical';
             }
         });
     }
 
     function hideMenu() {
-        html.removeClass('nav-open');
-        html.removeClass('nav-before-open');
+        $('html').removeClass('nav-open nav-before-open');
+    }
+
+    window.clickNavigationLink = function (e) {
+        if (document.querySelector('ff-navigation').flyout === 'false' || isSearchResultPage()) {
+            e.preventDefault();
+        }
     }
 });
-
-function clickNavigationLink(e) {
-    if (document.querySelector('ff-navigation').getAttribute('flyout') == 'false') {
-        e.preventDefault();
-    }
-}
