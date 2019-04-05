@@ -42,7 +42,7 @@ define(['factfinder', 'mage/url', 'matchMedia', 'jquery'], function (factfinder,
         $('html').removeClass('nav-open nav-before-open');
     }
 
-    window.clickNavigationLink = function (e) {
+    window.ffClickNavigationLink = function (e) {
         if (document.querySelector('ff-navigation').flyout === 'false' || isSearchResultPage()) {
             e.preventDefault();
         }
