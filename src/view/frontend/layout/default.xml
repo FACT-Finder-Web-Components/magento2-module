@@ -9,6 +9,12 @@
             </block>
         </referenceContainer>
 
+        <referenceBlock name="catalog.topnav">
+            <action method="setTemplate" ifconfig="factfinder/components/ff_header_navigation">
+                <argument name="template" xsi:type="string">Omikron_Factfinder::ff/header-navigation.phtml</argument>
+            </action>
+        </referenceBlock>
+
         <referenceBlock name="top.search">
             <action method="setTemplate" ifconfig="factfinder/general/is_enabled">
                 <argument name="template" xsi:type="string">Omikron_Factfinder::ff/searchbox.phtml</argument>
