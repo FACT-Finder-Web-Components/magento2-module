@@ -6,11 +6,13 @@ namespace Omikron\Factfinder\Block\Adminhtml\System\Config\Button;
 
 class UpdateFieldRoles extends Button
 {
-    /** @var string */
-    protected $_template = 'Omikron_Factfinder::system/config/button/update-field-roles.phtml';
-
-    public function getButtonHtml(): string
+    protected function getLabel(): string
     {
-        return $this->generateButtonHtml('updatefieldroles_button', 'Update Field Roles');
+        return (string) __('Update Field Roles');
+    }
+
+    protected function getTargetUrl(): string
+    {
+        return $this->getUrl('factfinder/fieldroles/update');
     }
 }

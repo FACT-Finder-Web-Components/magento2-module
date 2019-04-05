@@ -46,6 +46,7 @@ class Client implements ApiClientInterface
             $params = ['format' => 'json'] + $params + $this->getCredentials($this->authConfig)->toArray();
             $query  = preg_replace('#products%5B\d+%5D%5B(.+?)%5D=#', '\1=', http_build_query($params));
 
+            $httpClient->addHeader('Accept', 'application/json');
             $httpClient->get($endpoint . '?' . $query);
             if ($httpClient->getStatus() >= 200 && $httpClient->getStatus() < 300) {
                 return (array) $this->serializer->unserialize($httpClient->getBody());

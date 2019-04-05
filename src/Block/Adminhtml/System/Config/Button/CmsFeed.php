@@ -6,11 +6,13 @@ namespace Omikron\Factfinder\Block\Adminhtml\System\Config\Button;
 
 class CmsFeed extends Button
 {
-    /** @var string */
-    protected $_template = 'Omikron_Factfinder::system/config/button/cms-feed.phtml';
-
-    public function getButtonHtml(): string
+    protected function getLabel(): string
     {
-        return $this->generateButtonHtml('cms_feed_button', 'Generate CMS feed now');
+        return (string) __('Generate CMS feed now');
+    }
+
+    protected function getTargetUrl(): string
+    {
+        return $this->getUrl('factfinder/export/cmsfeed');
     }
 }

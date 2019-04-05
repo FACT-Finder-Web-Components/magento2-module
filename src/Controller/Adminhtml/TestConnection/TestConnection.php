@@ -48,7 +48,7 @@ class TestConnection extends Action
         try {
             $request = $this->getRequest();
             $params  = $this->getCredentials($request->getParams()) + ['channel' => $request->getParam('channel')];
-            $this->testConnection->execute($request->getParam('serverUrl'), $params);
+            $this->testConnection->execute($request->getParam('address'), $params);
         } catch (\Exception $e) {
             $message = $e->getMessage();
         }
@@ -62,6 +62,11 @@ class TestConnection extends Action
         if ($params['password'] === $this->obscuredValue) {
             $params['password'] = $this->authConfig->getPassword();
         }
+
+        $params += [
+            'prefix'  => $params['authentication_prefix'],
+            'postfix' => $params['authentication_postfix'],
+        ];
         return $this->credentialsFactory->create($params)->toArray();
     }
 }
