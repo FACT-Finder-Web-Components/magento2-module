@@ -9,6 +9,6 @@
         </images>
     </media>
     <exclude>
-        <item type="file">Omikron_Factfinder::ff-web-components/vendor/webcomponents-loader.min.js</item>
+        <item type="file">Omikron_Factfinder::ff-web-components/vendor/webcomponents-loader.js</item>
     </exclude>
 </view>
