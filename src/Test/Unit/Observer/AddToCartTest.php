@@ -8,7 +8,7 @@ use Magento\Catalog\Model\Product;
 use Magento\Framework\App\RequestInterface;
 use Magento\Framework\Event\Observer;
 use Magento\Store\Api\Data\StoreInterface;
-use Magento\Store\Model\StoreManagerInterface;
+use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
 use Omikron\Factfinder\Api\Data\TrackingProductInterface;
 use Omikron\Factfinder\Api\Data\TrackingProductInterfaceFactory;
 use Omikron\Factfinder\Api\FieldRolesInterface;
@@ -95,7 +95,7 @@ class AddToCartTest extends TestCase
             $this->trackingMock,
             $this->trackingProductFactoryMock,
             $this->fieldRolesMock,
-            $this->createConfiguredMock(StoreManagerInterface::class, ['getStore' => $this->storeMock])
+            $this->createConfiguredMock(CommunicationConfigInterface::class, ['isChannelEnabled' => true ])
         );
     }
 }

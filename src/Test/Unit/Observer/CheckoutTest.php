@@ -8,7 +8,7 @@ use Magento\Catalog\Model\Product;
 use Magento\Framework\Event\Observer;
 use Magento\Quote\Model\Quote;
 use Magento\Quote\Model\Quote\Item;
-use Magento\Store\Model\StoreManagerInterface;
+use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
 use Omikron\Factfinder\Api\Data\TrackingProductInterface;
 use Omikron\Factfinder\Api\Data\TrackingProductInterfaceFactory;
 use Omikron\Factfinder\Api\FieldRolesInterface;
@@ -58,7 +58,7 @@ class CheckoutTest extends TestCase
             $this->trackingMock,
             $this->trackingProductFactoryMock,
             $this->createMock(FieldRolesInterface::class),
-            $this->createMock(StoreManagerInterface::class)
+            $this->createConfiguredMock(CommunicationConfigInterface::class, ['isChannelEnabled' => true ])
         );
     }
 }
