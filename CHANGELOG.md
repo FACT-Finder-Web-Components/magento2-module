@@ -1,7 +1,10 @@
 # Changelog
-## Unreleased
+## [v1.1.1] - 2019.05.16
 ### Added
 - Add logging to tracking exceptions
+
+### Changed
+- Upgrade Web Components to v3.3.0
 
 ### Fixed
 - Skip tracking if the FACT-Finder integration is disabled in the backend
@@ -109,6 +112,7 @@
 ### Added
 - Feed Export: Export feed file is now available via separate link
 
+[v1.1.1]:       https://github.com/FACT-Finder-Web-Components/magento2-module/compare/v1.1.0...v1.1.1
 [v1.1.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/compare/v1.0.0...v1.1.0
 [v1.0.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/compare/v0.9-beta.11...v1.0.0
 [v0.9-beta.11]: https://github.com/FACT-Finder-Web-Components/magento2-module/compare/v0.9-beta.10...v0.9-beta.11
