@@ -74,7 +74,7 @@ class AddToCartTest extends TestCase
     public function test_no_tracking_if_integration_is_disabled()
     {
         $this->configMock->method('isChannelEnabled')->willReturn(false);
-        $this->trackingMock->expects($this->any())->method('execute');
+        $this->trackingMock->expects($this->never())->method('execute');
         $this->addToCart->execute($this->observerMock);
     }
 

@@ -1,4 +1,10 @@
 # Changelog
+## [Unreleased]
+### Added
+- Add Logging to tracking exceptions
+### Fixed
+- Fixed exceptions thrown by Tracking if FACT-Finder connection could not be established
+
 ## [v1.1.0] - 2019.04.05
 ### Added
 - Replace main navigation with the `<ff-navigation>` component
