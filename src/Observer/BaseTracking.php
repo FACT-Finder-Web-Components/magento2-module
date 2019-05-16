@@ -21,7 +21,7 @@ abstract class BaseTracking
     /** @var FieldRolesInterface */
     protected $fieldRoles;
 
-    /** @var CommunicationConfigInterface  */
+    /** @var CommunicationConfigInterface */
     protected $config;
 
     public function __construct(
