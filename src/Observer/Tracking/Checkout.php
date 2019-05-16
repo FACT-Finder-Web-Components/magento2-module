@@ -14,6 +14,10 @@ class Checkout extends BaseTracking implements ObserverInterface
 {
     public function execute(Observer $observer)
     {
+        if (!$this->config->isChannelEnabled()) {
+            return;
+        }
+
         /** @var Quote $cart */
         $cart = $observer->getData('quote');
 

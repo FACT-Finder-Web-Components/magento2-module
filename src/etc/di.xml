@@ -99,6 +99,9 @@
         </arguments>
     </virtualType>
 
+    <type name="Magento\Framework\View\Asset\Minification">
+        <plugin name="ff.asset.minification" type="Omikron\Factfinder\Plugin\AssetMinificationPlugin" />
+    </type>
     <type name="Omikron\Factfinder\Controller\Export\Product">
         <arguments>
             <argument name="channelProvider" xsi:type="object">Omikron\Factfinder\Model\Config\CommunicationConfig</argument>
@@ -111,6 +114,9 @@
     </type>
     <type name="Omikron\Factfinder\Model\Api\PushImport">
         <plugin name="logPushImportExceptions" type="Omikron\Factfinder\Plugin\LogExceptions" />
+    </type>
+    <type name="Omikron\Factfinder\Model\Api\Tracking">
+        <plugin name="logTrackingExceptions" type="Omikron\Factfinder\Plugin\LogExceptions" />
     </type>
     <type name="Omikron\Factfinder\Model\Api\Tracking">
         <arguments>
