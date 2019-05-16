@@ -14,22 +14,22 @@ class Checkout extends BaseTracking implements ObserverInterface
 {
     public function execute(Observer $observer)
     {
-        if ($this->config->isChannelEnabled()) {
-            /** @var Quote $cart */
-            $cart             = $observer->getData('quote');
-            $trackingProducts = array_map(
-                function (Item $item) {
-                    return $this->trackingProductFactory->create(
-                        [
-                            'trackingNumber'      => $this->getProductData('trackingProductNumber', $item->getProduct()),
-                            'masterArticleNumber' => $this->getProductData('masterArticleNumber', $item->getProduct()),
-                            'price'               => $item->getPrice(),
-                            'count'               => $item->getQty(),
-                        ]
-                    );
-                }, $cart->getAllVisibleItems()
-            );
-            $this->tracking->execute('checkout', ...$trackingProducts);
+        if (!$this->config->isChannelEnabled()) {
+            return;
         }
+
+        /** @var Quote $cart */
+        $cart = $observer->getData('quote');
+
+        $trackingProducts = array_map(function (Item $item) {
+            return $this->trackingProductFactory->create([
+                'trackingNumber'      => $this->getProductData('trackingProductNumber', $item->getProduct()),
+                'masterArticleNumber' => $this->getProductData('masterArticleNumber', $item->getProduct()),
+                'price'               => $item->getPrice(),
+                'count'               => $item->getQty(),
+            ]);
+        }, $cart->getAllVisibleItems());
+
+        $this->tracking->execute('checkout', ...$trackingProducts);
     }
 }
