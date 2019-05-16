@@ -12,10 +12,13 @@ class AddToCart extends BaseTracking implements ObserverInterface
 {
     public function execute(Observer $observer)
     {
+        if (!$this->config->isChannelEnabled()) {
+            return;
+        }
+
         $request = $observer->getData('request');
         $product = $observer->getData('product');
         $qty     = (int) ($request->getParam('qty') ?: 1);
-
         $this->tracking->execute('cart', $this->trackingProductFactory->create([
             'trackingNumber'      => $this->getProductData('trackingProductNumber', $product),
             'masterArticleNumber' => $this->getProductData('masterArticleNumber', $product),

@@ -8,7 +8,7 @@ use Magento\Catalog\Model\Product;
 use Magento\Framework\App\RequestInterface;
 use Magento\Framework\Event\Observer;
 use Magento\Store\Api\Data\StoreInterface;
-use Magento\Store\Model\StoreManagerInterface;
+use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
 use Omikron\Factfinder\Api\Data\TrackingProductInterface;
 use Omikron\Factfinder\Api\Data\TrackingProductInterfaceFactory;
 use Omikron\Factfinder\Api\FieldRolesInterface;
@@ -42,10 +42,15 @@ class AddToCartTest extends TestCase
     /** @var AddToCart */
     private $addToCart;
 
+    /** @var MockObject|CommunicationConfigInterface */
+    private $configMock;
+
     public function test_execute_track_event_successfully()
     {
+        $this->configMock->method('isChannelEnabled')->willReturn(true);
         $this->requestMock->method('getParam')->with('qty')->willReturn(0);
         $this->productMock->method('getFinalPrice')->with(1)->willReturn(9.99);
+
         $this->fieldRolesMock->expects($this->exactly(2))
             ->method('fieldRoleToAttribute')->willReturnMap([
                 [$this->productMock, 'trackingProductNumber', '1'],
@@ -67,6 +72,13 @@ class AddToCartTest extends TestCase
         $this->addToCart->execute($this->observerMock);
     }
 
+    public function test_tracking_is_skipped_if_the_integration_is_disabled()
+    {
+        $this->configMock->method('isChannelEnabled')->willReturn(false);
+        $this->trackingMock->expects($this->never())->method('execute');
+        $this->addToCart->execute($this->observerMock);
+    }
+
     protected function setUp()
     {
         $this->storeMock      = $this->createMock(StoreInterface::class);
@@ -75,6 +87,7 @@ class AddToCartTest extends TestCase
         $this->requestMock    = $this->createMock(RequestInterface::class);
         $this->productMock    = $this->createMock(Product::class);
         $this->observerMock   = $this->createMock(Observer::class);
+        $this->configMock     = $this->createMock(CommunicationConfigInterface::class);
 
         $this->trackingProductFactoryMock = $this->getMockBuilder(TrackingProductInterfaceFactory::class)
             ->disableOriginalConstructor()
@@ -95,7 +108,7 @@ class AddToCartTest extends TestCase
             $this->trackingMock,
             $this->trackingProductFactoryMock,
             $this->fieldRolesMock,
-            $this->createConfiguredMock(StoreManagerInterface::class, ['getStore' => $this->storeMock])
+            $this->configMock
         );
     }
 }

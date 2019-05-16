@@ -1,4 +1,11 @@
 # Changelog
+## Unreleased
+### Added
+- Add logging to tracking exceptions
+
+### Fixed
+- Skip tracking if the FACT-Finder integration is disabled in the backend
+
 ## [v1.1.0] - 2019.04.05
 ### Added
 - Replace main navigation with the `<ff-navigation>` component
