@@ -24,11 +24,15 @@ class CheckoutTest extends TestCase
     /** @var MockObject|TrackingProductInterfaceFactory */
     private $trackingProductFactoryMock;
 
+    /** @var MockObject|CommunicationConfigInterface */
+    private $configMock;
+
     /** @var Checkout */
     private $checkoutObserver;
 
     public function test_execute_should_call_tracking_with_parameters_of_correct_type()
     {
+        $this->configMock->method('isChannelEnabled')->willReturn(true);
         $quoteMock = $this->createConfiguredMock(Quote::class, ['getAllVisibleItems' => [
             $this->createConfiguredMock(Item::class, ['getProduct' => $this->createMock(Product::class)]),
             $this->createConfiguredMock(Item::class, ['getProduct' => $this->createMock(Product::class)]),
@@ -45,10 +49,17 @@ class CheckoutTest extends TestCase
         $this->checkoutObserver->execute(new Observer(['quote' => $quoteMock]));
     }
 
+    public function test_no_tracking_if_integration_is_disabled()
+    {
+        $this->configMock->method('isChannelEnabled')->willReturn(false);
+        $this->trackingMock->expects($this->any())->method('execute');
+        $this->checkoutObserver->execute(new Observer(['quote' => $this->createMock(Quote::class)]));
+    }
+
     protected function setUp()
     {
         $this->trackingMock = $this->createMock(Tracking::class);
-
+        $this->configMock = $this->createMock(CommunicationConfigInterface::class);
         $this->trackingProductFactoryMock = $this->getMockBuilder(TrackingProductInterfaceFactory::class)
             ->disableOriginalConstructor()
             ->setMethods(['create'])
@@ -58,7 +69,7 @@ class CheckoutTest extends TestCase
             $this->trackingMock,
             $this->trackingProductFactoryMock,
             $this->createMock(FieldRolesInterface::class),
-            $this->createConfiguredMock(CommunicationConfigInterface::class, ['isChannelEnabled' => true ])
+            $this->configMock
         );
     }
 }

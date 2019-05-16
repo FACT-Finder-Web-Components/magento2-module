@@ -42,8 +42,12 @@ class AddToCartTest extends TestCase
     /** @var AddToCart */
     private $addToCart;
 
+    /** @var MockObject|CommunicationConfigInterface */
+    private $configMock;
+
     public function test_execute_track_event_successfully()
     {
+        $this->configMock->method('isChannelEnabled')->willReturn(true);
         $this->requestMock->method('getParam')->with('qty')->willReturn(0);
         $this->productMock->method('getFinalPrice')->with(1)->willReturn(9.99);
         $this->fieldRolesMock->expects($this->exactly(2))
@@ -67,6 +71,13 @@ class AddToCartTest extends TestCase
         $this->addToCart->execute($this->observerMock);
     }
 
+    public function test_no_tracking_if_integration_is_disabled()
+    {
+        $this->configMock->method('isChannelEnabled')->willReturn(false);
+        $this->trackingMock->expects($this->any())->method('execute');
+        $this->addToCart->execute($this->observerMock);
+    }
+
     protected function setUp()
     {
         $this->storeMock      = $this->createMock(StoreInterface::class);
@@ -75,6 +86,7 @@ class AddToCartTest extends TestCase
         $this->requestMock    = $this->createMock(RequestInterface::class);
         $this->productMock    = $this->createMock(Product::class);
         $this->observerMock   = $this->createMock(Observer::class);
+        $this->configMock     = $this->createMock(CommunicationConfigInterface::class);
 
         $this->trackingProductFactoryMock = $this->getMockBuilder(TrackingProductInterfaceFactory::class)
             ->disableOriginalConstructor()
@@ -95,7 +107,7 @@ class AddToCartTest extends TestCase
             $this->trackingMock,
             $this->trackingProductFactoryMock,
             $this->fieldRolesMock,
-            $this->createConfiguredMock(CommunicationConfigInterface::class, ['isChannelEnabled' => true ])
+            $this->configMock
         );
     }
 }
