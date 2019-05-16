@@ -33,6 +33,7 @@ class CheckoutTest extends TestCase
     public function test_execute_should_call_tracking_with_parameters_of_correct_type()
     {
         $this->configMock->method('isChannelEnabled')->willReturn(true);
+
         $quoteMock = $this->createConfiguredMock(Quote::class, ['getAllVisibleItems' => [
             $this->createConfiguredMock(Item::class, ['getProduct' => $this->createMock(Product::class)]),
             $this->createConfiguredMock(Item::class, ['getProduct' => $this->createMock(Product::class)]),
@@ -49,7 +50,7 @@ class CheckoutTest extends TestCase
         $this->checkoutObserver->execute(new Observer(['quote' => $quoteMock]));
     }
 
-    public function test_no_tracking_if_integration_is_disabled()
+    public function test_tracking_is_skipped_if_the_integration_is_disabled()
     {
         $this->configMock->method('isChannelEnabled')->willReturn(false);
         $this->trackingMock->expects($this->never())->method('execute');

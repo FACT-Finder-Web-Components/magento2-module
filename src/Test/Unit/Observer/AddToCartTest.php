@@ -50,6 +50,7 @@ class AddToCartTest extends TestCase
         $this->configMock->method('isChannelEnabled')->willReturn(true);
         $this->requestMock->method('getParam')->with('qty')->willReturn(0);
         $this->productMock->method('getFinalPrice')->with(1)->willReturn(9.99);
+
         $this->fieldRolesMock->expects($this->exactly(2))
             ->method('fieldRoleToAttribute')->willReturnMap([
                 [$this->productMock, 'trackingProductNumber', '1'],
@@ -71,7 +72,7 @@ class AddToCartTest extends TestCase
         $this->addToCart->execute($this->observerMock);
     }
 
-    public function test_no_tracking_if_integration_is_disabled()
+    public function test_tracking_is_skipped_if_the_integration_is_disabled()
     {
         $this->configMock->method('isChannelEnabled')->willReturn(false);
         $this->trackingMock->expects($this->never())->method('execute');

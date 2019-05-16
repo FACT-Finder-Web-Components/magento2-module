@@ -1,9 +1,10 @@
 # Changelog
-## [Unreleased]
+## Unreleased
 ### Added
-- Add Logging to tracking exceptions
+- Add logging to tracking exceptions
+
 ### Fixed
-- Fixed exceptions thrown by Tracking if FACT-Finder connection could not be established
+- Skip tracking if the FACT-Finder integration is disabled in the backend
 
 ## [v1.1.0] - 2019.04.05
 ### Added
