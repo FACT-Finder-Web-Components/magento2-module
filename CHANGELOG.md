@@ -1,4 +1,8 @@
 # Changelog
+## [Unreleased]
+### Changed
+- Upgrade Web Components to v3.3.0
+
 ## [v1.1.0] - 2019.04.05
 ### Added
 - Replace main navigation with the `<ff-navigation>` component
