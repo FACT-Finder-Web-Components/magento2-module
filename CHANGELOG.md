@@ -1,7 +1,13 @@
 # Changelog
-## [Unreleased]
+## Unreleased
+### Added
+- Add logging to tracking exceptions
+
 ### Changed
 - Upgrade Web Components to v3.3.0
+
+### Fixed
+- Skip tracking if the FACT-Finder integration is disabled in the backend
 
 ## [v1.1.0] - 2019.04.05
 ### Added
