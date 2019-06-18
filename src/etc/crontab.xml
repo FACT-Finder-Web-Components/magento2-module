@@ -1,8 +1,11 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
     <group id="default">
-        <job name="factfinder_feed_export" instance="Omikron\Factfinder\Cron\Feed" method="execute">
+        <job name="factfinder_feed_export" instance="ProductExportCron" method="execute">
             <schedule>0 1 * * *</schedule>
         </job>
+        <!--<job name="factfinder_cms_feed_export" instance="CmsExportCron" method="execute">
+            <schedule>0 1 * * *</schedule>
+        </job>-->
     </group>
 </config>
