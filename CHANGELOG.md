@@ -1,4 +1,11 @@
 # Changelog
+## [v1.1.2] - [unreleased]
+### Changed
+- Upgrade Web Components to v3.4.0
+
+### Fixed
+- Fix fatal PHP error which occurs on cron export
+
 ## [v1.1.1] - 2019.05.16
 ### Added
 - Add logging to tracking exceptions
