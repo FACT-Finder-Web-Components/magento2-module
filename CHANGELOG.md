@@ -1,10 +1,17 @@
 # Changelog
+## [v1.1.2] - 2019.06.28
+### Changed
+- Upgrade Web Components to v3.4.0
+
+### Fixed
+- Fix fatal PHP error which occurs on cron export
+
 ## [v1.1.1] - 2019.05.16
 ### Added
 - Add logging to tracking exceptions
 
 ### Changed
-- Upgrade Web Components to v3.3.0
+- Upgrade Web Components to v3.3.1
 
 ### Fixed
 - Skip tracking if the FACT-Finder integration is disabled in the backend
