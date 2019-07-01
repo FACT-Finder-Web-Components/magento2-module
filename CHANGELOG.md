@@ -1,5 +1,10 @@
 # Changelog
 ## Unreleased
+### Added
+- Add configurable product adding to cart listing.
+WARNING! This functionality is based on additional data exported in product Feed.
+In order to get this work correctly, please export new feed file right after new version is installed
+
 ### Changed
 - Add push FACT-Finder import on cron feed export
 
