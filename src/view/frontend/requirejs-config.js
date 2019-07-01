@@ -13,5 +13,5 @@ var config = {
             exports: 'factfinder'
         }
     },
-    deps: ['Omikron_Factfinder/js/search-navigation']
+    deps: ['Omikron_Factfinder/js/search-navigation','Omikron_Factfinder/js/catalog-add-to-cart', 'Omikron_Factfinder/js/swatch-renderer']
 };
