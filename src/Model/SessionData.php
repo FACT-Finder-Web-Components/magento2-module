@@ -12,7 +12,7 @@ use Omikron\Factfinder\Api\SessionDataInterface;
 class SessionData implements SessionDataInterface, SectionSourceInterface, ParametersSourceInterface
 {
     /** @var CustomerSession */
-    private $customerSession;
+    protected $customerSession;
 
     public function __construct(CustomerSession $customerSession) // phpcs:ignore
     {
@@ -48,7 +48,7 @@ class SessionData implements SessionDataInterface, SectionSourceInterface, Param
         ];
     }
 
-    private function getCorrectSessionId(string $sessionId, int $length = 30): string
+    protected function getCorrectSessionId(string $sessionId, int $length = 30): string
     {
         $sessionId = $sessionId ?: sha1(uniqid('', true));
         $sessionId = str_repeat($sessionId, intdiv($length, strlen($sessionId)) + 1);
