@@ -56,7 +56,7 @@ class SimpleDataProvider implements DataProviderInterface, ExportEntityInterface
             'Description'   => (string) $this->product->getData('description'),
             'Short'         => (string) $this->product->getData('short_description'),
             'ProductURL'    => (string) $this->product->getUrlInStore(),
-            'Price'         => $this->numberFormatter->format((float) $this->product->getFinalPrice()),
+            'Price'         => $this->numberFormatter->format($this->getPrice()),
             'Brand'         => (string) $this->product->getAttributeText('manufacturer'),
             'Availability'  => (int) $this->product->isAvailable(),
             'MagentoId'     => $this->getId(),
@@ -65,5 +65,12 @@ class SimpleDataProvider implements DataProviderInterface, ExportEntityInterface
         return array_merge($data, array_map(function (ProductFieldInterface $field): string {
             return $field->getValue($this->product);
         }, $this->productFields));
+    }
+
+    private function getPrice(): float
+    {
+        return (float)($this->product->getFinalPrice() > 0.0
+            ? $this->product->getFinalPrice()
+            : $this->product->getPriceInfo()->getPrice('final_price')->getValue());
     }
 }
