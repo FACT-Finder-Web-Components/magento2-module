@@ -5,6 +5,7 @@
 
 ### Fixed
 - Fix currency code is now taken from store config
+- baseUrl is now set before window setting location in search-navigation
 
 ## [v1.1.2] - 2019.06.28
 ### Changed
