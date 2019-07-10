@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Changed
+- Add push FACT-Finder import on cron feed export
+
 ## [v1.1.2] - 2019.06.28
 ### Changed
 - Upgrade Web Components to v3.4.0

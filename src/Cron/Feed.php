@@ -11,6 +11,7 @@ use Omikron\Factfinder\Model\Export\FeedFactory as FeedGeneratorFactory;
 use Omikron\Factfinder\Model\FtpUploader;
 use Omikron\Factfinder\Model\StoreEmulation;
 use Omikron\Factfinder\Model\Stream\CsvFactory;
+use Omikron\Factfinder\Model\Api\PushImport;
 
 class Feed
 {
@@ -40,6 +41,9 @@ class Feed
     /** @var string */
     private $feedType;
 
+    /** @var PushImport  */
+    private $pushImport;
+
     public function __construct(
         ScopeConfigInterface $scopeConfig,
         StoreManagerInterface $storeManager,
@@ -48,6 +52,7 @@ class Feed
         CsvFactory $csvFactory,
         FtpUploader $ftpUploader,
         ChannelProviderInterface $channelProvider,
+        PushImport $pushImport,
         string $type
     ) {
         $this->scopeConfig          = $scopeConfig;
@@ -57,6 +62,7 @@ class Feed
         $this->csvFactory           = $csvFactory;
         $this->ftpUploader          = $ftpUploader;
         $this->channelProvider      = $channelProvider;
+        $this->pushImport           = $pushImport;
         $this->feedType             = $type;
     }
 
@@ -73,6 +79,7 @@ class Feed
                     $stream   = $this->csvFactory->create(['filename' => "factfinder/{$filename}"]);
                     $this->feedGeneratorFactory->create($this->feedType)->generate($stream);
                     $this->ftpUploader->upload($filename, $stream);
+                    $this->pushImport->execute((int) $store->getId());
                 }
             });
         }
