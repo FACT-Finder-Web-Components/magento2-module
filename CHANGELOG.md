@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Fixed
+- Fix currency code is now taken from store config
+
 ## [v1.1.2] - 2019.06.28
 ### Changed
 - Upgrade Web Components to v3.4.0
