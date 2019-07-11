@@ -26,7 +26,7 @@
                 <div data-container="showMore">
 
                     <!-- set the padding on an inner element so we don't suffer from height 0 + padding issues-->
-                    <span class="text">Show More</span>
+                    <span class="text"><?= __('Show More') ?></span>
                 </div>
 
                 <div class="marginBottom"></div>
@@ -40,7 +40,7 @@
                 <div data-container="showLess">
 
                     <!-- set the padding on an inner element so we don't suffer from height 0 + padding issues-->
-                    <span class="text">Show Less</span>
+                    <span class="text"><?= __('Show Less') ?></span>
                 </div>
                 <div class="marginBottom"></div>
             </div>
@@ -70,7 +70,7 @@
             <div slot="groupCaption" class="groupCaption">
                 {{group.name}}<span class="filterArrowDown">&nbsp;</span>
             </div>
-            <div data-container="removeFilter">Remove Filter</div>
+            <div data-container="removeFilter"><?= __('Remove Filter') ?></div>
             <ff-slider-control submit-on-input="true">
                 <input data-control='1'
                        style="position: absolute; width: 60px;left: 15px;top:12px;">
