@@ -5,23 +5,23 @@ declare(strict_types=1);
 namespace Omikron\Factfinder\Model\Config\Communication;
 
 use Magento\Directory\Model\Currency;
+use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Locale\ResolverInterface;
+use Magento\Store\Model\ScopeInterface;
 use Omikron\Factfinder\Api\Config\ParametersSourceInterface;
 
 class CurrencyConfig implements ParametersSourceInterface
 {
+    /** @var ScopeConfigInterface */
+    private $scopeConfig;
+
     /** @var ResolverInterface */
     private $localeResolver;
 
-    /** @var Currency */
-    private $currency;
-
-    public function __construct(
-        ResolverInterface $localeResolver,
-        Currency $currency
-    ) {
+    public function __construct(ScopeConfigInterface $scopeConfig, ResolverInterface $localeResolver)
+    {
+        $this->scopeConfig    = $scopeConfig;
         $this->localeResolver = $localeResolver;
-        $this->currency       = $currency;
     }
 
     public function getParameters(): array
@@ -34,8 +34,7 @@ class CurrencyConfig implements ParametersSourceInterface
 
     private function getCurrencyCode(): string
     {
-        $currencies = $this->currency->getConfigDefaultCurrencies();
-        return reset($currencies );
+        return (string) $this->scopeConfig->getValue(Currency::XML_PATH_CURRENCY_DEFAULT, ScopeInterface::SCOPE_STORES);
     }
 
     private function getCurrencyCountryCode(): string

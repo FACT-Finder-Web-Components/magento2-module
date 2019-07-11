@@ -58,7 +58,7 @@ class AttributeTest extends TestCase
         $this->sourceModel = new Attribute($this->attributeCollectionFactory);
     }
 
-    private function createAttribute(?string $value, ?string $label): MockObject
+    private function createAttribute(?string $value, ?string $label)
     {
         return $this->createConfiguredMock(EavAttribute::class, [
             'getAttributeCode'        => $value,
