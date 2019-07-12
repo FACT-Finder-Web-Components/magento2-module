@@ -13,6 +13,6 @@ class Feed extends Button
 
     protected function getTargetUrl(): string
     {
-        return $this->getUrl('factfinder/export/feed');
+        return $this->getUrl('factfinder/export/feed', ['type' => 'product']);
     }
 }

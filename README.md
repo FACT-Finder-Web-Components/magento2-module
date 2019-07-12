@@ -109,8 +109,8 @@ Feed export is also available to trigger by visiting specific URL, which is also
 
 Exports are available under following locations:
 
-- `https://YOUR_SHOP_URL/factfinder/export/product/store/YOUR_STORE_ID` - for exporting product feed (or combined feed if You have cms export enabled and You've chosen to export product and cms data in one file)
-- `https://YOUR_SHOP_URL/factfinder/export/cms/store/YOUR_STORE_ID`- for CMS export
+- `https://YOUR_SHOP_URL/factfinder/export/feed/type/product/store/YOUR_STORE_ID` - for exporting product feed (or combined feed if You have cms export enabled and You've chosen to export product and cms data in one file)
+- `https://YOUR_SHOP_URL/factfinder/export/feed/type/cms/store/YOUR_STORE_ID`- for CMS export
 
 If there's no `store id` provided, feed will be generated with the default store (by default with id = 1)
 

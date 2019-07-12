@@ -3,6 +3,7 @@
 namespace Omikron\Factfinder\Model\Stream;
 
 use Magento\Framework\App\Filesystem\DirectoryList;
+use Magento\Framework\Exception\FileSystemException;
 use Magento\Framework\Filesystem;
 use Magento\Framework\Filesystem\File\WriteInterface;
 use Omikron\Factfinder\Api\StreamInterface;
@@ -27,7 +28,7 @@ class Csv implements StreamInterface
     /**
      * @param array $entity
      *
-     * @throws \Magento\Framework\Exception\FileSystemException
+     * @throws FileSystemException
      */
     public function addEntity(array $entity): void
     {
@@ -37,6 +38,11 @@ class Csv implements StreamInterface
     public function getContent(): string
     {
         return $this->getStream()->readAll();
+    }
+
+    public function getFileName(): string
+    {
+        return $this->filename;
     }
 
     private function getStream(): WriteInterface

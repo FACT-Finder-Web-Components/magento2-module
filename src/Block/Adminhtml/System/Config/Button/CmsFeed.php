@@ -13,6 +13,6 @@ class CmsFeed extends Button
 
     protected function getTargetUrl(): string
     {
-        return $this->getUrl('factfinder/export/cmsfeed');
+        return $this->getUrl('factfinder/export/feed', ['type' => 'cms']);
     }
 }

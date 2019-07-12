@@ -1,5 +1,8 @@
 # Changelog
 ## Unreleased
+### Added
+- Added Feed service which can be easily use to integrate/download feed
+
 ### Changed
 - Add push FACT-Finder import on cron feed export
 

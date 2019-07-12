@@ -9,7 +9,7 @@ define([
         /** @inheritdoc */
         initialize: function () {
             this._super();
-            customerData.reload(['ffcommunication']).done(function (result) {
+            customerData.reload(['ffcommunication', 'messages']).done(function (result) {
                 var communication = $('ff-communication'),
                     uid = result.ffcommunication.uid,
                     sid = result.ffcommunication.sid;

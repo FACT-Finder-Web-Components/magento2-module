@@ -10,8 +10,9 @@ use Magento\Framework\Exception\NotFoundException;
 use Omikron\Factfinder\Api\ClientInterface;
 use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
 use Omikron\Factfinder\Exception\ResponseException;
+use Magento\Framework\App\Action\Action;
 
-class Call extends \Magento\Framework\App\Action\Action
+class Call extends Action
 {
     /** @var JsonFactory */
     private $jsonResultFactory;

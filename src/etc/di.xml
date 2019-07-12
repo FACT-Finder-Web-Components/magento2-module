@@ -98,18 +98,29 @@
             <argument name="serializer" xsi:type="object">Omikron\Factfinder\Model\Serializer\PlainTextSerializer</argument>
         </arguments>
     </virtualType>
-
+    <virtualType name="Omikron\Factfinder\Model\CatalogFeedExportService" type="Omikron\Factfinder\Model\FeedService">
+        <arguments>
+            <argument name="channelProvider" xsi:type="object">Omikron\Factfinder\Model\Config\CommunicationConfig</argument>
+            <argument name="type" xsi:type="string">product</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Omikron\Factfinder\Model\CmsFeedExportService" type="Omikron\Factfinder\Model\FeedService">
+        <arguments>
+            <argument name="channelProvider" xsi:type="object">Omikron\Factfinder\Model\Config\CmsConfig</argument>
+            <argument name="type" xsi:type="string">cms</argument>
+        </arguments>
+    </virtualType>
     <type name="Magento\Framework\View\Asset\Minification">
         <plugin name="ff.asset.minification" type="Omikron\Factfinder\Plugin\AssetMinificationPlugin" />
     </type>
     <type name="Omikron\Factfinder\Controller\Export\Product">
         <arguments>
-            <argument name="channelProvider" xsi:type="object">Omikron\Factfinder\Model\Config\CommunicationConfig</argument>
+            <argument name="feedService" xsi:type="object">"Omikron\Factfinder\Model\CatalogFeedExportService</argument>
         </arguments>
     </type>
     <type name="Omikron\Factfinder\Controller\Export\Cms">
         <arguments>
-            <argument name="channelProvider" xsi:type="object">Omikron\Factfinder\Model\Config\CmsConfig</argument>
+            <argument name="feedService" xsi:type="object">Omikron\Factfinder\Model\CmsFeedExportService</argument>
         </arguments>
     </type>
     <type name="Omikron\Factfinder\Model\Api\PushImport">
@@ -180,6 +191,14 @@
             </argument>
         </arguments>
         <plugin name="changeFeedType" type="Omikron\Factfinder\Plugin\Export\ChangeFeedType"/>
+    </type>
+    <type name="Omikron\Factfinder\Model\FeedServiceFactory">
+        <arguments>
+            <argument name="servicesPool" xsi:type="array">
+                <item name="product" xsi:type="string">Omikron\Factfinder\Model\CatalogFeedExportService</item>
+                <item name="cms" xsi:type="string">Omikron\Factfinder\Model\CmsFeedExportService</item>
+            </argument>
+        </arguments>
     </type>
     <type name="Omikron\Factfinder\Model\FtpUploader">
         <arguments>
