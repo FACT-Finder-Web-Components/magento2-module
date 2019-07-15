@@ -7,7 +7,11 @@
 - Add push FACT-Finder import on cron feed export
 
 ### Fixed
+- Allow empty multiselect fields in system configuration
+- baseUrl is now set before window setting location in search-navigation
 - Fix currency code is now taken from store config
+- Fix price 0 export for bundle and grouped products
+- Fix use-cache communication parameter value
 
 ## [v1.1.2] - 2019.06.28
 ### Changed
