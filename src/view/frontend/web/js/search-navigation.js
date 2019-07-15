@@ -4,7 +4,7 @@ define(['factfinder', 'mage/url', 'matchMedia', 'jquery'], function (factfinder,
     factfinder.communication.FFCommunicationEventAggregator.addBeforeDispatchingCallback(function (event) {
         if ((event.type === 'search' || event.type === 'navigation-search') && !isSearchResultPage()) {
             var params = factfinder.common.dictToParameterString(event);
-            url.setBaseUrl(BASE_URL);
+            if (!url.build('')) url.setBaseUrl(BASE_URL || '');
             window.location = url.build(redirectPath + params);
         }
         hideMenu();
