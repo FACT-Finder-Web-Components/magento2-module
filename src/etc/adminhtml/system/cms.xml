@@ -35,6 +35,7 @@
             <label>Pages Blacklist</label>
             <comment>Selected pages will not be exported</comment>
             <source_model>Magento\Cms\Model\Config\Source\Page</source_model>
+            <can_be_empty>1</can_be_empty>
             <depends>
                 <field id="ff_cms_export_enabled">1</field>
             </depends>
