@@ -4,6 +4,7 @@
 - Add push FACT-Finder import on cron feed export
 
 ### Fixed
+- baseUrl is now set before window setting location in search-navigation
 - Fix currency code is now taken from store config
 - Fix price 0 export for bundle and grouped product
 - Fix use-cache communication parameter value
