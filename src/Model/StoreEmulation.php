@@ -19,13 +19,11 @@ class StoreEmulation
 
     public function runInStore(int $storeId, callable $proceed)
     {
-        $result = null;
         try {
             $this->emulation->startEnvironmentEmulation($storeId, Area::AREA_FRONTEND, true);
-            $result = $proceed();
+            return $proceed();
         } finally {
             $this->emulation->stopEnvironmentEmulation();
-            return $result;
         }
     }
 }

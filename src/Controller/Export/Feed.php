@@ -9,7 +9,6 @@ use Magento\Framework\App\Action\Context;
 use Magento\Framework\App\Response\Http\FileFactory;
 use Magento\Store\Model\StoreManagerInterface;
 use Omikron\Factfinder\Model\FeedServiceFactory;
-use Omikron\Factfinder\Model\Stream\CsvFactory;
 
 class Feed extends Action
 {
@@ -36,7 +35,7 @@ class Feed extends Action
 
     public function execute()
     {
-        $storeId = (int)$this->getRequest()->getParam('store', $this->storeManager->getDefaultStoreView()->getId());
+        $storeId = (int) $this->getRequest()->getParam('store', $this->storeManager->getDefaultStoreView()->getId());
         try {
             $type = $this->getRequest()->getParam('type', $this->storeManager->getDefaultStoreView()->getId());
             $feedService = $this->feedServiceFactory = $this->feedServiceFactory->create($type);

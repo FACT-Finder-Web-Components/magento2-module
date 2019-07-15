@@ -38,8 +38,8 @@ class Feed extends Action
         $result = $this->jsonResultFactory->create();
         try {
             $type = $this->getRequest()->getParam('type', 'product');
-            preg_match('@/store/([0-9]+)/@', (string)$this->_redirect->getRefererUrl(), $match);
-            $storeId = (int)($match[1] ?? $this->storeManager->getDefaultStoreView()->getId());
+            preg_match('@/store/([0-9]+)/@', (string) $this->_redirect->getRefererUrl(), $match);
+            $storeId = (int) ($match[1] ?? $this->storeManager->getDefaultStoreView()->getId());
             $feedService = $this->feedServiceFactory->create($type);
             $feedService->integrate($storeId);
             $result->setData(['message' => __('Feed successfully generated')]);

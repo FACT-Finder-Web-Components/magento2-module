@@ -6,7 +6,6 @@ namespace Omikron\Factfinder\Model;
 
 use Omikron\Factfinder\Api\Config\ChannelProviderInterface;
 use Omikron\Factfinder\Api\FeedServiceInterface;
-use Omikron\Factfinder\Api\StoreInterface;
 use Omikron\Factfinder\Model\Api\PushImport;
 use Omikron\Factfinder\Model\Export\FeedFactory as FeedGeneratorFactory;
 use Omikron\Factfinder\Model\Stream\Csv;
