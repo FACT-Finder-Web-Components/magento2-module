@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Omikron\Factfinder\Model\Export\Catalog\ProductType;
 
-class CompositeDataProvider extends SimpleDataProvider
+class GroupedDataProvider extends SimpleDataProvider
 {
     public function toArray(): array
     {
