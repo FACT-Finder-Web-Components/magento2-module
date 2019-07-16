@@ -18,10 +18,10 @@ class BundleDataProvider extends SimpleDataProvider
     private $priceCurrency;
 
     public function __construct(
-        PriceCurrency $priceCurrency,
-        CatalogPrice $priceModel,
         Product $product,
         NumberFormatter $numberFormatter,
+        PriceCurrency $priceCurrency,
+        CatalogPrice $priceModel,
         array $productFields = []
     ) {
         parent::__construct($product, $numberFormatter, $productFields);
@@ -31,8 +31,7 @@ class BundleDataProvider extends SimpleDataProvider
 
     public function toArray(): array
     {
-        return ['Price' => $this->numberFormatter->format(
-                $this->priceCurrency->convert($this->priceModel->getCatalogPrice($this->product)))
-            ] + parent::toArray();
+        $price = (float) $this->priceCurrency->convert($this->priceModel->getCatalogPrice($this->product));
+        return ['Price' => $this->numberFormatter->format($price)] + parent::toArray();
     }
 }
