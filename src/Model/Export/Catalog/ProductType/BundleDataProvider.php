@@ -9,7 +9,7 @@ use Magento\Catalog\Model\Product;
 use Magento\Directory\Model\PriceCurrency;
 use Omikron\Factfinder\Model\Formatter\NumberFormatter;
 
-class CompositeDataProvider extends SimpleDataProvider
+class BundleDataProvider extends SimpleDataProvider
 {
     /** @var CatalogPrice */
     private $priceModel;
