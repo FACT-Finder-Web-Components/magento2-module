@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace Omikron\Factfinder\Model\Export\Catalog\ProductType;
 
-use Magento\Catalog\Model\Product;
-use Omikron\Factfinder\Model\Formatter\NumberFormatter;
 use Magento\Bundle\Model\Product\CatalogPrice;
+use Magento\Catalog\Model\Product;
 use Magento\Directory\Model\PriceCurrency;
+use Omikron\Factfinder\Model\Formatter\NumberFormatter;
 
 class CompositeDataProvider extends SimpleDataProvider
 {
-    /** @var CatalogPrice  */
+    /** @var CatalogPrice */
     private $priceModel;
 
-    /** @var PriceCurrency  */
+    /** @var PriceCurrency */
     private $priceCurrency;
 
     public function __construct(
@@ -23,9 +23,9 @@ class CompositeDataProvider extends SimpleDataProvider
         Product $product,
         NumberFormatter $numberFormatter,
         array $productFields = []
-    ){
+    ) {
         parent::__construct($product, $numberFormatter, $productFields);
-        $this->priceModel = $priceModel;
+        $this->priceModel    = $priceModel;
         $this->priceCurrency = $priceCurrency;
     }
 
