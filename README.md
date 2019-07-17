@@ -298,7 +298,7 @@ The standard feed contains all data FACT-Finder® requires to work. However, you
 which is relevant for your project and not part of a default Magento 2 installation.  In order to do so let's take a look
 into the DataProvider definition:
  
- ```
+ ```xml
 <type name="Omikron\Factfinder\Model\Export\Catalog\ProductType\SimpleDataProvider">
      <arguments>
          <argument name="productFields" xsi:type="array">
@@ -314,7 +314,7 @@ The constructor argument `productFields` stores references to specific fields th
 data from the product. Let's assume we want to add a new column `BrandLogo` containing image URLs. In your module DI, add
 the new definition which will be merged with the existing ones.
  
-```
+```xml
 <type name="Omikron\Factfinder\Model\Export\Catalog\ProductType\SimpleDataProvider">
     <arguments>
         <argument name="productFields" xsi:type="array">
