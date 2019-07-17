@@ -253,93 +253,92 @@ Once response from FACT-Finder is available, proxy controller emits an `ff_proxy
 ![Communication Overview](docs/assets/communication-overview.png "Communication Overview")
 
 ## Modification examples
-Module offers a fully working integration out of the box, however some of the projects may require modification in order to fit their needs. 
-Here are some common customization operations examples
+Our Magento 2 module offers a fully working integration out of the box, however some of the projects may require
+modification in order to fit their needs. Here are some common customization operations examples
+
 ### Changing existing column names
-Module has predefined column names defined in main dependency injection file `etc/di.xml`.
-Also the default DataProvider is configured to export data for columns with same names, so in order to change column name, You will need to add two modifications:
-*   Define new column name in Your module (located i.e app/code/YOUR_PROJECT/Factfinder) di.xml (You can use module definition as an example). Following coe snippet shows how to change name for column
-which is used by default as a Master Product Number (in module named Master)
- ```
- <virtualType name="Omikron\Factfinder\Model\Export\CombinedFeed" type="Omikron\Factfinder\Model\Export\Feed">
-        <arguments>
-            <argument name="dataProvider" xsi:type="object">Omikron\Factfinder\Model\Export\Combined\DataProvider</argument>
-            <argument name="columns" xsi:type="array">
-                <item name="Master" xsi:type="string">CUSTOM_NAME</item>
-            </argument>
-        </arguments>
-    </virtualType>   
- ```
- by keeping item name same as in module, You can change the value, which then, will be merged and it replace default definitions
-After the column name is changed in `di.xml` You need to add one plugin for DataProvider which will replace default old names with new one.
-Remember that You don't need to copy rest of elements. They won't be removed because configuration loading mechanism will merge all definitions into one output.
-Example implementation:
+The module has predefined column names defined in main dependency injection file `etc/di.xml`. These follow our feed best
+practices. The default DataProvider is configured to export data for columns with same names, so in order to change column
+name, you will need to add two modifications:
+
+* Define new column name in your custom module `di.xml`. The following code snippet shows how to change name for column
+Master Product Number (in module named `Master`):
+
+```xml
+<virtualType name="Omikron\Factfinder\Model\Export\CatalogFeed">
+    <arguments>
+        <argument name="columns" xsi:type="array">
+            <item name="Master" xsi:type="string">CUSTOM_NAME</item>
+        </argument>
+    </arguments>
+</virtualType>
 ```
-  <type name="Omikron\Factfinder\Model\Export\Catalog\ProductType\SimpleDataProvider">
-        <plugin name="custom-provider" type="Omikron\Outdoor\Plugin\AfterToArrayPlugin" />
-    </type>
-    
-    class AfterToArrayPlugin
-    {
-        public function afterToArray($subject, $result)
-        {
-            //changing name of column by copying value from column with old name to column with new name
-            $result['CUSTOM_NAME'] = $result['Master'];
-            
-            //removing old element
-            unset($result['Master']); 
-    
-            return $result;
-        }
-    }
+
+* After the column name is changed in `di.xml` you need to add one plugin for DataProvider which will replace default old names with new one.
+Remember that You don't need to copy rest of elements. They won't be removed because the DI configuration loading mechanism will merge all
+definitions into one output. Example implementation:
+
+```xml
+<type name="Omikron\Factfinder\Model\Export\Catalog\ProductType\SimpleDataProvider">
+    <plugin name="custom-provider" type="YOUR_VENDOR\YOUR_MODULE\Plugin\AfterToArrayPlugin" />
+</type>
 ```
-then run `magento cache:clean` to replace old di configuration with the one, You just created.
- ###Adding new column
- Default feed contains all data, FACT-Finder® require for work, however You may want to export additional
- data, especially which are not part of default Magento2 instance i.e lets assume that Your project use a brand logos
- and You want to export this data.
- In order to do so let take a look into definition of DataProvider
+
+```php
+public function afterToArray($subject, $result)
+{
+    return ['CUSTOM_NAME' => $result['Master']] + $result;
+}
+```
+
+then run `bin/magento cache:clean config` to replace old DI configuration with the one you just created.
+
+### Adding new column
+Default feed contains all data FACT-Finder® require for work. However, you may want to export additional information
+which is relevant for your project and not part of a default Magento 2 installation.  In order to do so let take a look
+into definition of DataProvider:
  
  ```
-   <type name="Omikron\Factfinder\Model\Export\Catalog\ProductType\SimpleDataProvider">
-         <arguments>
-             <argument name="productFields" xsi:type="array">
-                 <item name="ImageURL" xsi:type="object">Omikron\Factfinder\Model\Export\Catalog\ProductField\ProductImage</item>
-                 <item name="CategoryPath" xsi:type="object">Omikron\Factfinder\Model\Export\Catalog\ProductField\CategoryPath</item>
-                 <item name="Attributes" xsi:type="object">Omikron\Factfinder\Model\Export\Catalog\ProductField\Attributes</item>
-             </argument>
-         </arguments>
-     </type>
+<type name="Omikron\Factfinder\Model\Export\Catalog\ProductType\SimpleDataProvider">
+     <arguments>
+         <argument name="productFields" xsi:type="array">
+             <item name="ImageURL" xsi:type="object">Omikron\Factfinder\Model\Export\Catalog\ProductField\ProductImage</item>
+             <item name="CategoryPath" xsi:type="object">Omikron\Factfinder\Model\Export\Catalog\ProductField\CategoryPath</item>
+             <item name="Attributes" xsi:type="object">Omikron\Factfinder\Model\Export\Catalog\ProductField\Attributes</item>
+         </argument>
+     </arguments>
+ </type>
  ```
- Constructor argument `productField` store references to specific fields exporter which need to use more logic than simply getting it from product.
- We are starting here. following our example, we want to add new column BrandLogo with images urls exported there. In Your module
- add new definition which will be merged with existing one.
+
+Constructor argument `productFields` stores references to specific fields that require more logic than simply retrieving
+data from the product. Let's assume we want to add a new column `BrandLogo` containing image URLs. In your module DI, add
+the new definition which will be merged with existing one.
  
-  ```
-    <type name="Omikron\Factfinder\Model\Export\Catalog\ProductType\SimpleDataProvider">
-          <arguments>
-              <argument name="productFields" xsi:type="array">
-                  <item name="BrandLogo" xsi:type="object">YOUR_VENDOR\Factfinder\Model\Export\Catalog\ProductField\BrandLogo</item>
-              </argument>
-          </arguments>
-      </type>
-  ```
- Again, there's no need to copy rest of fields definitions. They'll be merged with new one You've added. You can place definition anywhere, same with the rest of namespace. There only one requirement, Your field exporter needs to meet.
- It need to implement `Omikron\Factfinder\Api\Export\Catalog\ProductFieldInterface`. Example class skeleton for exporting BrandLogo could look like this:
+```
+<type name="Omikron\Factfinder\Model\Export\Catalog\ProductType\SimpleDataProvider">
+    <arguments>
+        <argument name="productFields" xsi:type="array">
+            <item name="BrandLogo" xsi:type="object">YOUR_VENDOR\YOUR_MODULE\Model\Export\Catalog\ProductField\BrandLogo</item>
+        </argument>
+    </arguments>
+</type>
+```
+
+Again, there is no need to copy all other field definitions. Magento will merge the existing ones with the one you created.
+In order for your field exporter to work, it has to implement `Omikron\Factfinder\Api\Export\Catalog\ProductFieldInterface`.
+Your class skeleton for exporting the brand logo could look like this:
  
- ```
-class BrandLogo implements Omikron\Factfinder\Api\Export\Catalog\ProductFieldInterface
+```php
+class BrandLogo implements \Omikron\Factfinder\Api\Export\Catalog\ProductFieldInterface
 {
     public function getValue(Product $product): string
     {
-        /**
-        * Getting products brand logo url;
-        */
+        // Getting products brand logo URL...
     }
 }
-
 ```
- then run `magento cache:clean` to use new di configuration
+
+then run `bin/magento cache:clean config` to use the new DI configuration.
  
  
 ## License
