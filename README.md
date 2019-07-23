@@ -252,5 +252,93 @@ Once response from FACT-Finder is available, proxy controller emits an `ff_proxy
 
 ![Communication Overview](docs/assets/communication-overview.png "Communication Overview")
 
+## Modification examples
+Our Magento 2 module offers a fully working integration out of the box. However, most projects may require
+modifications in order to fit their needs. Here are some common customization examples.
+
+### Changing existing column names
+The module has predefined column names defined in the main DI configuration `etc/di.xml`. These follow our feed best
+practices. The default DataProvider is configured to export data for columns with same names, so in order to change column
+name, you will need to add two modifications:
+
+* Define new column name in your custom module `di.xml`. The following code snippet shows how to change name for column
+Master Product Number (in module named `Master`):
+
+```xml
+<virtualType name="Omikron\Factfinder\Model\Export\CatalogFeed">
+    <arguments>
+        <argument name="columns" xsi:type="array">
+            <item name="Master" xsi:type="string">CUSTOM_NAME</item>
+        </argument>
+    </arguments>
+</virtualType>
+```
+
+* Once the column name is changed in `di.xml`, add a plugin to the DataProvider and replace the standard name with new one.
+Remember that you don't need to copy rest of elements. They won't be removed because the DI configuration loading mechanism
+will merge all definitions into one output. Example implementation:
+
+```xml
+<type name="Omikron\Factfinder\Model\Export\Catalog\ProductType\SimpleDataProvider">
+    <plugin name="custom-provider" type="YOUR_VENDOR\YOUR_MODULE\Plugin\AfterToArrayPlugin" />
+</type>
+```
+
+```php
+public function afterToArray($subject, $result)
+{
+    return ['CUSTOM_NAME' => $result['Master']] + $result;
+}
+```
+
+Finally, run `bin/magento cache:clean config` to replace old DI configuration with the one you just created.
+
+### Adding new column
+The standard feed contains all data FACT-Finder® requires to work. However, you may want to export additional information
+which is relevant for your project and not part of a default Magento 2 installation.  In order to do so, let's take a look
+into the DataProvider definition:
+ 
+ ```xml
+<type name="Omikron\Factfinder\Model\Export\Catalog\ProductType\SimpleDataProvider">
+     <arguments>
+         <argument name="productFields" xsi:type="array">
+             <item name="ImageURL" xsi:type="object">Omikron\Factfinder\Model\Export\Catalog\ProductField\ProductImage</item>
+             <item name="CategoryPath" xsi:type="object">Omikron\Factfinder\Model\Export\Catalog\ProductField\CategoryPath</item>
+             <item name="Attributes" xsi:type="object">Omikron\Factfinder\Model\Export\Catalog\ProductField\Attributes</item>
+         </argument>
+     </arguments>
+ </type>
+ ```
+
+The constructor argument `productFields` stores references to specific fields that require more logic than simply retrieving
+data from the product. Let's assume we want to add a new column `BrandLogo` containing image URLs. In your module DI, add
+the new field definition:
+ 
+```xml
+<type name="Omikron\Factfinder\Model\Export\Catalog\ProductType\SimpleDataProvider">
+    <arguments>
+        <argument name="productFields" xsi:type="array">
+            <item name="BrandLogo" xsi:type="object">YOUR_VENDOR\YOUR_MODULE\Model\Export\Catalog\ProductField\BrandLogo</item>
+        </argument>
+    </arguments>
+</type>
+```
+
+Again, there is no need to copy all other field definitions: Magento will merge the existing ones with the one you just created.
+In order for your field exporter to work, it has to implement our `Omikron\Factfinder\Api\Export\Catalog\ProductFieldInterface`.
+Your class skeleton to export the brand logo could look like this:
+ 
+```php
+class BrandLogo implements \Omikron\Factfinder\Api\Export\Catalog\ProductFieldInterface
+{
+    public function getValue(Product $product): string
+    {
+        // Getting products brand logo URL...
+    }
+}
+```
+
+Now run `bin/magento cache:clean config` to use the new DI configuration.
+ 
 ## License
 FACT-Finder® Web Components License. For more information see the [LICENSE](LICENSE) file.

@@ -1,4 +1,15 @@
 # Changelog
+## Unreleased
+### Changed
+- Add push FACT-Finder import on cron feed export
+
+### Fixed
+- Allow empty multiselect fields in system configuration
+- baseUrl is now set before window setting location in search-navigation
+- Fix currency code is now taken from store config
+- Fix price 0 export for bundle and grouped products
+- Fix use-cache communication parameter value
+
 ## [v1.1.2] - 2019.06.28
 ### Changed
 - Upgrade Web Components to v3.4.0
@@ -119,6 +130,7 @@
 ### Added
 - Feed Export: Export feed file is now available via separate link
 
+[v1.1.2]:       https://github.com/FACT-Finder-Web-Components/magento2-module/compare/v1.1.1...v1.1.2
 [v1.1.1]:       https://github.com/FACT-Finder-Web-Components/magento2-module/compare/v1.1.0...v1.1.1
 [v1.1.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/compare/v1.0.0...v1.1.0
 [v1.0.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/compare/v0.9-beta.11...v1.0.0
