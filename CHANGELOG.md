@@ -1,13 +1,15 @@
 # Changelog
 ## [v1.2.0] - 2019.07.24
+### Added
+- Add data providers for bundle and grouped products
+
 ### Changed
 - Add push FACT-Finder import on cron feed export
 
 ### Fixed
 - Allow empty multiselect fields in system configuration
-- baseUrl is now set before window setting location in search-navigation
-- Fix currency code is now taken from store config
-- Fix price 0 export for bundle and grouped products
+- Base URL is now set, if needed, before redirect in search/navigation
+- Currency code is now taken from store config
 - Fix use-cache communication parameter value
 
 ## [v1.1.2] - 2019.06.28
