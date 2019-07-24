@@ -1,5 +1,5 @@
 # Changelog
-## Unreleased
+## [v1.2.0] - 2019.07.24
 ### Changed
 - Add push FACT-Finder import on cron feed export
 
@@ -130,14 +130,15 @@
 ### Added
 - Feed Export: Export feed file is now available via separate link
 
-[v1.1.2]:       https://github.com/FACT-Finder-Web-Components/magento2-module/compare/v1.1.1...v1.1.2
-[v1.1.1]:       https://github.com/FACT-Finder-Web-Components/magento2-module/compare/v1.1.0...v1.1.1
-[v1.1.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/compare/v1.0.0...v1.1.0
-[v1.0.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/compare/v0.9-beta.11...v1.0.0
-[v0.9-beta.11]: https://github.com/FACT-Finder-Web-Components/magento2-module/compare/v0.9-beta.10...v0.9-beta.11
-[v0.9-beta.10]: https://github.com/FACT-Finder-Web-Components/magento2-module/compare/v0.9-beta.9...v0.9-beta.10
-[v0.9-beta.9]:  https://github.com/FACT-Finder-Web-Components/magento2-module/compare/v0.9-beta.8...v0.9-beta.9
-[v0.9-beta.8]:  https://github.com/FACT-Finder-Web-Components/magento2-module/compare/v0.9-beta.7...v0.9-beta.8
-[v0.9-beta.7]:  https://github.com/FACT-Finder-Web-Components/magento2-module/compare/v0.9-beta.6...v0.9-beta.7
-[v0.9-beta.6]:  https://github.com/FACT-Finder-Web-Components/magento2-module/compare/v0.9-beta.5...v0.9-beta.6
-[v0.9-beta.5]:  https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v0.9-beta.5
+[v1.2.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v1.2.0
+[v1.1.2]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v1.1.2
+[v1.1.1]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v1.1.1
+[v1.1.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v1.1.0
+[v1.0.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v1.0.0
+[v0.9-beta.11]: https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v0.9-beta.11
+[v0.9-beta.10]: https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v0.9-beta.10
+[v0.9-beta.9]:  https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v0.9-beta.9
+[v0.9-beta.8]:  https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v0.9-beta.8
+[v0.9-beta.7]:  https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v0.9-beta.7
+[v0.9-beta.6]:  https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v0.9-beta.6
+[v0.9-beta.5]:  https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v0.9-beta.6
