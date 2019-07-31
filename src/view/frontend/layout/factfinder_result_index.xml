@@ -24,23 +24,19 @@
         <referenceContainer name="content">
             <block class="Magento\Framework\View\Element\Template" name="factfinder.breadcrumb" ifconfig="factfinder/components/ff_breadcrumb" template="Omikron_Factfinder::ff/breadcrumb.phtml" />
             <block class="Magento\Framework\View\Element\Template" name="factfinder.campaign" ifconfig="factfinder/components/ff_campaign" template="Omikron_Factfinder::ff/campaign.phtml" />
-            <block class="Magento\Framework\View\Element\Template" name="factfinder.pushedproductscampaign" ifconfig="factfinder/components/ff_pushedproductscampaign" template="Omikron_Factfinder::ff/pushed-products-campaign.phtml" />
+            <block class="Magento\Framework\View\Element\Template" name="factfinder.pushedproductscampaign" ifconfig="factfinder/components/ff_pushedproductscampaign" template="Omikron_Factfinder::ff/campaign-pushed-products.phtml" />
             <container name="ff-navigation-top" htmlTag="div" htmlClass="ff-navigation">
                 <block class="Magento\Framework\View\Element\Template" name="factfinder.sortbox" ifconfig="factfinder/components/ff_sortbox" template="Omikron_Factfinder::ff/sortbox.phtml" before="-" />
                 <block class="Magento\Framework\View\Element\Template" name="factfinder.paging.top" ifconfig="factfinder/components/ff_paging" template="Omikron_Factfinder::ff/paging.phtml" />
                 <block class="Magento\Framework\View\Element\Template" name="factfinder.productsperpage" ifconfig="factfinder/components/ff_productspp" template="Omikron_Factfinder::ff/products-per-page.phtml" />
             </container>
-            <block class="Magento\Framework\View\Element\Template" name="factfinder.recordlist" template="Omikron_Factfinder::ff/record-list.phtml">
-                <arguments>
-                    <argument name="view_model" xsi:type="object">Omikron\Factfinder\ViewModel\ProductBasedComponent</argument>
-                </arguments>
-            </block>
             <container name="ff-navigation-bottom" htmlTag="div" htmlClass="ff-navigation">
                 <block class="Magento\Framework\View\Element\Template" name="factfinder.paging.bottom" ifconfig="factfinder/components/ff_paging" template="Omikron_Factfinder::ff/paging.phtml" />
             </container>
         </referenceContainer>
 
         <move element="factfinder.feedbacktext" destination="content" after="factfinder.campaign" />
+        <move element="factfinder.recordlist" destination="content" after="ff-navigation-top" />
         <move element="product.info.stock.sku" destination="product.info.price" after="product.price.final" />
         <move element="top.search" destination="content" before="factfinder.breadcrumb" />
     </body>

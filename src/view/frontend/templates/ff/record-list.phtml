@@ -3,15 +3,6 @@
 /** @var Omikron\Factfinder\ViewModel\ProductBasedComponent $viewModel */
 $viewModel = $block->getViewModel();
 ?>
-<script type="text/x-magento-init">
-    {
-        ".product_addtocart_form": {
-            "catalogAddToCart": {
-                "bindSubmit": true
-            }
-        }
-    }
-</script>
 <div class="products wrapper grid products-grid">
     <ff-record-list class="products list items product-items" unresolved>
         <ff-record class="item product product-item">
@@ -26,7 +17,7 @@ $viewModel = $block->getViewModel();
                     <div class="product name product-item-name">{{record.Name}}</div>
                     <div class="price-box price-final_price" data-role="priceBox">
                         <span class="price-container price-final_price tax weee">
-                            <span id="product-price-39" data-price-amount="55" data-price-type="finalPrice" class="price-wrapper">
+                            <span data-price-amount="{{{record.__ORIG_PRICE__}}}" data-price-type="finalPrice" class="price-wrapper">
                                 <span class="price">{{record.Price}}</span>
                             </span>
                         </span>
@@ -37,8 +28,8 @@ $viewModel = $block->getViewModel();
                             <div class="product actions product-item-actions">
                                 <div class="actions-primary">
                                     <form action="<?= $block->escapeUrl($viewModel->getAddToCartUrl()) ?>" method="post" class="product_addtocart_form" novalidate="novalidate">
-                                        <input type="hidden" name="product" value="{{record.MagentoId}}" />
-                                        <input name="form_key" type="hidden" value="<?= /* @escapeNotVerified */ $block->getFormKey() ?>" />
+                                        <?= /* @noEscape */ $block->getBlockHtml('formkey') ?>
+                                        <input type="hidden" name="product" value="{{record.MagentoId}}"/>
                                         <button type="submit" title="Add to Cart" class="action tocart primary">
                                             <span><?= $block->escapeHtml(__('Add to Cart')) ?></span>
                                         </button>
