@@ -4,6 +4,8 @@
         <title>Search Results</title>
     </head>
     <body>
+        <attribute name="class" value="page-products" />
+
         <!-- Remove the search box from the header -->
         <referenceBlock name="factfinder.communication">
             <arguments>
