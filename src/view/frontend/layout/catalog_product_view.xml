@@ -18,5 +18,13 @@
                 </arguments>
             </block>
         </referenceContainer>
+
+        <referenceBlock name="factfinder.feedbacktext">
+            <arguments>
+                <argument name="flag" xsi:type="string">is-product-campaign</argument>
+            </arguments>
+        </referenceBlock>
+
+        <move element="factfinder.feedbacktext" destination="content" after="factfinder.campaign.product" />
     </body>
 </page>

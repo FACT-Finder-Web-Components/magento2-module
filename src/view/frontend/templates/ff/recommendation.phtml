@@ -3,7 +3,7 @@
 /** @var Omikron\Factfinder\ViewModel\ProductBasedComponent $viewModel */
 $viewModel = $block->getViewModel();
 ?>
-<ff-recommendation record-id="<?= $block->escapeHtmlAttr($viewModel->getProduct()->getSku()) ?>" unresolved>
+<ff-recommendation <?php if ($viewModel): ?>record-id="<?= $block->escapeHtmlAttr($viewModel->getProduct()->getSku()) ?>" <?php endif; ?>unresolved>
     <div class="block upsell" data-limit="0" data-shuffle="0">
         <div class="block-title title">
             <strong id="block-upsell-heading" role="heading" aria-level="2"><?= $block->escapeHtml(__('Recommendations')) ?></strong>
@@ -18,8 +18,7 @@ $viewModel = $block->getViewModel();
                                     <a href="{{record.ProductURL}}" class="product photo product-item-photo">
                                         <span class="product-image-container">
                                             <span class="product-image-wrapper">
-                                            <img class="product-image-photo" src="{{record.ImageURL}}" data-image="{{record.ImageURL}}"
-                                                 data-image-onerror="<?= $block->escapeUrl($viewModel->getProductImagePlaceholder()) ?>"/>
+                                                <img class="product-image-photo" alt="{{record.Name}} " data-image="{{record.ImageURL}}" />
                                             </span>
                                         </span>
                                     </a>

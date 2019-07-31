@@ -38,6 +38,7 @@
             </container>
         </referenceContainer>
 
+        <move element="factfinder.feedbacktext" destination="content" after="factfinder.campaign" />
         <move element="product.info.stock.sku" destination="product.info.price" after="product.price.final" />
         <move element="top.search" destination="content" before="factfinder.breadcrumb" />
     </body>
