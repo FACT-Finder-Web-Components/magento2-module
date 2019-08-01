@@ -24,7 +24,7 @@ define(['jquery', 'Magento_Ui/js/modal/alert'], function ($, alert) {
         getFields: function () {
             var pattern = this.options.pattern;
             return this.element.closest('fieldset').serializeArray().reduce(function (fields, field) {
-                fields[field.name.match(pattern)[1]] = field.value;
+                if (pattern.test(field.name)) fields[field.name.match(pattern)[1]] = field.value;
                 return fields;
             }, {});
         }
