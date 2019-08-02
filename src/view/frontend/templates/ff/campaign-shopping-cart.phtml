@@ -1,6 +1,4 @@
 <?php
 /** @var Magento\Framework\View\Element\Template $block */
-/** @var Omikron\Factfinder\ViewModel\Cart $viewModel */
-$viewModel = $block->getViewModel();
 ?>
-<ff-campaign-shopping-cart record-id="<?= $block->escapeHtmlAttr(implode(',', $viewModel->getItemIds())) ?>"></ff-campaign-shopping-cart>
+<ff-campaign-shopping-cart record-id="<?= $block->escapeHtmlAttr(implode(',', (array) $block->getData('record_id'))) ?>"></ff-campaign-shopping-cart>

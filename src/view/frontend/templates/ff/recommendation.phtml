@@ -1,15 +1,12 @@
 <?php
 /** @var Magento\Framework\View\Element\Template $block */
-/** @var Omikron\Factfinder\ViewModel\ProductBasedComponent|null $viewModel */
 $viewModel = $block->getViewModel();
 ?>
-<ff-recommendation record-id="<?= $block->escapeHtmlAttr($viewModel ? $viewModel->getProduct()->getSku() : implode(',', (array) $block->getRecordId())) ?>" unresolved>
-    <div class="block upsell" data-limit="0" data-shuffle="0">
+<ff-recommendation record-id="<?= $block->escapeHtmlAttr($viewModel ? $viewModel->getProduct()->getSku() : implode(',', (array) $block->getData('record_id'))) ?>" unresolved>
+    <div class="block upsell">
         <div class="block-title title">
-            <strong id="block-upsell-heading" role="heading" aria-level="2"><?= $block->escapeHtml(__('Recommendations')) ?></strong>
+            <strong role="heading" aria-level="2"><?= $block->escapeHtml(__('Recommendations')) ?></strong>
         </div>
-        <div class="block-content content" aria-labelledby="block-upsell-heading">
-            <?= /* @noEscape */ $block->getBlockHtml('factfinder.recordlist') ?>
-        </div>
+        <div class="block-content content"><?= /* @noEscape */ $block->getBlockHtml('factfinder.recordlist') ?></div>
     </div>
 </ff-recommendation>
