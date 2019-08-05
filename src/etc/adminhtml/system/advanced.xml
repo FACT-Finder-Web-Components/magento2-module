@@ -21,11 +21,6 @@
             <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
             <comment>This value determines, if the browser should cache previous search requests or not. Some browsers support this feature and therefore speed up the search for repeated requests.</comment>
         </field>
-        <field id="default_query" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
-            <label>default-query</label>
-            <validate>required-entry</validate>
-            <comment>Determines which search term should be used by default. Default is '*'</comment>
-        </field>
         <field id="only_search_params" translate="label comment" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
             <label>only-search-params</label>
             <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
