@@ -3,6 +3,9 @@
 ### Added
 - Add missing product campaigns on product detail page
 
+### Changed
+- Remove `ff-navigation`
+
 ## [v1.2.0] - 2019.07.24
 ### Added
 - Add data providers for bundle and grouped products
