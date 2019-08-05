@@ -1,50 +1,12 @@
 <?php
 /** @var Magento\Framework\View\Element\Template $block */
-/** @var Omikron\Factfinder\ViewModel\ProductBasedComponent $viewModel */
 $viewModel = $block->getViewModel();
 ?>
-<ff-recommendation <?php if ($viewModel): ?>record-id="<?= $block->escapeHtmlAttr($viewModel->getProduct()->getSku()) ?>" <?php endif; ?>unresolved>
-    <div class="block upsell" data-limit="0" data-shuffle="0">
+<ff-recommendation record-id="<?= $block->escapeHtmlAttr($viewModel ? $viewModel->getProduct()->getSku() : implode(',', (array) $block->getData('record_id'))) ?>" unresolved>
+    <div class="block upsell">
         <div class="block-title title">
-            <strong id="block-upsell-heading" role="heading" aria-level="2"><?= $block->escapeHtml(__('Recommendations')) ?></strong>
+            <strong role="heading" aria-level="2"><?= $block->escapeHtml(__('Recommendations')) ?></strong>
         </div>
-        <div class="block-content content" aria-labelledby="block-upsell-heading">
-            <div class="products wrapper grid products-grid products-upsell">
-                <ol class="products list items product-items">
-                    <ff-record-list>
-                        <ff-record>
-                            <li class="item product product-item" style="">
-                                <div class="product-item-info ">
-                                    <a href="{{record.ProductURL}}" class="product photo product-item-photo">
-                                        <span class="product-image-container">
-                                            <span class="product-image-wrapper">
-                                                <img class="product-image-photo" alt="{{record.Name}} " data-image="{{record.ImageURL}}" />
-                                            </span>
-                                        </span>
-                                    </a>
-                                    <div class="product details product-item-details">
-                                        <a class="product name product-item-name product-item-link"
-                                           title="{{record.Name}}"
-                                           href="{{record.ProductURL}}">
-                                            {{record.Name}}</a>
-
-                                        <div class="price-box price-final_price" data-role="priceBox"
-                                             data-product-id="{{record.MagentoId}}">
-                                            <span class="price-container price-final_price tax weee">
-                                                <span id="product-price-{{record.MagentoId}}"
-                                                      data-price-amount="{{record.Price}}"
-                                                      data-price-type="finalPrice" class="price-wrapper ">
-                                                    <span class="price">{{record.Price}}</span>
-                                                </span>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                        </ff-record>
-                    </ff-record-list>
-                </ol>
-            </div>
-        </div>
+        <div class="block-content content"><?= /* @noEscape */ $block->getBlockHtml('factfinder.recordlist') ?></div>
     </div>
 </ff-recommendation>
