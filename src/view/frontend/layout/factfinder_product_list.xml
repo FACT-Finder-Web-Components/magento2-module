@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="factfinder.communication">
+            <arguments>
+                <argument name="communication_parameters" xsi:type="array">
+                    <item name="add-params" xsi:type="helper" helper="Omikron\Factfinder\ViewModel\CategoryPath::getValue" />
+                    <item name="search-immediate" xsi:type="string">true</item>
+                    <item name="use-filter-url" xsi:type="string">true</item>
+                </argument>
+            </arguments>
+        </referenceBlock>
+
+        <referenceContainer name="sidebar.main">
+            <block class="Magento\Framework\View\Element\Template" name="factfinder.asn" template="Omikron_Factfinder::ff/asn.phtml" before="-" />
+        </referenceContainer>
+
+        <referenceContainer name="content">
+            <block class="Magento\Framework\View\Element\Template" name="factfinder.breadcrumb" template="Omikron_Factfinder::ff/breadcrumb.phtml" />
+        </referenceContainer>
+
+        <move element="factfinder.recordlist" destination="content" />
+    </body>
+</page>
