@@ -3,6 +3,14 @@
     <update handle="factfinder_product_list" />
 
     <body>
+        <referenceBlock name="factfinder.communication">
+            <arguments>
+                <argument name="communication_parameters" xsi:type="array">
+                    <item name="add-params" xsi:type="helper" helper="Omikron\Factfinder\ViewModel\CategoryPath::getValue" />
+                </argument>
+            </arguments>
+        </referenceBlock>
+
         <referenceBlock name="category.products" remove="true" />
         <referenceBlock name="catalog.leftnav" remove="true" />
     </body>
