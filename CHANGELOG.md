@@ -3,6 +3,9 @@
 ### Added
 - Add missing product campaigns on product detail page
 
+### Fixed
+- Downgrade `magento/module-directory` to be compatible with Magento 2.2
+
 ## [v1.2.0] - 2019.07.24
 ### Added
 - Add data providers for bundle and grouped products
