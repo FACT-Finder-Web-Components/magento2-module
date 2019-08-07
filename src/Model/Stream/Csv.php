@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Omikron\Factfinder\Model\Stream;
 
 use Magento\Framework\App\Filesystem\DirectoryList;
