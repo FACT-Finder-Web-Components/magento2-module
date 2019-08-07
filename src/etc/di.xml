@@ -196,4 +196,9 @@
             <argument name="logger" xsi:type="object">Omikron\Factfinder\Logger</argument>
         </arguments>
     </type>
+    <type name="Omikron\Factfinder\ViewModel\Cart">
+        <arguments>
+            <argument name="checkoutSession" xsi:type="object">Magento\Checkout\Model\Session\Proxy</argument>
+        </arguments>
+    </type>
 </config>

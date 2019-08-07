@@ -3,41 +3,43 @@
 /** @var Omikron\Factfinder\ViewModel\ProductBasedComponent $viewModel */
 $viewModel = $block->getViewModel();
 ?>
-<script type="text/x-magento-init">
-    {
-        ".product_addtocart_form": {
-            "catalogAddToCart": {
-                "bindSubmit": true
-            }
-        }
-    }
-</script>
-<ff-record-list unresolved>
-    <ff-record>
-        <img data-image data-image-onerror="<?= $block->escapeUrl($viewModel->getProductImagePlaceholder()) ?>" />
-        <div class="recordContent">
-            <div class="brand">{{record.Manufacturer}}</div>
-            <a class="productDetailLink" data-redirect="{{record.ProductURL}}" data-redirect-target="_blank" data-anchor="{{record.ProductURL}}">
-                {{record.Name}}
-            </a>
-            <div class="description">{{record.Description}}</div>
-            <a class="toProduct" data-redirect="{{record.ProductURL}}" data-redirect-target="_blank" data-anchor="{{record.ProductURL}}">
-                <?= $block->escapeHtml(__('Product Page')) ?>
-            </a>
-            <div class="productInfo">
-                <?php if ($viewModel->isAddToCartEnabled()): ?>
-                    <div class="addCartLink basketIcon">
-                        <form action="<?= $block->escapeUrl($viewModel->getAddToCartUrl()) ?>" method="post" class="product_addtocart_form" novalidate="novalidate">
-                            <?= /* @noEscape */ $block->getBlockHtml('formkey') ?>
-                            <input type="hidden" name="product" value="{{record.MagentoId}}" />
-                            <button data-track type="submit" title="<?= $block->escapeHtmlAttr(__('Add to Cart')) ?>" class="action primary tocart">
-                                <span><?= $block->escapeHtml(__('Add to Cart')) ?></span>
-                            </button>
-                        </form>
+<div class="products wrapper grid products-grid">
+    <ff-record-list class="products list items product-items" unresolved>
+        <ff-record class="item product product-item">
+            <div class="product-item-info" data-container="product-grid">
+                <a class="product-image-container" data-redirect="{{record.ProductURL}}" data-anchor="{{record.ProductURL}}" data-redirect-target="_self">
+                    <span class="product-image-wrapper">
+                        <img class="product-image-photo" data-image alt="{{record.Name}}"/>
+                    </span>
+                </a>
+
+                <div class="product details product-item-details">
+                    <div class="product name product-item-name">{{record.Name}}</div>
+                    <div class="price-box price-final_price" data-role="priceBox">
+                        <span class="price-container price-final_price tax weee">
+                            <span data-price-amount="{{{record.__ORIG_PRICE__}}}" data-price-type="finalPrice" class="price-wrapper">
+                                <span class="price">{{record.Price}}</span>
+                            </span>
+                        </span>
                     </div>
-                <?php endif; ?>
-                <span class="price">{{record.Price}}</span>
+
+                    <?php if ($viewModel->isAddToCartEnabled()): ?>
+                        <div class="product-item-inner">
+                            <div class="product actions product-item-actions">
+                                <div class="actions-primary">
+                                    <form action="<?= $block->escapeUrl($viewModel->getAddToCartUrl()) ?>" method="post" class="product_addtocart_form" novalidate="novalidate">
+                                        <?= /* @noEscape */ $block->getBlockHtml('formkey') ?>
+                                        <input type="hidden" name="product" value="{{record.MagentoId}}"/>
+                                        <button type="submit" title="Add to Cart" class="action tocart primary">
+                                            <span><?= $block->escapeHtml(__('Add to Cart')) ?></span>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+                </div>
             </div>
-        </div>
-    </ff-record>
-</ff-record-list>
+        </ff-record>
+    </ff-record-list>
+</div>
