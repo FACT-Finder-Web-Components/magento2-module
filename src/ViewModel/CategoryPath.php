@@ -19,8 +19,11 @@ class CategoryPath implements ArgumentInterface
     /** @var string */
     private $initial;
 
-    public function __construct(Registry $registry, string $param = 'CategoryPath', string $initial = 'navigation=true')
-    {
+    public function __construct(
+        Registry $registry,
+        string $param = 'CategoryPath',
+        string $initial = 'navigation=true'
+    ) {
         $this->param    = $param;
         $this->registry = $registry;
         $this->initial  = $initial;
