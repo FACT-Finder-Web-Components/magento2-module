@@ -5,6 +5,7 @@
 
 ### Changed
 - Remove `ff-navigation`
+- Render category pages using Web Components
 
 ### Fixed
 - Downgrade `magento/module-directory` to be compatible with Magento 2.2
