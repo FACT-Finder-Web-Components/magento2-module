@@ -1,10 +1,5 @@
 <?php /** @var Magento\Framework\View\Element\Template $block */ ?>
 <div class="ff-sortbox">
-    <ff-sortbox collapse-onblur="true" unresolved>
-        <ff-sortbox-item key="null.desc"><?= $block->escapeHtml(__('Relevance')) ?></ff-sortbox-item>
-        <ff-sortbox-item key="Name.asc"><?= $block->escapeHtml(__('Name (Ascending)')) ?></ff-sortbox-item>
-        <ff-sortbox-item key="Name.desc"><?= $block->escapeHtml(__('Name (Descending)')) ?></ff-sortbox-item>
-        <ff-sortbox-item key="Price.asc"><?= $block->escapeHtml(__('Price (Ascending)')) ?></ff-sortbox-item>
-        <ff-sortbox-item key="Price.desc"><?= $block->escapeHtml(__('Price (Descending)')) ?></ff-sortbox-item>
-    </ff-sortbox>
+    <span><?= $block->escapeHtml(__('Sort By')) ?></span>
+    <ff-sortbox-select class="sorter-options" unresolved></ff-sortbox-select>
 </div>

@@ -3,6 +3,9 @@
     <update handle="factfinder_product_list" />
 
     <body>
+        <referenceBlock name="category.products" remove="true" />
+        <referenceBlock name="catalog.leftnav" remove="true" />
+
         <referenceBlock name="factfinder.communication">
             <arguments>
                 <argument name="communication_parameters" xsi:type="array">
@@ -10,8 +13,5 @@
                 </argument>
             </arguments>
         </referenceBlock>
-
-        <referenceBlock name="category.products" remove="true" />
-        <referenceBlock name="catalog.leftnav" remove="true" />
     </body>
 </page>

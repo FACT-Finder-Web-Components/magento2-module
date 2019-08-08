@@ -16,16 +16,20 @@ class CategoryPath implements ArgumentInterface
     /** @var string */
     private $param;
 
-    public function __construct(Registry $registry, string $param = 'CategoryPath')
+    /** @var string */
+    private $initial;
+
+    public function __construct(Registry $registry, string $param = 'CategoryPath', string $initial = 'navigation=true')
     {
         $this->param    = $param;
         $this->registry = $registry;
+        $this->initial  = $initial;
     }
 
     public function getValue(): string
     {
         $path  = 'ROOT';
-        $value = [];
+        $value = [$this->initial];
         foreach ($this->getCurrentCategory()->getParentCategories() as $item) {
             $value[] = sprintf("filter{$this->param}%s=%s", $path, urlencode($item->getName()));
             $path    .= urlencode('/' . $item->getName());
