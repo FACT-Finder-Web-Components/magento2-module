@@ -180,7 +180,7 @@
                 <item name="combined" xsi:type="string">Omikron\Factfinder\Model\Export\CombinedFeed</item>
             </argument>
         </arguments>
-        <plugin name="changeFeedType" type="Omikron\Factfinder\Plugin\Export\ChangeFeedType"/>
+        <plugin name="changeFeedType" type="Omikron\Factfinder\Plugin\Export\ChangeFeedType" />
     </type>
     <type name="Omikron\Factfinder\Model\FtpUploader">
         <arguments>
@@ -200,6 +200,13 @@
     <type name="Omikron\Factfinder\ViewModel\Cart">
         <arguments>
             <argument name="checkoutSession" xsi:type="object">Magento\Checkout\Model\Session\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Omikron\Factfinder\ViewModel\CategoryPath">
+        <arguments>
+            <argument name="initial" xsi:type="array">
+                <item name="navigation" xsi:type="string">navigation=true</item>
+            </argument>
         </arguments>
     </type>
 </config>

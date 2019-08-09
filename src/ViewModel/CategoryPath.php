@@ -22,7 +22,7 @@ class CategoryPath implements ArgumentInterface
     public function __construct(
         Registry $registry,
         string $param = 'CategoryPath',
-        array $initial = ['navigation=true']
+        array $initial = []
     ) {
         $this->param    = $param;
         $this->registry = $registry;
