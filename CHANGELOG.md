@@ -1,5 +1,5 @@
 # Changelog
-## Unreleased
+## [v1.3.0] - 2019.08.14
 ### Added
 - Add missing product campaigns on product detail page
 
@@ -144,6 +144,7 @@
 ### Added
 - Feed Export: Export feed file is now available via separate link
 
+[v1.3.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v1.3.0
 [v1.2.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v1.2.0
 [v1.1.2]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v1.1.2
 [v1.1.1]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v1.1.1
