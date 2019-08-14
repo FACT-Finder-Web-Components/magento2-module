@@ -3,6 +3,9 @@
 ### Added
 - Add missing product campaigns on product detail page
 
+### Changed
+- Upgrade Web Components to v3.6.0
+
 ### Fixed
 - Downgrade `magento/module-directory` to be compatible with Magento 2.2
 
