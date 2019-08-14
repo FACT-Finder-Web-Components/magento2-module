@@ -1,5 +1,8 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="layout_load_before">
+        <observer name="ff_category_view" instance="Omikron\Factfinder\Observer\CategoryView" />
+    </event>
     <event name="controller_action_predispatch_catalogsearch_result_index">
         <observer name="ff_redirect_search" instance="Omikron\Factfinder\Observer\RedirectSearch" />
     </event>

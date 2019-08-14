@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="factfinder.communication">
+            <arguments>
+                <argument name="communication_parameters" xsi:type="array">
+                    <item name="search-immediate" xsi:type="string">true</item>
+                </argument>
+            </arguments>
+        </referenceBlock>
+
+        <referenceContainer name="sidebar.main">
+            <block class="Magento\Framework\View\Element\Template" name="factfinder.asn" template="Omikron_Factfinder::ff/asn.phtml" />
+        </referenceContainer>
+
+        <referenceContainer name="content">
+            <container name="factfinder.toolbar" htmlTag="div" htmlClass="toolbar toolbar-products toolbar-factfinder">
+                <block class="Magento\Framework\View\Element\Template" name="factfinder.result.count" template="Omikron_Factfinder::ff/result_count.phtml" />
+                <block class="Magento\Framework\View\Element\Template" name="factfinder.sortbox" template="Omikron_Factfinder::ff/sortbox.phtml" />
+            </container>
+
+            <container name="factfinder.toolbar.bottom" htmlTag="div" htmlClass="toolbar toolbar-products toolbar-factfinder">
+                <block class="Magento\Framework\View\Element\Template" name="factfinder.paging.bottom" template="Omikron_Factfinder::ff/paging.phtml" />
+                <block class="Magento\Framework\View\Element\Template" name="factfinder.ppp" template="Omikron_Factfinder::ff/products-per-page.phtml" />
+            </container>
+        </referenceContainer>
+
+        <move element="factfinder.recordlist" destination="content" after="factfinder.toolbar" />
+    </body>
+</page>

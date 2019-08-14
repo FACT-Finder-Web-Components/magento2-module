@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="factfinder_product_list" />
+
+    <body>
+        <referenceBlock name="category.products" remove="true" />
+        <referenceBlock name="catalog.leftnav" remove="true" />
+
+        <referenceBlock name="factfinder.communication">
+            <arguments>
+                <argument name="communication_parameters" xsi:type="array">
+                    <item name="add-params" xsi:type="helper" helper="Omikron\Factfinder\ViewModel\CategoryPath::getValue" />
+                </argument>
+            </arguments>
+        </referenceBlock>
+    </body>
+</page>

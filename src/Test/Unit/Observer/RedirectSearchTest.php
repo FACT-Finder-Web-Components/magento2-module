@@ -46,7 +46,6 @@ class RedirectSearchTest extends TestCase
     public function testRedirectIfEnabled()
     {
         $this->config->method('isChannelEnabled')->willReturn(true);
-        $this->config->method('getDefaultQuery')->willReturn('*');
 
         $request = $this->createMock(RequestInterface::class);
         $request->method('getParam')->with('q', '*')->willReturn('Foobar');

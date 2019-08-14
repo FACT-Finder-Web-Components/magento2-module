@@ -1,0 +1,24 @@
+.toolbar-factfinder {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+
+  &.toolbar {
+    text-align: left;
+  }
+
+  > * {
+    flex: 1 1 auto;
+    text-align: right;
+
+    &:first-child {
+      text-align: left;
+    }
+  }
+
+  ff-sortbox-select {
+    margin-right: 0;
+  }
+}
+

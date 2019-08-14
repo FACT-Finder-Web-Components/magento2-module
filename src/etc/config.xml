@@ -16,7 +16,6 @@
                 <search_immediate>0</search_immediate>
                 <use_url_parameter>1</use_url_parameter>
                 <use_cache>0</use_cache>
-                <default_query>*</default_query>
                 <only_search_params>0</only_search_params>
                 <keep_filters>0</keep_filters>
                 <use_found_words>0</use_found_words>

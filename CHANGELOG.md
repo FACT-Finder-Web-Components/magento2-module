@@ -4,6 +4,8 @@
 - Add missing product campaigns on product detail page
 
 ### Changed
+- Remove `ff-navigation`
+- Render category pages using Web Components
 - Upgrade Web Components to v3.6.0
 
 ### Fixed

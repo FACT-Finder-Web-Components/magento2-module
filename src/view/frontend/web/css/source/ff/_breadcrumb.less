@@ -1,23 +1,18 @@
 ff-breadcrumb-trail {
-    font-size: 36px;
-    padding-left: 15px;
-    margin-left: 0;
+  margin: 0 1rem;
+
+  &-item {
+    font-weight: @font-weight__regular;
+    color: @active__color;
+  }
 }
 
 .ff-breadcrumb-trail {
-    font-size: 36px;
-    margin: 50px 10px 30px 10px;
-}
+  font-weight: @heading__font-weight__base;
+  font-size: 3rem;
+  margin: 3rem 0 2rem;
 
-@media (max-width: 560px) {
-    .ff-breadcrumb-trail {
-        text-align: center;
-    }
-    .ff-breadcrumb-trail * {
-        font-size: 24px !important;
-    }
-}
-
-ff-breadcrumb-trail-item {
-    color: rgb(255, 105, 44);
+  ff-template span {
+    font-weight: @font-weight__regular;
+  }
 }
