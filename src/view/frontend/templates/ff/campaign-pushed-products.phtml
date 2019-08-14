@@ -1,0 +1,5 @@
+<?php /** @var Magento\Framework\View\Element\Template $block */ ?>
+<ff-campaign-pushed-products <?= /* @noEscape */ $block->getFlag() ?> unresolved>
+    <span><?= $block->escapeHtml(__('Product Campaign')) ?></span>
+    <?= /* @noEscape */ $block->getBlockHtml('factfinder.recordlist') ?>
+</ff-campaign-pushed-products>

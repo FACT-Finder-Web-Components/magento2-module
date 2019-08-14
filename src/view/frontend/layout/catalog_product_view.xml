@@ -2,6 +2,11 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
         <referenceContainer name="content">
+            <block class="Magento\Framework\View\Element\Template" name="factfinder.campaign.product" template="Omikron_Factfinder::ff/campaign-product.phtml">
+                <arguments>
+                    <argument name="view_model" xsi:type="object">Omikron\Factfinder\ViewModel\ProductBasedComponent</argument>
+                </arguments>
+            </block>
             <block class="Magento\Framework\View\Element\Template" name="factfinder.recommendation" ifconfig="factfinder/components/ff_recommendation" template="Omikron_Factfinder::ff/recommendation.phtml">
                 <arguments>
                     <argument name="view_model" xsi:type="object">Omikron\Factfinder\ViewModel\ProductBasedComponent</argument>
@@ -13,5 +18,13 @@
                 </arguments>
             </block>
         </referenceContainer>
+
+        <referenceBlock name="factfinder.feedbacktext">
+            <arguments>
+                <argument name="flag" xsi:type="string">is-product-campaign</argument>
+            </arguments>
+        </referenceBlock>
+
+        <move element="factfinder.feedbacktext" destination="content" after="factfinder.campaign.product" />
     </body>
 </page>

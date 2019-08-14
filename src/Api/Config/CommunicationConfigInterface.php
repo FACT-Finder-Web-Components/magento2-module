@@ -13,7 +13,5 @@ interface CommunicationConfigInterface
 
     public function getChannel(int $scopeId = null): string;
 
-    public function getDefaultQuery(): string;
-
     public function isPushImportEnabled(int $scopeId = null): bool;
 }

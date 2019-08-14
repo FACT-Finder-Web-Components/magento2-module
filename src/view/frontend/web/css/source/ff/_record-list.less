@@ -1,163 +1,21 @@
-ff-record-list{
-    margin: 20px 0;
-}
-
-ff-record-list {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-}
-
-@media (min-width: 1121px) {
-    ff-record-list {
-        min-width: 860px;
-    }
-}
-
-@media (max-width: 1020px) {
-    ff-record-list ff-record {
-        flex-direction: column !important;
+ff-record {
+  .product-image {
+    &-container {
+      display: block;
     }
 
-    ff-record-list ff-record .record-wrapper {
-        flex-direction: column;
+    &-wrapper {
+      padding-bottom: 100%;
+    }
+  }
+
+  .product-item-actions {
+    .actions-primary {
+      display: block;
     }
 
-    ff-record-list ff-record .record-info {
-        align-items: center;
+    .tocart {
+      width: 100%;
     }
-}
-
-ff-record-list ff-record {
-    width: 90%;
-    min-height: 250px;
-    box-sizing: border-box;
-    padding: 15px 0 15px 15px;
-    margin: 15px;
-    border: 1px solid #d8dcde;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    transition: 200ms;
-}
-
-ff-record-list ff-record .record-wrapper {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-}
-
-ff-record-list ff-record .record-action {
-    align-items: center;
-}
-
-ff-record-list ff-record .record-info,
-ff-record-list ff-record .record-action {
-    display: flex;
-    flex-direction: column;
-    margin: 10px;
-}
-
-ff-record-list ff-record .addCartLink {
-    min-width: 100px;
-}
-
-ff-record-list ff-record .recordContent {
-    padding-left: 25px;
-    /*padding-right: 25px;*/
-    font-size: 16px;
-    width: 100%;
-    height: 100%;
-
-    display: flex;
-    flex-direction: column;
-}
-
-ff-record-list ff-record .productDetailLink {
-    color: #393b3e;
-    font-weight: bold;
-    font-size: 20px;
-    margin-bottom: 15px;
-    margin-top: 15px;
-    transition: 400ms;
-    display: inline-block;
-}
-
-ff-record-list ff-record .description {
-    padding-right: 25px;
-    max-height: 5em;
-    font-size: 1em;
-    line-height: 1em;
-    overflow: hidden;
-}
-
-ff-record-list ff-record .basketIcon {
-    padding-top: 8px;
-    cursor: pointer;
-}
-
-ff-record-list ff-record .productDetailLink:hover {
-    color: white;
-    /*color: rgb(255, 105, 44);*/
-    background-color: #393b3e;
-    text-decoration: none;
-}
-
-ff-record-list ff-record .price {
-    font-weight: bold;
-    /*text-align: center;*/
-    padding-top: 15px;
-    padding-bottom: 15px;
-    font-size: 22px;
-    /*color: #393b3e;*/
-    color: rgb(255, 105, 44);
-}
-
-ff-record-list ff-record .brand {
-    font-weight: bold;
-    padding-top: 15px;
-    padding-bottom: 15px;
-    font-size: 22px;
-    color: #393b3e;
-    text-align: center;
-}
-
-ff-record-list ff-record .productInfo {
-    display: flex;
-    justify-content: space-between;
-    padding-top: 7px;
-    padding-right: 25px;
-}
-
-ff-record-list ff-record .toProduct {
-    border: 1px solid #d8dcde;
-
-    padding: 15px;
-    margin-top: 15px;
-    cursor: pointer;
-    text-align: center;
-    margin-right: 25px;
-}
-
-ff-record-list ff-record .toProduct:hover {
-    background-color: #393b3e;
-    color: white;
-    transition: 400ms;
-    text-decoration: none;
-}
-
-ff-record-list ff-record a,
-ff-record-list ff-record a:active,
-ff-record-list ff-record a:visited {
-    display:inline-block;
-    text-decoration: none;
-    color: #000;
-}
-
-ff-record-list ff-record img {
-    max-width: 190px;
-    height: auto;
+  }
 }

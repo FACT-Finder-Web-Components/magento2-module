@@ -9,14 +9,13 @@
                 <password backend_model="Magento\Config\Model\Config\Backend\Encrypted" />
                 <show_add_to_card_button>1</show_add_to_card_button>
                 <ff_enrichment>0</ff_enrichment>
-                <tracking_product_number_field_role>{"brand":"Brand","campaignProductNumber":"ProductNumber","deeplink":"ProductUrl","description":"Description","displayProductNumber":"ProductNumber","ean":"EAN","imageUrl":"ImageUrl","masterArticleNumber":"Master","price":"Price","productName":"Name","trackingProductNumber":"ProductNumber"}</tracking_product_number_field_role>
+                <tracking_product_number_field_role>{"brand":"Brand","campaignProductNumber":"ProductNumber","deeplink":"ProductURL","description":"Description","displayProductNumber":"ProductNumber","ean":"EAN","imageUrl":"ImageURL","masterArticleNumber":"Master","price":"Price","productName":"Name","trackingProductNumber":"ProductNumber"}</tracking_product_number_field_role>
             </general>
             <advanced>
                 <version>7.3</version>
                 <search_immediate>0</search_immediate>
                 <use_url_parameter>1</use_url_parameter>
                 <use_cache>0</use_cache>
-                <default_query>*</default_query>
                 <only_search_params>0</only_search_params>
                 <keep_filters>0</keep_filters>
                 <use_found_words>0</use_found_words>

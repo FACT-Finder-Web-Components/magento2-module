@@ -17,7 +17,6 @@ class CommunicationConfig implements CommunicationConfigInterface, ParametersSou
     private const PATH_CHANNEL               = 'factfinder/general/channel';
     private const PATH_ADDRESS               = 'factfinder/general/address';
     private const PATH_VERSION               = 'factfinder/advanced/version';
-    private const PATH_DEFAULT_QUERY         = 'factfinder/advanced/default_query';
     private const PATH_IS_ENABLED            = 'factfinder/general/is_enabled';
     private const PATH_IS_ENRICHMENT_ENABLED = 'factfinder/general/ff_enrichment';
     private const PATH_DATA_TRANSFER_IMPORT  = 'factfinder/data_transfer/ff_push_import_enabled';
@@ -44,11 +43,6 @@ class CommunicationConfig implements CommunicationConfigInterface, ParametersSou
         return (string) $this->scopeConfig->getValue(self::PATH_ADDRESS);
     }
 
-    public function getDefaultQuery(): string
-    {
-        return (string) $this->scopeConfig->getValue(self::PATH_DEFAULT_QUERY);
-    }
-
     public function isChannelEnabled(int $scopeId = null): bool
     {
         return $this->scopeConfig->isSetFlag(self::PATH_IS_ENABLED, ScopeInterface::SCOPE_STORES, $scopeId);
@@ -62,10 +56,9 @@ class CommunicationConfig implements CommunicationConfigInterface, ParametersSou
     public function getParameters(): array
     {
         return [
-            'url'           => $this->getServerUrl(),
-            'version'       => $this->scopeConfig->getValue(self::PATH_VERSION),
-            'default-query' => $this->getDefaultQuery(),
-            'channel'       => $this->getChannel(),
+            'url'     => $this->getServerUrl(),
+            'version' => $this->scopeConfig->getValue(self::PATH_VERSION),
+            'channel' => $this->getChannel(),
         ];
     }
 

@@ -2,7 +2,7 @@
 <ruleset name="FACT-Finder">
     <description>FACT-Finder Coding Standard</description>
 
-    <arg value="pw" />
+    <arg value="psw" />
     <arg name="extensions" value="php,phtml" />
     <arg name="ignore" value="*/vendor/*" />
 

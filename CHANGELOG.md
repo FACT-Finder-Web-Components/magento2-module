@@ -1,4 +1,16 @@
 # Changelog
+## [v1.3.0] - 2019.08.14
+### Added
+- Add missing product campaigns on product detail page
+
+### Changed
+- Remove `ff-navigation`
+- Render category pages using Web Components
+- Upgrade Web Components to v3.6.0
+
+### Fixed
+- Downgrade `magento/module-directory` to be compatible with Magento 2.2
+
 ## [v1.2.0] - 2019.07.24
 ### Added
 - Add data providers for bundle and grouped products
@@ -132,6 +144,7 @@
 ### Added
 - Feed Export: Export feed file is now available via separate link
 
+[v1.3.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v1.3.0
 [v1.2.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v1.2.0
 [v1.1.2]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v1.1.2
 [v1.1.1]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v1.1.1

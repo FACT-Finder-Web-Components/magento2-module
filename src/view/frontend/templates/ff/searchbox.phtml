@@ -2,12 +2,11 @@
 <div class="search-wrapper">
     <div class="top-search-box">
         <ff-searchbox class="ff-searchbox" suggest-onfocus="true" use-suggest="true" select-onclick="true">
-            <input placeholder="<?= $block->escapeHtmlAttr(__('Search…')) ?>" />
+            <input class="input-text" placeholder="<?= $block->escapeHtmlAttr(__('Search…')) ?>"/>
+            <ff-searchbutton>
+                <button><span><?= $block->escapeHtml(__('Search…')) ?></span></button>
+            </ff-searchbutton>
         </ff-searchbox>
-
-        <ff-searchbutton>
-            <button><?= $block->escapeHtml(__('Search…')) ?></button>
-        </ff-searchbutton>
     </div>
     <?= /* @noEscape */ $block->getChildHtml('suggest') ?>
 </div>
