@@ -1,5 +1,5 @@
 # Changelog
-## Unreleased
+## [v1.3.1] - 2019.08.19
 ### Fixed
 - Fix log plugin compatibility with Magento 2.2.*
 
@@ -148,6 +148,7 @@
 ### Added
 - Feed Export: Export feed file is now available via separate link
 
+[v1.3.1]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v1.3.1
 [v1.3.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v1.3.0
 [v1.2.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v1.2.0
 [v1.1.2]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v1.1.2
