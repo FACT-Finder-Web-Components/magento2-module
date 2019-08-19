@@ -30,7 +30,7 @@ class CategoryView implements ObserverInterface
             return;
         }
 
-        /** @var Category $category */
+        /** @var ?Category $category */
         $category = $this->registry->registry('current_category');
         if ($category && $category->getDisplayMode() !== Category::DM_PAGE && $this->config->useForCategories()) {
             $observer->getData('layout')->getUpdate()->addHandle('factfinder_category_view');
