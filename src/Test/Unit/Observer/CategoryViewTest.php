@@ -18,10 +18,10 @@ class CategoryViewTest extends TestCase
     /** @var CategoryView */
     private $testee;
 
-    /** @var Registry|MockObject */
+    /** @var MockObject|Registry */
     private $registry;
 
-    /** @var FeatureConfigInterface|MockObject */
+    /** @var MockObject|FeatureConfigInterface */
     private $config;
 
     public function test_only_activate_for_category_pages()
