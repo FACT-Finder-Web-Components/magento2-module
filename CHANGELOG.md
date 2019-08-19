@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Fixed
+- Fix log plugin compatibility with Magento 2.2.*
+
 ## [v1.3.0] - 2019.08.14
 ### Added
 - Add missing product campaigns on product detail page
