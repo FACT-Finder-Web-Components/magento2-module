@@ -4,7 +4,7 @@
 $viewModel  = $block->getViewModel();
 $parameters = ((array) $block->getData('communication_parameters')) + $viewModel->getParameters();
 ?>
-<ff-communication<?php foreach ($parameters as $key => $value) /* @noEscape */ echo sprintf(' %s="%s"', $key, $block->escapeHtmlAttr($value)) ?> />
+<ff-communication<?php foreach ($parameters as $key => $value) /* @noEscape */ echo sprintf(' %s="%s"', $key, $block->escapeHtmlAttr($value)) ?>></ff-communication>
 <!-- Set FieldRoles -->
 <script>
     document.addEventListener('ffReady', function () {
