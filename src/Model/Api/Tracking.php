@@ -33,7 +33,11 @@ class Tracking
         $this->sessionData         = $sessionData;
     }
 
-    public function execute(string $event, TrackingProductInterface ...$trackingProducts)
+    /**
+     * @param string                     $event
+     * @param TrackingProductInterface[] $trackingProducts
+     */
+    public function execute(string $event, array $trackingProducts)
     {
         $params = [
             'event'    => $event,

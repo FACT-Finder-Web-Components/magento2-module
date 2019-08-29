@@ -43,6 +43,9 @@
             <property name="requiredSpacesBeforeColon" value="0" />
         </properties>
     </rule>
+    <rule ref="Squiz.ControlStructures.ControlSignature.NewlineAfterOpenBrace">
+        <exclude-pattern>*.phtml</exclude-pattern>
+    </rule>
     <rule ref="Squiz.Functions.GlobalFunction">
         <exclude-pattern>*Test.php</exclude-pattern>
     </rule>

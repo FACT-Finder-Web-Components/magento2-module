@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Fixed
+- Fix tracking model compatibility with Magento 2.2.*
+
 ## [v1.3.1] - 2019.08.19
 ### Fixed
 - Fix log plugin compatibility with Magento 2.2.*
