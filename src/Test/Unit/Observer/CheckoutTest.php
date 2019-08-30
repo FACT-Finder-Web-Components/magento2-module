@@ -45,7 +45,7 @@ class CheckoutTest extends TestCase
 
         $this->trackingMock->expects($this->once())
             ->method('execute')
-            ->with($this->isType('string'), $this->isInstanceOf(TrackingProductInterface::class));
+            ->with($this->isType('string'), $this->containsOnlyInstancesOf(TrackingProductInterface::class));
 
         $this->checkoutObserver->execute(new Observer(['quote' => $quoteMock]));
     }
