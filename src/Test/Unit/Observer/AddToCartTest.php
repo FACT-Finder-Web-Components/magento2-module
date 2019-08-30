@@ -67,7 +67,7 @@ class AddToCartTest extends TestCase
             ])->willReturn($this->createMock(TrackingProductInterface::class));
 
         $this->trackingMock->expects($this->once())->method('execute')
-            ->with($this->isType('string'), $this->isInstanceOf(TrackingProductInterface::class));
+            ->with($this->isType('string'), $this->containsOnlyInstancesOf(TrackingProductInterface::class));
 
         $this->addToCart->execute($this->observerMock);
     }

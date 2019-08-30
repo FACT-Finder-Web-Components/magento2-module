@@ -54,7 +54,7 @@ class TrackingTest extends TestCase
                 ],
             ]);
 
-        $this->tracking->execute('checkout', ...$trackingProducts);
+        $this->tracking->execute('checkout', $trackingProducts);
     }
 
     /**
@@ -68,7 +68,7 @@ class TrackingTest extends TestCase
             ->method('sendRequest')
             ->with($this->anything(), $this->logicalNot(new ArraySubset(['products' => [['userId' => 0]]])));
 
-        $this->tracking->execute('checkout', ...$trackingProducts);
+        $this->tracking->execute('checkout', $trackingProducts);
     }
 
     public function trackingProductProvider(): array
