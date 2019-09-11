@@ -1,7 +1,8 @@
 var config = {
     map: {
         '*': {
-            factfinder: 'Omikron_Factfinder/ff-web-components/bundle'
+            factfinder: 'Omikron_Factfinder/ff-web-components/bundle',
+            iepolyfills: 'Omikron_Factfinder/js/polyfill/ie11/polyfill'
         }
     },
     shim: {
@@ -11,7 +12,10 @@ var config = {
                 'Omikron_Factfinder/ff-web-components/vendor/webcomponents-loader'
             ],
             exports: 'factfinder'
+        },
+        'Omikron_Factfinder/js/polyfill/ie11/polyfill': {
+            exports: 'iepolyfills'
         }
     },
-    deps: ['Omikron_Factfinder/js/search-navigation']
+    deps: ['Omikron_Factfinder/js/search-navigation',]
 };

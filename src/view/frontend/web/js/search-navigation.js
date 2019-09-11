@@ -1,4 +1,4 @@
-define(['factfinder', 'mage/url'], function (factfinder, url) {
+define(['factfinder', 'mage/url', 'iepolyfills'], function (factfinder, url) {
     var redirectPath = 'FACT-Finder/result';
 
     factfinder.communication.FFCommunicationEventAggregator.addBeforeDispatchingCallback(function (event) {
