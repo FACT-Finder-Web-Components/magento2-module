@@ -12,7 +12,7 @@ var config = {
                 'Omikron_Factfinder/ff-web-components/vendor/webcomponents-loader'
             ].concat(!!window.navigator.userAgent.match(/(MSIE |Trident\/)/) ? ['iepolyfills'] : []),
             exports: 'factfinder'
-        },
+        }
     },
     deps: ['Omikron_Factfinder/js/search-navigation']
 };
