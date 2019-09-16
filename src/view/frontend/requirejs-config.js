@@ -10,12 +10,9 @@ var config = {
             deps: [
                 'Omikron_Factfinder/ff-web-components/vendor/custom-elements-es5-adapter',
                 'Omikron_Factfinder/ff-web-components/vendor/webcomponents-loader'
-            ],
+            ].concat(!!window.navigator.userAgent.match(/(MSIE |Trident\/)/) ? ['iepolyfills'] : []),
             exports: 'factfinder'
         },
-        'Omikron_Factfinder/js/polyfill/ie11/polyfill': {
-            exports: 'iepolyfills'
-        }
     },
-    deps: ['Omikron_Factfinder/js/search-navigation',]
+    deps: ['Omikron_Factfinder/js/search-navigation']
 };
