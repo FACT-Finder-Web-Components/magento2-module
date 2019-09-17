@@ -26,13 +26,6 @@ class CommunicationTest extends TestCase
 
     public function test_get_parameters_filter_null_values()
     {
-        $this->parametersProviderMock->method('getParameters')->willReturn([
-            'url'       => 'http://some-url',
-            'version'   => '7.3',
-            'user-id'   => null,
-            'channel'   => 'some-channel',
-            'use-cache' => 'true'
-        ]);
         $this->assertArrayNotHasKey('user-sid', $this->communication->getParameters());
     }
 
@@ -42,7 +35,7 @@ class CommunicationTest extends TestCase
         $parameters  = $this->communication->getParameters($blockParams);
 
         $this->assertArrayHasKey('add-params', $parameters);
-        $this->assertEquals('param1=123,param2=abc', $parameters['add-params']);
+        $this->assertSame('param1=123,param2=abc', $parameters['add-params']);
     }
 
     public function test_multiple_boolean_values_will_be_overwritten()
@@ -51,7 +44,7 @@ class CommunicationTest extends TestCase
         $parameters  = $this->communication->getParameters($blockParams);
 
         $this->assertArrayHasKey('use-cache', $parameters);
-        $this->assertEquals('false', $parameters['use-cache']);
+        $this->assertSame('false', $parameters['use-cache']);
     }
 
     protected function setUp()

@@ -39,7 +39,7 @@ class Communication implements ArgumentInterface
 
     public function getFieldRoles(): string
     {
-        return (string)$this->serializer->serialize($this->fieldRoles->getFieldRoles());
+        return (string) $this->serializer->serialize($this->fieldRoles->getFieldRoles());
     }
 
     private function mergeParameters(array $params): string
