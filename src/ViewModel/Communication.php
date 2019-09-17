@@ -30,13 +30,20 @@ class Communication implements ArgumentInterface
         $this->serializer         = $serializer;
     }
 
-    public function getParameters(): array
+    public function getParameters(array $blockParams = []): array
     {
-        return array_filter($this->parametersProvider->getParameters(), 'boolval');
+        return array_map(function ($element) {
+            return is_array($element) ? $this->mergeParameters($element) : $element;
+        }, array_filter(array_merge_recursive($blockParams, $this->parametersProvider->getParameters()), 'boolval'));
     }
 
     public function getFieldRoles(): string
     {
-        return (string) $this->serializer->serialize($this->fieldRoles->getFieldRoles());
+        return (string)$this->serializer->serialize($this->fieldRoles->getFieldRoles());
+    }
+
+    private function mergeParameters(array $params): string
+    {
+        return !empty(array_intersect(['true', 'false'], $params)) ? $params[0] : implode(',', $params);
     }
 }
