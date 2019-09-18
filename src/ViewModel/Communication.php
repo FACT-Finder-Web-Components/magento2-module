@@ -20,21 +20,25 @@ class Communication implements ArgumentInterface
     /** @var CommunicationParametersProvider */
     private $parametersProvider;
 
+    /** @var string[] */
+    private $mergeableParams;
+
     public function __construct(
         FieldRolesInterface $fieldRoles,
         SerializerInterface $serializer,
-        CommunicationParametersProvider $parametersProvider
+        CommunicationParametersProvider $parametersProvider,
+        array $mergeableParams = ['add-params', 'add-tracking-params', 'keep-url-params', 'parameter-whitelist']
     ) {
         $this->parametersProvider = $parametersProvider;
         $this->fieldRoles         = $fieldRoles;
         $this->serializer         = $serializer;
+        $this->mergeableParams    = array_combine($mergeableParams, array_fill(0, count($mergeableParams), ''));
     }
 
     public function getParameters(array $blockParams = []): array
     {
-        return array_map(function ($element) {
-            return is_array($element) ? $this->mergeParameters($element) : $element;
-        }, array_filter(array_merge_recursive($blockParams, $this->parametersProvider->getParameters()), 'boolval'));
+        $params = $this->parametersProvider->getParameters();
+        return array_filter($this->mergeParameters($blockParams, $params) + $blockParams + $params, 'boolval');
     }
 
     public function getFieldRoles(): string
@@ -42,8 +46,14 @@ class Communication implements ArgumentInterface
         return (string) $this->serializer->serialize($this->fieldRoles->getFieldRoles());
     }
 
-    private function mergeParameters(array $params): string
+    private function mergeParameters(array ...$params): array
     {
-        return !empty(array_intersect(['true', 'false'], $params)) ? $params[0] : implode(',', $params);
+        $params = array_map(function (array $p): array {
+            return array_intersect_key($p + $this->mergeableParams, $this->mergeableParams);
+        }, $params);
+
+        return array_reduce(array_keys($this->mergeableParams), function ($result, $key) use ($params) {
+            return $result + [$key => implode(',', array_filter(array_column($params, $key)))];
+        }, []);
     }
 }
