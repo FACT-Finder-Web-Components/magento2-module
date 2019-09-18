@@ -25,7 +25,7 @@ class ImageTest extends TestCase
         $pageMock = $this->createConfiguredMock(PageInterface::class, ['getContent' => $this->content]);
         $imageUrl = $this->imageField->getValue($pageMock);
 
-        $this->assertEquals('http://magento-test.factfinder.de/media/image/cms.png', $imageUrl);
+        $this->assertSame('http://magento-test.factfinder.de/media/image/cms.png', $imageUrl);
     }
 
     protected function setUp()

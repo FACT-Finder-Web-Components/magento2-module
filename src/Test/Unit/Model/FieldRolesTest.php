@@ -68,8 +68,8 @@ class FieldRolesTest extends TestCase
         ]);
         $brandAttributeValue  = $this->fieldRoles->fieldRoleToAttribute($productMock, 'brand');
         $masterAttributeValue = $this->fieldRoles->fieldRoleToAttribute($productMock, 'masterArticleNumber');
-        $this->assertEquals('Product brand', $brandAttributeValue);
-        $this->assertEquals('sku-1', $masterAttributeValue);
+        $this->assertSame('Product brand', $brandAttributeValue);
+        $this->assertSame('sku-1', $masterAttributeValue);
     }
 
     protected function setUp()
