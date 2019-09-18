@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Fixed
+- Correctly merge communication params added via layout
+
 ## [v1.3.2] - 2019.08.30
 ### Fixed
 - Fix tracking model compatibility with Magento 2.2.*
