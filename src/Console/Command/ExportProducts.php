@@ -41,9 +41,6 @@ class ExportProducts extends \Symfony\Component\Console\Command\Command
     /** @var FtpUploader */
     private $ftpUploader;
 
-    /** @var string */
-    private $feedType;
-
     /** @var PushImport */
     private $pushImport;
 
@@ -63,9 +60,9 @@ class ExportProducts extends \Symfony\Component\Console\Command\Command
         CommunicationConfig $communicationConfig,
         PushImport $pushImport,
         State $state,
-        Filesystem $filesystem,
-        string $name = null)
-    {
+        Filesystem $filesystem
+    ) {
+        parent::__construct();
         $this->scopeConfig = $scopeConfig;
         $this->storeManager = $storeManager;
         $this->feedGeneratorFactory = $feedFactory;
@@ -76,7 +73,6 @@ class ExportProducts extends \Symfony\Component\Console\Command\Command
         $this->pushImport = $pushImport;
         $this->state = $state;
         $this->filesystem = $filesystem;
-        parent::__construct($name);
     }
 
     /**
