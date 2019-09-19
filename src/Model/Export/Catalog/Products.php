@@ -9,6 +9,7 @@ use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Catalog\Model\Product\Attribute\Source\Status;
 use Magento\Catalog\Model\Product\Visibility;
 use Magento\Framework\Api\SearchCriteriaBuilder;
+use Magento\Store\Model\StoreManagerInterface;
 
 class Products implements \IteratorAggregate
 {
@@ -18,16 +19,21 @@ class Products implements \IteratorAggregate
     /** @var SearchCriteriaBuilder */
     private $searchCriteriaBuilder;
 
+    /** @var StoreManagerInterface */
+    private $storeManager;
+
     /** @var int */
     private $batchSize;
 
     public function __construct(
         ProductRepositoryInterface $productRepository,
         SearchCriteriaBuilder $searchCriteriaBuilder,
+        StoreManagerInterface $storeManager,
         int $batchSize = 300
     ) {
         $this->productRepository     = $productRepository;
         $this->searchCriteriaBuilder = $searchCriteriaBuilder;
+        $this->storeManager          = $storeManager;
         $this->batchSize             = $batchSize;
     }
 
@@ -52,6 +58,7 @@ class Products implements \IteratorAggregate
     {
         return $this->searchCriteriaBuilder
             ->addFilter('status', Status::STATUS_ENABLED)
+            ->addFilter('store_id', $this->storeManager->getStore()->getId())
             ->addFilter('visibility', Visibility::VISIBILITY_NOT_VISIBLE, 'neq')
             ->setPageSize($this->batchSize)
             ->setCurrentPage($page);
