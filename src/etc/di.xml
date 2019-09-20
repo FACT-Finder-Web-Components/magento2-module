@@ -209,4 +209,11 @@
             </argument>
         </arguments>
     </type>
+    <type name="Magento\Framework\Console\CommandListInterface">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="omikron_factfinder_export_products" xsi:type="object">Omikron\Factfinder\Console\Command\ExportProducts</item>
+            </argument>
+        </arguments>
+    </type>
 </config>
