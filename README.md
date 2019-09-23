@@ -10,6 +10,32 @@ processes. The second chapter “Backend Configuration” explains the customisa
 final chapter *Web Component Integration* describes how the web components interface with the shop system and how to
 customise them. 
 
+## Table of contents
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Activating the Module](#activating-the-module)
+- [Backend Configuration](#backend-configuration)
+    - [General Settings](#general-settings)
+    - [Activated Web-Components](#activated-web-components)
+    - [Advanced Settings](#advanced-settings)
+    - [Export Settings](#export-settings)
+        - [Updating Field Roles](#updating-field-roles)
+- [Data Export](#data-export)
+    - [Integration Methods](#integration-methods)
+        - [FTP Export](#ftp-export)
+        - [HTTP Export](#http-export)
+    - [CMS Export](#cms-export)
+    - [Console Command](#console-command)
+- [Web Component Integration](#web-component-integration)
+    - [Overview of relevant Files](#overview-of-relevant-files)
+    - [Searchbox Integration and Functions](#searchbox-integration-and-functions)
+    - [Process of Data Transfer between Shop and FACT-Finder](#process-of-data-transfer-between-shop-and-fact-finder)
+- [Modification examples](#modification-examples)
+    - [Changing existing column names](#changing-existing-column-names)
+    - [Adding new column](#adding-new-column)
+    - [Adding custom communication parameter](#adding-custom-communication-parameter)
+    - [Adding custom product data provider](#adding-custom-product-data-provider)
+    
 ## Requirements
 
 This module supports:
@@ -87,8 +113,7 @@ Here you can decide which web components are activated. Only active web componen
 Advanced Settings contains additional parameters used for the `ff-communication` web component. Each setting is set to a
  default value and has a short explanatory text attached.  
 
-### Product Data Export
-
+### Export Settings
 This option configures the connection with the FACT-Finder system via FTP. Shop data can be generated and transferred to
 FACT-Finder using FTP. FACT-Finder needs to be up to date on the product data, to ensure that components like the search work as intended.
 
@@ -104,12 +129,38 @@ The exception from that rule is `Test Connection` function which always takes th
  
 ![Product Data Export](docs/assets/export-settings.png "Product Data Export")
 
-### Updating Field Roles
+#### Updating Field Roles
 Field roles are assigned while creating new channel in FACT-Finder application, however they can be changed anytime. In this situations, You need to update field roles which are being kept in Magento database for tracking purposes.
 To updates field roles, use the button `Update Field Roles`
 
-#### Http Export
-Feed export is also available to trigger by visiting specific URL, which is also able to be secured by Basic Auth (username and password configured at section Http Export). You can configure Your FACT-Finder application to download the feed directly from this location.
+#### Automatic Import
+Once the feed file is uploaded (using [FTP Export](#ftp-export)), in order FACT-Finder to start serving new data, import needs to be triggered. Module allows
+You to enable automatic import which makes FACT-Finder import will be triggered, right after the feed file is uploaded onto FTP server. You can also select which of data types
+should be imported automatically
+- Data (Search)
+- Suggest
+This is a multiselect field so You can select both of them
+
+## Data Export
+In following section You'll get information how, to integrate Your feed with FACT-Finder. You can choose from one of possible methods.  
+### Integration Methods
+#### FTP export
+This method exports feed from shop system and uploads it to FTP server. In order to do so, You need to have FTP server configured (described in section Export Settings). Then You can use dedicated button (visible below) to generate and then, upload file via FTP.
+ 
+![Product Data Export](docs/assets/generate-feed.png "Generate Export File(s) now")
+
+This method is dedicated mostly for ad-hoc export. In production environment You'll rather use cronjob which will do the same work without forcing You to click the export button each time You want to send new data to FACT-Finder
+To configure Cron, please activate the option *Generate Export Files(s) automatically* and the export will be generated every day at 01:00 server time.
+
+`<schedule>0 1 * * *</schedule>` is a default value however You can define your own cron expression in the module configuration at `Cron Schedule` section.
+  
+![Cron Configuration](docs/assets/cron-configuration_en.jpg "Cron Configuration")
+
+#### HTTP Export
+
+Alternative way to integrate Your feed is to use builtin FACT-Finder functionality to periodically download feed from specific URL
+which the feed is accessible at. This URL should be secured by Basic Auth (username and password configured at section [Export Settings](#export-settings))
+in order only authenticated users get access to. By making this URL no secured, You are allowing literally everyone to download Your feed!  
 
 Exports are available under following locations:
 
@@ -118,16 +169,10 @@ Exports are available under following locations:
 
 If there's no `store id` provided, feed will be generated with the default store (by default with id = 1)
 
+You should provide this URL in Your FACT-Finder UI
+![FACT-Finder Import settings](docs/assets/import-settings.png "Import settings")
 
-### Cron configuration
-
-You can  set the program to generate the product data export automatically. Activate the option *Generate Export Files(s) automatically* and the export is generated every day at 01:00 server time.
-
-`<schedule>0 1 * * *</schedule>` is a default value however You can define your own cron expression in the module configuration at `Cron Schedule` section.
-  
-![Cron Configuration](docs/assets/cron-configuration_en.jpg "Cron Configuration")
-
-## CMS Export
+### CMS Export
 
 You can export Your cms pages to FACT-Finder to present them in suggest results. You can specify whether You want to export cms pages content to separate channel, or using single channel, which You are using for standard products information export.
 Both ways offer same functionality but in different ways and are described below.
@@ -145,7 +190,7 @@ Both ways offer same functionality but in different ways and are described below
 
 Before You start exporting Your CMS content to FACT-Finder You need to prepare it for correctly serving this data to Your Magento application.
 
-### Create new suggest type
+#### Create new suggest type
 At first You need to create a new suggest type named **cms**. I'ts because the new <ff-suggest-item> was added with type attribute equals to"cms"
 
     <ff-suggest-item type="cms">
@@ -153,24 +198,24 @@ At first You need to create a new suggest type named **cms**. I'ts because the n
 ![New Suggest Type](docs/assets/cms-suggest-type.png "FACT-Finder backend - new suggest type")
 
 It's also  required to configure the return data of newly created suggest type. It's recommended to set return data as it's shown 
-on screen, however You can also choose more fields to be returned. You should add page url to returned data to allow users directly 
+on screen, however You can also choose more fields to be returned. You should add page URL to returned data to allow users directly 
 reaching them from suggest component. If You want to present also page images, it's also worth adding them to returned data
 
 ![Suggest Type Return Data](docs/assets/cms-type-return-data.png "FACT-Finder cms suggest return")
 
 Please note that each field needs to be correctly bind to html tag using access path same as in the FACT-Finder JSON object. 
-The example below shows how to render page url
+The example below shows how to render page URL
 
     <a href="{{attributes.PageLink}}" data-redirect="{{attributes.PageLink}}"'
 
-### Using Single Channel 
+#### Using Single Channel 
 Using single channel is recommended way of integrate Your CMS with FACT-Finder, however it requires additional
 configuration in FACT-Finder backend. In order to prevent CMS pages appears in search results
 You need to mark CMS related columns as no searchable (CMS results are displayed only in suggest component).
 
 ![Columns searchability](docs/assets/columns-searchability.png "CMS related columns mark as no searchable")
 
-### Using Separate channel
+#### Using Separate channel
 This solution does not require You to make any changes to channel configuration regarding columns searchability, however  You need to create a new channel.
 You need also to add new suggest type in Your newly created channel, as it is described in section [New Suggest Type](#create-new-suggest-type). Also You need to
 set configuration option **Activate Enrichment feature** to value **Yes** in module configuration.
@@ -182,7 +227,14 @@ of this solution will be lower, since all request are passed through Http server
 
 ![Example Suggest Result](docs/assets/example-suggest-cms.png "Example suggest result with cms")
 
-
+### Console Command
+If You are developer and want to test feed is generated correctly or You do not want to executing magento cron
+You can use console command which is implementation of Command of Symfony Console Component, builtin in Magento2. 
+Command name: `factfinder:export:products`. You can add execution of this command to Your crontab file.
+You can customize execution be configuring following options (which all are optional)
+- store - define a store, which the product data will be taken from
+- skip-ftp-upload - skips the ftp upload
+- skip-push-import - skips triggering import
 ## Web Component Integration
 
 You can activate and deactivate any web components from the configurations page in the Magento 2 backend.
@@ -233,7 +285,7 @@ You can also instantiate block in templates using the Magento Layout API, but it
 
 ### Search Box Integration and Functions
 
-As soon as the FACT-Finder-Integration is activated in the configuration, the search box web component is automatically activated. It replaces your standard search in Magenteo 2.
+As soon as the FACT-Finder-Integration is activated in the configuration, the search box web component is automatically activated. It replaces your standard search in Magento2 2.
 
 You can find the template for the FACT-Finder Search at:
 
@@ -279,7 +331,7 @@ Master Product Number (in module named `Master`):
 ```
 
 * Once the column name is changed in `di.xml`, add a plugin to the DataProvider and replace the standard name with new one.
-Remember that you don't need to copy rest of elements. They won't be removed because the DI configuration loading mechanism
+Remember that you do not need to copy rest of elements. They won't be removed because the DI configuration loading mechanism
 will merge all definitions into one output. Example implementation:
 
 ```xml
@@ -343,6 +395,75 @@ class BrandLogo implements \Omikron\Factfinder\Api\Export\Catalog\ProductFieldIn
 ```
 
 Now run `bin/magento cache:clean config` to use the new DI configuration.
- 
+
+### Adding custom communication parameter
+Module configuration allows You to pass constant values to each params, however sometimes You may need to provide variable value i.e. depending on currently logged customer. In order to do that, You should create custom ParameterProvider and pass it to CommunicationParametersProvider as constructor argument
+
+```php
+class CustomAddParams implements \Omikron\Factfinder\Api\Config\ParametersSourceInterface
+{
+       public function getParameters(): array
+       {
+           return [
+               'add-params'  => $this->getMyVariableParameters(),
+           ];
+       }
+}
+```
+Please keep in mind, that on that level of execution, parameters stored in associative array, will be overridden for each time, the single ParameterProvider returns an array of parameters with a key
+which already exist in the result of merge all ParameterProviders. By using Magento dependency injection mechanism Your ParameterProviders added from project level will be evaluated last, but If You
+want to add more than one, You need to maintain its order. In following example, if parameter arrays provided by CustomProviderFirst and CustomProviderSecond have intersection, for given key, the value
+from CustomProviderSecond will be returned in a result   
+```xml
+    <type name="Omikron\Factfinder\Model\Config\CommunicationParametersProvider">
+        <arguments>
+            <argument name="parametersSource" xsi:type="array">
+                <item name="first" xsi:type="object">YOUR_VENDOR\YOUR_MODULE\Model\Config\CustomProviderFirst</item>
+                <item name="secpmd" xsi:type="object">YOUR_VENDOR\YOUR_MODULE\Model\Config\CustomProviderSecond</item>
+            </argument>
+        </arguments>
+    </type>
+ ```
+
+### Adding custom product data provider
+If You are using custom module which defines new product types, and its data cannot be fetched using SimpleDataProvider used by simple products, You should create
+a custom data provider and map it to Your product type. This operation like previous are available via Magento DI mechanism. In your module DI add following
+xml code
+
+```xml
+    <type name="Omikron\Factfinder\Model\Export\Catalog\DataProvider">
+        <arguments>
+            <argument name="entityTypes" xsi:type="array">
+                <item name="customProductType" xsi:type="string">YOUR_VENDOR\YOUR_MODULE\Model\Export\Catalog\ProductType\CustomDataProvider</item>
+            </argument>
+        </arguments>
+    </type>
+```
+
+
+```php
+<?php
+class CustomDataProvider implements DataProviderInterface
+{
+    /** @var Product */
+    protected $product;
+
+    public function __construct(Product $product)
+    {
+        $this->product = $product;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getEntities(): iterable
+    {
+        // Your logic
+    }
+}
+```
+It's a minimum configuration. `$product` constructor will be passed automatically and in method `getEntities` You should extract all required product data
+
+
 ## License
 FACT-Finder® Web Components License. For more information see the [LICENSE](LICENSE) file.
