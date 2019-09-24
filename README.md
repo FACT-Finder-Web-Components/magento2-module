@@ -142,17 +142,19 @@ should be imported automatically
 This is a multiselect field so You can select both of them
 
 ## Data Export
-In following section You'll get information how, to integrate Your feed with FACT-Finder. You can choose from one of possible methods.  
+In following section You'll get information how, to integrate Your feed with FACT-Finder. Feed is built the same way, regardless of chosen method, so You can choose from one of possible methods.  
 ### Integration Methods
 #### FTP export
-This method exports feed from shop system and uploads it to FTP server. In order to do so, You need to have FTP server configured (described in section Export Settings). Then You can use dedicated button (visible below) to generate and then, upload file via FTP.
+This method exports feed from shop system and uploads it to FTP server. In order to use this method of export, You need to have FTP server configured (described in section [Export Settings](#export-settings)).
+Then You can click the button (visible below) to generate and then, upload file via FTP.
  
 ![Product Data Export](docs/assets/generate-feed.png "Generate Export File(s) now")
 
-This method is dedicated mostly for ad-hoc export. In production environment You'll rather use cronjob which will do the same work without forcing You to click the export button each time You want to send new data to FACT-Finder
+Using of that button is dedicated mostly for ad-hoc export. In production environment You'll rather use Cron job which will do the same work without forcing You to click the export button each time You want to send new data to FACT-Finder.
 To configure Cron, please activate the option *Generate Export Files(s) automatically* and the export will be generated every day at 01:00 server time.
 
-`<schedule>0 1 * * *</schedule>` is a default value however You can define your own cron expression in the module configuration at `Cron Schedule` section.
+In file [crontab.xml](src/etc/crontab.xml) You can see a expression `<schedule>0 1 * * *</schedule>` which is a default value however You can define your own cron expression in the module configuration (section visibile below).
+Value set here, will override the default crontab config
   
 ![Cron Configuration](docs/assets/cron-configuration_en.jpg "Cron Configuration")
 
@@ -397,7 +399,8 @@ class BrandLogo implements \Omikron\Factfinder\Api\Export\Catalog\ProductFieldIn
 Now run `bin/magento cache:clean config` to use the new DI configuration.
 
 ### Adding custom communication parameter
-Module configuration allows You to pass constant values to each params, however sometimes You may need to provide variable value i.e. depending on currently logged customer. In order to do that, You should create custom ParameterProvider and pass it to CommunicationParametersProvider as constructor argument
+Module configuration allows You to pass constant values to each params, however sometimes You may need to provide variable value i.e. depending on currently logged customer. In order to do that, You should create
+custom Parameter Provider.
 
 ```php
 class CustomAddParams implements \Omikron\Factfinder\Api\Config\ParametersSourceInterface
@@ -410,24 +413,27 @@ class CustomAddParams implements \Omikron\Factfinder\Api\Config\ParametersSource
        }
 }
 ```
-Please keep in mind, that on that level of execution, parameters stored in associative array, will be overridden for each time, the single ParameterProvider returns an array of parameters with a key
-which already exist in the result of merge all ParameterProviders. By using Magento dependency injection mechanism Your ParameterProviders added from project level will be evaluated last, but If You
-want to add more than one, You need to maintain its order. In following example, if parameter arrays provided by CustomProviderFirst and CustomProviderSecond have intersection, for given key, the value
-from CustomProviderSecond will be returned in a result   
+All registered Parameters Providers are executed in loop its results are stored in associative array which in result will be passed to the frontend.
+
+Please keep in mind, that on this level of execution, parameters will be overridden each time, Parameter Provider returns a value with a key
+which already exist in the result array. By using Magento dependency injection mechanism Your Parameter Providers added from project level will be evaluated last, but If You
+want to add more than one, You need to maintain their order. In following example, if parameter arrays provided by CustomProviderFirst and CustomProviderSecond have an intersection, for given key, the value
+from CustomProviderSecond will be returned in a result
+   
 ```xml
     <type name="Omikron\Factfinder\Model\Config\CommunicationParametersProvider">
         <arguments>
             <argument name="parametersSource" xsi:type="array">
                 <item name="first" xsi:type="object">YOUR_VENDOR\YOUR_MODULE\Model\Config\CustomProviderFirst</item>
-                <item name="secpmd" xsi:type="object">YOUR_VENDOR\YOUR_MODULE\Model\Config\CustomProviderSecond</item>
+                <item name="second" xsi:type="object">YOUR_VENDOR\YOUR_MODULE\Model\Config\CustomProviderSecond</item>
             </argument>
         </arguments>
     </type>
  ```
 
 ### Adding custom product data provider
-If You are using custom module which defines new product types, and its data cannot be fetched using SimpleDataProvider used by simple products, You should create
-a custom data provider and map it to Your product type. This operation like previous are available via Magento DI mechanism. In your module DI add following
+If You are in need to define new product types, and its data cannot be provided by any of existing Data Providers, You should create
+a custom Data Provider and map it to Your product type. This operation like previous are available via Magento DI mechanism. In your module DI add following
 xml code
 
 ```xml
@@ -462,8 +468,7 @@ class CustomDataProvider implements DataProviderInterface
     }
 }
 ```
-It's a minimum configuration. `$product` constructor will be passed automatically and in method `getEntities` You should extract all required product data
-
+It's a minimum configuration. `$product` constructor will be passed automatically and in method `getEntities` You should extract all required data
 
 ## License
 FACT-Finder® Web Components License. For more information see the [LICENSE](LICENSE) file.
