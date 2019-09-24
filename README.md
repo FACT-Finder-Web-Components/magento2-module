@@ -12,8 +12,8 @@ customise them.
 - [Activating the Module](#activating-the-module)
 - [Backend Configuration](#backend-configuration)
     - [General Settings](#general-settings)
-    - [Activated Web-Components](#activated-web-components)
     - [Advanced Settings](#advanced-settings)
+    - [Activated Web Components](#activated-web-components)
     - [Export Settings](#export-settings)
         - [Updating Field Roles](#updating-field-roles)
 - [Data Export](#data-export)
@@ -23,9 +23,9 @@ customise them.
     - [CMS Export](#cms-export)
     - [Console Command](#console-command)
 - [Web Component Integration](#web-component-integration)
-    - [Overview of relevant Files](#overview-of-relevant-files)
     - [Searchbox Integration and Functions](#searchbox-integration-and-functions)
     - [Process of Data Transfer between Shop and FACT-Finder](#process-of-data-transfer-between-shop-and-fact-finder)
+    - [Using FACT-Finder on category pages](#using-fact-finder-on-category-pages)
 - [Modification examples](#modification-examples)
     - [Changing existing column names](#changing-existing-column-names)
     - [Adding new column](#adding-new-column)
@@ -82,16 +82,31 @@ Once the FACT-Finder module is activated, you can find the configurations page u
 
 ### General Settings
 
-At the top of the configurations page are the general settings. The information with which the shop connects to and authorises itself to the FACT-Finder Service are entered here. In the first line, activate your FACT-Finder integration. Before any changes become active, save them by clicking “Save Config”. In some cases, you need to manually empty the cache (*Configuration* and *Page Cache*).
-
+At the top of the configurations page are the general settings. The information with which the shop connects to and authorises itself to the FACT-Finder Service are entered here. In the first line, activate your FACT-Finder integration. Before any changes become active, save them by clicking “Save Config”.
+In some cases, you need to manually empty the cache (*Configuration* and *Page Cache*).
 Click the button “Test Connection” to check the connection to the FACT-Finder service. Please note the channel name needs to be entered correctly to establish a connection.
 
-At the end of the general settings section is an option *Show 'Add to Cart' Button in Search Results*. Activate this option to add a button to the products displayed on the search result page, which directly adds that product to the shopping cart.
+Here You can also enable using FACT-Finder for category pages. More You can read in [Using FACT-Finder on category pages](#using-fact-finder-on-category-pages) section
+
+At the end of the general settings section is an option *Show 'Add to Cart' Button in Search Results*. Activate this option to add a button to the products displayed on the search result page, which directly
+adds that product to the shopping cart. This feature works only for simple products. For configurable products user will be redirected to product page to choose specific product variant.
 Warning: The product added to the cart is identified by the variable "MasterProductNumber". To allow this function to work correctly, the field "MasterProductNumber" must be imported to the FACT-Finder backend (on fact-finder.de).   
 
-![General Settings](docs/assets/general-settings.jpg "General Settings")
+![General Settings](docs/assets/general-settings.png "General Settings")
 
-### Activate Web Components
+### Advanced Settings
+
+Advanced Settings contains additional parameters used for the `ff-communication` web component. Each setting is set to a
+ default value and has a short explanatory text attached.  
+ 
+#### Currency and Country Settings
+You don't need to set currency nor country only for module purposes. It will use currently used currency and pass this information to `ff-communication`
+component as respectively `currency-code` and `country-code` parameters. You can find these settings under Magento General settings
+- [How to configure currency?](https://docs.magento.com/m2/ce/user_guide/stores/currency-configuration.html)
+- [How to configure country?](https://docs.magento.com/m2/ce/user_guide/stores/country-options.html)
+
+
+### Activated Web Components
 
 Here you can decide which web components are activated. Only active web components can be used and displayed in the shop.
 
@@ -103,11 +118,6 @@ Here you can decide which web components are activated. Only active web componen
 - **Products per Page** activates an option to limit the number of displayed search results per page.
 - **Campaigns** displays your active FACT-Finder campaigns, e.g. advisor and feedback campaigns.
 - **Pushed Products** displays your pushed products campaigns.
-
-### Advanced Settings
-
-Advanced Settings contains additional parameters used for the `ff-communication` web component. Each setting is set to a
- default value and has a short explanatory text attached.  
 
 ### Export Settings
 This option configures the connection with the FACT-Finder system via FTP. Shop data can be generated and transferred to
@@ -281,7 +291,7 @@ You can also instantiate block in templates using the Magento Layout API, but it
 ->toHtml(); ?>
 ```
 
-### Search Box Integration and Functions
+### Searchbox Integration and Functions
 
 As soon as the FACT-Finder-Integration is activated in the configuration, the search box web component is automatically activated. It replaces your standard search in Magento2 2.
 
@@ -305,6 +315,10 @@ which hands the request to the FACT-Finder system, receives the answer, processe
 Once response from FACT-Finder is available, proxy controller emits an `ff_proxy_post_dispatch` event which allows user to listen in order to modify and enrich recieved data
 
 ![Communication Overview](docs/assets/communication-overview.png "Communication Overview")
+
+### Using FACT-Finder on category pages
+Module in order to preserve categories URLs and hence SEO get use of standard Magento routing with the combination of FACT-Finder availability to pass custom parameters to search request.
+Once user is landed on category page. Search request is performed immediately (thanks to `search-immediate` communication parameter usage). To enable
 
 ## Modification examples
 Our Magento 2 module offers a fully working integration out of the box. However, most projects may require
