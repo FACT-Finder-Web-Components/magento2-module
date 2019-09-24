@@ -31,6 +31,8 @@ customise them.
     - [Adding new column](#adding-new-column)
     - [Adding custom communication parameter](#adding-custom-communication-parameter)
     - [Adding custom product data provider](#adding-custom-product-data-provider)
+- [Contributing](#contributing)
+- [License](#license)
     
 ## Requirements
 
@@ -422,6 +424,7 @@ class CustomAddParams implements \Omikron\Factfinder\Api\Config\ParametersSource
            ];
        }
 }
+
 ```
 All registered Parameters Providers are executed in loop its results are stored in associative array which in result will be passed to the frontend.
 
@@ -456,7 +459,6 @@ xml code
     </type>
 ```
 
-
 ```php
 <?php
 class CustomDataProvider implements DataProviderInterface
@@ -479,6 +481,13 @@ class CustomDataProvider implements DataProviderInterface
 }
 ```
 It's a minimum configuration. `$product` constructor will be passed automatically and in method `getEntities` You should extract all required data
+
+## Contributing
+If You have improved module in any possible way: fixed bug, added new functionality changed existing functionality, added unit test feel free to contribute.
+You can find more information [here](.github/CONTRIBUTING.md)
+
+You can also open a new issue if You spot a bug or just have an idea for module improvement
+To learn about issues, click [here](https://github.com/FACT-Finder-Web-Components/magento2-module/issues)
 
 ## License
 FACT-Finder® Web Components License. For more information see the [LICENSE](LICENSE) file.
