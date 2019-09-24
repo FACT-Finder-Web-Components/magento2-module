@@ -21,6 +21,13 @@
 
 * Create first an issue and then start coding to contribute via a PR.
 
+## Contribution requirements
+- Contributions must adhere to the coding standards. Module is using [magento-ecg/coding-standard](https://github.com/magento-ecg/coding-standard), there is also [phpcs.xml.dist](../phpcs.xml.dist)
+  included which should be used.
+- Pull requests (PRs) must be accompanied by a meaningful description of their purpose. Please use our [template](ISSUE_TEMPLATE.md) while creating pull request
+- For any change, which could be notified, please update the [CHANGELOG.md](../CHANGELOG.md) with relative change info.
+- PRs which include bug fixes must be accompanied with a step-by-step description of how to reproduce the bug.
+
 ## Do you have questions about the source code?
 
 * Ask your question via an issue which is prefixed with `question` in the title.
