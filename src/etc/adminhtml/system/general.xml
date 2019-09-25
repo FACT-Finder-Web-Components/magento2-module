@@ -3,6 +3,9 @@
     <group id="general" translate="label" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
         <label>Main Settings</label>
         <comment><![CDATA[<div class="message message-notice notice"><div data-ui-id="messages-message-success">Please always save the config in the upper right corner after making changes.</div></div>]]></comment>
+        <field id="module_Version" type="note" translate="label" sortOrder="0" showInDefault="1" showInWebsite="1" showInStore="1">
+            <frontend_model>Omikron\Factfinder\Block\Adminhtml\System\Config\ModuleVersion</frontend_model>
+        </field>
         <field id="is_enabled" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
             <label>Activate FACT-Finder integration</label>
             <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
@@ -10,6 +13,7 @@
         <field id="logging_enabled" translate="label" type="select" sortOrder="1" showInDefault="1">
             <label>Activate Logging</label>
             <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+            <comment>Logs all exception during communication with FACT-Finder on the Backend side (Web Components won't be affected)</comment>
         </field>
         <field id="address" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
             <label>Server URL</label>

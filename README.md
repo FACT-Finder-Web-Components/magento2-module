@@ -20,6 +20,7 @@ customise them.
     - [Activated Web Components](#activated-web-components)
     - [Export Settings](#export-settings)
         - [Updating Field Roles](#updating-field-roles)
+        - [Automatic Import](#automatic-import)
 - [Data Export](#data-export)
     - [Integration Methods](#integration-methods)
         - [FTP Export](#ftp-export)
@@ -35,7 +36,7 @@ customise them.
     - [Adding new column](#adding-new-column)
     - [Adding custom communication parameter](#adding-custom-communication-parameter)
     - [Adding custom product data provider](#adding-custom-product-data-provider)
-- [Contributing](#contributing)
+- [Contribute](#contribute)
 - [License](#license)
     
 ## Requirements
@@ -97,6 +98,9 @@ Here You can also enable using FACT-Finder for category pages. More You can read
 At the end of the general settings section is an option *Show 'Add to Cart' Button in Search Results*. Activate this option to add a button to the products displayed on the search result page, which directly
 adds that product to the shopping cart. This feature works only for simple products. For configurable products user will be redirected to product page to choose specific product variant.
 Warning: The product added to the cart is identified by the variable "MasterProductNumber". To allow this function to work correctly, the field "MasterProductNumber" must be imported to the FACT-Finder backend (on fact-finder.de).   
+
+By enabling option `Activate Logging`, all exceptions thrown during communication with FACT-Finder server will be saved in log file `var/log/factfinder.log`. 
+Please note that is a server side communication option - WebComponents behaviour won't be affected
 
 ![General Settings](docs/assets/general-settings.png "General Settings")
 
@@ -486,12 +490,12 @@ class CustomDataProvider implements DataProviderInterface
 ```
 It's a minimum configuration. `$product` constructor will be passed automatically and in method `getEntities` You should extract all required data
 
-## Contributing
-If You have improved module in any possible way: fixed bug, added new functionality changed existing functionality, added unit test feel free to contribute.
-You can find more information [here](.github/CONTRIBUTING.md)
+## Contribute
+
+For more information, click [here](.github/CONTRIBUTING.md)
 
 You can also open a new issue if You spot a bug or just have an idea for module improvement
-To learn about issues, click [here](https://github.com/FACT-Finder-Web-Components/magento2-module/issues)
+To check currently opened issues [here](https://github.com/FACT-Finder-Web-Components/magento2-module/issues)
 
 ## License
 FACT-Finder® Web Components License. For more information see the [LICENSE](LICENSE) file.
