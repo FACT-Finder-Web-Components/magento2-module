@@ -11,5 +11,8 @@ before_install:
   - composer self-update
   - composer config  --auth --global http-basic.repo.magento.com $MAGENTO_USERNAME $MAGENTO_PASSWORD
 
+install:
+  - composer install --no-interaction
+
 script:
   - vendor/bin/phpunit
