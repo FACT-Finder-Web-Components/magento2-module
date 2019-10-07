@@ -41,5 +41,5 @@
     <rule ref="Squiz.ControlStructures.ControlSignature.SpaceAfterKeyword">
         <exclude-pattern>*.phtml</exclude-pattern>
     </rule>
-    <rule ref="Squiz.Strings.DoubleQuoteUsage" />
+    <rule ref="Squiz.Strings.DoubleQuoteUsage.NotRequired" />
 </ruleset>
