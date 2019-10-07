@@ -3,20 +3,20 @@ declare(strict_types=1);
 
 namespace Omikron\Factfinder\Console\Command;
 
-use Magento\Framework\App\Filesystem\DirectoryList;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
-use Magento\Store\Model\StoreManagerInterface;
+use Magento\Framework\App\Filesystem\DirectoryList;
 use Magento\Framework\App\State;
 use Magento\Framework\Filesystem;
+use Magento\Store\Model\StoreManagerInterface;
 use Omikron\Factfinder\Model\Api\PushImport;
+use Omikron\Factfinder\Model\Config\CommunicationConfig;
 use Omikron\Factfinder\Model\Export\FeedFactory as FeedGeneratorFactory;
 use Omikron\Factfinder\Model\FtpUploader;
 use Omikron\Factfinder\Model\StoreEmulation;
 use Omikron\Factfinder\Model\Stream\CsvFactory;
-use Omikron\Factfinder\Model\Config\CommunicationConfig;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
 
 class ExportProducts extends \Symfony\Component\Console\Command\Command
 {
@@ -108,9 +108,9 @@ class ExportProducts extends \Symfony\Component\Console\Command\Command
         }
         foreach ($storeIds as $storeId) {
             $this->storeEmulation->runInStore(
-                (int)$storeId,
+                (int) $storeId,
                 function () use ($storeId, $input, $output) {
-                    if ($this->communicationConfig->isChannelEnabled((int)$storeId)) {
+                    if ($this->communicationConfig->isChannelEnabled((int) $storeId)) {
                         $filename = "export.{$this->communicationConfig->getChannel()}.csv";
                         $stream = $this->csvFactory->create(['filename' => "factfinder/{$filename}"]);
                         $this->feedGeneratorFactory->create('product')->generate($stream);
@@ -123,7 +123,7 @@ class ExportProducts extends \Symfony\Component\Console\Command\Command
                             $output->writeln("Store $storeId: File $filename has been uploaded to FTP.");
                         }
                         if (!$input->getOption('skip-push-import')) {
-                            if ($this->pushImport->execute((int)$storeId)) {
+                            if ($this->pushImport->execute((int) $storeId)) {
                                 $output->writeln("Store $storeId: Push Import for File $filename has been triggered.");
                             }
                         }
