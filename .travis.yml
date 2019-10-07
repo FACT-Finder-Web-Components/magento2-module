@@ -1,0 +1,15 @@
+language: php
+php:
+  - 7.1
+  - 7.2
+
+cache:
+  directories:
+    - $HOME/.composer/cache
+
+before_install:
+  - composer self-update
+  - composer config  --auth --global http-basic.repo.magento.com $MAGENTO_USERNAME $MAGENTO_PASSWORD
+
+script:
+  - vendor/bin/phpunit
