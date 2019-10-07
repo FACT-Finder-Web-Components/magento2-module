@@ -110,7 +110,7 @@ class ExportProducts extends \Symfony\Component\Console\Command\Command
             $this->storeEmulation->runInStore(
                 (int)$storeId,
                 function () use ($storeId, $input, $output) {
-                    if ($this->communicationConfig->isChannelEnabled((int)$storeId)) {
+                    if ($this->communicationConfig->isChannelEnabled((int) $storeId)) {
                         $filename = "export.{$this->communicationConfig->getChannel()}.csv";
                         $stream = $this->csvFactory->create(['filename' => "factfinder/{$filename}"]);
                         $this->feedGeneratorFactory->create('product')->generate($stream);
@@ -123,7 +123,7 @@ class ExportProducts extends \Symfony\Component\Console\Command\Command
                             $output->writeln("Store $storeId: File $filename has been uploaded to FTP.");
                         }
                         if (!$input->getOption('skip-push-import')) {
-                            if ($this->pushImport->execute((int)$storeId)) {
+                            if ($this->pushImport->execute((int) $storeId)) {
                                 $output->writeln("Store $storeId: Push Import for File $filename has been triggered.");
                             }
                         }

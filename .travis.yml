@@ -2,6 +2,9 @@ language: php
 php:
   - 7.1
   - 7.2
+env:
+  - COMPOSER_FLAGS=""
+  - COMPOSER_FLAGS="--prefer-lowest"
 
 cache:
   directories:
@@ -13,7 +16,8 @@ before_install:
   - composer config  --global repositories.magento composer https://repo.magento.com/
 
 install:
-  - composer install --no-interaction
+  - composer install --no-interaction $COMPOSER_FLAGS
 
 script:
   - vendor/bin/phpunit
+  - vendor/bin/phpcs -q .
