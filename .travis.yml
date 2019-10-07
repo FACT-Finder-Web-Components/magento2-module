@@ -10,6 +10,7 @@ cache:
 before_install:
   - composer self-update
   - composer config  --auth --global http-basic.repo.magento.com $MAGENTO_USERNAME $MAGENTO_PASSWORD
+  - composer config  --global repositories.magento composer https://repo.magento.com/
 
 install:
   - composer install --no-interaction
