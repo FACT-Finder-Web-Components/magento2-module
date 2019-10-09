@@ -9,8 +9,6 @@ env:
 matrix:
   exclude:
     - if: type = pull_request
-      php: 7.1
-    - if: type = pull_request
       env: COMPOSER_FLAGS="--prefer-lowest"
 
 cache:
