@@ -2,14 +2,9 @@ language: php
 php:
   - 7.1
   - 7.2
-matrix:
-  include:
-    - php: 7.2
-      env: COMPOSER_FLAGS="--prefer-lowest"
-      if: type != pull_request
-    - php: 7.1
-      env: COMPOSER_FLAGS="--prefer-lowest"
-      if: type != pull_request
+env:
+  - COMPOSER_FLAGS="--prefer-lowest"
+  - COMPOSER_FLAGS="--prefer-stable"
 
 cache:
   directories:
