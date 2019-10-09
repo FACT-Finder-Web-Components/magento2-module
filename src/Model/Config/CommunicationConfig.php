@@ -40,7 +40,7 @@ class CommunicationConfig implements CommunicationConfigInterface, ParametersSou
 
     public function getAddress(): string
     {
-        return (string) $this->scopeConfig->getValue(self::PATH_ADDRESS);
+        return (string) $this->scopeConfig->getValue(self::PATH_ADDRESS, ScopeInterface::SCOPE_STORES);
     }
 
     public function isChannelEnabled(int $scopeId = null): bool

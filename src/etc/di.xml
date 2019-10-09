@@ -128,8 +128,6 @@
         <arguments>
             <argument name="entityTypes" xsi:type="array">
                 <item name="simple" xsi:type="string">Omikron\Factfinder\Model\Export\Catalog\ProductType\SimpleDataProvider</item>
-                <item name="virtual" xsi:type="string">Omikron\Factfinder\Model\Export\Catalog\ProductType\SimpleDataProvider</item>
-                <item name="downloadable" xsi:type="string">Omikron\Factfinder\Model\Export\Catalog\ProductType\SimpleDataProvider</item>
                 <item name="configurable" xsi:type="string">Omikron\Factfinder\Model\Export\Catalog\ProductType\ConfigurableDataProvider</item>
                 <item name="grouped" xsi:type="string">Omikron\Factfinder\Model\Export\Catalog\ProductType\GroupedDataProvider</item>
                 <item name="bundle" xsi:type="string">Omikron\Factfinder\Model\Export\Catalog\ProductType\BundleDataProvider</item>
@@ -206,6 +204,13 @@
         <arguments>
             <argument name="initial" xsi:type="array">
                 <item name="navigation" xsi:type="string">navigation=true</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\Console\CommandListInterface">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="omikron_factfinder_export_products" xsi:type="object">Omikron\Factfinder\Console\Command\ExportProducts</item>
             </argument>
         </arguments>
     </type>
