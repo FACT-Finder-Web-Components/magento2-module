@@ -414,6 +414,19 @@ class BrandLogo implements \Omikron\Factfinder\Api\Export\Catalog\ProductFieldIn
 }
 ```
 
+Finally, You need to define new column in CatalogFeed definition in di.xml`.
+
+```xml
+<virtualType name="Omikron\Factfinder\Model\Export\CatalogFeed">
+    <arguments>
+        <argument name="columns" xsi:type="array">
+            <item name="BrandLogo" xsi:type="string">BrandLogo</item>
+        </argument>
+    </arguments>
+</virtualType>
+```
+
+
 Now run `bin/magento cache:clean config` to use the new DI configuration.
 
 ### Adding custom communication parameter
