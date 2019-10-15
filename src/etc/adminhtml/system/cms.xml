@@ -3,7 +3,7 @@
     <group id="cms_export" translate="label" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
         <label>CMS settings</label>
         <field id="ff_cms_export_enabled" translate="label" type="select" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="1">
-            <label>Export Enabled</label>
+            <label>Export enabled</label>
             <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
         </field>
         <field id="ff_cms_use_separate_channel" type="select" translate="label comment" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="2">

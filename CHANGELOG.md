@@ -1,5 +1,8 @@
 # Changelog
 ## Unreleased
+### Changed
+- Improve German language package
+
 ### Fixed
 - Correctly merge communication params added via layout
 
