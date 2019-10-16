@@ -5,6 +5,7 @@
 
 ### Fixed
 - Correctly merge communication params added via layout
+- Prevent search request before redirecting to search result page
 
 ## [v1.3.2] - 2019.08.30
 ### Fixed
