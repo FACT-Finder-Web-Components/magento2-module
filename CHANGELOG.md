@@ -1,5 +1,8 @@
 # Changelog
 ## Unreleased
+### Changed
+- Upgrade Web Components to v3.7.0
+
 ### Fixed
 - Correctly merge communication params added via layout
 - Prevent search request before redirecting to search result page
