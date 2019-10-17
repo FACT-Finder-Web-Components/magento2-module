@@ -2,6 +2,7 @@
 ## Unreleased
 ### Changed
 - Improve German language package
+- Upgrade Web Components to v3.7.0
 
 ### Fixed
 - Correctly merge communication params added via layout
