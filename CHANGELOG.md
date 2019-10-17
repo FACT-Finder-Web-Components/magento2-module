@@ -1,6 +1,7 @@
 # Changelog
 ## Unreleased
 ### Changed
+- Improve German language package
 - Upgrade Web Components to v3.7.0
 
 ### Fixed
