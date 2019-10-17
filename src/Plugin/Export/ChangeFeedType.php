@@ -17,13 +17,13 @@ class ChangeFeedType
     }
 
     /**
-     * @param mixed  $_
+     * @param mixed  $subject
      * @param string $type
      *
      * @return array
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function beforeCreate($_, string $type): array
+    public function beforeCreate($subject, string $type): array
     {
         if ($type == 'product' && $this->config->isExportEnabled() && !$this->config->useSeparateChannel()) {
             $type = 'combined';

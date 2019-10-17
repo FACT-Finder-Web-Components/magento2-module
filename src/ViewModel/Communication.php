@@ -48,8 +48,8 @@ class Communication implements ArgumentInterface
 
     private function mergeParameters(array ...$params): array
     {
-        $params = array_map(function (array $p): array {
-            return array_intersect_key($p + $this->mergeableParams, $this->mergeableParams);
+        $params = array_map(function (array $param): array {
+            return array_intersect_key($param + $this->mergeableParams, $this->mergeableParams);
         }, $params);
 
         return array_reduce(array_keys($this->mergeableParams), function ($result, $key) use ($params) {

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Omikron\Factfinder\Model\Stream;
 
+use BadMethodCallException;
 use Omikron\Factfinder\Api\StreamInterface;
 
 class Stdout implements StreamInterface
@@ -15,6 +16,6 @@ class Stdout implements StreamInterface
 
     public function getContent(): string
     {
-        throw new \BadMethodCallException('Not implemented');
+        throw new BadMethodCallException('Not implemented');
     }
 }
