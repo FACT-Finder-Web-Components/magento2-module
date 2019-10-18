@@ -1,5 +1,5 @@
 # Changelog
-## [v1.3.3] - 2019.10.18
+## [v1.3.3] - 2019.10.21
 ### Changed
 - Improve German language package
 - Upgrade Web Components to v3.7.0
