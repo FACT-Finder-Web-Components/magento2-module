@@ -1,5 +1,5 @@
 # Changelog
-## Unreleased
+## [v1.3.3] - 2019.10.18
 ### Changed
 - Improve German language package
 - Upgrade Web Components to v3.7.0
@@ -161,6 +161,7 @@
 ### Added
 - Feed Export: Export feed file is now available via separate link
 
+[v1.3.3]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v1.3.3
 [v1.3.2]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v1.3.2
 [v1.3.1]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v1.3.1
 [v1.3.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v1.3.0
