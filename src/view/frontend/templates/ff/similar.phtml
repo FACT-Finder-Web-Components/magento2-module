@@ -7,7 +7,7 @@ $viewModel = $block->getViewModel();
 <ff-similar-products <?php if ($viewModel): ?>record-id="<?= $block->escapeHtmlAttr($viewModel->getProduct()->getSku()) ?>" <?php endif; ?>unresolved>
     <div class="block upsell" data-limit="0" data-shuffle="0">
         <div class="block-title title">
-            <strong id="block-upsell-heading" role="heading" aria-level="2"><?= $block->escapeHtml(__('Similar Products')) ?></strong>
+            <strong id="block-upsell-heading" role="heading" aria-level="2"><?= $block->escapeHtml(__('Similar products')) ?></strong>
         </div>
         <div class="block-content content" aria-labelledby="block-upsell-heading">
             <?= /* @noEscape */ $block->getBlockHtml('factfinder.recordlist') ?>

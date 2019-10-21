@@ -23,7 +23,7 @@ class Exporter implements ExporterInterface
     {
         $emptyRecord = array_combine($columns, array_fill(0, count($columns), ''));
         foreach ($dataProvider->getEntities() as $entity) {
-            $entityData = array_merge($emptyRecord, array_intersect_key($entity->toArray(), $emptyRecord));
+            $entityData = array_merge($emptyRecord, array_intersect_key($entity->toArray(), $emptyRecord)); // phpcs:ignore
             $stream->addEntity($this->prepare($entityData));
         }
     }

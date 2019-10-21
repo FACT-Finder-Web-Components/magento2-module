@@ -45,7 +45,7 @@
             <label>Show 'Add to Cart' button in search results</label>
             <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
         </field>
-        <field id="ff_enrichment" translate="label" type="select" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
+        <field id="ff_enrichment" translate="label comment" type="select" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
             <label>Activate Enrichment feature</label>
             <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
             <comment>Data enrichment enables you to refine the data coming back from FACT-Finder inside the SDK code. Please refer the documentation for more infos (last chapter about data-communication).</comment>

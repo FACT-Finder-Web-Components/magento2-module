@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Omikron\Factfinder\Model\Export\Catalog;
 
 use Magento\Catalog\Api\Data\ProductInterface;
+use Magento\Catalog\Model\Product\Type;
 use Magento\Framework\ObjectManagerInterface;
 use Omikron\Factfinder\Api\Export\DataProviderInterface;
 use Omikron\Factfinder\Api\Export\ExportEntityInterface;
@@ -40,6 +41,7 @@ class DataProvider implements DataProviderInterface
 
     private function entitiesFrom(ProductInterface $product): DataProviderInterface
     {
-        return $this->objectManager->create($this->entityTypes[$product->getTypeId()], ['product' => $product]); // phpcs:ignore
+        $type = $this->entityTypes[$product->getTypeId()] ?? $this->entityTypes[Type::DEFAULT_TYPE];
+        return $this->objectManager->create($type, ['product' => $product]); // phpcs:ignore
     }
 }
