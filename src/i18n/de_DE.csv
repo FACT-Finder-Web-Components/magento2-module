@@ -88,7 +88,7 @@ Campaigns,Kampagnen
 "Generate export files(s) automatically","Generate export files(s) automatically"
 "Start Time","Startzeit"
 "Cron execution frequency","Ausführungshäufigkeit"
-"Data export","Datenexport"
+"Export settings","Export-Einstellungen"
 "<div class=""message message-notice notice""><div data-ui-id=""messages-message-success"">Please always save the config in the upper right corner after making changes.</div></div>","<div class=""message message-notice notice""><div data-ui-id=""messages-message-success"">Damit Änderungen übernommen werden, müssen diese zuerst über die Speichern-Schaltfläche oben rechts gespeichert werden.</div></div>"
 "Upload Host","FTP-Host"
 "Please specify the FTP server address, where the export file(s) should be uploaded. For example shopname.fact-finder.de. This parameter shouldn't have any trailing slashes and shouldn't be prefixed with ftp://.","Geben Sie hier den FTP Server an, auf den der Produktdaten Export hochgeladen werden soll, z.B. shopname.fact-finder.de. Die URL des FTP-Servers sollte ohne voranstehendes Protokoll (ftp://) und ohne nachgestelltem Schrägstrich angegeben werden."
