@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Fixed
+- The ASN is now compatible with IE11
+
 ## [v1.3.3] - 2019.10.21
 ### Changed
 - Improve German language package
