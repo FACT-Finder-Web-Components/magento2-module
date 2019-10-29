@@ -1,5 +1,9 @@
 # FACT-Finder® Web Components for Magento 2
 
+![Packagist Version](https://img.shields.io/packagist/v/omikron/magento2-factfinder)
+![GitHub contributors](https://img.shields.io/github/contributors/FACT-Finder-Web-Components/magento2-module)
+[![Build Status](https://travis-ci.org/FACT-Finder-Web-Components/magento2-module.svg?branch=develop)](https://travis-ci.org/FACT-Finder-Web-Components/magento2-module)
+
 This document helps you integrate the FACT-Finder Web Components SDK into your Magento 2 Shop. In addition, it gives a
 concise overview of its primary functions. The first chapter *Installation* walks you through the suggested installation
 processes. The second chapter “Backend Configuration” explains the customisation options in the Magento 2 backend. The
