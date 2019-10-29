@@ -2,6 +2,7 @@
 ## Unreleased
 ### Fixed
 - The ASN is now compatible with IE11
+- Check current configuration before switching layout on category pages
 
 ## [v1.3.3] - 2019.10.21
 ### Changed
