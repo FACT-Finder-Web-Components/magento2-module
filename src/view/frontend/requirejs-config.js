@@ -10,7 +10,7 @@ var config = {
             deps: [
                 'Omikron_Factfinder/ff-web-components/vendor/custom-elements-es5-adapter',
                 'Omikron_Factfinder/ff-web-components/vendor/webcomponents-loader'
-            ].concat(!!window.navigator.userAgent.match(/(MSIE |Trident\/)/) || true ? ['es6shim'] : []),
+            ].concat(!!window.navigator.userAgent.match(/(MSIE |Trident\/)/) ? ['es6shim'] : []),
             exports: 'factfinder'
         }
     },
