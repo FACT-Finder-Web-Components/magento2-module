@@ -1,8 +1,8 @@
 var config = {
     map: {
         '*': {
-            factfinder: 'Omikron_Factfinder/ff-web-components/bundle',
-            es6shim: 'Omikron_Factfinder/js/polyfill/es6-shim.min'
+            es6shim: 'Omikron_Factfinder/js/polyfill/es6-shim.min',
+            factfinder: 'Omikron_Factfinder/ff-web-components/bundle'
         }
     },
     shim: {
