@@ -62,8 +62,8 @@ class SuggestTest extends TestCase
             'endpoint' => self::FF_SERVER . 'Suggest.ff',
             'params'   => ['channel' => 'catalog_channel', 'foo' => 'bar'],
             'response' => ['suggestions' => [
-                ["name" => "Proteus Fitness Jackshirt", "type" => "productName"],
-                ["name" => "Promotions", "type" => "category"],
+                ['name' => 'Proteus Fitness Jackshirt', 'type' => 'productName'],
+                ['name' => 'Promotions', 'type' => 'category'],
             ]],
         ]);
 
