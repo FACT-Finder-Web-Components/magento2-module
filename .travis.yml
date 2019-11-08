@@ -21,3 +21,4 @@ install:
 script:
   - vendor/bin/phpunit
   - vendor/bin/phpcs -q .
+  - vendor/bin/phpmd src text phpmd.xml.dist

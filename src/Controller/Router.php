@@ -42,12 +42,11 @@ class Router implements RouterInterface
         $pos        = strpos($identifier, '/');
         $path       = substr($identifier, $pos + 1);
 
+        $request->setModuleName('factfinder')->setActionName('call')->setControllerName('proxy');
         if ($path == self::CUSTOM_RESULT_PAGE) {
-            $request->setModuleName('factfinder')->setControllerName('result')->setActionName('index');
+            $request->setActionName('index')->setControllerName('result');
         } elseif ($path == self::EXPORT_PAGE) {
-            $request->setModuleName('factfinder')->setControllerName('export')->setActionName('export');
-        } else {
-            $request->setModuleName('factfinder')->setControllerName('proxy')->setActionName('call');
+            $request->setActionName('export')->setControllerName('export');
         }
 
         return $this->actionFactory->create(Forward::class);

@@ -11,6 +11,9 @@ use Magento\Framework\Event\ObserverInterface;
 use Magento\Framework\HTTP\Authentication as Credentials;
 use Omikron\Factfinder\Model\Export\BasicAuth as Authentication;
 
+/**
+ * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+ */
 class ExportAuthentication implements ObserverInterface
 {
     /** @var ActionFlag */
