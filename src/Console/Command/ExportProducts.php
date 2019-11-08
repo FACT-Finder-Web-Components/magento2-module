@@ -84,8 +84,8 @@ class ExportProducts extends \Symfony\Component\Console\Command\Command
         $this->setName('factfinder:export:products')->setDescription('Export Factfinder Product Data as CSV file');
 
         $this->addOption('store', 's', InputOption::VALUE_OPTIONAL, 'Store ID or Store Code');
-        $this->addOption('skip-ftp-upload', null, InputOption::VALUE_OPTIONAL, 'Skip FTP Upload');
-        $this->addOption('skip-push-import', null, InputOption::VALUE_OPTIONAL, 'Skip Push Import');
+        $this->addOption('skip-ftp-upload', null, InputOption::VALUE_NONE, 'Skip FTP Upload');
+        $this->addOption('skip-push-import', null, InputOption::VALUE_NONE, 'Skip Push Import');
 
         parent::configure();
     }

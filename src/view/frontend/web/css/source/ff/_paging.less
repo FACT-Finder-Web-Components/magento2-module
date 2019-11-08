@@ -1,52 +1,36 @@
-ff-paging {
-    line-height: 32px;
-    height: 32px;
+ff-paging-item {
+  line-height: 32px;
+  height: 32px;
+
+  .ffw-cursor {
+    padding: 0 13px;
+  }
+
+  &:hover {
+    background: #FF692C;
+    color: #FFF;
+  }
+
+  &[type="nextLink"], &[type="previousLink"] {
+    background: #FFF;
+  }
+
+  &[type="currentLink"] {
+    background-color: #393b3e;
+    color: #FFF;
+    font-weight: normal;
+  }
+
+  input.padd {
+    &, &:focus {
+      box-shadow: none;
+      outline: none;
+    }
+  }
 }
 
 @media (max-width: 560px) {
-    .ff-paging {
-        margin: 10px auto;
-    }
-}
-
-ff-paging-item:hover {
-    background-color: rgb(255, 105, 44);
-    color: #FFF;
-}
-
-ff-paging-item[type="nextLink"]:hover,
-ff-paging-item[type="previousLink"]:hover {
-    background-color: rgb(255, 105, 44);
-}
-
-ff-paging-item[type="nextLink"],
-ff-paging-item[type="previousLink"] {
-    background-color: white;
-}
-
-ff-paging ff-paging-item,
-ff-paging span.more {
-    color: #393b3e;
-    transition: 400ms;
-}
-
-ff-paging-set input {
-    outline: none;
-}
-
-ff-paging span.more {
-    padding: 0 13px;
-}
-
-ff-paging ff-paging-item,
-ff-paging ff-paging-item:nth-last-of-type(1) {
-    border: 0px;
-    padding: 0 13px;
-}
-
-ff-paging ff-paging-item[type="currentLink"] {
-    background-color: #393b3e;
-    /*border-radius: 4px;*/
-    color: #FFF;
-    font-weight: normal;
+  .ff-paging {
+    margin: 10px auto;
+  }
 }
