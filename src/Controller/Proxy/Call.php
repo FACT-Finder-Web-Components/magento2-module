@@ -4,17 +4,21 @@ declare(strict_types=1);
 
 namespace Omikron\Factfinder\Controller\Proxy;
 
-use Magento\Framework\App\Action\Context;
-use Magento\Framework\Controller\Result\JsonFactory;
+use Magento\Framework\App\Action;
+use Magento\Framework\Controller\Result\JsonFactory as JsonResultFactory;
+use Magento\Framework\Controller\Result\RawFactory as RawResultFactory;
 use Magento\Framework\Exception\NotFoundException;
 use Omikron\Factfinder\Api\ClientInterface;
 use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
 use Omikron\Factfinder\Exception\ResponseException;
 
-class Call extends \Magento\Framework\App\Action\Action
+class Call extends Action\Action
 {
-    /** @var JsonFactory */
+    /** @var JsonResultFactory */
     private $jsonResultFactory;
+
+    /** @var RawResultFactory */
+    private $rawResultFactory;
 
     /** @var ClientInterface */
     private $apiClient;
@@ -23,13 +27,15 @@ class Call extends \Magento\Framework\App\Action\Action
     private $communicationConfig;
 
     public function __construct(
-        Context $context,
-        JsonFactory $jsonResultFactory,
+        Action\Context $context,
+        JsonResultFactory $jsonResultFactory,
+        RawResultFactory $rawResultFactory,
         ClientInterface $apiClient,
         CommunicationConfigInterface $communicationConfig
     ) {
         parent::__construct($context);
         $this->jsonResultFactory   = $jsonResultFactory;
+        $this->rawResultFactory    = $rawResultFactory;
         $this->apiClient           = $apiClient;
         $this->communicationConfig = $communicationConfig;
     }
@@ -53,7 +59,7 @@ class Call extends \Magento\Framework\App\Action\Action
             ]);
             $result->setData($response);
         } catch (ResponseException $e) {
-            $result->setJsonData($e->getMessage());
+            return $this->rawResultFactory->create()->setContents($e->getMessage());
         }
 
         return $result;

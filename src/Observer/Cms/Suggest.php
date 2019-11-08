@@ -39,13 +39,13 @@ class Suggest implements ObserverInterface
 
         try {
             $params     = ['channel' => $this->cmsConfig->getChannel()] + $observer->getData('params');
-            $cmsSuggest = $this->factFinderClient->sendRequest($endpoint, $params);
-            if (isset($cmsSuggest['suggestions'])) {
-                array_walk($cmsSuggest['suggestions'], function (&$element) {
-                    $element['type'] = 'cms'; // Change search results type to CMS
-                });
-                $observer->setData('response', array_merge_recursive($observer->getData('response'), $cmsSuggest));
+            $cmsSuggest = $this->factFinderClient->sendRequest($endpoint, $params)['suggestions'] ?? [];
+
+            $response = ((array) $observer->getData('response')) + ['suggestions' => []];
+            foreach ($cmsSuggest as $item) {
+                array_push($response['suggestions'], ['type' => 'cms'] + $item);
             }
+            $observer->setData('response', $response);
         } catch (ResponseException $e) {
             return;
         }

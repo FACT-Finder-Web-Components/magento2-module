@@ -56,12 +56,21 @@ class SuggestTest extends TestCase
         $this->client->expects($this->once())
             ->method('sendRequest')
             ->with(self::FF_SERVER . 'Suggest.ff', ['channel' => 'cms_channel', 'foo' => 'bar'])
-            ->willReturn([]);
+            ->willReturn(['suggestions' => [['name' => 'AGB', 'type' => 'changeme']]]);
 
-        $this->observer->execute(new Observer([
+        $observer = new Observer([
             'endpoint' => self::FF_SERVER . 'Suggest.ff',
             'params'   => ['channel' => 'catalog_channel', 'foo' => 'bar'],
-        ]));
+            'response' => ['suggestions' => [
+                ['name' => 'Proteus Fitness Jackshirt', 'type' => 'productName'],
+                ['name' => 'Promotions', 'type' => 'category'],
+            ]],
+        ]);
+
+        $this->observer->execute($observer);
+
+        $this->assertCount(3, $observer->getData('response/suggestions'));
+        $this->assertSame('cms', $observer->getData('response/suggestions/2/type'));
     }
 
     protected function setUp()
