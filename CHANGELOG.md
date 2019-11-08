@@ -4,7 +4,7 @@
 - Improve CI suite by introducing PHPMD checks
 
 ### Changed
-- Upgrade Web Components to v3.8.0
+- Upgrade Web Components to v3.9.0
 
 ### Fixed
 - The ASN is now compatible with IE11
