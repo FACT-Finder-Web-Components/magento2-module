@@ -10,7 +10,7 @@ $viewModel = $block->getViewModel();
             <strong id="block-upsell-heading" role="heading" aria-level="2"><?= $block->escapeHtml(__('Similar products')) ?></strong>
         </div>
         <div class="block-content content" aria-labelledby="block-upsell-heading">
-            <?= /* @noEscape */ $block->getBlockHtml('factfinder.recordlist') ?>
+            <?= /* @noEscape */ $block->getBlockHtml('factfinder.recordlist.unsubscribed') ?>
         </div>
     </div>
 </ff-similar-products>
