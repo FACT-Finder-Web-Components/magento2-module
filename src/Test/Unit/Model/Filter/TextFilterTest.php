@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Omikron\Factfinder\Model\Filter;
 
 use Omikron\Factfinder\Api\Filter\FilterInterface;

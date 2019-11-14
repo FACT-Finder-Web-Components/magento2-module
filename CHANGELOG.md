@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Changed
+- Upgrade Web Components to v3.10.0
+
 ## [v1.3.4] - 2019.11.08
 ### Added
 - Improve CI suite by introducing PHPMD checks
