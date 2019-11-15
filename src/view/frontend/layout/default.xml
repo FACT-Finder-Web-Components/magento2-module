@@ -4,6 +4,13 @@
         <block class="Magento\Framework\View\Element\Template" name="factfinder.feedbacktext" ifconfig="factfinder/components/ff_campaign" template="Omikron_Factfinder::ff/campaign-feedbacktext.phtml" />
         <block class="Magento\Framework\View\Element\Template" name="factfinder.recordlist" template="Omikron_Factfinder::ff/record-list.phtml">
             <arguments>
+                <argument name="subscribe" xsi:type="boolean">true</argument>
+                <argument name="view_model" xsi:type="object">Omikron\Factfinder\ViewModel\ProductBasedComponent</argument>
+            </arguments>
+        </block>
+        <block class="Magento\Framework\View\Element\Template" name="factfinder.recordlist.unsubscribed" template="Omikron_Factfinder::ff/record-list.phtml">
+            <arguments>
+                <argument name="subscribe" xsi:type="boolean">false</argument>
                 <argument name="view_model" xsi:type="object">Omikron\Factfinder\ViewModel\ProductBasedComponent</argument>
             </arguments>
         </block>
