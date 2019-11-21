@@ -28,8 +28,8 @@ class StoreEmulation
         try {
             $this->emulation->startEnvironmentEmulation($storeId, Area::AREA_FRONTEND, true);
 
-            $area = $this->areaList->getArea(\Magento\Framework\App\Area::AREA_FRONTEND);
-            $area->load(\Magento\Framework\App\Area::PART_TRANSLATE);
+            $area = $this->areaList->getArea(Area::AREA_FRONTEND);
+            $area->load(Area::PART_TRANSLATE);
 
             $proceed();
         } finally {
