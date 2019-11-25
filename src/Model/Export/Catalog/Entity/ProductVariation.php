@@ -37,6 +37,7 @@ class ProductVariation implements ExportEntityInterface
             'ProductNumber' => (string) $this->product->getSku(),
             'Price'         => $this->numberFormatter->format((float) $this->product->getFinalPrice()),
             'Availability'  => (int) $this->product->isAvailable(),
+            'IsMaster'      => 0,
             'MagentoId'     => $this->getId(),
         ]);
     }
