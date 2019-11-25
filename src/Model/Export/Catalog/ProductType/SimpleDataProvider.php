@@ -51,7 +51,7 @@ class SimpleDataProvider implements DataProviderInterface, ExportEntityInterface
     {
         $data = [
             'ProductNumber' => (string) $this->product->getSku(),
-            'Master'        => (string) $this->product->getSku(),
+            'Master'        => (string) $this->product->getData('sku'),
             'Name'          => (string) $this->product->getName(),
             'Description'   => (string) $this->product->getData('description'),
             'Short'         => (string) $this->product->getData('short_description'),
