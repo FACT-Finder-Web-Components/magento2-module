@@ -41,7 +41,7 @@
             <label>Use FACT-Finder® for category pages?</label>
             <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
         </field>
-        <field id="show_add_to_card_button" translate="label" type="select" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
+        <field id="show_add_to_cart_button" translate="label" type="select" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
             <label>Show 'Add to Cart' button in search results</label>
             <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
         </field>
