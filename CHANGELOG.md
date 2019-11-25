@@ -1,7 +1,11 @@
 # Changelog
 ## Unreleased
+### Fixed
+- Fix tracking of products with options and submit correct master ID
+
 ### Changed
 - Upgrade Web Components to v3.10.0
+- Only offer _Add to cart_ button for products without options
 
 ## [v1.3.4] - 2019.11.08
 ### Added
