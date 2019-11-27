@@ -12,15 +12,14 @@ class StoreEmulation
 {
     /** @var Emulation */
     private $emulation;
-    /**
-     * @var AreaList
-     */
+
+    /** @var AreaList */
     private $areaList;
 
     public function __construct(Emulation $emulation, AreaList $areaList)
     {
         $this->emulation = $emulation;
-        $this->areaList = $areaList;
+        $this->areaList  = $areaList;
     }
 
     public function runInStore(int $storeId, callable $proceed)

@@ -1,7 +1,10 @@
 # Changelog
 ## Unreleased
 ### Changed
-- Upgrade Web Components to v3.10.0
+- Upgrade Web Components to v3.10.1
+
+### Fixed
+- Prevent duplicate login tracking when customer data is reloaded
 
 ## [v1.3.4] - 2019.11.08
 ### Added
