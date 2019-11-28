@@ -5,6 +5,7 @@
 
 ### Fixed
 - Prevent duplicate login tracking when customer data is reloaded
+- Fix sorting campaign blocks on search result page
 
 ## [v1.3.4] - 2019.11.08
 ### Added
