@@ -53,18 +53,9 @@ To install module, open your terminal and run the command:
 
     composer require omikron/magento2-factfinder
 
-Alternatively, you may want to add module reference to `composer.json` file:
-
-    "require": {
-        "omikron/magento2-factfinder": "VERSION YOU WANT TO INSTALL"
-    }
-
-and run command:
-
-    composer update
-
-If, for some reason, `composer` is not available globally, proceed to install it following the instructions available
-on the [project website](https://getcomposer.org/doc/00-intro.md).
+Optionally, you can specify a version constraint, e.g. `omikron/magento2-factfinder:^1.3`. Refer to Composer manual
+for more information. If, for some reason, `composer` is not available globally, proceed to install it following the
+instructions available on the [project website](https://getcomposer.org/doc/00-intro.md).
 
 ## Activating the Module
 
