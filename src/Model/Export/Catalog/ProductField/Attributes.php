@@ -73,6 +73,9 @@ class Attributes implements ProductFieldInterface
                 $values = (array) $product->getAttributeText($attribute->getAttributeCode());
                 break;
             default:
+                if(is_array($value)) {
+                    return [];
+                }
                 $values[] = (string) $value;
                 break;
         }
