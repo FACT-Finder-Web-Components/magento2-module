@@ -36,4 +36,4 @@ Your FACT-Finder Web-Components Team
 
 [1]: https://github.com/FACT-Finder-Web-Components/magento2-module/issues
 [2]: https://github.com/FACT-Finder-Web-Components/magento2-module/issues/new
-[3]: https://github.com/FACT-Finder-Web-Components/magento2-module/issues/new
+[3]: https://github.com/magento/magento-coding-standard
