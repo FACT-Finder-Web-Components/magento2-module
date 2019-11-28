@@ -89,25 +89,25 @@ Once the FACT-Finder module is activated, you can find the configurations page u
 
 ### General Settings
 
-At the top of the configurations page are the general settings. The information with which the shop connects to and authorises itself to the FACT-Finder Service are entered here. In the first line, activate your FACT-Finder integration. Before any changes become active, save them by clicking “Save Config”.
+At the top of the configurations page are the general settings. The information with which the shop connects to and authorises itself to the FACT-Finder Service are entered here. In the first line, activate your FACT-Finder integration. Before any changes become active, save them by clicking "Save Config".
 In some cases, you need to manually empty the cache (*Configuration* and *Page Cache*).
-Click the button “Test Connection” to check the connection to the FACT-Finder service. Please note the channel name needs to be entered correctly to establish a connection.
+Click the button "Test Connection" to check the connection to the FACT-Finder service. Please note the channel name needs to be entered correctly to establish a connection.
 
-Here You can also enable using FACT-Finder for category pages. More You can read in [Using FACT-Finder on category pages](#using-fact-finder-on-category-pages) section
+Here you can also enable the rendering of category pages using FACT-Finder. More details can be found [here](#using-fact-finder-on-category-pages).
 
-At the end of the general settings section is an option *Show 'Add to Cart' Button in Search Results*. Activate this option to add a button to the products displayed on the search result page, which directly
+At the end of the *General Settings* section is an option *Show 'Add to Cart' Button in Search Results*. Activate this option to add a button to the products displayed on the search result page, which directly
 adds that product to the shopping cart. This feature works only for simple products. For configurable products user will be redirected to product page to choose specific product variant.
 Warning: The product added to the cart is identified by the variable "MasterProductNumber". To allow this function to work correctly, the field "MasterProductNumber" must be imported to the FACT-Finder backend (on fact-finder.de).   
 
-By enabling option `Activate Logging`, all exceptions thrown during communication with FACT-Finder server will be saved in log file `var/log/factfinder.log`. 
-Please note that is a server side communication option - WebComponents behaviour won't be affected
+By enabling option *Activate Logging*, all exceptions thrown during communication with FACT-Finder server will be saved in log file `var/log/factfinder.log`.
+Please note that is a server side communication option: Web Components behaviour won't be affected.
 
 ![General Settings](docs/assets/general-settings.png "General Settings")
 
 ### Advanced Settings
 
 Advanced Settings contains additional parameters used for the `ff-communication` web component. Each setting is set to a
- default value and has a short explanatory text attached.  
+default value and has a short explanatory text attached.  
  
 #### Currency and Country Settings
 You don't need to set currency nor country only for module purposes. It will use currently used currency and pass this information to `ff-communication`
@@ -117,7 +117,6 @@ component as respectively `currency-code` and `country-code` parameters. You can
 
 
 ### Activated Web Components
-
 Here you can decide which web components are activated. Only active web components can be used and displayed in the shop.
 
 - **Suggestions** activates loading and displaying suggestions while search terms are entered into the search bar.
@@ -134,7 +133,7 @@ This option configures the connection with the FACT-Finder system via FTP. Shop 
 FACT-Finder using FTP. FACT-Finder needs to be up to date on the product data, to ensure that components like the search work as intended.
 
 Enter an FTP-server to which the CSV file is uploaded automatically. The URL needs to be entered without the protocol
-prefix (ftp://) and without the slash at the end.
+prefix (`ftp://`) and without the slash at the end.
 
 The CSV file uses double quotes `"` for field enclosure and a semi-colon `;` as field delimiter.
 
@@ -430,7 +429,6 @@ Finally, You need to define new column in CatalogFeed definition in di.xml`.
 </virtualType>
 ```
 
-
 Now run `bin/magento cache:clean config` to use the new DI configuration.
 
 ### Adding custom communication parameter
@@ -447,8 +445,8 @@ class CustomAddParams implements \Omikron\Factfinder\Api\Config\ParametersSource
            ];
        }
 }
-
 ```
+
 All registered Parameters Providers are executed in loop its results are stored in associative array which in result will be passed to the frontend.
 
 Please keep in mind, that on this level of execution, parameters will be overridden each time, Parameter Provider returns a value with a key
@@ -503,14 +501,14 @@ class CustomDataProvider implements DataProviderInterface
     }
 }
 ```
+
 It's a minimum configuration. `$product` constructor will be passed automatically and in method `getEntities` You should extract all required data
 
 ## Contribute
-
 For more information, click [here](.github/CONTRIBUTING.md)
 
 You can also open a new issue if You spot a bug or just have an idea for module improvement
-To check currently opened issues [here](https://github.com/FACT-Finder-Web-Components/magento2-module/issues)
+To check currently opened issues [here](https://github.com/FACT-Finder-Web-Components/magento2-module/issues).
 
 ## License
 FACT-Finder® Web Components License. For more information see the [LICENSE](LICENSE) file.
