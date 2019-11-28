@@ -1,24 +1,12 @@
-define([
-    'uiComponent',
-    'Magento_Customer/js/customer-data',
-    'jquery'
-], function (Component, customerData, $) {
+define(['Magento_Customer/js/customer-data'], function (customerData) {
     'use strict';
 
-    return Component.extend({
-        /** @inheritdoc */
-        initialize: function () {
-            this._super();
-            customerData.reload(['ffcommunication']).done(function (result) {
-                var communication = $('ff-communication'),
-                    uid = result.ffcommunication.uid,
-                    sid = result.ffcommunication.sid;
-
-                communication.attr('sid', sid);
-                if (!!uid) {
-                    communication.attr('user-id', uid);
-                }
-            });
-        }
-    });
+    return function (config, element) {
+        var sessionData = customerData.get('ffcommunication');
+        sessionData.subscribe(function (data) {
+            if (data.sid && data.sid !== element.sid) element.sid = data.sid;
+            if (data.uid && data.uid !== element.userId) element.userId = data.uid;
+        });
+        sessionData.valueHasMutated();
+    };
 });

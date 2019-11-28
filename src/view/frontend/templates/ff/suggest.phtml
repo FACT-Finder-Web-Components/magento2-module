@@ -29,22 +29,15 @@
     <section id="productContainer" class="productsContainer">
         <div data-container="productName">
             <p class="containerCaption"><?= $block->escapeHtml(__('Suggested products')) ?></p>
-            <div>
-                <ff-suggest-item type="productName">
-                    <a href="{{attributes.deeplink}}" data-redirect="{{attributes.deeplink}}" data-redirect-target="_blank">
-                        <img data-image="{{{suggestions.image}}}">
-                        <div class="product-center">
-                            <div class="product-name">{{{name}}}</div>
-                            <div><?= $block->escapeHtml(__('Shipping')) ?></div>
-                            <div><?= $block->escapeHtml(__('Rating')) ?> </div>
-                        </div>
-                        <div class="product-right">
-                            <div class="product-price">{{attributes.Price}}</div>
-                            <div class="product-availabilitytext">{{attributes.availabilitytext}}</div>
-                        </div>
-                    </a>
-                </ff-suggest-item>
-            </div>
+            <ff-suggest-item type="productName">
+                <img data-image="{{suggestions.image}}" />
+                <div class="product-center">
+                    <div class="product-name">{{{name}}}</div>
+                </div>
+                <div class="product-right">
+                    <div class="product-price">{{attributes.Price}}</div>
+                </div>
+            </ff-suggest-item>
         </div>
     </section>
 </ff-suggest>

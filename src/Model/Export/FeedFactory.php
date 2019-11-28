@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Omikron\Factfinder\Model\Export;
 
+use InvalidArgumentException;
 use Magento\Framework\ObjectManagerInterface;
 
 class FeedFactory
@@ -23,7 +24,7 @@ class FeedFactory
     public function create(string $type): Feed
     {
         if (!isset($this->feedPool[$type])) {
-            throw new \InvalidArgumentException('There is no feed with given type');
+            throw new InvalidArgumentException('There is no feed with given type');
         }
         return $this->objectManager->create($this->feedPool[$type]); // phpcs:ignore
     }

@@ -1,0 +1,24 @@
+language: php
+php:
+  - 7.1
+  - 7.2
+env:
+  - COMPOSER_FLAGS="--prefer-lowest"
+  - COMPOSER_FLAGS="--prefer-stable"
+
+cache:
+  directories:
+    - $HOME/.composer/cache
+
+before_install:
+  - composer self-update
+  - composer config --global --auth http-basic.repo.magento.com "$MAGENTO_USERNAME" "$MAGENTO_PASSWORD"
+  - composer config --global repositories.magento composer https://repo.magento.com/
+
+install:
+  - composer update --no-interaction --prefer-dist $COMPOSER_FLAGS
+
+script:
+  - vendor/bin/phpunit
+  - vendor/bin/phpcs -q .
+  - vendor/bin/phpmd src text phpmd.xml.dist

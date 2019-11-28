@@ -20,6 +20,7 @@ abstract class Button extends Field
      * @param AbstractElement $element
      *
      * @return string
+     * @SuppressWarnings(PHPMD.CamelCaseMethodName)
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      * @throws \Magento\Framework\Exception\LocalizedException
      */
