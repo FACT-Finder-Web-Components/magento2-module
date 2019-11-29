@@ -44,7 +44,6 @@ class Call extends Action\Action
     {
         // Extract API name from path
         $endpoint = $this->getEndpoint($this->_url->getCurrentUrl());
-        die($endpoint);
         if (!$endpoint) {
             throw new NotFoundException(__('Endpoint missing'));
         }
