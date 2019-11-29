@@ -24,7 +24,7 @@ class ProxyCallTest extends AbstractController
         $this->assertSame($this->getResponse()->getStatusCode(), 200);
     }
 
-    public function test_Rest_calls_are_accepted_by_the_proxy_controller()
+    public function test_rest_calls_are_accepted_by_the_proxy_controller()
     {
         $this->apiClient->expects($this->atLeastOnce())
             ->method('sendRequest')
@@ -32,6 +32,13 @@ class ProxyCallTest extends AbstractController
 
         $this->dispatch('/FACT-Finder/rest/v1/records/my_channel?sid=abc');
         $this->assertSame($this->getResponse()->getStatusCode(), 200);
+    }
+
+    public function test_other_request_paths_are_ignored()
+    {
+        $this->apiClient->expects($this->never())->method('sendRequest');
+        $this->dispatch('/FACT-Finder/non-existing-endpoint');
+        $this->assert404NotFound();
     }
 
     protected function setUp()
