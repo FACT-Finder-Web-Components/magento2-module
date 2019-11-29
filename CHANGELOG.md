@@ -4,8 +4,10 @@
 - Upgrade Web Components to v3.10.1
 
 ### Fixed
-- Prevent duplicate login tracking when customer data is reloaded
+- Fix handling of REST calls via proxy
 - Fix sorting of campaign blocks on search result page
+- Fix tracking of products with options and submit correct master ID
+- Prevent duplicate login tracking when customer data is reloaded
 
 ## [v1.3.4] - 2019.11.08
 ### Added
