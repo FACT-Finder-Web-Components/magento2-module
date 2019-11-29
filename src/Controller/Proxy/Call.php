@@ -44,6 +44,7 @@ class Call extends Action\Action
     {
         // Extract API name from path
         $endpoint = $this->getEndpoint($this->_url->getCurrentUrl());
+        die($endpoint);
         if (!$endpoint) {
             throw new NotFoundException(__('Endpoint missing'));
         }
@@ -67,7 +68,7 @@ class Call extends Action\Action
 
     private function getEndpoint(string $currentUrl): string
     {
-        preg_match('#/([A-Za-z]+\.ff)#', $currentUrl, $match);
+        preg_match('#/([A-Za-z]+\.ff|rest/v[^\?]*)#', $currentUrl, $match);
         return $match[1] ?? '';
     }
 }
