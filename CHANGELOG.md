@@ -2,6 +2,7 @@
 ## Unreleased
 ### Changed
 - Upgrade Web Components to v3.10.1
+- Only offer _Add to cart_ button for products without variants
 
 ### Fixed
 - Fix handling of REST calls via proxy

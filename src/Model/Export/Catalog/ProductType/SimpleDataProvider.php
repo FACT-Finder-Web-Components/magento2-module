@@ -59,6 +59,7 @@ class SimpleDataProvider implements DataProviderInterface, ExportEntityInterface
             'Price'         => $this->numberFormatter->format((float) $this->product->getFinalPrice()),
             'Brand'         => (string) $this->product->getAttributeText('manufacturer'),
             'Availability'  => (int) $this->product->isAvailable(),
+            'HasVariants'   => 0,
             'MagentoId'     => $this->getId(),
         ];
 
