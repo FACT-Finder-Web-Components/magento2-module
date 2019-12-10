@@ -5,6 +5,8 @@
 - Only offer _Add to cart_ button for products without variants
 
 ### Fixed
+- Fix handling of REST calls via proxy
+- Fix sorting of campaign blocks on search result page
 - Fix tracking of products with options and submit correct master ID
 - Prevent duplicate login tracking when customer data is reloaded
 
