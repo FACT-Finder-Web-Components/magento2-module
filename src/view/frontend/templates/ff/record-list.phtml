@@ -24,7 +24,7 @@ $viewModel = $block->getViewModel();
                     </div>
 
                     <?php if ($viewModel->isAddToCartEnabled()): ?>
-                        {{#record.IsMaster}}
+                        {{^record.HasVariants}}
                         <div class="product-item-inner">
                             <div class="product actions product-item-actions">
                                 <div class="actions-primary">
@@ -38,7 +38,7 @@ $viewModel = $block->getViewModel();
                                 </div>
                             </div>
                         </div>
-                        {{/record.IsMaster}}
+                        {{/record.HasVariants}}
                     <?php endif; ?>
                 </div>
             </div>
