@@ -51,7 +51,7 @@ class ConfigurableDataProvider extends SimpleDataProvider
 
     public function toArray(): array
     {
-        $data = ['HasVariants' => 0] + parent::toArray();
+        $data = ['HasVariants' => 1] + parent::toArray();
 
         $options = array_merge([], ...array_values($this->getOptions($this->product)));
         if ($options) {
