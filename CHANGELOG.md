@@ -2,7 +2,7 @@
 ## Unreleased
 ### Changed
 - Upgrade Web Components to v3.10.1
-- Only offer _Add to cart_ button for products without options
+- Only offer _Add to cart_ button for products without variants
 
 ### Fixed
 - Fix tracking of products with options and submit correct master ID
