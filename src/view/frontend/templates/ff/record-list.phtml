@@ -4,7 +4,7 @@
 $viewModel = $block->getViewModel();
 ?>
 <div class="products wrapper grid products-grid">
-    <ff-record-list class="products list items product-items" unresolved>
+    <ff-record-list class="products list items product-items" subscribe="<?= $block->getData('subscribe') ? 'true' : 'false' ?>" unresolved>
         <ff-record class="item product product-item">
             <div class="product-item-info" data-container="product-grid">
                 <a class="product-image-container" data-redirect="{{record.ProductURL}}" data-anchor="{{record.ProductURL}}" data-redirect-target="_self">
@@ -24,6 +24,7 @@ $viewModel = $block->getViewModel();
                     </div>
 
                     <?php if ($viewModel->isAddToCartEnabled()): ?>
+                        {{^record.HasVariants}}
                         <div class="product-item-inner">
                             <div class="product actions product-item-actions">
                                 <div class="actions-primary">
@@ -37,6 +38,7 @@ $viewModel = $block->getViewModel();
                                 </div>
                             </div>
                         </div>
+                        {{/record.HasVariants}}
                     <?php endif; ?>
                 </div>
             </div>

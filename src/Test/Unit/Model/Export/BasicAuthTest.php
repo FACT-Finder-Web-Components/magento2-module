@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Omikron\Factfinder\Model\Export;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;

@@ -2,7 +2,7 @@
 <include xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_include.xsd">
     <group id="data_transfer" translate="label comment" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
         <label>Export settings</label>
-        <comment><![CDATA[<div class="message message-notice notice"><div data-ui-id="messages-message-success">Please always save the config in the upper right corner after making changes.</div></div>]]></comment>
+        <comment><![CDATA[<div class="message message-notice notice"><div data-ui-id="messages-message-success">Please always save the config in the upper right corner after making changes, especially before using the export button.</div></div>]]></comment>
         <field id="ff_upload_host" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
             <label>Upload Host</label>
             <comment><![CDATA[Please specify the FTP server address, where the export file(s) should be uploaded. For example shopname.fact-finder.de. This parameter shouldn't have any trailing slashes and shouldn't be prefixed with ftp://.]]></comment>

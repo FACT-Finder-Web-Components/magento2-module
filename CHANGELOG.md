@@ -1,4 +1,15 @@
 # Changelog
+## [v1.4.0] - 2019.12.17
+### Changed
+- Upgrade Web Components to v3.11.1
+- Only offer _Add to cart_ button for products without variants
+
+### Fixed
+- Fix handling of REST calls via proxy
+- Fix sorting of campaign blocks on search result page
+- Fix tracking of products with options and submit correct master ID
+- Prevent duplicate login tracking when customer data is reloaded
+
 ## [v1.3.4] - 2019.11.08
 ### Added
 - Improve CI suite by introducing PHPMD checks
@@ -10,7 +21,7 @@
 - The ASN is now compatible with IE11
 - Check current configuration before switching layout on category pages
 - Prevent duplicate login tracking
-- Remove wrapping link tag in suggest which was parsed by bots 
+- Remove wrapping link tag in suggest which was parsed by bots
 
 ## [v1.3.3] - 2019.10.21
 ### Changed
@@ -174,6 +185,7 @@
 ### Added
 - Feed Export: Export feed file is now available via separate link
 
+[v1.4.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v1.4.0
 [v1.3.4]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v1.3.4
 [v1.3.3]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v1.3.3
 [v1.3.2]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v1.3.2

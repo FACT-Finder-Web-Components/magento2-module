@@ -1,7 +1,7 @@
 define(['factfinder', 'mage/url'], function (factfinder, url) {
     var redirectPath = 'FACT-Finder/result';
 
-    factfinder.communication.FFCommunicationEventAggregator.addBeforeDispatchingCallback(function (event) {
+    factfinder.communication.EventAggregator.addBeforeDispatchingCallback(function (event) {
         if (event.type === 'search' && !isSearchResultPage() && !event.__immediate) {
             delete event.type;
             var params = factfinder.common.dictToParameterString(event);

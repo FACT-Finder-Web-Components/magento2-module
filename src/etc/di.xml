@@ -32,6 +32,7 @@
                 <item name="ImageURL" xsi:type="string">ImageURL</item>
                 <item name="CategoryPath" xsi:type="string">CategoryPath</item>
                 <item name="Attributes" xsi:type="string">Attributes</item>
+                <item name="HasVariants" xsi:type="string">HasVariants</item>
             </argument>
         </arguments>
     </virtualType>
@@ -69,6 +70,7 @@
                 <item name="ImageURL" xsi:type="string">ImageURL</item>
                 <item name="CategoryPath" xsi:type="string">CategoryPath</item>
                 <item name="Attributes" xsi:type="string">Attributes</item>
+                <item name="HasVariants" xsi:type="string">HasVariants</item>
                 <item name="PageId" xsi:type="string">PageId</item>
                 <item name="PageIdentifier" xsi:type="string">PageIdentifier</item>
                 <item name="PageTitle" xsi:type="string">PageTitle</item>

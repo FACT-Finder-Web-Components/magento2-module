@@ -10,11 +10,16 @@
 
         <referenceContainer name="content">
             <block class="Magento\Framework\View\Element\Template" name="factfinder.breadcrumb" template="Omikron_Factfinder::ff/breadcrumb.phtml" before="-" />
-            <block class="Magento\Framework\View\Element\Template" name="factfinder.campaign" ifconfig="factfinder/components/ff_campaign" template="Omikron_Factfinder::ff/campaign.phtml" />
-            <block class="Magento\Framework\View\Element\Template" name="factfinder.pushedproductscampaign" ifconfig="factfinder/components/ff_pushedproductscampaign" template="Omikron_Factfinder::ff/campaign-pushed-products.phtml" />
         </referenceContainer>
 
-        <move element="factfinder.feedbacktext" destination="content" after="factfinder.campaign" />
+        <container name="factfinder.campaigns">
+            <block class="Magento\Framework\View\Element\Template" name="factfinder.campaign.advisor" ifconfig="factfinder/components/ff_campaign" template="Omikron_Factfinder::ff/campaign-advisor.phtml" />
+            <block class="Magento\Framework\View\Element\Template" name="factfinder.campaign.redirect" ifconfig="factfinder/components/ff_campaign" template="Omikron_Factfinder::ff/campaign-redirect.phtml" />
+            <block class="Magento\Framework\View\Element\Template" name="factfinder.campaign.pushedproducts" ifconfig="factfinder/components/ff_pushedproductscampaign" template="Omikron_Factfinder::ff/campaign-pushed-products.phtml" />
+        </container>
+
+        <move element="factfinder.feedbacktext" destination="factfinder.campaigns" />
+        <move element="factfinder.campaigns" destination="content" before="factfinder.breadcrumb" />
         <move element="top.search" destination="content" before="factfinder.breadcrumb" />
     </body>
 </page>

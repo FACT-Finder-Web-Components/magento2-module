@@ -13,7 +13,7 @@ use Magento\Framework\View\Element\Block\ArgumentInterface;
 
 class ProductBasedComponent implements ArgumentInterface
 {
-    private const PATH_SHOW_ADD_TO_CART_BUTTON = 'factfinder/general/show_add_to_card_button';
+    private const PATH_SHOW_ADD_TO_CART_BUTTON = 'factfinder/general/show_add_to_cart_button';
 
     /** @var Image */
     private $imageHelper;
