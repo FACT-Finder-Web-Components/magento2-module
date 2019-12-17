@@ -1,88 +1,36 @@
-<?php
-/** @var Magento\Framework\View\Element\Template $block */
-?>
+<?php /** @var Magento\Framework\View\Element\Template $block */ ?>
 <div class="ff-asn">
     <ff-asn align="vertical" unresolved>
-        <!--use this as a default template for all groups-->
         <ff-asn-group for-group="all" class="cursor">
+            <div slot="groupCaption" class="groupCaption">{{group.name}}</div>
+
             <ff-asn-group-element>
-                <div slot="selected">
-                    <span class="filterName">{{element.name}}</span>
-                </div>
-                <div slot="unselected">
-                    <span class="filterName">{{element.name}}</span>
-                </div>
+                <div slot="selected"><span class="filterName">{{element.name}}</span></div>
+                <div slot="unselected"><span class="filterName">{{element.name}}</span></div>
             </ff-asn-group-element>
-            <div slot="groupCaption" class="groupCaption">
-                {{group.name}}<span class="filterArrowDown">&nbsp;</span>
-            </div>
+
+            <div data-container="detailedLinks"><div data-content="detailedLinks"></div></div>
+            <div data-container="hiddenLinks"><div data-content="hiddenLinks"></div></div>
 
             <div data-container="removeFilter"><?= $block->escapeHtml(__('Remove Filter')) ?></div>
-
-            <div opened data-container="detailedLinks">
-                <!--we'll show all links which should be displayed immediately aside this element-->
-                <div data-content="detailedLinks"></div>
-
-                <!--use this container for automatically showing the hiddenLinks container on tap-->
-                <div data-container="showMore">
-
-                    <!-- set the padding on an inner element so we don't suffer from height 0 + padding issues-->
-                    <span class="text"><?= $block->escapeHtml(__('Show More')) ?></span>
-                </div>
-
-                <div class="marginBottom"></div>
-            </div>
-
-            <div data-container="hiddenLinks">
-                <!--we'll hide all links which should NOT be displayed immediately aside this element-->
-                <div data-content="hiddenLinks"></div>
-
-                <!--use this container for automatically hiding the hiddenLinks container on tap-->
-                <div data-container="showLess">
-
-                    <!-- set the padding on an inner element so we don't suffer from height 0 + padding issues-->
-                    <span class="text"><?= $block->escapeHtml(__('Show Less')) ?></span>
-                </div>
-                <div class="marginBottom"></div>
-            </div>
+            <div data-container="showMore"><span class="text"><?= $block->escapeHtml(__('Show More')) ?></span></div>
+            <div data-container="showLess"><span class="text"><?= $block->escapeHtml(__('Show Less')) ?></span></div>
         </ff-asn-group>
 
-        <!--style all groups with filter style TREE-->
-        <ff-asn-group filter-style="TREE" opened class="cursor">
-            <ff-asn-group-element>
-                <div slot="selected">
-                    &nbsp;&nbsp;<span class="filterName"><b>{{element.name}}</b></span>
-                </div>
-                <div slot="unselected">
-                    &nbsp;<span class="filterArrowRight"></span>&nbsp;<span class="filterName">{{element.name}}</span>
-                </div>
-            </ff-asn-group-element>
-            <div slot="groupCaption" class="groupCaption">
-                {{group.name}} <span class="filterArrowDown">&nbsp;</span>
-            </div>
-            <div opened data-container="detailedLinks">
-                <div data-content="detailedLinks"></div>
-                <div class="marginBottom"></div>
-            </div>
-        </ff-asn-group>
-
-        <!--style slider groups-->
         <ff-asn-group-slider>
-            <div slot="groupCaption" class="groupCaption">
-                {{group.name}}<span class="filterArrowDown">&nbsp;</span>
-            </div>
-            <div data-container="removeFilter"><?= $block->escapeHtml(__('Remove Filter')) ?></div>
+            <div slot="groupCaption" class="groupCaption">{{group.name}}</div>
+
             <ff-slider-control submit-on-input="true">
-                <input data-control='1'
-                       style="position: absolute; width: 60px;left: 15px;top:12px;">
-                <input
-                        data-control='2' style="position: absolute; width: 60px;right: 15px;top:12px;">
+                <input data-control="1" style="position: absolute; width: 60px;left: 15px;top:12px;" />
+                <input data-control="2" style="position: absolute; width: 60px;right: 15px;top:12px;" />
 
                 <ff-slider current-min-value="0" style="width: 150px;margin-top: 30px;">
                     <div slot="slider1" id="slider1" class="sliderBtn"></div>
                     <div slot="slider2" id="slider2" class="sliderBtn"></div>
                 </ff-slider>
             </ff-slider-control>
+
+            <div data-container="removeFilter"><?= $block->escapeHtml(__('Remove Filter')) ?></div>
         </ff-asn-group-slider>
     </ff-asn>
 </div>
