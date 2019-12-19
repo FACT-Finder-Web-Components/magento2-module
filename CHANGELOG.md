@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Fixed
+- Remove typo in campaign template which prevents the rendering
+
 ## [v1.4.0] - 2019.12.17
 ### Changed
 - Upgrade Web Components to v3.11.1
