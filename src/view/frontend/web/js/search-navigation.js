@@ -6,6 +6,7 @@ define(['factfinder', 'mage/url'], function (factfinder, url) {
             delete event.type;
             var params = factfinder.common.dictToParameterString(event);
             if (!url.build('')) url.setBaseUrl(BASE_URL || '');
+            factfinder.common.localStorage.setItem('ff_no_redirect');
             window.location = url.build(redirectPath + params);
         }
     });
