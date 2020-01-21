@@ -67,6 +67,7 @@ class Call extends Action\Action
 
     private function getEndpoint(string $currentUrl): string
     {
+        $match = null;
         preg_match('#/([A-Za-z]+\.ff|rest/v[^\?]*)#', $currentUrl, $match);
         return $match[1] ?? '';
     }
