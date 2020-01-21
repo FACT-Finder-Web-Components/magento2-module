@@ -20,6 +20,7 @@ class Image implements PageFieldInterface
 
     public function getValue(PageInterface $page): string
     {
+        $result  = null;
         $pattern = '#https?://[^/\s]+/\S+\.(jpe?g|png|gif)#';
         preg_match($pattern, $this->filter->filter((string) $page->getContent()), $result);
         return $result[0] ?? '';

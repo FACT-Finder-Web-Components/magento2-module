@@ -37,6 +37,7 @@ class Update extends Action
     public function execute()
     {
         $result = $this->jsonResultFactory->create();
+        $match  = null;
         preg_match('@/store/([0-9]+)/@', (string) $this->_redirect->getRefererUrl(), $match);
         try {
             $this->updateFieldRoles->execute((int) ($match[1] ?? $this->storeManager->getDefaultStoreView()->getId()));
