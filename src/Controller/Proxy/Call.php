@@ -57,7 +57,7 @@ class Call extends Action\Action
         $result = $this->jsonResultFactory->create();
         try {
             $endpoint = $this->communicationConfig->getAddress() . '/' . $endpoint;
-            $params   = $this->parameterUtils->fixedGetParams($this->getRequest());
+            $params   = $this->parameterUtils->fixedGetParams($this->getRequest()->getParams());
             $response = $this->apiClient->sendRequest($endpoint, $params);
             $this->_eventManager->dispatch('ff_proxy_post_dispatch', [
                 'endpoint' => $endpoint,
