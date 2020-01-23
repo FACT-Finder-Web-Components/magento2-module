@@ -2,7 +2,7 @@
 ## Unreleased
 ### Fixed
 - Remove typo in campaign template which prevents the rendering
-- Fixed filterCategory was not encoded correctly for categories with at least two words i n name when using Proxy
+- Fixed filterCategory was not encoded correctly for categories with at least two words in name when using Proxy
 
 ## [v1.4.0] - 2019.12.17
 ### Changed
