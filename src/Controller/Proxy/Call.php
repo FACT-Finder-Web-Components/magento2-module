@@ -11,6 +11,7 @@ use Magento\Framework\Exception\NotFoundException;
 use Omikron\Factfinder\Api\ClientInterface;
 use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
 use Omikron\Factfinder\Exception\ResponseException;
+use Omikron\Factfinder\Model\Http\ParameterUtils;
 
 class Call extends Action\Action
 {
@@ -26,18 +27,23 @@ class Call extends Action\Action
     /** @var CommunicationConfigInterface */
     private $communicationConfig;
 
+    /** @var ParameterUtils */
+    private $parameterUtils;
+
     public function __construct(
         Action\Context $context,
         JsonResultFactory $jsonResultFactory,
         RawResultFactory $rawResultFactory,
         ClientInterface $apiClient,
-        CommunicationConfigInterface $communicationConfig
+        CommunicationConfigInterface $communicationConfig,
+        ParameterUtils $parameterUtils
     ) {
         parent::__construct($context);
         $this->jsonResultFactory   = $jsonResultFactory;
         $this->rawResultFactory    = $rawResultFactory;
         $this->apiClient           = $apiClient;
         $this->communicationConfig = $communicationConfig;
+        $this->parameterUtils      = $parameterUtils;
     }
 
     public function execute()
@@ -51,10 +57,11 @@ class Call extends Action\Action
         $result = $this->jsonResultFactory->create();
         try {
             $endpoint = $this->communicationConfig->getAddress() . '/' . $endpoint;
-            $response = $this->apiClient->sendRequest($endpoint, $this->getRequest()->getParams());
+            $params   = $this->parameterUtils->fixedGetParams($this->getRequest()->getParams());
+            $response = $this->apiClient->sendRequest($endpoint, $params);
             $this->_eventManager->dispatch('ff_proxy_post_dispatch', [
                 'endpoint' => $endpoint,
-                'params'   => $this->getRequest()->getParams(),
+                'params'   => $params,
                 'response' => &$response,
             ]);
             $result->setData($response);

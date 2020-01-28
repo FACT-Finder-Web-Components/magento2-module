@@ -1,4 +1,9 @@
 # Changelog
+## [v1.4.1] - 2020.01.28
+### Fixed
+- Remove typo in campaign template which prevents the rendering
+- Fixed filterCategory not encoded correctly for categories with more words in name when using Proxy
+
 ## [v1.4.0] - 2019.12.17
 ### Changed
 - Upgrade Web Components to v3.11.1
