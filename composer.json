@@ -16,7 +16,8 @@
     "magento/module-configurable-product": ">=100.2.0",
     "magento/module-directory": ">=100.2.0",
     "magento/module-store": ">=100.2.0",
-    "magento/zendframework1": "^1.13"
+    "magento/zendframework1": "^1.13",
+    "mustache/mustache": "^2.13"
   },
   "require-dev": {
     "magento/magento-coding-standard": "^4.0",

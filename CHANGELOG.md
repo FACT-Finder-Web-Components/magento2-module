@@ -1,5 +1,8 @@
 # Changelog
 ## Unreleased
+### Added
+- Server-side rendering of subscribed record lists
+
 ### Changed
 - Upgrade Web Components to version 3.11.4
 
