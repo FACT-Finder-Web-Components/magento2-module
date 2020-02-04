@@ -7,8 +7,12 @@ namespace Omikron\Factfinder\Test\Integration\Controller;
 use Magento\TestFramework\TestCase\AbstractController;
 use Omikron\Factfinder\Api\ClientInterface;
 use Omikron\Factfinder\Model\Client;
+use PHPUnit\Framework\Constraint\ArraySubset;
 use PHPUnit\Framework\MockObject\MockObject;
 
+/**
+ * @testdox Omikron\Factfinder\Controller\Proxy\Call
+ */
 class ProxyCallTest extends AbstractController
 {
     /** @var MockObject|ClientInterface */
@@ -41,18 +45,13 @@ class ProxyCallTest extends AbstractController
         $this->assert404NotFound();
     }
 
-    public function test_get_param_names_are_correctly_encoded()
+    public function test_filter_parameters_are_correctly_encoded()
     {
         $this->apiClient->expects($this->atLeastOnce())
             ->method('sendRequest')
-            ->with(
-                $this->anything(),
-                [
-                    'filterCategoryPathROOT' => 'First Category',
-                    'filterCategoryPathROOT/First Category' => 'Second Category'
-                ]
-            );
-        $this->dispatch('/FACT-Finder/Search.ff?filterCategoryPathROOT=First+Category&filterCategoryPathROOT%2FFirst+Category=Second+Category');
+            ->with($this->anything(), new ArraySubset(['filterCategoryPathROOT/First Category' => 'Second Category']));
+
+        $this->dispatch('/FACT-Finder/Search.ff?filterCategoryPathROOT=First+Category&filterCategoryPathROOT%2FFirst+Category=Second+Category&a=b');
     }
 
     protected function setUp()
