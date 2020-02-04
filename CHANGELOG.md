@@ -3,6 +3,9 @@
 ### Changed
 - Upgrade Web Components to version 3.11.4
 
+### Fixed
+- Enforce correct category path order in ViewModel
+
 ## [v1.4.1] - 2020.01.28
 ### Fixed
 - Remove typo in campaign template which prevents the rendering
