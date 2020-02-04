@@ -1,5 +1,8 @@
 # Changelog
-# Unreleased
+## Unreleased
+### Changed
+- Upgrade Web Components to version 3.11.4
+
 ### Fixed
 - Follow-up fixup to encoding parameter names to make them parsed correctly by `http_build_query`.
 
@@ -194,6 +197,7 @@
 ### Added
 - Feed Export: Export feed file is now available via separate link
 
+[v1.4.1]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v1.4.1
 [v1.4.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v1.4.0
 [v1.3.4]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v1.3.4
 [v1.3.3]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v1.3.3

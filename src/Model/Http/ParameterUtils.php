@@ -6,6 +6,13 @@ namespace Omikron\Factfinder\Model\Http;
 
 class ParameterUtils
 {
+    /**
+     * @link https://www.php.net/manual/en/language.variables.external.php#81080
+     *
+     * @param array $params
+     *
+     * @return array
+     */
     public function fixedGetParams(array $params): array
     {
         return array_combine(array_map(function (string $key): string {
