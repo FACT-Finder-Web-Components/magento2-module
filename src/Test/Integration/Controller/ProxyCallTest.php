@@ -41,6 +41,20 @@ class ProxyCallTest extends AbstractController
         $this->assert404NotFound();
     }
 
+    public function test_get_param_names_are_correctly_encoded()
+    {
+        $this->apiClient->expects($this->atLeastOnce())
+            ->method('sendRequest')
+            ->with(
+                $this->anything(),
+                [
+                    'filterCategoryPathROOT' => 'First Category',
+                    'filterCategoryPathROOT/First Category' => 'Second Category'
+                ]
+            );
+        $this->dispatch('/FACT-Finder/Search.ff?filterCategoryPathROOT=First+Category&filterCategoryPathROOT%2FFirst+Category=Second+Category');
+    }
+
     protected function setUp()
     {
         parent::setUp();
