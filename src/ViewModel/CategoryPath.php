@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Omikron\Factfinder\ViewModel;
 
-use Magento\Catalog\Model\Category;
+use Magento\Catalog\Api\Data\CategoryInterface as Category;
 use Magento\Framework\Registry;
 use Magento\Framework\View\Element\Block\ArgumentInterface;
 
