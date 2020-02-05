@@ -4,6 +4,7 @@
 - Upgrade Web Components to version 3.11.4
 
 ### Fixed
+- Follow-up fixup to encoding parameter names to make them parsed correctly by `http_build_query`
 - Enforce correct category path order in ViewModel
 
 ## [v1.4.1] - 2020.01.28
