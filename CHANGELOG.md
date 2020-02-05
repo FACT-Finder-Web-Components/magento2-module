@@ -3,6 +3,9 @@
 ### Changed
 - Upgrade Web Components to version 3.11.4
 
+### Fixed
+- Follow-up fixup to encoding parameter names to make them parsed correctly by `http_build_query`.
+
 ## [v1.4.1] - 2020.01.28
 ### Fixed
 - Remove typo in campaign template which prevents the rendering

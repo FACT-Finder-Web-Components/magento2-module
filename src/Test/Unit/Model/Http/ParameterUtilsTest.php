@@ -21,9 +21,9 @@ class ParameterUtilsTest extends TestCase
         ]);
 
         $this->assertArrayHasKey(
-            str_replace('_', '+', $lvl2CategoryFilterName),
+            str_replace('_', ' ', $lvl2CategoryFilterName),
             $fixedParams,
-            'filterCategory parameters should have "_" changed to "+"'
+            'filterCategory parameters should have "_" changed to " "'
         );
     }
 
