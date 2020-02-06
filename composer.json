@@ -20,7 +20,7 @@
     "mustache/mustache": "^2.13"
   },
   "require-dev": {
-    "magento/magento-coding-standard": "^4.0",
+    "magento/magento-coding-standard": "^5.0",
     "pdepend/pdepend": ">=2.5.1",
     "phpmd/phpmd": "^2.7",
     "phpunit/phpunit": ">=6.1 <8.0"

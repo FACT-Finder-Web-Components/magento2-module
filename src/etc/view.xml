@@ -9,6 +9,7 @@
         </images>
     </media>
     <exclude>
-        <item type="file">Omikron_Factfinder::ff-web-components/vendor/webcomponents-loader.js</item>
+        <item type="directory">Omikron_Factfinder::ff-web-components</item>
+        <item type="directory">Omikron_Factfinder::js/polyfill</item>
     </exclude>
 </view>

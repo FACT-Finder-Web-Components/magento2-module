@@ -1,5 +1,6 @@
 <?php
 /** @var Magento\Framework\View\Element\Template $block */
+/** @var ?Omikron\Factfinder\ViewModel\ProductBasedComponent $viewModel */
 $viewModel = $block->getViewModel();
 ?>
 <ff-recommendation record-id="<?= $block->escapeHtmlAttr($viewModel ? $viewModel->getProduct()->getSku() : implode(',', (array) $block->getData('record_id'))) ?>" unresolved>
