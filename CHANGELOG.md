@@ -6,6 +6,7 @@
 ### Fixed
 - Follow-up fixup to encoding parameter names to make them parsed correctly by `http_build_query`
 - Enforce correct category path order in ViewModel
+- Prevent merging and bundling of Web Components
 
 ## [v1.4.1] - 2020.01.28
 ### Fixed
