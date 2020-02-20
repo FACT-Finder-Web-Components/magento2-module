@@ -69,7 +69,7 @@ FACT-Finder&reg;,FACT-Finder&reg;
 "CMS settings","CMS-Einstellugen"
 "Export enabled","Export enabled"
 "Use separate channel","Use separate channel"
-"Setting this option to 'Yes' requires a new channel dedicated to CMS content. Please note that for this feature to work correctly, You need to Activate enrichment feature","Setting this option to 'Yes' requires a new channel dedicated to CMS content. Please note that for this feature to work correctly, You need to Activate enrichment feature"
+"Setting this option to 'Yes' requires a new channel dedicated to CMS content. Please note that for this feature to work correctly, you need to activate **Use Proxy**","Setting this option to 'Yes' requires a new channel dedicated to CMS content. Please note that for this feature to work correctly, you need to activate **Use Proxy*"
 Channel,Channel
 "Generate CMS feed","CMS-Feed generieren"
 "On buttonclick CSV exports of all of your CMS pages will be generated and uploaded to the specified FTP Server.","On buttonclick CSV exports of all of your CMS pages will be generated and uploaded to the specified FTP Server."
@@ -116,5 +116,5 @@ Password,Passwort
 "Test Connection","Verbindung testen"
 "Use FACT-Finder® for category pages?","Kategorieseiten mit FACT-Finder® rendern?"
 "Show 'Add to Cart' button in search results","'In den Warenkorb'-Button auf Produktlisten anzeigen"
-"Activate Enrichment feature","Datenanreicherung aktivieren?"
-"Data enrichment enables you to refine the data coming back from FACT-Finder inside the SDK code. Please refer the documentation for more infos (last chapter about data-communication).","Mit der Daten-Anreicherungsfunktion können Sie die Daten überarbeiten, die von FACT-Finder zurückkommen. Weitere Informationen dazu finden Sie in der Dokumentation im Abschnitt über den Ablauf der Datenkommunikation."
+"Use Proxy","Proxy aktivieren?"
+"Using Proxy allows you to refine the data coming back from FACT-Finder inside the SDK code. Please refer the documentation for more infos (last chapter about data-communication).","Mit der Daten-Anreicherungsfunktion können Sie die Daten überarbeiten, die von FACT-Finder zurückkommen. Weitere Informationen dazu finden Sie in der Dokumentation im Abschnitt über den Ablauf der Datenkommunikation."

@@ -12,7 +12,7 @@
                 <field id="ff_cms_export_enabled">1</field>
             </depends>
             <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-            <comment>Setting this option to 'Yes' requires a new channel dedicated to CMS content. Please note that for this feature to work correctly, You need to Activate enrichment feature</comment>
+            <comment>Setting this option to 'Yes' requires a new channel dedicated to CMS content. Please note that for this feature to work correctly, You need to activate **Use Proxy** feature</comment>
         </field>
         <field id="ff_cms_channel" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="3">
             <label>Channel</label>

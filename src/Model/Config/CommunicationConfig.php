@@ -18,7 +18,7 @@ class CommunicationConfig implements CommunicationConfigInterface, ParametersSou
     private const PATH_ADDRESS               = 'factfinder/general/address';
     private const PATH_VERSION               = 'factfinder/advanced/version';
     private const PATH_IS_ENABLED            = 'factfinder/general/is_enabled';
-    private const PATH_IS_ENRICHMENT_ENABLED = 'factfinder/general/ff_enrichment';
+    private const PATH_USE_PROXY             = 'factfinder/general/ff_enrichment';
     private const PATH_DATA_TRANSFER_IMPORT  = 'factfinder/data_transfer/ff_push_import_enabled';
 
     /** @var ScopeConfigInterface */
@@ -64,7 +64,7 @@ class CommunicationConfig implements CommunicationConfigInterface, ParametersSou
 
     private function getServerUrl(): string
     {
-        if ($this->scopeConfig->isSetFlag(self::PATH_IS_ENRICHMENT_ENABLED, ScopeInterface::SCOPE_STORES)) {
+        if ($this->scopeConfig->isSetFlag(self::PATH_USE_PROXY, ScopeInterface::SCOPE_STORES)) {
             return $this->urlBuilder->getUrl('', ['_direct' => Router::FRONT_NAME]);
         }
         return $this->getAddress();
