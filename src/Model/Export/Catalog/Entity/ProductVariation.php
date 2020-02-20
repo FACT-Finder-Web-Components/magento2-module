@@ -11,17 +11,21 @@ use Omikron\Factfinder\Model\Formatter\NumberFormatter;
 class ProductVariation implements ExportEntityInterface
 {
     /** @var Product */
-    private $product;
+    protected $product;
+
+    /** @var Product */
+    protected $configurable;
 
     /** @var NumberFormatter */
-    private $numberFormatter;
+    protected $numberFormatter;
 
     /** @var array */
     private $data;
 
-    public function __construct(Product $product, NumberFormatter $numberFormatter, array $data = [])
+    public function __construct(Product $product, Product $configurable, NumberFormatter $numberFormatter, array $data = [])
     {
         $this->product         = $product;
+        $this->configurable    = $configurable;
         $this->numberFormatter = $numberFormatter;
         $this->data            = $data;
     }
@@ -40,5 +44,19 @@ class ProductVariation implements ExportEntityInterface
             'HasVariants'   => 1,
             'MagentoId'     => $this->getId(),
         ]);
+    }
+
+    /**
+     * @return Product
+     */
+    public function getProduct() {
+        return $this->product;
+    }
+
+    /**
+     * @return Product
+     */
+    public function getConfigurable() {
+        return $this->configurable;
     }
 }
