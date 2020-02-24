@@ -112,7 +112,7 @@ class ExportProducts extends \Symfony\Component\Console\Command\Command
                 (int) $storeId,
                 function () use ($storeId, $input, $output) {
                     if ($this->communicationConfig->isChannelEnabled((int) $storeId)) {
-                        $filename = "export.{$this->communicationConfig->getChannel()}.csv";
+                        $filename = "export.{$this->communicationConfig->getChannel((int) $storeId)}.csv";
                         $stream = $this->csvFactory->create(['filename' => "factfinder/{$filename}"]);
                         $this->feedGeneratorFactory->create('product')->generate($stream);
                         $path = $this->filesystem->getDirectoryWrite(DirectoryList::VAR_DIR)
