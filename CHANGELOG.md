@@ -1,4 +1,8 @@
 # Changelog
+## [v1.4.3] - UNRELEASED
+### Fixed
+- Fixed cron feed export is now working correctly with multistore
+
 ## [v1.4.2] - 2020.02.06
 ### Changed
 - Upgrade Web Components to version 3.11.4
