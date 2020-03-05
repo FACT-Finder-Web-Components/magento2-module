@@ -11,13 +11,13 @@ use Omikron\Factfinder\Model\Formatter\NumberFormatter;
 class ProductVariation implements ExportEntityInterface
 {
     /** @var Product */
-    protected $product;
+    private $product;
 
     /** @var Product */
-    protected $configurable;
+    private $configurable;
 
     /** @var NumberFormatter */
-    protected $numberFormatter;
+    private $numberFormatter;
 
     /** @var array */
     private $data;
@@ -46,17 +46,13 @@ class ProductVariation implements ExportEntityInterface
         ]);
     }
 
-    /**
-     * @return Product
-     */
-    public function getProduct() {
+    public function getProduct(): Product
+    {
         return $this->product;
     }
 
-    /**
-     * @return Product
-     */
-    public function getConfigurable() {
+    public function getConfigurable(): Product
+    {
         return $this->configurable;
     }
 }
