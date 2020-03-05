@@ -1,5 +1,8 @@
 # Changelog
-## [v1.4.3] - UNRELEASED
+## [v1.5.0] - 2020.03.06
+### Changed
+- Improve extendability of product export
+
 ### Fixed
 - Fixed cron feed export is now working correctly with multistore
 
