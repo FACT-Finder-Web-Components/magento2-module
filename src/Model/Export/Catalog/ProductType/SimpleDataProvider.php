@@ -67,4 +67,9 @@ class SimpleDataProvider implements DataProviderInterface, ExportEntityInterface
             return $field->getValue($this->product);
         }, $this->productFields));
     }
+
+    public function getProduct(): Product
+    {
+        return $this->product;
+    }
 }

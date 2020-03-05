@@ -13,15 +13,19 @@ class ProductVariation implements ExportEntityInterface
     /** @var Product */
     private $product;
 
+    /** @var Product */
+    private $configurable;
+
     /** @var NumberFormatter */
     private $numberFormatter;
 
     /** @var array */
     private $data;
 
-    public function __construct(Product $product, NumberFormatter $numberFormatter, array $data = [])
+    public function __construct(Product $product, Product $configurable, NumberFormatter $numberFormatter, array $data = [])
     {
         $this->product         = $product;
+        $this->configurable    = $configurable;
         $this->numberFormatter = $numberFormatter;
         $this->data            = $data;
     }
@@ -40,5 +44,15 @@ class ProductVariation implements ExportEntityInterface
             'HasVariants'   => 1,
             'MagentoId'     => $this->getId(),
         ]);
+    }
+
+    public function getProduct(): Product
+    {
+        return $this->product;
+    }
+
+    public function getConfigurable(): Product
+    {
+        return $this->configurable;
     }
 }
