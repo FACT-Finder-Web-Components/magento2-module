@@ -1,7 +1,11 @@
 # Changelog
-## [v1.4.3] - UNRELEASED
+## [v1.5.0] - 2020.03.06
+### Changed
+- Improve extendability of product export
+
 ### Fixed
 - Fixed cron feed export is now working correctly with multistore
+- Prevent slider filter requests from being redirected to search result page
 
 ## [v1.4.2] - 2020.02.06
 ### Changed
@@ -203,6 +207,7 @@
 ### Added
 - Feed Export: Export feed file is now available via separate link
 
+[v1.5.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v1.5.0
 [v1.4.2]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v1.4.2
 [v1.4.1]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v1.4.1
 [v1.4.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v1.4.0

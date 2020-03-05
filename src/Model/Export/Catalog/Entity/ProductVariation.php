@@ -22,8 +22,12 @@ class ProductVariation implements ExportEntityInterface
     /** @var array */
     private $data;
 
-    public function __construct(Product $product, Product $configurable, NumberFormatter $numberFormatter, array $data = [])
-    {
+    public function __construct(
+        Product $product,
+        Product $configurable,
+        NumberFormatter $numberFormatter,
+        array $data = []
+    ) {
         $this->product         = $product;
         $this->configurable    = $configurable;
         $this->numberFormatter = $numberFormatter;
