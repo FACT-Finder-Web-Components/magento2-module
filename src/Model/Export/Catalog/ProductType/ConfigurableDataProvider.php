@@ -66,9 +66,10 @@ class ConfigurableDataProvider extends SimpleDataProvider
         $options = $this->getOptions($product);
         $data    = parent::toArray();
 
-        return function (Product $variation) use ($options, $data): ExportEntityInterface {
+        return function (Product $variation) use ($options, $product, $data): ExportEntityInterface {
             return $this->variationFactory->create([
                 'product' => $variation,
+                'configurable' => $product,
                 'data'    => ['Attributes' => '|' . implode('|', $options[$variation->getSku()] ?? []) . '|'] + $data,
             ]);
         };
