@@ -1,3 +1,7 @@
+# Unreleased
+### Added
+- Added RECOMMENDATION to available import type to be pushed after feed is uploaded.
+
 # Changelog
 ## [v1.5.0] - 2020.03.06
 ### Changed
