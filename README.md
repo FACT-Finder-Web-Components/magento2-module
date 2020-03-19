@@ -30,6 +30,7 @@ customise them.
 - [Web Component Integration](#web-component-integration)
     - [Searchbox Integration and Functions](#searchbox-integration-and-functions)
     - [Process of Data Transfer between Shop and FACT-Finder](#process-of-data-transfer-between-shop-and-fact-finder)
+        - [Using Proxy](#using-proxy)
     - [Using FACT-Finder on category pages](#using-fact-finder-on-category-pages)
 - [Modification examples](#modification-examples)
     - [Changing existing column names](#changing-existing-column-names)
@@ -82,7 +83,9 @@ Once the FACT-Finder module is activated, you can find the configurations page u
 
 At the top of the configurations page are the general settings. The information with which the shop connects to and authorises itself to the FACT-Finder Service are entered here. In the first line, activate your FACT-Finder integration. Before any changes become active, save them by clicking "Save Config".
 In some cases, you need to manually empty the cache (*Configuration* and *Page Cache*).
-Click the button "Test Connection" to check the connection to the FACT-Finder service. Please note the channel name needs to be entered correctly to establish a connection.
+Click the button "Test Connection" to check the connection to the FACT-Finder service.
+
+**Note:** the channel name needs to be entered correctly to establish a connection.
 
 Here you can also enable the rendering of category pages using FACT-Finder. More details can be found [here](#using-fact-finder-on-category-pages).
 
@@ -91,7 +94,8 @@ adds that product to the shopping cart. This feature works only for simple produ
 Warning: The product added to the cart is identified by the variable "MasterProductNumber". To allow this function to work correctly, the field "MasterProductNumber" must be imported to the FACT-Finder backend (on fact-finder.de).   
 
 By enabling option *Activate Logging*, all exceptions thrown during communication with FACT-Finder server will be saved in log file `var/log/factfinder.log`.
-Please note that is a server side communication option: Web Components behaviour won't be affected.
+
+**Note:** that is a server side communication option: Web Components behaviour won't be affected.
 
 ![General Settings](docs/assets/general-settings.png "General Settings")
 
@@ -213,7 +217,8 @@ reaching them from suggest component. If You want to present also page images, i
 
 ![Suggest Type Return Data](docs/assets/cms-type-return-data.png "FACT-Finder cms suggest return")
 
-Please note that each field needs to be correctly bind to html tag using access path same as in the FACT-Finder JSON object. 
+**Note:**
+Each field needs to be correctly bind to html tag using access path same as in the FACT-Finder JSON object. 
 The example below shows how to render page URL
 
     <a href="{{attributes.PageLink}}" data-redirect="{{attributes.PageLink}}"'
@@ -228,7 +233,7 @@ You need to mark CMS related columns as no searchable (CMS results are displayed
 #### Using Separate channel
 This solution does not require You to make any changes to channel configuration regarding columns searchability, however  You need to create a new channel.
 You need also to add new suggest type in Your newly created channel, as it is described in section [New Suggest Type](#create-new-suggest-type). Also You need to
-set configuration option **Activate Enrichment feature** to value **Yes** in module configuration.
+set configuration option **Use Proxy** to value **Yes** in module configuration.
 
 Despite the fact that due to the use of separate channels, the products data will not be mixed up with CMS, and you do not need to perform any additional
 operations to prevent CMS from appearing in the search results, this solution has one drawback. Two requests to FACT-Finder, will be performed in order to recieve full response: one for products and
@@ -308,19 +313,26 @@ Once you perform a search, you will automatically be redirected to a new and imp
 Several templates are already integrated into this layout, among others `ff-record-list`, which displays the search results.
  
 ### Process of Data Transfer between Shop and FACT-Finder
+![Communication Overview](docs/assets/communication-overview.png "Communication Overview")
 By default search/suggest requests are performed directly to FACT-Finder bypassing Magento backend. However if for some reason, You want to modify request parameters
-or want to modify the response before returning it to the front, You can enable **Enrichment feature**. By enabling this, once a search query is sent, it does not immediately reach FACT-Finder, but is handed off to a specific controller
+or want to modify the response before returning it to the front, You can enable **Proxy**. 
+
+#### Using Proxy
+By enabling this, once a search query is sent, it does not immediately reach FACT-Finder, but is handed off to a specific controller
 
     src/Controller/Proxy/Call.php
 
 which hands the request to the FACT-Finder system, receives the answer, processes it and only then returns it to the frontend/web component.
-Once response from FACT-Finder is available, proxy controller emits an `ff_proxy_post_dispatch` event which allows user to listen in order to modify and enrich recieved data
+Once response from FACT-Finder is available, proxy controller emits an `ff_proxy_post_dispatch` event which allows user to listen in order to modify and enrich recieved data.
 
-![Communication Overview](docs/assets/communication-overview.png "Communication Overview")
+**Note:**
+Sending each request to FACT-Finder instance trough Magento, you lose on performance as each request need to be handled first by HTTP server and then, by Magento itself. This additional traffic could be easily avoided by not activating this feature if there's no clear reason to use it
 
 ### Using FACT-Finder on category pages
 Module in order to preserve categories URLs and hence SEO get use of standard Magento routing with the combination of FACT-Finder availability to pass custom parameters to search request.
-Once user is landed on category page. Search request is performed immediately (thanks to `search-immediate` communication parameter usage). To enable
+Once user is landed on category page. Search request is performed immediately (thanks to `search-immediate` communication parameter usage).
+To enable that, turn on corresponding option in *Main Settings* section.
+ 
 
 ## Modification examples
 Our Magento 2 module offers a fully working integration out of the box. However, most projects may require
@@ -419,6 +431,9 @@ Finally, You need to define new column in CatalogFeed definition in di.xml`.
     </arguments>
 </virtualType>
 ```
+
+**Note:**
+If You are exporting CMS in single file, You need to add column definition to *CombinedFeed* instead of *CatalogFeed*
 
 Now run `bin/magento cache:clean config` to use the new DI configuration.
 

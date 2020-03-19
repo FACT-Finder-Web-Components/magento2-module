@@ -75,7 +75,7 @@ class Feed
         foreach ($this->storeManager->getStores() as $store) {
             $this->storeEmulation->runInStore((int) $store->getId(), function () use ($store) {
                 if ($this->channelProvider->isChannelEnabled((int) $store->getId())) {
-                    $filename = "export.{$this->channelProvider->getChannel()}.csv";
+                    $filename = "export.{$this->channelProvider->getChannel((int) $store->getId())}.csv";
                     $stream   = $this->csvFactory->create(['filename' => "factfinder/{$filename}"]);
                     $this->feedGeneratorFactory->create($this->feedType)->generate($stream);
                     $this->ftpUploader->upload($filename, $stream);

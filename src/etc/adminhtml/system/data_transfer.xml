@@ -39,6 +39,7 @@
             <options>
                 <option label="Data">data</option>
                 <option label="Suggest">suggest</option>
+                <option label="Recommendation">recommendation</option>
             </options>
             <depends>
                 <field id="ff_push_import_enabled">1</field>
