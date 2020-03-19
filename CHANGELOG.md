@@ -1,11 +1,11 @@
-# Unreleased
+# Changelog
+## Unreleased
 ### Added
 - Added RECOMMENDATION to available import type to be pushed after feed is uploaded.
 
-# Changelog
 ## [v1.5.0] - 2020.03.06
 ### Changed
-- Improve extendability of product export
+- Improve extendability of product export (by @aptudock)
 
 ### Fixed
 - Fixed cron feed export is now working correctly with multistore
