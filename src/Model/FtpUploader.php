@@ -22,6 +22,13 @@ class FtpUploader
         $this->client = $client;
     }
 
+    public function testConnection(array $params)
+    {
+        $this->client->open($params);
+        $this->client->write('testconnection', '');
+        $this->client->close();
+    }
+
     public function upload(string $filename, StreamInterface $stream): void
     {
         $this->client->open($this->config->toArray());
