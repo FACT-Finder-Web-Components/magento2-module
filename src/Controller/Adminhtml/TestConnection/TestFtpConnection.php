@@ -7,8 +7,6 @@ namespace Omikron\Factfinder\Controller\Adminhtml\TestConnection;
 use Magento\Backend\App\Action;
 use Magento\Framework\Controller\Result\JsonFactory;
 use Magento\Framework\Phrase;
-use Omikron\Factfinder\Exception\ResponseException;
-use Omikron\Factfinder\Model\Api\CredentialsFactory;
 use Omikron\Factfinder\Model\Config\FtpConfig;
 use Omikron\Factfinder\Model\FtpUploader;
 
@@ -42,12 +40,9 @@ class TestFtpConnection extends Action
 
         try {
             $request = $this->getRequest();
-            $params  = $this->getConfig($request->getParams());
-
-
-            $serverUrl = $request->getParam('address', $this->communicationConfig->getAddress());
-            $this->testConnection->execute($serverUrl, $params);
-        } catch (ResponseException $e) {
+            $params  = $this->getConfig($request->getParams()) + $this->ftpConfig->toArray();
+            $this->ftpUploader->testConnection($params);
+        } catch (\Exception $e) {
             $message = $e->getMessage();
         }
 
@@ -56,10 +51,13 @@ class TestFtpConnection extends Action
 
     private function getConfig(array $params): array
     {
-        array_walk($params, function (string $_v, string $key) {
-            preg_replace('ff_upload_', '', $key);
-        });
+        $prefix   = 'ff_upload_';
+        $filtered = array_filter($params, function(string $key) use ($prefix): bool {
+            return (bool) preg_match("/$prefix/", $key);
+        }, ARRAY_FILTER_USE_KEY );
 
-        return $params + $this->ftpConfig->toArray();
+        return array_combine(array_map(function (string $key) use ($prefix): string {
+            return str_replace($prefix, '', $key);
+        }, array_keys($filtered)), array_values($filtered));
     }
 }

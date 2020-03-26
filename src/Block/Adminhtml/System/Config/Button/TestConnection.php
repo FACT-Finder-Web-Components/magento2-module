@@ -8,7 +8,7 @@ class TestConnection extends Button
 {
     protected function getLabel(): string
     {
-        return (string) __('Test Connection now');
+        return (string) __('Test Connection');
     }
 
     protected function getTargetUrl(): string

@@ -22,13 +22,26 @@ class FtpUploader
         $this->client = $client;
     }
 
-    public function testConnection(array $params)
+    /**
+     * @param array $params
+     * @throws \Exception When credentials are invalid or target directory is not writeable
+     */
+    public function testConnection(array $params): void
     {
+        $fileName = 'testconnection';
         $this->client->open($params);
-        $this->client->write('testconnection', '');
+        //check write permission
+        $this->client->write($fileName, '');
+        $this->client->rm($fileName);
+
         $this->client->close();
     }
 
+    /**
+     * @param string          $filename
+     * @param StreamInterface $stream
+     * @throws \Exception
+     */
     public function upload(string $filename, StreamInterface $stream): void
     {
         $this->client->open($this->config->toArray());

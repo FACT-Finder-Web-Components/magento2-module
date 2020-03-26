@@ -128,7 +128,8 @@ This option configures the connection with the FACT-Finder system via FTP. Shop 
 FACT-Finder using FTP. FACT-Finder needs to be up to date on the product data, to ensure that components like the search work as intended.
 
 Enter an FTP-server to which the CSV file is uploaded automatically. The URL needs to be entered without the protocol
-prefix (`ftp://`) and without the slash at the end.
+prefix (`ftp://`) and without the slash at the end. If you are not sure if Magento will be able to connect to your FTP server, please use 
+"Check FTP connection" option. 
 
 The CSV file uses double quotes `"` for field enclosure and a semi-colon `;` as field delimiter.
 

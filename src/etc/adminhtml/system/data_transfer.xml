@@ -13,14 +13,15 @@
         <field id="ff_upload_password" translate="label" type="password" sortOrder="30" showInDefault="1" showInWebsite="0" showInStore="0">
             <label>Upload Password</label>
         </field>
-        <field id="ff_upload_port" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="0" showInStore="0">
+        <field id="ff_upload_port" translate="label comment" type="text" sortOrder="30" showInDefault="1" showInWebsite="0" showInStore="0">
             <label>Port</label>
+            <comment>Leave empty if you use default port 21.</comment>
         </field>
-        <field id="ff_upload_ssl" translate="label comment" type="select" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
+        <field id="ff_upload_ssl" translate="label comment" type="select" sortOrder="31" showInDefault="1" showInWebsite="1" showInStore="1">
             <label>Use SSL</label>
             <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
         </field>
-        <field id="ff_upload_test_connection" translate="label comment" type="button" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+        <field id="ff_upload_test_connection" translate="label comment" type="button" sortOrder="32" showInDefault="1" showInWebsite="1" showInStore="1">
             <label>Test FTP Connection</label>
             <frontend_model>Omikron\Factfinder\Block\Adminhtml\System\Config\Button\TestFtpConnection</frontend_model>
         </field>
