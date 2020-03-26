@@ -31,7 +31,6 @@ class TestFtpConnection extends Action
         $this->jsonResultFactory = $jsonResultFactory;
         $this->ftpUploader       = $ftpUploader;
         $this->ftpConfig         = $ftpConfig;
-
     }
 
     public function execute()
@@ -52,9 +51,9 @@ class TestFtpConnection extends Action
     private function getConfig(array $params): array
     {
         $prefix   = 'ff_upload_';
-        $filtered = array_filter($params, function(string $key) use ($prefix): bool {
+        $filtered = array_filter($params, function (string $key) use ($prefix): bool {
             return (bool) preg_match("/$prefix/", $key);
-        }, ARRAY_FILTER_USE_KEY );
+        }, ARRAY_FILTER_USE_KEY);
 
         return array_combine(array_map(function (string $key) use ($prefix): string {
             return str_replace($prefix, '', $key);
