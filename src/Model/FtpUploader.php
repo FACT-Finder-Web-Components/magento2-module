@@ -29,12 +29,14 @@ class FtpUploader
     public function testConnection(array $params): void
     {
         $fileName = 'testconnection';
-        $this->client->open($params);
-        //check write permission
-        $this->client->write($fileName, '');
-        $this->client->rm($fileName);
-
-        $this->client->close();
+        try {
+            $this->client->open($this->trimProtocol($params));
+            //check write permission
+            $this->client->write($fileName, '');
+            $this->client->rm($fileName);
+        } finally {
+            $this->client->close();
+        }
     }
 
     /**
@@ -44,8 +46,17 @@ class FtpUploader
      */
     public function upload(string $filename, StreamInterface $stream): void
     {
-        $this->client->open($this->config->toArray());
-        $this->client->write($filename, $stream->getContent());
-        $this->client->close();
+        try {
+            $this->client->open($this->trimProtocol($this->config->toArray()));
+            $this->client->write($filename, $stream->getContent());
+        } finally {
+            $this->client->close();
+        }
+    }
+
+    private function trimProtocol(array $config): array
+    {
+        $config['host'] = preg_replace('#^(ftp|sftp|ftps)?://#', '', $config['host']);
+        return $config;
     }
 }

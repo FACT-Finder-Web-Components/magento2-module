@@ -52,7 +52,7 @@ class TestFtpConnection extends Action
     {
         $prefix   = 'ff_upload_';
         $filtered = array_filter($params, function (string $key) use ($prefix): bool {
-            return (bool) preg_match("/$prefix/", $key);
+            return (bool) preg_match("#^{$prefix}#", $key);
         }, ARRAY_FILTER_USE_KEY);
 
         return array_combine(array_map(function (string $key) use ($prefix): string {

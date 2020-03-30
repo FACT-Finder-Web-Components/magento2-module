@@ -26,7 +26,7 @@ class FtpConfig
             'password' => $this->getConfig('password'),
             'ssl'      => $this->getConfig('use_ssl'),
             'passive'  => true,
-            'port'     => $this->getConfig('port') ?? 21,
+            'port'     => $this->getConfig('port') ?: 21,
         ];
     }
 
