@@ -27,7 +27,7 @@ class Ssr extends Template
         $output = $this->getChildHtml();
         $output = preg_replace_callback('#<ff-record-list([^>]*?)>#s', function (array $match) {
             $attributes = preg_replace('#\sunresolved\s?#s', '', $match[1]);
-            return "<ff-record-list ssr-rendered{$attributes}>";
+            return "<ff-record-list ssr {$attributes}>";
         }, $output);
 
         return preg_replace_callback('#<ff-record[\s>].*?</ff-record>#s', function (array $match): string {
