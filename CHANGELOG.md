@@ -1,5 +1,8 @@
 # Changelog
 ## Unreleased
+### Changed
+- Upgrade Web Components to version 3.13.0
+
 ### Added
 - Added RECOMMENDATION to available import type to be pushed after feed is uploaded.
 
