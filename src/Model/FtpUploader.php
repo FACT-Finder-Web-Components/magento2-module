@@ -24,6 +24,7 @@ class FtpUploader
 
     /**
      * @param array $params
+     *
      * @throws \Exception When credentials are invalid or target directory is not writeable
      */
     public function testConnection(array $params): void
@@ -31,7 +32,7 @@ class FtpUploader
         $fileName = 'testconnection';
         try {
             $this->client->open($this->trimProtocol($params));
-            //check write permission
+            // Check write permission
             $this->client->write($fileName, '');
             $this->client->rm($fileName);
         } finally {
@@ -42,6 +43,7 @@ class FtpUploader
     /**
      * @param string          $filename
      * @param StreamInterface $stream
+     *
      * @throws \Exception
      */
     public function upload(string $filename, StreamInterface $stream): void
@@ -56,7 +58,7 @@ class FtpUploader
 
     private function trimProtocol(array $config): array
     {
-        $config['host'] = preg_replace('#^(ftp|sftp|ftps)?://#', '', $config['host']);
-        return $config;
+        preg_match('#^(?:s?ftps?)://(.+?)/?$#', $config['host'], $match);
+        return $match ? ['host' => $match[1]] + $config : $config;
     }
 }

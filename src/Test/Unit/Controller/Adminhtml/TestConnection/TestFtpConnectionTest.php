@@ -21,7 +21,7 @@ class TestFtpConnectionTest extends TestCase
     /** @var MockObject|RequestInterface */
     private $request;
 
-    /** @var  MockObject|FtpUploader */
+    /** @var MockObject|FtpUploader */
     private $ftpUploader;
 
     /** @var MockObject|JsonResult */

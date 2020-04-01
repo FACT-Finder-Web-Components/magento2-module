@@ -15,7 +15,7 @@ class TestFtpConnection extends Action
     /** @var JsonFactory */
     private $jsonResultFactory;
 
-    /** @var  FtpUploader */
+    /** @var FtpUploader */
     private $ftpUploader;
 
     /** @var FtpConfig */
