@@ -4,7 +4,8 @@
 - Upgrade Web Components to version 3.13.0
 
 ### Added
-- Added RECOMMENDATION to available import type to be pushed after feed is uploaded.
+- Added RECOMMENDATION to available import type to be pushed after feed is uploaded
+- Added Check FTP connection functionality in the module configuration
 
 ## [v1.5.0] - 2020.03.06
 ### Changed
