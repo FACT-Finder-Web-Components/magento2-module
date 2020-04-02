@@ -13,5 +13,11 @@
                 </argument>
             </arguments>
         </referenceBlock>
+
+        <referenceBlock name="factfinder.ssr.recordlist">
+            <arguments>
+                <argument name="search_params" xsi:type="helper" helper="Omikron\Factfinder\ViewModel\CategoryPath::getValue" />
+            </arguments>
+        </referenceBlock>
     </body>
 </page>

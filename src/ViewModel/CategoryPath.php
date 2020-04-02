@@ -29,7 +29,7 @@ class CategoryPath implements ArgumentInterface
         $this->initial  = $initial;
     }
 
-    public function getValue(): string
+    public function __toString(): string
     {
         $path  = 'ROOT';
         $value = $this->initial;
@@ -38,6 +38,11 @@ class CategoryPath implements ArgumentInterface
             $path    .= urlencode('/' . trim($item->getName()));
         }
         return implode(',', $value);
+    }
+
+    public function getValue(): self
+    {
+        return $this;
     }
 
     /**

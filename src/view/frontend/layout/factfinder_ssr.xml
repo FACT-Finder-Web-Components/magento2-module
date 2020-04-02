@@ -1,12 +1,7 @@
 <?xml version="1.0"?>
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
-        <block class="Omikron\Factfinder\Block\Ssr" name="factfinder.ssr">
-            <arguments>
-                <argument name="search_params" xsi:type="helper" helper="Omikron\Factfinder\ViewModel\CategoryPath::getValue" />
-            </arguments>
-        </block>
-        <move element="factfinder.recordlist" destination="factfinder.ssr" />
-        <move element="factfinder.ssr" destination="content" after="factfinder.toolbar" />
+        <move element="factfinder.recordlist" destination="factfinder.ssr.recordlist" />
+        <move element="factfinder.ssr.recordlist" destination="content" after="factfinder.toolbar" />
     </body>
 </page>

@@ -35,5 +35,7 @@
                 </block>
             </block>
         </referenceBlock>
+
+        <block class="Omikron\Factfinder\Block\Ssr\RecordList" name="factfinder.ssr.recordlist" />
     </body>
 </page>

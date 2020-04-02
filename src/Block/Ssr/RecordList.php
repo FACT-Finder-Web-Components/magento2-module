@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Omikron\Factfinder\Block;
+namespace Omikron\Factfinder\Block\Ssr;
 
 use Magento\Framework\View\Element\Template;
 use Omikron\Factfinder\Model\Ssr\SearchAdapter;
 
-class Ssr extends Template
+class RecordList extends Template
 {
     /** @var SearchAdapter */
     private $searchAdapter;
@@ -53,7 +53,7 @@ class Ssr extends Template
     private function getSearchParams(): array
     {
         $params = explode(',', (string) $this->getData('search_params'));
-        return array_reduce($params, function (array $result, string $part): array {
+        return array_reduce(array_filter($params), function (array $result, string $part): array {
             [$key, $value] = array_map('urldecode', explode('=', $part));
             return $result + [$key => $value];
         }, []);
