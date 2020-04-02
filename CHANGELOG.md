@@ -1,5 +1,5 @@
 # Changelog
-## [v1.5.1] 2020.04.02
+## [v1.5.1] - 2020.04.02
 ### Added
 - Added RECOMMENDATION to available import type to be pushed after feed is uploaded
 - Added Check FTP connection functionality in the module configuration
