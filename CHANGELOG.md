@@ -1,5 +1,5 @@
 # Changelog
-## Unreleased
+## [v1.5.1] 2020.04.02
 ### Changed
 - Upgrade Web Components to version 3.13.0
 
