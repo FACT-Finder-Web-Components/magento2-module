@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Omikron\Factfinder\Block\Adminhtml\System\Config\Button;
 
-class TestConnection extends Button
+class TestFtpConnection extends Button
 {
     protected function getLabel(): string
     {
-        return (string) __('Test Connection');
+        return (string) __('Test FTP Connection');
     }
 
     protected function getTargetUrl(): string
     {
-        return $this->getUrl('factfinder/testconnection/testconnection');
+        return $this->getUrl('factfinder/testconnection/testftpconnection');
     }
 }
