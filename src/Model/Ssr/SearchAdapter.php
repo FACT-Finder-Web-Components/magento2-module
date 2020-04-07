@@ -41,19 +41,23 @@ class SearchAdapter
         $this->params              = $params;
     }
 
-    public function search(string $query = '*', array $params = []): array
+    public function search(string $channel, string $query = '*', array $params = []): array
     {
         $endpoint = $this->communicationConfig->getAddress() . '/Search.ff';
-        $params   = ['channel' => $this->communicationConfig->getChannel(), 'query' => $query] + $params;
+        $params   = ['channel' => $channel, 'query' => $query] + $params;
 
-        $priceField = $this->fieldRoles->getFieldRole('price');
-        return array_map(function (array $record) use ($priceField): array {
+        $priceField   = $this->fieldRoles->getFieldRole('price');
+        $searchResult = $this->client->sendRequest($endpoint, $params)['searchResult'];
+
+        $searchResult['records'] = array_map(function (array $record) use ($priceField): array {
             $record['record'] = $this->getFormattedPrice($record['record'], $priceField) + $record['record'];
             return $record;
-        }, $this->client->sendRequest($endpoint, $params)['searchResult']['records'] ?? []);
+        }, $searchResult['records'] ?? []);
+
+        return $searchResult;
     }
 
-    private function getFormattedPrice(array $record, string $priceField): array
+    protected function getFormattedPrice(array $record, string $priceField): array
     {
         return [
             '__ORIG_PRICE__' => $record[$priceField],

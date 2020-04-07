@@ -4,53 +4,76 @@ declare(strict_types=1);
 
 namespace Omikron\Factfinder\Block\Ssr;
 
+use Magento\Framework\Serialize\SerializerInterface;
 use Magento\Framework\View\Element\Template;
+use Omikron\Factfinder\Api\Config\ChannelProviderInterface;
 use Omikron\Factfinder\Model\Ssr\SearchAdapter;
 
 class RecordList extends Template
 {
-    /** @var SearchAdapter */
-    private $searchAdapter;
+    private const RECORD_PATTERN = '#<ff-record[\s>].*?</ff-record>#s';
 
-    public function __construct(Template\Context $context, SearchAdapter $searchAdapter, array $data = [])
-    {
+    /** @var SearchAdapter */
+    protected $searchAdapter;
+
+    /** @var ChannelProviderInterface */
+    protected $channelProvider;
+
+    /** @var SerializerInterface */
+    protected $jsonSerializer;
+
+    public function __construct(
+        Template\Context $context,
+        SearchAdapter $searchAdapter,
+        ChannelProviderInterface $channelProvider,
+        SerializerInterface $jsonSerializer,
+        array $data = []
+    ) {
         parent::__construct($context, $data);
-        $this->searchAdapter = $searchAdapter;
+        $this->searchAdapter   = $searchAdapter;
+        $this->channelProvider = $channelProvider;
+        $this->jsonSerializer  = $jsonSerializer;
     }
 
     /**
      * @return string
      * @SuppressWarnings(PHPMD.CamelCaseMethodName)
      */
-    protected function _toHtml()
+    protected function _afterToHtml($html)
     {
-        $output = $this->getChildHtml();
-        $output = preg_replace_callback('#<ff-record-list([^>]*?)>#s', function (array $match) {
+        // Resolve record list
+        $html = preg_replace_callback('#<ff-record-list([^>]*?)>#s', function (array $match) {
             $attributes = preg_replace('#\sunresolved\s?#s', '', $match[1]);
             return "<ff-record-list ssr {$attributes}>";
-        }, $output);
+        }, $html);
 
-        return preg_replace_callback('#<ff-record[\s>].*?</ff-record>#s', function (array $match): string {
-            return $this->preRendered($match[0]) . '<template data-role="record">' . $match[0] . '</template>';
-        }, $output);
+        $channel = $this->channelProvider->getChannel();
+        $result  = $this->searchResult($channel, $this->getRequest()->getParam('query', '*'), $this->getSearchParams());
+
+        // Add pre-rendered records
+        $html = preg_replace_callback(self::RECORD_PATTERN, function (array $match) use ($result): string {
+            $template = '<template data-role="record">' . $match[0] . '</template>';
+            return array_reduce($result['records'] ?? [], $this->recordRenderer($match[0]), $template);
+        }, $html);
+
+        return str_replace('{FF_SEARCH_RESULT}', $this->jsonSerializer->serialize($result), $html);
     }
 
-    public function preRendered(string $template): string
+    protected function searchResult(string $channel, string $query, array $params): array
     {
-        $records = $this->searchAdapter->search($this->getRequest()->getParam('query', '*'), $this->getSearchParams());
-        return implode('', array_map($this->renderRecord($template), $records));
+        return $this->searchAdapter->search($channel, $query, $params);
     }
 
-    private function renderRecord(string $template): callable
+    protected function recordRenderer(string $template): callable
     {
-        return function (array $record) use ($template): string {
+        return function (string $initial, array $record) use ($template): string {
             $this->assign($record);
             $templateEngine = $this->templateEnginePool->get('mustache');
-            return $templateEngine->render($this->templateContext, $template, $this->_viewVars);
+            return $initial . $templateEngine->render($this->templateContext, $template, $this->_viewVars);
         };
     }
 
-    private function getSearchParams(): array
+    protected function getSearchParams(): array
     {
         $params = explode(',', (string) $this->getData('search_params'));
         return array_reduce(array_filter($params), function (array $result, string $part): array {
