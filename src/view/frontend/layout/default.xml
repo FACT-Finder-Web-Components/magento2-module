@@ -36,6 +36,6 @@
             </block>
         </referenceBlock>
 
-        <block class="Omikron\Factfinder\Block\Ssr\RecordList" name="factfinder.ssr.recordlist" />
+        <block class="Omikron\Factfinder\Block\Ssr\RecordList" name="factfinder.ssr.recordlist" template="Omikron_Factfinder::ff/ssr/record-list.phtml" />
     </body>
 </page>

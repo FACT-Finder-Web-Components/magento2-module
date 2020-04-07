@@ -1,6 +1,14 @@
 <?xml version="1.0"?>
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
+        <referenceBlock name="factfinder.communication">
+            <arguments>
+                <argument name="communication_parameters" xsi:type="array">
+                    <item name="search-immediate" xsi:type="string">false</item>
+                </argument>
+            </arguments>
+        </referenceBlock>
+
         <move element="factfinder.recordlist" destination="factfinder.ssr.recordlist" />
         <move element="factfinder.ssr.recordlist" destination="content" after="factfinder.toolbar" />
     </body>
