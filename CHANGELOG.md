@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Added
+- Track requests coming from internal IPs
+
 ## [v1.5.1] - 2020.04.02
 ### Added
 - Added RECOMMENDATION to available import type to be pushed after feed is uploaded
