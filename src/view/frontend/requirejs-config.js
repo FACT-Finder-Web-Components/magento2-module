@@ -13,6 +13,5 @@ var config = {
             ].concat(!!window.navigator.userAgent.match(/(MSIE |Trident\/)/) ? ['es6shim'] : []),
             exports: 'factfinder'
         }
-    },
-    deps: ['Omikron_Factfinder/js/search-navigation']
+    }
 };
