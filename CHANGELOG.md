@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Changed
+- Changed `search-navigation.js` is now listen to `before-search` event
+
 ## [v1.5.1] - 2020.04.02
 ### Added
 - Added RECOMMENDATION to available import type to be pushed after feed is uploaded
