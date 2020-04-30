@@ -6,6 +6,8 @@ namespace Omikron\Factfinder\Model;
 
 use Magento\Customer\CustomerData\SectionSourceInterface;
 use Magento\Customer\Model\Session as CustomerSession;
+use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Framework\HTTP\PhpEnvironment\RemoteAddress;
 use Omikron\Factfinder\Api\Config\ParametersSourceInterface;
 use Omikron\Factfinder\Api\SessionDataInterface;
 
@@ -14,9 +16,20 @@ class SessionData implements SessionDataInterface, SectionSourceInterface, Param
     /** @var CustomerSession */
     private $customerSession;
 
-    public function __construct(CustomerSession $customerSession) // phpcs:ignore
-    {
+    /** @var ScopeConfigInterface */
+    private $scopeConfig;
+
+    /** @var RemoteAddress */
+    private $remoteAddress;
+
+    public function __construct(
+        CustomerSession $customerSession,
+        ScopeConfigInterface $scopeConfig,
+        RemoteAddress $remoteAddress
+    ) {
         $this->customerSession = $customerSession;
+        $this->scopeConfig     = $scopeConfig;
+        $this->remoteAddress   = $remoteAddress;
     }
 
     public function getUserId(): int
@@ -35,8 +48,9 @@ class SessionData implements SessionDataInterface, SectionSourceInterface, Param
     public function getSectionData()
     {
         return [
-            'uid' => $this->getUserId(),
-            'sid' => $this->getSessionId(),
+            'uid'      => $this->getUserId(),
+            'sid'      => $this->getSessionId(),
+            'internal' => $this->isInternal(),
         ];
     }
 
@@ -53,5 +67,11 @@ class SessionData implements SessionDataInterface, SectionSourceInterface, Param
         $sessionId = $sessionId ?: sha1(uniqid('', true));
         $sessionId = str_repeat($sessionId, intdiv($length, strlen($sessionId)) + 1);
         return substr($sessionId, 0, $length);
+    }
+
+    private function isInternal(): bool
+    {
+        $internalIps = explode(',', (string) $this->scopeConfig->getValue('factfinder/advanced/internal_ips'));
+        return in_array($this->remoteAddress->getRemoteAddress(), array_map('trim', $internalIps));
     }
 }

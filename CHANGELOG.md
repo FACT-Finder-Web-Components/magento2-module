@@ -1,5 +1,8 @@
 # Changelog
 ## Unreleased
+### Added
+- Track requests coming from internal IPs
+
 ### Changed
 - Upgrade Web Components to version 3.14.1
 
