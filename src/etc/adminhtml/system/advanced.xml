@@ -83,10 +83,5 @@
             <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
             <comment>If true, the search history is pushed to the browser history, even without using url parameter. Default is true.</comment>
         </field>
-        <field id="disable_single_hit_redirect" translate="label comment" type="select" sortOrder="210" showInDefault="1" showInWebsite="1" showInStore="1">
-            <label>Disable single hit redirect</label>
-            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-            <comment>If true, disables the automatic redirect to the product detail page if only one record is found.</comment>
-        </field>
     </group>
 </include>
