@@ -13,9 +13,6 @@ $parameters = $viewModel->getParameters((array) $block->getData('communication_p
 </script>
 <script type="text/x-magento-init">
     {
-        ".search-wrapper": {
-            "Omikron_Factfinder/js/search-redirect": {"targetUrl": "<?= $block->escapeJs($block->getUrl('factfinder/result')) ?>"}
-        },
         "ff-communication": {
             "Omikron_Factfinder/js/view/ffcommunication": {}
         }
