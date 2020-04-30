@@ -5,6 +5,8 @@
 
 ### Changed
 - Upgrade Web Components to version 3.14.1
+- Deprecate `search-navigation.js`: search redirection is now implemented using a
+  dedicated JS component on the relevant elements.
 
 ## [v1.5.1] - 2020.04.02
 ### Added
