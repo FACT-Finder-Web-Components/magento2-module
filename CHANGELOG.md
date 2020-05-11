@@ -1,5 +1,5 @@
 # Changelog
-## [v1.6.0.1] - 2020.05.11
+## [v1.6.1] - 2020.05.11
 ### Fixed
 - Fixed stack overflow error on IE11
 
@@ -228,7 +228,7 @@
 ### Added
 - Feed Export: Export feed file is now available via separate link
 
-[v1.6.0.1]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v1.6.0.1
+[v1.6.1]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v1.6.1
 [v1.6.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v1.6.0
 [v1.5.1]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v1.5.1
 [v1.5.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v1.5.0
