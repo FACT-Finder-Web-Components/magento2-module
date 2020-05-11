@@ -7,7 +7,7 @@ $parameters = $viewModel->getParameters((array) $block->getData('communication_p
 <ff-communication<?php foreach ($parameters as $key => $value) /* @noEscape */ echo sprintf(' %s="%s"', $key, $block->escapeHtmlAttr($value)) ?>></ff-communication>
 <!-- Set FieldRoles -->
 <script>
-    document.addEventListener('ffReady', function () {
+    document.addEventListener('WebComponentsReady', function () {
         factfinder.communication.fieldRoles = <?= /* @noEscape */ $viewModel->getFieldRoles() ?>;
     });
 </script>

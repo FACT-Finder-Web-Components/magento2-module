@@ -1,4 +1,4 @@
-define(['factfinder'], function (factfinder) {
+define([], function () {
     'use strict';
 
     return function (options, element) {

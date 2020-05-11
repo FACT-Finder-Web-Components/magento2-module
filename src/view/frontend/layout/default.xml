@@ -1,5 +1,10 @@
 <?xml version="1.0"?>
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <script src="Omikron_Factfinder::ff-web-components/vendor/custom-elements-es5-adapter.js" />
+        <script src="Omikron_Factfinder::ff-web-components/vendor/webcomponents-loader.js" />
+        <script src="Omikron_Factfinder::ff-web-components/bundle.js" />
+    </head>
     <body>
         <block class="Magento\Framework\View\Element\Template" name="factfinder.feedbacktext" ifconfig="factfinder/components/ff_campaign" template="Omikron_Factfinder::ff/campaign-feedbacktext.phtml" />
         <block class="Magento\Framework\View\Element\Template" name="factfinder.recordlist" template="Omikron_Factfinder::ff/record-list.phtml">
