@@ -335,13 +335,13 @@ Once user is landed on category page. Search request is performed immediately (t
 To enable that, turn on corresponding option in *Main Settings* section.
  
 ### Tracking event listeners
-Module defines two event listeners for the checkout process:
+The module defines two event listeners for the checkout process:
 * `checkout_cart_add_product_complete`: adding product to cart - defined in `frontend/events.xml`
 * `checkout_submit_all_after`: placing an order - defined in `webapi_rest/events.xml`
 
-If you are planning to customize the adding to cart/checkout process make sure that the events definitions are placed in the correct areas.
+If you are planning to customize the add-to-cart/checkout process, make sure that the event definitions are placed in the correct areas.
 For instance if your are not using REST API in checkout move the `checkout_submit_all_after` event listener definition from `webapi_rest/events.xml` to `frontend/events.xml`.
-If you are using custom controllers also make sure that they  emit these events. If not, tracking will not take place.
+If you are using custom controllers, also make sure that they  emit these events. If not, tracking will not take place.
  
 ## Modification examples
 Our Magento 2 module offers a fully working integration out of the box. However, most projects may require
