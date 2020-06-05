@@ -32,6 +32,7 @@ customise them.
     - [Process of Data Transfer between Shop and FACT-Finder](#process-of-data-transfer-between-shop-and-fact-finder)
         - [Using Proxy](#using-proxy)
     - [Using FACT-Finder on category pages](#using-fact-finder-on-category-pages)
+    - [Tracking event listeners](#tracking-event-listeners)
 - [Modification examples](#modification-examples)
     - [Changing existing column names](#changing-existing-column-names)
     - [Adding new column](#adding-new-column)
@@ -333,7 +334,15 @@ Module in order to preserve categories URLs and hence SEO get use of standard Ma
 Once user is landed on category page. Search request is performed immediately (thanks to `search-immediate` communication parameter usage).
 To enable that, turn on corresponding option in *Main Settings* section.
  
+### Tracking event listeners
+The module defines two event listeners for the checkout process:
+* `checkout_cart_add_product_complete`: adding product to cart - defined in `frontend/events.xml`
+* `checkout_submit_all_after`: placing an order - defined in `webapi_rest/events.xml`
 
+If you are planning to customize the add-to-cart/checkout process, make sure that the event definitions are placed in the correct areas.
+For instance if your are not using REST API in checkout move the `checkout_submit_all_after` event listener definition from `webapi_rest/events.xml` to `frontend/events.xml`.
+If you are using custom controllers, also make sure that they  emit these events. If not, tracking will not take place.
+ 
 ## Modification examples
 Our Magento 2 module offers a fully working integration out of the box. However, most projects may require
 modifications in order to fit their needs. Here are some common customization examples.
