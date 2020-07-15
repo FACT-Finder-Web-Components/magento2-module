@@ -25,12 +25,6 @@
             <label>Test FTP Connection</label>
             <frontend_model>Omikron\Factfinder\Block\Adminhtml\System\Config\Button\TestFtpConnection</frontend_model>
         </field>
-        <field id="ff_additional_attributes" translate="label comment" type="multiselect" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
-            <label>Select Additional Attributes</label>
-            <source_model>Omikron\Factfinder\Model\Config\Source\Attribute</source_model>
-            <comment>Select all attributes which should be exported to the product feed.</comment>
-            <can_be_empty>1</can_be_empty>
-        </field>
         <field id="ff_createfeed" translate="label comment" type="button" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
             <label>Generate Export File</label>
             <frontend_model>Omikron\Factfinder\Block\Adminhtml\System\Config\Button\Feed</frontend_model>
