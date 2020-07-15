@@ -31,8 +31,9 @@
                 <item name="MagentoId" xsi:type="string">MagentoId</item>
                 <item name="ImageURL" xsi:type="string">ImageURL</item>
                 <item name="CategoryPath" xsi:type="string">CategoryPath</item>
-                <item name="Attributes" xsi:type="string">Attributes</item>
                 <item name="HasVariants" xsi:type="string">HasVariants</item>
+                <item name="FilterAttributes" xsi:type="string">FilterAttributes</item>
+                <item name="SearchAttributes" xsi:type="string">SearchAttributes</item>
             </argument>
         </arguments>
     </virtualType>
@@ -69,8 +70,9 @@
                 <item name="MagentoId" xsi:type="string">MagentoId</item>
                 <item name="ImageURL" xsi:type="string">ImageURL</item>
                 <item name="CategoryPath" xsi:type="string">CategoryPath</item>
-                <item name="Attributes" xsi:type="string">Attributes</item>
                 <item name="HasVariants" xsi:type="string">HasVariants</item>
+                <item name="FilterAttributes" xsi:type="string">FilterAttributes</item>
+                <item name="SearchAttributes" xsi:type="string">SearchAttributes</item>
                 <item name="PageId" xsi:type="string">PageId</item>
                 <item name="PageIdentifier" xsi:type="string">PageIdentifier</item>
                 <item name="PageTitle" xsi:type="string">PageTitle</item>
@@ -99,6 +101,16 @@
     <virtualType name="Omikron\Factfinder\Model\TrackingEventClient" type="Omikron\Factfinder\Model\Client">
         <arguments>
             <argument name="serializer" xsi:type="object">Omikron\Factfinder\Model\Serializer\PlainTextSerializer</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Omikron\Factfinder\Model\Export\Catalog\ProductField\FilterAttributes" type="Omikron\Factfinder\Model\Export\Catalog\ProductField\Attributes">
+        <arguments>
+            <argument name="configPath" xsi:type="string">factfinder/feed/filter_attributes</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Omikron\Factfinder\Model\Export\Catalog\ProductField\SearchAttributes" type="Omikron\Factfinder\Model\Export\Catalog\ProductField\Attributes">
+        <arguments>
+            <argument name="configPath" xsi:type="string">factfinder/feed/search_attributes</argument>
         </arguments>
     </virtualType>
 
@@ -141,7 +153,8 @@
             <argument name="productFields" xsi:type="array">
                 <item name="ImageURL" xsi:type="object">Omikron\Factfinder\Model\Export\Catalog\ProductField\ProductImage</item>
                 <item name="CategoryPath" xsi:type="object">Omikron\Factfinder\Model\Export\Catalog\ProductField\CategoryPath</item>
-                <item name="Attributes" xsi:type="object">Omikron\Factfinder\Model\Export\Catalog\ProductField\Attributes</item>
+                <item name="FilterAttributes" xsi:type="object">Omikron\Factfinder\Model\Export\Catalog\ProductField\FilterAttributes</item>
+                <item name="SearchAttributes" xsi:type="object">Omikron\Factfinder\Model\Export\Catalog\ProductField\SearchAttributes</item>
             </argument>
         </arguments>
     </type>

@@ -15,10 +15,11 @@ use Omikron\Factfinder\Model\Formatter\NumberFormatter;
 
 class Attributes implements ProductFieldInterface
 {
-    private const CONFIG_PATH = 'factfinder/data_transfer/ff_additional_attributes';
-
     /** @var ScopeConfigInterface */
     private $scopeConfig;
+
+    /** @var string */
+    private $configPath;
 
     /** @var ProductResource */
     private $productResource;
@@ -33,12 +34,14 @@ class Attributes implements ProductFieldInterface
         ScopeConfigInterface $scopeConfig,
         ProductResource $productResource,
         FilterInterface $filter,
-        NumberFormatter $numberFormatter
+        NumberFormatter $numberFormatter,
+        string $configPath
     ) {
         $this->scopeConfig     = $scopeConfig;
         $this->productResource = $productResource;
         $this->filter          = $filter;
         $this->numberFormatter = $numberFormatter;
+        $this->configPath      = $configPath;
     }
 
     public function getValue(Product $product): string
@@ -87,7 +90,7 @@ class Attributes implements ProductFieldInterface
      */
     private function getAttributes(int $storeId): array
     {
-        $attributes = (string) $this->scopeConfig->getValue(self::CONFIG_PATH, Scope::SCOPE_STORES, $storeId);
+        $attributes = (string) $this->scopeConfig->getValue($this->configPath, Scope::SCOPE_STORES, $storeId);
         return array_filter(array_map([$this->productResource, 'getAttribute'], explode(',', $attributes)));
     }
 }
