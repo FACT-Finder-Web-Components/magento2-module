@@ -46,7 +46,7 @@ customise them.
 This module supports:
 
 - Magento 2 version 2.2 and higher
-- PHP version 7.1 and higher
+- PHP version 7.1 and higher  
   **Warning**: PHP 7.0 is not supported
 
 ## Installation
@@ -521,12 +521,12 @@ It's a minimum configuration. `$product` constructor will be passed automaticall
 
 ## Troubleshooting
 
-### Removing /pub from exported URLs
+### Removing `/pub` from exported URLs
 If exported feed file contains URLs with `pub/` added, most probably document root is set to /pub directory. In order to skip this part in URL, please add following entry to projects `env.php` file
 ```php
-    'directories' => [
-        'document_root_is_pub' => true
-    ],
+'directories' => [
+    'document_root_is_pub' => true
+],
 ``` 
 
 ## Contribute
