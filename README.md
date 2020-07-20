@@ -2,7 +2,7 @@
 
 [![Packagist Version](https://img.shields.io/packagist/v/omikron/magento2-factfinder)](https://packagist.org/packages/omikron/magento2-factfinder)
 [![GitHub contributors](https://img.shields.io/github/contributors/FACT-Finder-Web-Components/magento2-module)](https://github.com/FACT-Finder-Web-Components/magento2-module/graphs/contributors)
-[![Build Status](https://travis-ci.org/FACT-Finder-Web-Components/magento2-module.svg?branch=develop)](https://travis-ci.org/FACT-Finder-Web-Components/magento2-module)
+[![Build Status](https://travis-ci.org/FACT-Finder-Web-Components/magento2-module.svg?branch=master)](https://travis-ci.org/FACT-Finder-Web-Components/magento2-module)
 
 This document helps you integrate the FACT-Finder Web Components SDK into your Magento 2 Shop. In addition, it gives a
 concise overview of its primary functions. The first chapter *Installation* walks you through the suggested installation
@@ -38,6 +38,8 @@ customise them.
     - [Adding new column](#adding-new-column)
     - [Adding custom communication parameter](#adding-custom-communication-parameter)
     - [Adding custom product data provider](#adding-custom-product-data-provider)
+- [Troubleshooting](#troubleshooting)
+    - [Removing `/pub` from exported URLs](#removing-pub-from-exported-urls)
 - [Contribute](#contribute)
 - [License](#license)
     
@@ -518,6 +520,16 @@ class CustomDataProvider implements DataProviderInterface
 ```
 
 It's a minimum configuration. `$product` constructor will be passed automatically and in method `getEntities` You should extract all required data
+
+## Troubleshooting
+
+### Removing `/pub` from exported URLs
+If the exported feed file contains URLs with `pub/` added, most probably your document root is set to the `/pub` folder. In order to skip this part in URL, please add following entry to your project's `env.php` file:
+```php
+'directories' => [
+    'document_root_is_pub' => true
+],
+``` 
 
 ## Contribute
 For more information, click [here](.github/CONTRIBUTING.md)
