@@ -522,7 +522,7 @@ It's a minimum configuration. `$product` constructor will be passed automaticall
 ## Troubleshooting
 
 ### Removing `/pub` from exported URLs
-If exported feed file contains URLs with `pub/` added, most probably document root is set to /pub directory. In order to skip this part in URL, please add following entry to projects `env.php` file
+If the exported feed file contains URLs with `pub/` added, most probably your document root is set to the `/pub` folder. In order to skip this part in URL, please add following entry to your project's `env.php` file:
 ```php
 'directories' => [
     'document_root_is_pub' => true
