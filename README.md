@@ -539,7 +539,7 @@ depending on our requirements. Suppose you want to create a `Miscellanous` field
 </section>
 ```
 
-Now select the desired attributes in Magento backend. Now, configure your field via `di.xml`:
+Now select the desired attributes in Magento backend. Finally, configure your field via `di.xml`:
 
 ```xml
 <virtualType name="MyCompany\MyModule\ProductField\MiscAttributes" type="Omikron\Factfinder\Model\Export\Catalog\ProductField\Attributes">
