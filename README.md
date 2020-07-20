@@ -38,6 +38,7 @@ customise them.
     - [Adding new column](#adding-new-column)
     - [Adding custom communication parameter](#adding-custom-communication-parameter)
     - [Adding custom product data provider](#adding-custom-product-data-provider)
+    - [Adding an additional multi-attribute field](#adding-an-additional-multi-attribute-field)
 - [Troubleshooting](#troubleshooting)
     - [Removing `/pub` from exported URLs](#removing-pub-from-exported-urls)
 - [Contribute](#contribute)
@@ -519,10 +520,52 @@ class CustomDataProvider implements DataProviderInterface
 }
 ```
 
-It's a minimum configuration. `$product` constructor will be passed automatically and in method `getEntities` You should extract all required data
+It's a minimum configuration. `$product` constructor will be passed automatically and in method `getEntities` You should extract all required data.
+
+### Adding an additional multi-attribute field
+Our multi-attribute model can be reused to add custom fields depending on our requirements. Suppose you want to create
+a `Miscellanous` field. First, add configuration for it to the `system.xml`:
+
+```xml
+<section id="my_section">
+    <group id="my_group">
+        <field id="misc_attributes" type="multiselect">
+            <label>Miscellanous Attributes</label>
+            <source_model>Omikron\Factfinder\Model\Config\Source\Attribute</source_model>
+            <can_be_empty>1</can_be_empty>
+        </field>
+    </group>
+</section>
+```
+
+Now select the desired attributes in Magento backend. Now, configure your field via `di.xml`:
+
+```xml
+<virtualType name="MyCompany\MyModule\ProductField\MiscAttributes" type="Omikron\Factfinder\Model\Export\Catalog\ProductField\Attributes">
+    <arguments>
+        <argument name="configPath" xsi:type="string">my_section/my_group/misc_attributes</argument>
+    </arguments>
+</virtualType>
+<type name="Omikron\Factfinder\Model\Export\Catalog\ProductType\SimpleDataProvider">
+    <arguments>
+        <argument name="productFields" xsi:type="array">
+            <item name="Miscellaous" xsi:type="object">MyCompany\MyModule\ProductField\MiscAttributes</item>
+        </argument>
+    </arguments>
+</type>
+<virtualType name="Omikron\Factfinder\Model\Export\CatalogFeed">
+    <arguments>
+        <argument name="columns" xsi:type="array">
+            <item name="Miscellaous" xsi:type="string">Miscellaous</item>
+        </argument>
+    </arguments>
+</virtualType>
+```
+
+As you can see, the configured path reflects the system config path we defined previously. The new virtual type is then
+added to the available feed columns.
 
 ## Troubleshooting
-
 ### Removing `/pub` from exported URLs
 If the exported feed file contains URLs with `pub/` added, most probably your document root is set to the `/pub` folder. In order to skip this part in URL, please add following entry to your project's `env.php` file:
 ```php
