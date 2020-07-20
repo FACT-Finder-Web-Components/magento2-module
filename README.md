@@ -523,7 +523,7 @@ class CustomDataProvider implements DataProviderInterface
 It's a minimum configuration. `$product` constructor will be passed automatically and in method `getEntities` You should extract all required data.
 
 ### Adding an additional multi-attribute field
-Our [multi-attribute model](src/Model/Export/Catalog/ProductField/Attributes.php) can be reused to add custom fields
+Our [multi-attribute field model](src/Model/Export/Catalog/ProductField/Attributes.php) can be reused to add custom fields
 depending on our requirements. Suppose you want to create a `Miscellanous` field. First, add configuration for it to the
 `system.xml`:
 
