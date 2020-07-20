@@ -38,6 +38,8 @@ customise them.
     - [Adding new column](#adding-new-column)
     - [Adding custom communication parameter](#adding-custom-communication-parameter)
     - [Adding custom product data provider](#adding-custom-product-data-provider)
+- [Troubleshooting](#troubleshooting)
+    - [Removing `/pub` from exported URLs](#removing-pub-from-exported-urls)
 - [Contribute](#contribute)
 - [License](#license)
     
