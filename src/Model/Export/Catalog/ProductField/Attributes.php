@@ -12,6 +12,7 @@ use Magento\Store\Model\ScopeInterface as Scope;
 use Omikron\Factfinder\Api\Export\Catalog\ProductFieldInterface;
 use Omikron\Factfinder\Api\Filter\FilterInterface;
 use Omikron\Factfinder\Model\Formatter\NumberFormatter;
+use UnexpectedValueException;
 
 class Attributes implements ProductFieldInterface
 {
@@ -59,7 +60,8 @@ class Attributes implements ProductFieldInterface
 
     private function getAttributeValues(Product $product, Attribute $attribute): array
     {
-        $value  = $product->getDataUsingMethod($attribute->getAttributeCode());
+        $code   = $attribute->getAttributeCode();
+        $value  = $product->getDataUsingMethod($code);
         $values = [];
 
         switch ($attribute->getFrontendInput()) {
@@ -70,12 +72,16 @@ class Attributes implements ProductFieldInterface
                 $values[] = $this->numberFormatter->format((float) $value);
                 break;
             case 'select':
-                $values[] = (string) $product->getAttributeText($attribute->getAttributeCode());
+                $values[] = (string) $product->getAttributeText($code);
                 break;
             case 'multiselect':
-                $values = (array) $product->getAttributeText($attribute->getAttributeCode());
+                $values = (array) $product->getAttributeText($code);
                 break;
             default:
+                if (!is_scalar($value)) {
+                    $msg = "Attribute '{$code}' could not be exported. Please consider writing your own field model";
+                    throw new UnexpectedValueException($msg);
+                }
                 $values[] = (string) $value;
                 break;
         }
