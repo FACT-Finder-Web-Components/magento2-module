@@ -91,22 +91,9 @@
             </argument>
         </arguments>
     </virtualType>
-    <virtualType name="Omikron\Factfinder\Export\Logger" type="Monolog\Logger">
-        <arguments>
-            <argument name="name" xsi:type="string">FACT-Finder</argument>
-            <argument name="handlers" xsi:type="array">
-                <item name="factfinder" xsi:type="object">Omikron\Factfinder\Export\Logger\Handler</item>
-            </argument>
-        </arguments>
-    </virtualType>
     <virtualType name="Omikron\Factfinder\Logger\Handler" type="Magento\Framework\Logger\Handler\Base">
         <arguments>
             <argument name="fileName" xsi:type="string">/var/log/factfinder.log</argument>
-        </arguments>
-    </virtualType>
-    <virtualType name="Omikron\Factfinder\Export\Logger\Handler" type="Magento\Framework\Logger\Handler\Base">
-        <arguments>
-            <argument name="fileName" xsi:type="string">/var/log/factfinder.export.log</argument>
         </arguments>
     </virtualType>
     <virtualType name="Omikron\Factfinder\Model\TrackingEventClient" type="Omikron\Factfinder\Model\Client">
@@ -116,7 +103,7 @@
     </virtualType>
     <virtualType name="Omikron\Factfinder\Model\Export\Catalog\ProductField\Brand" type="Omikron\Factfinder\Model\Export\Catalog\ProductField\GenericField">
         <arguments>
-            <argument name="attributeName" xsi:type="string">manufacturer</argument>
+            <argument name="attributeCode" xsi:type="string">manufacturers</argument>
         </arguments>
     </virtualType>
 
