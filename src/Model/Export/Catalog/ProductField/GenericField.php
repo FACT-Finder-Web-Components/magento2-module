@@ -6,26 +6,33 @@ namespace Omikron\Factfinder\Model\Export\Catalog\ProductField;
 
 use Magento\Catalog\Api\ProductAttributeRepositoryInterface;
 use Magento\Catalog\Model\Product;
-use Magento\Framework\App\Config\ScopeConfigInterface;
-use Magento\Framework\Phrase;
-use Magento\Framework\ObjectManagerInterface;
+use Magento\Catalog\Model\ResourceModel\Eav\Attribute;
 use Omikron\Factfinder\Api\Export\Catalog\ProductFieldInterface;
-use Psr\Log\LoggerInterface;
+use Omikron\Factfinder\Model\Export\Catalog\AttributeValuesExtractor;
 
 class GenericField implements ProductFieldInterface
 {
+    /** @var AttributeValuesExtractor */
+    private $valuesExtractor;
+
     /** @var string */
     private $attributeCode;
 
-    public function __construct(string $attributeCode, ProductAttributeRepositoryInterface $attributeRepository)
-    {
-        $this->attributeCode = $attributeCode;
-        //check if attribute exists
-        $attributeRepository->get($this->attributeCode);
+    /** @var Attribute */
+    private $attribute;
+
+    public function __construct(
+        ProductAttributeRepositoryInterface $attributeRepository,
+        AttributeValuesExtractor $valuesExtractor,
+        string $attributeCode
+    ) {
+        $this->valuesExtractor = $valuesExtractor;
+        $this->attributeCode   = $attributeCode;
+        $this->attribute       = $attributeRepository->get($this->attributeCode);
     }
 
     public function getValue(Product $product): string
     {
-        return (string) $product->getAttributeText($this->attributeCode);
+        return implode('|', $this->valuesExtractor->getAttributeValues($product, $this->attribute));
     }
 }
