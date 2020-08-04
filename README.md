@@ -36,6 +36,7 @@ customise them.
 - [Modification examples](#modification-examples)
     - [Changing existing column names](#changing-existing-column-names)
     - [Adding new column](#adding-new-column)
+        - [GenericField usage](#genericfield-usage)
     - [Adding custom communication parameter](#adding-custom-communication-parameter)
     - [Adding custom product data provider](#adding-custom-product-data-provider)
 - [Troubleshooting](#troubleshooting)
@@ -96,7 +97,10 @@ At the end of the *General Settings* section is an option *Show 'Add to Cart' Bu
 adds that product to the shopping cart. This feature works only for simple products. For configurable products user will be redirected to product page to choose specific product variant.
 Warning: The product added to the cart is identified by the variable "MasterProductNumber". To allow this function to work correctly, the field "MasterProductNumber" must be imported to the FACT-Finder backend (on fact-finder.de).   
 
-By enabling option *Activate Logging*, all exceptions thrown during communication with FACT-Finder server will be saved in log file `var/log/factfinder.log`.
+By enabling option *Activate Logging*:
+ * all exceptions thrown during communication with FACT-Finder server will be saved in log file `var/log/factfinder.log`
+ * errors thrown during export of custom added column which breaks the export will be saved in log file `var/log/factfinder.export.log`
+
 
 **Note:** that is a server side communication option: Web Components behaviour won't be affected.
 
@@ -418,7 +422,7 @@ the new field definition:
 ```
 
 Again, there is no need to copy all other field definitions: Magento will merge the existing ones with the one you just created.
-In order for your field exporter to work, it has to implement our `Omikron\Factfinder\Api\Export\Catalog\ProductFieldInterface`.
+In order for your field exporter to work, it has to implement `Omikron\Factfinder\Api\Export\Catalog\ProductFieldInterface`.
 Your class skeleton to export the brand logo could look like this:
  
 ```php
@@ -442,6 +446,17 @@ Finally, You need to define new column in CatalogFeed definition in di.xml`.
     </arguments>
 </virtualType>
 ```
+
+#### GenericField usage
+If extracting logic is just a retrieving attribute value from product without any further data transformation creating virtual type of *GenericField* might be used instead of implementing *ProductFieldInterface*.
+The constructor for this class requires only a attribute name to be exported.
+```xml
+<virtualType name="Omikron\Factfinder\Model\Export\Catalog\ProductField\Brand" type="Omikron\Factfinder\Model\Export\Catalog\ProductField\GenericField">
+    <arguments>
+        <argument name="attributeName" xsi:type="string">manufacturer</argument>
+    </arguments>
+</virtualType>
+``` 
 
 **Note:**
 If You are exporting CMS in single file, You need to add column definition to *CombinedFeed* instead of *CatalogFeed*

@@ -91,14 +91,32 @@
             </argument>
         </arguments>
     </virtualType>
+    <virtualType name="Omikron\Factfinder\Export\Logger" type="Monolog\Logger">
+        <arguments>
+            <argument name="name" xsi:type="string">FACT-Finder</argument>
+            <argument name="handlers" xsi:type="array">
+                <item name="factfinder" xsi:type="object">Omikron\Factfinder\Export\Logger\Handler</item>
+            </argument>
+        </arguments>
+    </virtualType>
     <virtualType name="Omikron\Factfinder\Logger\Handler" type="Magento\Framework\Logger\Handler\Base">
         <arguments>
             <argument name="fileName" xsi:type="string">/var/log/factfinder.log</argument>
         </arguments>
     </virtualType>
+    <virtualType name="Omikron\Factfinder\Export\Logger\Handler" type="Magento\Framework\Logger\Handler\Base">
+        <arguments>
+            <argument name="fileName" xsi:type="string">/var/log/factfinder.export.log</argument>
+        </arguments>
+    </virtualType>
     <virtualType name="Omikron\Factfinder\Model\TrackingEventClient" type="Omikron\Factfinder\Model\Client">
         <arguments>
             <argument name="serializer" xsi:type="object">Omikron\Factfinder\Model\Serializer\PlainTextSerializer</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Omikron\Factfinder\Model\Export\Catalog\ProductField\Brand" type="Omikron\Factfinder\Model\Export\Catalog\ProductField\GenericField">
+        <arguments>
+            <argument name="attributeName" xsi:type="string">manufacturer</argument>
         </arguments>
     </virtualType>
 
@@ -141,6 +159,7 @@
             <argument name="productFields" xsi:type="array">
                 <item name="ImageURL" xsi:type="object">Omikron\Factfinder\Model\Export\Catalog\ProductField\ProductImage</item>
                 <item name="CategoryPath" xsi:type="object">Omikron\Factfinder\Model\Export\Catalog\ProductField\CategoryPath</item>
+                <item name="Brand" xsi:type="object">Omikron\Factfinder\Model\Export\Catalog\ProductField\Brand</item>
                 <item name="Attributes" xsi:type="object">Omikron\Factfinder\Model\Export\Catalog\ProductField\Attributes</item>
             </argument>
         </arguments>
