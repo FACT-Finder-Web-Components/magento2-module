@@ -36,6 +36,7 @@ customise them.
 - [Modification examples](#modification-examples)
     - [Changing existing column names](#changing-existing-column-names)
     - [Adding new column](#adding-new-column)
+        - [GenericField usage](#genericfield-usage)
     - [Adding custom communication parameter](#adding-custom-communication-parameter)
     - [Adding custom product data provider](#adding-custom-product-data-provider)
 - [Troubleshooting](#troubleshooting)
@@ -418,7 +419,7 @@ the new field definition:
 ```
 
 Again, there is no need to copy all other field definitions: Magento will merge the existing ones with the one you just created.
-In order for your field exporter to work, it has to implement our `Omikron\Factfinder\Api\Export\Catalog\ProductFieldInterface`.
+In order for your field exporter to work, it has to implement `Omikron\Factfinder\Api\Export\Catalog\ProductFieldInterface`.
 Your class skeleton to export the brand logo could look like this:
  
 ```php
@@ -442,6 +443,17 @@ Finally, You need to define new column in CatalogFeed definition in di.xml`.
     </arguments>
 </virtualType>
 ```
+
+#### GenericField usage
+If extracting logic is just a retrieving attribute value from product without any further data transformation creating virtual type of *GenericField* might be used instead of implementing *ProductFieldInterface*.
+The constructor for this class requires only an attribute code to be exported.
+```xml
+<virtualType name="Omikron\Factfinder\Model\Export\Catalog\ProductField\Brand" type="Omikron\Factfinder\Model\Export\Catalog\ProductField\GenericField">
+    <arguments>
+        <argument name="attributeName" xsi:type="string">manufacturer</argument>
+    </arguments>
+</virtualType>
+``` 
 
 **Note:**
 If You are exporting CMS in single file, You need to add column definition to *CombinedFeed* instead of *CatalogFeed*

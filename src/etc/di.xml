@@ -101,6 +101,11 @@
             <argument name="serializer" xsi:type="object">Omikron\Factfinder\Model\Serializer\PlainTextSerializer</argument>
         </arguments>
     </virtualType>
+    <virtualType name="Omikron\Factfinder\Model\Export\Catalog\ProductField\Brand" type="Omikron\Factfinder\Model\Export\Catalog\ProductField\GenericField">
+        <arguments>
+            <argument name="attributeCode" xsi:type="string">manufacturer</argument>
+        </arguments>
+    </virtualType>
 
     <type name="Magento\Framework\View\Asset\Minification">
         <plugin name="ff.asset.minification" type="Omikron\Factfinder\Plugin\AssetMinificationPlugin" />
@@ -141,6 +146,7 @@
             <argument name="productFields" xsi:type="array">
                 <item name="ImageURL" xsi:type="object">Omikron\Factfinder\Model\Export\Catalog\ProductField\ProductImage</item>
                 <item name="CategoryPath" xsi:type="object">Omikron\Factfinder\Model\Export\Catalog\ProductField\CategoryPath</item>
+                <item name="Brand" xsi:type="object">Omikron\Factfinder\Model\Export\Catalog\ProductField\Brand</item>
                 <item name="Attributes" xsi:type="object">Omikron\Factfinder\Model\Export\Catalog\ProductField\Attributes</item>
             </argument>
         </arguments>
