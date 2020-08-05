@@ -446,7 +446,7 @@ Finally, You need to define new column in CatalogFeed definition in di.xml`.
 
 #### GenericField usage
 If extracting logic is just a retrieving attribute value from product without any further data transformation creating virtual type of *GenericField* might be used instead of implementing *ProductFieldInterface*.
-The constructor for this class requires only a attribute name to be exported.
+The constructor for this class requires only an attribute code to be exported.
 ```xml
 <virtualType name="Omikron\Factfinder\Model\Export\Catalog\ProductField\Brand" type="Omikron\Factfinder\Model\Export\Catalog\ProductField\GenericField">
     <arguments>
