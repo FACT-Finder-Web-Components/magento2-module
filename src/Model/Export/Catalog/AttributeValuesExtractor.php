@@ -17,10 +17,8 @@ class AttributeValuesExtractor
     /** @var NumberFormatter */
     private $numberFormatter;
 
-    public function __construct(
-        FilterInterface $filter,
-        NumberFormatter $numberFormatter
-    ) {
+    public function __construct(FilterInterface $filter, NumberFormatter $numberFormatter)
+    {
         $this->filter          = $filter;
         $this->numberFormatter = $numberFormatter;
     }
