@@ -97,10 +97,7 @@ At the end of the *General Settings* section is an option *Show 'Add to Cart' Bu
 adds that product to the shopping cart. This feature works only for simple products. For configurable products user will be redirected to product page to choose specific product variant.
 Warning: The product added to the cart is identified by the variable "MasterProductNumber". To allow this function to work correctly, the field "MasterProductNumber" must be imported to the FACT-Finder backend (on fact-finder.de).   
 
-By enabling option *Activate Logging*:
- * all exceptions thrown during communication with FACT-Finder server will be saved in log file `var/log/factfinder.log`
- * errors thrown during export of custom added column which breaks the export will be saved in log file `var/log/factfinder.export.log`
-
+By enabling option *Activate Logging*, all exceptions thrown during communication with FACT-Finder server will be saved in log file `var/log/factfinder.log`.
 
 **Note:** that is a server side communication option: Web Components behaviour won't be affected.
 
