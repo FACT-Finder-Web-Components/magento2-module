@@ -54,6 +54,15 @@ class ProxyCallTest extends AbstractController
         $this->dispatch('/FACT-Finder/Search.ff?filterCategoryPathROOT=First+Category&filterCategoryPathROOT%2FFirst+Category=Second+Category&a=b');
     }
 
+    public function test_filter_parameters_are_correctly_encoded_2()
+    {
+        $this->apiClient->expects($this->atLeastOnce())
+            ->method('sendRequest')
+            ->with($this->anything(), new ArraySubset(['filterabgerundete Ecken vorhanden' => 'Ja']));
+
+        $this->dispatch('/FACT-Finder/Search.ff?query=pro&filterabgerundete+Ecken+vorhanden=Ja');
+    }
+
     protected function setUp()
     {
         parent::setUp();

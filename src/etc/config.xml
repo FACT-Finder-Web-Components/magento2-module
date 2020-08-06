@@ -25,7 +25,6 @@
                 <use_semantic_enhancer>1</use_semantic_enhancer>
                 <use_aso>1</use_aso>
                 <use_browser_history>1</use_browser_history>
-                <disable_single_hit_redirect>0</disable_single_hit_redirect>
             </advanced>
             <components>
                 <ff_suggest>0</ff_suggest>
