@@ -1,4 +1,3 @@
-"Generate CMS feed now","CMS-Feed jetzt generieren"
 "Generate Export File(s) now","Export-Feed jetzt generieren"
 "Test Connection now","Verbindung jetzt testen"
 "Update Field Roles","Feldrollen aktualisieren"
@@ -65,13 +64,9 @@ FACT-Finder&reg;,FACT-Finder&reg;
 "Use browser history","Use browser history"
 "If true, the search history is pushed to the browser history, even without using url parameter. Default is true.","Wenn aktiviert, wird der Suchverlauf zum Browsersuchverlauf hinzugefügt. Standardwert ist JA."
 "If true, disables the automatic redirect to the product detail page if only one record is found.","If true, disables the automatic redirect to the product detail page if only one record is found."
-"CMS settings","CMS-Einstellugen"
 "Export enabled","Export enabled"
 "Use separate channel","Use separate channel"
-"Setting this option to 'Yes' requires a new channel dedicated to CMS content. Please note that for this feature to work correctly, you need to activate **Use Proxy**","Setting this option to 'Yes' requires a new channel dedicated to CMS content. Please note that for this feature to work correctly, you need to activate **Use Proxy*"
 Channel,Channel
-"Generate CMS feed","CMS-Feed generieren"
-"On buttonclick CSV exports of all of your CMS pages will be generated and uploaded to the specified FTP Server.","On buttonclick CSV exports of all of your CMS pages will be generated and uploaded to the specified FTP Server."
 "Pages Blacklist","Pages Blacklist"
 "Selected pages will not be exported","Selected pages will not be exported"
 "Activated Web-Components","Aktivierte Web-Components"

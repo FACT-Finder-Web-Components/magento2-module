@@ -24,7 +24,7 @@ class FeedFactory
     public function create(string $type): Feed
     {
         if (!isset($this->feedPool[$type])) {
-            throw new InvalidArgumentException('There is no feed with given type');
+            throw new InvalidArgumentException(sprintf('There is no feed with given type: %s', $type));
         }
         return $this->objectManager->create($this->feedPool[$type]); // phpcs:ignore
     }
