@@ -1,0 +1,8 @@
+<?php /** @var Magento\Framework\View\Element\Template $block */ ?>
+<script type="text/x-magento-init">
+{
+  ".search-wrapper": {
+    "Omikron_Factfinder/js/search-redirect": {"targetUrl": "<?= $block->escapeJs($block->getUrl('factfinder/result')) ?>"}
+  }
+}
+</script>

@@ -6,6 +6,8 @@ namespace Omikron\Factfinder\Model;
 
 use Magento\Customer\CustomerData\SectionSourceInterface;
 use Magento\Customer\Model\Session as CustomerSession;
+use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Framework\HTTP\PhpEnvironment\RemoteAddress;
 use Omikron\Factfinder\Api\SessionDataInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -17,6 +19,12 @@ class SessionDataTest extends TestCase
 
     /** @var MockObject|CustomerSession */
     private $sessionMock;
+
+    /** @var MockObject|ScopeConfigInterface */
+    private $scopeConfigMock;
+
+    /** @var RemoteAddress|ScopeConfigInterface */
+    private $remoteAddressMock;
 
     public function test_it_implements_the_session_data_interface()
     {
@@ -61,7 +69,19 @@ class SessionDataTest extends TestCase
         $this->sessionMock->method('getSessionId')->willReturn('7ddf32e17a6ac5ce04a8ecbf782ca5');
 
         $expected = ['uid' => 123456, 'sid' => '7ddf32e17a6ac5ce04a8ecbf782ca5'];
-        $this->assertSame($expected, $this->sessionData->getSectionData());
+        $this->assertArraySubset($expected, $this->sessionData->getSectionData());
+    }
+
+    /**
+     * @dataProvider remoteAddressProvider
+     */
+    public function test_it_tracks_internal_requests(string $config, string $address, bool $result)
+    {
+        $this->scopeConfigMock->method('getValue')->willReturn($config);
+        $this->remoteAddressMock->method('getRemoteAddress')->willReturn($address);
+
+        $expected = ['internal' => $result];
+        $this->assertArraySubset($expected, $this->sessionData->getSectionData());
     }
 
     public function sessionIdProvider()
@@ -73,10 +93,21 @@ class SessionDataTest extends TestCase
         ];
     }
 
+    public function remoteAddressProvider()
+    {
+        return [
+            ['127.0.0.1,8.8.8.8', '127.0.0.1', true],
+            ['127.0.0.1,8.8.8.8', '4.4.4.4', false],
+        ];
+    }
+
     protected function setUp()
     {
-        $this->sessionMock = $this->createMock(CustomerSession::class);
-        $this->sessionData = new SessionData($this->sessionMock);
+        $this->sessionMock       = $this->createMock(CustomerSession::class);
+        $this->scopeConfigMock   = $this->createMock(ScopeConfigInterface::class);
+        $this->remoteAddressMock = $this->createMock(RemoteAddress::class);
+
+        $this->sessionData = new SessionData($this->sessionMock, $this->scopeConfigMock, $this->remoteAddressMock);
     }
 }
 

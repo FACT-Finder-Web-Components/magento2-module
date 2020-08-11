@@ -3,6 +3,31 @@
 ### Added
 - Server-side rendering of subscribed record lists
 
+## [v1.6.2] - 2020.08.06
+### Added
+- Add information about checkout tracking to the README file
+- Add troubleshooting section to the README file
+
+### Changed
+- Export `manufacturer` using a separate field model
+- Upgrade Web Components to version 3.15.4
+
+### Fixed
+- Fix all GET params containing spaces when using the Proxy
+
+## [v1.6.1] - 2020.05.11
+### Fixed
+- Fixed stack overflow error on IE11
+
+## [v1.6.0] - 2020.04.30
+### Added
+- Track requests coming from internal IPs
+
+### Changed
+- Upgrade Web Components to version 3.14.1
+- Deprecate `search-navigation.js`: search redirection is now implemented using a
+  dedicated JS component on the relevant elements.
+
 ## [v1.5.1] - 2020.04.02
 ### Added
 - Added RECOMMENDATION to available import type to be pushed after feed is uploaded
@@ -219,6 +244,9 @@
 ### Added
 - Feed Export: Export feed file is now available via separate link
 
+[v1.6.2]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v1.6.2
+[v1.6.1]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v1.6.1
+[v1.6.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v1.6.0
 [v1.5.1]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v1.5.1
 [v1.5.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v1.5.0
 [v1.4.2]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v1.4.2

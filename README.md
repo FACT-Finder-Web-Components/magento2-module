@@ -2,7 +2,7 @@
 
 [![Packagist Version](https://img.shields.io/packagist/v/omikron/magento2-factfinder)](https://packagist.org/packages/omikron/magento2-factfinder)
 [![GitHub contributors](https://img.shields.io/github/contributors/FACT-Finder-Web-Components/magento2-module)](https://github.com/FACT-Finder-Web-Components/magento2-module/graphs/contributors)
-[![Build Status](https://travis-ci.org/FACT-Finder-Web-Components/magento2-module.svg?branch=develop)](https://travis-ci.org/FACT-Finder-Web-Components/magento2-module)
+[![Build Status](https://travis-ci.org/FACT-Finder-Web-Components/magento2-module.svg?branch=master)](https://travis-ci.org/FACT-Finder-Web-Components/magento2-module)
 
 This document helps you integrate the FACT-Finder Web Components SDK into your Magento 2 Shop. In addition, it gives a
 concise overview of its primary functions. The first chapter *Installation* walks you through the suggested installation
@@ -32,11 +32,15 @@ customise them.
     - [Process of Data Transfer between Shop and FACT-Finder](#process-of-data-transfer-between-shop-and-fact-finder)
         - [Using Proxy](#using-proxy)
     - [Using FACT-Finder on category pages](#using-fact-finder-on-category-pages)
+    - [Tracking event listeners](#tracking-event-listeners)
 - [Modification examples](#modification-examples)
     - [Changing existing column names](#changing-existing-column-names)
     - [Adding new column](#adding-new-column)
+        - [GenericField usage](#genericfield-usage)
     - [Adding custom communication parameter](#adding-custom-communication-parameter)
     - [Adding custom product data provider](#adding-custom-product-data-provider)
+- [Troubleshooting](#troubleshooting)
+    - [Removing `/pub` from exported URLs](#removing-pub-from-exported-urls)
 - [Contribute](#contribute)
 - [License](#license)
     
@@ -333,7 +337,15 @@ Module in order to preserve categories URLs and hence SEO get use of standard Ma
 Once user is landed on category page. Search request is performed immediately (thanks to `search-immediate` communication parameter usage).
 To enable that, turn on corresponding option in *Main Settings* section.
  
+### Tracking event listeners
+The module defines two event listeners for the checkout process:
+* `checkout_cart_add_product_complete`: adding product to cart - defined in `frontend/events.xml`
+* `checkout_submit_all_after`: placing an order - defined in `webapi_rest/events.xml`
 
+If you are planning to customize the add-to-cart/checkout process, make sure that the event definitions are placed in the correct areas.
+For instance if your are not using REST API in checkout move the `checkout_submit_all_after` event listener definition from `webapi_rest/events.xml` to `frontend/events.xml`.
+If you are using custom controllers, also make sure that they  emit these events. If not, tracking will not take place.
+ 
 ## Modification examples
 Our Magento 2 module offers a fully working integration out of the box. However, most projects may require
 modifications in order to fit their needs. Here are some common customization examples.
@@ -407,7 +419,7 @@ the new field definition:
 ```
 
 Again, there is no need to copy all other field definitions: Magento will merge the existing ones with the one you just created.
-In order for your field exporter to work, it has to implement our `Omikron\Factfinder\Api\Export\Catalog\ProductFieldInterface`.
+In order for your field exporter to work, it has to implement `Omikron\Factfinder\Api\Export\Catalog\ProductFieldInterface`.
 Your class skeleton to export the brand logo could look like this:
  
 ```php
@@ -431,6 +443,17 @@ Finally, You need to define new column in CatalogFeed definition in di.xml`.
     </arguments>
 </virtualType>
 ```
+
+#### GenericField usage
+If extracting logic is just a retrieving attribute value from product without any further data transformation creating virtual type of *GenericField* might be used instead of implementing *ProductFieldInterface*.
+The constructor for this class requires only an attribute code to be exported.
+```xml
+<virtualType name="Omikron\Factfinder\Model\Export\Catalog\ProductField\Brand" type="Omikron\Factfinder\Model\Export\Catalog\ProductField\GenericField">
+    <arguments>
+        <argument name="attributeName" xsi:type="string">manufacturer</argument>
+    </arguments>
+</virtualType>
+``` 
 
 **Note:**
 If You are exporting CMS in single file, You need to add column definition to *CombinedFeed* instead of *CatalogFeed*
@@ -509,6 +532,16 @@ class CustomDataProvider implements DataProviderInterface
 ```
 
 It's a minimum configuration. `$product` constructor will be passed automatically and in method `getEntities` You should extract all required data
+
+## Troubleshooting
+
+### Removing `/pub` from exported URLs
+If the exported feed file contains URLs with `pub/` added, most probably your document root is set to the `/pub` folder. In order to skip this part in URL, please add following entry to your project's `env.php` file:
+```php
+'directories' => [
+    'document_root_is_pub' => true
+],
+``` 
 
 ## Contribute
 For more information, click [here](.github/CONTRIBUTING.md)

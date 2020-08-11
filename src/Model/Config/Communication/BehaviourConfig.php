@@ -10,13 +10,12 @@ use Omikron\Factfinder\Api\Config\ParametersSourceInterface;
 
 class BehaviourConfig implements ParametersSourceInterface
 {
-    private const PATH_USE_URL_PARAMETER           = 'factfinder/advanced/use_url_parameter';
-    private const PATH_ADD_PARAMS                  = 'factfinder/advanced/add_params';
-    private const PATH_ADD_TRACKING_PARAMS         = 'factfinder/advanced/add_tracking_params';
-    private const PATH_KEEP_URL_PARAMS             = 'factfinder/advanced/keep_url_param';
-    private const PATH_DISABLE_SINGLE_HIT_REDIRECT = 'factfinder/advanced/disable_single_hit_redirect';
-    private const PATH_ONLY_SEARCH_PARAMS          = 'factfinder/advanced/only_search_params';
-    private const PATH_PARAMETER_WHITELIST         = 'factfinder/advanced/parameter_whitelist';
+    private const PATH_USE_URL_PARAMETER   = 'factfinder/advanced/use_url_parameter';
+    private const PATH_ADD_PARAMS          = 'factfinder/advanced/add_params';
+    private const PATH_ADD_TRACKING_PARAMS = 'factfinder/advanced/add_tracking_params';
+    private const PATH_KEEP_URL_PARAMS     = 'factfinder/advanced/keep_url_param';
+    private const PATH_ONLY_SEARCH_PARAMS  = 'factfinder/advanced/only_search_params';
+    private const PATH_PARAMETER_WHITELIST = 'factfinder/advanced/parameter_whitelist';
 
     /** @var ScopeConfigInterface */
     private $scopeConfig;
@@ -35,7 +34,7 @@ class BehaviourConfig implements ParametersSourceInterface
             'keep-url-params'             => $this->getConfig(self::PATH_KEEP_URL_PARAMS),
             'only-search-params'          => $this->getFlag(self::PATH_ONLY_SEARCH_PARAMS),
             'parameter-whitelist'         => $this->getConfig(self::PATH_PARAMETER_WHITELIST),
-            'disable-single-hit-redirect' => $this->getFlag(self::PATH_DISABLE_SINGLE_HIT_REDIRECT),
+            'disable-single-hit-redirect' => 'true',
         ];
     }
 
