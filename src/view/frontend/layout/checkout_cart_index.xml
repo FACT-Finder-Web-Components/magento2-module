@@ -12,7 +12,7 @@
                     <argument name="flag" xsi:type="string">is-shopping-cart-campaign</argument>
                 </arguments>
             </block>
-            <block class="Magento\Framework\View\Element\Template" name="factfinder.recommendation.cart" ifconfig="factfinder/components/ff_recommendation" template="Omikron_Factfinder::ff/recommendation.phtml">
+            <block class="Magento\Framework\View\Element\Template" name="factfinder.recommendation.cart" template="Omikron_Factfinder::ff/recommendation.phtml">
                 <arguments>
                     <argument name="record_id" xsi:type="helper" helper="Omikron\Factfinder\ViewModel\Cart::getItemIds" />
                 </arguments>

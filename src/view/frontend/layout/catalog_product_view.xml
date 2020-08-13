@@ -7,12 +7,12 @@
                     <argument name="view_model" xsi:type="object">Omikron\Factfinder\ViewModel\ProductBasedComponent</argument>
                 </arguments>
             </block>
-            <block class="Magento\Framework\View\Element\Template" name="factfinder.recommendation" ifconfig="factfinder/components/ff_recommendation" template="Omikron_Factfinder::ff/recommendation.phtml">
+            <block class="Magento\Framework\View\Element\Template" name="factfinder.recommendation" template="Omikron_Factfinder::ff/recommendation.phtml">
                 <arguments>
                     <argument name="view_model" xsi:type="object">Omikron\Factfinder\ViewModel\ProductBasedComponent</argument>
                 </arguments>
             </block>
-            <block class="Magento\Framework\View\Element\Template" name="factfinder.similar" ifconfig="factfinder/components/ff_similar" template="Omikron_Factfinder::ff/similar.phtml">
+            <block class="Magento\Framework\View\Element\Template" name="factfinder.similar" template="Omikron_Factfinder::ff/similar.phtml">
                 <arguments>
                     <argument name="view_model" xsi:type="object">Omikron\Factfinder\ViewModel\ProductBasedComponent</argument>
                 </arguments>

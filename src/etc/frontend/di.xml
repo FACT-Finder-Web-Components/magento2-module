@@ -23,8 +23,6 @@
             <argument name="parametersSource" xsi:type="array">
                 <item name="communication" xsi:type="object">Omikron\Factfinder\Model\Config\CommunicationConfig</item>
                 <item name="behaviour" xsi:type="object">Omikron\Factfinder\Model\Config\Communication\BehaviourConfig</item>
-                <item name="personalization" xsi:type="object">Omikron\Factfinder\Model\Config\Communication\PersonalizationConfig</item>
-                <item name="cache" xsi:type="object">Omikron\Factfinder\Model\Config\Communication\CacheConfig</item>
                 <item name="currency" xsi:type="object">Omikron\Factfinder\Model\Config\Communication\CurrencyConfig</item>
             </argument>
         </arguments>
