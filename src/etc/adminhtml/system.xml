@@ -9,7 +9,6 @@
             <include path="Omikron_Factfinder::system/general.xml" />
             <include path="Omikron_Factfinder::system/advanced.xml" />
             <include path="Omikron_Factfinder::system/data_transfer.xml" />
-            <include path="Omikron_Factfinder::system/cms.xml" />
             <include path="Omikron_Factfinder::system/cron.xml" />
         </section>
     </system>
