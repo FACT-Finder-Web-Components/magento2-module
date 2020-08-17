@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
-        <block class="Magento\Framework\View\Element\Template" name="factfinder.feedbacktext" ifconfig="factfinder/components/ff_campaign" template="Omikron_Factfinder::ff/campaign-feedbacktext.phtml" />
+        <block class="Magento\Framework\View\Element\Template" name="factfinder.feedbacktext" ifconfig="factfinder/general/is_enabled" template="Omikron_Factfinder::ff/campaign-feedbacktext.phtml" />
         <block class="Magento\Framework\View\Element\Template" name="factfinder.recordlist" template="Omikron_Factfinder::ff/record-list.phtml">
             <arguments>
                 <argument name="subscribe" xsi:type="boolean">true</argument>
@@ -28,7 +28,7 @@
             <action method="setTemplate" ifconfig="factfinder/general/is_enabled">
                 <argument name="template" xsi:type="string">Omikron_Factfinder::ff/searchbox.phtml</argument>
             </action>
-            <block class="Magento\Framework\View\Element\Template" name="factfinder.suggest" as="suggest" ifconfig="factfinder/components/ff_suggest" template="Omikron_Factfinder::ff/suggest.phtml">
+            <block class="Magento\Framework\View\Element\Template" name="factfinder.suggest" as="suggest" ifconfig="factfinder/general/is_enabled" template="Omikron_Factfinder::ff/suggest.phtml">
                 <block class="Magento\Framework\View\Element\Template" ifconfig="factfinder/cms_export/ff_cms_export_enabled" name="factfinder.suggest.cms" as="suggest.cms" template="Omikron_Factfinder::ff/suggest-cms.phtml">
                     <arguments>
                         <argument name="view_model" xsi:type="object">Omikron\Factfinder\ViewModel\Suggest</argument>

@@ -13,11 +13,6 @@
             <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
             <comment>If set to true, the http parameters of the current search are pushed to the browser url.</comment>
         </field>
-        <field id="use_cache" translate="label comment" type="select" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
-            <label>Use browser cache?</label>
-            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-            <comment>This value determines if the browser should cache previous search requests or not. Some browsers support this feature and therefore speed up the search for repeated requests.</comment>
-        </field>
         <field id="only_search_params" translate="label comment" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
             <label>Only search parameters?</label>
             <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
@@ -42,46 +37,6 @@
             <label>Keep URL parameters</label>
             <comment>Determines if parameters which are written into the URL should be kept.</comment>
             <tooltip>Comma-separated value</tooltip>
-        </field>
-        <field id="use_found_words" translate="label comment" type="select" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
-            <label>Use found words</label>
-            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-            <comment>For found records, FACT-Finder is capable of returning the words which lead to the find. The determination of these words costs performance. It is therefore deactivated by default. If true, words are created. If false, words are not created.</comment>
-        </field>
-        <field id="use_campaigns" translate="label comment" type="select" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="1">
-            <label>Use campaigns</label>
-            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-            <comment>Use this parameter if you want to prevent the campaign manager from checking if there is a campaign for this search request. If true, campaigns are analyzed and returned. If false, campaigns are ignored. Default is true.</comment>
-        </field>
-        <field id="generate_advisor_tree" translate="label comment" type="select" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1">
-            <label>Generate advisor tree</label>
-            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-            <comment>Used with advisor campaigns. Please refer the campaign manager documentation. If true, the whole question-answer-tree is returned with the advisor campaign. If false, only the currently active questions and their answers are returned. Default is false.</comment>
-        </field>
-        <field id="disable_cache" translate="label comment" type="select" sortOrder="140" showInDefault="1" showInWebsite="1" showInStore="1">
-            <label>Disable cache</label>
-            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-            <comment>Controls the usage of search result caches. If true, cache is ignored. If false, cache is used. Default is false.</comment>
-        </field>
-        <field id="use_personalization" translate="label comment" type="select" sortOrder="150" showInDefault="1" showInWebsite="1" showInStore="1">
-            <label>Use personalization</label>
-            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-            <comment>Allows activating/deactivating of request personalization. If true, the search result is personalized if the personalization module is active and all other requirements are met. If false, the search result is not personalized. Default is true.</comment>
-        </field>
-        <field id="use_semantic_enhancer" translate="label comment" type="select" sortOrder="160" showInDefault="1" showInWebsite="1" showInStore="1">
-            <label>Use semantic enhancer</label>
-            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-            <comment>Allows activating/deactivating of the semantic enrichment of requests. If true, the search result is semantically enriched if the enhanced module is activated and all other requirements are met. If false, the search result is not semantically enriched. Default value is true.</comment>
-        </field>
-        <field id="use_aso" translate="label comment" type="select" sortOrder="170" showInDefault="1" showInWebsite="1" showInStore="1">
-            <label>Use ASO</label>
-            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-            <comment>Allows activating/deactivating of automated search optimization. If true, the search result is automatically optimized. If false, the search result is not optimized. Default is true.</comment>
-        </field>
-        <field id="use_browser_history" translate="label comment" type="select" sortOrder="180" showInDefault="1" showInWebsite="1" showInStore="1">
-            <label>Use browser history</label>
-            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-            <comment>If true, the search history is pushed to the browser history, even without using url parameter. Default is true.</comment>
         </field>
     </group>
 </include>
