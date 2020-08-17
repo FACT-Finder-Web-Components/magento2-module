@@ -6,10 +6,4 @@
             <argument name="type" xsi:type="string">product</argument>
         </arguments>
     </virtualType>
-    <virtualType name="CmsExportCron" type="Omikron\Factfinder\Cron\Feed">
-        <arguments>
-            <argument name="channelProvider" xsi:type="object">Omikron\Factfinder\Model\Config\CmsConfig</argument>
-            <argument name="type" xsi:type="string">cms</argument>
-        </arguments>
-    </virtualType>
 </config>

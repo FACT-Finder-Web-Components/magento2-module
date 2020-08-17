@@ -4,8 +4,5 @@
         <job name="factfinder_feed_export" instance="ProductExportCron" method="execute">
             <schedule>0 1 * * *</schedule>
         </job>
-        <!--<job name="factfinder_cms_feed_export" instance="CmsExportCron" method="execute">
-            <schedule>0 1 * * *</schedule>
-        </job>-->
     </group>
 </config>

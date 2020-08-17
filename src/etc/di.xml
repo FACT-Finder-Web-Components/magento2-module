@@ -36,53 +36,6 @@
             </argument>
         </arguments>
     </virtualType>
-    <virtualType name="Omikron\Factfinder\Model\Export\CmsFeed" type="Omikron\Factfinder\Model\Export\Feed">
-        <arguments>
-            <argument name="dataProvider" xsi:type="object">Omikron\Factfinder\Model\Export\Cms\DataProvider</argument>
-            <argument name="columns" xsi:type="array">
-                <item name="PageId" xsi:type="string">PageId</item>
-                <item name="Master" xsi:type="string">Master</item>
-                <item name="PageIdentifier" xsi:type="string">PageIdentifier</item>
-                <item name="PageTitle" xsi:type="string">PageTitle</item>
-                <item name="PageContentHeading" xsi:type="string">PageContentHeading</item>
-                <item name="PageContent" xsi:type="string">PageContent</item>
-                <item name="PageMetaKeywords" xsi:type="string">PageMetaKeywords</item>
-                <item name="PageMetaDescription" xsi:type="string">PageMetaDescription</item>
-                <item name="PageUrl" xsi:type="string">PageUrl</item>
-                <item name="PageImage" xsi:type="string">PageImage</item>
-            </argument>
-        </arguments>
-    </virtualType>
-    <virtualType name="Omikron\Factfinder\Model\Export\CombinedFeed" type="Omikron\Factfinder\Model\Export\Feed">
-        <arguments>
-            <argument name="dataProvider" xsi:type="object">Omikron\Factfinder\Model\Export\Combined\DataProvider</argument>
-            <argument name="columns" xsi:type="array">
-                <item name="ProductNumber" xsi:type="string">ProductNumber</item>
-                <item name="Master" xsi:type="string">Master</item>
-                <item name="Name" xsi:type="string">Name</item>
-                <item name="Description" xsi:type="string">Description</item>
-                <item name="Short" xsi:type="string">Short</item>
-                <item name="ProductURL" xsi:type="string">ProductURL</item>
-                <item name="Price" xsi:type="string">Price</item>
-                <item name="Brand" xsi:type="string">Brand</item>
-                <item name="Availability" xsi:type="string">Availability</item>
-                <item name="MagentoId" xsi:type="string">MagentoId</item>
-                <item name="ImageURL" xsi:type="string">ImageURL</item>
-                <item name="CategoryPath" xsi:type="string">CategoryPath</item>
-                <item name="Attributes" xsi:type="string">Attributes</item>
-                <item name="HasVariants" xsi:type="string">HasVariants</item>
-                <item name="PageId" xsi:type="string">PageId</item>
-                <item name="PageIdentifier" xsi:type="string">PageIdentifier</item>
-                <item name="PageTitle" xsi:type="string">PageTitle</item>
-                <item name="PageContentHeading" xsi:type="string">PageContentHeading</item>
-                <item name="PageContent" xsi:type="string">PageContent</item>
-                <item name="PageMetaKeywords" xsi:type="string">PageMetaKeywords</item>
-                <item name="PageMetaDescription" xsi:type="string">PageMetaDescription</item>
-                <item name="PageUrl" xsi:type="string">PageUrl</item>
-                <item name="PageImage" xsi:type="string">PageImage</item>
-            </argument>
-        </arguments>
-    </virtualType>
     <virtualType name="Omikron\Factfinder\Logger" type="Monolog\Logger">
         <arguments>
             <argument name="name" xsi:type="string">FACT-Finder</argument>
@@ -113,11 +66,6 @@
     <type name="Omikron\Factfinder\Controller\Export\Product">
         <arguments>
             <argument name="channelProvider" xsi:type="object">Omikron\Factfinder\Model\Config\CommunicationConfig</argument>
-        </arguments>
-    </type>
-    <type name="Omikron\Factfinder\Controller\Export\Cms">
-        <arguments>
-            <argument name="channelProvider" xsi:type="object">Omikron\Factfinder\Model\Config\CmsConfig</argument>
         </arguments>
     </type>
     <type name="Omikron\Factfinder\Model\Api\PushImport">
@@ -161,32 +109,12 @@
             <argument name="filter" xsi:type="object">Omikron\Factfinder\Model\Filter\ExtendedTextFilter</argument>
         </arguments>
     </type>
-    <type name="Omikron\Factfinder\Model\Export\Cms\Page">
-        <arguments>
-            <argument name="pageFields" xsi:type="array">
-                <item name="PageContent" xsi:type="object">Omikron\Factfinder\Model\Export\Cms\Field\Content</item>
-                <item name="PageUrl" xsi:type="object">Omikron\Factfinder\Model\Export\Cms\Field\Url</item>
-                <item name="PageImage" xsi:type="object">Omikron\Factfinder\Model\Export\Cms\Field\Image</item>
-            </argument>
-        </arguments>
-    </type>
-    <type name="Omikron\Factfinder\Model\Export\Combined\DataProvider">
-        <arguments>
-            <argument name="dataProviders" xsi:type="array">
-                <item name="products" xsi:type="object">Omikron\Factfinder\Model\Export\Catalog\DataProvider</item>
-                <item name="cms" xsi:type="object">Omikron\Factfinder\Model\Export\Cms\DataProvider</item>
-            </argument>
-        </arguments>
-    </type>
     <type name="Omikron\Factfinder\Model\Export\FeedFactory">
         <arguments>
             <argument name="feedPool" xsi:type="array">
                 <item name="product" xsi:type="string">Omikron\Factfinder\Model\Export\CatalogFeed</item>
-                <item name="cms" xsi:type="string">Omikron\Factfinder\Model\Export\CmsFeed</item>
-                <item name="combined" xsi:type="string">Omikron\Factfinder\Model\Export\CombinedFeed</item>
             </argument>
         </arguments>
-        <plugin name="changeFeedType" type="Omikron\Factfinder\Plugin\Export\ChangeFeedType" />
     </type>
     <type name="Omikron\Factfinder\Model\FtpUploader">
         <arguments>

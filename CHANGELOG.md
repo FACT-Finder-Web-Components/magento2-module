@@ -1,4 +1,9 @@
 # Changelog
+## Unreleased
+### Changed
+- Simplify module configuration
+- Remove CMS export from the module
+
 ## [v1.6.5] - 2020.12.16
 ### Changed
 - Upgrade Web Components to version 3.15.10
