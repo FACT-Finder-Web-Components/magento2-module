@@ -2,17 +2,17 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
         <referenceContainer name="content">
-            <block class="Magento\Framework\View\Element\Template" name="factfinder.campaign.shopping.cart" template="Omikron_Factfinder::ff/campaign-shopping-cart.phtml">
+            <block class="Magento\Framework\View\Element\Template" name="factfinder.campaign.shopping.cart" ifconfig="factfinder/general/is_enabled" template="Omikron_Factfinder::ff/campaign-shopping-cart.phtml">
                 <arguments>
                     <argument name="record_id" xsi:type="helper" helper="Omikron\Factfinder\ViewModel\Cart::getItemIds" />
                 </arguments>
             </block>
-            <block class="Magento\Framework\View\Element\Template" name="factfinder.campaign.pushed.products.cart" template="Omikron_Factfinder::ff/campaign-pushed-products.phtml">
+            <block class="Magento\Framework\View\Element\Template" name="factfinder.campaign.pushed.products.cart" ifconfig="factfinder/general/is_enabled" template="Omikron_Factfinder::ff/campaign-pushed-products.phtml">
                 <arguments>
                     <argument name="flag" xsi:type="string">is-shopping-cart-campaign</argument>
                 </arguments>
             </block>
-            <block class="Magento\Framework\View\Element\Template" name="factfinder.recommendation.cart" template="Omikron_Factfinder::ff/recommendation.phtml">
+            <block class="Magento\Framework\View\Element\Template" name="factfinder.recommendation.cart" ifconfig="factfinder/general/is_enabled" template="Omikron_Factfinder::ff/recommendation.phtml">
                 <arguments>
                     <argument name="record_id" xsi:type="helper" helper="Omikron\Factfinder\ViewModel\Cart::getItemIds" />
                 </arguments>
