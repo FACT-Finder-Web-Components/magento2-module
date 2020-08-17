@@ -8,7 +8,6 @@
             <resource>Omikron_Factfinder::config</resource>
             <include path="Omikron_Factfinder::system/general.xml" />
             <include path="Omikron_Factfinder::system/advanced.xml" />
-            <include path="Omikron_Factfinder::system/components.xml" />
             <include path="Omikron_Factfinder::system/data_transfer.xml" />
             <include path="Omikron_Factfinder::system/cron.xml" />
         </section>

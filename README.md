@@ -113,19 +113,6 @@ component as respectively `currency-code` and `country-code` parameters. You can
 - [How to configure currency?](https://docs.magento.com/m2/ce/user_guide/stores/currency-configuration.html)
 - [How to configure country?](https://docs.magento.com/m2/ce/user_guide/stores/country-options.html)
 
-
-### Activated Web Components
-Here you can decide which web components are activated. Only active web components can be used and displayed in the shop.
-
-- **Suggestions** activates loading and displaying suggestions while search terms are entered into the search bar.
-- **Filter / ASN** activates the functions to narrow down and refine search results.
-- **Paging** activates paging through the returned search results.
-- **Sorting** activates a sorting function for returned search results.
-- **Breadcrumb** activates displaying the current position during a search. Can be refined with the **Filter / ASN** component.
-- **Products per Page** activates an option to limit the number of displayed search results per page.
-- **Campaigns** displays your active FACT-Finder campaigns, e.g. advisor and feedback campaigns.
-- **Pushed Products** displays your pushed products campaigns.
-
 ### Export Settings
 This option configures the connection with the FACT-Finder system via FTP. Shop data can be generated and transferred to
 FACT-Finder using FTP. FACT-Finder needs to be up to date on the product data, to ensure that components like the search work as intended.
@@ -223,13 +210,7 @@ As an example, the `ff-suggest` element was integrated into the `ff-searchbox` t
     <action method="setTemplate" ifconfig="factfinder/general/is_enabled">
         <argument name="template" xsi:type="string">Omikron_Factfinder::ff/searchbox.phtml</argument>
     </action>
-    <block class="Magento\Framework\View\Element\Template" name="factfinder.suggest" as="suggest" ifconfig="factfinder/components/ff_suggest" template="Omikron_Factfinder::ff/suggest.phtml">
-        <block class="Magento\Framework\View\Element\Template"  name="factfinder.suggest" as="suggest" template="Omikron_Factfinder::ff/suggest.phtml">
-            <arguments>
-                <argument name="view_model" xsi:type="object">Omikron\Factfinder\ViewModel\Suggest</argument>
-            </arguments>
-        </block>
-    </block>
+    <block class="Magento\Framework\View\Element\Template" name="factfinder.suggest" as="suggest" ifconfig="factfinder/general/is_enabled" template="Omikron_Factfinder::ff/suggest.phtml" />
 </referenceBlock>
 ```
 

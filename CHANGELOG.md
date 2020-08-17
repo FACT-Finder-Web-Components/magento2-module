@@ -1,4 +1,9 @@
 # Changelog
+## Unreleased
+### Changed
+- Simplify module configuration
+- Remove CMS export from the module
+
 ## [v1.6.2] - 2020.08.06
 ### Added
 - Add information about checkout tracking to the README file
