@@ -14,30 +14,9 @@
                 <version>7.3</version>
                 <search_immediate>0</search_immediate>
                 <use_url_parameter>1</use_url_parameter>
-                <use_cache>0</use_cache>
                 <only_search_params>0</only_search_params>
                 <keep_filters>0</keep_filters>
-                <use_found_words>0</use_found_words>
-                <use_campaigns>1</use_campaigns>
-                <generate_advisor_tree>0</generate_advisor_tree>
-                <disable_cache>0</disable_cache>
-                <use_personalization>1</use_personalization>
-                <use_semantic_enhancer>1</use_semantic_enhancer>
-                <use_aso>1</use_aso>
-                <use_browser_history>1</use_browser_history>
             </advanced>
-            <components>
-                <ff_suggest>0</ff_suggest>
-                <ff_asn>0</ff_asn>
-                <ff_paging>0</ff_paging>
-                <ff_sortbox>0</ff_sortbox>
-                <ff_breadcrumb>0</ff_breadcrumb>
-                <ff_productspp>0</ff_productspp>
-                <ff_campaign>0</ff_campaign>
-                <ff_pushedproductscampaign>0</ff_pushedproductscampaign>
-                <ff_recommendation>0</ff_recommendation>
-                <ff_similar>0</ff_similar>
-            </components>
             <data_transfer>
                 <ff_cron_enabled>0</ff_cron_enabled>
                 <ff_push_import_enabled>1</ff_push_import_enabled>
