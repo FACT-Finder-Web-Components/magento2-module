@@ -16,7 +16,7 @@ class TextFilter implements FilterInterface
         $value = strip_tags($value);
         $value = mb_convert_encoding($value, 'HTML-ENTITIES', 'UTF-8');
         $value = mb_convert_encoding($value, 'UTF-8', 'HTML-ENTITIES');
-        $value = preg_replace('#\s+#', ' ', $value);
+        $value = preg_replace('#\s+#u', ' ', $value);
         $value = preg_replace('#[[:^print:]]#u', '', $value);
         return trim($value);
     }
