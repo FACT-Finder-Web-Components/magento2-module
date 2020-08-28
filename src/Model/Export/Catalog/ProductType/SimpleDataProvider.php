@@ -55,7 +55,7 @@ class SimpleDataProvider implements DataProviderInterface, ExportEntityInterface
             'Name'          => (string) $this->product->getName(),
             'Description'   => (string) $this->product->getData('description'),
             'Short'         => (string) $this->product->getData('short_description'),
-            'ProductURL'    => (string) $this->product->getUrlInStore(),
+            'Deeplink'      => (string) $this->product->getUrlInStore(),
             'Price'         => $this->numberFormatter->format((float) $this->product->getFinalPrice()),
             'Availability'  => (int) $this->product->isAvailable(),
             'HasVariants'   => 0,

@@ -34,9 +34,19 @@ class GenericField implements ProductFieldInterface
         $this->attributeRepository = $attributeRepository;
     }
 
+    public function getName(): string
+    {
+        return (string) $this->getAttribute()->getDefaultFrontendLabel();
+    }
+
     public function getValue(Product $product): string
     {
+        return implode('|', $this->valuesExtractor->getAttributeValues($product, $this->getAttribute()));
+    }
+
+    private function getAttribute(): Attribute
+    {
         $this->attribute = $this->attribute ?? $this->attributeRepository->get($this->attributeCode);
-        return implode('|', $this->valuesExtractor->getAttributeValues($product, $this->attribute));
+        return $this->attribute;
     }
 }

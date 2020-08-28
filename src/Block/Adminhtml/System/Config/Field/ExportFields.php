@@ -36,7 +36,6 @@ class ExportFields extends AbstractFieldArray
         $this->boolSource      = $boolSource;
     }
 
-
     protected function _prepareToRender()
     {
         $this->_addAfter = false;
@@ -68,7 +67,6 @@ class ExportFields extends AbstractFieldArray
 
         $row->setData('option_extra_attrs', $options);
     }
-
 
     private function getAttributeRenderer(): Select
     {

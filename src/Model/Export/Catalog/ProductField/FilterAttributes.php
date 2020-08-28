@@ -7,18 +7,15 @@ namespace Omikron\Factfinder\Model\Export\Catalog\ProductField;
 use Magento\Catalog\Model\Product;
 use Magento\Catalog\Model\ResourceModel\Eav\Attribute;
 use Magento\Catalog\Model\ResourceModel\Product as ProductResource;
-use Magento\Framework\App\Config\ScopeConfigInterface;
-use Magento\Store\Model\ScopeInterface as Scope;
 use Omikron\Factfinder\Api\Export\Catalog\ProductFieldInterface;
 use Omikron\Factfinder\Api\Filter\FilterInterface;
+use Omikron\Factfinder\Model\Config\ExportConfig;
 use Omikron\Factfinder\Model\Export\Catalog\AttributeValuesExtractor;
 
-class Attributes implements ProductFieldInterface
+class FilterAttributes implements ProductFieldInterface
 {
-    private const CONFIG_PATH = 'factfinder/data_transfer/ff_additional_attributes';
-
-    /** @var ScopeConfigInterface */
-    private $scopeConfig;
+    /** @var ExportConfig */
+    private $exportConfig;
 
     /** @var ProductResource */
     private $productResource;
@@ -30,15 +27,20 @@ class Attributes implements ProductFieldInterface
     private $valuesExtractor;
 
     public function __construct(
-        ScopeConfigInterface $scopeConfig,
+        ExportConfig $exportConfig,
         ProductResource $productResource,
         FilterInterface $filter,
         AttributeValuesExtractor $valuesExtractor
     ) {
-        $this->scopeConfig     = $scopeConfig;
+        $this->exportConfig    = $exportConfig;
         $this->productResource = $productResource;
         $this->filter          = $filter;
-        $this->valuesExtractor  = $valuesExtractor;
+        $this->valuesExtractor = $valuesExtractor;
+    }
+
+    public function getName(): string
+    {
+        return 'FilterAttributes';
     }
 
     public function getValue(Product $product): string
@@ -62,7 +64,7 @@ class Attributes implements ProductFieldInterface
      */
     private function getAttributes(int $storeId): array
     {
-        $attributes = (string) $this->scopeConfig->getValue(self::CONFIG_PATH, Scope::SCOPE_STORES, $storeId);
-        return array_filter(array_map([$this->productResource, 'getAttribute'], explode(',', $attributes)));
+        $attributes = $this->exportConfig->getMultiAttributes($storeId);
+        return array_filter(array_map([$this->productResource, 'getAttribute'], $attributes));
     }
 }

@@ -55,7 +55,7 @@ class ConfigurableDataProvider extends SimpleDataProvider
 
         $options = array_merge([], ...array_values($this->getOptions($this->product)));
         if ($options) {
-            $data = ['Attributes' => ($data['Attributes'] ?? '|') . implode('|', $options) . '|'] + $data;
+            $data = ['FilterAttributes' => ($data['FilterAttributes'] ?? '|') . implode('|', $options) . '|'] + $data;
         }
 
         return $data;
@@ -67,10 +67,11 @@ class ConfigurableDataProvider extends SimpleDataProvider
         $data    = parent::toArray();
 
         return function (Product $variation) use ($options, $product, $data): ExportEntityInterface {
+            $sku = $variation->getSku();
             return $this->variationFactory->create([
-                'product' => $variation,
+                'product'      => $variation,
                 'configurable' => $product,
-                'data'    => ['Attributes' => '|' . implode('|', $options[$variation->getSku()] ?? []) . '|'] + $data,
+                'data'         => ['FilterAttributes' => '|' . implode('|', $options[$sku] ?? []) . '|'] + $data,
             ]);
         };
     }

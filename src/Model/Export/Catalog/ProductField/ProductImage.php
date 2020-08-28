@@ -22,6 +22,11 @@ class ProductImage implements ProductFieldInterface
         $this->imageId     = $imageId;
     }
 
+    public function getName(): string
+    {
+        return 'ImageUrl';
+    }
+
     public function getValue(Product $product): string
     {
         return $this->imageHelper->init($product, $this->imageId)->getUrl();
