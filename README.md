@@ -371,7 +371,7 @@ The constructor for this class requires only an attribute code to be exported.
 ```xml
 <virtualType name="Omikron\Factfinder\Model\Export\Catalog\ProductField\Brand" type="Omikron\Factfinder\Model\Export\Catalog\ProductField\GenericField">
     <arguments>
-        <argument name="attributeName" xsi:type="string">manufacturer</argument>
+        <argument name="attributeCode" xsi:type="string">manufacturer</argument>
     </arguments>
 </virtualType>
 ``` 
