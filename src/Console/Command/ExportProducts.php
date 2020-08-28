@@ -64,16 +64,16 @@ class ExportProducts extends \Symfony\Component\Console\Command\Command
         Filesystem $filesystem
     ) {
         parent::__construct();
-        $this->scopeConfig = $scopeConfig;
-        $this->storeManager = $storeManager;
+        $this->scopeConfig          = $scopeConfig;
+        $this->storeManager         = $storeManager;
         $this->feedGeneratorFactory = $feedFactory;
-        $this->storeEmulation = $emulation;
-        $this->csvFactory = $csvFactory;
-        $this->ftpUploader = $ftpUploader;
-        $this->communicationConfig = $communicationConfig;
-        $this->pushImport = $pushImport;
-        $this->state = $state;
-        $this->filesystem = $filesystem;
+        $this->storeEmulation       = $emulation;
+        $this->csvFactory           = $csvFactory;
+        $this->ftpUploader          = $ftpUploader;
+        $this->communicationConfig  = $communicationConfig;
+        $this->pushImport           = $pushImport;
+        $this->state                = $state;
+        $this->filesystem           = $filesystem;
     }
 
     /**
@@ -84,8 +84,8 @@ class ExportProducts extends \Symfony\Component\Console\Command\Command
         $this->setName('factfinder:export:products')->setDescription('Export Factfinder Product Data as CSV file');
 
         $this->addOption('store', 's', InputOption::VALUE_OPTIONAL, 'Store ID or Store Code');
-        $this->addOption('skip-ftp-upload', null, InputOption::VALUE_NONE, 'Skip FTP Upload');
-        $this->addOption('skip-push-import', null, InputOption::VALUE_NONE, 'Skip Push Import');
+        $this->addOption('upload', 'u', InputOption::VALUE_NONE, 'Upload feed via FTP');
+        $this->addOption('push-import', 'i', InputOption::VALUE_NONE, 'Push Import');
 
         parent::configure();
     }
@@ -97,40 +97,32 @@ class ExportProducts extends \Symfony\Component\Console\Command\Command
     {
         $this->state->setAreaCode('frontend');
 
-        if ($storeId = $input->getOption('store')) {
-            $storeIds = [$this->storeManager->getStore($storeId)->getId()];
-        } else {
-            $storeIds = array_map(
-                function ($store) {
-                    return $store->getId();
-                },
-                $this->storeManager->getStores()
-            );
-        }
-        foreach ($storeIds as $storeId) {
-            $this->storeEmulation->runInStore(
-                (int) $storeId,
-                function () use ($storeId, $input, $output) {
-                    if ($this->communicationConfig->isChannelEnabled((int) $storeId)) {
-                        $filename = "export.{$this->communicationConfig->getChannel((int) $storeId)}.csv";
-                        $stream = $this->csvFactory->create(['filename' => "factfinder/{$filename}"]);
-                        $this->feedGeneratorFactory->create('product')->generate($stream);
-                        $path = $this->filesystem->getDirectoryWrite(DirectoryList::VAR_DIR)
-                            ->getAbsolutePath('factfinder' . DIRECTORY_SEPARATOR . $filename);
-                        $output->writeln("Store $storeId: File $path has been generated.");
-                        if (!$input->getOption('skip-ftp-upload')
-                            && $this->scopeConfig->getValue('factfinder/data_transfer/ff_upload_host')) {
-                            $this->ftpUploader->upload($filename, $stream);
-                            $output->writeln("Store $storeId: File $filename has been uploaded to FTP.");
-                        }
-                        if (!$input->getOption('skip-push-import')) {
-                            if ($this->pushImport->execute((int) $storeId)) {
-                                $output->writeln("Store $storeId: Push Import for File $filename has been triggered.");
-                            }
-                        }
-                    }
+        foreach ($this->getStoreIds((int) $input->getOption('store')) as $storeId) {
+            $this->storeEmulation->runInStore($storeId, function () use ($storeId, $input, $output) {
+                $filename = "export.{$this->communicationConfig->getChannel($storeId)}.csv";
+                $stream   = $this->csvFactory->create(['filename' => "factfinder/{$filename}"]);
+                $this->feedGeneratorFactory->create('product')->generate($stream);
+                $path = $this->filesystem->getDirectoryWrite(DirectoryList::VAR_DIR)
+                    ->getAbsolutePath('factfinder' . DIRECTORY_SEPARATOR . $filename);
+                $output->writeln("Store {$storeId}: File {$path} has been generated.");
+
+                if ($input->getOption('upload')) {
+                    $this->ftpUploader->upload($filename, $stream);
+                    $output->writeln("Store {$storeId}: File {$filename} has been uploaded to FTP.");
                 }
-            );
+
+                if ($input->getOption('push-import') && $this->pushImport->execute((int) $storeId)) {
+                    $output->writeln("Store {$storeId}: Push Import for File {$filename} has been triggered.");
+                }
+            });
         }
+    }
+
+    private function getStoreIds(int $storeId): array
+    {
+        $storeIds = array_map(function ($store) {
+            return (int) $store->getId();
+        }, $storeId ? [$this->storeManager->getStore($storeId)] : $this->storeManager->getStores());
+        return array_filter($storeIds, [$this->communicationConfig, 'isChannelEnabled']);
     }
 }

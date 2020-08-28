@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <include xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_include.xsd">
     <group id="data_transfer" translate="label comment" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
-        <label>Export settings</label>
+        <label>Data transfer settings</label>
         <comment><![CDATA[<div class="message message-notice notice"><div data-ui-id="messages-message-success">Please always save the config in the upper right corner after making changes, especially before using the export button.</div></div>]]></comment>
         <field id="ff_upload_host" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
             <label>Upload Host</label>
@@ -13,28 +13,17 @@
         <field id="ff_upload_password" translate="label" type="password" sortOrder="30" showInDefault="1" showInWebsite="0" showInStore="0">
             <label>Upload Password</label>
         </field>
-        <field id="ff_upload_port" translate="label comment" type="text" sortOrder="30" showInDefault="1" showInWebsite="0" showInStore="0">
+        <field id="ff_upload_port" translate="label comment" type="text" sortOrder="40" showInDefault="1" showInWebsite="0" showInStore="0">
             <label>Port</label>
             <comment>Leave empty if you use default port 21.</comment>
         </field>
-        <field id="ff_upload_ssl" translate="label comment" type="select" sortOrder="31" showInDefault="1" showInWebsite="1" showInStore="1">
+        <field id="ff_upload_ssl" translate="label comment" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
             <label>Use SSL</label>
             <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
         </field>
-        <field id="ff_upload_test_connection" translate="label comment" type="button" sortOrder="32" showInDefault="1" showInWebsite="1" showInStore="1">
+        <field id="ff_upload_test_connection" translate="label comment" type="button" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
             <label>Test FTP Connection</label>
             <frontend_model>Omikron\Factfinder\Block\Adminhtml\System\Config\Button\TestFtpConnection</frontend_model>
-        </field>
-        <field id="ff_additional_attributes" translate="label comment" type="multiselect" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
-            <label>Select Additional Attributes</label>
-            <source_model>Omikron\Factfinder\Model\Config\Source\Attribute</source_model>
-            <comment>Select all attributes which should be exported to the product feed.</comment>
-            <can_be_empty>1</can_be_empty>
-        </field>
-        <field id="ff_createfeed" translate="label comment" type="button" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
-            <label>Generate Export File</label>
-            <frontend_model>Omikron\Factfinder\Block\Adminhtml\System\Config\Button\Feed</frontend_model>
-            <comment>On buttonclick CSV exports of all your products will be generated and uploaded to the specified FTP Server.</comment>
         </field>
         <field id="ff_update_field_roles" translate="label comment" type="button" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
             <label>Update Field Roles</label>
@@ -58,6 +47,7 @@
             </depends>
         </field>
     </group>
+
     <group id="basic_auth_data_transfer" translate="label" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
         <label>HTTP Export</label>
         <field id="ff_upload_url_user" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">

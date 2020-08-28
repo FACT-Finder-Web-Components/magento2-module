@@ -27,7 +27,6 @@ class AttributeTest extends TestCase
         ]]));
 
         $expected = [
-            ['value' => '', 'label' => ''],
             ['value' => 'first', 'label' => 'First'],
             ['value' => 'second', 'label' => 'Second'],
             ['value' => 'third', 'label' => 'Third'],
@@ -35,17 +34,17 @@ class AttributeTest extends TestCase
         $this->assertSame($expected, $this->sourceModel->toOptionArray());
     }
 
-    public function test_labels_and_values_are_cast_to_string()
+    public function test_empty_values_are_omitted()
     {
         $this->attributeCollectionFactory->method('create')->willReturn(new DataObject(['items' => [
+            $this->createAttribute('second', 'Second'),
             $this->createAttribute(null, null),
-            $this->createAttribute(null, null),
+            $this->createAttribute('first', 'First'),
         ]]));
 
         $expected = [
-            ['value' => '', 'label' => ''],
-            ['value' => '', 'label' => ''],
-            ['value' => '', 'label' => ''],
+            ['value' => 'first', 'label' => 'First'],
+            ['value' => 'second', 'label' => 'Second'],
         ];
         $this->assertSame($expected, $this->sourceModel->toOptionArray());
     }
