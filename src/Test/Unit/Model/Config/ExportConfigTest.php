@@ -15,12 +15,18 @@ class ExportConfigTest extends TestCase
 
     public function test_multiattributes_are_calculated_correctly()
     {
-        $this->assertArraySubset(['climate'], $this->testee->getMultiAttributes(42));
+        $result = $this->testee->getMultiAttributes(42);
+        $this->assertContains('climate', $result);
+        $this->assertNotContains('color', $result);
+        $this->assertNotContains('gender', $result);
     }
 
     public function test_single_fields_are_calculated_correctly()
     {
-        $this->assertArraySubset(['color', 'gender'], $this->testee->getSingleFields(42));
+        $result = $this->testee->getSingleFields(42);
+        $this->assertNotContains('climate', $result);
+        $this->assertContains('color', $result);
+        $this->assertContains('gender', $result);
     }
 
     protected function setUp()

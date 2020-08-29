@@ -48,9 +48,9 @@ class FilterAttributes implements ProductFieldInterface
         $storeId = (int) $product->getStoreId();
         $values  = '';
         foreach ($this->getAttributes($storeId) as $attribute) {
-            $label = $this->filter->filterValue($attribute->getStoreLabel($storeId));
-            foreach ($this->valuesExtractor->getAttributeValues($product, $attribute) as $value) {
-                $values .= "|{$label}={$value}";
+            $attributeValues = implode('#', $this->valuesExtractor->getAttributeValues($product, $attribute));
+            if ($attributeValues) {
+                $values .= "|{$this->filter->filterValue($attribute->getStoreLabel($storeId))}={$attributeValues}";
             }
         }
 

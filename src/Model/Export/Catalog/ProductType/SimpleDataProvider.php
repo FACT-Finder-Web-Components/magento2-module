@@ -21,11 +21,8 @@ class SimpleDataProvider implements DataProviderInterface, ExportEntityInterface
     /** @var ProductFieldInterface[] */
     private $productFields;
 
-    public function __construct(
-        Product $product,
-        NumberFormatter $numberFormatter,
-        array $productFields = []
-    ) {
+    public function __construct(Product $product, NumberFormatter $numberFormatter, array $productFields = [])
+    {
         $this->product         = $product;
         $this->numberFormatter = $numberFormatter;
         $this->productFields   = $productFields;
@@ -62,9 +59,9 @@ class SimpleDataProvider implements DataProviderInterface, ExportEntityInterface
             'MagentoId'     => $this->getId(),
         ];
 
-        return array_merge($data, array_map(function (ProductFieldInterface $field): string {
-            return $field->getValue($this->product);
-        }, $this->productFields));
+        return array_reduce($this->productFields, function (array $result, ProductFieldInterface $field): array {
+            return [$field->getName() => $field->getValue($this->product)] + $result;
+        }, $data);
     }
 
     public function getProduct(): Product

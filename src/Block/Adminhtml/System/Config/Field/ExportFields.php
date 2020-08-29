@@ -11,6 +11,9 @@ use Magento\Framework\Data\OptionSourceInterface;
 use Magento\Framework\DataObject;
 use Omikron\Factfinder\Model\Config\Source\Attribute as AttributeSource;
 
+/**
+ * @SuppressWarnings(PHPMD.CamelCaseMethodName)
+ */
 class ExportFields extends AbstractFieldArray
 {
     /** @var Select */

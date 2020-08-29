@@ -55,7 +55,7 @@ class ConfigurableDataProvider extends SimpleDataProvider
 
         $options = array_merge([], ...array_values($this->getOptions($this->product)));
         if ($options) {
-            $data = ['FilterAttributes' => ($data['FilterAttributes'] ?? '|') . implode('|', $options) . '|'] + $data;
+            $data['FilterAttributes'] = ($data['FilterAttributes'] ?: '|') . implode('|', array_unique($options)) . '|';
         }
 
         return $data;

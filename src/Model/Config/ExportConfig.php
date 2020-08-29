@@ -24,21 +24,21 @@ class ExportConfig
         $this->serializer  = $serializer;
     }
 
-    public function getMultiAttributes(int $storeId): array
+    public function getMultiAttributes(?int $storeId = null): array
     {
         return array_column(array_filter($this->getConfigValue($storeId), function (array $row): bool {
             return $row['multi'];
         }), 'code');
     }
 
-    public function getSingleFields(int $storeId): array
+    public function getSingleFields(?int $storeId = null): array
     {
         return array_column(array_filter($this->getConfigValue($storeId), function (array $row): bool {
             return !$row['multi'];
         }), 'code');
     }
 
-    protected function getConfigValue(int $storeId): array
+    protected function getConfigValue(?int $storeId): array
     {
         $value = $this->scopeConfig->getValue(self::CONFIG_PATH, ScopeInterface::SCOPE_STORES, $storeId);
         return array_map(function (array $row): array {

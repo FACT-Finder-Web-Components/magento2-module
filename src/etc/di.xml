@@ -89,7 +89,7 @@
             </argument>
         </arguments>
     </type>
-    <type name="Omikron\Factfinder\Model\Export\Catalog\ProductType\SimpleDataProvider">
+    <type name="Omikron\Factfinder\Model\Export\Catalog\ProductFieldProvider">
         <arguments>
             <argument name="productFields" xsi:type="array">
                 <item name="ImageURL" xsi:type="object">Omikron\Factfinder\Model\Export\Catalog\ProductField\ProductImage</item>
