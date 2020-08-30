@@ -63,9 +63,9 @@ class ExportFields extends AbstractFieldArray
             $options['option_' . $this->getAttributeRenderer()->calcOptionHash($type)] = 'selected';
         }
 
-        $attr = $row->getData('multi');
-        if ($attr !== null) {
-            $options['option_' . $this->getMultiRenderer()->calcOptionHash($attr)] = 'selected';
+        $multi = $row->getData('multi');
+        if ($multi !== null) {
+            $options['option_' . $this->getMultiRenderer()->calcOptionHash($multi)] = 'selected';
         }
 
         $row->setData('option_extra_attrs', $options);
