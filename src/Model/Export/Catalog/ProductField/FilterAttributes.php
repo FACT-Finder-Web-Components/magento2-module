@@ -20,6 +20,9 @@ class FilterAttributes implements ProductFieldInterface
     /** @var ProductResource */
     private $productResource;
 
+    /** @var Attribute[] */
+    private $attributes;
+
     /** @var FilterInterface */
     private $filter;
 
@@ -64,7 +67,10 @@ class FilterAttributes implements ProductFieldInterface
      */
     private function getAttributes(int $storeId): array
     {
-        $attributes = $this->exportConfig->getMultiAttributes($storeId);
-        return array_filter(array_map([$this->productResource, 'getAttribute'], $attributes));
+        if (is_null($this->attributes)) {
+            $attributes       = $this->exportConfig->getMultiAttributes($storeId);
+            $this->attributes = array_filter(array_map([$this->productResource, 'getAttribute'], $attributes));
+        }
+        return $this->attributes;
     }
 }
