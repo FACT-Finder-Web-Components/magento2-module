@@ -48,8 +48,11 @@ class Feed
 
     private function getColumns(array $fields): array
     {
-        return array_merge($this->columns, array_map(function (ProductFieldInterface $field): string {
-            return $field->getName();
-        }, $fields));
+        return array_values(array_unique(array_merge($this->columns, array_map([$this, 'getFieldName'], $fields))));
+    }
+
+    private function getFieldName(ProductFieldInterface $field): string
+    {
+        return $field->getName();
     }
 }
