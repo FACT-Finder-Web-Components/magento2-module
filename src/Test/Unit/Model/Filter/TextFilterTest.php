@@ -45,6 +45,7 @@ class TextFilterTest extends TestCase
             'strip HTML, keep blocks #1' => ['<h1>FACT-Finder</h1><p>Omikron GmbH</p>', 'FACT-Finder Omikron GmbH'],
             'strip HTML, keep blocks #2' => ['FACT-Finder<br>Omikron GmbH', 'FACT-Finder Omikron GmbH'],
             'non printable chars'        => ['Schulfüller Pelikano Junior P68L türkis', 'Schulfüller Pelikano Junior P68L türkis'],
+            'non-breaking space'         => ['chevaux contre', 'chevaux contre'],
         ];
     }
 
