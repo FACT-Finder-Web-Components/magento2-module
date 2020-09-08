@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<csp_whitelist xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Csp:etc/csp_whitelist.xsd">
+    <policies>
+        <policy id="connect-src">
+            <values>
+                <value id="factfinder_de" type="host">*.fact-finder.de</value>
+                <value id="factfinder_com" type="host">*.fact-finder.com</value>
+                <value id="factfinder_uk" type="host">*.fact-finder.co.uk</value>
+                <value id="factfinder_fr" type="host">*.fact-finder.fr</value>
+                <value id="factfinder_pl" type="host">*.fact-finder.pl</value>
+                <value id="factfinder_it" type="host">*.fact-finder.it</value>
+                <value id="factfinder_at" type="host">*.fact-finder.at</value>
+                <value id="factfinder_ch" type="host">*.fact-finder.ch</value>
+                <value id="factfinder_cloud" type="host">*.fact-finder.cloud</value>
+            </values>
+        </policy>
+    </policies>
+</csp_whitelist>
