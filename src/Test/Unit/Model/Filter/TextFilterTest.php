@@ -49,7 +49,7 @@ class TextFilterTest extends TestCase
         ];
     }
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->filter = new TextFilter();
     }

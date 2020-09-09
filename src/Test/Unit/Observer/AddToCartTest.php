@@ -12,7 +12,8 @@ use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
 use Omikron\Factfinder\Api\Data\TrackingProductInterface;
 use Omikron\Factfinder\Api\Data\TrackingProductInterfaceFactory;
 use Omikron\Factfinder\Api\FieldRolesInterface;
-use Omikron\Factfinder\Model\Api\Tracking;
+use Omikron\Factfinder\Model\Api\Action\Standard\Tracking;
+use Omikron\Factfinder\Model\Api\ActionFactory;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
@@ -20,6 +21,9 @@ class AddToCartTest extends TestCase
 {
     /** @var MockObject|Tracking */
     private $trackingMock;
+
+    /** @var MockObject|ActionFactory */
+    private $actionFactoryMock;
 
     /** @var MockObject|TrackingProductInterfaceFactory */
     private $trackingProductFactoryMock;
@@ -79,16 +83,18 @@ class AddToCartTest extends TestCase
         $this->addToCart->execute($this->observerMock);
     }
 
-    protected function setUp()
+    protected function setUp(): void
     {
-        $this->storeMock      = $this->createMock(StoreInterface::class);
-        $this->trackingMock   = $this->createMock(Tracking::class);
-        $this->fieldRolesMock = $this->createMock(FieldRolesInterface::class);
-        $this->requestMock    = $this->createMock(RequestInterface::class);
-        $this->productMock    = $this->createMock(Product::class);
-        $this->observerMock   = $this->createMock(Observer::class);
-        $this->configMock     = $this->createMock(CommunicationConfigInterface::class);
+        $this->storeMock           = $this->createMock(StoreInterface::class);
+        $this->trackingMock        = $this->createMock(Tracking::class);
+        $this->fieldRolesMock      = $this->createMock(FieldRolesInterface::class);
+        $this->requestMock         = $this->createMock(RequestInterface::class);
+        $this->productMock         = $this->createMock(Product::class);
+        $this->observerMock        = $this->createMock(Observer::class);
+        $this->configMock          = $this->createMock(CommunicationConfigInterface::class);
+        $this->actionFactoryMock = $this->createConfiguredMock(ActionFactory::class, ['getTracking' => $this->trackingMock]);
 
+        $this->actionFactoryMock->method('withApiVersion')->with($this->anything())->willReturn($this->actionFactoryMock);
         $this->trackingProductFactoryMock = $this->getMockBuilder(TrackingProductInterfaceFactory::class)
             ->disableOriginalConstructor()
             ->setMethods(['create'])
@@ -105,7 +111,7 @@ class AddToCartTest extends TestCase
         ]);
 
         $this->addToCart = new AddToCart(
-            $this->trackingMock,
+            $this->actionFactoryMock,
             $this->trackingProductFactoryMock,
             $this->fieldRolesMock,
             $this->configMock

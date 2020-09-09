@@ -8,12 +8,13 @@ use Magento\Catalog\Model\Product;
 use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
 use Omikron\Factfinder\Api\Data\TrackingProductInterfaceFactory;
 use Omikron\Factfinder\Api\FieldRolesInterface;
-use Omikron\Factfinder\Model\Api\Tracking;
+use Omikron\Factfinder\Api\Action\TrackingInterface;
+use Omikron\Factfinder\Model\Api\ActionFactory;
 
 abstract class BaseTracking
 {
-    /** @var Tracking */
-    protected $tracking;
+    /** @var ActionFactory */
+    protected $actionFactory;
 
     /** @var TrackingProductInterfaceFactory */
     protected $trackingProductFactory;
@@ -25,12 +26,12 @@ abstract class BaseTracking
     protected $config;
 
     public function __construct(
-        Tracking $tracking,
+        ActionFactory $actionFactory,
         TrackingProductInterfaceFactory $trackingProductFactory,
         FieldRolesInterface $fieldRoles,
         CommunicationConfigInterface $config
     ) {
-        $this->tracking               = $tracking;
+        $this->actionFactory        = $actionFactory;
         $this->trackingProductFactory = $trackingProductFactory;
         $this->fieldRoles             = $fieldRoles;
         $this->config                 = $config;
@@ -39,5 +40,10 @@ abstract class BaseTracking
     protected function getProductData(string $roleName, Product $product): string
     {
         return $this->fieldRoles->fieldRoleToAttribute($product, $roleName);
+    }
+
+    protected function getTracking(): TrackingInterface
+    {
+        return $this->actionFactory->withApiVersion($this->config->getVersion())->getTracking();
     }
 }

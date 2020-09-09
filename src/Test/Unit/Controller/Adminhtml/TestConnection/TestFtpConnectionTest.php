@@ -57,8 +57,7 @@ class TestFtpConnectionTest extends TestCase
         $this->ftpUploader
             ->expects($this->once())
             ->method('testConnection')
-            ->with($this->anything())
-            ->willReturn(true);
+            ->with($this->anything());
 
         $this->jsonResult->expects($this->once())
             ->method('setData')
@@ -67,7 +66,7 @@ class TestFtpConnectionTest extends TestCase
         $this->controller->execute([]);
     }
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->request      = $this->createConfiguredMock(RequestInterface::class, ['getParams' =>[]]);
         $this->ftpUploader  = $this->createMock(FtpUploader::class);

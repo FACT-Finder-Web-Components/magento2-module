@@ -7,7 +7,6 @@ namespace Omikron\Factfinder\Plugin;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Phrase;
 use Omikron\Factfinder\Exception\ResponseException;
-use Omikron\Factfinder\Model\Api\PushImport;
 use Psr\Log\LoggerInterface;
 
 class LogExceptions
@@ -25,7 +24,7 @@ class LogExceptions
     }
 
     /**
-     * @param PushImport $subject
+     * @param mixed      $subject
      * @param callable   $proceed
      * @param mixed      ...$params
      *

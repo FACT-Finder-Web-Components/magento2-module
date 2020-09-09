@@ -2,23 +2,28 @@
 
 declare(strict_types=1);
 
-namespace Omikron\Factfinder\Model\Api;
+namespace Omikron\Factfinder\Model\Api\Action\Standard;
 
-use Omikron\Factfinder\Api\ClientInterface;
+use Omikron\Factfinder\Api\Action\UpdateFieldRolesInterface;
+use Omikron\Factfinder\Api\ClientInterfaceFactory;
 use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
 use Omikron\Factfinder\Api\FieldRolesInterface;
 use Omikron\Factfinder\Exception\ResponseException;
+use Omikron\Factfinder\Model\Api\Credentials;
 
-class UpdateFieldRoles
+class UpdateFieldRoles implements UpdateFieldRolesInterface
 {
     /** @var FieldRolesInterface */
     private $fieldRoles;
 
-    /** @var ClientInterface */
-    private $factFinderClient;
+    /** @var ClientFactory */
+    private $clientFactory;
 
     /** @var CommunicationConfigInterface */
     private $communicationConfig;
+
+    /** @var Credentials */
+    private $credentials;
 
     /** @var string */
     private $apiQuery = 'FACT-Finder version';
@@ -27,18 +32,20 @@ class UpdateFieldRoles
     private $apiName = 'Search.ff';
 
     public function __construct(
+        ClientInterfaceFactory $clientFactory,
         FieldRolesInterface $fieldRoles,
-        ClientInterface $factFinderClient,
-        CommunicationConfigInterface $communicationConfig
+        CommunicationConfigInterface $communicationConfig,
+        Credentials $credentials
     ) {
         $this->fieldRoles          = $fieldRoles;
-        $this->factFinderClient    = $factFinderClient;
+        $this->clientFactory       = $clientFactory;
         $this->communicationConfig = $communicationConfig;
+        $this->credentials         = $credentials;
     }
 
     /**
-     * @param int   $scopeId
-     * @param array $params
+     * @param int|null $scopeId
+     * @param array    $params
      *
      * @return bool
      * @throws ResponseException
@@ -52,10 +59,11 @@ class UpdateFieldRoles
         ];
 
         $endpoint = ($params['serverUrl'] ?? $this->communicationConfig->getAddress()) . '/' . $this->apiName;
-        $response = $this->factFinderClient->sendRequest($endpoint, $params + $default);
+        $response = $this->clientFactory->create()->get($endpoint, $this->credentials->toArray() + $params + $default);
 
         if ($response['searchResult']['fieldRoles'] ?? []) {
             $this->fieldRoles->saveFieldRoles($response['searchResult']['fieldRoles'], $scopeId);
+
             return true;
         }
 

@@ -61,7 +61,7 @@ class RedirectSearchTest extends TestCase
         $this->observer->execute(new Observer(['request' => $request]));
     }
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->config   = $this->createMock(CommunicationConfigInterface::class);
         $this->redirect = $this->createMock(RedirectInterface::class);

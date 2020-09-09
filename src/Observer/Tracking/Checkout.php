@@ -30,6 +30,6 @@ class Checkout extends BaseTracking implements ObserverInterface
             ]);
         }, $cart->getAllVisibleItems());
 
-        $this->tracking->execute('checkout', $trackingProducts);
+        $this->getTracking()->execute('checkout', $trackingProducts);
     }
 }

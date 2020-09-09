@@ -49,7 +49,7 @@ class LogExceptionsTest extends TestCase
         }));
     }
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->scopeConfig = $this->createMock(ScopeConfigInterface::class);
         $this->logger      = $this->createMock(LoggerInterface::class);

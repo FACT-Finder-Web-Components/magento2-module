@@ -8,8 +8,8 @@ use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
 use Magento\Framework\Controller\Result\JsonFactory;
 use Magento\Store\Model\StoreManagerInterface;
-use Omikron\Factfinder\Api\Config\ChannelProviderInterface;
-use Omikron\Factfinder\Model\Api\PushImport;
+use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
+use Omikron\Factfinder\Model\Api\ActionFactory;
 use Omikron\Factfinder\Model\Export\FeedFactory as FeedGeneratorFactory;
 use Omikron\Factfinder\Model\FtpUploader;
 use Omikron\Factfinder\Model\StoreEmulation;
@@ -20,8 +20,8 @@ class Feed extends Action
     /** @var JsonFactory */
     private $jsonResultFactory;
 
-    /** @var ChannelProviderInterface */
-    private $channelProvider;
+    /** @var CommunicationConfigInterface */
+    private $communicationConfig;
 
     /** @var StoreEmulation */
     private $storeEmulation;
@@ -35,8 +35,8 @@ class Feed extends Action
     /** @var FtpUploader */
     private $ftpUploader;
 
-    /** @var PushImport */
-    private $pushImport;
+    /** @var ActionFactory  */
+    private $actionFactory;
 
     /** @var StoreManagerInterface */
     private $storeManager;
@@ -47,22 +47,22 @@ class Feed extends Action
     public function __construct(
         Context $context,
         JsonFactory $jsonResultFactory,
-        ChannelProviderInterface $channelProvider,
+        CommunicationConfigInterface $communicationConfig,
         StoreEmulation $storeEmulation,
         FeedGeneratorFactory $feedGeneratorFactory,
         CsvFactory $csvFactory,
         FtpUploader $ftpUploader,
-        PushImport $pushImport,
+        ActionFactory $actionFactory,
         StoreManagerInterface $storeManager
     ) {
         parent::__construct($context);
         $this->jsonResultFactory    = $jsonResultFactory;
-        $this->channelProvider      = $channelProvider;
+        $this->communicationConfig  = $communicationConfig;
         $this->storeEmulation       = $storeEmulation;
         $this->feedGeneratorFactory = $feedGeneratorFactory;
         $this->csvFactory           = $csvFactory;
         $this->ftpUploader          = $ftpUploader;
-        $this->pushImport           = $pushImport;
+        $this->actionFactory      = $actionFactory;
         $this->storeManager         = $storeManager;
     }
 
@@ -78,7 +78,8 @@ class Feed extends Action
                 $stream   = $this->csvFactory->create(['filename' => "factfinder/{$filename}"]);
                 $this->feedGeneratorFactory->create($this->feedType)->generate($stream);
                 $this->ftpUploader->upload($filename, $stream);
-                $this->pushImport->execute($storeId);
+                $this->actionFactory->withApiVersion($this->communicationConfig->getVersion())
+                    ->getPushImport()->execute($storeId);
             });
 
             $result->setData(['message' => __('Feed successfully generated')]);

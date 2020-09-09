@@ -8,13 +8,14 @@ use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
 use Magento\Framework\Controller\Result\JsonFactory;
 use Magento\Store\Model\StoreManagerInterface;
+use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
 use Omikron\Factfinder\Exception\ResponseException;
-use Omikron\Factfinder\Model\Api\UpdateFieldRoles;
+use Omikron\Factfinder\Model\Api\ActionFactory;
 
 class Update extends Action
 {
-    /** @var UpdateFieldRoles */
-    private $updateFieldRoles;
+    /** @var ActionFactory */
+    private $actionFactory;
 
     /** @var JsonFactory */
     private $jsonResultFactory;
@@ -22,16 +23,21 @@ class Update extends Action
     /** @var StoreManagerInterface */
     private $storeManager;
 
+    /** @var CommunicationConfigInterface */
+    private $communicationConfig;
+
     public function __construct(
         Context $context,
-        UpdateFieldRoles $updateFieldRoles,
+        ActionFactory $actionFactory,
         JsonFactory $jsonFactory,
-        StoreManagerInterface $storeManager
+        StoreManagerInterface $storeManager,
+        CommunicationConfigInterface $communicationConfig
     ) {
         parent::__construct($context);
-        $this->updateFieldRoles  = $updateFieldRoles;
-        $this->jsonResultFactory = $jsonFactory;
-        $this->storeManager      = $storeManager;
+        $this->actionFactory     = $actionFactory;
+        $this->jsonResultFactory   = $jsonFactory;
+        $this->storeManager        = $storeManager;
+        $this->communicationConfig = $communicationConfig;
     }
 
     public function execute()
@@ -39,7 +45,10 @@ class Update extends Action
         $result = $this->jsonResultFactory->create();
         preg_match('@/store/([0-9]+)/@', (string) $this->_redirect->getRefererUrl(), $match);
         try {
-            $this->updateFieldRoles->execute((int) ($match[1] ?? $this->storeManager->getDefaultStoreView()->getId()));
+            $this->actionFactory
+                ->withApiVersion($this->communicationConfig->getVersion())
+                ->getUpdateFieldRoles()
+                ->execute((int) ($match[1] ?? $this->storeManager->getDefaultStoreView()->getId()));
             $result->setData(['message' => __('Field roles updated successfully')]);
         } catch (ResponseException $e) {
             $result->setData(['message' => $e->getMessage()]);

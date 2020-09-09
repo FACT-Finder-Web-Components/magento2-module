@@ -5,7 +5,7 @@
             <argument name="channelProvider" xsi:type="object">Omikron\Factfinder\Model\Config\CommunicationConfig</argument>
         </arguments>
     </type>
-    <type name="Omikron\Factfinder\Model\Config\Source\Attribute">
+    <type name="Omikron\Factfinder\Model\Adminhtml\System\Config\Source\Attribute">
         <arguments>
             <argument name="collectionFactory" xsi:type="object">Omikron\Factfinder\Model\Product\Attribute\CollectionFactory</argument>
         </arguments>

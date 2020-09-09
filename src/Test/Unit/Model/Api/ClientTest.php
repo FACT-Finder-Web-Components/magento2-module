@@ -2,15 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Omikron\Factfinder\Model;
+namespace Omikron\Factfinder\Model\Api;
 
+use Magento\Framework\HTTP\Client\Curl;
 use Magento\Framework\HTTP\ClientFactory;
 use Magento\Framework\HTTP\ClientInterface;
 use Magento\Framework\Serialize\SerializerInterface;
-use Omikron\Factfinder\Api\Config\AuthConfigInterface;
 use Omikron\Factfinder\Exception\ResponseException;
-use Omikron\Factfinder\Model\Api\Credentials;
-use Omikron\Factfinder\Model\Api\CredentialsFactory;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
@@ -35,7 +33,7 @@ class ClientTest extends TestCase
         $this->serializerMock->expects($this->once())->method('unserialize')->willThrowException(new ResponseException());
 
         $this->expectException(ResponseException::class);
-        $this->client->sendRequest('http://fake-ff-server.com/Search.ff', []);
+        $this->client->get('http://fake-ff-server.com/Search.ff', []);
     }
 
     /**
@@ -47,7 +45,7 @@ class ClientTest extends TestCase
         $this->httpClientMock->method('getBody')->willReturn('{}');
 
         $this->expectException(ResponseException::class);
-        $this->client->sendRequest('http://fake-ff-server.com/Search.ff', []);
+        $this->client->get('http://fake-ff-server.com/Search.ff', []);
     }
 
     /**
@@ -60,7 +58,7 @@ class ClientTest extends TestCase
         $this->httpClientMock->method('getBody')->willReturn($response);
         $this->serializerMock->expects($this->once())->method('unserialize')->willReturn(json_decode($response, true));
 
-        $response = $this->client->sendRequest('http://fake-ff-server.com/Search.ff', []);
+        $response = $this->client->get('http://fake-ff-server.com/Search.ff', []);
 
         $this->assertArrayHasKey('searchResult', $response, 'Correct response should contains searchResult key');
     }
@@ -77,13 +75,13 @@ class ClientTest extends TestCase
         $this->httpClientMock->method('getBody')->willReturn('{}');
         $this->serializerMock->expects($this->once())->method('unserialize')->willReturn([]);
 
-        $this->client->sendRequest('http://fake-ff-server.com/Search.ff', ['username' => $newUserName]);
+        $this->client->get('http://fake-ff-server.com/Search.ff', ['username' => $newUserName]);
     }
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->serializerMock = $this->createMock(SerializerInterface::class);
-        $this->httpClientMock = $this->createMock(ClientInterface::class);
+        $this->httpClientMock = $this->createMock(Curl::class);
 
         /** @var CredentialsFactory $credentialsFactory */
         $credentialsFactory = $this->getMockBuilder(CredentialsFactory::class)
@@ -94,9 +92,7 @@ class ClientTest extends TestCase
 
         $this->client = new Client(
             $this->createConfiguredMock(ClientFactory::class, ['create' => $this->httpClientMock]),
-            $this->serializerMock,
-            $this->createMock(AuthConfigInterface::class),
-            $credentialsFactory
+            $this->serializerMock
         );
     }
 }

@@ -12,7 +12,8 @@ use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
 use Omikron\Factfinder\Api\Data\TrackingProductInterface;
 use Omikron\Factfinder\Api\Data\TrackingProductInterfaceFactory;
 use Omikron\Factfinder\Api\FieldRolesInterface;
-use Omikron\Factfinder\Model\Api\Tracking;
+use Omikron\Factfinder\Model\Api\Action\Standard\Tracking;
+use Omikron\Factfinder\Model\Api\ActionFactory;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
@@ -20,6 +21,9 @@ class CheckoutTest extends TestCase
 {
     /** @var MockObject|Tracking */
     private $trackingMock;
+
+    /** @var MockObject|ActionFactory */
+    private $actionFactoryMock;
 
     /** @var MockObject|TrackingProductInterfaceFactory */
     private $trackingProductFactoryMock;
@@ -57,7 +61,7 @@ class CheckoutTest extends TestCase
         $this->checkoutObserver->execute(new Observer(['quote' => $this->createMock(Quote::class)]));
     }
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->trackingMock = $this->createMock(Tracking::class);
         $this->configMock = $this->createMock(CommunicationConfigInterface::class);
@@ -66,8 +70,10 @@ class CheckoutTest extends TestCase
             ->setMethods(['create'])
             ->getMock();
 
+        $this->actionFactoryMock = $this->createConfiguredMock(ActionFactory::class, ['getTracking' => $this->trackingMock]);
+        $this->actionFactoryMock->method('withApiVersion')->with($this->anything())->willReturn($this->actionFactoryMock);
         $this->checkoutObserver = new Checkout(
-            $this->trackingMock,
+            $this->actionFactoryMock,
             $this->trackingProductFactoryMock,
             $this->createMock(FieldRolesInterface::class),
             $this->configMock

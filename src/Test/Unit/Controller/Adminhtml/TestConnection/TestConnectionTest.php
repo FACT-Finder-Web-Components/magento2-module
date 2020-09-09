@@ -12,7 +12,8 @@ use Omikron\Factfinder\Api\Config\AuthConfigInterface;
 use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
 use Omikron\Factfinder\Model\Api\Credentials;
 use Omikron\Factfinder\Model\Api\CredentialsFactory;
-use Omikron\Factfinder\Model\Api\TestConnection as ApiConnectionTest;
+use Omikron\Factfinder\Model\Api\Action\Standard\TestConnection as ApiConnectionTest;
+use Omikron\Factfinder\Model\Api\ActionFactory;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
@@ -20,6 +21,9 @@ class TestConnectionTest extends TestCase
 {
     /** @var TestConnection */
     private $controller;
+
+    /** @var MockObject|ActionFactory */
+    private $actionFactoryMock;
 
     /** @var MockObject|RequestInterface */
     private $request;
@@ -32,7 +36,7 @@ class TestConnectionTest extends TestCase
         $this->assertNull($this->getExpectedException());
     }
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $credentialsFactory = $this->getMockBuilder(CredentialsFactory::class)
             ->disableOriginalConstructor()
@@ -41,6 +45,9 @@ class TestConnectionTest extends TestCase
         $credentialsFactory->method('create')->willReturn($this->createMock(Credentials::class));
 
         $this->request = $this->createMock(RequestInterface::class);
+        $this->actionFactoryMock = $this->createConfiguredMock(ActionFactory::class, ['getTestConnection' => $this->createMock(ApiConnectionTest::class)]);
+        $this->actionFactoryMock->method('withCredentials')->with($this->anything())->willReturn($this->actionFactoryMock);
+        $this->actionFactoryMock->method('withApiVersion')->with($this->anything())->willReturn($this->actionFactoryMock);
 
         $this->controller = new TestConnection(
             $this->createConfiguredMock(Context::class, ['getRequest' => $this->request]),
@@ -48,7 +55,7 @@ class TestConnectionTest extends TestCase
             $credentialsFactory,
             $this->createMock(AuthConfigInterface::class),
             $this->createMock(CommunicationConfigInterface::class),
-            $this->createMock(ApiConnectionTest::class)
+            $this->actionFactoryMock
         );
     }
 }

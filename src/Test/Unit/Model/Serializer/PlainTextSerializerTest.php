@@ -29,7 +29,7 @@ class PlainTextSerializerTest extends TestCase
         $this->assertSame(['success' => false], $result, "Result should be an associative array with 'success' key and value equal to 'false'");
     }
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->serializer = new PlainTextSerializer();
     }

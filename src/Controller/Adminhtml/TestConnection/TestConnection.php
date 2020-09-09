@@ -10,8 +10,10 @@ use Magento\Framework\Phrase;
 use Omikron\Factfinder\Api\Config\AuthConfigInterface;
 use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
 use Omikron\Factfinder\Exception\ResponseException;
+use Omikron\Factfinder\Model\Api\Credentials;
 use Omikron\Factfinder\Model\Api\CredentialsFactory;
-use Omikron\Factfinder\Model\Api\TestConnection as ApiConnectionTest;
+use Omikron\Factfinder\Model\Api\ActionFactory;
+use Omikron\Factfinder\Model\Config\CommunicationConfig;
 
 class TestConnection extends Action
 {
@@ -24,8 +26,8 @@ class TestConnection extends Action
     /** @var CredentialsFactory */
     private $credentialsFactory;
 
-    /** @var ApiConnectionTest */
-    private $testConnection;
+    /** @var ActionFactory */
+    private $actionFactory;
 
     /** @var AuthConfigInterface */
     private $authConfig;
@@ -39,12 +41,12 @@ class TestConnection extends Action
         CredentialsFactory $credentialsFactory,
         AuthConfigInterface $authConfig,
         CommunicationConfigInterface $communicationConfig,
-        ApiConnectionTest $testConnection
+        ActionFactory $actionFactory
     ) {
         parent::__construct($context);
         $this->jsonResultFactory   = $jsonResultFactory;
         $this->credentialsFactory  = $credentialsFactory;
-        $this->testConnection      = $testConnection;
+        $this->actionFactory     = $actionFactory;
         $this->authConfig          = $authConfig;
         $this->communicationConfig = $communicationConfig;
     }
@@ -55,9 +57,15 @@ class TestConnection extends Action
 
         try {
             $request   = $this->getRequest();
-            $params    = $this->getCredentials($request->getParams()) + ['channel' => $request->getParam('channel')];
+            $params    = ['channel' => $request->getParam('channel')];
             $serverUrl = $request->getParam('address', $this->communicationConfig->getAddress());
-            $this->testConnection->execute($serverUrl, $params);
+
+            $testConnection = $this->actionFactory
+                ->withCredentials($this->getCredentials($request->getParams()))
+                ->withApiVersion($request->getParam('version'))
+                ->getTestConnection();
+
+            $testConnection->execute($serverUrl, $params);
         } catch (ResponseException $e) {
             $message = $e->getMessage();
         }
@@ -65,17 +73,13 @@ class TestConnection extends Action
         return $this->jsonResultFactory->create()->setData(['message' => $message]);
     }
 
-    private function getCredentials(array $params): array
+    private function getCredentials(array $params): Credentials
     {
         // The password wasn't edited, load it from config
         if (!isset($params['password']) || $params['password'] === $this->obscuredValue) {
             $params['password'] = $this->authConfig->getPassword();
         }
 
-        $params += [
-            'prefix'  => $params['authentication_prefix'] ?? $this->authConfig->getAuthenticationPrefix(),
-            'postfix' => $params['authentication_postfix'] ?? $this->authConfig->getAuthenticationPostfix(),
-        ];
-        return $this->credentialsFactory->create($params)->toArray();
+        return $this->credentialsFactory->create($params);
     }
 }

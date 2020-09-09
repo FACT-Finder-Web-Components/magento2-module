@@ -2,13 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Omikron\Factfinder\Model\Api;
+namespace Omikron\Factfinder\Model\Api\Action\Standard;
 
 use Omikron\Factfinder\Api\ClientInterface;
+use Omikron\Factfinder\Model\Api\ClientFactory;
 use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
 use Omikron\Factfinder\Api\SessionDataInterface;
+use Omikron\Factfinder\Model\Api\Credentials;
 use Omikron\Factfinder\Model\Data\TrackingProduct;
-use PHPUnit\Framework\Constraint\ArraySubset;
+use PHPUnit\Framework\Constraint\ArrayHasKey;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
@@ -30,7 +32,7 @@ class TrackingTest extends TestCase
     {
         $this->sessionDataMock->method('getUserId')->willReturn(42);
 
-        $this->factFinderClientMock->expects($this->once())->method('sendRequest')
+        $this->factFinderClientMock->expects($this->once())->method('get')
             ->with('http://fake-factfinder.com/FACT-Finder-7.3/Tracking.ff', [
                 'event'    => 'checkout',
                 'channel'  => 'test-channel',
@@ -65,8 +67,8 @@ class TrackingTest extends TestCase
         $this->sessionDataMock->method('getUserId')->willReturn(0);
 
         $this->factFinderClientMock->expects($this->once())
-            ->method('sendRequest')
-            ->with($this->anything(), $this->logicalNot(new ArraySubset(['products' => [['userId' => 0]]])));
+            ->method('get')
+            ->with($this->anything(), $this->callback($this->productsContainsField('userId')));
 
         $this->tracking->execute('checkout', $trackingProducts);
     }
@@ -80,7 +82,7 @@ class TrackingTest extends TestCase
         return [$trackingProducts];
     }
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->factFinderClientMock = $this->createMock(ClientInterface::class);
         $this->sessionDataMock      = $this->createMock(SessionDataInterface::class);
@@ -94,7 +96,15 @@ class TrackingTest extends TestCase
         $this->tracking = new Tracking(
             $this->factFinderClientMock,
             $communicationConfig,
-            $this->sessionDataMock
+            $this->sessionDataMock,
+            $this->createMock(Credentials::class)
         );
+    }
+
+    private function productsContainsField($field): callable
+    {
+        return function ($payload) use ($field) : bool {
+            return !isset($payload['products'][0][$field]);
+        };
     }
 }

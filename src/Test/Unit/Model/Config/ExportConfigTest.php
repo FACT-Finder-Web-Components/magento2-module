@@ -30,7 +30,7 @@ class ExportConfigTest extends TestCase
         $this->assertCount(2, $result);
     }
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $scopeConfig  = $this->createMock(ScopeConfigInterface::class);
         $this->testee = new ExportConfig($scopeConfig, new Json());

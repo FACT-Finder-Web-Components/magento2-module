@@ -2,14 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Omikron\Factfinder\Model\Api;
+namespace Omikron\Factfinder\Model\Api\Action\Standard;
 
 use Omikron\Factfinder\Api\ClientInterface;
+use Omikron\Factfinder\Api\Action\TrackingInterface;
+use Omikron\Factfinder\Model\Api\ClientFactory;
 use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
 use Omikron\Factfinder\Api\Data\TrackingProductInterface;
 use Omikron\Factfinder\Api\SessionDataInterface;
+use Omikron\Factfinder\Model\Api\Credentials;
 
-class Tracking
+class Tracking implements TrackingInterface
 {
     /** @var CommunicationConfigInterface */
     private $communicationConfig;
@@ -20,24 +23,29 @@ class Tracking
     /** @var SessionDataInterface */
     private $sessionData;
 
+    /** @var Credentials */
+    private $credentials;
+
     /** @var string */
     private $apiName = 'Tracking.ff';
 
     public function __construct(
         ClientInterface $factFinderClient,
         CommunicationConfigInterface $communicationConfig,
-        SessionDataInterface $sessionData
+        SessionDataInterface $sessionData,
+        Credentials $credentials
     ) {
         $this->factFinderClient    = $factFinderClient;
         $this->communicationConfig = $communicationConfig;
         $this->sessionData         = $sessionData;
+        $this->credentials         = $credentials;
     }
 
     /**
      * @param string                     $event
      * @param TrackingProductInterface[] $trackingProducts
      */
-    public function execute(string $event, array $trackingProducts)
+    public function execute(string $event, array $trackingProducts): void
     {
         $params = [
             'event'    => $event,
@@ -54,6 +62,6 @@ class Tracking
             }, $trackingProducts),
         ];
 
-        $this->factFinderClient->sendRequest($this->communicationConfig->getAddress() . '/' . $this->apiName, $params);
+        $this->factFinderClient->get($this->communicationConfig->getAddress() . '/' . $this->apiName, $this->credentials->toArray() + $params);
     }
 }
