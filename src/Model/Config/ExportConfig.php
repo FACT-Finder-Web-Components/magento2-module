@@ -26,19 +26,25 @@ class ExportConfig
 
     public function getMultiAttributes(?int $storeId = null): array
     {
-        return array_column(array_filter($this->getConfigValue($storeId), function (array $row): bool {
+        return $this->getAttributeCodes($storeId, function (array $row): bool {
             return $row['multi'];
-        }), 'code');
+        });
     }
 
     public function getSingleFields(?int $storeId = null): array
     {
-        return array_column(array_filter($this->getConfigValue($storeId), function (array $row): bool {
+        return $this->getAttributeCodes($storeId, function (array $row): bool {
             return !$row['multi'];
-        }), 'code');
+        });
     }
 
-    protected function getConfigValue(?int $storeId): array
+    private function getAttributeCodes(?int $storeId, callable $condition): array
+    {
+        $rows = array_filter($this->getConfigValue($storeId), $condition);
+        return array_values(array_unique(array_column($rows, 'code')));
+    }
+
+    private function getConfigValue(?int $storeId): array
     {
         $value = $this->scopeConfig->getValue(self::CONFIG_PATH, ScopeInterface::SCOPE_STORES, $storeId);
         return array_map(function (array $row): array {

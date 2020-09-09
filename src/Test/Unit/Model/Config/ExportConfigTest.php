@@ -27,6 +27,7 @@ class ExportConfigTest extends TestCase
         $this->assertNotContains('climate', $result);
         $this->assertContains('color', $result);
         $this->assertContains('gender', $result);
+        $this->assertCount(2, $result);
     }
 
     protected function setUp()
@@ -36,6 +37,6 @@ class ExportConfigTest extends TestCase
 
         $scopeConfig->method('getValue')
             ->with('factfinder/export/attributes', 'stores', 42)
-            ->willReturn('{"_1":{"code":"color","multi":"0"},"_2":{"code":"climate","multi":"1"},"_3":{"code":"gender","multi":"0"}}');
+            ->willReturn('{"_1":{"code":"color","multi":"0"},"_2":{"code":"climate","multi":"1"},"_3":{"code":"gender","multi":"0"},"_4":{"code":"gender","multi":"0"}}');
     }
 }
