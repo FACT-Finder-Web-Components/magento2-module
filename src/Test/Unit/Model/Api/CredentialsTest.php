@@ -32,7 +32,7 @@ class CredentialsTest extends TestCase
         $this->assertSame($expected, (string) $this->credentials);
     }
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->credentials = new Credentials('user', 'userpw', 'FACT-FINDER', 'FACT-FINDER');
     }

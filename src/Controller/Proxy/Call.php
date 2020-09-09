@@ -8,9 +8,9 @@ use Magento\Framework\App\Action;
 use Magento\Framework\Controller\Result\JsonFactory as JsonResultFactory;
 use Magento\Framework\Controller\Result\RawFactory as RawResultFactory;
 use Magento\Framework\Exception\NotFoundException;
-use Omikron\Factfinder\Api\ClientInterface;
 use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
 use Omikron\Factfinder\Exception\ResponseException;
+use Omikron\Factfinder\Model\Api\ClientFactory;
 use Omikron\Factfinder\Model\Http\ParameterUtils;
 
 class Call extends Action\Action
@@ -21,8 +21,8 @@ class Call extends Action\Action
     /** @var RawResultFactory */
     private $rawResultFactory;
 
-    /** @var ClientInterface */
-    private $apiClient;
+    /** @var ClientFactory */
+    private $clientFactory;
 
     /** @var CommunicationConfigInterface */
     private $communicationConfig;
@@ -34,14 +34,14 @@ class Call extends Action\Action
         Action\Context $context,
         JsonResultFactory $jsonResultFactory,
         RawResultFactory $rawResultFactory,
-        ClientInterface $apiClient,
+        ClientFactory $clientFactory,
         CommunicationConfigInterface $communicationConfig,
         ParameterUtils $parameterUtils
     ) {
         parent::__construct($context);
         $this->jsonResultFactory   = $jsonResultFactory;
         $this->rawResultFactory    = $rawResultFactory;
-        $this->apiClient           = $apiClient;
+        $this->clientFactory       = $clientFactory;
         $this->communicationConfig = $communicationConfig;
         $this->parameterUtils      = $parameterUtils;
     }
@@ -58,7 +58,7 @@ class Call extends Action\Action
         try {
             $endpoint = $this->communicationConfig->getAddress() . '/' . $endpoint;
             $params   = $this->parameterUtils->fixedGetParams($this->getRequest()->getParams());
-            $response = $this->apiClient->sendRequest($endpoint, $params);
+            $response = $this->clientFactory->create()->get($endpoint, $params);
             $this->_eventManager->dispatch('ff_proxy_post_dispatch', [
                 'endpoint' => $endpoint,
                 'params'   => $params,

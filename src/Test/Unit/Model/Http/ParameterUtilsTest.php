@@ -27,7 +27,7 @@ class ParameterUtilsTest extends TestCase
         );
     }
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->paramUtils = new ParameterUtils();
     }

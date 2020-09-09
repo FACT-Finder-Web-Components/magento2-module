@@ -2,35 +2,40 @@
 
 declare(strict_types=1);
 
-namespace Omikron\Factfinder\Model\Api;
+namespace Omikron\Factfinder\Model\Api\Ng\Action;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Store\Model\ScopeInterface;
+use Omikron\Factfinder\Api\Action\PushImportInterface;
 use Omikron\Factfinder\Api\ClientInterface;
+use Omikron\Factfinder\Api\ClientInterfaceFactory;
 use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
+use Omikron\Factfinder\Model\Api\Credentials;
 
-class PushImport
+class PushImport implements PushImportInterface
 {
-    /** @var ClientInterface */
-    protected $apiClient;
+    /** @var ClientInterfaceFactory */
+    private $clientFactory;
 
     /** @var CommunicationConfigInterface */
-    protected $communicationConfig;
-
-    /** @var string */
-    protected $apiName = 'Import.ff';
+    private $communicationConfig;
 
     /** @var ScopeConfigInterface */
-    protected $scopeConfig;
+    private $scopeConfig;
+
+    /** @var Credentials */
+    private $credentials;
 
     public function __construct(
-        ClientInterface $apiClient,
+        ClientInterfaceFactory $clientFactory,
         CommunicationConfigInterface $communicationConfig,
-        ScopeConfigInterface $scopeConfig
+        ScopeConfigInterface $scopeConfig,
+        Credentials $credentials
     ) {
-        $this->apiClient           = $apiClient;
+        $this->clientFactory       = $clientFactory;
         $this->communicationConfig = $communicationConfig;
         $this->scopeConfig         = $scopeConfig;
+        $this->credentials         = $credentials;
     }
 
     public function execute(int $scopeId = null, array $params = []): bool
@@ -40,16 +45,16 @@ class PushImport
         }
 
         $params += [
-            'channel'  => $this->communicationConfig->getChannel($scopeId),
-            'quiet'    => 'true',
-            'download' => 'true',
+            'channel' => $this->communicationConfig->getChannel($scopeId),
+            'quiet'   => 'true',
         ];
 
         $response = [];
-        $endpoint = $this->communicationConfig->getAddress() . '/' . $this->apiName;
+        $endpoint = $this->communicationConfig->getAddress() . '/rest/v3/import';
+        /** @var ClientInterface $client */
+        $client = $this->clientFactory->create()->setHeaders(['Authorization' => $this->credentials->toBasicAuth()]);
         foreach ($this->getPushImportDataTypes($scopeId) as $type) {
-            $params['type'] = $type;
-            $response       = array_merge_recursive($response, $this->apiClient->sendRequest($endpoint, $params));
+            $response = array_merge_recursive($response, $client->post($endpoint . "/$type", $params));
         }
 
         return $response && !(isset($response['errors']) || isset($response['error']));
@@ -59,6 +64,7 @@ class PushImport
     {
         $configPath = 'factfinder/data_transfer/ff_push_import_type';
         $dataTypes  = (string) $this->scopeConfig->getValue($configPath, ScopeInterface::SCOPE_STORE, $scopeId);
-        return $dataTypes ? explode(',', $dataTypes) : [];
+
+        return $dataTypes ? explode(',', str_replace('data', 'search', $dataTypes)) : [];
     }
 }

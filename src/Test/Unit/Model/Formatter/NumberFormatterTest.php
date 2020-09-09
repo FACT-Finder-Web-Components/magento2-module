@@ -20,7 +20,7 @@ class NumberFormatterTest extends TestCase
         $this->assertSame('42.205', $this->formatter->format(42.2051, 3));
     }
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->formatter = new NumberFormatter();
     }

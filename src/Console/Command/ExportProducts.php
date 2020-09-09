@@ -9,7 +9,7 @@ use Magento\Framework\App\Filesystem\DirectoryList;
 use Magento\Framework\App\State;
 use Magento\Framework\Filesystem;
 use Magento\Store\Model\StoreManagerInterface;
-use Omikron\Factfinder\Model\Api\PushImport;
+use Omikron\Factfinder\Model\Api\ActionFactory;
 use Omikron\Factfinder\Model\Config\CommunicationConfig;
 use Omikron\Factfinder\Model\Export\FeedFactory as FeedGeneratorFactory;
 use Omikron\Factfinder\Model\FtpUploader;
@@ -42,8 +42,8 @@ class ExportProducts extends \Symfony\Component\Console\Command\Command
     /** @var FtpUploader */
     private $ftpUploader;
 
-    /** @var PushImport */
-    private $pushImport;
+    /** @var ActionFactory */
+    private $actionFactory;
 
     /** @var State */
     private $state;
@@ -59,7 +59,7 @@ class ExportProducts extends \Symfony\Component\Console\Command\Command
         CsvFactory $csvFactory,
         FtpUploader $ftpUploader,
         CommunicationConfig $communicationConfig,
-        PushImport $pushImport,
+        ActionFactory $actionFactory,
         State $state,
         Filesystem $filesystem
     ) {
@@ -71,7 +71,7 @@ class ExportProducts extends \Symfony\Component\Console\Command\Command
         $this->csvFactory           = $csvFactory;
         $this->ftpUploader          = $ftpUploader;
         $this->communicationConfig  = $communicationConfig;
-        $this->pushImport           = $pushImport;
+        $this->actionFactory      = $actionFactory;
         $this->state                = $state;
         $this->filesystem           = $filesystem;
     }
@@ -111,7 +111,9 @@ class ExportProducts extends \Symfony\Component\Console\Command\Command
                     $output->writeln("Store {$storeId}: File {$filename} has been uploaded to FTP.");
                 }
 
-                if ($input->getOption('push-import') && $this->pushImport->execute((int) $storeId)) {
+                $pushImport = $this->actionFactory->withApiVersion($this->communicationConfig->getVersion())
+                    ->getPushImport();
+                if ($input->getOption('push-import') && $pushImport->execute((int) $storeId)) {
                     $output->writeln("Store {$storeId}: Push Import for File {$filename} has been triggered.");
                 }
             });

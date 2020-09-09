@@ -6,6 +6,7 @@ namespace Omikron\Factfinder\ViewModel;
 
 use Magento\Catalog\Model\Category;
 use Magento\Framework\Registry;
+use Omikron\Factfinder\Model\Config\CommunicationConfig;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
@@ -26,11 +27,11 @@ class CategoryPathTest extends TestCase
         $this->assertSame($value, $this->categoryPath->getValue());
     }
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->currentCategory = $this->createMock(Category::class);
         $registry              = new Registry();
-        $this->categoryPath    = new CategoryPath($registry);
+        $this->categoryPath    = new CategoryPath($registry, $this->createMock(CommunicationConfig::class));
         $registry->register('current_category', $this->currentCategory);
     }
 

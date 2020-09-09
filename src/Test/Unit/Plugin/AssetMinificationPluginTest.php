@@ -17,7 +17,7 @@ class AssetMinificationPluginTest extends TestCase
         $this->assertNotContains(AssetMinificationPlugin::JS_LIBRARY, $this->plugin->afterGetExcludes(null, [], 'css'));
     }
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->plugin = new AssetMinificationPlugin();
     }

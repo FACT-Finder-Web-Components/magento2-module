@@ -36,7 +36,7 @@ class ExportAuthenticationTest extends TestCase
         $this->observer->execute(new Observer());
     }
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->authMock = $this->createMock(BasicAuth::class);
         $this->flagMock = $this->createMock(ActionFlag::class);

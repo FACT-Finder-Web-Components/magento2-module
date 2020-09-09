@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Omikron\Factfinder\Model\Config\Source;
+namespace Omikron\Factfinder\Model\Adminhtml\System\Config\Source;
 
 use Magento\Eav\Model\Entity\Attribute\AbstractAttribute as EavAttribute;
 use Magento\Eav\Model\ResourceModel\Entity\Attribute\CollectionFactory as AttributeCollectionFactory;
@@ -49,7 +49,7 @@ class AttributeTest extends TestCase
         $this->assertSame($expected, $this->sourceModel->toOptionArray());
     }
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->attributeCollectionFactory = $this->getMockBuilder(AttributeCollectionFactory::class)
             ->disableOriginalConstructor()
