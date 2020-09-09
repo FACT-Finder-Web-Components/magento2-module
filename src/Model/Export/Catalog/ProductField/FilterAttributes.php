@@ -67,7 +67,7 @@ class FilterAttributes implements ProductFieldInterface
      */
     private function getAttributes(int $storeId): array
     {
-        if (is_null($this->attributes)) {
+        if ($this->attributes === null) {
             $attributes       = $this->exportConfig->getMultiAttributes($storeId);
             $this->attributes = array_filter(array_map([$this->productResource, 'getAttribute'], $attributes));
         }
