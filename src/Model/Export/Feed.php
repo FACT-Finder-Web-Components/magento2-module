@@ -10,6 +10,9 @@ use Omikron\Factfinder\Api\StreamInterface;
 use Omikron\Factfinder\Model\Export\Catalog\DataProviderFactory;
 use Omikron\Factfinder\Model\Export\Catalog\ProductFieldProvider;
 
+/**
+ * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
+ */
 class Feed
 {
     /** @var ExporterInterface */
