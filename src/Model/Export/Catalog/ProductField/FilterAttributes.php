@@ -20,8 +20,8 @@ class FilterAttributes implements ProductFieldInterface
     /** @var ProductResource */
     private $productResource;
 
-    /** @var Attribute[] */
-    private $attributes;
+    /** @var Attribute[][] */
+    private $attributes = [];
 
     /** @var FilterInterface */
     private $filter;
@@ -48,15 +48,11 @@ class FilterAttributes implements ProductFieldInterface
 
     public function getValue(Product $product): string
     {
-        $storeId = (int) $product->getStoreId();
-        $values  = '';
-        foreach ($this->getAttributes($storeId) as $attribute) {
+        $values = '';
+        foreach ($this->getAttributes((int) $product->getStoreId()) as $label => $attribute) {
             $attributeValues = implode('#', $this->valuesExtractor->getAttributeValues($product, $attribute));
-            if ($attributeValues) {
-                $values .= "|{$this->filter->filterValue($attribute->getStoreLabel($storeId))}={$attributeValues}";
-            }
+            if ($attributeValues) $values .= "|{$label}={$attributeValues}";
         }
-
         return $values ? "{$values}|" : '';
     }
 
@@ -67,10 +63,20 @@ class FilterAttributes implements ProductFieldInterface
      */
     private function getAttributes(int $storeId): array
     {
-        if ($this->attributes === null) {
-            $attributes       = $this->exportConfig->getMultiAttributes($storeId);
-            $this->attributes = array_filter(array_map([$this->productResource, 'getAttribute'], $attributes));
+        if (!isset($this->attributes[$storeId])) {
+            $codes      = $this->exportConfig->getMultiAttributes($storeId);
+            $attributes = array_filter(array_map([$this->productResource, 'getAttribute'], $codes));
+            $labels     = array_map($this->getAttributeLabel($storeId), $attributes);
+
+            $this->attributes[$storeId] = array_combine($labels, $attributes);
         }
-        return $this->attributes;
+        return $this->attributes[$storeId];
+    }
+
+    private function getAttributeLabel(int $storeId): callable
+    {
+        return function (Attribute $attribute) use ($storeId): string {
+            return $this->filter->filterValue((string) $attribute->getStoreLabel($storeId));
+        };
     }
 }
