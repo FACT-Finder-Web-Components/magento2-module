@@ -6,22 +6,21 @@
                 <is_enabled>0</is_enabled>
                 <logging_enabled>0</logging_enabled>
                 <password backend_model="Magento\Config\Model\Config\Backend\Encrypted" />
+                <use_for_categories>1</use_for_categories>
                 <show_add_to_cart_button>1</show_add_to_cart_button>
                 <ff_enrichment>0</ff_enrichment>
                 <tracking_product_number_field_role>{"brand":"Brand","campaignProductNumber":"ProductNumber","deeplink":"ProductURL","description":"Description","displayProductNumber":"ProductNumber","ean":"EAN","imageUrl":"ImageURL","masterArticleNumber":"Master","price":"Price","productName":"Name","trackingProductNumber":"ProductNumber"}</tracking_product_number_field_role>
             </general>
             <advanced>
                 <version>7.3</version>
-                <search_immediate>0</search_immediate>
                 <use_url_parameter>1</use_url_parameter>
-                <only_search_params>0</only_search_params>
-                <keep_filters>0</keep_filters>
+                <only_search_params>1</only_search_params>
             </advanced>
             <data_transfer>
                 <ff_cron_enabled>0</ff_cron_enabled>
                 <ff_push_import_enabled>1</ff_push_import_enabled>
-                <ff_push_import_type>suggest</ff_push_import_type>
-                <ff_product_visibility>3,4</ff_product_visibility>
+                <ff_push_import_type>data,suggest</ff_push_import_type>
+                <ff_upload_port>21</ff_upload_port>
             </data_transfer>
             <basic_auth_data_transfer>
                 <ff_upload_url_password backend_model="Magento\Config\Model\Config\Backend\Encrypted" />

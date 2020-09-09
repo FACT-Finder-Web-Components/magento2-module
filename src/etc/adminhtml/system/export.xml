@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<include xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_include.xsd">
+    <group id="export" translate="label comment" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="0">
+        <label>Export settings</label>
+        <field id="attributes" translate="label comment" sortOrder="10" showInDefault="1" showInWebsite="1">
+            <label>Fields</label>
+            <frontend_model>Omikron\Factfinder\Block\Adminhtml\System\Config\Field\ExportFields</frontend_model>
+            <backend_model>Magento\Config\Model\Config\Backend\Serialized\ArraySerialized</backend_model>
+            <comment>Multiattribute fields can contain multiple fields in one. Often they are used to collect filterable attributes and simplify their configuration in FACT-Finder.</comment>
+        </field>
+    </group>
+</include>

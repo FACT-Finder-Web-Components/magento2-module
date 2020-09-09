@@ -9,5 +9,7 @@ use Magento\Catalog\Model\Product;
  */
 interface ProductFieldInterface
 {
+    public function getName(): string;
+
     public function getValue(Product $product): string;
 }
