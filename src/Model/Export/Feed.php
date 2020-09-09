@@ -4,31 +4,58 @@ declare(strict_types=1);
 
 namespace Omikron\Factfinder\Model\Export;
 
-use Omikron\Factfinder\Api\Export\DataProviderInterface;
+use Omikron\Factfinder\Api\Export\Catalog\ProductFieldInterface;
 use Omikron\Factfinder\Api\ExporterInterface;
 use Omikron\Factfinder\Api\StreamInterface;
+use Omikron\Factfinder\Model\Export\Catalog\DataProviderFactory;
+use Omikron\Factfinder\Model\Export\Catalog\ProductFieldProvider;
 
+/**
+ * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
+ */
 class Feed
 {
     /** @var ExporterInterface */
     private $exporter;
 
-    /** @var DataProviderInterface */
-    private $dataProvider;
+    /** @var DataProviderFactory */
+    private $dataProviderFactory;
 
     /** @var array */
     private $columns;
 
-    public function __construct(ExporterInterface $exporter, DataProviderInterface $dataProvider, array $columns)
-    {
-        $this->exporter     = $exporter;
-        $this->dataProvider = $dataProvider;
-        $this->columns      = $columns;
+    /** @var ProductFieldProvider */
+    private $fieldProvider;
+
+    public function __construct(
+        ExporterInterface $exporter,
+        DataProviderFactory $dataProviderFactory,
+        ProductFieldProvider $fieldProvider,
+        array $columns
+    ) {
+        $this->exporter            = $exporter;
+        $this->dataProviderFactory = $dataProviderFactory;
+        $this->columns             = $columns;
+        $this->fieldProvider       = $fieldProvider;
     }
 
     public function generate(StreamInterface $stream): void
     {
-        $stream->addEntity($this->columns);
-        $this->exporter->exportEntities($stream, $this->dataProvider, $this->columns);
+        $fields       = $this->fieldProvider->getFields();
+        $columns      = $this->getColumns($fields);
+        $dataProvider = $this->dataProviderFactory->create(['productFields' => $fields]);
+
+        $stream->addEntity($columns);
+        $this->exporter->exportEntities($stream, $dataProvider, $columns);
+    }
+
+    private function getColumns(array $fields): array
+    {
+        return array_values(array_unique(array_merge($this->columns, array_map([$this, 'getFieldName'], $fields))));
+    }
+
+    private function getFieldName(ProductFieldInterface $field): string
+    {
+        return $field->getName();
     }
 }

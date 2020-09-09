@@ -8,6 +8,7 @@ use Magento\Catalog\Model\Product;
 use Magento\Catalog\Model\ResourceModel\Eav\Attribute;
 use Omikron\Factfinder\Api\Filter\FilterInterface;
 use Omikron\Factfinder\Model\Formatter\NumberFormatter;
+use UnexpectedValueException;
 
 class AttributeValuesExtractor
 {
@@ -25,7 +26,8 @@ class AttributeValuesExtractor
 
     public function getAttributeValues(Product $product, Attribute $attribute): array
     {
-        $value  = $product->getDataUsingMethod($attribute->getAttributeCode());
+        $code   = $attribute->getAttributeCode();
+        $value  = $product->getDataUsingMethod($code);
         $values = [];
 
         switch ($attribute->getFrontendInput()) {
@@ -36,12 +38,16 @@ class AttributeValuesExtractor
                 $values[] = $this->numberFormatter->format((float) $value);
                 break;
             case 'select':
-                $values[] = (string) $product->getAttributeText($attribute->getAttributeCode());
+                $values[] = (string) $product->getAttributeText($code);
                 break;
             case 'multiselect':
-                $values = (array) $product->getAttributeText($attribute->getAttributeCode());
+                $values = (array) $product->getAttributeText($code);
                 break;
             default:
+                if (!is_scalar($value)) {
+                    $msg = "Attribute '{$code}' could not be exported. Please consider writing your own field model";
+                    throw new UnexpectedValueException($msg);
+                }
                 $values[] = (string) $value;
                 break;
         }

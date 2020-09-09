@@ -16,9 +16,18 @@ class CategoryPath implements ProductFieldInterface
     /** @var CategoryRepositoryInterface */
     private $categoryRepository;
 
-    public function __construct(CategoryRepositoryInterface $categoryRepository)
+    /** @var string */
+    private $fieldName;
+
+    public function __construct(CategoryRepositoryInterface $categoryRepository, string $fieldName = 'CategoryPath')
     {
         $this->categoryRepository = $categoryRepository;
+        $this->fieldName          = $fieldName;
+    }
+
+    public function getName(): string
+    {
+        return $this->fieldName;
     }
 
     public function getValue(Product $product): string

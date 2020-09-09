@@ -60,7 +60,7 @@ class FieldRolesTest extends TestCase
             'Name'          => 'product name',
             'Description'   => 'product description',
             'Short'         => 'product short description',
-            'ProductURL'    => 'http://magneto2/product-link.html',
+            'Deeplink'      => 'http://magneto2/product-link.html',
             'Price'         => '9.99',
             'Brand'         => 'Product brand',
             'Availability'  => 1,

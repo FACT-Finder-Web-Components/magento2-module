@@ -7,7 +7,7 @@ $viewModel = $block->getViewModel();
     <ff-record-list class="products list items product-items" subscribe="<?= $block->getData('subscribe') ? 'true' : 'false' ?>" unresolved>
         <ff-record class="item product product-item">
             <div class="product-item-info" data-container="product-grid">
-                <a class="product-image-container" data-redirect="{{record.ProductURL}}" data-anchor="{{record.ProductURL}}" data-redirect-target="_self">
+                <a class="product-image-container" data-redirect="{{record.Deeplink}}" data-anchor="{{record.Deeplink}}" data-redirect-target="_self">
                     <span class="product-image-wrapper">
                         <img class="product-image-photo" data-image alt="{{record.Name}}"/>
                     </span>

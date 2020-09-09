@@ -27,10 +27,14 @@ class Attribute implements OptionSourceInterface
             ];
         }, $this->collectionFactory->create()->getItems());
 
+        $options = array_filter($options, function (array $a): bool {
+            return !!$a['label'];
+        });
+
         usort($options, function (array $a, array $b): int {
             return strtolower($a['label']) <=> strtolower($b['label']);
         });
 
-        return array_merge([['value' => '', 'label' => '']], $options);
+        return $options;
     }
 }
