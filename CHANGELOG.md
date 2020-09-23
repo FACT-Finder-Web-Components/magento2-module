@@ -2,7 +2,6 @@
 ## [v1.6.3] - 2020.09.23
 ### Fixed
 - Magento CSP compatibility
-- Non printable characters were exported
 - Filter non-printable characters in export feed
 
 ## [v1.6.2] - 2020.08.06
