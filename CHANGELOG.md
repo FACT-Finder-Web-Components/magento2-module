@@ -1,4 +1,9 @@
 # Changelog
+## [v1.6.3] - 2020.09.23
+### Fixed
+- Magento CSP compatibility
+- Filter non-printable characters in export feed
+
 ## [v1.6.2] - 2020.08.06
 ### Added
 - Add information about checkout tracking to the README file
@@ -240,6 +245,7 @@
 ### Added
 - Feed Export: Export feed file is now available via separate link
 
+[v1.6.3]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v1.6.3
 [v1.6.2]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v1.6.2
 [v1.6.1]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v1.6.1
 [v1.6.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v1.6.0
