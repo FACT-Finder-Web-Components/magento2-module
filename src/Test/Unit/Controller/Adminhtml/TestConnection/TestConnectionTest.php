@@ -10,10 +10,10 @@ use Magento\Framework\Controller\Result\Json as JsonResult;
 use Magento\Framework\Controller\Result\JsonFactory;
 use Omikron\Factfinder\Api\Config\AuthConfigInterface;
 use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
-use Omikron\Factfinder\Model\Api\Credentials;
-use Omikron\Factfinder\Model\Api\CredentialsFactory;
 use Omikron\Factfinder\Model\Api\Action\Standard\TestConnection as ApiConnectionTest;
 use Omikron\Factfinder\Model\Api\ActionFactory;
+use Omikron\Factfinder\Model\Api\Credentials;
+use Omikron\Factfinder\Model\Api\CredentialsFactory;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Omikron\Factfinder\Model\Api\Ng\Action;
+namespace Omikron\Factfinder\Model\Api\Action\Ng;
 
 use Omikron\Factfinder\Api\Action\TrackingInterface;
 use Omikron\Factfinder\Api\ClientInterfaceFactory;

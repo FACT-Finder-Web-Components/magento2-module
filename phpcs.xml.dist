@@ -42,7 +42,4 @@
         <exclude-pattern>*.phtml</exclude-pattern>
     </rule>
     <rule ref="Squiz.Strings.DoubleQuoteUsage.NotRequired" />
-    <rule ref="Squiz.Arrays.ArrayDeclaration.KeyNotAligned">
-        <severity>0</severity>
-    </rule>
 </ruleset>

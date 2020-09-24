@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Omikron\Factfinder\Model\Api\Ng\Action;
+namespace Omikron\Factfinder\Model\Api\Action\Ng;
 
 use Omikron\Factfinder\Api\Action\TestConnectionInterface;
 use Omikron\Factfinder\Api\ClientInterfaceFactory;
@@ -14,7 +14,7 @@ class TestConnection implements TestConnectionInterface
     /** @var ClientInterfaceFactory */
     private $clientFactory;
 
-    /** @var Credentials  */
+    /** @var Credentials */
     private $credentials;
 
     /** @var string */
@@ -27,8 +27,8 @@ class TestConnection implements TestConnectionInterface
     }
 
     /**
-     * @param string      $serverUrl
-     * @param array       $params
+     * @param string $serverUrl
+     * @param array  $params
      *
      * @return bool
      * @throws ResponseException

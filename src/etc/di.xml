@@ -55,7 +55,7 @@
     </virtualType>
 
     <type name="Magento\Framework\View\Asset\Minification">
-        <plugin name="ff.asset.minification" type="Omikron\Factfinder\Plugin\AssetMinificationPlugin" />
+        <plugin name="ff.asset.minification" type="Omikron\Factfinder\Plugin\AssetMinificationPlugin"/>
     </type>
     <type name="Omikron\Factfinder\Controller\Export\Product">
         <arguments>
