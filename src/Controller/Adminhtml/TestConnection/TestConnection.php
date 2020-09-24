@@ -10,10 +10,9 @@ use Magento\Framework\Phrase;
 use Omikron\Factfinder\Api\Config\AuthConfigInterface;
 use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
 use Omikron\Factfinder\Exception\ResponseException;
+use Omikron\Factfinder\Model\Api\ActionFactory;
 use Omikron\Factfinder\Model\Api\Credentials;
 use Omikron\Factfinder\Model\Api\CredentialsFactory;
-use Omikron\Factfinder\Model\Api\ActionFactory;
-use Omikron\Factfinder\Model\Config\CommunicationConfig;
 
 class TestConnection extends Action
 {
@@ -46,7 +45,7 @@ class TestConnection extends Action
         parent::__construct($context);
         $this->jsonResultFactory   = $jsonResultFactory;
         $this->credentialsFactory  = $credentialsFactory;
-        $this->actionFactory     = $actionFactory;
+        $this->actionFactory       = $actionFactory;
         $this->authConfig          = $authConfig;
         $this->communicationConfig = $communicationConfig;
     }

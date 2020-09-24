@@ -48,9 +48,9 @@ class CategoryPath implements ArgumentInterface
     {
         $path  = 'ROOT';
         $value = $this->initial;
-        foreach ($this->getParentCategories($category) as $item) {
-            $value[] = sprintf("filter{$this->param}%s=%s", $path, urlencode(trim($item->getName())));
-            $path    .= urlencode('/' . trim($item->getName()));
+        foreach ($this->getCategoryPath($category) as $category) {
+            $value[] = sprintf("filter{$this->param}%s=%s", $path, urlencode(trim($category)));
+            $path    .= urlencode('/' . trim($category));
         }
 
         return $value;
@@ -58,29 +58,27 @@ class CategoryPath implements ArgumentInterface
 
     private function ngPath(Category $category): array
     {
-        return $this->initial + [sprintf('filter=%s', urlencode($this->param . ':' . implode('/', $this->getCategoryPath($category))))];
-    }
-
-    private function getCategoryPath(Category $category): array
-    {
-        return array_map(function (Category $item): string {
-            return (string) $item->getName();
-        }, $category->getParentCategories());
+        $categoryPath = $this->getCategoryPath($category);
+        return $this->initial + [sprintf('filter=%s', urlencode($this->param . ':' . implode('/', $categoryPath)))];
     }
 
     /**
      * @param Category $category
      *
-     * @return Category[]
+     * @return string[]
      */
-    private function getParentCategories(Category $category): array
+    private function getCategoryPath(Category $category): array
     {
         $categories = $category->getParentCategories();
         usort($categories, function (Category $a, Category $b): int {
             return $a->getLevel() - $b->getLevel();
         });
+        return array_map([$this, 'getCategoryName'], $categories);
+    }
 
-        return $categories;
+    private function getCategoryName(Category $category): string
+    {
+        return (string) $category->getName();
     }
 
     private function getCurrentCategory(): Category

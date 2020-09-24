@@ -13,12 +13,12 @@ use Omikron\Factfinder\Controller\Router;
 
 class CommunicationConfig implements CommunicationConfigInterface, ParametersSourceInterface
 {
-    private const PATH_CHANNEL               = 'factfinder/general/channel';
-    private const PATH_ADDRESS               = 'factfinder/general/address';
-    private const PATH_VERSION               = 'factfinder/general/version';
-    private const PATH_IS_ENABLED            = 'factfinder/general/is_enabled';
-    private const PATH_USE_PROXY             = 'factfinder/general/ff_enrichment';
-    private const PATH_DATA_TRANSFER_IMPORT  = 'factfinder/data_transfer/ff_push_import_enabled';
+    private const PATH_CHANNEL              = 'factfinder/general/channel';
+    private const PATH_ADDRESS              = 'factfinder/general/address';
+    private const PATH_VERSION              = 'factfinder/general/version';
+    private const PATH_IS_ENABLED           = 'factfinder/general/is_enabled';
+    private const PATH_USE_PROXY            = 'factfinder/general/ff_enrichment';
+    private const PATH_DATA_TRANSFER_IMPORT = 'factfinder/data_transfer/ff_push_import_enabled';
 
     /** @var ScopeConfigInterface */
     private $scopeConfig;
@@ -60,10 +60,10 @@ class CommunicationConfig implements CommunicationConfigInterface, ParametersSou
     public function getParameters(): array
     {
         return [
-            'url'     => $this->getServerUrl(),
-            'version' => $this->getVersion(),
-            'channel' => $this->getChannel(),
-        ] + ($this->getVersion() === CommunicationConfig::NG_VERSION) ? ['api' => $this->getApi()] : [];
+                'url'     => $this->getServerUrl(),
+                'version' => $this->getVersion(),
+                'channel' => $this->getChannel(),
+            ] + ($this->getVersion() === CommunicationConfig::NG_VERSION ? ['api' => $this->getApi()] : []);
     }
 
     private function getServerUrl(): string
@@ -72,5 +72,10 @@ class CommunicationConfig implements CommunicationConfigInterface, ParametersSou
             return $this->urlBuilder->getUrl('', ['_direct' => Router::FRONT_NAME]);
         }
         return $this->getAddress();
+    }
+
+    private function getApi()
+    {
+        return 'v3';
     }
 }

@@ -7,7 +7,6 @@ namespace Omikron\Factfinder\Test\Integration\Controller;
 use Magento\TestFramework\TestCase\AbstractController;
 use Omikron\Factfinder\Api\ClientInterface;
 use Omikron\Factfinder\Model\Api\ClientFactory;
-use PHPUnit\Framework\Constraint\ArraySubset;
 use PHPUnit\Framework\MockObject\MockObject;
 
 /**

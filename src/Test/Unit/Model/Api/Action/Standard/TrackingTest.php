@@ -5,12 +5,11 @@ declare(strict_types=1);
 namespace Omikron\Factfinder\Model\Api\Action\Standard;
 
 use Omikron\Factfinder\Api\ClientInterface;
-use Omikron\Factfinder\Model\Api\ClientFactory;
 use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
 use Omikron\Factfinder\Api\SessionDataInterface;
+use Omikron\Factfinder\Model\Api\ClientFactory;
 use Omikron\Factfinder\Model\Api\Credentials;
 use Omikron\Factfinder\Model\Data\TrackingProduct;
-use PHPUnit\Framework\Constraint\ArrayHasKey;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
