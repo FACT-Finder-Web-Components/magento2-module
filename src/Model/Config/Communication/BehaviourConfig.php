@@ -28,7 +28,7 @@ class BehaviourConfig implements ParametersSourceInterface
     public function getParameters(): array
     {
         return [
-            'use-url-parameter'           => $this->getFlag(self::PATH_USE_URL_PARAMETER),
+            'use-url-parameters'          => $this->getFlag(self::PATH_USE_URL_PARAMETER),
             'add-params'                  => $this->getConfig(self::PATH_ADD_PARAMS),
             'add-tracking-params'         => $this->getConfig(self::PATH_ADD_TRACKING_PARAMS),
             'keep-url-params'             => $this->getConfig(self::PATH_KEEP_URL_PARAMS),

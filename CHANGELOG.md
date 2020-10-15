@@ -1,4 +1,11 @@
 # Changelog
+## [v1.6.4] - 2020.10.15
+### Changed
+- Upgrade Web Components to version 3.15.8
+
+### Fixed
+- Make category optional in CategoryPath view model, preventing errors on Varnish ESI
+
 ## [v1.6.3] - 2020.09.23
 ### Fixed
 - Magento CSP compatibility
@@ -245,6 +252,7 @@
 ### Added
 - Feed Export: Export feed file is now available via separate link
 
+[v1.6.4]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v1.6.4
 [v1.6.3]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v1.6.3
 [v1.6.2]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v1.6.2
 [v1.6.1]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v1.6.1
