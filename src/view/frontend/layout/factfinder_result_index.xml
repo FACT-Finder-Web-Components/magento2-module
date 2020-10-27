@@ -20,6 +20,5 @@
 
         <move element="factfinder.feedbacktext" destination="factfinder.campaigns" />
         <move element="factfinder.campaigns" destination="content" before="factfinder.breadcrumb" />
-        <move element="top.search" destination="content" before="factfinder.breadcrumb" />
     </body>
 </page>
