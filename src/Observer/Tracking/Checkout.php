@@ -8,13 +8,14 @@ use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Quote\Model\Quote;
 use Magento\Quote\Model\Quote\Item;
+use Omikron\FactFinder\Communication\Resource\Tracking\Product;
 use Omikron\Factfinder\Observer\BaseTracking;
 
 class Checkout extends BaseTracking implements ObserverInterface
 {
     public function execute(Observer $observer)
     {
-        if (!$this->config->isChannelEnabled()) {
+        if (!$this->communicationConfig->isChannelEnabled()) {
             return;
         }
 
@@ -22,14 +23,20 @@ class Checkout extends BaseTracking implements ObserverInterface
         $cart = $observer->getData('quote');
 
         $trackingProducts = array_map(function (Item $item) {
-            return $this->trackingProductFactory->create([
-                'trackingNumber'      => $this->getProductData('trackingProductNumber', $item->getProduct()),
-                'masterArticleNumber' => $this->getProductData('masterArticleNumber', $item->getProduct()),
-                'price'               => $item->getPrice(),
-                'count'               => $item->getQty(),
-            ]);
+            return new Product(
+                $this->getProductData('trackingProductNumber', $item->getProduct()),
+                $this->getProductData('masterArticleNumber', $item->getProduct()),
+                $item->getPrice(),
+                $item->getQty()
+            );
         }, $cart->getAllVisibleItems());
 
-        $this->getTracking()->execute('checkout', $trackingProducts);
+        $this->getTracking()->track(
+            'checkout',
+            $this->communicationConfig->getChannel(),
+            $trackingProducts,
+            $this->sessionData->getSessionId(),
+            $this->sessionData->getUserId()
+        );
     }
 }

@@ -8,8 +8,11 @@ use Magento\Catalog\Model\Product;
 use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
 use Omikron\Factfinder\Api\Data\TrackingProductInterfaceFactory;
 use Omikron\Factfinder\Api\FieldRolesInterface;
-use Omikron\Factfinder\Api\Action\TrackingInterface;
+use Omikron\Factfinder\Api\SessionDataInterface;
+use Omikron\FactFinder\Communication\Resource\Builder;
+use Omikron\FactFinder\Communication\ResourceInterface;
 use Omikron\Factfinder\Model\Api\ActionFactory;
+use Omikron\Factfinder\Model\Api\CredentialsFactory;
 
 abstract class BaseTracking
 {
@@ -23,18 +26,28 @@ abstract class BaseTracking
     protected $fieldRoles;
 
     /** @var CommunicationConfigInterface */
-    protected $config;
+    protected $communicationConfig;
+
+    /** @var SessionDataInterface */
+    protected $sessionData;
+
+    /** @var CredentialsFactory */
+    private $credentialsFactory;
 
     public function __construct(
         ActionFactory $actionFactory,
         TrackingProductInterfaceFactory $trackingProductFactory,
         FieldRolesInterface $fieldRoles,
-        CommunicationConfigInterface $config
+        CommunicationConfigInterface $communicationConfig,
+        CredentialsFactory $credentialsFactory,
+        SessionDataInterface $sessionData
     ) {
-        $this->actionFactory        = $actionFactory;
+        $this->actionFactory          = $actionFactory;
         $this->trackingProductFactory = $trackingProductFactory;
         $this->fieldRoles             = $fieldRoles;
-        $this->config                 = $config;
+        $this->communicationConfig    = $communicationConfig;
+        $this->credentialsFactory     = $credentialsFactory;
+        $this->sessionData            = $sessionData;
     }
 
     protected function getProductData(string $roleName, Product $product): string
@@ -42,8 +55,12 @@ abstract class BaseTracking
         return $this->fieldRoles->fieldRoleToAttribute($product, $roleName);
     }
 
-    protected function getTracking(): TrackingInterface
+    protected function getTracking(): ResourceInterface
     {
-        return $this->actionFactory->withApiVersion($this->config->getVersion())->getTracking();
+        return (new Builder())
+            ->withServerUrl($this->communicationConfig->getAddress())
+            ->withApiVersion($this->communicationConfig->getVersion())
+            ->withCredentials($this->credentialsFactory->create())
+            ->build();
     }
 }
