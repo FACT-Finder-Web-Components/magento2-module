@@ -4,14 +4,17 @@ declare(strict_types=1);
 
 namespace Omikron\Factfinder\Controller\Proxy;
 
+use GuzzleHttp\ClientFactory;
 use Magento\Framework\App\Action;
 use Magento\Framework\Controller\Result\JsonFactory as JsonResultFactory;
 use Magento\Framework\Controller\Result\RawFactory as RawResultFactory;
 use Magento\Framework\Exception\NotFoundException;
 use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
+use Omikron\FactFinder\Communication\Resource\Builder;
 use Omikron\Factfinder\Exception\ResponseException;
-use Omikron\Factfinder\Model\Api\ClientFactory;
+use Omikron\Factfinder\Model\Api\CredentialsFactory;
 use Omikron\Factfinder\Model\Http\ParameterUtils;
+use Psr\Log\LoggerInterface;
 
 class Call extends Action\Action
 {
@@ -30,13 +33,25 @@ class Call extends Action\Action
     /** @var ParameterUtils */
     private $parameterUtils;
 
+    /** @var CredentialsFactory */
+    private $credentialsFactory;
+
+    /** @var LoggerInterface  */
+    private $logger;
+
+    /** @var Builder  */
+    private $builder;
+
     public function __construct(
         Action\Context $context,
         JsonResultFactory $jsonResultFactory,
         RawResultFactory $rawResultFactory,
         ClientFactory $clientFactory,
         CommunicationConfigInterface $communicationConfig,
-        ParameterUtils $parameterUtils
+        ParameterUtils $parameterUtils,
+        CredentialsFactory $credentialsFactory,
+        LoggerInterface  $logger,
+        Builder $builder
     ) {
         parent::__construct($context);
         $this->jsonResultFactory   = $jsonResultFactory;
@@ -44,6 +59,9 @@ class Call extends Action\Action
         $this->clientFactory       = $clientFactory;
         $this->communicationConfig = $communicationConfig;
         $this->parameterUtils      = $parameterUtils;
+        $this->credentialsFactory  = $credentialsFactory;
+        $this->logger              = $logger;
+        $this->builder             = $builder;
     }
 
     public function execute()
@@ -58,12 +76,17 @@ class Call extends Action\Action
         try {
             $endpoint = $this->communicationConfig->getAddress() . '/' . $endpoint;
             $params   = $this->parameterUtils->fixedGetParams($this->getRequest()->getParams());
-            $response = $this->clientFactory->create()->get($endpoint, $params);
-            $this->_eventManager->dispatch('ff_proxy_post_dispatch', [
-                'endpoint' => $endpoint,
-                'params'   => $params,
-                'response' => &$response,
-            ]);
+
+            $builder = $this->builder
+                ->withCredentials($this->credentialsFactory->create())
+                ->withServerUrl($this->communicationConfig->getAddress())
+                ->withApiVersion($this->communicationConfig->getVersion());
+
+            if ($this->communicationConfig->isLoggingEnabled()) {
+                $builder->withLogger($this->logger);
+            }
+
+            $response = $builder->client()->getRequest($endpoint, $params);
             $result->setData($response);
         } catch (ResponseException $e) {
             return $this->rawResultFactory->create()->setContents($e->getMessage());

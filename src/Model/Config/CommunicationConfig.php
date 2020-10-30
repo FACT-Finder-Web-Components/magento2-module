@@ -19,6 +19,7 @@ class CommunicationConfig implements CommunicationConfigInterface, ParametersSou
     private const PATH_IS_ENABLED           = 'factfinder/general/is_enabled';
     private const PATH_USE_PROXY            = 'factfinder/general/ff_enrichment';
     private const PATH_DATA_TRANSFER_IMPORT = 'factfinder/data_transfer/ff_push_import_enabled';
+    private const PATH_IS_LOGGING_ENABLED   = 'factfinder/general/logging_enabled';
 
     /** @var ScopeConfigInterface */
     private $scopeConfig;
@@ -57,6 +58,11 @@ class CommunicationConfig implements CommunicationConfigInterface, ParametersSou
         return (string) $this->scopeConfig->getValue(self::PATH_VERSION, ScopeInterface::SCOPE_STORES);
     }
 
+    public function isLoggingEnabled(): bool
+    {
+        return $this->scopeConfig->isSetFlag(self::PATH_IS_LOGGING_ENABLED, ScopeInterface::SCOPE_STORES);
+    }
+
     public function getParameters(): array
     {
         return [
@@ -71,6 +77,7 @@ class CommunicationConfig implements CommunicationConfigInterface, ParametersSou
         if ($this->scopeConfig->isSetFlag(self::PATH_USE_PROXY, ScopeInterface::SCOPE_STORES)) {
             return $this->urlBuilder->getUrl('', ['_direct' => Router::FRONT_NAME]);
         }
+
         return $this->getAddress();
     }
 

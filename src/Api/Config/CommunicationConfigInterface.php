@@ -20,4 +20,6 @@ interface CommunicationConfigInterface
     public function isPushImportEnabled(int $scopeId = null): bool;
 
     public function getVersion(): string;
+
+    public function isLoggingEnabled(): bool;
 }

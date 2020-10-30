@@ -7,6 +7,7 @@ namespace Omikron\Factfinder\Model\Config;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Serialize\SerializerInterface;
 use Magento\Store\Model\ScopeInterface;
+use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
 
 class ExportConfig
 {
@@ -18,10 +19,17 @@ class ExportConfig
     /** @var SerializerInterface */
     private $serializer;
 
-    public function __construct(ScopeConfigInterface $scopeConfig, SerializerInterface $serializer)
-    {
-        $this->scopeConfig = $scopeConfig;
-        $this->serializer  = $serializer;
+    /** @var CommunicationConfigInterface */
+    private $communicationConfig;
+
+    public function __construct(
+        ScopeConfigInterface $scopeConfig,
+        SerializerInterface $serializer,
+        CommunicationConfigInterface $communicationConfig
+    ) {
+        $this->scopeConfig         = $scopeConfig;
+        $this->serializer          = $serializer;
+        $this->communicationConfig = $communicationConfig;
     }
 
     public function getMultiAttributes(?int $storeId = null): array
@@ -36,6 +44,15 @@ class ExportConfig
         return $this->getAttributeCodes($storeId, function (array $row): bool {
             return !$row['multi'];
         });
+    }
+
+    public function getPushImportDataTypes(int $scopeId = null): array
+    {
+        $configPath = 'factfinder/data_transfer/ff_push_import_type';
+        $dataTypes  = (string) $this->scopeConfig->getValue($configPath, ScopeInterface::SCOPE_STORE, $scopeId);
+        $isNg       = $this->communicationConfig->getVersion() === CommunicationConfigInterface::NG_VERSION;
+
+        return explode(',', $isNg ? $dataTypes : str_replace('search', 'data', $dataTypes));
     }
 
     private function getAttributeCodes(?int $storeId, callable $condition): array

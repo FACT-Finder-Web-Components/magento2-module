@@ -9,7 +9,10 @@ use Magento\Backend\App\Action\Context;
 use Magento\Framework\Controller\Result\JsonFactory;
 use Magento\Store\Model\StoreManagerInterface;
 use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
-use Omikron\Factfinder\Model\Api\ActionFactory;
+use Omikron\FactFinder\Communication\Resource\Builder;
+use Omikron\Factfinder\Model\Api\CredentialsFactory;
+use Omikron\Factfinder\Model\Api\PushImport;
+use Omikron\Factfinder\Model\Config\ExportConfig;
 use Omikron\Factfinder\Model\Export\FeedFactory as FeedGeneratorFactory;
 use Omikron\Factfinder\Model\FtpUploader;
 use Omikron\Factfinder\Model\StoreEmulation;
@@ -23,6 +26,9 @@ class Feed extends Action
     /** @var CommunicationConfigInterface */
     private $communicationConfig;
 
+    /** @var ExportConfig */
+    private $exportConfig;
+
     /** @var StoreEmulation */
     private $storeEmulation;
 
@@ -35,11 +41,14 @@ class Feed extends Action
     /** @var FtpUploader */
     private $ftpUploader;
 
-    /** @var ActionFactory  */
-    private $actionFactory;
+    /** @var CredentialsFactory */
+    private $credentialsFactory;
 
     /** @var StoreManagerInterface */
     private $storeManager;
+
+    /** @var PushImport */
+    private $pushImport;
 
     /** @var string */
     protected $feedType = 'product';
@@ -52,8 +61,8 @@ class Feed extends Action
         FeedGeneratorFactory $feedGeneratorFactory,
         CsvFactory $csvFactory,
         FtpUploader $ftpUploader,
-        ActionFactory $actionFactory,
-        StoreManagerInterface $storeManager
+        StoreManagerInterface $storeManager,
+        PushImport $pushImport
     ) {
         parent::__construct($context);
         $this->jsonResultFactory    = $jsonResultFactory;
@@ -62,8 +71,8 @@ class Feed extends Action
         $this->feedGeneratorFactory = $feedGeneratorFactory;
         $this->csvFactory           = $csvFactory;
         $this->ftpUploader          = $ftpUploader;
-        $this->actionFactory      = $actionFactory;
         $this->storeManager         = $storeManager;
+        $this->pushImport           = $pushImport;
     }
 
     public function execute()
@@ -74,12 +83,13 @@ class Feed extends Action
             preg_match('@/store/([0-9]+)/@', (string) $this->_redirect->getRefererUrl(), $match);
             $storeId = (int) ($match[1] ?? $this->storeManager->getDefaultStoreView()->getId());
             $this->storeEmulation->runInStore($storeId, function () use ($storeId) {
-                $filename = "export.{$this->channelProvider->getChannel()}.csv";
+                $filename = "export.{$this->communicationConfig->getChannel()}.csv";
                 $stream   = $this->csvFactory->create(['filename' => "factfinder/{$filename}"]);
                 $this->feedGeneratorFactory->create($this->feedType)->generate($stream);
                 $this->ftpUploader->upload($filename, $stream);
-                $this->actionFactory->withApiVersion($this->communicationConfig->getVersion())
-                    ->getPushImport()->execute($storeId);
+                if ($this->communicationConfig->isPushImportEnabled($storeId)) {
+                    $this->pushImport->execute($storeId);
+                }
             });
 
             $result->setData(['message' => __('Feed successfully generated')]);

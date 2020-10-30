@@ -9,9 +9,9 @@ use Magento\Framework\Controller\Result\JsonFactory;
 use Magento\Framework\Phrase;
 use Omikron\Factfinder\Api\Config\AuthConfigInterface;
 use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
-use Omikron\Factfinder\Exception\ResponseException;
-use Omikron\Factfinder\Model\Api\ActionFactory;
-use Omikron\Factfinder\Model\Api\Credentials;
+use Omikron\FactFinder\Communication\Credentials;
+use Omikron\FactFinder\Communication\Exception\ResponseException;
+use Omikron\FactFinder\Communication\Resource\Builder;
 use Omikron\Factfinder\Model\Api\CredentialsFactory;
 
 class TestConnection extends Action
@@ -25,14 +25,14 @@ class TestConnection extends Action
     /** @var CredentialsFactory */
     private $credentialsFactory;
 
-    /** @var ActionFactory */
-    private $actionFactory;
-
     /** @var AuthConfigInterface */
     private $authConfig;
 
     /** @var CommunicationConfigInterface */
     private $communicationConfig;
+
+    /** @var Builder  */
+    private $builder;
 
     public function __construct(
         Action\Context $context,
@@ -40,14 +40,14 @@ class TestConnection extends Action
         CredentialsFactory $credentialsFactory,
         AuthConfigInterface $authConfig,
         CommunicationConfigInterface $communicationConfig,
-        ActionFactory $actionFactory
+        Builder $builder
     ) {
         parent::__construct($context);
         $this->jsonResultFactory   = $jsonResultFactory;
         $this->credentialsFactory  = $credentialsFactory;
-        $this->actionFactory       = $actionFactory;
         $this->authConfig          = $authConfig;
         $this->communicationConfig = $communicationConfig;
+        $this->builder             = $builder;
     }
 
     public function execute()
@@ -56,15 +56,15 @@ class TestConnection extends Action
 
         try {
             $request   = $this->getRequest();
-            $params    = ['channel' => $request->getParam('channel')];
             $serverUrl = $request->getParam('address', $this->communicationConfig->getAddress());
 
-            $testConnection = $this->actionFactory
-                ->withCredentials($this->getCredentials($request->getParams()))
+            $resource = $this->builder
+                ->withCredentials($this->getCredentials($this->getRequest()->getParams()))
                 ->withApiVersion($request->getParam('version'))
-                ->getTestConnection();
+                ->withServerUrl($serverUrl)
+                ->build();
 
-            $testConnection->execute($serverUrl, $params);
+            $resource->search('Search.ff', $request->getParam('channel'));
         } catch (ResponseException $e) {
             $message = $e->getMessage();
         }

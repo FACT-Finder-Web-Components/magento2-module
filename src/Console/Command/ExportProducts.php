@@ -4,26 +4,23 @@ declare(strict_types=1);
 
 namespace Omikron\Factfinder\Console\Command;
 
-use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\App\Filesystem\DirectoryList;
 use Magento\Framework\App\State;
 use Magento\Framework\Filesystem;
 use Magento\Store\Model\StoreManagerInterface;
-use Omikron\Factfinder\Model\Api\ActionFactory;
+use Omikron\Factfinder\Model\Api\PushImport;
 use Omikron\Factfinder\Model\Config\CommunicationConfig;
 use Omikron\Factfinder\Model\Export\FeedFactory as FeedGeneratorFactory;
 use Omikron\Factfinder\Model\FtpUploader;
 use Omikron\Factfinder\Model\StoreEmulation;
 use Omikron\Factfinder\Model\Stream\CsvFactory;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class ExportProducts extends \Symfony\Component\Console\Command\Command
+class ExportProducts extends Command
 {
-    /** @var ScopeConfigInterface */
-    private $scopeConfig;
-
     /** @var StoreEmulation */
     private $storeEmulation;
 
@@ -42,38 +39,36 @@ class ExportProducts extends \Symfony\Component\Console\Command\Command
     /** @var FtpUploader */
     private $ftpUploader;
 
-    /** @var ActionFactory */
-    private $actionFactory;
-
     /** @var State */
     private $state;
 
     /** @var Filesystem */
     private $filesystem;
 
+    /** @var PushImport */
+    private $pushImport;
+
     public function __construct(
-        ScopeConfigInterface $scopeConfig,
         StoreManagerInterface $storeManager,
         FeedGeneratorFactory $feedFactory,
         StoreEmulation $emulation,
         CsvFactory $csvFactory,
         FtpUploader $ftpUploader,
         CommunicationConfig $communicationConfig,
-        ActionFactory $actionFactory,
         State $state,
-        Filesystem $filesystem
+        Filesystem $filesystem,
+        PushImport $pushImport
     ) {
         parent::__construct();
-        $this->scopeConfig          = $scopeConfig;
         $this->storeManager         = $storeManager;
         $this->feedGeneratorFactory = $feedFactory;
         $this->storeEmulation       = $emulation;
         $this->csvFactory           = $csvFactory;
         $this->ftpUploader          = $ftpUploader;
         $this->communicationConfig  = $communicationConfig;
-        $this->actionFactory      = $actionFactory;
         $this->state                = $state;
         $this->filesystem           = $filesystem;
+        $this->pushImport           = $pushImport;
     }
 
     /**
@@ -111,9 +106,8 @@ class ExportProducts extends \Symfony\Component\Console\Command\Command
                     $output->writeln("Store {$storeId}: File {$filename} has been uploaded to FTP.");
                 }
 
-                $pushImport = $this->actionFactory->withApiVersion($this->communicationConfig->getVersion())
-                    ->getPushImport();
-                if ($input->getOption('push-import') && $pushImport->execute((int) $storeId)) {
+                if ($input->getOption('push-import')) {
+                    $this->pushImport->execute($storeId);
                     $output->writeln("Store {$storeId}: Push Import for File {$filename} has been triggered.");
                 }
             });

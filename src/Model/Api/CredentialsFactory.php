@@ -6,16 +6,17 @@ namespace Omikron\Factfinder\Model\Api;
 
 use Magento\Framework\ObjectManagerInterface;
 use Omikron\Factfinder\Api\Config\AuthConfigInterface;
+use Omikron\FactFinder\Communication\Credentials;
 
 class CredentialsFactory
 {
-    /** @var AuthConfigInterface  */
+    /** @var AuthConfigInterface */
     private $authConfig;
 
-   /** @var ObjectManagerInterface  */
+    /** @var ObjectManagerInterface */
     private $objectManager;
 
-    public function __construct(ObjectManagerInterface $objectManager, AuthConfigInterface  $authConfig)
+    public function __construct(ObjectManagerInterface $objectManager, AuthConfigInterface $authConfig)
     {
         $this->objectManager = $objectManager;
         $this->authConfig    = $authConfig;
