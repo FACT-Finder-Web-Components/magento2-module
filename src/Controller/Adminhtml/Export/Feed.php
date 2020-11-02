@@ -9,7 +9,9 @@ use Magento\Backend\App\Action\Context;
 use Magento\Framework\Controller\Result\JsonFactory;
 use Magento\Store\Model\StoreManagerInterface;
 use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
-use Omikron\Factfinder\Model\Api\ActionFactory;
+use Omikron\FactFinder\Communication\Resource\Builder;
+use Omikron\Factfinder\Model\Api\CredentialsFactory;
+use Omikron\Factfinder\Model\Config\ExportConfig;
 use Omikron\Factfinder\Model\Export\FeedFactory as FeedGeneratorFactory;
 use Omikron\Factfinder\Model\FtpUploader;
 use Omikron\Factfinder\Model\StoreEmulation;
@@ -23,6 +25,9 @@ class Feed extends Action
     /** @var CommunicationConfigInterface */
     private $communicationConfig;
 
+    /** @var ExportConfig */
+    private $exportConfig;
+
     /** @var StoreEmulation */
     private $storeEmulation;
 
@@ -35,8 +40,8 @@ class Feed extends Action
     /** @var FtpUploader */
     private $ftpUploader;
 
-    /** @var ActionFactory  */
-    private $actionFactory;
+    /** @var CredentialsFactory */
+    private $credentialsFactory;
 
     /** @var StoreManagerInterface */
     private $storeManager;
@@ -48,21 +53,23 @@ class Feed extends Action
         Context $context,
         JsonFactory $jsonResultFactory,
         CommunicationConfigInterface $communicationConfig,
+        ExportConfig $exportConfig,
         StoreEmulation $storeEmulation,
         FeedGeneratorFactory $feedGeneratorFactory,
         CsvFactory $csvFactory,
         FtpUploader $ftpUploader,
-        ActionFactory $actionFactory,
+        CredentialsFactory $credentialsFactory,
         StoreManagerInterface $storeManager
     ) {
         parent::__construct($context);
         $this->jsonResultFactory    = $jsonResultFactory;
         $this->communicationConfig  = $communicationConfig;
+        $this->exportConfig         = $exportConfig;
         $this->storeEmulation       = $storeEmulation;
         $this->feedGeneratorFactory = $feedGeneratorFactory;
         $this->csvFactory           = $csvFactory;
         $this->ftpUploader          = $ftpUploader;
-        $this->actionFactory      = $actionFactory;
+        $this->credentialsFactory   = $credentialsFactory;
         $this->storeManager         = $storeManager;
     }
 
@@ -71,15 +78,23 @@ class Feed extends Action
         $result = $this->jsonResultFactory->create();
 
         try {
-            preg_match('@/store/([0-9]+)/@', (string) $this->_redirect->getRefererUrl(), $match);
-            $storeId = (int) ($match[1] ?? $this->storeManager->getDefaultStoreView()->getId());
+            preg_match('@/store/([0-9]+)/@', (string)$this->_redirect->getRefererUrl(), $match);
+            $storeId = (int)($match[1] ?? $this->storeManager->getDefaultStoreView()->getId());
             $this->storeEmulation->runInStore($storeId, function () use ($storeId) {
-                $filename = "export.{$this->channelProvider->getChannel()}.csv";
+                $filename = "export.{$this->communicationConfig->getChannel()}.csv";
                 $stream   = $this->csvFactory->create(['filename' => "factfinder/{$filename}"]);
                 $this->feedGeneratorFactory->create($this->feedType)->generate($stream);
                 $this->ftpUploader->upload($filename, $stream);
-                $this->actionFactory->withApiVersion($this->communicationConfig->getVersion())
-                    ->getPushImport()->execute($storeId);
+
+                $api = (new Builder())
+                    ->withApiVersion($this->communicationConfig->getVersion())
+                    ->withServerUrl($this->communicationConfig->getAddress())
+                    ->withCredentials($this->credentialsFactory->create())
+                    ->build();
+
+                foreach ($this->exportConfig->getPushImportDataTypes($storeId) as $dataType) {
+                    $api->import($dataType, $this->communicationConfig->getChannel($storeId));
+                }
             });
 
             $result->setData(['message' => __('Feed successfully generated')]);

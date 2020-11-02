@@ -4,26 +4,25 @@ declare(strict_types=1);
 
 namespace Omikron\Factfinder\Console\Command;
 
-use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\App\Filesystem\DirectoryList;
 use Magento\Framework\App\State;
 use Magento\Framework\Filesystem;
 use Magento\Store\Model\StoreManagerInterface;
-use Omikron\Factfinder\Model\Api\ActionFactory;
+use Omikron\FactFinder\Communication\Resource\Builder;
+use Omikron\Factfinder\Model\Api\CredentialsFactory;
 use Omikron\Factfinder\Model\Config\CommunicationConfig;
+use Omikron\Factfinder\Model\Config\ExportConfig;
 use Omikron\Factfinder\Model\Export\FeedFactory as FeedGeneratorFactory;
 use Omikron\Factfinder\Model\FtpUploader;
 use Omikron\Factfinder\Model\StoreEmulation;
 use Omikron\Factfinder\Model\Stream\CsvFactory;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class ExportProducts extends \Symfony\Component\Console\Command\Command
+class ExportProducts extends Command
 {
-    /** @var ScopeConfigInterface */
-    private $scopeConfig;
-
     /** @var StoreEmulation */
     private $storeEmulation;
 
@@ -42,8 +41,11 @@ class ExportProducts extends \Symfony\Component\Console\Command\Command
     /** @var FtpUploader */
     private $ftpUploader;
 
-    /** @var ActionFactory */
-    private $actionFactory;
+    /** @var CredentialsFactory */
+    private $credentialsFactory;
+
+    /** @var ExportConfig */
+    private $exportConfig;
 
     /** @var State */
     private $state;
@@ -52,26 +54,26 @@ class ExportProducts extends \Symfony\Component\Console\Command\Command
     private $filesystem;
 
     public function __construct(
-        ScopeConfigInterface $scopeConfig,
         StoreManagerInterface $storeManager,
         FeedGeneratorFactory $feedFactory,
         StoreEmulation $emulation,
         CsvFactory $csvFactory,
         FtpUploader $ftpUploader,
         CommunicationConfig $communicationConfig,
-        ActionFactory $actionFactory,
+        CredentialsFactory $credentialsFactory,
+        ExportConfig $exportConfig,
         State $state,
         Filesystem $filesystem
     ) {
         parent::__construct();
-        $this->scopeConfig          = $scopeConfig;
         $this->storeManager         = $storeManager;
         $this->feedGeneratorFactory = $feedFactory;
         $this->storeEmulation       = $emulation;
         $this->csvFactory           = $csvFactory;
         $this->ftpUploader          = $ftpUploader;
         $this->communicationConfig  = $communicationConfig;
-        $this->actionFactory      = $actionFactory;
+        $this->credentialsFactory   = $credentialsFactory;
+        $this->exportConfig         = $exportConfig;
         $this->state                = $state;
         $this->filesystem           = $filesystem;
     }
@@ -97,7 +99,7 @@ class ExportProducts extends \Symfony\Component\Console\Command\Command
     {
         $this->state->setAreaCode('frontend');
 
-        foreach ($this->getStoreIds((int) $input->getOption('store')) as $storeId) {
+        foreach ($this->getStoreIds((int)$input->getOption('store')) as $storeId) {
             $this->storeEmulation->runInStore($storeId, function () use ($storeId, $input, $output) {
                 $filename = "export.{$this->communicationConfig->getChannel($storeId)}.csv";
                 $stream   = $this->csvFactory->create(['filename' => "factfinder/{$filename}"]);
@@ -111,9 +113,16 @@ class ExportProducts extends \Symfony\Component\Console\Command\Command
                     $output->writeln("Store {$storeId}: File {$filename} has been uploaded to FTP.");
                 }
 
-                $pushImport = $this->actionFactory->withApiVersion($this->communicationConfig->getVersion())
-                    ->getPushImport();
-                if ($input->getOption('push-import') && $pushImport->execute((int) $storeId)) {
+                if ($input->getOption('push-import')) {
+                    $pushImport = (new Builder())
+                        ->withApiVersion($this->communicationConfig->getVersion())
+                        ->withServerUrl($this->communicationConfig->getAddress())
+                        ->withCredentials($this->credentialsFactory->create())
+                        ->build();
+
+                    foreach ($this->exportConfig->getPushImportDataTypes($storeId) as $dataType) {
+                        $pushImport->import($dataType, $this->communicationConfig->getChannel($storeId));
+                    }
                     $output->writeln("Store {$storeId}: Push Import for File {$filename} has been triggered.");
                 }
             });

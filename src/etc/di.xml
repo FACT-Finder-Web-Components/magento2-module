@@ -1,10 +1,8 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
-    <preference for="Omikron\Factfinder\Api\ClientInterface" type="Omikron\Factfinder\Model\Api\Client"/>
     <preference for="Omikron\Factfinder\Api\Config\AuthConfigInterface" type="Omikron\Factfinder\Model\Config\AuthConfig"/>
     <preference for="Omikron\Factfinder\Api\Config\CommunicationConfigInterface" type="Omikron\Factfinder\Model\Config\CommunicationConfig"/>
     <preference for="Omikron\Factfinder\Api\Config\FeatureConfigInterface" type="Omikron\Factfinder\Model\Config\FeatureConfig"/>
-    <preference for="Omikron\Factfinder\Api\Data\TrackingProductInterface" type="Omikron\Factfinder\Model\Data\TrackingProduct"/>
     <preference for="Omikron\Factfinder\Api\ExporterInterface" type="Omikron\Factfinder\Model\Exporter"/>
     <preference for="Omikron\Factfinder\Api\FieldRolesInterface" type="Omikron\Factfinder\Model\FieldRoles"/>
     <preference for="Omikron\Factfinder\Api\Filter\FilterInterface" type="Omikron\Factfinder\Model\Filter\TextFilter"/>
@@ -48,11 +46,6 @@
             <argument name="fileName" xsi:type="string">/var/log/factfinder.log</argument>
         </arguments>
     </virtualType>
-    <virtualType name="Omikron\Factfinder\Model\Api\TrackingEventClient" type="Omikron\Factfinder\Model\Api\Client">
-        <arguments>
-            <argument name="serializer" xsi:type="object">Omikron\Factfinder\Model\Serializer\PlainTextSerializer</argument>
-        </arguments>
-    </virtualType>
     <virtualType name="Omikron\Factfinder\Model\Export\Catalog\ProductField\Brand" type="Omikron\Factfinder\Model\Export\Catalog\ProductField\GenericField">
         <arguments>
             <argument name="attributeCode" xsi:type="string">manufacturer</argument>
@@ -65,23 +58,6 @@
     <type name="Omikron\Factfinder\Controller\Export\Product">
         <arguments>
             <argument name="channelProvider" xsi:type="object">Omikron\Factfinder\Model\Config\CommunicationConfig</argument>
-        </arguments>
-    </type>
-    <type name="Omikron\Factfinder\Model\Api\Action\Standard\PushImport">
-        <plugin name="logPushImportExceptions" type="Omikron\Factfinder\Plugin\LogExceptions"/>
-    </type>
-    <type name="Omikron\Factfinder\Model\Api\Action\Standard\Tracking">
-        <plugin name="logTrackingExceptions" type="Omikron\Factfinder\Plugin\LogExceptions"/>
-    </type>
-    <type name="Omikron\Factfinder\Model\Api\Ng\Resource\PushImport">
-        <plugin name="logPushImportExceptions" type="Omikron\Factfinder\Plugin\LogExceptions"/>
-    </type>
-    <type name="Omikron\Factfinder\Model\Api\Ng\Resource\Tracking">
-        <plugin name="logTrackingExceptions" type="Omikron\Factfinder\Plugin\LogExceptions"/>
-    </type>
-    <type name="Omikron\Factfinder\Model\Api\Action\Standard\Tracking">
-        <arguments>
-            <argument name="factFinderClient" xsi:type="object">Omikron\Factfinder\Model\Api\TrackingEventClient</argument>
         </arguments>
     </type>
     <type name="Omikron\Factfinder\Model\Export\Catalog\DataProvider">
@@ -122,24 +98,6 @@
         </arguments>
     </type>
 
-    <type name="Omikron\Factfinder\Model\Api\ActionFactory">
-        <arguments>
-            <argument name="resourcePool" xsi:type="array">
-                <item name="standard" xsi:type="array">
-                    <item name="tracking" xsi:type="string">Omikron\Factfinder\Model\Api\Action\Standard\Tracking</item>
-                    <item name="testConnection" xsi:type="string">Omikron\Factfinder\Model\Api\Action\Standard\TestConnection</item>
-                    <item name="pushImport" xsi:type="string">Omikron\Factfinder\Model\Api\Action\Standard\PushImport</item>
-                    <item name="updateFieldRoles" xsi:type="string">Omikron\Factfinder\Model\Api\Action\Standard\UpdateFieldRoles</item>
-                </item>
-                <item name="ng" xsi:type="array">
-                    <item name="tracking" xsi:type="string">Omikron\Factfinder\Model\Api\Action\Ng\Tracking</item>
-                    <item name="testConnection" xsi:type="string">Omikron\Factfinder\Model\Api\Action\Ng\TestConnection</item>
-                    <item name="pushImport" xsi:type="string">Omikron\Factfinder\Model\Api\Action\Ng\PushImport</item>
-                    <item name="updateFieldRoles" xsi:type="string">Omikron\Factfinder\Model\Api\Action\Ng\UpdateFieldRoles</item>
-                </item>
-            </argument>
-        </arguments>
-    </type>
     <type name="Omikron\Factfinder\Model\FtpUploader">
         <arguments>
             <argument name="client" xsi:type="object">Magento\Framework\Filesystem\Io\Ftp</argument>

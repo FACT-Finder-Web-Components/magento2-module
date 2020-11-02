@@ -12,7 +12,6 @@ use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
 use Omikron\FactFinder\Communication\Credentials;
 use Omikron\FactFinder\Communication\Exception\ResponseException;
 use Omikron\FactFinder\Communication\Resource\Builder;
-use Omikron\Factfinder\Model\Api\ActionFactory;
 use Omikron\Factfinder\Model\Api\CredentialsFactory;
 
 class TestConnection extends Action
@@ -54,13 +53,13 @@ class TestConnection extends Action
             $request   = $this->getRequest();
             $serverUrl = $request->getParam('address', $this->communicationConfig->getAddress());
 
-            $resource = (new Builder())
+            $api = (new Builder())
                 ->withCredentials($this->getCredentials($this->getRequest()->getParams()))
                 ->withApiVersion($request->getParam('version'))
                 ->withServerUrl($serverUrl)
                 ->build();
 
-            $resource->search('Search.ff', $request->getParam('channel'));
+            $api->search('Search.ff', $request->getParam('channel'));
         } catch (ResponseException $e) {
             $message = $e->getMessage();
         }
