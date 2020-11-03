@@ -108,9 +108,14 @@
             <argument name="customerSession" xsi:type="object">Magento\Customer\Model\Session\Proxy</argument>
         </arguments>
     </type>
-    <type name="Omikron\Factfinder\Plugin\LogExceptions">
+    <type name="Omikron\Factfinder\Model\Api\PushImport">
         <arguments>
-            <argument name="logger" xsi:type="object">Omikron\Factfinder\Logger</argument>
+            <argument xsi:type="object" name="logger">Omikron\Factfinder\Logger</argument>
+        </arguments>
+    </type>
+    <type name="Omikron\Factfinder\Observer\BaseTracking">
+        <arguments>
+            <argument xsi:type="object" name="logger">Omikron\Factfinder\Logger</argument>
         </arguments>
     </type>
     <type name="Omikron\Factfinder\ViewModel\Cart">

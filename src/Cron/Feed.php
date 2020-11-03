@@ -8,8 +8,7 @@ use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Store\Model\StoreManagerInterface;
 use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
 use Omikron\FactFinder\Communication\Resource\Builder;
-use Omikron\Factfinder\Model\Api\CredentialsFactory;
-use Omikron\Factfinder\Model\Config\ExportConfig;
+use Omikron\Factfinder\Model\Api\PushImport;
 use Omikron\Factfinder\Model\Export\FeedFactory as FeedGeneratorFactory;
 use Omikron\Factfinder\Model\FtpUploader;
 use Omikron\Factfinder\Model\StoreEmulation;
@@ -34,17 +33,14 @@ class Feed
     /** @var CommunicationConfigInterface */
     private $communicationConfig;
 
-    /** @var ExportConfig */
-    private $exportConfig;
-
     /** @var CsvFactory */
     private $csvFactory;
 
     /** @var FtpUploader */
     private $ftpUploader;
 
-    /** @var CredentialsFactory */
-    private $credentialsFactory;
+    /** @var PushImport */
+    private $pushImport;
 
     /** @var string */
     private $feedType;
@@ -57,8 +53,7 @@ class Feed
         CsvFactory $csvFactory,
         FtpUploader $ftpUploader,
         CommunicationConfigInterface $communicationConfig,
-        ExportConfig $exportConfig,
-        CredentialsFactory $credentialsFactory,
+        PushImport $pushImport,
         string $type
     ) {
         $this->scopeConfig          = $scopeConfig;
@@ -68,8 +63,7 @@ class Feed
         $this->csvFactory           = $csvFactory;
         $this->ftpUploader          = $ftpUploader;
         $this->communicationConfig  = $communicationConfig;
-        $this->credentialsFactory   = $credentialsFactory;
-        $this->exportConfig         = $exportConfig;
+        $this->pushImport           = $pushImport;
         $this->feedType             = $type;
     }
 
@@ -87,15 +81,8 @@ class Feed
                     $stream   = $this->csvFactory->create(['filename' => "factfinder/{$filename}"]);
                     $this->feedGeneratorFactory->create($this->feedType)->generate($stream);
                     $this->ftpUploader->upload($filename, $stream);
-
-                    $api = (new Builder())
-                        ->withApiVersion($this->communicationConfig->getVersion())
-                        ->withServerUrl($this->communicationConfig->getAddress())
-                        ->withCredentials($this->credentialsFactory->create())
-                        ->build();
-
-                    foreach ($this->exportConfig->getPushImportDataTypes($storeId) as $dataType) {
-                        $api->import($dataType, $this->communicationConfig->getChannel($storeId));
+                    if ($this->communicationConfig->isPushImportEnabled($storeId)) {
+                        $this->pushImport->execute($storeId);
                     }
                 }
             });
