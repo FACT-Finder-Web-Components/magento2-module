@@ -26,8 +26,8 @@ class Checkout extends BaseTracking implements ObserverInterface
             return new Product(
                 $this->getProductData('trackingProductNumber', $item->getProduct()),
                 $this->getProductData('masterArticleNumber', $item->getProduct()),
-                $item->getPrice(),
-                $item->getQty()
+                (float) $item->getPrice(),
+                (int) $item->getQty()
             );
         }, $cart->getAllVisibleItems());
 

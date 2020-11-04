@@ -21,5 +21,5 @@ interface CommunicationConfigInterface
 
     public function getVersion(): string;
 
-    public function isLoggingEnabled(): boolean;
+    public function isLoggingEnabled(): bool;
 }

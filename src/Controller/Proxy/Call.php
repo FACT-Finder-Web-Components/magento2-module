@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Omikron\Factfinder\Controller\Proxy;
 
+use GuzzleHttp\ClientFactory;
 use Magento\Framework\App\Action;
 use Magento\Framework\Controller\Result\JsonFactory as JsonResultFactory;
 use Magento\Framework\Controller\Result\RawFactory as RawResultFactory;
@@ -13,6 +14,7 @@ use Omikron\FactFinder\Communication\Resource\Builder;
 use Omikron\Factfinder\Exception\ResponseException;
 use Omikron\Factfinder\Model\Api\CredentialsFactory;
 use Omikron\Factfinder\Model\Http\ParameterUtils;
+use Psr\Log\LoggerInterface;
 
 class Call extends Action\Action
 {
@@ -21,6 +23,9 @@ class Call extends Action\Action
 
     /** @var RawResultFactory */
     private $rawResultFactory;
+
+    /** @var ClientFactory */
+    private $clientFactory;
 
     /** @var CommunicationConfigInterface */
     private $communicationConfig;
@@ -31,20 +36,27 @@ class Call extends Action\Action
     /** @var CredentialsFactory */
     private $credentialsFactory;
 
+    /** @var LoggerInterface  */
+    private $logger;
+
     public function __construct(
         Action\Context $context,
         JsonResultFactory $jsonResultFactory,
         RawResultFactory $rawResultFactory,
+        ClientFactory $clientFactory,
         CommunicationConfigInterface $communicationConfig,
         ParameterUtils $parameterUtils,
-        CredentialsFactory $credentialsFactory
+        CredentialsFactory $credentialsFactory,
+        LoggerInterface  $logger
     ) {
         parent::__construct($context);
         $this->jsonResultFactory   = $jsonResultFactory;
         $this->rawResultFactory    = $rawResultFactory;
+        $this->clientFactory       = $clientFactory;
         $this->communicationConfig = $communicationConfig;
         $this->parameterUtils      = $parameterUtils;
         $this->credentialsFactory  = $credentialsFactory;
+        $this->logger              = $logger;
     }
 
     public function execute()
@@ -60,12 +72,16 @@ class Call extends Action\Action
             $endpoint = $this->communicationConfig->getAddress() . '/' . $endpoint;
             $params   = $this->parameterUtils->fixedGetParams($this->getRequest()->getParams());
 
-            $response = (new Builder())
+            $builder = (new Builder())
                 ->withCredentials($this->credentialsFactory->create())
                 ->withServerUrl($this->communicationConfig->getAddress())
-                ->client()
-                ->getRequest($endpoint, $params);
+                ->withApiVersion($this->communicationConfig->getVersion());
 
+            if ($this->communicationConfig->isLoggingEnabled()) {
+                $builder->withLogger($this->logger);
+            }
+
+            $response = $builder->client()->getRequest($endpoint, $params);
             $result->setData($response);
         } catch (ResponseException $e) {
             return $this->rawResultFactory->create()->setContents($e->getMessage());
