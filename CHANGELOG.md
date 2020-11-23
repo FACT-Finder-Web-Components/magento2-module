@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Fixed
+- Fix redirect URL in `controller_action_predispatch_*` observer
+
 ## [v1.6.4] - 2020.10.15
 ### Changed
 - Upgrade Web Components to version 3.15.8
