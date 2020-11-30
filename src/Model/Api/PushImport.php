@@ -23,32 +23,41 @@ class PushImport
     /** @var LoggerInterface */
     private $logger;
 
+    /** @var Builder */
+    private $builder;
+
     public function __construct(
+        Builder $builder,
         CredentialsFactory $credentialsFactory,
         CommunicationConfigInterface $communicationConfig,
         ExportConfig $exportConfig,
         LoggerInterface $logger
     ) {
+        $this->builder             = $builder;
+        $this->credentialsFactory  = $credentialsFactory;
         $this->communicationConfig = $communicationConfig;
         $this->exportConfig        = $exportConfig;
-        $this->credentialsFactory  = $credentialsFactory;
         $this->logger              = $logger;
     }
 
-    public function execute(int $storeId)
+    public function execute(int $storeId): bool
     {
-        $builder = (new Builder())
-            ->withApiVersion($this->communicationConfig->getVersion())
+        $this->builder->withApiVersion($this->communicationConfig->getVersion())
             ->withServerUrl($this->communicationConfig->getAddress())
             ->withCredentials($this->credentialsFactory->create());
 
         if ($this->communicationConfig->isLoggingEnabled()) {
-            $builder->withLogger($this->logger);
+            $this->builder->withLogger($this->logger);
         }
-        $api = $builder->build();
+
+        $api      = $this->builder->build();
+        $response = [];
 
         foreach ($this->exportConfig->getPushImportDataTypes($storeId) as $dataType) {
+            $response = array_merge_recursive($response, $api->import($dataType, $this->communicationConfig->getChannel($storeId)));
             $api->import($dataType, $this->communicationConfig->getChannel($storeId));
         }
+
+        return $response && !(isset($response['errors']) || isset($response['error']));
     }
 }

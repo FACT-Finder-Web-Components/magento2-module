@@ -31,18 +31,23 @@ class TestConnection extends Action
     /** @var CommunicationConfigInterface */
     private $communicationConfig;
 
+    /** @var Builder  */
+    private $builder;
+
     public function __construct(
         Action\Context $context,
         JsonFactory $jsonResultFactory,
         CredentialsFactory $credentialsFactory,
         AuthConfigInterface $authConfig,
-        CommunicationConfigInterface $communicationConfig
+        CommunicationConfigInterface $communicationConfig,
+        Builder $builder
     ) {
         parent::__construct($context);
         $this->jsonResultFactory   = $jsonResultFactory;
         $this->credentialsFactory  = $credentialsFactory;
         $this->authConfig          = $authConfig;
         $this->communicationConfig = $communicationConfig;
+        $this->builder             = $builder;
     }
 
     public function execute()
@@ -53,7 +58,7 @@ class TestConnection extends Action
             $request   = $this->getRequest();
             $serverUrl = $request->getParam('address', $this->communicationConfig->getAddress());
 
-            $api = (new Builder())
+            $api = $this->builder
                 ->withCredentials($this->getCredentials($this->getRequest()->getParams()))
                 ->withApiVersion($request->getParam('version'))
                 ->withServerUrl($serverUrl)
