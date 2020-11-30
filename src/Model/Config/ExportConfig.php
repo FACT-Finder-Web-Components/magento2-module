@@ -50,9 +50,9 @@ class ExportConfig
     {
         $configPath = 'factfinder/data_transfer/ff_push_import_type';
         $dataTypes  = (string) $this->scopeConfig->getValue($configPath, ScopeInterface::SCOPE_STORE, $scopeId);
-        $isNg       = $this->communicationConfig->getVersion() !== CommunicationConfigInterface::NG_VERSION;
+        $isNg       = $this->communicationConfig->getVersion() === CommunicationConfigInterface::NG_VERSION;
 
-        return explode(',', $isNg ? str_replace('search', 'data', $dataTypes) : $dataTypes);
+        return explode(',', $isNg ? $dataTypes : str_replace('search', 'data', $dataTypes));
     }
 
     private function getAttributeCodes(?int $storeId, callable $condition): array

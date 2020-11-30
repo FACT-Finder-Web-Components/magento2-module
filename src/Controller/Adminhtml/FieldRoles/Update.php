@@ -53,7 +53,7 @@ class Update extends Action
         try {
             preg_match('@/store/([0-9]+)/@', (string)$this->_redirect->getRefererUrl(), $match);
             $storeId = (int) ($match[1] ?? $this->storeManager->getDefaultStoreView()->getId());
-            $api = (new Builder())
+            $resource = (new Builder())
                 ->withCredentials($this->credentialsFactory->create())
                 ->withApiVersion($this->communicationConfig->getVersion())
                 ->withServerUrl($this->communicationConfig->getAddress())

@@ -58,13 +58,13 @@ class TestConnection extends Action
             $request   = $this->getRequest();
             $serverUrl = $request->getParam('address', $this->communicationConfig->getAddress());
 
-            $api = $this->builder
+            $resource = $this->builder
                 ->withCredentials($this->getCredentials($this->getRequest()->getParams()))
                 ->withApiVersion($request->getParam('version'))
                 ->withServerUrl($serverUrl)
                 ->build();
 
-            $api->search('Search.ff', $request->getParam('channel'));
+            $resource->search('Search.ff', $request->getParam('channel'));
         } catch (ResponseException $e) {
             $message = $e->getMessage();
         }

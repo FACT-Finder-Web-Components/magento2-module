@@ -50,12 +50,12 @@ class PushImport
             $this->builder->withLogger($this->logger);
         }
 
-        $api      = $this->builder->build();
+        $resource = $this->builder->build();
         $response = [];
 
         foreach ($this->exportConfig->getPushImportDataTypes($storeId) as $dataType) {
-            $response = array_merge_recursive($response, $api->import($dataType, $this->communicationConfig->getChannel($storeId)));
-            $api->import($dataType, $this->communicationConfig->getChannel($storeId));
+            $response = array_merge_recursive($response, $resource->import($dataType, $this->communicationConfig->getChannel($storeId)));
+            $resource->import($dataType, $this->communicationConfig->getChannel($storeId));
         }
 
         return $response && !(isset($response['errors']) || isset($response['error']));
