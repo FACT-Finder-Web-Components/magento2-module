@@ -2,6 +2,7 @@
 ## Unreleased
 ### Fixed
 - Fix redirect URL in `controller_action_predispatch_*` observer
+- Exclude category filter from URL on category pages
 
 ## [v1.6.4] - 2020.10.15
 ### Changed
