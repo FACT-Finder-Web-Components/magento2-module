@@ -8,6 +8,7 @@ use Magento\Catalog\Model\Product;
 use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
 use Omikron\Factfinder\Api\FieldRolesInterface;
 use Omikron\Factfinder\Api\SessionDataInterface;
+use Omikron\FactFinder\Communication\BuilderInterface;
 use Omikron\FactFinder\Communication\Resource\Builder;
 use Omikron\FactFinder\Communication\ResourceInterface;
 use Omikron\Factfinder\Model\Api\ActionFactory;
@@ -28,6 +29,9 @@ abstract class BaseTracking
     /** @var CredentialsFactory */
     private $credentialsFactory;
 
+    /** @var BuilderInterface */
+    private $builder;
+
     /** @var LoggerInterface */
     private $logger;
 
@@ -36,12 +40,14 @@ abstract class BaseTracking
         CommunicationConfigInterface $communicationConfig,
         CredentialsFactory $credentialsFactory,
         SessionDataInterface $sessionData,
+        Builder $builder,
         LoggerInterface $logger
     ) {
         $this->fieldRoles          = $fieldRoles;
         $this->communicationConfig = $communicationConfig;
         $this->credentialsFactory  = $credentialsFactory;
         $this->sessionData         = $sessionData;
+        $this->builder             = $builder;
         $this->logger              = $logger;
     }
 
@@ -52,14 +58,13 @@ abstract class BaseTracking
 
     protected function getTracking(): ResourceInterface
     {
-        $builder = (new Builder())
-            ->withServerUrl($this->communicationConfig->getAddress())
+        $this->builder->withServerUrl($this->communicationConfig->getAddress())
             ->withApiVersion($this->communicationConfig->getVersion())
             ->withCredentials($this->credentialsFactory->create());
         if ($this->communicationConfig->isLoggingEnabled()) {
-            $builder->withLogger($this->logger);
+            $this->builder->withLogger($this->logger);
         }
 
-        return $builder->build();
+        return $this->builder->build();
     }
 }

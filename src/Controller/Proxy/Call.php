@@ -39,6 +39,9 @@ class Call extends Action\Action
     /** @var LoggerInterface  */
     private $logger;
 
+    /** @var Builder  */
+    private $builder;
+
     public function __construct(
         Action\Context $context,
         JsonResultFactory $jsonResultFactory,
@@ -47,7 +50,8 @@ class Call extends Action\Action
         CommunicationConfigInterface $communicationConfig,
         ParameterUtils $parameterUtils,
         CredentialsFactory $credentialsFactory,
-        LoggerInterface  $logger
+        LoggerInterface  $logger,
+        Builder $builder
     ) {
         parent::__construct($context);
         $this->jsonResultFactory   = $jsonResultFactory;
@@ -57,6 +61,7 @@ class Call extends Action\Action
         $this->parameterUtils      = $parameterUtils;
         $this->credentialsFactory  = $credentialsFactory;
         $this->logger              = $logger;
+        $this->builder             = $builder;
     }
 
     public function execute()
@@ -72,7 +77,7 @@ class Call extends Action\Action
             $endpoint = $this->communicationConfig->getAddress() . '/' . $endpoint;
             $params   = $this->parameterUtils->fixedGetParams($this->getRequest()->getParams());
 
-            $builder = (new Builder())
+            $builder = $this->builder
                 ->withCredentials($this->credentialsFactory->create())
                 ->withServerUrl($this->communicationConfig->getAddress())
                 ->withApiVersion($this->communicationConfig->getVersion());

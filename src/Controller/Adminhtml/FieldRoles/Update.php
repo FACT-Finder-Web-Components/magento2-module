@@ -31,13 +31,17 @@ class Update extends Action
     /** @var FieldRoles */
     private $fieldRoles;
 
+    /** @var Builder  */
+    private $builder;
+
     public function __construct(
         Context $context,
         JsonFactory $jsonFactory,
         StoreManagerInterface $storeManager,
         CommunicationConfigInterface $communicationConfig,
         CredentialsFactory $credentialsFactory,
-        FieldRoles $fieldRoles
+        FieldRoles $fieldRoles,
+        Builder $builder
     ) {
         parent::__construct($context);
         $this->jsonResultFactory   = $jsonFactory;
@@ -45,6 +49,7 @@ class Update extends Action
         $this->communicationConfig = $communicationConfig;
         $this->credentialsFactory  = $credentialsFactory;
         $this->fieldRoles          = $fieldRoles;
+        $this->builder             = $builder;
     }
 
     public function execute()
@@ -53,7 +58,7 @@ class Update extends Action
         try {
             preg_match('@/store/([0-9]+)/@', (string)$this->_redirect->getRefererUrl(), $match);
             $storeId = (int) ($match[1] ?? $this->storeManager->getDefaultStoreView()->getId());
-            $resource = (new Builder())
+            $resource = $this->builder
                 ->withCredentials($this->credentialsFactory->create())
                 ->withApiVersion($this->communicationConfig->getVersion())
                 ->withServerUrl($this->communicationConfig->getAddress())

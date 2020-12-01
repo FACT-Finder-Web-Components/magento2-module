@@ -7,6 +7,7 @@ namespace Omikron\Factfinder\Model\Api;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Omikron\Factfinder\Api\ClientInterface;
 use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
+use Omikron\FactFinder\Communication\Credentials;
 use Omikron\FactFinder\Communication\Resource\Builder;
 use Omikron\FactFinder\Communication\ResourceInterface;
 use Omikron\Factfinder\Model\Config\ExportConfig;
@@ -24,9 +25,6 @@ class PushImportTest extends TestCase
 
     /** @var MockObject|ScopeConfigInterface */
     private $scopeConfigMock;
-
-    /** @var MockObject|CredentialsFactory */
-    private $credentialsFactoryMock;
 
     /** @var MockObject|ExportConfig */
     private $exportConfigMock;
@@ -74,10 +72,9 @@ class PushImportTest extends TestCase
         $this->scopeConfigMock         = $this->createMock(ScopeConfigInterface::class);
         $this->communicationConfigMock->method('getAddress')->willReturn('http://fake-factfinder.com/FACT-Finder-7.3');
         $this->communicationConfigMock->method('getVersion')->willReturn('7.3');
-        $this->exportConfigMock       = $this->createMock(ExportConfig::class);
-        $this->credentialsFactoryMock = $this->createConfiguredMock(CredentialsFactory::class, ['create' => $this->createMock(\Omikron\FactFinder\Communication\Credentials::class)]);
-        $this->resourceMock           = $this->createMock(ResourceInterface::class);
-        $this->builderMock            = $this->createMock(Builder::class);
+        $this->exportConfigMock = $this->createMock(ExportConfig::class);
+        $this->resourceMock     = $this->createMock(ResourceInterface::class);
+        $this->builderMock      = $this->createMock(Builder::class);
         $this->builderMock->method('withApiVersion')->willReturn($this->builderMock);
         $this->builderMock->method('withServerUrl')->willReturn($this->builderMock);
         $this->builderMock->method('withCredentials')->willReturn($this->builderMock);
@@ -86,7 +83,7 @@ class PushImportTest extends TestCase
 
         $this->pushImport = new PushImport(
             $this->builderMock,
-            $this->credentialsFactoryMock,
+            $this->createConfiguredMock(CredentialsFactory::class, ['create' => $this->createMock(Credentials::class)]),
             $this->communicationConfigMock,
             $this->exportConfigMock,
             $this->createMock(LoggerInterface::class)
