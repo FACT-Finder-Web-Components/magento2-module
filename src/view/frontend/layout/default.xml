@@ -22,6 +22,7 @@
                 </arguments>
             </block>
             <block class="Magento\Framework\View\Element\Template" name="factfinder.search.redirect" ifconfig="factfinder/general/is_enabled" template="Omikron_Factfinder::ff/search-redirect.phtml" after="factfinder.communication" />
+            <block class="Magento\Framework\View\Element\Template" name="factfinder.tracking.add_to_cart" ifconfig="factfinder/general/is_enabled" template="Omikron_Factfinder::ff/add-to-cart-tracking.phtml" after="factfinder.communication" />
         </referenceContainer>
 
         <referenceBlock name="top.search">
