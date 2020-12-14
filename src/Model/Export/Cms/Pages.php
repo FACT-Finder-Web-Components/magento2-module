@@ -51,9 +51,11 @@ class Pages implements \IteratorAggregate
     protected function getQuery(): SearchCriteriaBuilder
     {
         $blacklist = $this->cmsConfig->getCmsBlacklist();
-        if (!empty($blacklist)) {
-          $this->searchCriteriaBuilder->addFilter('identifier', $blacklist, 'nin');
+        if ($blacklist) {
+            $this->searchCriteriaBuilder->addFilter('identifier', $blacklist, 'nin');
         }
-        return $this->searchCriteriaBuilder->addFilter('store_id', [Store::DEFAULT_STORE_ID, (int) $this->storeManager->getStore()->getId()], 'in');
+
+        $inStores  = [Store::DEFAULT_STORE_ID, (int) $this->storeManager->getStore()->getId()];
+        return $this->searchCriteriaBuilder->addFilter('store_id', $inStores, 'in');
     }
 }
