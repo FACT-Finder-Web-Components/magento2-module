@@ -8,6 +8,7 @@ use Magento\Cms\Api\Data\PageInterface;
 use Magento\Cms\Api\PageRepositoryInterface;
 use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Framework\Exception\LocalizedException;
+use Magento\Store\Model\Store;
 use Magento\Store\Model\StoreManagerInterface;
 use Omikron\Factfinder\Model\Config\CmsConfig;
 
@@ -49,8 +50,10 @@ class Pages implements \IteratorAggregate
 
     protected function getQuery(): SearchCriteriaBuilder
     {
-        return $this->searchCriteriaBuilder
-            ->addFilter('identifier', $this->cmsConfig->getCmsBlacklist(), 'nin')
-            ->addFilter('store_id', $this->storeManager->getStore()->getId());
+        $blacklist = $this->cmsConfig->getCmsBlacklist();
+        if (!empty($blacklist)) {
+          $this->searchCriteriaBuilder->addFilter('identifier', $blacklist, 'nin');
+        }
+        return $this->searchCriteriaBuilder->addFilter('store_id', [Store::DEFAULT_STORE_ID, (int) $this->storeManager->getStore()->getId()], 'in');
     }
 }
