@@ -4,8 +4,8 @@
 <?= $block->getChildHtml() ?>
 <script>
     require(['factfinder'], function (ff) {
-        var searchResult = {FF_SEARCH_RESULT};
+        const searchResult = {FF_SEARCH_RESULT};
         ff.communication.EventAggregator.currentSearchResult = searchResult;
-        ff.communication.ResultDispatcher.dispatchSearchResult(searchResult);
+        ff.communication.ResultDispatcher.dispatchRaw(searchResult);
     });
 </script>
