@@ -4,6 +4,13 @@ var config = {
             factfinder: 'Omikron_Factfinder/ff-web-components/bundle'
         }
     },
+    config: {
+        mixins: {
+            'Magento_Catalog/js/catalog-add-to-cart': {
+                'Omikron_Factfinder/js/catalog-add-to-cart-mixin': true
+            }
+        }
+    },
     shim: {
         'Omikron_Factfinder/ff-web-components/bundle': {
             deps: [

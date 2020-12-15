@@ -1,7 +1,17 @@
-define(['factfinder', 'jquery', 'Magento_Customer/js/customer-data'], function (factfinder, jQuery, customerData) {
+define([
+    'jquery',
+    'factfinder',
+    'Magento_Customer/js/customer-data'
+], function ($, factfinder, customerData) {
     'use strict';
+    return function (widget) {
+        function unpackOrUndefined(arrayElement) {
+            if (Array.isArray(arrayElement) && arrayElement.length) {
+                return arrayElement[0];
+            }
+            return undefined;
+        }
 
-    return function (options, element) {
         jQuery(document).on('ajax:addToCart', function (_, eventData) {
             const cart = customerData.get('cart');
             let payload, subscription;
@@ -34,12 +44,6 @@ define(['factfinder', 'jquery', 'Magento_Customer/js/customer-data'], function (
                 });
             }
         });
-
-        function unpackOrUndefined(arrayElement) {
-            if (Array.isArray(arrayElement) && arrayElement.length) {
-                return arrayElement[0];
-            }
-            return undefined;
-        }
+        return widget;
     }
 });
