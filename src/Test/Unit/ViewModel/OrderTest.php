@@ -28,7 +28,7 @@ class OrderTest extends TestCase
         $this->assertEquals('test-channel', $this->order->getChannel());
     }
 
-    protected function setUp():void
+    protected function setUp(): void
     {
         $this->orderItemsMock = array_map(function (array $data): OrderModel\Item {
             return $this->createConfiguredMock(OrderModel\Item::class, ['getProduct' => new DataObject(['sku' => $data[0], 'qty' => $data[1]])]);
