@@ -1,5 +1,8 @@
 # Changelog
 ## Unreleased
+### Changed
+- Upgrade Web Components to version 3.15.10
+
 ### Fixed
 - Fix redirect URL in `controller_action_predispatch_*` observer
 - Exclude category filter from URL on category pages
