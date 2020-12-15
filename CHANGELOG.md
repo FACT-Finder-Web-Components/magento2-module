@@ -15,7 +15,6 @@
 - Fix CMS export does not export pages assigned to all stores when exporting from specific store scope
 - Fix CMS export does not export any page if nothing is selected in the export blacklist
 
-
 ## [v1.6.4] - 2020.10.15
 ### Changed
 - Upgrade Web Components to version 3.15.8
