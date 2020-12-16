@@ -1,5 +1,5 @@
 # Changelog
-## Unreleased
+## [v1.6.5] - 2020.12.16
 ### Changed
 - Simplify module configuration
 - Remove CMS export from the module
