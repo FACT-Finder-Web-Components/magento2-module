@@ -19,9 +19,9 @@
     "magento/zendframework1": "^1.13"
   },
   "require-dev": {
-    "magento/magento-coding-standard": "^5.0",
-    "pdepend/pdepend": ">=2.5.1",
-    "phpmd/phpmd": "^2.7",
+    "magento/magento-coding-standard": "^6.0",
+    "pdepend/pdepend": "^2.8",
+    "phpmd/phpmd": "^2.9",
     "phpunit/phpunit": ">=6.1 <8.0"
   },
   "autoload": {

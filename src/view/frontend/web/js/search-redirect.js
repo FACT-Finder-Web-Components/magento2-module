@@ -7,7 +7,6 @@ define(['factfinder'], function (factfinder) {
         element.addEventListener('before-search', function (event) {
             if (['productDetail', 'getRecords'].lastIndexOf(event.detail.type) === -1) {
                 event.preventDefault();
-                delete event.detail.type;
                 window.location = options.targetUrl + factfinder.common.dictToParameterString(event.detail);
             }
         });

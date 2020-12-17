@@ -808,6 +808,15 @@ ff-slider-one-touch .ffw-line {
     border-bottom: 25px solid transparent;
 }
 
+ff-slider-one-touch .ffw-selected-range {
+    z-index: 1000;
+    top: 50%;
+    position: absolute;
+    height: 2px;
+    transform: translateY(-50%);
+    background-color: #003ccb;
+}
+
 ff-slider-one-touch .ffw-slider-button {
     width: 5px;
     height: 5px;
@@ -815,7 +824,9 @@ ff-slider-one-touch .ffw-slider-button {
     position: absolute;
     top: 50%;
     transform: translate(-50%, -50%);
-    z-index: 999;
+    z-index: 1003;
+    pointer-events: auto;
+    cursor: pointer;
 }
 
 /* ---- generic ---- */

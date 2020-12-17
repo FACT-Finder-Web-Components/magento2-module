@@ -1,0 +1,13 @@
+<?php
+/** @var Magento\Framework\View\Element\Template $block */
+/** @var Magento\Quote\Model\Quote\Item $item */
+?>
+<ff-checkout-tracking>
+    <?php foreach ($block->getData('items') as $item): ?>
+        <ff-checkout-tracking-item
+            record-id="<?= /* @noEscape */ $item->getSku() ?>"
+            count="<?= /* @noEscape */ $item->getQty() ?>"
+            channel="<?= /* @noEscape */ $block->getData('channel') ?>">
+        </ff-checkout-tracking-item>
+    <?php endforeach; ?>
+</ff-checkout-tracking>

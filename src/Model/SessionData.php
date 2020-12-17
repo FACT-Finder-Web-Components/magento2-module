@@ -37,11 +37,6 @@ class SessionData implements SessionDataInterface, SectionSourceInterface, Param
         return (int) $this->customerSession->getCustomerId();
     }
 
-    public function getSessionId(): string
-    {
-        return $this->getCorrectSessionId((string) $this->customerSession->getSessionId());
-    }
-
     /**
      * @return array
      */
@@ -49,24 +44,13 @@ class SessionData implements SessionDataInterface, SectionSourceInterface, Param
     {
         return [
             'uid'      => $this->getUserId(),
-            'sid'      => $this->getSessionId(),
             'internal' => $this->isInternal(),
         ];
     }
 
     public function getParameters(): array
     {
-        return [
-            'sid'     => $this->getSessionId(),
-            'user-id' => $this->getUserId() ?: null,
-        ];
-    }
-
-    private function getCorrectSessionId(string $sessionId, int $length = 30): string
-    {
-        $sessionId = $sessionId ?: sha1(uniqid('', true));
-        $sessionId = str_repeat($sessionId, intdiv($length, strlen($sessionId)) + 1);
-        return substr($sessionId, 0, $length);
+        return ['user-id' => $this->getUserId() ?: null];
     }
 
     private function isInternal(): bool

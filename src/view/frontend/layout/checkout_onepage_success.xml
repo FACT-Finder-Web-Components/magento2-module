@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="order.success.additional.info">
+            <block class="Magento\Framework\View\Element\Template" name="factfinder.tracking.checkout" ifconfig="factfinder/general/is_enabled" template="Omikron_Factfinder::ff/checkout-tracking.phtml" cacheable="false">
+            <arguments>
+                <argument name="items" xsi:type="helper" helper="Omikron\Factfinder\ViewModel\Order::getItems" />
+                <argument name="channel" xsi:type="helper" helper="Omikron\Factfinder\ViewModel\Order::getChannel" />
+            </arguments>
+        </block>
+        </referenceContainer>
+    </body>
+</page>

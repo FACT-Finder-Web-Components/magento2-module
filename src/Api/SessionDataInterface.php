@@ -15,11 +15,4 @@ interface SessionDataInterface
      * @return int
      */
     public function getUserId(): int;
-
-    /**
-     * Get session ID (30 characters long)
-     *
-     * @return string
-     */
-    public function getSessionId(): string;
 }
