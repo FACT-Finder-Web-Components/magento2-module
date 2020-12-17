@@ -4,7 +4,6 @@
     <preference for="Omikron\Factfinder\Api\Config\AuthConfigInterface" type="Omikron\Factfinder\Model\Config\AuthConfig" />
     <preference for="Omikron\Factfinder\Api\Config\CommunicationConfigInterface" type="Omikron\Factfinder\Model\Config\CommunicationConfig" />
     <preference for="Omikron\Factfinder\Api\Config\FeatureConfigInterface" type="Omikron\Factfinder\Model\Config\FeatureConfig" />
-    <preference for="Omikron\Factfinder\Api\Data\TrackingProductInterface" type="Omikron\Factfinder\Model\Data\TrackingProduct" />
     <preference for="Omikron\Factfinder\Api\ExporterInterface" type="Omikron\Factfinder\Model\Exporter" />
     <preference for="Omikron\Factfinder\Api\FieldRolesInterface" type="Omikron\Factfinder\Model\FieldRoles" />
     <preference for="Omikron\Factfinder\Api\Filter\FilterInterface" type="Omikron\Factfinder\Model\Filter\TextFilter" />
@@ -96,11 +95,6 @@
             <argument name="fileName" xsi:type="string">/var/log/factfinder.log</argument>
         </arguments>
     </virtualType>
-    <virtualType name="Omikron\Factfinder\Model\TrackingEventClient" type="Omikron\Factfinder\Model\Client">
-        <arguments>
-            <argument name="serializer" xsi:type="object">Omikron\Factfinder\Model\Serializer\PlainTextSerializer</argument>
-        </arguments>
-    </virtualType>
     <virtualType name="Omikron\Factfinder\Model\Export\Catalog\ProductField\Brand" type="Omikron\Factfinder\Model\Export\Catalog\ProductField\GenericField">
         <arguments>
             <argument name="attributeCode" xsi:type="string">manufacturer</argument>
@@ -122,14 +116,6 @@
     </type>
     <type name="Omikron\Factfinder\Model\Api\PushImport">
         <plugin name="logPushImportExceptions" type="Omikron\Factfinder\Plugin\LogExceptions" />
-    </type>
-    <type name="Omikron\Factfinder\Model\Api\Tracking">
-        <plugin name="logTrackingExceptions" type="Omikron\Factfinder\Plugin\LogExceptions" />
-    </type>
-    <type name="Omikron\Factfinder\Model\Api\Tracking">
-        <arguments>
-            <argument name="factFinderClient" xsi:type="object">Omikron\Factfinder\Model\TrackingEventClient</argument>
-        </arguments>
     </type>
     <type name="Omikron\Factfinder\Model\Export\Catalog\DataProvider">
         <arguments>
