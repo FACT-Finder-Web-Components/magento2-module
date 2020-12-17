@@ -1,49 +1,41 @@
 define([
     'jquery',
     'factfinder',
+    'underscore',
     'Magento_Customer/js/customer-data'
-], function ($, factfinder, customerData) {
+], function ($, factfinder, _, customerData) {
     'use strict';
-    return function (widget) {
-        function unpackOrUndefined(arrayElement) {
-            if (Array.isArray(arrayElement) && arrayElement.length) {
-                return arrayElement[0];
-            }
-            return undefined;
-        }
 
-        jQuery(document).on('ajax:addToCart', function (_, eventData) {
-            const cart = customerData.get('cart');
-            let payload, subscription;
-            payload = eventData
+    $(document).on('ajax:addToCart', function (event, eventData) {
+        const cart = customerData.get('cart');
+        const productId = _.first(eventData.productInfo, null, {id: 0}).id;
+        let subscription;
 
-            if (!subscription || subscription.isDisposed) {
-                subscription = cart.subscribe(function (cartData) {
-                    if (payload.productInfo && payload.productInfo.length) {
-                        const addedProductId = payload.productInfo[0].id;
-                        const cartItem = unpackOrUndefined(cartData.items.filter(function (item) {
-                            return item.product_id === addedProductId;
-                        }));
-                        const qtyInput = unpackOrUndefined(jQuery(payload.form[0]).serializeArray().filter(function (element) {
-                            return element.name === 'qty';
-                        }));
-
-                        if (qtyInput && cartItem) {
-                            const track = new factfinder.communication.Tracking12();
-                            track.cart({
-                                channel: factfinder.communication.globalSearchParameter.channel,
-                                sid: factfinder.common.localStorage.getItem('ff_sid'),
-                                id: cartItem.product_sku,
-                                price: cartItem.product_price_value,
-                                masterId: payload.sku,
-                                count: parseInt(qtyInput.value)
-                            });
-                        }
-                    }
-                    subscription.dispose();
+        if (productId && (!subscription || subscription.isDisposed)) {
+            subscription = cart.subscribe(function (cartData) {
+                const cartItem = _.find(cartData.items, function (item) {
+                    return item.product_id === productId;
                 });
-            }
-        });
-        return widget;
-    }
+
+                const qtyInput = _.find($(eventData.form[0]).serializeArray(), function (element) {
+                    return element.name === 'qty';
+                });
+
+                if (qtyInput && cartItem) {
+                    const track = new factfinder.communication.Tracking12();
+                    track.cart({
+                        channel: factfinder.communication.globalSearchParameter.channel,
+                        id: cartItem.product_sku,
+                        price: cartItem.product_price_value,
+                        masterId: eventData.sku || cartItem.product_sku,
+                        count: parseInt(qtyInput.value)
+                    });
+                }
+
+                subscription.dispose();
+            });
+        }
+    });
+
+    return _.identity;
 });
