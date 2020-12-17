@@ -48,16 +48,6 @@ class SessionDataTest extends TestCase
         $this->assertSame(0, $this->sessionData->getUserId());
     }
 
-    /**
-     * @testdox      The session ID is correctly calculated (30 characters long)
-     * @dataProvider sessionIdProvider
-     */
-    public function test_session_id(string $from, string $to)
-    {
-        $this->sessionMock->method('getSessionId')->willReturn($from);
-        $this->assertSame($to, $this->sessionData->getSessionId());
-    }
-
     public function test_it_implements_the_customer_section_source_interface()
     {
         $this->assertInstanceOf(SectionSourceInterface::class, $this->sessionData);
@@ -66,10 +56,7 @@ class SessionDataTest extends TestCase
     public function test_it_collects_the_customer_data()
     {
         $this->sessionMock->method('getCustomerId')->willReturn(123456);
-        $this->sessionMock->method('getSessionId')->willReturn('7ddf32e17a6ac5ce04a8ecbf782ca5');
-
-        $expected = ['uid' => 123456, 'sid' => '7ddf32e17a6ac5ce04a8ecbf782ca5'];
-        $this->assertArraySubset($expected, $this->sessionData->getSectionData());
+        $this->assertArraySubset(['uid' => 123456], $this->sessionData->getSectionData());
     }
 
     /**
@@ -82,15 +69,6 @@ class SessionDataTest extends TestCase
 
         $expected = ['internal' => $result];
         $this->assertArraySubset($expected, $this->sessionData->getSectionData());
-    }
-
-    public function sessionIdProvider()
-    {
-        return [
-            ['shorter', 'shortershortershortershortersh'],
-            [sha1('longer'), substr(sha1('longer'), 0, 30)],
-            ['', 'a415ab5cc17c8c093c015ccdb7e552'],
-        ];
     }
 
     public function remoteAddressProvider()
