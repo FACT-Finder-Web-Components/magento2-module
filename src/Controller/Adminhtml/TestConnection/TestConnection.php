@@ -5,13 +5,15 @@ declare(strict_types=1);
 namespace Omikron\Factfinder\Controller\Adminhtml\TestConnection;
 
 use Magento\Backend\App\Action;
+use Magento\Framework\App\RequestInterface;
 use Magento\Framework\Controller\Result\JsonFactory;
 use Magento\Framework\Phrase;
 use Omikron\Factfinder\Api\Config\AuthConfigInterface;
-use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
+use Omikron\FactFinder\Communication\Client\ClientBuilder;
+use Omikron\FactFinder\Communication\Client\ClientException;
+use Omikron\FactFinder\Communication\Client\ClientInterface;
 use Omikron\FactFinder\Communication\Credentials;
-use Omikron\FactFinder\Communication\Exception\ResponseException;
-use Omikron\FactFinder\Communication\Resource\Builder;
+use Omikron\FactFinder\Communication\Resource\AdapterFactory;
 use Omikron\Factfinder\Model\Api\CredentialsFactory;
 
 class TestConnection extends Action
@@ -28,44 +30,36 @@ class TestConnection extends Action
     /** @var AuthConfigInterface */
     private $authConfig;
 
-    /** @var CommunicationConfigInterface */
-    private $communicationConfig;
-
-    /** @var Builder  */
-    private $builder;
+    /** @var ClientBuilder */
+    private $clientBuilder;
 
     public function __construct(
         Action\Context $context,
         JsonFactory $jsonResultFactory,
         CredentialsFactory $credentialsFactory,
         AuthConfigInterface $authConfig,
-        CommunicationConfigInterface $communicationConfig,
-        Builder $builder
+        ClientBuilder $clientBuilder
     ) {
         parent::__construct($context);
-        $this->jsonResultFactory   = $jsonResultFactory;
-        $this->credentialsFactory  = $credentialsFactory;
-        $this->authConfig          = $authConfig;
-        $this->communicationConfig = $communicationConfig;
-        $this->builder             = $builder;
+        $this->jsonResultFactory  = $jsonResultFactory;
+        $this->credentialsFactory = $credentialsFactory;
+        $this->authConfig         = $authConfig;
+        $this->clientBuilder      = $clientBuilder;
     }
 
     public function execute()
     {
-        $message = new Phrase('Connection successfully established.');
-
         try {
-            $request   = $this->getRequest();
-            $serverUrl = $request->getParam('address', $this->communicationConfig->getAddress());
-
-            $resource = $this->builder
+            $request       = $this->getRequest();
+            $clientBuilder = $this->clientBuilder
                 ->withCredentials($this->getCredentials($this->getRequest()->getParams()))
-                ->withApiVersion($request->getParam('version'))
-                ->withServerUrl($serverUrl)
-                ->build();
+                ->withServerUrl($request->getParam('address'));
 
-            $resource->search('Search.ff', $request->getParam('channel'));
-        } catch (ResponseException $e) {
+            $searchAdapter = (new AdapterFactory($clientBuilder, $request->getParam('version')))->getSearchAdapter();
+            $searchAdapter->search($request->getParam('channel'), '*');
+
+            $message = new Phrase('Connection successfully established.');
+        } catch (ClientException $e) {
             $message = $e->getMessage();
         }
 
