@@ -9,8 +9,8 @@ use Magento\Backend\App\Action\Context;
 use Magento\Framework\Controller\Result\JsonFactory;
 use Magento\Store\Model\StoreManagerInterface;
 use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
-use Omikron\FactFinder\Communication\Exception\ResponseException;
-use Omikron\FactFinder\Communication\Resource\Builder;
+use Omikron\FactFinder\Communication\Client\ClientBuilder;
+use Omikron\FactFinder\Communication\Resource\AdapterFactory;
 use Omikron\Factfinder\Model\Api\CredentialsFactory;
 use Omikron\Factfinder\Model\FieldRoles;
 
@@ -31,8 +31,8 @@ class Update extends Action
     /** @var FieldRoles */
     private $fieldRoles;
 
-    /** @var Builder  */
-    private $builder;
+    /** @var ClientBuilder */
+    private $clientBuilder;
 
     public function __construct(
         Context $context,
@@ -41,7 +41,7 @@ class Update extends Action
         CommunicationConfigInterface $communicationConfig,
         CredentialsFactory $credentialsFactory,
         FieldRoles $fieldRoles,
-        Builder $builder
+        ClientBuilder $clientBuilder
     ) {
         parent::__construct($context);
         $this->jsonResultFactory   = $jsonFactory;
@@ -49,7 +49,7 @@ class Update extends Action
         $this->communicationConfig = $communicationConfig;
         $this->credentialsFactory  = $credentialsFactory;
         $this->fieldRoles          = $fieldRoles;
-        $this->builder             = $builder;
+        $this->clientBuilder       = $clientBuilder;
     }
 
     public function execute()
@@ -57,16 +57,15 @@ class Update extends Action
         $result = $this->jsonResultFactory->create();
         try {
             preg_match('@/store/([0-9]+)/@', (string)$this->_redirect->getRefererUrl(), $match);
-            $storeId = (int) ($match[1] ?? $this->storeManager->getDefaultStoreView()->getId());
-            $resource = $this->builder
+            $storeId = (int)($match[1] ?? $this->storeManager->getDefaultStoreView()->getId());
+            $client  = $this->clientBuilder
                 ->withCredentials($this->credentialsFactory->create())
-                ->withApiVersion($this->communicationConfig->getVersion())
-                ->withServerUrl($this->communicationConfig->getAddress())
-                ->build();
+                ->withServerUrl($this->communicationConfig->getAddress());
 
-            $response = $resource->search('Search.ff', $this->communicationConfig->getChannel($storeId));
+            $searchAdapter = (new AdapterFactory($client, $this->communicationConfig->getVersion()))->getSearchAdapter();
+            $response      = $searchAdapter->search($this->communicationConfig->getChannel($storeId), 'Search.ff');
+
             $this->fieldRoles->saveFieldRoles($response['fieldRoles'], $storeId);
-
             $result->setData(['message' => __('Field roles updated successfully')]);
         } catch (ResponseException $e) {
             $result->setData(['message' => $e->getMessage()]);
