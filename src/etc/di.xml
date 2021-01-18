@@ -113,9 +113,7 @@
         </arguments>
     </type>
     <type name="Omikron\Factfinder\Model\Api\PushImport">
-        <arguments>
-            <argument xsi:type="object" name="logger">Omikron\Factfinder\Logger</argument>
-        </arguments>
+        <plugin name="logPushImportExceptions" type="Omikron\Factfinder\Plugin\LogExceptions" />
     </type>
     <type name="Omikron\Factfinder\Observer\BaseTracking">
         <arguments>
@@ -137,6 +135,11 @@
             <argument name="initial" xsi:type="array">
                 <item name="navigation" xsi:type="string">navigation=true</item>
             </argument>
+        </arguments>
+    </type>
+    <type name="Omikron\Factfinder\Plugin\LogExceptions">
+        <arguments>
+            <argument name="logger" xsi:type="object">Omikron\Factfinder\Logger</argument>
         </arguments>
     </type>
     <type name="Magento\Framework\Console\CommandListInterface">

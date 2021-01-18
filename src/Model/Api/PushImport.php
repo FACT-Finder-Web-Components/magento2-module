@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Omikron\Factfinder\Model\Api;
 
 use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
-use Omikron\FactFinder\Communication\Resource\Builder;
+use Omikron\FactFinder\Communication\Client\ClientBuilder;
+use Omikron\FactFinder\Communication\Client\ClientException;
+use Omikron\FactFinder\Communication\Resource\AdapterFactory;
 use Omikron\Factfinder\Model\Config\ExportConfig;
 use Psr\Log\LoggerInterface;
 
@@ -23,17 +25,17 @@ class PushImport
     /** @var LoggerInterface */
     private $logger;
 
-    /** @var Builder */
-    private $builder;
+    /** @var ClientBuilder */
+    private $clientBuilder;
 
     public function __construct(
-        Builder $builder,
+        ClientBuilder $clientBuilder,
         CredentialsFactory $credentialsFactory,
         CommunicationConfigInterface $communicationConfig,
         ExportConfig $exportConfig,
         LoggerInterface $logger
     ) {
-        $this->builder             = $builder;
+        $this->clientBuilder       = $clientBuilder;
         $this->credentialsFactory  = $credentialsFactory;
         $this->communicationConfig = $communicationConfig;
         $this->exportConfig        = $exportConfig;
@@ -42,22 +44,21 @@ class PushImport
 
     public function execute(int $storeId): bool
     {
-        $this->builder->withApiVersion($this->communicationConfig->getVersion())
+        $clientBuilder = $this->clientBuilder
             ->withServerUrl($this->communicationConfig->getAddress())
             ->withCredentials($this->credentialsFactory->create());
 
-        if ($this->communicationConfig->isLoggingEnabled()) {
-            $this->builder->withLogger($this->logger);
+        $importAdapter = (new AdapterFactory($clientBuilder, $this->communicationConfig->getVersion()))->getImportAdapter();
+        $channel = $this->communicationConfig->getChannel($storeId);
+
+        if ($importAdapter->running($channel)) {
+            throw new ClientException("Can't start a new import process. Another one is still going");
         }
 
-        $resource = $this->builder->build();
         $response = [];
-
         foreach ($this->exportConfig->getPushImportDataTypes($storeId) as $dataType) {
-            $response = array_merge_recursive($response, $resource->import($dataType, $this->communicationConfig->getChannel($storeId)));
-            $resource->import($dataType, $this->communicationConfig->getChannel($storeId));
+            $response = array_merge_recursive($response, $importAdapter->import($this->communicationConfig->getChannel($storeId), $dataType));
         }
-
         return $response && !(isset($response['errors']) || isset($response['error']));
     }
 }
