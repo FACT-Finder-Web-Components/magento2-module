@@ -9,8 +9,6 @@ namespace Omikron\Factfinder\Api\Config;
  */
 interface CommunicationConfigInterface
 {
-    const NG_VERSION = 'ng';
-
     public function isChannelEnabled(int $scopeId = null): bool;
 
     public function getAddress(): string;

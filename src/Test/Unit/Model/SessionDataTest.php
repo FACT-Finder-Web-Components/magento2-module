@@ -56,7 +56,9 @@ class SessionDataTest extends TestCase
     public function test_it_collects_the_customer_data()
     {
         $this->sessionMock->method('getCustomerId')->willReturn(123456);
-        $this->assertArraySubset(['uid' => 123456], $this->sessionData->getSectionData());
+        $expected = ['uid' => 123456];
+        $actual   = $this->sessionData->getSectionData();
+        $this->assertEquals($expected['uid'], $actual['uid']);
     }
 
     /**
@@ -68,7 +70,8 @@ class SessionDataTest extends TestCase
         $this->remoteAddressMock->method('getRemoteAddress')->willReturn($address);
 
         $expected = ['internal' => $result];
-        $this->assertArraySubset($expected, $this->sessionData->getSectionData());
+        $actual = $this->sessionData->getSectionData();
+        $this->assertEquals($expected['internal'], $actual['internal']);
     }
 
     public function remoteAddressProvider()
@@ -79,7 +82,7 @@ class SessionDataTest extends TestCase
         ];
     }
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->sessionMock       = $this->createMock(CustomerSession::class);
         $this->scopeConfigMock   = $this->createMock(ScopeConfigInterface::class);
