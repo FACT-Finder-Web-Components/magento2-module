@@ -8,6 +8,7 @@ use Magento\Catalog\Model\Category;
 use Magento\Framework\Registry;
 use Magento\Framework\View\Element\Block\ArgumentInterface;
 use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
+use Omikron\FactFinder\Communication\Version;
 
 class CategoryPath implements ArgumentInterface
 {
@@ -37,7 +38,7 @@ class CategoryPath implements ArgumentInterface
 
     public function getValue(): string
     {
-        $path = $this->communicationConfig->getVersion() === CommunicationConfigInterface::NG_VERSION
+        $path = $this->communicationConfig->getVersion() === Version::NG
             ? $this->ngPath($this->getCurrentCategory())
             : $this->standardPath($this->getCurrentCategory());
 
