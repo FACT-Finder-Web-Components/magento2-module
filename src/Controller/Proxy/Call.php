@@ -10,11 +10,9 @@ use Magento\Framework\Controller\Result\JsonFactory as JsonResultFactory;
 use Magento\Framework\Controller\Result\RawFactory as RawResultFactory;
 use Magento\Framework\Exception\NotFoundException;
 use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
-use Omikron\FactFinder\Communication\Resource\Builder;
-use Omikron\Factfinder\Exception\ResponseException;
+use Omikron\FactFinder\Communication\Client\ClientBuilder;
+use Omikron\FactFinder\Communication\Client\ClientException;
 use Omikron\Factfinder\Model\Api\CredentialsFactory;
-use Omikron\Factfinder\Model\Http\ParameterUtils;
-use Psr\Log\LoggerInterface;
 
 class Call extends Action\Action
 {
@@ -30,17 +28,11 @@ class Call extends Action\Action
     /** @var CommunicationConfigInterface */
     private $communicationConfig;
 
-    /** @var ParameterUtils */
-    private $parameterUtils;
-
     /** @var CredentialsFactory */
     private $credentialsFactory;
 
-    /** @var LoggerInterface  */
-    private $logger;
-
-    /** @var Builder  */
-    private $builder;
+    /** @var ClientBuilder */
+    private $clientBuilder;
 
     public function __construct(
         Action\Context $context,
@@ -48,20 +40,16 @@ class Call extends Action\Action
         RawResultFactory $rawResultFactory,
         ClientFactory $clientFactory,
         CommunicationConfigInterface $communicationConfig,
-        ParameterUtils $parameterUtils,
         CredentialsFactory $credentialsFactory,
-        LoggerInterface  $logger,
-        Builder $builder
+        ClientBuilder $clientBuilder
     ) {
         parent::__construct($context);
         $this->jsonResultFactory   = $jsonResultFactory;
         $this->rawResultFactory    = $rawResultFactory;
         $this->clientFactory       = $clientFactory;
         $this->communicationConfig = $communicationConfig;
-        $this->parameterUtils      = $parameterUtils;
         $this->credentialsFactory  = $credentialsFactory;
-        $this->logger              = $logger;
-        $this->builder             = $builder;
+        $this->clientBuilder       = $clientBuilder;
     }
 
     public function execute()
@@ -75,20 +63,29 @@ class Call extends Action\Action
         $result = $this->jsonResultFactory->create();
         try {
             $endpoint = $this->communicationConfig->getAddress() . '/' . $endpoint;
-            $params   = $this->parameterUtils->fixedGetParams($this->getRequest()->getParams());
-
-            $builder = $this->builder
+            $client   = $this->clientBuilder
                 ->withCredentials($this->credentialsFactory->create())
                 ->withServerUrl($this->communicationConfig->getAddress())
-                ->withApiVersion($this->communicationConfig->getVersion());
+                ->withVersion($this->communicationConfig->getVersion())
+                ->build();
 
-            if ($this->communicationConfig->isLoggingEnabled()) {
-                $builder->withLogger($this->logger);
+            if ($this->getRequest()->getMethod() === 'POST') {
+                $response = $client->request(
+                    'POST',
+                    $endpoint,
+                    ['body' => $this->getRequest()->getContent(), 'headers' => ['Content-Type' => 'application/json']]
+                );
+            } else if ($this->getRequest()->getMethod() === 'GET') {
+                $response = $client->request(
+                    'GET',
+                    $endpoint . '?' . (string) parse_url($this->_url->getCurrentUrl(), PHP_URL_QUERY)
+                );
+            } else {
+                throw new \HttpRequestMethodException(__(sprintf('Method %s is not supported', $this->getRequest()->getMethod())));
             }
 
-            $response = $builder->client()->getRequest($endpoint, $params);
-            $result->setData($response);
-        } catch (ResponseException $e) {
+            $result->setJsonData($response->getBody()->getContents());
+        } catch (ClientException $e) {
             return $this->rawResultFactory->create()->setContents($e->getMessage());
         }
 
