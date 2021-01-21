@@ -47,7 +47,7 @@ class CommunicationTest extends TestCase
         $this->assertSame('false', $parameters['use-cache']);
     }
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->parametersProviderMock = $this->createMock(CommunicationParametersProvider::class);
         $this->fieldRolesMock         = $this->createMock(FieldRolesInterface::class);

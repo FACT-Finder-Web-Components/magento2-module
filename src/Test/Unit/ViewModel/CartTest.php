@@ -19,7 +19,7 @@ class CartTest extends TestCase
         $this->assertSame(['foo', 'bar', 'baz'], $this->cart->getItemIds());
     }
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $quoteItems = array_map(function (string $sku): Quote\Item {
             return $this->createConfiguredMock(Quote\Item::class, ['getProduct' => new DataObject(['sku' => $sku])]);

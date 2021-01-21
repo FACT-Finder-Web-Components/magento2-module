@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace Omikron\Factfinder\Controller\Proxy;
 
+use GuzzleHttp\ClientFactory;
 use Magento\Framework\App\Action;
 use Magento\Framework\Controller\Result\JsonFactory as JsonResultFactory;
 use Magento\Framework\Controller\Result\RawFactory as RawResultFactory;
 use Magento\Framework\Exception\NotFoundException;
-use Omikron\Factfinder\Api\ClientInterface;
 use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
-use Omikron\Factfinder\Exception\ResponseException;
-use Omikron\Factfinder\Model\Http\ParameterUtils;
+use Omikron\FactFinder\Communication\Client\ClientBuilder;
+use Omikron\FactFinder\Communication\Client\ClientException;
+use Omikron\Factfinder\Model\Api\CredentialsFactory;
 
 class Call extends Action\Action
 {
@@ -21,29 +22,34 @@ class Call extends Action\Action
     /** @var RawResultFactory */
     private $rawResultFactory;
 
-    /** @var ClientInterface */
-    private $apiClient;
+    /** @var ClientFactory */
+    private $clientFactory;
 
     /** @var CommunicationConfigInterface */
     private $communicationConfig;
 
-    /** @var ParameterUtils */
-    private $parameterUtils;
+    /** @var CredentialsFactory */
+    private $credentialsFactory;
+
+    /** @var ClientBuilder */
+    private $clientBuilder;
 
     public function __construct(
         Action\Context $context,
         JsonResultFactory $jsonResultFactory,
         RawResultFactory $rawResultFactory,
-        ClientInterface $apiClient,
+        ClientFactory $clientFactory,
         CommunicationConfigInterface $communicationConfig,
-        ParameterUtils $parameterUtils
+        CredentialsFactory $credentialsFactory,
+        ClientBuilder $clientBuilder
     ) {
         parent::__construct($context);
         $this->jsonResultFactory   = $jsonResultFactory;
         $this->rawResultFactory    = $rawResultFactory;
-        $this->apiClient           = $apiClient;
+        $this->clientFactory       = $clientFactory;
         $this->communicationConfig = $communicationConfig;
-        $this->parameterUtils      = $parameterUtils;
+        $this->credentialsFactory  = $credentialsFactory;
+        $this->clientBuilder       = $clientBuilder;
     }
 
     public function execute()
@@ -57,15 +63,29 @@ class Call extends Action\Action
         $result = $this->jsonResultFactory->create();
         try {
             $endpoint = $this->communicationConfig->getAddress() . '/' . $endpoint;
-            $params   = $this->parameterUtils->fixedGetParams($this->getRequest()->getParams());
-            $response = $this->apiClient->sendRequest($endpoint, $params);
-            $this->_eventManager->dispatch('ff_proxy_post_dispatch', [
-                'endpoint' => $endpoint,
-                'params'   => $params,
-                'response' => &$response,
-            ]);
-            $result->setData($response);
-        } catch (ResponseException $e) {
+            $client   = $this->clientBuilder
+                ->withCredentials($this->credentialsFactory->create())
+                ->withServerUrl($this->communicationConfig->getAddress())
+                ->withVersion($this->communicationConfig->getVersion())
+                ->build();
+
+            if ($this->getRequest()->getMethod() === 'POST') {
+                $response = $client->request(
+                    'POST',
+                    $endpoint,
+                    ['body' => $this->getRequest()->getContent(), 'headers' => ['Content-Type' => 'application/json']]
+                );
+            } else if ($this->getRequest()->getMethod() === 'GET') {
+                $response = $client->request(
+                    'GET',
+                    $endpoint . '?' . (string) parse_url($this->_url->getCurrentUrl(), PHP_URL_QUERY)
+                );
+            } else {
+                throw new \HttpRequestMethodException(__(sprintf('Method %s is not supported', $this->getRequest()->getMethod())));
+            }
+
+            $result->setJsonData($response->getBody()->getContents());
+        } catch (ClientException $e) {
             return $this->rawResultFactory->create()->setContents($e->getMessage());
         }
 

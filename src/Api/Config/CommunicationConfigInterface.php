@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Omikron\Factfinder\Api\Config;
 
 /**
@@ -14,4 +16,8 @@ interface CommunicationConfigInterface
     public function getChannel(int $scopeId = null): string;
 
     public function isPushImportEnabled(int $scopeId = null): bool;
+
+    public function getVersion(): string;
+
+    public function isLoggingEnabled(): bool;
 }

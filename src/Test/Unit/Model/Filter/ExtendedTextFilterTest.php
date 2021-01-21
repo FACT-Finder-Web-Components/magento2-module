@@ -22,7 +22,7 @@ class ExtendedTextFilterTest extends TestCase
         $this->assertSame($this->filter->filterValue('Remove#all|forbidden=chars'), 'Remove all forbidden chars');
     }
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->filter = new ExtendedTextFilter();
     }

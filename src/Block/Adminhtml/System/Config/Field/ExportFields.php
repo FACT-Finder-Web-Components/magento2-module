@@ -9,7 +9,7 @@ use Magento\Config\Block\System\Config\Form\Field\FieldArray\AbstractFieldArray;
 use Magento\Config\Model\Config\Source\Yesno;
 use Magento\Framework\Data\OptionSourceInterface;
 use Magento\Framework\DataObject;
-use Omikron\Factfinder\Model\Config\Source\Attribute as AttributeSource;
+use Omikron\Factfinder\Model\Adminhtml\System\Config\Source\Attribute as AttributeSource;
 
 /**
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)

@@ -6,7 +6,8 @@ namespace Omikron\Factfinder\Cron;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Store\Model\StoreManagerInterface;
-use Omikron\Factfinder\Api\Config\ChannelProviderInterface;
+use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
+use Omikron\FactFinder\Communication\Resource\Builder;
 use Omikron\Factfinder\Model\Api\PushImport;
 use Omikron\Factfinder\Model\Export\FeedFactory as FeedGeneratorFactory;
 use Omikron\Factfinder\Model\FtpUploader;
@@ -29,8 +30,8 @@ class Feed
     /** @var StoreManagerInterface */
     private $storeManager;
 
-    /** @var ChannelProviderInterface */
-    private $channelProvider;
+    /** @var CommunicationConfigInterface */
+    private $communicationConfig;
 
     /** @var CsvFactory */
     private $csvFactory;
@@ -38,11 +39,11 @@ class Feed
     /** @var FtpUploader */
     private $ftpUploader;
 
-    /** @var string */
-    private $feedType;
-
     /** @var PushImport */
     private $pushImport;
+
+    /** @var string */
+    private $feedType;
 
     public function __construct(
         ScopeConfigInterface $scopeConfig,
@@ -51,7 +52,7 @@ class Feed
         StoreEmulation $emulation,
         CsvFactory $csvFactory,
         FtpUploader $ftpUploader,
-        ChannelProviderInterface $channelProvider,
+        CommunicationConfigInterface $communicationConfig,
         PushImport $pushImport,
         string $type
     ) {
@@ -61,7 +62,7 @@ class Feed
         $this->storeEmulation       = $emulation;
         $this->csvFactory           = $csvFactory;
         $this->ftpUploader          = $ftpUploader;
-        $this->channelProvider      = $channelProvider;
+        $this->communicationConfig  = $communicationConfig;
         $this->pushImport           = $pushImport;
         $this->feedType             = $type;
     }
@@ -74,12 +75,15 @@ class Feed
 
         foreach ($this->storeManager->getStores() as $store) {
             $this->storeEmulation->runInStore((int) $store->getId(), function () use ($store) {
-                if ($this->channelProvider->isChannelEnabled((int) $store->getId())) {
-                    $filename = "export.{$this->channelProvider->getChannel((int) $store->getId())}.csv";
+                $storeId = (int) $store->getId();
+                if ($this->communicationConfig->isChannelEnabled($storeId)) {
+                    $filename = "export.{$this->communicationConfig->getChannel($storeId)}.csv";
                     $stream   = $this->csvFactory->create(['filename' => "factfinder/{$filename}"]);
                     $this->feedGeneratorFactory->create($this->feedType)->generate($stream);
                     $this->ftpUploader->upload($filename, $stream);
-                    $this->pushImport->execute((int) $store->getId());
+                    if ($this->communicationConfig->isPushImportEnabled($storeId)) {
+                        $this->pushImport->execute($storeId);
+                    }
                 }
             });
         }

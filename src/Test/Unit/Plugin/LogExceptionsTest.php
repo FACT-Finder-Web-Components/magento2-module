@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Omikron\Factfinder\Plugin;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
-use Omikron\Factfinder\Exception\ResponseException;
+use Omikron\FactFinder\Communication\Client\ClientException;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
@@ -31,7 +31,7 @@ class LogExceptionsTest extends TestCase
     public function test_return_false_on_exception()
     {
         $this->assertSame(false, $this->plugin->aroundExecute(null, function () {
-            throw new ResponseException();
+            throw new ClientException();
         }));
     }
 
@@ -45,11 +45,11 @@ class LogExceptionsTest extends TestCase
         $this->logger->expects($this->once())->method('error');
 
         $this->assertSame(false, $this->plugin->aroundExecute(null, function () {
-            throw new ResponseException();
+            throw new ClientException();
         }));
     }
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->scopeConfig = $this->createMock(ScopeConfigInterface::class);
         $this->logger      = $this->createMock(LoggerInterface::class);

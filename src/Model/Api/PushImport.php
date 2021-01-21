@@ -4,61 +4,61 @@ declare(strict_types=1);
 
 namespace Omikron\Factfinder\Model\Api;
 
-use Magento\Framework\App\Config\ScopeConfigInterface;
-use Magento\Store\Model\ScopeInterface;
-use Omikron\Factfinder\Api\ClientInterface;
 use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
+use Omikron\FactFinder\Communication\Client\ClientBuilder;
+use Omikron\FactFinder\Communication\Client\ClientException;
+use Omikron\FactFinder\Communication\Resource\AdapterFactory;
+use Omikron\Factfinder\Model\Config\ExportConfig;
+use Psr\Log\LoggerInterface;
 
 class PushImport
 {
-    /** @var ClientInterface */
-    protected $apiClient;
-
     /** @var CommunicationConfigInterface */
-    protected $communicationConfig;
+    private $communicationConfig;
 
-    /** @var string */
-    protected $apiName = 'Import.ff';
+    /** @var CredentialsFactory */
+    private $credentialsFactory;
 
-    /** @var ScopeConfigInterface */
-    protected $scopeConfig;
+    /** @var ExportConfig */
+    private $exportConfig;
+
+    /** @var LoggerInterface */
+    private $logger;
+
+    /** @var ClientBuilder */
+    private $clientBuilder;
 
     public function __construct(
-        ClientInterface $apiClient,
+        ClientBuilder $clientBuilder,
+        CredentialsFactory $credentialsFactory,
         CommunicationConfigInterface $communicationConfig,
-        ScopeConfigInterface $scopeConfig
+        ExportConfig $exportConfig,
+        LoggerInterface $logger
     ) {
-        $this->apiClient           = $apiClient;
+        $this->clientBuilder       = $clientBuilder;
+        $this->credentialsFactory  = $credentialsFactory;
         $this->communicationConfig = $communicationConfig;
-        $this->scopeConfig         = $scopeConfig;
+        $this->exportConfig        = $exportConfig;
+        $this->logger              = $logger;
     }
 
-    public function execute(int $scopeId = null, array $params = []): bool
+    public function execute(int $storeId): bool
     {
-        if (!$this->communicationConfig->isPushImportEnabled($scopeId)) {
-            return false;
-        }
+        $clientBuilder = $this->clientBuilder
+            ->withServerUrl($this->communicationConfig->getAddress())
+            ->withCredentials($this->credentialsFactory->create());
 
-        $params += [
-            'channel'  => $this->communicationConfig->getChannel($scopeId),
-            'quiet'    => 'true',
-            'download' => 'true',
-        ];
+        $importAdapter = (new AdapterFactory($clientBuilder, $this->communicationConfig->getVersion()))->getImportAdapter();
+        $channel = $this->communicationConfig->getChannel($storeId);
+
+        if ($importAdapter->running($channel)) {
+            throw new ClientException("Can't start a new import process. Another one is still going");
+        }
 
         $response = [];
-        $endpoint = $this->communicationConfig->getAddress() . '/' . $this->apiName;
-        foreach ($this->getPushImportDataTypes($scopeId) as $type) {
-            $params['type'] = $type;
-            $response       = array_merge_recursive($response, $this->apiClient->sendRequest($endpoint, $params));
+        foreach ($this->exportConfig->getPushImportDataTypes($storeId) as $dataType) {
+            $response = array_merge_recursive($response, $importAdapter->import($this->communicationConfig->getChannel($storeId), $dataType));
         }
-
         return $response && !(isset($response['errors']) || isset($response['error']));
-    }
-
-    private function getPushImportDataTypes(int $scopeId = null): array
-    {
-        $configPath = 'factfinder/data_transfer/ff_push_import_type';
-        $dataTypes  = (string) $this->scopeConfig->getValue($configPath, ScopeInterface::SCOPE_STORE, $scopeId);
-        return $dataTypes ? explode(',', $dataTypes) : [];
     }
 }
