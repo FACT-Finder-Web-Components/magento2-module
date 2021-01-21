@@ -71,11 +71,13 @@ class Call extends Action\Action
 
             switch ($method) {
                 case 'POST':
-                    return $this->returnJson($client->request('POST', $endpoint,
-                        ['body' => $this->getRequest()->getContent(), 'headers' => ['Content-Type' => 'application/json']]
-                    ));
+                    return $this->returnJson($client->request('POST', $endpoint, [
+                        'body'    => $this->getRequest()->getContent(),
+                        'headers' => ['Content-Type' => 'application/json'],
+                    ]));
                 case 'GET':
-                    return $this->returnJson($client->request('GET', $endpoint . '?' . (string) parse_url($url, PHP_URL_QUERY)));
+                    $query = (string) parse_url($url, PHP_URL_QUERY); // phpcs:ignore
+                    return $this->returnJson($client->request('GET', $endpoint . '?' . $query));
                 default:
                     throw new LocalizedException(__(sprintf('HTTP Method %s is not supported', $method)));
             }

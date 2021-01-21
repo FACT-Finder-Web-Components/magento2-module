@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Omikron\Factfinder\Test\Integration\Controller;
 
-use Magento\Framework\App\Request\Http;
 use Magento\Framework\App\RequestInterface;
 use Magento\TestFramework\TestCase\AbstractController;
 use Omikron\FactFinder\Communication\Client\ClientBuilder;
@@ -76,21 +75,21 @@ class ProxyCallTest extends AbstractController
         $this->_request->setContent('{"masterId":"123","price":"29.99"}');
         $this->clientMock->expects($this->atLeastOnce())
             ->method('request')
-            ->with(
-                'POST',
-                $this->stringContains('/rest/v3/tracking/'),
-                ['body' =>'{"masterId":"123","price":"29.99"}', 'headers' => ['Content-Type' => 'application/json']]
-            );
+            ->with('POST', $this->stringContains('/rest/v3/tracking/'), [
+                'body'    => '{"masterId":"123","price":"29.99"}',
+                'headers' => ['Content-Type' => 'application/json'],
+            ]);
         $this->dispatch('/FACT-Finder/rest/v3/tracking/cart');
     }
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->clientMock = $this->createConfiguredMock(ClientInterface::class,
-            ['request' => $this->createConfiguredMock(ResponseInterface::class,
-                ['getBody' => $this->createConfiguredMock(StreamInterface::class, ['getContents' => '{"status":"OK"}'])
-        ])]);
+        $body    = $this->createConfiguredMock(StreamInterface::class, ['getContents' => '{"status":"OK"}']);
+        $respose = $this->createConfiguredMock(ResponseInterface::class, ['getBody' => $body]);
+
+        $this->clientMock = $this->createConfiguredMock(ClientInterface::class, ['request' => $respose]);
+
         $this->clientBuilderMock = $this->createMock(ClientBuilder::class);
         $this->clientBuilderMock->method('withVersion')->willReturn($this->clientBuilderMock);
         $this->clientBuilderMock->method('withServerUrl')->willReturn($this->clientBuilderMock);

@@ -13,6 +13,7 @@ use Omikron\FactFinder\Communication\Client\ClientBuilder;
 use Omikron\FactFinder\Communication\Resource\AdapterFactory;
 use Omikron\Factfinder\Model\Api\CredentialsFactory;
 use Omikron\Factfinder\Model\FieldRoles;
+use Psr\Http\Client\ClientExceptionInterface;
 
 class Update extends Action
 {
@@ -56,8 +57,8 @@ class Update extends Action
     {
         $result = $this->jsonResultFactory->create();
         try {
-            preg_match('@/store/([0-9]+)/@', (string)$this->_redirect->getRefererUrl(), $match);
-            $storeId = (int)($match[1] ?? $this->storeManager->getDefaultStoreView()->getId());
+            preg_match('@/store/([0-9]+)/@', (string) $this->_redirect->getRefererUrl(), $match);
+            $storeId = (int) ($match[1] ?? $this->storeManager->getDefaultStoreView()->getId());
             $client  = $this->clientBuilder
                 ->withCredentials($this->credentialsFactory->create())
                 ->withServerUrl($this->communicationConfig->getAddress());
@@ -67,7 +68,7 @@ class Update extends Action
 
             $this->fieldRoles->saveFieldRoles($response['fieldRoles'], $storeId);
             $result->setData(['message' => __('Field roles updated successfully')]);
-        } catch (ResponseException $e) {
+        } catch (ClientExceptionInterface $e) {
             $result->setData(['message' => $e->getMessage()]);
         }
 

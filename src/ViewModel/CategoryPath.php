@@ -59,7 +59,8 @@ class CategoryPath implements ArgumentInterface
 
     private function ngPath(Category $category): array
     {
-        return $this->initial + [sprintf('filter=%s', urlencode($this->param . ':' . implode('/', $this->getCategoryPath($category))))];
+        $path = implode('/', $this->getCategoryPath($category));
+        return $this->initial + [sprintf('filter=%s', urlencode($this->param . ':' . $path))];
     }
 
     private function getCategoryPath(Category $category): array

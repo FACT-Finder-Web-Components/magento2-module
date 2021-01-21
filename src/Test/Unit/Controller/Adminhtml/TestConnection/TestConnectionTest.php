@@ -9,7 +9,6 @@ use Magento\Framework\App\RequestInterface;
 use Magento\Framework\Controller\Result\Json as JsonResult;
 use Magento\Framework\Controller\Result\JsonFactory;
 use Omikron\Factfinder\Api\Config\AuthConfigInterface;
-use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
 use Omikron\FactFinder\Communication\Client\ClientBuilder;
 use Omikron\FactFinder\Communication\Client\ClientInterface;
 use Omikron\FactFinder\Communication\Credentials;
@@ -32,12 +31,11 @@ class TestConnectionTest extends TestCase
     public function test_prevent_errors_without_post_data()
     {
         $this->request->method('getParams')->willReturn([]);
-        $this->request->method('getParam')->willReturnMap(
-            [
-                ['address', null, 'https://fake-factfinder.de/fact-finder'],
-                ['version', null, 'ng'],
-                ['channel', null, 'foo']
-            ]);
+        $this->request->method('getParam')->willReturnMap([
+            ['address', null, 'https://fake-factfinder.de/fact-finder'],
+            ['version', null, 'ng'],
+            ['channel', null, 'foo'],
+        ]);
 
         $this->controller->execute();
         $this->assertNull($this->getExpectedException());

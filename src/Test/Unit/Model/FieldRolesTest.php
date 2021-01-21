@@ -74,7 +74,6 @@ class FieldRolesTest extends TestCase
 
     protected function setUp(): void
     {
-
         $this->serializer         = new JsonSerializer();
         $this->scopeConfigMock    = $this->createMock(ScopeConfigInterface::class);
         $this->configResourceMock = $this->createMock(ConfigResource::class);
