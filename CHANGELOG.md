@@ -1,5 +1,8 @@
 # Changelog
 ## Unreleased
+### Added
+- Users can decide now if the attributes should be exported as single fields or grouped into a multi-attribute field
+
 ### Changed
 - Simplify module configuration
 - Remove CMS export from the module
