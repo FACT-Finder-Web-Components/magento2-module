@@ -6,6 +6,9 @@
         <referenceBlock name="category.products" remove="true" />
         <referenceBlock name="catalog.leftnav" remove="true" />
 
+        <referenceBlock name="after.body.start">
+            <block class="Magento\Framework\View\Element\Template" name="factfinder.history.cb" template="Omikron_Factfinder::category/history_callback.phtml" after="factfinder.communication" />
+        </referenceBlock>
         <referenceBlock name="factfinder.communication">
             <arguments>
                 <argument name="communication_parameters" xsi:type="array">

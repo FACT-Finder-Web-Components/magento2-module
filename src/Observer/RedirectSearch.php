@@ -42,6 +42,6 @@ class RedirectSearch implements ObserverInterface
     private function redirectRequest(RequestInterface $request): void
     {
         $query = $request->getParam('q', '*');
-        $this->redirect->redirect($this->response, 'FACT-Finder/result', ['_query' => ['query' => $query]]);
+        $this->redirect->redirect($this->response, 'factfinder/result', ['_query' => ['query' => $query]]);
     }
 }
