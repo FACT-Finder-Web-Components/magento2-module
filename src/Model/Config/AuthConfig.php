@@ -12,8 +12,8 @@ class AuthConfig implements AuthConfigInterface
 {
     private const PATH_USERNAME     = 'factfinder/general/username';
     private const PATH_PASSWORD     = 'factfinder/general/password';
-    private const PATH_AUTH_PREFIX  = 'factfinder/general/authentication_prefix';
-    private const PATH_AUTH_POSTFIX = 'factfinder/general/authentication_postfix';
+    private const PATH_AUTH_PREFIX  = 'factfinder/general/prefix';
+    private const PATH_AUTH_POSTFIX = 'factfinder/general/postfix';
 
     /** @var ScopeConfigInterface */
     private $scopeConfig;

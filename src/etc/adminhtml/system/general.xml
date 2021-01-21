@@ -35,13 +35,13 @@
             <label>Password</label>
             <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
         </field>
-        <field id="authentication_prefix" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+        <field id="prefix" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
             <label>Authentication Prefix</label>
             <depends>
                 <field negative="1" id="factfinder/general/version">ng</field>
             </depends>
         </field>
-        <field id="authentication_postfix" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+        <field id="postfix" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
             <label>Authentication Postfix</label>
             <depends>
                 <field negative="1" id="factfinder/general/version">ng</field>
