@@ -12,17 +12,13 @@ class CsrfValidatorSkip
 {
     /**
      * @param CsrfValidator    $subject
-     * @param \Closure         $proceed
+     * @param callable         $proceed
      * @param RequestInterface $request
      * @param ActionInterface  $action
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function aroundValidate(
-        $subject,
-        \Closure $proceed,
-        $request,
-        $action
-    ) {
+    public function aroundValidate($subject, callable $proceed, $request, $action)
+    {
         if ($request->getModuleName() === 'factfinder') {
             return;
         }

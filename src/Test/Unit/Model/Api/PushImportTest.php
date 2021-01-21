@@ -8,7 +8,6 @@ use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
 use Omikron\FactFinder\Communication\Client\ClientBuilder;
 use Omikron\FactFinder\Communication\Client\ClientInterface;
 use Omikron\FactFinder\Communication\Credentials;
-use Omikron\FactFinder\Communication\Resource\Builder;
 use Omikron\Factfinder\Model\Config\ExportConfig;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -26,7 +25,7 @@ class PushImportTest extends TestCase
     /** @var MockObject|ExportConfig */
     private $exportConfigMock;
 
-    /** @var MockObject|Builder */
+    /** @var MockObject|ClientBuilder */
     private $builderMock;
 
     /** @var MockObject|ClientInterface */
@@ -64,7 +63,7 @@ class PushImportTest extends TestCase
             )->willReturnOnConsecutiveCalls(
                 $this->importNotRunningResponse(),
                 $this->importResponseOk(),
-                $this->importResponseOk(),
+                $this->importResponseOk()
             );
         $this->assertTrue($this->pushImport->execute(1));
     }
@@ -81,11 +80,11 @@ class PushImportTest extends TestCase
             ->withConsecutive(
                 ['GET', $this->stringContains('running'), $this->anything()],
                 [$this->anything()],
-                [$this->anything()],
+                [$this->anything()]
             )->willReturnOnConsecutiveCalls(
                 $this->importNotRunningResponse(),
                 $this->importResponseBad($param),
-                $this->importResponseOk($param),
+                $this->importResponseOk($param)
             );
         $this->assertFalse($this->pushImport->execute(1));
     }
@@ -114,25 +113,25 @@ class PushImportTest extends TestCase
         );
     }
 
-    private function importRunningResponse(): MockObject
+    private function importRunningResponse(): ResponseInterface
     {
         return $this->createConfiguredMock(ResponseInterface::class, ['getBody' => 'true']);
     }
 
-    private function importNotRunningResponse(): MockObject
+    private function importNotRunningResponse(): ResponseInterface
     {
         return $this->createConfiguredMock(ResponseInterface::class, ['getBody' => 'false']);
     }
 
-    private function importResponseOk(): MockObject
+    private function importResponseOk(): ResponseInterface
     {
         return $this->createConfiguredMock(ResponseInterface::class, ['getBody' => '{"status":"200"}']);
     }
 
-    private function importResponseBad(string $errorField): MockObject
+    private function importResponseBad(string $errorField): ResponseInterface
     {
         return $this->createConfiguredMock(ResponseInterface::class, [
-            'getBody' => json_encode([$errorField => 'There were an error during push import'])
+            'getBody' => json_encode([$errorField => 'There were an error during push import']),
         ]);
     }
 }

@@ -26,37 +26,24 @@ class CsrfValidatorSkipTest extends TestCase
 
     public function test_factfinder_frontname_will_be_passed()
     {
-        $this->validatorMock->expects($this->never())->method('validate');
+        $cb = $this->createPartialMock(\stdClass::class, ['__invoke']);
+        $cb->expects($this->never())->method('__invoke');
         $this->requestMock->method('getModuleName')->willReturn('factfinder');
-        $this->plugin->aroundValidate(
-            $this->validatorMock,
-            function () {
-                $this->validatorMock->validate($this->requestMock, $this->actionMock);
-            },
-            $this->requestMock,
-            $this->createMock(ActionInterface::class)
-        );
+        $this->plugin->aroundValidate($this->validatorMock, $cb, $this->requestMock, $this->createMock(ActionInterface::class));
     }
 
     public function test_other_frontnames_will_be_validated()
     {
-        $this->validatorMock->expects($this->once())->method('validate');
+        $cb = $this->createPartialMock(\stdClass::class, ['__invoke']);
+        $cb->expects($this->once())->method('__invoke');
         $this->requestMock->method('getModuleName')->willReturn('customer');
-        $this->plugin->aroundValidate(
-            $this->validatorMock,
-            function () {
-                $this->validatorMock->validate($this->requestMock, $this->actionMock);
-            },
-            $this->requestMock,
-            $this->createMock(ActionInterface::class)
-        );
+        $this->plugin->aroundValidate($this->validatorMock, $cb, $this->requestMock, $this->createMock(ActionInterface::class));
     }
 
     public function setUp(): void
     {
-        $this->requestMock   = $this->createMock(RequestInterface::class);
-        $this->validatorMock = $validatorMock = $this->createPartialMock(CsrfValidator::class, ['validate']);
-        $this->actionMock    = $this->createMock(ActionInterface::class);
-        $this->plugin        = new CsrfValidatorSkip();
+        $this->requestMock = $this->createMock(RequestInterface::class);
+        $this->actionMock  = $this->createMock(ActionInterface::class);
+        $this->plugin      = new CsrfValidatorSkip();
     }
 }
