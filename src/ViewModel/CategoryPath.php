@@ -45,7 +45,7 @@ class CategoryPath implements ArgumentInterface
         return implode(',', $path);
     }
 
-    private function standardPath(Category $category): array
+    private function standardPath(?Category $category): array
     {
         $path  = 'ROOT';
         $value = $this->initial;
@@ -57,7 +57,7 @@ class CategoryPath implements ArgumentInterface
         return $value;
     }
 
-    private function ngPath(Category $category): array
+    private function ngPath(?Category $category): array
     {
         $path = implode('/', $this->getCategoryPath($category));
         return $this->initial + [sprintf('filter=%s', urlencode($this->param . ':' . $path))];
@@ -67,7 +67,7 @@ class CategoryPath implements ArgumentInterface
     {
         return array_map(function (Category $item): string {
             return (string) $item->getName();
-        }, $category->getParentCategories());
+        }, $category ? $category->getParentCategories() : []);
     }
 
     /**

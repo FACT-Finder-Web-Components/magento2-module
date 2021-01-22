@@ -12,8 +12,8 @@ use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NotFoundException;
 use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
 use Omikron\FactFinder\Communication\Client\ClientBuilder;
-use Omikron\FactFinder\Communication\Client\ClientException;
 use Omikron\Factfinder\Model\Api\CredentialsFactory;
+use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Message\ResponseInterface;
 
 class Call extends Action\Action
@@ -52,23 +52,21 @@ class Call extends Action\Action
     public function execute()
     {
         $url = $this->_url->getCurrentUrl();
+
         // Extract API name from path
         $endpoint = $this->getEndpoint($url);
-
         if (!$endpoint) {
             throw new NotFoundException(__('Endpoint missing'));
         }
 
         try {
-            $endpoint = $this->communicationConfig->getAddress() . '/' . $endpoint;
-            $client   = $this->clientBuilder
+            $client = $this->clientBuilder
                 ->withCredentials($this->credentialsFactory->create())
                 ->withServerUrl($this->communicationConfig->getAddress())
                 ->withVersion($this->communicationConfig->getVersion())
                 ->build();
 
             $method = $this->getRequest()->getMethod();
-
             switch ($method) {
                 case 'POST':
                     return $this->returnJson($client->request('POST', $endpoint, [
@@ -81,7 +79,7 @@ class Call extends Action\Action
                 default:
                     throw new LocalizedException(__(sprintf('HTTP Method %s is not supported', $method)));
             }
-        } catch (ClientException $e) {
+        } catch (ClientExceptionInterface $e) {
             return $this->rawResultFactory->create()->setContents($e->getMessage());
         }
     }

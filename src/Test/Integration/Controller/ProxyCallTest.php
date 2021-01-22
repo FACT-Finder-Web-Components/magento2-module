@@ -27,7 +27,7 @@ class ProxyCallTest extends AbstractController
     {
         $this->clientMock->expects($this->atLeastOnce())
             ->method('request')
-            ->with('GET', $this->stringContains('/Suggest.ff'), $this->anything());
+            ->with('GET', $this->stringContains('Suggest.ff'), $this->anything());
 
         $this->dispatch('/FACT-Finder/Suggest.ff?query=asd');
         $this->assertSame($this->getResponse()->getStatusCode(), 200);
@@ -37,7 +37,7 @@ class ProxyCallTest extends AbstractController
     {
         $this->clientMock->expects($this->atLeastOnce())
             ->method('request')
-            ->with($this->anything(), $this->stringContains('/rest/v3/records/'), $this->anything());
+            ->with($this->anything(), $this->stringContains('rest/v3/records/'), $this->anything());
 
         $this->dispatch('/FACT-Finder/rest/v3/records/my_channel?sid=abc');
         $this->assertSame($this->getResponse()->getStatusCode(), 200);
@@ -75,7 +75,7 @@ class ProxyCallTest extends AbstractController
         $this->_request->setContent('{"masterId":"123","price":"29.99"}');
         $this->clientMock->expects($this->atLeastOnce())
             ->method('request')
-            ->with('POST', $this->stringContains('/rest/v3/tracking/'), [
+            ->with('POST', $this->stringContains('rest/v3/tracking/'), [
                 'body'    => '{"masterId":"123","price":"29.99"}',
                 'headers' => ['Content-Type' => 'application/json'],
             ]);
@@ -85,10 +85,10 @@ class ProxyCallTest extends AbstractController
     protected function setUp(): void
     {
         parent::setUp();
-        $body    = $this->createConfiguredMock(StreamInterface::class, ['getContents' => '{"status":"OK"}']);
-        $respose = $this->createConfiguredMock(ResponseInterface::class, ['getBody' => $body]);
+        $body     = $this->createConfiguredMock(StreamInterface::class, ['getContents' => '{"status":"OK"}']);
+        $response = $this->createConfiguredMock(ResponseInterface::class, ['getBody' => $body]);
 
-        $this->clientMock = $this->createConfiguredMock(ClientInterface::class, ['request' => $respose]);
+        $this->clientMock = $this->createConfiguredMock(ClientInterface::class, ['request' => $response]);
 
         $this->clientBuilderMock = $this->createMock(ClientBuilder::class);
         $this->clientBuilderMock->method('withVersion')->willReturn($this->clientBuilderMock);
