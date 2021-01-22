@@ -6,9 +6,9 @@ namespace Omikron\Factfinder\Plugin;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Phrase;
-use Omikron\FactFinder\Communication\Client\ClientException;
 use Omikron\Factfinder\Model\Api\PushImport;
 use Psr\Log\LoggerInterface;
+use Psr\Http\Client\ClientExceptionInterface;
 
 class LogExceptions
 {
@@ -36,7 +36,7 @@ class LogExceptions
     {
         try {
             return $proceed(...$params);
-        } catch (ClientException $e) {
+        } catch (ClientExceptionInterface $e) {
             if ($this->scopeConfig->isSetFlag('factfinder/general/logging_enabled')) {
                 $this->logger->error(new Phrase(
                     'FACT-Finder response exception: %1, thrown at %2',

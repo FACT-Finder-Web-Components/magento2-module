@@ -10,11 +10,11 @@ use Magento\Framework\Controller\Result\JsonFactory;
 use Magento\Framework\Phrase;
 use Omikron\Factfinder\Api\Config\AuthConfigInterface;
 use Omikron\FactFinder\Communication\Client\ClientBuilder;
-use Omikron\FactFinder\Communication\Client\ClientException;
 use Omikron\FactFinder\Communication\Client\ClientInterface;
 use Omikron\FactFinder\Communication\Credentials;
 use Omikron\FactFinder\Communication\Resource\AdapterFactory;
 use Omikron\Factfinder\Model\Api\CredentialsFactory;
+use Psr\Http\Client\ClientExceptionInterface;
 
 class TestConnection extends Action
 {
@@ -59,7 +59,7 @@ class TestConnection extends Action
             $searchAdapter->search($request->getParam('channel'), '*');
 
             $message = new Phrase('Connection successfully established.');
-        } catch (ClientException $e) {
+        } catch (ClientExceptionInterface $e) {
             $message = $e->getMessage();
         }
 
