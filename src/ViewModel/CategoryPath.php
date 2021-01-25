@@ -63,7 +63,7 @@ class CategoryPath implements ArgumentInterface
         return $this->initial + [sprintf('filter=%s', urlencode($this->param . ':' . $path))];
     }
 
-    private function getCategoryPath(Category $category): array
+    private function getCategoryPath(?Category $category): array
     {
         return array_map(function (Category $item): string {
             return (string) $item->getName();

@@ -48,9 +48,8 @@ customise them.
 
 This module supports:
 
-- Magento 2 version 2.2 and higher
-- PHP version 7.1 and higher  
-  **Warning**: PHP 7.0 is not supported
+- Magento 2 version 2.3 and higher
+- PHP version 7.2 and higher  
 
 ## Installation
 
