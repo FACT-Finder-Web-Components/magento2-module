@@ -29,7 +29,7 @@ class ProxyCallTest extends AbstractController
             ->method('request')
             ->with('GET', $this->stringContains('Suggest.ff'), $this->anything());
 
-        $this->dispatch('/FACT-Finder/Suggest.ff?query=asd');
+        $this->dispatch('/fact-finder/Suggest.ff?query=asd');
         $this->assertSame($this->getResponse()->getStatusCode(), 200);
     }
 
@@ -39,14 +39,14 @@ class ProxyCallTest extends AbstractController
             ->method('request')
             ->with($this->anything(), $this->stringContains('rest/v3/records/'), $this->anything());
 
-        $this->dispatch('/FACT-Finder/rest/v3/records/my_channel?sid=abc');
+        $this->dispatch('/fact-finder/rest/v3/records/my_channel?sid=abc');
         $this->assertSame($this->getResponse()->getStatusCode(), 200);
     }
 
     public function test_other_request_paths_are_ignored()
     {
         $this->clientMock->expects($this->never())->method('request');
-        $this->dispatch('/FACT-Finder/non-existing-endpoint');
+        $this->dispatch('/fact-finder/non-existing-endpoint');
         $this->assert404NotFound();
     }
 
@@ -56,7 +56,7 @@ class ProxyCallTest extends AbstractController
             ->method('request')
             ->with('GET', $this->stringContains('filterCategoryPathROOT=First+Category&filterCategoryPathROOT%2FFirst+Category=Second+Category'));
 
-        $this->dispatch('/FACT-Finder/Search.ff?filterCategoryPathROOT=First+Category&filterCategoryPathROOT%2FFirst+Category=Second+Category');
+        $this->dispatch('/fact-finder/Search.ff?filterCategoryPathROOT=First+Category&filterCategoryPathROOT%2FFirst+Category=Second+Category');
     }
 
     public function test_filter_parameters_are_correctly_encoded_2()
@@ -65,7 +65,7 @@ class ProxyCallTest extends AbstractController
             ->method('request')
             ->with('GET', $this->stringContains('query=pro&filterabgerundete+Ecken+vorhanden=Ja'));
 
-        $this->dispatch('/FACT-Finder/Search.ff?query=pro&filterabgerundete+Ecken+vorhanden=Ja');
+        $this->dispatch('/fact-finder/Search.ff?query=pro&filterabgerundete+Ecken+vorhanden=Ja');
     }
 
     public function test_post_request_are_send_correctly()
@@ -79,7 +79,7 @@ class ProxyCallTest extends AbstractController
                 'body'    => '{"masterId":"123","price":"29.99"}',
                 'headers' => ['Content-Type' => 'application/json'],
             ]);
-        $this->dispatch('/FACT-Finder/rest/v3/tracking/cart');
+        $this->dispatch('/fact-finder/rest/v3/tracking/cart');
     }
 
     protected function setUp(): void

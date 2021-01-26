@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Omikron\Factfinder\Controller\Proxy;
 
 use Magento\Framework\App\Action;
+use Magento\Framework\App\CsrfAwareActionInterface;
 use Magento\Framework\Controller\Result\Json;
 use Magento\Framework\Controller\Result\JsonFactory as JsonResultFactory;
 use Magento\Framework\Controller\Result\RawFactory as RawResultFactory;
@@ -12,12 +13,15 @@ use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NotFoundException;
 use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
 use Omikron\FactFinder\Communication\Client\ClientBuilder;
+use Omikron\Factfinder\Controller\SkipCsrfValidation;
 use Omikron\Factfinder\Model\Api\CredentialsFactory;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Message\ResponseInterface;
 
-class Call extends Action\Action
+class Call extends Action\Action implements Action\HttpGetActionInterface, Action\HttpPostActionInterface, CsrfAwareActionInterface
 {
+    use SkipCsrfValidation;
+
     /** @var JsonResultFactory */
     private $jsonResultFactory;
 
@@ -68,14 +72,14 @@ class Call extends Action\Action
 
             $method = $this->getRequest()->getMethod();
             switch ($method) {
+                case 'GET':
+                    $query = (string) parse_url($url, PHP_URL_QUERY); // phpcs:ignore
+                    return $this->returnJson($client->request('GET', $endpoint . '?' . $query));
                 case 'POST':
                     return $this->returnJson($client->request('POST', $endpoint, [
                         'body'    => $this->getRequest()->getContent(),
                         'headers' => ['Content-Type' => 'application/json'],
                     ]));
-                case 'GET':
-                    $query = (string) parse_url($url, PHP_URL_QUERY); // phpcs:ignore
-                    return $this->returnJson($client->request('GET', $endpoint . '?' . $query));
                 default:
                     throw new LocalizedException(__(sprintf('HTTP Method %s is not supported', $method)));
             }
