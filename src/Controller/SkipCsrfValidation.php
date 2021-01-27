@@ -8,6 +8,8 @@ use Magento\Framework\App\Request\InvalidRequestException;
 use Magento\Framework\App\RequestInterface;
 
 /**
+ * Implementation of CsrfAwareActionInterface.
+ *
  * @SuppressWarnings(PHPMD.UnusedFormalParameter)
  */
 trait SkipCsrfValidation
