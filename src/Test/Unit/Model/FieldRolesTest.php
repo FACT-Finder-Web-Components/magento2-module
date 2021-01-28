@@ -72,9 +72,8 @@ class FieldRolesTest extends TestCase
         $this->assertSame('sku-1', $masterAttributeValue);
     }
 
-    protected function setUp()
+    protected function setUp(): void
     {
-
         $this->serializer         = new JsonSerializer();
         $this->scopeConfigMock    = $this->createMock(ScopeConfigInterface::class);
         $this->configResourceMock = $this->createMock(ConfigResource::class);

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Omikron\Factfinder\Console\Command;
 
-use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\App\Filesystem\DirectoryList;
 use Magento\Framework\App\State;
 use Magento\Framework\Filesystem;
@@ -15,15 +14,13 @@ use Omikron\Factfinder\Model\Export\FeedFactory as FeedGeneratorFactory;
 use Omikron\Factfinder\Model\FtpUploader;
 use Omikron\Factfinder\Model\StoreEmulation;
 use Omikron\Factfinder\Model\Stream\CsvFactory;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class ExportProducts extends \Symfony\Component\Console\Command\Command
+class ExportProducts extends Command
 {
-    /** @var ScopeConfigInterface */
-    private $scopeConfig;
-
     /** @var StoreEmulation */
     private $storeEmulation;
 
@@ -52,7 +49,6 @@ class ExportProducts extends \Symfony\Component\Console\Command\Command
     private $filesystem;
 
     public function __construct(
-        ScopeConfigInterface $scopeConfig,
         StoreManagerInterface $storeManager,
         FeedGeneratorFactory $feedFactory,
         StoreEmulation $emulation,
@@ -64,7 +60,6 @@ class ExportProducts extends \Symfony\Component\Console\Command\Command
         Filesystem $filesystem
     ) {
         parent::__construct();
-        $this->scopeConfig          = $scopeConfig;
         $this->storeManager         = $storeManager;
         $this->feedGeneratorFactory = $feedFactory;
         $this->storeEmulation       = $emulation;

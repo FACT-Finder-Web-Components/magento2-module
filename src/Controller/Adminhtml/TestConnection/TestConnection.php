@@ -8,10 +8,11 @@ use Magento\Backend\App\Action;
 use Magento\Framework\Controller\Result\JsonFactory;
 use Magento\Framework\Phrase;
 use Omikron\Factfinder\Api\Config\AuthConfigInterface;
-use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
-use Omikron\Factfinder\Exception\ResponseException;
+use Omikron\FactFinder\Communication\Client\ClientBuilder;
+use Omikron\FactFinder\Communication\Credentials;
+use Omikron\FactFinder\Communication\Resource\AdapterFactory;
 use Omikron\Factfinder\Model\Api\CredentialsFactory;
-use Omikron\Factfinder\Model\Api\TestConnection as ApiConnectionTest;
+use Psr\Http\Client\ClientExceptionInterface;
 
 class TestConnection extends Action
 {
@@ -24,58 +25,52 @@ class TestConnection extends Action
     /** @var CredentialsFactory */
     private $credentialsFactory;
 
-    /** @var ApiConnectionTest */
-    private $testConnection;
-
     /** @var AuthConfigInterface */
     private $authConfig;
 
-    /** @var CommunicationConfigInterface */
-    private $communicationConfig;
+    /** @var ClientBuilder */
+    private $clientBuilder;
 
     public function __construct(
         Action\Context $context,
         JsonFactory $jsonResultFactory,
         CredentialsFactory $credentialsFactory,
         AuthConfigInterface $authConfig,
-        CommunicationConfigInterface $communicationConfig,
-        ApiConnectionTest $testConnection
+        ClientBuilder $clientBuilder
     ) {
         parent::__construct($context);
-        $this->jsonResultFactory   = $jsonResultFactory;
-        $this->credentialsFactory  = $credentialsFactory;
-        $this->testConnection      = $testConnection;
-        $this->authConfig          = $authConfig;
-        $this->communicationConfig = $communicationConfig;
+        $this->jsonResultFactory  = $jsonResultFactory;
+        $this->credentialsFactory = $credentialsFactory;
+        $this->authConfig         = $authConfig;
+        $this->clientBuilder      = $clientBuilder;
     }
 
     public function execute()
     {
-        $message = new Phrase('Connection successfully established.');
-
         try {
-            $request   = $this->getRequest();
-            $params    = $this->getCredentials($request->getParams()) + ['channel' => $request->getParam('channel')];
-            $serverUrl = $request->getParam('address', $this->communicationConfig->getAddress());
-            $this->testConnection->execute($serverUrl, $params);
-        } catch (ResponseException $e) {
+            $request       = $this->getRequest();
+            $clientBuilder = $this->clientBuilder
+                ->withCredentials($this->getCredentials($this->getRequest()->getParams()))
+                ->withServerUrl($request->getParam('address'));
+
+            $searchAdapter = (new AdapterFactory($clientBuilder, $request->getParam('version')))->getSearchAdapter();
+            $searchAdapter->search($request->getParam('channel'), '*');
+
+            $message = new Phrase('Connection successfully established.');
+        } catch (ClientExceptionInterface $e) {
             $message = $e->getMessage();
         }
 
         return $this->jsonResultFactory->create()->setData(['message' => $message]);
     }
 
-    private function getCredentials(array $params): array
+    private function getCredentials(array $params): Credentials
     {
         // The password wasn't edited, load it from config
         if (!isset($params['password']) || $params['password'] === $this->obscuredValue) {
             $params['password'] = $this->authConfig->getPassword();
         }
 
-        $params += [
-            'prefix'  => $params['authentication_prefix'] ?? $this->authConfig->getAuthenticationPrefix(),
-            'postfix' => $params['authentication_postfix'] ?? $this->authConfig->getAuthenticationPostfix(),
-        ];
-        return $this->credentialsFactory->create($params)->toArray();
+        return $this->credentialsFactory->create($params);
     }
 }

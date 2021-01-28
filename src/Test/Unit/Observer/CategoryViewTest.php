@@ -79,7 +79,7 @@ class CategoryViewTest extends TestCase
         $this->testee->execute($this->withObserver($layout));
     }
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->registry = $this->createMock(Registry::class);
         $this->config   = $this->createMock(FeatureConfigInterface::class);

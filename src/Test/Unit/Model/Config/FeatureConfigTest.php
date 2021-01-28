@@ -38,7 +38,7 @@ class FeatureConfigTest extends TestCase
         $this->assertSame($expected, $this->testee->useForCategories());
     }
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->scopeConfig         = $this->createMock(ScopeConfigInterface::class);
         $this->communicationConfig = $this->createMock(CommunicationConfigInterface::class);

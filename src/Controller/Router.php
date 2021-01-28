@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Omikron\Factfinder\Controller;
 
-use Magento\Framework\App\Action\Forward;
 use Magento\Framework\App\ActionFactory;
 use Magento\Framework\App\ActionInterface;
 use Magento\Framework\App\RequestInterface;
@@ -12,9 +11,7 @@ use Magento\Framework\App\RouterInterface;
 
 class Router implements RouterInterface
 {
-    public const  FRONT_NAME         = 'FACT-Finder';
-    private const EXPORT_PAGE        = 'export';
-    private const CUSTOM_RESULT_PAGE = 'result';
+    public const FRONT_NAME = 'fact-finder';
 
     /** @var ActionFactory */
     private $actionFactory;
@@ -37,19 +34,10 @@ class Router implements RouterInterface
             return false;
         }
 
-        // check if URL matches = FACT-Finder/result
-        $identifier = trim($request->getPathInfo(), '/');
-        $pos        = strpos($identifier, '/');
-        $path       = substr($identifier, $pos + 1);
-
-        $request->setModuleName('factfinder')->setActionName('call')->setControllerName('proxy');
-        if ($path == self::CUSTOM_RESULT_PAGE) {
-            $request->setActionName('index')->setControllerName('result');
-        } elseif ($path == self::EXPORT_PAGE) {
-            $request->setActionName('export')->setControllerName('export');
-        }
-
-        return $this->actionFactory->create(Forward::class);
+        $request->setModuleName('factfinder');
+        $request->setActionName('call');
+        $request->setControllerName('proxy');
+        return $this->actionFactory->create(Proxy\Call::class);
     }
 
     private function isValidRequest(RequestInterface $request): bool

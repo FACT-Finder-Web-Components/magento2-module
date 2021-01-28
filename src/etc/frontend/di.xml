@@ -3,7 +3,7 @@
     <type name="Magento\Framework\App\RouterList">
         <arguments>
             <argument name="routerList" xsi:type="array">
-                <item name="omikroncustomrouter" xsi:type="array">
+                <item name="ff_proxy_router" xsi:type="array">
                     <item name="class" xsi:type="string">Omikron\Factfinder\Controller\Router</item>
                     <item name="disable" xsi:type="boolean">false</item>
                     <item name="sortOrder" xsi:type="string">22</item>

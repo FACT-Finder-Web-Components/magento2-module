@@ -1,8 +1,8 @@
 # FACT-Finder® Web Components for Magento 2
 
 [![Packagist Version](https://img.shields.io/packagist/v/omikron/magento2-factfinder)](https://packagist.org/packages/omikron/magento2-factfinder)
+[![Build status](https://github.com/FACT-Finder-Web-Components/magento2-module/workflows/build/badge.svg)](https://github.com/FACT-Finder-Web-Components/magento2-module/actions)
 [![GitHub contributors](https://img.shields.io/github/contributors/FACT-Finder-Web-Components/magento2-module)](https://github.com/FACT-Finder-Web-Components/magento2-module/graphs/contributors)
-[![Build Status](https://travis-ci.org/FACT-Finder-Web-Components/magento2-module.svg?branch=master)](https://travis-ci.org/FACT-Finder-Web-Components/magento2-module)
 
 This document helps you integrate the FACT-Finder Web Components SDK into your Magento 2 Shop. In addition, it gives a
 concise overview of its primary functions. The first chapter *Installation* walks you through the suggested installation
@@ -19,6 +19,7 @@ customise them.
     - [Advanced Settings](#advanced-settings)
     - [Activated Web Components](#activated-web-components)
     - [Export Settings](#export-settings)
+    - [Data Transfer Settings](#data-transfer-settings)
         - [Updating Field Roles](#updating-field-roles)
         - [Automatic Import](#automatic-import)
 - [Data Export](#data-export)
@@ -47,9 +48,8 @@ customise them.
 
 This module supports:
 
-- Magento 2 version 2.2 and higher
-- PHP version 7.1 and higher  
-  **Warning**: PHP 7.0 is not supported
+- Magento 2 version 2.3 and higher
+- PHP version 7.2 and higher  
 
 ## Installation
 
@@ -114,6 +114,19 @@ component as respectively `currency-code` and `country-code` parameters. You can
 - [How to configure country?](https://docs.magento.com/m2/ce/user_guide/stores/country-options.html)
 
 ### Export Settings
+![Product Data Export](docs/assets/export-settings.png "Product Data Export")
+In this section users can decide if the attributes should be exported as single fields or grouped into a multi-attribute field.
+Setting Multi-Attribute to No will result attribute being part of cumulative column FilterAttribute.
+Setting value to Yes will result attribute will be exported into separated column.
+
+ Attribute export is working for the attributes of type:
+- boolean
+- price
+- select
+- multiselect
+- all scalars
+
+### Data Transfer Settings
 This option configures the connection with the FACT-Finder system via FTP. Shop data can be generated and transferred to
 FACT-Finder using FTP. FACT-Finder needs to be up to date on the product data, to ensure that components like the search work as intended.
 
@@ -125,9 +138,9 @@ The CSV file uses double quotes `"` for field enclosure and a semi-colon `;` as 
 The *Select additional Attributes* option offers a multiple-choice list of attributes. Select all of those you want added to the CSV file.
 
 Before starting the export by clicking *Generate Export File(s) now*, you need to commit all changes by clicking "Save Config".
-The exception from that rule is `Test Connection` function which always takes the actual values from the corresponding fields. 
- 
-![Product Data Export](docs/assets/export-settings.png "Product Data Export")
+The exception from that rule is `Test Connection` function which always takes the actual values from the corresponding fields.
+
+![Data Transfer Settings](docs/assets/data-transfer-settings.png "Data Transfer Settings")
 
 #### Updating Field Roles
 Field roles are assigned while creating new channel in FACT-Finder application, however they can be changed anytime. In this situations, You need to update field roles which are being kept in Magento database for tracking purposes.
@@ -145,7 +158,7 @@ This is a multiselect field so You can select both of them
 In following section You'll get information how, to integrate Your feed with FACT-Finder. Feed is built the same way, regardless of chosen method, so You can choose from one of possible methods.  
 ### Integration Methods
 #### FTP export
-This method exports feed from shop system and uploads it to FTP server. In order to use this method of export, You need to have FTP server configured (described in section [Export Settings](#export-settings)).
+This method exports feed from shop system and uploads it to FTP server. In order to use this method of export, You need to have FTP server configured (described in section [Data Transfer Settings](#data-transfer-settings)).
 Then You can click the button (visible below) to generate and then, upload file via FTP.
  
 ![Product Data Export](docs/assets/generate-feed.png "Generate Export File(s) now")
@@ -163,7 +176,7 @@ Read this [tutorial](https://devdocs.magento.com/guides/v2.3/config-guide/cli/co
 #### HTTP Export
 
 Alternative way to integrate Your feed is to use builtin FACT-Finder functionality to periodically download feed from specific URL
-which the feed is accessible at. This URL should be secured by Basic Auth (username and password configured at section [Export Settings](#export-settings))
+which the feed is accessible at. This URL should be secured by Basic Auth (username and password configured at section [Data Transfer Settings](#data-transfer-settings))
 in order only authenticated users get access to. By making this URL no secured, You are allowing literally everyone to download Your feed!  
 
 Exports are available under following location: `https://YOUR_SHOP_URL/factfinder/export/product/store/YOUR_STORE_ID`

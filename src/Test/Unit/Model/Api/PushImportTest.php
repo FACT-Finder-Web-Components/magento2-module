@@ -4,11 +4,15 @@ declare(strict_types=1);
 
 namespace Omikron\Factfinder\Model\Api;
 
-use Magento\Framework\App\Config\ScopeConfigInterface;
-use Omikron\Factfinder\Api\ClientInterface;
 use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
+use Omikron\FactFinder\Communication\Client\ClientBuilder;
+use Omikron\FactFinder\Communication\Client\ClientInterface;
+use Omikron\FactFinder\Communication\Credentials;
+use Omikron\Factfinder\Model\Config\ExportConfig;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Log\LoggerInterface;
 
 class PushImportTest extends TestCase
 {
@@ -18,31 +22,49 @@ class PushImportTest extends TestCase
     /** @var MockObject|CommunicationConfigInterface */
     private $communicationConfigMock;
 
-    /** @var MockObject|ScopeConfigInterface */
-    private $scopeConfigMock;
+    /** @var MockObject|ExportConfig */
+    private $exportConfigMock;
+
+    /** @var MockObject|ClientBuilder */
+    private $builderMock;
+
+    /** @var MockObject|ClientInterface */
+    private $clientMock;
 
     /** @var PushImport */
     private $pushImport;
 
-    public function test_execute_should_not_trigger_import_if_PushImport_is_disabled()
+    public function test_should_throw_if_import_is_running()
     {
-        $this->communicationConfigMock->method('isPushImportEnabled')->willReturn(false);
-        $this->factFinderClientMock->expects($this->never())->method('sendRequest');
-        $this->assertFalse($this->pushImport->execute(1));
+        $this->clientMock->method('request')->with('GET', 'rest/v4/import/running', $this->anything())
+            ->willReturn($this->importRunningResponse());
+        $this->expectExceptionMessage("Can't start a new import process. Another one is still going");
+        $this->pushImport->execute(1);
     }
 
     public function test_execute_should_not_trigger_import_if_no_data_type_is_configured()
     {
-        $this->scopeConfigMock->method('getValue')->with('factfinder/data_transfer/ff_push_import_type', 'store', 1)->willReturn('');
-        $this->factFinderClientMock->expects($this->never())->method('sendRequest');
+        $this->exportConfigMock->method('getPushImportDataTypes')->with($this->anything())->willReturn([]);
+        $this->clientMock->expects($this->once())->method('request');
+
         $this->assertFalse($this->pushImport->execute(1));
     }
 
     public function test_execute_should_return_true_if_no_error()
     {
-        $this->communicationConfigMock->method('isPushImportEnabled')->willReturn(true);
-        $this->scopeConfigMock->method('getValue')->with('factfinder/data_transfer/ff_push_import_type', 'store', 1)->willReturn('data,suggest');
-        $this->factFinderClientMock->expects($this->exactly(2))->method('sendRequest')->willReturn(['success' => true]);
+        $this->exportConfigMock->method('getPushImportDataTypes')->willReturn(['data', 'suggest']);
+
+        $this->clientMock->expects($this->exactly(3))
+            ->method('request')
+            ->withConsecutive(
+                ['GET', $this->stringContains('running'), $this->anything()],
+                ['POST', $this->stringContains('import/data'), $this->anything()],
+                ['POST', $this->stringContains('import/suggest'), $this->anything()]
+            )->willReturnOnConsecutiveCalls(
+                $this->importNotRunningResponse(),
+                $this->importResponseOk(),
+                $this->importResponseOk()
+            );
         $this->assertTrue($this->pushImport->execute(1));
     }
 
@@ -52,24 +74,64 @@ class PushImportTest extends TestCase
      */
     public function test_execute_should_return_false_if_response_contains_errors(string $param)
     {
-        $this->communicationConfigMock->method('isPushImportEnabled')->willReturn(true);
-        $this->scopeConfigMock->method('getValue')->with('factfinder/data_transfer/ff_push_import_type', 'store', 1)->willReturn('data,suggest');
-        $this->factFinderClientMock->expects($this->exactly(2))->method('sendRequest')->willReturn([$param => 'There were an error during push import']);
+        $this->exportConfigMock->method('getPushImportDataTypes')->willReturn(['data', 'suggest']);
+        $this->clientMock->expects($this->exactly(3))
+            ->method('request')
+            ->withConsecutive(
+                ['GET', $this->stringContains('running'), $this->anything()],
+                [$this->anything()],
+                [$this->anything()]
+            )->willReturnOnConsecutiveCalls(
+                $this->importNotRunningResponse(),
+                $this->importResponseBad($param),
+                $this->importResponseOk($param)
+            );
         $this->assertFalse($this->pushImport->execute(1));
     }
 
-    protected function setUp()
+    protected function setUp(): void
     {
-        $this->factFinderClientMock    = $this->createMock(ClientInterface::class);
         $this->communicationConfigMock = $this->createMock(CommunicationConfigInterface::class);
-        $this->scopeConfigMock         = $this->createMock(ScopeConfigInterface::class);
-        $this->communicationConfigMock->method('getChannel')->willReturn('test-channel');
         $this->communicationConfigMock->method('getAddress')->willReturn('http://fake-factfinder.com/FACT-Finder-7.3');
+        $this->communicationConfigMock->method('getVersion')->willReturn('ng');
+
+        $this->exportConfigMock = $this->createMock(ExportConfig::class);
+        $this->clientMock       = $this->createMock(ClientInterface::class);
+
+        $this->builderMock = $this->createMock(ClientBuilder::class);
+        $this->builderMock->method('withVersion')->willReturn($this->builderMock);
+        $this->builderMock->method('withServerUrl')->willReturn($this->builderMock);
+        $this->builderMock->method('withCredentials')->willReturn($this->builderMock);
+        $this->builderMock->method('build')->willReturn($this->clientMock);
 
         $this->pushImport = new PushImport(
-            $this->factFinderClientMock,
+            $this->builderMock,
+            $this->createConfiguredMock(CredentialsFactory::class, ['create' => $this->createMock(Credentials::class)]),
             $this->communicationConfigMock,
-            $this->scopeConfigMock
+            $this->exportConfigMock,
+            $this->createMock(LoggerInterface::class)
         );
+    }
+
+    private function importRunningResponse(): ResponseInterface
+    {
+        return $this->createConfiguredMock(ResponseInterface::class, ['getBody' => 'true']);
+    }
+
+    private function importNotRunningResponse(): ResponseInterface
+    {
+        return $this->createConfiguredMock(ResponseInterface::class, ['getBody' => 'false']);
+    }
+
+    private function importResponseOk(): ResponseInterface
+    {
+        return $this->createConfiguredMock(ResponseInterface::class, ['getBody' => '{"status":"200"}']);
+    }
+
+    private function importResponseBad(string $errorField): ResponseInterface
+    {
+        return $this->createConfiguredMock(ResponseInterface::class, [
+            'getBody' => json_encode([$errorField => 'There were an error during push import']),
+        ]);
     }
 }

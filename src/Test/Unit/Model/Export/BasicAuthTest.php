@@ -35,7 +35,7 @@ class BasicAuthTest extends TestCase
         );
     }
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $scopeConfig = $this->createMock(ScopeConfigInterface::class);
         $scopeConfig->method('getValue')->willReturnMap([

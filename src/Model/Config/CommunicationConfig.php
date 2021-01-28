@@ -7,19 +7,21 @@ namespace Omikron\Factfinder\Model\Config;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\UrlInterface;
 use Magento\Store\Model\ScopeInterface;
-use Omikron\Factfinder\Api\Config\ChannelProviderInterface;
 use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
 use Omikron\Factfinder\Api\Config\ParametersSourceInterface;
+use Omikron\FactFinder\Communication\Version;
 use Omikron\Factfinder\Controller\Router;
 
-class CommunicationConfig implements CommunicationConfigInterface, ParametersSourceInterface, ChannelProviderInterface
+class CommunicationConfig implements CommunicationConfigInterface, ParametersSourceInterface
 {
-    private const PATH_CHANNEL               = 'factfinder/general/channel';
-    private const PATH_ADDRESS               = 'factfinder/general/address';
-    private const PATH_VERSION               = 'factfinder/advanced/version';
-    private const PATH_IS_ENABLED            = 'factfinder/general/is_enabled';
-    private const PATH_USE_PROXY             = 'factfinder/general/ff_enrichment';
-    private const PATH_DATA_TRANSFER_IMPORT  = 'factfinder/data_transfer/ff_push_import_enabled';
+    private const PATH_CHANNEL              = 'factfinder/general/channel';
+    private const PATH_ADDRESS              = 'factfinder/general/address';
+    private const PATH_VERSION              = 'factfinder/general/version';
+    private const PATH_IS_ENABLED           = 'factfinder/general/is_enabled';
+    private const PATH_USE_PROXY            = 'factfinder/general/ff_enrichment';
+    private const PATH_DATA_TRANSFER_IMPORT = 'factfinder/data_transfer/ff_push_import_enabled';
+    private const PATH_IS_LOGGING_ENABLED   = 'factfinder/general/logging_enabled';
+    private const API_VERSION               = 'factfinder/general/api_version';
 
     /** @var ScopeConfigInterface */
     private $scopeConfig;
@@ -53,13 +55,23 @@ class CommunicationConfig implements CommunicationConfigInterface, ParametersSou
         return $this->scopeConfig->isSetFlag(self::PATH_DATA_TRANSFER_IMPORT, ScopeInterface::SCOPE_STORES, $scopeId);
     }
 
+    public function getVersion(): string
+    {
+        return (string) $this->scopeConfig->getValue(self::PATH_VERSION, ScopeInterface::SCOPE_STORES);
+    }
+
+    public function isLoggingEnabled(): bool
+    {
+        return $this->scopeConfig->isSetFlag(self::PATH_IS_LOGGING_ENABLED, ScopeInterface::SCOPE_STORES);
+    }
+
     public function getParameters(): array
     {
         return [
-            'url'     => $this->getServerUrl(),
-            'version' => $this->scopeConfig->getValue(self::PATH_VERSION),
-            'channel' => $this->getChannel(),
-        ];
+                'url'     => $this->getServerUrl(),
+                'version' => $this->getVersion(),
+                'channel' => $this->getChannel(),
+            ] + ($this->getVersion() === Version::NG ? ['api' => $this->getApi()] : []);
     }
 
     private function getServerUrl(): string
@@ -67,6 +79,12 @@ class CommunicationConfig implements CommunicationConfigInterface, ParametersSou
         if ($this->scopeConfig->isSetFlag(self::PATH_USE_PROXY, ScopeInterface::SCOPE_STORES)) {
             return $this->urlBuilder->getUrl('', ['_direct' => Router::FRONT_NAME]);
         }
+
         return $this->getAddress();
+    }
+
+    private function getApi(int $scopeId = null): string
+    {
+        return (string) $this->scopeConfig->getValue(self::API_VERSION, ScopeInterface::SCOPE_STORES, $scopeId);
     }
 }

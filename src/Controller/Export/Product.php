@@ -8,15 +8,15 @@ use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\App\Response\Http\FileFactory;
 use Magento\Store\Model\StoreManagerInterface;
-use Omikron\Factfinder\Api\Config\ChannelProviderInterface;
+use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
 use Omikron\Factfinder\Model\Export\FeedFactory as FeedGeneratorFactory;
 use Omikron\Factfinder\Model\StoreEmulation;
 use Omikron\Factfinder\Model\Stream\CsvFactory;
 
 class Product extends Action
 {
-    /** @var ChannelProviderInterface */
-    private $channelProvider;
+    /** @var CommunicationConfigInterface */
+    private $communicationConfig;
 
     /** @var StoreEmulation */
     private $storeEmulation;
@@ -38,7 +38,7 @@ class Product extends Action
 
     public function __construct(
         Context $context,
-        ChannelProviderInterface $channelProvider,
+        CommunicationConfigInterface $communicationConfig,
         StoreEmulation $storeEmulation,
         FeedGeneratorFactory $feedGeneratorFactory,
         FileFactory $fileFactory,
@@ -46,7 +46,7 @@ class Product extends Action
         StoreManagerInterface $storeManager
     ) {
         parent::__construct($context);
-        $this->channelProvider      = $channelProvider;
+        $this->communicationConfig  = $communicationConfig;
         $this->storeEmulation       = $storeEmulation;
         $this->feedGeneratorFactory = $feedGeneratorFactory;
         $this->csvFactory           = $csvFactory;
@@ -58,7 +58,7 @@ class Product extends Action
     {
         $storeId = (int) $this->getRequest()->getParam('store', $this->storeManager->getDefaultStoreView()->getId());
         $this->storeEmulation->runInStore($storeId, function () {
-            $filename = "export.{$this->channelProvider->getChannel()}.csv";
+            $filename = "export.{$this->communicationConfig->getChannel()}.csv";
             $stream   = $this->csvFactory->create(['filename' => "factfinder/{$filename}"]);
             $this->feedGeneratorFactory->create($this->feedType)->generate($stream);
             $this->fileFactory->create($filename, $stream->getContent());
