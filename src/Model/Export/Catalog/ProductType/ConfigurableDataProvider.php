@@ -6,7 +6,6 @@ namespace Omikron\Factfinder\Model\Export\Catalog\ProductType;
 
 use Magento\Catalog\Api\Data\ProductInterface;
 use Magento\Catalog\Model\Product;
-use Magento\ConfigurableProduct\Model\LinkManagement;
 use Magento\ConfigurableProduct\Model\Product\Type\Configurable as ConfigurableProductType;
 use Omikron\Factfinder\Api\Export\ExportEntityInterface;
 use Omikron\Factfinder\Api\Filter\FilterInterface;
@@ -15,9 +14,6 @@ use Omikron\Factfinder\Model\Formatter\NumberFormatter;
 
 class ConfigurableDataProvider extends SimpleDataProvider
 {
-    /** @var LinkManagement */
-    private $linkManagement;
-
     /** @var ConfigurableProductType */
     private $productType;
 
@@ -37,7 +33,6 @@ class ConfigurableDataProvider extends SimpleDataProvider
         array $productFields = []
     ) {
         parent::__construct($product, $numberFormatter, $productFields);
-        $this->linkManagement   = $linkManagement;
         $this->productType      = $productType;
         $this->filter           = $filter;
         $this->variationFactory = $variationFactory;
@@ -46,7 +41,7 @@ class ConfigurableDataProvider extends SimpleDataProvider
     public function getEntities(): iterable
     {
         yield from parent::getEntities();
-        yield from array_map($this->productVariation($this->product), $this->getChildren($this->product->getSku()));
+        yield from array_map($this->productVariation($this->product), $this->getChildren($this->product));
     }
 
     public function toArray(): array
@@ -87,12 +82,12 @@ class ConfigurableDataProvider extends SimpleDataProvider
     }
 
     /**
-     * @param string $sku
+     * @param Product $product
      *
      * @return ProductInterface[]
      */
-    private function getChildren(string $sku): array
+    private function getChildren(Product $product): array
     {
-        return $this->linkManagement->getChildren($sku);
+        return $this->productType->getUsedProducts($product);
     }
 }
