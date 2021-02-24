@@ -70,7 +70,7 @@ class CategoryPath implements ArgumentInterface
         }, $category ? $category->getParentCategories() : []);
     }
 
-    public function getValue(): string
+    public function getValue()
     {
         return $this;
     }

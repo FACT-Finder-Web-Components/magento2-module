@@ -2,7 +2,6 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
     <virtualType name="ProductExportCron" type="Omikron\Factfinder\Cron\Feed">
         <arguments>
-            <argument name="channelProvider" xsi:type="object">Omikron\Factfinder\Model\Config\CommunicationConfig</argument>
             <argument name="type" xsi:type="string">product</argument>
         </arguments>
     </virtualType>

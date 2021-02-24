@@ -6,7 +6,7 @@ namespace Omikron\Factfinder\Block\Ssr;
 
 use Magento\Framework\Serialize\SerializerInterface;
 use Magento\Framework\View\Element\Template;
-use Omikron\Factfinder\Api\Config\ChannelProviderInterface;
+use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
 use Omikron\Factfinder\Model\Ssr\SearchAdapter;
 
 class RecordList extends Template
@@ -16,8 +16,8 @@ class RecordList extends Template
     /** @var SearchAdapter */
     protected $searchAdapter;
 
-    /** @var ChannelProviderInterface */
-    protected $channelProvider;
+    /** @var CommunicationConfigInterface  */
+    protected $communicationConfig;
 
     /** @var SerializerInterface */
     protected $jsonSerializer;
@@ -25,14 +25,14 @@ class RecordList extends Template
     public function __construct(
         Template\Context $context,
         SearchAdapter $searchAdapter,
-        ChannelProviderInterface $channelProvider,
+        CommunicationConfigInterface $communicationConfig,
         SerializerInterface $jsonSerializer,
         array $data = []
     ) {
         parent::__construct($context, $data);
-        $this->searchAdapter   = $searchAdapter;
-        $this->channelProvider = $channelProvider;
-        $this->jsonSerializer  = $jsonSerializer;
+        $this->searchAdapter       = $searchAdapter;
+        $this->communicationConfig = $communicationConfig;
+        $this->jsonSerializer      = $jsonSerializer;
     }
 
     /**
@@ -47,7 +47,7 @@ class RecordList extends Template
             return "<ff-record-list ssr {$attributes}>";
         }, $html);
 
-        $channel = $this->channelProvider->getChannel();
+        $channel = $this->communicationConfig->getChannel();
         $result  = $this->searchResult($channel, $this->getRequest()->getParam('query', '*'), $this->getSearchParams());
 
         // Add pre-rendered records

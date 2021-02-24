@@ -773,6 +773,7 @@ ff-slider-one-touch .ffw-triangle {
     z-index: 1000;
     opacity: .5;
     cursor: pointer;
+    touch-action: none;
     border-style: solid;
     border-color: transparent transparent #89bdff transparent;
     top: 50%;
@@ -827,6 +828,7 @@ ff-slider-one-touch .ffw-slider-button {
     z-index: 1003;
     pointer-events: auto;
     cursor: pointer;
+    touch-action: none;
 }
 
 /* ---- generic ---- */
