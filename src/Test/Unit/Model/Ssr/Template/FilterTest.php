@@ -37,7 +37,7 @@ class FilterTest extends TestCase
         $this->assertSame($this->filter->filterValue($from), $to);
     }
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $fieldRoles = $this->createMock(FieldRolesInterface::class);
         $fieldRoles->method('getFieldRole')->with('imageUrl', $this->anything())->willReturn('CustomUrl');

@@ -7,6 +7,7 @@ namespace Omikron\Factfinder\Block\Ssr;
 use Magento\Framework\Serialize\SerializerInterface;
 use Magento\Framework\View\Element\Template;
 use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
+use Omikron\Factfinder\Model\Ssr\PriceFormatter;
 use Omikron\Factfinder\Model\Ssr\SearchAdapter;
 
 class RecordList extends Template
@@ -27,6 +28,7 @@ class RecordList extends Template
         SearchAdapter $searchAdapter,
         CommunicationConfigInterface $communicationConfig,
         SerializerInterface $jsonSerializer,
+        PriceFormatter $priceFormatter,
         array $data = []
     ) {
         parent::__construct($context, $data);

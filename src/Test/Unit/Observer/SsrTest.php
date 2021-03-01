@@ -46,7 +46,7 @@ class SsrTest extends TestCase
         $this->withLayoutUpdate($update, ['handle_without_ssr']);
     }
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->scopeConfig = $this->createMock(ScopeConfigInterface::class);
         $this->observer    = new Ssr($this->scopeConfig, ['handle_with_ssr']);
@@ -59,7 +59,7 @@ class SsrTest extends TestCase
             ->willReturn($active);
     }
 
-    private function withLayoutUpdate(MockObject $update, array $handles = []): void
+    private function withLayoutUpdate(ProcessorInterface $update, array $handles = []): void
     {
         $update->method('getHandles')->willReturn($handles);
         $layout = $this->createConfiguredMock(LayoutInterface::class, ['getUpdate' => $update]);

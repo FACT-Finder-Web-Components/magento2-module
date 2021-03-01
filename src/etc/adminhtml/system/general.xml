@@ -47,16 +47,6 @@
                 <field negative="1" id="factfinder/general/version">ng</field>
             </depends>
         </field>
-        <field id="api_version" translate="label comment" type="select" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
-            <label>NG API Version</label>
-            <options>
-                <option label="v3">v3</option>
-                <option label="v4">v4</option>
-            </options>
-            <depends>
-                <field id="factfinder/general/version">ng</field>
-            </depends>
-        </field>
         <field id="ff_build_connection" translate="label comment" type="button" sortOrder="71" showInDefault="1" showInWebsite="1" showInStore="1">
             <label>Test Connection</label>
             <frontend_model>Omikron\Factfinder\Block\Adminhtml\System\Config\Button\TestConnection</frontend_model>

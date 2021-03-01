@@ -4,64 +4,47 @@ declare(strict_types=1);
 
 namespace Omikron\Factfinder\Model\Ssr;
 
-use Magento\Framework\Pricing\PriceCurrencyInterface;
-use Omikron\Factfinder\Api\ClientInterface;
 use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
-use Omikron\Factfinder\Api\FieldRolesInterface;
-use Omikron\Factfinder\ViewModel\Communication;
+use Omikron\FactFinder\Communication\Client\ClientBuilder;
+use Omikron\FactFinder\Communication\Resource\AdapterFactory;
+use Omikron\Factfinder\Model\Api\CredentialsFactory;
 
 class SearchAdapter
 {
-    /** @var ClientInterface */
-    private $client;
+    /** @var ClientBuilder */
+    private $clientBuilder;
 
     /** @var CommunicationConfigInterface */
     private $communicationConfig;
 
-    /** @var Communication */
-    private $params;
+    /** @var CredentialsFactory */
+    private $credentialsFactory;
 
-    /** @var PriceCurrencyInterface */
-    private $priceCurrency;
-
-    /** @var FieldRolesInterface */
-    private $fieldRoles;
+    /** @var PriceFormatter */
+    private $priceFormatter;
 
     public function __construct(
-        ClientInterface $client,
+        ClientBuilder $clientBuilder,
         CommunicationConfigInterface $communicationConfig,
-        PriceCurrencyInterface $priceCurrency,
-        FieldRolesInterface $fieldRoles,
-        Communication $params
+        CredentialsFactory $credentialsFactory,
+        PriceFormatter $priceFormatter
     ) {
-        $this->client              = $client;
+        $this->clientBuilder       = $clientBuilder;
         $this->communicationConfig = $communicationConfig;
-        $this->priceCurrency       = $priceCurrency;
-        $this->fieldRoles          = $fieldRoles;
-        $this->params              = $params;
+        $this->credentialsFactory  = $credentialsFactory;
+        $this->priceFormatter      = $priceFormatter;
     }
 
     public function search(string $channel, string $query = '*', array $params = []): array
     {
-        $endpoint = $this->communicationConfig->getAddress() . '/Search.ff';
-        $params   = ['channel' => $channel, 'query' => $query] + $params;
+        $client = $this->clientBuilder
+            ->withServerUrl($this->communicationConfig->getAddress())
+            ->withCredentials($this->credentialsFactory->create());
 
-        $priceField   = $this->fieldRoles->getFieldRole('price');
-        $searchResult = $this->client->sendRequest($endpoint, $params)['searchResult'];
-
-        $searchResult['records'] = array_map(function (array $record) use ($priceField): array {
-            $record['record'] = $this->getFormattedPrice($record['record'], $priceField) + $record['record'];
-            return $record;
-        }, $searchResult['records'] ?? []);
+        $searchAdapter = (new AdapterFactory($client, $this->communicationConfig->getVersion()))->getSearchAdapter();
+        $searchResult  = $searchAdapter->search($this->communicationConfig->getChannel(), $query, $params);
+        $searchResult['records'] = $this->priceFormatter->format($searchResult);
 
         return $searchResult;
-    }
-
-    protected function getFormattedPrice(array $record, string $priceField): array
-    {
-        return [
-            '__ORIG_PRICE__' => $record[$priceField],
-            $priceField      => $this->priceCurrency->format($record[$priceField], false),
-        ];
     }
 }
