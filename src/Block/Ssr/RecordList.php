@@ -6,8 +6,6 @@ namespace Omikron\Factfinder\Block\Ssr;
 
 use Magento\Framework\Serialize\SerializerInterface;
 use Magento\Framework\View\Element\Template;
-use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
-use Omikron\Factfinder\Model\Ssr\PriceFormatter;
 use Omikron\Factfinder\Model\Ssr\SearchAdapter;
 
 class RecordList extends Template
@@ -17,23 +15,17 @@ class RecordList extends Template
     /** @var SearchAdapter */
     protected $searchAdapter;
 
-    /** @var CommunicationConfigInterface  */
-    protected $communicationConfig;
-
     /** @var SerializerInterface */
     protected $jsonSerializer;
 
     public function __construct(
         Template\Context $context,
         SearchAdapter $searchAdapter,
-        CommunicationConfigInterface $communicationConfig,
         SerializerInterface $jsonSerializer,
-        PriceFormatter $priceFormatter,
         array $data = []
     ) {
         parent::__construct($context, $data);
         $this->searchAdapter       = $searchAdapter;
-        $this->communicationConfig = $communicationConfig;
         $this->jsonSerializer      = $jsonSerializer;
     }
 
@@ -49,8 +41,7 @@ class RecordList extends Template
             return "<ff-record-list ssr {$attributes}>";
         }, $html);
 
-        $channel = $this->communicationConfig->getChannel();
-        $result  = $this->searchResult($channel, $this->getRequest()->getParam('query', '*'), $this->getSearchParams());
+        $result  = $this->searchResult($this->getRequest()->getParam('query', '*'), $this->getSearchParams());
 
         // Add pre-rendered records
         $html = preg_replace_callback(self::RECORD_PATTERN, function (array $match) use ($result): string {
@@ -61,9 +52,9 @@ class RecordList extends Template
         return str_replace('{FF_SEARCH_RESULT}', $this->jsonSerializer->serialize($result), $html);
     }
 
-    protected function searchResult(string $channel, string $query, array $params): array
+    protected function searchResult(string $query, array $params): array
     {
-        return $this->searchAdapter->search($channel, $query, $params);
+        return $this->searchAdapter->search($query, $params);
     }
 
     protected function recordRenderer(string $template): callable

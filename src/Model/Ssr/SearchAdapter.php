@@ -35,7 +35,7 @@ class SearchAdapter
         $this->priceFormatter      = $priceFormatter;
     }
 
-    public function search(string $channel, string $query = '*', array $params = []): array
+    public function search(string $query = '*', array $params = []): array
     {
         $client = $this->clientBuilder
             ->withServerUrl($this->communicationConfig->getAddress())

@@ -82,7 +82,7 @@ class CommunicationConfig implements CommunicationConfigInterface, ParametersSou
         return $this->getAddress();
     }
 
-    private function getApi(int $scopeId = null): string
+    private function getApi(): string
     {
         return 'v4';
     }
