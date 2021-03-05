@@ -36,7 +36,7 @@ class CategoryPath implements ArgumentInterface
         $this->initial             = $initial;
     }
 
-    public function getValue(): string
+    public function __toString(): string
     {
         $path = $this->communicationConfig->getVersion() === Version::NG
             ? $this->ngPath($this->getCurrentCategory())
@@ -68,6 +68,11 @@ class CategoryPath implements ArgumentInterface
         return array_map(function (Category $item): string {
             return (string) $item->getName();
         }, $category ? $category->getParentCategories() : []);
+    }
+
+    public function getValue()
+    {
+        return $this;
     }
 
     /**

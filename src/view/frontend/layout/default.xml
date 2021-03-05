@@ -30,5 +30,7 @@
             </action>
             <block class="Magento\Framework\View\Element\Template" name="factfinder.suggest" as="suggest" ifconfig="factfinder/general/is_enabled" template="Omikron_Factfinder::ff/suggest.phtml" />
         </referenceBlock>
+
+        <block class="Omikron\Factfinder\Block\Ssr\RecordList" name="factfinder.ssr.recordlist" template="Omikron_Factfinder::ff/ssr/record-list.phtml" />
     </body>
 </page>

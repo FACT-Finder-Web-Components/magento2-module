@@ -21,7 +21,6 @@ class CommunicationConfig implements CommunicationConfigInterface, ParametersSou
     private const PATH_USE_PROXY            = 'factfinder/general/ff_enrichment';
     private const PATH_DATA_TRANSFER_IMPORT = 'factfinder/data_transfer/ff_push_import_enabled';
     private const PATH_IS_LOGGING_ENABLED   = 'factfinder/general/logging_enabled';
-    private const API_VERSION               = 'factfinder/general/api_version';
 
     /** @var ScopeConfigInterface */
     private $scopeConfig;
@@ -83,8 +82,8 @@ class CommunicationConfig implements CommunicationConfigInterface, ParametersSou
         return $this->getAddress();
     }
 
-    private function getApi(int $scopeId = null): string
+    private function getApi(): string
     {
-        return (string) $this->scopeConfig->getValue(self::API_VERSION, ScopeInterface::SCOPE_STORES, $scopeId);
+        return 'v4';
     }
 }

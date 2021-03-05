@@ -24,7 +24,7 @@ class CategoryPathTest extends TestCase
             ->willReturn([$this->category('C', 3), $this->category('A', 1), $this->category('B', 2)]);
 
         $value = 'filterCategoryPathROOT=A,filterCategoryPathROOT%2FA=B,filterCategoryPathROOT%2FA%2FB=C';
-        $this->assertSame($value, $this->categoryPath->getValue());
+        $this->assertSame($value, (string) $this->categoryPath->getValue());
     }
 
     protected function setUp(): void

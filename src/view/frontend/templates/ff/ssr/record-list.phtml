@@ -1,0 +1,13 @@
+<?php
+/** @var Magento\Framework\View\Element\Template $block */
+?>
+<?= $block->getChildHtml() ?>
+<script>
+    require(['factfinder'], function (ff) {
+        document.addEventListener('WebComponentsReady', function (event) {
+            const searchResult = {FF_SEARCH_RESULT};
+            ff.communication.EventAggregator.currentSearchResult = searchResult;
+            ff.communication.ResultDispatcher.dispatchRaw(searchResult);
+        });
+    });
+</script>
