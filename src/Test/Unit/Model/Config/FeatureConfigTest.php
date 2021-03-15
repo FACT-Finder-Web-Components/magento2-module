@@ -6,7 +6,6 @@ namespace Omikron\Factfinder\Model\Config;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Store\Model\ScopeInterface;
-use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
@@ -18,7 +17,7 @@ class FeatureConfigTest extends TestCase
     /** @var ScopeConfigInterface|MockObject */
     private $scopeConfig;
 
-    /** @var CommunicationConfigInterface|MockObject */
+    /** @var CommunicationConfig|MockObject */
     private $communicationConfig;
 
     /**
@@ -41,7 +40,7 @@ class FeatureConfigTest extends TestCase
     protected function setUp(): void
     {
         $this->scopeConfig         = $this->createMock(ScopeConfigInterface::class);
-        $this->communicationConfig = $this->createMock(CommunicationConfigInterface::class);
+        $this->communicationConfig = $this->createMock(CommunicationConfig::class);
 
         $this->testee = new FeatureConfig($this->scopeConfig, $this->communicationConfig);
     }

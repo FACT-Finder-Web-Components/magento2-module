@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Omikron\Factfinder\Model\Export\Catalog\ProductField;
 
-use Magento\Catalog\Model\Product;
 use Magento\Catalog\Model\ResourceModel\Eav\Attribute;
 use Magento\Catalog\Model\ResourceModel\Product as ProductResource;
-use Omikron\Factfinder\Api\Export\Catalog\ProductFieldInterface;
+use Magento\Framework\Model\AbstractModel;
+use Omikron\Factfinder\Api\Export\FieldInterface;
 use Omikron\Factfinder\Api\Filter\FilterInterface;
 use Omikron\Factfinder\Model\Config\ExportConfig;
 use Omikron\Factfinder\Model\Export\Catalog\AttributeValuesExtractor;
 
-class FilterAttributes implements ProductFieldInterface
+class FilterAttributes implements FieldInterface
 {
     /** @var ExportConfig */
     private $exportConfig;
@@ -46,13 +46,16 @@ class FilterAttributes implements ProductFieldInterface
         return 'FilterAttributes';
     }
 
-    public function getValue(Product $product): string
+    public function getValue(AbstractModel $product): string
     {
         $values = '';
         foreach ($this->getAttributes((int) $product->getStoreId()) as $label => $attribute) {
             $attributeValues = implode('#', $this->valuesExtractor->getAttributeValues($product, $attribute));
-            if ($attributeValues) $values .= "|{$label}={$attributeValues}";
+            if ($attributeValues) {
+                $values .= "|{$label}={$attributeValues}";
+            }
         }
+
         return $values ? "{$values}|" : '';
     }
 

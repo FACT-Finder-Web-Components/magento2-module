@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace Omikron\Factfinder\Model\Export\Catalog\ProductField;
 
 use Magento\Catalog\Api\ProductAttributeRepositoryInterface;
-use Magento\Catalog\Model\Product;
 use Magento\Catalog\Model\ResourceModel\Eav\Attribute;
+use Magento\Framework\Model\AbstractModel;
 use Magento\Store\Model\StoreManagerInterface;
-use Omikron\Factfinder\Api\Export\Catalog\ProductFieldInterface;
+use Omikron\Factfinder\Api\Export\FieldInterface;
 use Omikron\Factfinder\Model\Export\Catalog\AttributeValuesExtractor;
+use Magento\Catalog\Model\Product;
 
-class GenericField implements ProductFieldInterface
+class GenericField implements FieldInterface
 {
     /** @var ProductAttributeRepositoryInterface */
     private $attributeRepository;
@@ -45,7 +46,12 @@ class GenericField implements ProductFieldInterface
         return (string) $this->getAttribute()->getStoreLabel($this->storeManager->getStore());
     }
 
-    public function getValue(Product $product): string
+    /**
+     * @param Product $product
+     *
+     * @return string
+     */
+    public function getValue(AbstractModel $product): string
     {
         return implode('|', $this->valuesExtractor->getAttributeValues($product, $this->getAttribute()));
     }
@@ -53,6 +59,7 @@ class GenericField implements ProductFieldInterface
     private function getAttribute(): Attribute
     {
         $this->attribute = $this->attribute ?? $this->attributeRepository->get($this->attributeCode);
+
         return $this->attribute;
     }
 }

@@ -9,7 +9,7 @@ use Magento\Framework\Event\Observer;
 use Magento\Framework\Registry;
 use Magento\Framework\View\Layout\ProcessorInterface;
 use Magento\Framework\View\LayoutInterface;
-use Omikron\Factfinder\Api\Config\FeatureConfigInterface;
+use Omikron\Factfinder\Model\Config\FeatureConfig;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
@@ -21,7 +21,7 @@ class CategoryViewTest extends TestCase
     /** @var MockObject|Registry */
     private $registry;
 
-    /** @var MockObject|FeatureConfigInterface */
+    /** @var MockObject|FeatureConfig */
     private $config;
 
     public function test_only_activate_for_category_pages()
@@ -82,7 +82,7 @@ class CategoryViewTest extends TestCase
     protected function setUp(): void
     {
         $this->registry = $this->createMock(Registry::class);
-        $this->config   = $this->createMock(FeatureConfigInterface::class);
+        $this->config   = $this->createMock(FeatureConfig::class);
         $this->testee   = new CategoryView($this->registry, $this->config);
     }
 

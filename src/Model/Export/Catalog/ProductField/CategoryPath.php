@@ -6,12 +6,13 @@ namespace Omikron\Factfinder\Model\Export\Catalog\ProductField;
 
 use Magento\Catalog\Api\CategoryRepositoryInterface;
 use Magento\Catalog\Api\Data\CategoryInterface;
-use Magento\Catalog\Model\Product;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Store\Model\Store;
-use Omikron\Factfinder\Api\Export\Catalog\ProductFieldInterface;
+use Omikron\Factfinder\Api\Export\FieldInterface;
+use Magento\Framework\Model\AbstractModel;
+use Magento\Catalog\Model\Product;
 
-class CategoryPath implements ProductFieldInterface
+class CategoryPath implements FieldInterface
 {
     /** @var CategoryRepositoryInterface */
     private $categoryRepository;
@@ -30,7 +31,12 @@ class CategoryPath implements ProductFieldInterface
         return $this->fieldName;
     }
 
-    public function getValue(Product $product): string
+    /**
+     * @param Product $product
+     *
+     * @return string
+     */
+    public function getValue(AbstractModel $product): string
     {
         $paths = array_map(function (int $categoryId) use ($product): array {
             return $this->getPath($categoryId, $product->getStore());

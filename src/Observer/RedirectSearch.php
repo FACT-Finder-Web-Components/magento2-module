@@ -9,7 +9,7 @@ use Magento\Framework\App\Response\RedirectInterface;
 use Magento\Framework\App\ResponseInterface;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
-use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
+use Omikron\Factfinder\Model\Config\CommunicationConfig;
 
 class RedirectSearch implements ObserverInterface
 {
@@ -19,13 +19,13 @@ class RedirectSearch implements ObserverInterface
     /** @var ResponseInterface */
     private $response;
 
-    /** @var CommunicationConfigInterface */
+    /** @var CommunicationConfig */
     private $config;
 
     public function __construct(
         RedirectInterface $redirect,
         ResponseInterface $response,
-        CommunicationConfigInterface $config
+        CommunicationConfig $config
     ) {
         $this->redirect = $redirect;
         $this->response = $response;

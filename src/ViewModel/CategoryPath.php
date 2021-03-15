@@ -7,15 +7,15 @@ namespace Omikron\Factfinder\ViewModel;
 use Magento\Catalog\Model\Category;
 use Magento\Framework\Registry;
 use Magento\Framework\View\Element\Block\ArgumentInterface;
-use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
 use Omikron\FactFinder\Communication\Version;
+use Omikron\Factfinder\Model\Config\CommunicationConfig;
 
 class CategoryPath implements ArgumentInterface
 {
     /** @var Registry */
     private $registry;
 
-    /** @var CommunicationConfigInterface */
+    /** @var CommunicationConfig */
     private $communicationConfig;
 
     /** @var string */
@@ -26,7 +26,7 @@ class CategoryPath implements ArgumentInterface
 
     public function __construct(
         Registry $registry,
-        CommunicationConfigInterface $communicationConfig,
+        CommunicationConfig $communicationConfig,
         string $param = 'CategoryPath',
         array $initial = []
     ) {
@@ -60,6 +60,7 @@ class CategoryPath implements ArgumentInterface
     private function ngPath(?Category $category): array
     {
         $path = implode('/', $this->getCategoryPath($category));
+
         return $this->initial + [sprintf('filter=%s', urlencode($this->param . ':' . $path))];
     }
 
@@ -67,7 +68,8 @@ class CategoryPath implements ArgumentInterface
     {
         return array_map(function (Category $item): string {
             return (string) $item->getName();
-        }, $category ? $category->getParentCategories() : []);
+        }, $category ? $category->getParentCategories() : []
+        );
     }
 
     /**
@@ -80,7 +82,8 @@ class CategoryPath implements ArgumentInterface
         $categories = $category ? $category->getParentCategories() : [];
         usort($categories, function (Category $a, Category $b): int {
             return $a->getLevel() - $b->getLevel();
-        });
+        }
+        );
 
         return $categories;
     }

@@ -6,20 +6,18 @@ namespace Omikron\Factfinder\Model\Config;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Store\Model\ScopeInterface;
-use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
-use Omikron\Factfinder\Api\Config\FeatureConfigInterface;
 
-class FeatureConfig implements FeatureConfigInterface
+class FeatureConfig
 {
     private const PATH_USE_FOR_CATEGORIES = 'factfinder/general/use_for_categories';
 
-    /** @var CommunicationConfigInterface */
+    /** @var CommunicationConfig */
     private $communicationConfig;
 
     /** @var ScopeConfigInterface */
     private $scopeConfig;
 
-    public function __construct(ScopeConfigInterface $scopeConfig, CommunicationConfigInterface $communicationConfig)
+    public function __construct(ScopeConfigInterface $scopeConfig, CommunicationConfig $communicationConfig)
     {
         $this->scopeConfig         = $scopeConfig;
         $this->communicationConfig = $communicationConfig;

@@ -26,7 +26,6 @@ class ConfigurableDataProvider extends SimpleDataProvider
     public function __construct(
         Product $product,
         NumberFormatter $numberFormatter,
-        LinkManagement $linkManagement,
         ConfigurableProductType $productType,
         FilterInterface $filter,
         ProductVariationFactory $variationFactory,

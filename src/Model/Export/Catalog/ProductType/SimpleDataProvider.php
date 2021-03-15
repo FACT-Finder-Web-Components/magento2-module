@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Omikron\Factfinder\Model\Export\Catalog\ProductType;
 
 use Magento\Catalog\Model\Product;
-use Omikron\Factfinder\Api\Export\Catalog\ProductFieldInterface;
+use Omikron\Factfinder\Api\Export\FieldInterface;
 use Omikron\Factfinder\Api\Export\DataProviderInterface;
 use Omikron\Factfinder\Api\Export\ExportEntityInterface;
 use Omikron\Factfinder\Model\Formatter\NumberFormatter;
@@ -18,7 +18,7 @@ class SimpleDataProvider implements DataProviderInterface, ExportEntityInterface
     /** @var Product */
     protected $product;
 
-    /** @var ProductFieldInterface[] */
+    /** @var FieldInterface[] */
     private $productFields;
 
     public function __construct(Product $product, NumberFormatter $numberFormatter, array $productFields = [])
@@ -59,7 +59,7 @@ class SimpleDataProvider implements DataProviderInterface, ExportEntityInterface
             'MagentoId'     => $this->getId(),
         ];
 
-        return array_reduce($this->productFields, function (array $result, ProductFieldInterface $field): array {
+        return array_reduce($this->productFields, function (array $result, FieldInterface $field): array {
             return [$field->getName() => $field->getValue($this->product)] + $result;
         }, $data);
     }

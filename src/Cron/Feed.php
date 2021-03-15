@@ -6,9 +6,9 @@ namespace Omikron\Factfinder\Cron;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Store\Model\StoreManagerInterface;
-use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
 use Omikron\FactFinder\Communication\Resource\Builder;
 use Omikron\Factfinder\Model\Api\PushImport;
+use Omikron\Factfinder\Model\Config\CommunicationConfig;
 use Omikron\Factfinder\Model\Export\FeedFactory as FeedGeneratorFactory;
 use Omikron\Factfinder\Model\FtpUploader;
 use Omikron\Factfinder\Model\StoreEmulation;
@@ -30,7 +30,7 @@ class Feed
     /** @var StoreManagerInterface */
     private $storeManager;
 
-    /** @var CommunicationConfigInterface */
+    /** @var CommunicationConfig */
     private $communicationConfig;
 
     /** @var CsvFactory */
@@ -52,7 +52,7 @@ class Feed
         StoreEmulation $emulation,
         CsvFactory $csvFactory,
         FtpUploader $ftpUploader,
-        CommunicationConfigInterface $communicationConfig,
+        CommunicationConfig $communicationConfig,
         PushImport $pushImport,
         string $type
     ) {

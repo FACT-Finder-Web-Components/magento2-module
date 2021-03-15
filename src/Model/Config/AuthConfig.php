@@ -6,9 +6,8 @@ namespace Omikron\Factfinder\Model\Config;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Store\Model\ScopeInterface as Scope;
-use Omikron\Factfinder\Api\Config\AuthConfigInterface;
 
-class AuthConfig implements AuthConfigInterface
+class AuthConfig
 {
     private const PATH_USERNAME     = 'factfinder/general/username';
     private const PATH_PASSWORD     = 'factfinder/general/password';

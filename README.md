@@ -353,11 +353,11 @@ the new field definition:
 ```
 
 Again, there is no need to copy all other field definitions: Magento will merge the existing ones with the one you just created.
-In order for your field exporter to work, it has to implement `Omikron\Factfinder\Api\Export\Catalog\ProductFieldInterface`.
+In order for your field exporter to work, it has to implement `Omikron\Factfinder\Api\Export\FieldInterface`.
 Your class skeleton to export the brand logo could look like this:
  
 ```php
-class BrandLogo implements \Omikron\Factfinder\Api\Export\Catalog\ProductFieldInterface
+class BrandLogo implements \Omikron\Factfinder\Api\Export\FieldInterface
 {
     public function getValue(Product $product): string
     {
@@ -379,7 +379,7 @@ Finally, You need to define new column in CatalogFeed definition in di.xml`.
 ```
 
 #### GenericField usage
-If extracting logic is just a retrieving attribute value from product without any further data transformation creating virtual type of *GenericField* might be used instead of implementing *ProductFieldInterface*.
+If extracting logic is just a retrieving attribute value from product without any further data transformation creating virtual type of *GenericField* might be used instead of implementing *FieldInterface*.
 The constructor for this class requires only an attribute code to be exported.
 ```xml
 <virtualType name="Omikron\Factfinder\Model\Export\Catalog\ProductField\Brand" type="Omikron\Factfinder\Model\Export\Catalog\ProductField\GenericField">
