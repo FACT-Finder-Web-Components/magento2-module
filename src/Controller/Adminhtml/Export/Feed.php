@@ -8,9 +8,9 @@ use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
 use Magento\Framework\Controller\Result\JsonFactory;
 use Magento\Store\Model\StoreManagerInterface;
-use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
 use Omikron\FactFinder\Communication\Resource\Builder;
 use Omikron\Factfinder\Model\Api\PushImport;
+use Omikron\Factfinder\Model\Config\CommunicationConfig;
 use Omikron\Factfinder\Model\Export\FeedFactory as FeedGeneratorFactory;
 use Omikron\Factfinder\Model\FtpUploader;
 use Omikron\Factfinder\Model\StoreEmulation;
@@ -21,7 +21,7 @@ class Feed extends Action
     /** @var JsonFactory */
     private $jsonResultFactory;
 
-    /** @var CommunicationConfigInterface */
+    /** @var CommunicationConfig */
     private $communicationConfig;
 
     /** @var StoreEmulation */
@@ -48,7 +48,7 @@ class Feed extends Action
     public function __construct(
         Context $context,
         JsonFactory $jsonResultFactory,
-        CommunicationConfigInterface $communicationConfig,
+        CommunicationConfig $communicationConfig,
         StoreEmulation $storeEmulation,
         FeedGeneratorFactory $feedGeneratorFactory,
         CsvFactory $csvFactory,

@@ -8,10 +8,10 @@ use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
 use Magento\Framework\Controller\Result\JsonFactory;
 use Magento\Store\Model\StoreManagerInterface;
-use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
 use Omikron\FactFinder\Communication\Client\ClientBuilder;
 use Omikron\FactFinder\Communication\Resource\AdapterFactory;
 use Omikron\Factfinder\Model\Api\CredentialsFactory;
+use Omikron\Factfinder\Model\Config\CommunicationConfig;
 use Omikron\Factfinder\Model\FieldRoles;
 use Psr\Http\Client\ClientExceptionInterface;
 
@@ -23,7 +23,7 @@ class Update extends Action
     /** @var StoreManagerInterface */
     private $storeManager;
 
-    /** @var CommunicationConfigInterface */
+    /** @var CommunicationConfig */
     private $communicationConfig;
 
     /** @var CredentialsFactory */
@@ -39,7 +39,7 @@ class Update extends Action
         Context $context,
         JsonFactory $jsonFactory,
         StoreManagerInterface $storeManager,
-        CommunicationConfigInterface $communicationConfig,
+        CommunicationConfig $communicationConfig,
         CredentialsFactory $credentialsFactory,
         FieldRoles $fieldRoles,
         ClientBuilder $clientBuilder

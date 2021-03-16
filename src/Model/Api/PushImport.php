@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Omikron\Factfinder\Model\Api;
 
-use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
 use Omikron\FactFinder\Communication\Client\ClientBuilder;
 use Omikron\FactFinder\Communication\Client\ClientException;
 use Omikron\FactFinder\Communication\Resource\AdapterFactory;
+use Omikron\Factfinder\Model\Config\CommunicationConfig;
 use Omikron\Factfinder\Model\Config\ExportConfig;
 use Psr\Log\LoggerInterface;
 
 class PushImport
 {
-    /** @var CommunicationConfigInterface */
+    /** @var CommunicationConfig */
     private $communicationConfig;
 
     /** @var CredentialsFactory */
@@ -31,7 +31,7 @@ class PushImport
     public function __construct(
         ClientBuilder $clientBuilder,
         CredentialsFactory $credentialsFactory,
-        CommunicationConfigInterface $communicationConfig,
+        CommunicationConfig $communicationConfig,
         ExportConfig $exportConfig,
         LoggerInterface $logger
     ) {
@@ -59,6 +59,7 @@ class PushImport
         foreach ($this->exportConfig->getPushImportDataTypes($storeId) as $dataType) {
             $response = array_merge_recursive($response, $importAdapter->import($channel, $dataType));
         }
+
         return $response && !(isset($response['errors']) || isset($response['error']));
     }
 }

@@ -4,20 +4,21 @@ declare(strict_types=1);
 
 namespace Omikron\Factfinder\Model\Export\Catalog;
 
-use Omikron\Factfinder\Api\Export\Catalog\ProductFieldInterface;
+use Omikron\Factfinder\Api\Export\FieldInterface;
+use Omikron\Factfinder\Api\Export\FieldProviderInterface;
 use Omikron\Factfinder\Model\Config\ExportConfig;
 use Omikron\Factfinder\Model\Export\Catalog\ProductField\GenericFieldFactory;
 
-class ProductFieldProvider
+class FieldProvider implements FieldProviderInterface
 {
     /** @var ExportConfig */
     private $config;
 
-    /** @var ProductFieldInterface[] */
-    private $productFields;
-
     /** @var GenericFieldFactory */
     private $fieldFactory;
+
+    /** @var FieldInterface[] */
+    private $productFields;
 
     public function __construct(ExportConfig $config, GenericFieldFactory $fieldFactory, array $productFields)
     {

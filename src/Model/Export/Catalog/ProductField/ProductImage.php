@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Omikron\Factfinder\Model\Export\Catalog\ProductField;
 
 use Magento\Catalog\Helper\Image as ImageHelper;
-use Magento\Catalog\Model\Product;
-use Omikron\Factfinder\Api\Export\Catalog\ProductFieldInterface;
+use Magento\Framework\Model\AbstractModel;
+use Omikron\Factfinder\Api\Export\FieldInterface;
 
-class ProductImage implements ProductFieldInterface
+class ProductImage implements FieldInterface
 {
     /** @var ImageHelper */
     private $imageHelper;
@@ -27,7 +27,7 @@ class ProductImage implements ProductFieldInterface
         return 'ImageUrl';
     }
 
-    public function getValue(Product $product): string
+    public function getValue(AbstractModel $product): string
     {
         return $this->imageHelper->init($product, $this->imageId)->getUrl();
     }

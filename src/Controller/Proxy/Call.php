@@ -11,10 +11,10 @@ use Magento\Framework\Controller\Result\JsonFactory as JsonResultFactory;
 use Magento\Framework\Controller\Result\RawFactory as RawResultFactory;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NotFoundException;
-use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
 use Omikron\FactFinder\Communication\Client\ClientBuilder;
 use Omikron\Factfinder\Controller\SkipCsrfValidation;
 use Omikron\Factfinder\Model\Api\CredentialsFactory;
+use Omikron\Factfinder\Model\Config\CommunicationConfig;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Message\ResponseInterface;
 
@@ -28,7 +28,7 @@ class Call extends Action\Action implements Action\HttpGetActionInterface, Actio
     /** @var RawResultFactory */
     private $rawResultFactory;
 
-    /** @var CommunicationConfigInterface */
+    /** @var CommunicationConfig */
     private $communicationConfig;
 
     /** @var CredentialsFactory */
@@ -41,7 +41,7 @@ class Call extends Action\Action implements Action\HttpGetActionInterface, Actio
         Action\Context $context,
         JsonResultFactory $jsonResultFactory,
         RawResultFactory $rawResultFactory,
-        CommunicationConfigInterface $communicationConfig,
+        CommunicationConfig $communicationConfig,
         CredentialsFactory $credentialsFactory,
         ClientBuilder $clientBuilder
     ) {

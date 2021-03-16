@@ -7,11 +7,11 @@ namespace Omikron\Factfinder\Controller\Adminhtml\TestConnection;
 use Magento\Backend\App\Action;
 use Magento\Framework\Controller\Result\JsonFactory;
 use Magento\Framework\Phrase;
-use Omikron\Factfinder\Api\Config\AuthConfigInterface;
 use Omikron\FactFinder\Communication\Client\ClientBuilder;
 use Omikron\FactFinder\Communication\Credentials;
 use Omikron\FactFinder\Communication\Resource\AdapterFactory;
 use Omikron\Factfinder\Model\Api\CredentialsFactory;
+use Omikron\Factfinder\Model\Config\AuthConfig;
 use Psr\Http\Client\ClientExceptionInterface;
 
 class TestConnection extends Action
@@ -25,7 +25,7 @@ class TestConnection extends Action
     /** @var CredentialsFactory */
     private $credentialsFactory;
 
-    /** @var AuthConfigInterface */
+    /** @var AuthConfig */
     private $authConfig;
 
     /** @var ClientBuilder */
@@ -35,7 +35,7 @@ class TestConnection extends Action
         Action\Context $context,
         JsonFactory $jsonResultFactory,
         CredentialsFactory $credentialsFactory,
-        AuthConfigInterface $authConfig,
+        AuthConfig $authConfig,
         ClientBuilder $clientBuilder
     ) {
         parent::__construct($context);

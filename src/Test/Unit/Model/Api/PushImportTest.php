@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Omikron\Factfinder\Model\Api;
 
-use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
 use Omikron\FactFinder\Communication\Client\ClientBuilder;
 use Omikron\FactFinder\Communication\Client\ClientInterface;
 use Omikron\FactFinder\Communication\Credentials;
+use Omikron\Factfinder\Model\Config\CommunicationConfig;
 use Omikron\Factfinder\Model\Config\ExportConfig;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -19,7 +19,7 @@ class PushImportTest extends TestCase
     /** @var MockObject|ClientInterface */
     private $factFinderClientMock;
 
-    /** @var MockObject|CommunicationConfigInterface */
+    /** @var MockObject|CommunicationConfig */
     private $communicationConfigMock;
 
     /** @var MockObject|ExportConfig */
@@ -91,7 +91,7 @@ class PushImportTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->communicationConfigMock = $this->createMock(CommunicationConfigInterface::class);
+        $this->communicationConfigMock = $this->createMock(CommunicationConfig::class);
         $this->communicationConfigMock->method('getAddress')->willReturn('http://fake-factfinder.com/FACT-Finder-7.3');
         $this->communicationConfigMock->method('getVersion')->willReturn('ng');
 

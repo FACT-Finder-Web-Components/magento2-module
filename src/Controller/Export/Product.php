@@ -8,14 +8,14 @@ use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\App\Response\Http\FileFactory;
 use Magento\Store\Model\StoreManagerInterface;
-use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
+use Omikron\Factfinder\Model\Config\CommunicationConfig;
 use Omikron\Factfinder\Model\Export\FeedFactory as FeedGeneratorFactory;
 use Omikron\Factfinder\Model\StoreEmulation;
 use Omikron\Factfinder\Model\Stream\CsvFactory;
 
 class Product extends Action
 {
-    /** @var CommunicationConfigInterface */
+    /** @var CommunicationConfig */
     private $communicationConfig;
 
     /** @var StoreEmulation */
@@ -38,7 +38,7 @@ class Product extends Action
 
     public function __construct(
         Context $context,
-        CommunicationConfigInterface $communicationConfig,
+        CommunicationConfig $communicationConfig,
         StoreEmulation $storeEmulation,
         FeedGeneratorFactory $feedGeneratorFactory,
         FileFactory $fileFactory,

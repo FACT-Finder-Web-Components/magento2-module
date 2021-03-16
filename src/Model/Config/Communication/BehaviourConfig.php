@@ -34,7 +34,6 @@ class BehaviourConfig implements ParametersSourceInterface
             'keep-url-params'             => $this->getConfig(self::PATH_KEEP_URL_PARAMS),
             'only-search-params'          => $this->getFlag(self::PATH_ONLY_SEARCH_PARAMS),
             'parameter-whitelist'         => $this->getConfig(self::PATH_PARAMETER_WHITELIST),
-            'disable-single-hit-redirect' => 'true',
         ];
     }
 

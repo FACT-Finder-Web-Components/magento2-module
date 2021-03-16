@@ -7,7 +7,6 @@ namespace Omikron\Factfinder\Model\Config;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Serialize\SerializerInterface;
 use Magento\Store\Model\ScopeInterface;
-use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
 use Omikron\FactFinder\Communication\Version;
 
 class ExportConfig
@@ -20,13 +19,13 @@ class ExportConfig
     /** @var SerializerInterface */
     private $serializer;
 
-    /** @var CommunicationConfigInterface */
+    /** @var CommunicationConfig */
     private $communicationConfig;
 
     public function __construct(
         ScopeConfigInterface $scopeConfig,
         SerializerInterface $serializer,
-        CommunicationConfigInterface $communicationConfig
+        CommunicationConfig $communicationConfig
     ) {
         $this->scopeConfig         = $scopeConfig;
         $this->serializer          = $serializer;

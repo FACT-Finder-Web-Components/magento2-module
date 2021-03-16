@@ -6,7 +6,6 @@ namespace Omikron\Factfinder\Model\Config;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Serialize\Serializer\Json;
-use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
 use PHPUnit\Framework\TestCase;
 
 class ExportConfigTest extends TestCase
@@ -49,7 +48,7 @@ class ExportConfigTest extends TestCase
             ['factfinder/data_transfer/ff_push_import_type', 'store', 1, 'search,suggest'],
             ['factfinder/export/attributes', 'stores', 42,'{"_1":{"code":"color","multi":"0"},"_2":{"code":"climate","multi":"1"},"_3":{"code":"gender","multi":"0"},"_4":{"code":"gender","multi":"0"}}']
         ]);
-        $communicationConfig = $this->createMock(CommunicationConfigInterface::class);
+        $communicationConfig = $this->createMock(CommunicationConfig::class);
         $communicationConfig->method('getVersion')->willReturnOnConsecutiveCalls('7.3', 'ng');
         $this->testee = new ExportConfig($scopeConfig, new Json(), $communicationConfig);
     }

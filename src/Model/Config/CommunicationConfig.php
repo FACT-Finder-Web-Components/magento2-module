@@ -7,12 +7,11 @@ namespace Omikron\Factfinder\Model\Config;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\UrlInterface;
 use Magento\Store\Model\ScopeInterface;
-use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
 use Omikron\Factfinder\Api\Config\ParametersSourceInterface;
 use Omikron\FactFinder\Communication\Version;
 use Omikron\Factfinder\Controller\Router;
 
-class CommunicationConfig implements CommunicationConfigInterface, ParametersSourceInterface
+class CommunicationConfig implements ParametersSourceInterface
 {
     private const PATH_CHANNEL              = 'factfinder/general/channel';
     private const PATH_ADDRESS              = 'factfinder/general/address';

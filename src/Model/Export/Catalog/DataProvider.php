@@ -7,9 +7,9 @@ namespace Omikron\Factfinder\Model\Export\Catalog;
 use Magento\Catalog\Api\Data\ProductInterface;
 use Magento\Catalog\Model\Product\Type as ProductType;
 use Magento\Framework\ObjectManagerInterface;
-use Omikron\Factfinder\Api\Export\Catalog\ProductFieldInterface;
 use Omikron\Factfinder\Api\Export\DataProviderInterface;
 use Omikron\Factfinder\Api\Export\ExportEntityInterface;
+use Omikron\Factfinder\Api\Export\FieldInterface;
 
 class DataProvider implements DataProviderInterface
 {
@@ -22,19 +22,19 @@ class DataProvider implements DataProviderInterface
     /** @var string[] */
     private $entityTypes;
 
-    /** @var ProductFieldInterface[] */
+    /** @var FieldInterface[] */
     private $productFields;
 
     public function __construct(
         Products $products,
         ObjectManagerInterface $objectManager,
-        array $productFields,
+        array $fields,
         array $entityTypes
     ) {
         $this->products      = $products;
         $this->objectManager = $objectManager;
         $this->entityTypes   = $entityTypes;
-        $this->productFields = $productFields;
+        $this->productFields = $fields;
     }
 
     /**

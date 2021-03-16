@@ -8,11 +8,11 @@ use Magento\Backend\App\Action\Context;
 use Magento\Framework\App\RequestInterface;
 use Magento\Framework\Controller\Result\Json as JsonResult;
 use Magento\Framework\Controller\Result\JsonFactory;
-use Omikron\Factfinder\Api\Config\AuthConfigInterface;
 use Omikron\FactFinder\Communication\Client\ClientBuilder;
 use Omikron\FactFinder\Communication\Client\ClientInterface;
 use Omikron\FactFinder\Communication\Credentials;
 use Omikron\Factfinder\Model\Api\CredentialsFactory;
+use Omikron\Factfinder\Model\Config\AuthConfig;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
@@ -57,7 +57,7 @@ class TestConnectionTest extends TestCase
             $this->createConfiguredMock(Context::class, ['getRequest' => $this->request]),
             $this->createConfiguredMock(JsonFactory::class, ['create' => $this->createMock(JsonResult::class)]),
             $credentialsFactory,
-            $this->createMock(AuthConfigInterface::class),
+            $this->createMock(AuthConfig::class),
             $this->builderMock
         );
     }

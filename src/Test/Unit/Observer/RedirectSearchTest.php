@@ -9,7 +9,7 @@ use Magento\Framework\App\Response\RedirectInterface;
 use Magento\Framework\App\ResponseInterface;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
-use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
+use Omikron\Factfinder\Model\Config\CommunicationConfig;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
@@ -18,7 +18,7 @@ class RedirectSearchTest extends TestCase
     /** @var RedirectSearch */
     private $observer;
 
-    /** @var MockObject|CommunicationConfigInterface */
+    /** @var MockObject|CommunicationConfig */
     private $config;
 
     /** @var MockObject|RedirectInterface */
@@ -63,7 +63,7 @@ class RedirectSearchTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->config   = $this->createMock(CommunicationConfigInterface::class);
+        $this->config   = $this->createMock(CommunicationConfig::class);
         $this->redirect = $this->createMock(RedirectInterface::class);
         $this->response = $this->createMock(ResponseInterface::class);
         $this->observer = new RedirectSearch($this->redirect, $this->response, $this->config);

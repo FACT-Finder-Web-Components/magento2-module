@@ -7,7 +7,7 @@ namespace Omikron\Factfinder\Test\Unit\ViewModel;
 use Magento\Checkout\Model\Session;
 use Magento\Framework\DataObject;
 use Magento\Sales\Model\Order as OrderModel;
-use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
+use Omikron\Factfinder\Model\Config\CommunicationConfig;
 use Omikron\Factfinder\ViewModel\Order;
 use PHPUnit\Framework\TestCase;
 
@@ -37,6 +37,6 @@ class OrderTest extends TestCase
         $orderMock   = $this->createConfiguredMock(OrderModel::class, ['getAllVisibleItems' => $this->orderItemsMock]);
         $sessionMock = $this->createConfiguredMock(Session::class, ['getLastRealOrder' => $orderMock]);
 
-        $this->order = new Order($sessionMock, $this->createConfiguredMock(CommunicationConfigInterface::class, ['getChannel' => 'test-channel']));
+        $this->order = new Order($sessionMock, $this->createConfiguredMock(CommunicationConfig::class, ['getChannel' => 'test-channel']));
     }
 }
