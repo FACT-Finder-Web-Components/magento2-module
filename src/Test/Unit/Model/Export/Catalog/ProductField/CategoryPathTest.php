@@ -117,7 +117,7 @@ class CategoryPathTest extends TestCase
             ]);
         $this->productMock = $this->getMockBuilder(AbstractModel::class)
             ->disableOriginalConstructor()
-            ->addMethods(['getStore', 'getCategoryIds'])
+            ->setMethods(['getStore', 'getCategoryIds'])
             ->getMock();
 
         $this->productMock->method('getStore')
