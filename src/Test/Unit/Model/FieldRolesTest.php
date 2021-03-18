@@ -8,7 +8,6 @@ use Magento\Catalog\Api\Data\ProductInterface;
 use Magento\Config\Model\ResourceModel\Config as ConfigResource;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Serialize\Serializer\Json as JsonSerializer;
-use Omikron\Factfinder\Api\FieldRolesInterface;
 use Omikron\Factfinder\Model\Export\Catalog\ProductType\SimpleDataProvider;
 use Omikron\Factfinder\Model\Export\Catalog\ProductType\SimpleDataProviderFactory;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -22,7 +21,7 @@ class FieldRolesTest extends TestCase
     /** @var MockObject|ConfigResource */
     private $configResourceMock;
 
-    /** @var FieldRolesInterface */
+    /** @var FieldRoles */
     private $fieldRoles;
 
     /** @var JsonSerializer */

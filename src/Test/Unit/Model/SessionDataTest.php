@@ -8,7 +8,6 @@ use Magento\Customer\CustomerData\SectionSourceInterface;
 use Magento\Customer\Model\Session as CustomerSession;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\HTTP\PhpEnvironment\RemoteAddress;
-use Omikron\Factfinder\Api\SessionDataInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
@@ -25,11 +24,6 @@ class SessionDataTest extends TestCase
 
     /** @var RemoteAddress|ScopeConfigInterface */
     private $remoteAddressMock;
-
-    public function test_it_implements_the_session_data_interface()
-    {
-        $this->assertInstanceOf(SessionDataInterface::class, $this->sessionData);
-    }
 
     /**
      * @testdox User ID is fetched from the customer session
