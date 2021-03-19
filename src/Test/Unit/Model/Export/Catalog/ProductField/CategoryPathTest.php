@@ -26,8 +26,8 @@ class CategoryPathTest extends TestCase
     {
         $this->productMock->method('getCategoryIds')->willReturn(['5']);
         $path = $this->categoryPath->getValue($this->productMock);
-        $this->assertStringContainsString(urlencode('Trousers & Pants'), $path);
-        $this->assertStringContainsString(urlencode('5/6 Length Trousers'), $path);
+        $this->assertStringContains(urlencode('Trousers & Pants'), $path);
+        $this->assertStringContains(urlencode('5/6 Length Trousers'), $path);
     }
 
     public function test_multiple_category_branches_will_be_exported()
@@ -41,8 +41,8 @@ class CategoryPathTest extends TestCase
     {
         $this->productMock->method('getCategoryIds')->willReturn(['5']);
         $path = $this->categoryPath->getValue($this->productMock);
-        $this->assertStringNotContainsString('Root Catalog', $path);
-        $this->assertStringNotContainsString('Default Category', $path);
+        $this->assertStringNotContains('Root Catalog', $path);
+        $this->assertStringNotContains('Default Category', $path);
     }
 
 
@@ -127,5 +127,23 @@ class CategoryPathTest extends TestCase
             ]));
 
         $this->categoryPath = new CategoryPath($this->repositoryMock, 'CategoryPath');
+    }
+
+    private function assertStringContains(string $needle, string $haystack)
+    {
+        if (method_exists($this, 'assertStringContains')) {
+            return $this->assertStringContainsString($needle, $haystack);
+        }
+
+        $this->assertMatchesRegularExpression('/' . preg_quote($needle) . '/', $haystack);
+    }
+
+    public function assertStringNotContains($needle, $haystack)
+    {
+        if (method_exists($this, 'assertStringNotContainsString')) {
+            return $this->assertStringNotContainsString($needle, $haystack);
+        }
+
+        $this->assertDoesNotMatchRegularExpression('/' . preg_quote($needle) . '/', $haystack);
     }
 }
