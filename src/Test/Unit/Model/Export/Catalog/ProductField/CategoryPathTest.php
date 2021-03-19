@@ -131,19 +131,12 @@ class CategoryPathTest extends TestCase
 
     private function assertStringContains(string $needle, string $haystack)
     {
-        if (method_exists($this, 'assertStringContains')) {
-            return $this->assertStringContainsString($needle, $haystack);
-        }
 
         $this->assertMatchesRegularExpression('/' . preg_quote($needle) . '/', $haystack);
     }
 
     public function assertStringNotContains($needle, $haystack)
     {
-        if (method_exists($this, 'assertStringNotContainsString')) {
-            return $this->assertStringNotContainsString($needle, $haystack);
-        }
-
         $this->assertDoesNotMatchRegularExpression('/' . preg_quote($needle) . '/', $haystack);
     }
 }
