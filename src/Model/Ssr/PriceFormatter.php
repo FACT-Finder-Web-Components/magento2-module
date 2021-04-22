@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Omikron\Factfinder\Model\Ssr;
 
 use Magento\Framework\Pricing\PriceCurrencyInterface;
-use Omikron\Factfinder\Api\Config\CommunicationConfigInterface;
+use Omikron\Factfinder\Model\Config\CommunicationConfig;
 use Omikron\FactFinder\Communication\Version;
 use Omikron\Factfinder\Model\FieldRoles;
 
@@ -14,14 +14,14 @@ class PriceFormatter
     /** @var PriceCurrencyInterface */
     private $priceCurrency;
 
-    /** @var CommunicationConfigInterface */
+    /** @var CommunicationConfig */
     private $communicationConfig;
 
     /** @var FieldRoles */
     private $fieldRoles;
 
     public function __construct(
-        CommunicationConfigInterface $communicationConfig,
+        CommunicationConfig $communicationConfig,
         PriceCurrencyInterface $priceCurrency,
         FieldRoles $fieldRoles
     ) {
