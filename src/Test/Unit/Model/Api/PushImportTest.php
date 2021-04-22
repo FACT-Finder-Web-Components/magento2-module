@@ -68,27 +68,6 @@ class PushImportTest extends TestCase
         $this->assertTrue($this->pushImport->execute(1));
     }
 
-    /**
-     * @testWith ["errors"]
-     *           ["error"]
-     */
-    public function test_execute_should_return_false_if_response_contains_errors(string $param)
-    {
-        $this->exportConfigMock->method('getPushImportDataTypes')->willReturn(['data', 'suggest']);
-        $this->clientMock->expects($this->exactly(3))
-            ->method('request')
-            ->withConsecutive(
-                ['GET', $this->stringContains('running'), $this->anything()],
-                [$this->anything()],
-                [$this->anything()]
-            )->willReturnOnConsecutiveCalls(
-                $this->importNotRunningResponse(),
-                $this->importResponseBad($param),
-                $this->importResponseOk($param)
-            );
-        $this->assertFalse($this->pushImport->execute(1));
-    }
-
     protected function setUp(): void
     {
         $this->communicationConfigMock = $this->createMock(CommunicationConfig::class);
