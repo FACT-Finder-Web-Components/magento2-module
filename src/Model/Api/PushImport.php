@@ -49,17 +49,21 @@ class PushImport
             ->withCredentials($this->credentialsFactory->create());
 
         $importAdapter = (new AdapterFactory($clientBuilder, $this->communicationConfig->getVersion()))->getImportAdapter();
+        $channel       = $this->communicationConfig->getChannel($storeId);
+        $dataTypes     = $this->exportConfig->getPushImportDataTypes($storeId);
 
-        $channel = $this->communicationConfig->getChannel($storeId);
+        if (!$dataTypes) {
+            return false;
+        }
+
         if ($importAdapter->running($channel)) {
             throw new ClientException("Can't start a new import process. Another one is still going");
         }
 
-        $response = [];
-        foreach ($this->exportConfig->getPushImportDataTypes($storeId) as $dataType) {
-            $response = array_merge_recursive($response, $importAdapter->import($channel, $dataType));
+        foreach ($dataTypes as $dataType) {
+            $importAdapter->import($channel, $dataType);
         }
 
-        return $response && !(isset($response['errors']) || isset($response['error']));
+        return true;
     }
 }

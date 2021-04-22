@@ -9,10 +9,9 @@ use Magento\Config\Model\ResourceModel\Config as ConfigResource;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Serialize\SerializerInterface;
 use Magento\Store\Model\ScopeInterface as Scope;
-use Omikron\Factfinder\Api\FieldRolesInterface;
 use Omikron\Factfinder\Model\Export\Catalog\ProductType\SimpleDataProviderFactory;
 
-class FieldRoles implements FieldRolesInterface
+class FieldRoles
 {
     private const PATH_PRODUCT_FIELD_ROLE = 'factfinder/general/tracking_product_number_field_role';
 

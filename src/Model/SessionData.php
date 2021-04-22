@@ -9,9 +9,8 @@ use Magento\Customer\Model\Session as CustomerSession;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\HTTP\PhpEnvironment\RemoteAddress;
 use Omikron\Factfinder\Api\Config\ParametersSourceInterface;
-use Omikron\Factfinder\Api\SessionDataInterface;
 
-class SessionData implements SessionDataInterface, SectionSourceInterface, ParametersSourceInterface
+class SessionData implements SectionSourceInterface, ParametersSourceInterface
 {
     /** @var CustomerSession */
     private $customerSession;

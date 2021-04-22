@@ -1,9 +1,7 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
     <preference for="Omikron\Factfinder\Api\ExporterInterface" type="Omikron\Factfinder\Model\Exporter" />
-    <preference for="Omikron\Factfinder\Api\FieldRolesInterface" type="Omikron\Factfinder\Model\FieldRoles" />
     <preference for="Omikron\Factfinder\Api\Filter\FilterInterface" type="Omikron\Factfinder\Model\Filter\TextFilter" />
-    <preference for="Omikron\Factfinder\Api\SessionDataInterface" type="Omikron\Factfinder\Model\SessionData" />
 
     <type name="Magento\Framework\View\TemplateEngineFactory">
         <arguments>

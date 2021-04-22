@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Omikron\Factfinder\Model\Ssr\Template;
 
-use Omikron\Factfinder\Api\FieldRolesInterface;
+use Omikron\Factfinder\Model\FieldRoles;
 use PHPUnit\Framework\TestCase;
 
 class FilterTest extends TestCase
@@ -39,7 +39,7 @@ class FilterTest extends TestCase
 
     protected function setUp(): void
     {
-        $fieldRoles = $this->createMock(FieldRolesInterface::class);
+        $fieldRoles = $this->createMock(FieldRoles::class);
         $fieldRoles->method('getFieldRole')->with('imageUrl', $this->anything())->willReturn('CustomUrl');
         $this->filter = new Filter($fieldRoles);
     }

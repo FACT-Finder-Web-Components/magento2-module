@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace Omikron\Factfinder\ViewModel;
 
 use Magento\Framework\Serialize\SerializerInterface;
-use Omikron\Factfinder\Api\FieldRolesInterface;
 use Omikron\Factfinder\Model\Config\CommunicationParametersProvider;
+use Omikron\Factfinder\Model\FieldRoles;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class CommunicationTest extends TestCase
 {
-    /** @var MockObject|FieldRolesInterface */
+    /** @var MockObject|FieldRoles */
     private $fieldRolesMock;
 
     /** @var MockObject|SerializerInterface */
@@ -50,7 +50,7 @@ class CommunicationTest extends TestCase
     protected function setUp(): void
     {
         $this->parametersProviderMock = $this->createMock(CommunicationParametersProvider::class);
-        $this->fieldRolesMock         = $this->createMock(FieldRolesInterface::class);
+        $this->fieldRolesMock         = $this->createMock(FieldRoles::class);
         $this->serializerMock         = $this->createMock(SerializerInterface::class);
 
         $this->parametersProviderMock->method('getParameters')->willReturn([

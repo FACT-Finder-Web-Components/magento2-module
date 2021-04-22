@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Omikron\Factfinder\Model\Ssr\Template;
 
-use Omikron\Factfinder\Api\FieldRolesInterface;
 use Omikron\Factfinder\Api\Filter\FilterInterface;
+use Omikron\Factfinder\Model\FieldRoles;
 
 class Filter implements FilterInterface
 {
-    /** @var FieldRolesInterface */
+    /** @var FieldRoles */
     private $fieldRoles;
 
-    public function __construct(FieldRolesInterface $fieldRoles)
+    public function __construct(FieldRoles $fieldRoles)
     {
         $this->fieldRoles = $fieldRoles;
     }

@@ -6,12 +6,12 @@ namespace Omikron\Factfinder\ViewModel;
 
 use Magento\Framework\Serialize\SerializerInterface;
 use Magento\Framework\View\Element\Block\ArgumentInterface;
-use Omikron\Factfinder\Api\FieldRolesInterface;
 use Omikron\Factfinder\Model\Config\CommunicationParametersProvider;
+use Omikron\Factfinder\Model\FieldRoles;
 
 class Communication implements ArgumentInterface
 {
-    /** @var FieldRolesInterface */
+    /** @var FieldRoles */
     private $fieldRoles;
 
     /** @var SerializerInterface */
@@ -24,7 +24,7 @@ class Communication implements ArgumentInterface
     private $mergeableParams;
 
     public function __construct(
-        FieldRolesInterface $fieldRoles,
+        FieldRoles $fieldRoles,
         SerializerInterface $serializer,
         CommunicationParametersProvider $parametersProvider,
         array $mergeableParams = ['add-params', 'add-tracking-params', 'keep-url-params', 'parameter-whitelist']

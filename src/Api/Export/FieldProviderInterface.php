@@ -14,6 +14,7 @@ interface FieldProviderInterface
      * a keys represents the field names and the values
      * are a FieldInterface implementation responsible
      * for retrieving corresponding product value
+     *
      * @see FieldInterface
      *
      * @return array

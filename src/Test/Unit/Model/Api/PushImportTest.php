@@ -36,6 +36,7 @@ class PushImportTest extends TestCase
 
     public function test_should_throw_if_import_is_running()
     {
+        $this->exportConfigMock->method('getPushImportDataTypes')->with($this->anything())->willReturn(['search','suggest']);
         $this->clientMock->method('request')->with('GET', 'rest/v4/import/running', $this->anything())
             ->willReturn($this->importRunningResponse());
         $this->expectExceptionMessage("Can't start a new import process. Another one is still going");
@@ -45,7 +46,7 @@ class PushImportTest extends TestCase
     public function test_execute_should_not_trigger_import_if_no_data_type_is_configured()
     {
         $this->exportConfigMock->method('getPushImportDataTypes')->with($this->anything())->willReturn([]);
-        $this->clientMock->expects($this->once())->method('request');
+        $this->clientMock->expects($this->never())->method('request');
 
         $this->assertFalse($this->pushImport->execute(1));
     }
@@ -66,27 +67,6 @@ class PushImportTest extends TestCase
                 $this->importResponseOk()
             );
         $this->assertTrue($this->pushImport->execute(1));
-    }
-
-    /**
-     * @testWith ["errors"]
-     *           ["error"]
-     */
-    public function test_execute_should_return_false_if_response_contains_errors(string $param)
-    {
-        $this->exportConfigMock->method('getPushImportDataTypes')->willReturn(['data', 'suggest']);
-        $this->clientMock->expects($this->exactly(3))
-            ->method('request')
-            ->withConsecutive(
-                ['GET', $this->stringContains('running'), $this->anything()],
-                [$this->anything()],
-                [$this->anything()]
-            )->willReturnOnConsecutiveCalls(
-                $this->importNotRunningResponse(),
-                $this->importResponseBad($param),
-                $this->importResponseOk($param)
-            );
-        $this->assertFalse($this->pushImport->execute(1));
     }
 
     protected function setUp(): void
