@@ -57,9 +57,9 @@ class PushImport
 
         $response = [];
         foreach ($this->exportConfig->getPushImportDataTypes($storeId) as $dataType) {
-            $response = array_merge_recursive($response, $importAdapter->import($channel, $dataType));
+            $importAdapter->import($channel, $dataType);
         }
 
-        return $response && !(isset($response['errors']) || isset($response['error']));
+        return true;
     }
 }

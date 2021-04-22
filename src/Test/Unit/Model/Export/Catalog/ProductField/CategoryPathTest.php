@@ -8,6 +8,8 @@ use Magento\Catalog\Api\CategoryRepositoryInterface;
 use Magento\Catalog\Api\Data\CategoryInterface;
 use Magento\Framework\Model\AbstractModel;
 use Magento\Store\Model\Store;
+use PHPUnit\Framework\Constraint\LogicalNot;
+use PHPUnit\Framework\Constraint\RegularExpression;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
@@ -129,14 +131,13 @@ class CategoryPathTest extends TestCase
         $this->categoryPath = new CategoryPath($this->repositoryMock, 'CategoryPath');
     }
 
-    private function assertStringContains(string $needle, string $haystack)
+    private function assertStringContains(string $pattern, string $string)
     {
-
-        $this->assertMatchesRegularExpression('/' . preg_quote($needle) . '/', $haystack);
+        $this->assertThat($string, new RegularExpression('/' . preg_quote($pattern) . '/'), $string);
     }
 
-    public function assertStringNotContains($needle, $haystack)
+    public function assertStringNotContains(string$pattern, string $string)
     {
-        $this->assertDoesNotMatchRegularExpression('/' . preg_quote($needle) . '/', $haystack);
+        $this->assertThat($string, new LogicalNot(new RegularExpression('/' . preg_quote($pattern) . '/')));
     }
 }
