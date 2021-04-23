@@ -13,6 +13,9 @@ use Omikron\Factfinder\Model\Config\FeatureConfig;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @covers CategoryView
+ */
 class CategoryViewTest extends TestCase
 {
     /** @var CategoryView */

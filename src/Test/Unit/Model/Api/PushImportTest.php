@@ -14,6 +14,9 @@ use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
 
+/**
+ * @covers PushImport
+ */
 class PushImportTest extends TestCase
 {
     /** @var MockObject|ClientInterface */

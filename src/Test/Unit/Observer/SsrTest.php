@@ -11,6 +11,9 @@ use Magento\Framework\View\LayoutInterface;
 use PHPUnit\Framework\TestCase;
 use PHPUnit_Framework_MockObject_MockObject as MockObject;
 
+/**
+ * @covers Ssr
+ */
 class SsrTest extends TestCase
 {
     /** @var Ssr */

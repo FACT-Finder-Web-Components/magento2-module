@@ -17,6 +17,9 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 
+/**
+ * @covers TestConnection
+ */
 class TestConnectionTest extends TestCase
 {
     /** @var TestConnection */

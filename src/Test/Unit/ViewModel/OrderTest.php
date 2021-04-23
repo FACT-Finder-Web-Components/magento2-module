@@ -11,6 +11,9 @@ use Omikron\Factfinder\Model\Config\CommunicationConfig;
 use Omikron\Factfinder\ViewModel\Order;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @covers Order
+ */
 class OrderTest extends TestCase
 {
     /** @var Order */

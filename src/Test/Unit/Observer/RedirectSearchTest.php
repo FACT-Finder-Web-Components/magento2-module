@@ -13,6 +13,9 @@ use Omikron\Factfinder\Model\Config\CommunicationConfig;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @covers RedirectSearch
+ */
 class RedirectSearchTest extends TestCase
 {
     /** @var RedirectSearch */

@@ -13,6 +13,9 @@ use PHPUnit\Framework\Constraint\RegularExpression;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @covers CategoryPath
+ */
 class CategoryPathTest extends TestCase
 {
     /** @var CategoryPath */

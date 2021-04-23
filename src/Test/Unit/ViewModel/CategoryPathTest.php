@@ -10,6 +10,9 @@ use Omikron\Factfinder\Model\Config\CommunicationConfig;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @covers CategoryPath
+ */
 class CategoryPathTest extends TestCase
 {
     /** @var CategoryPath */

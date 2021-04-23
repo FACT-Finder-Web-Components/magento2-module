@@ -8,6 +8,9 @@ use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Serialize\Serializer\Json;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @covers ExportConfig
+ */
 class ExportConfigTest extends TestCase
 {
     /** @var ExportConfig */

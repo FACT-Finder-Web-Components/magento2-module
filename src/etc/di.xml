@@ -50,17 +50,17 @@
             </argument>
         </arguments>
     </virtualType>
-    <virtualType name="Omikron\Factfinder\Logger" type="Monolog\Logger">
+    <virtualType name="Omikron\Factfinder\Model\Export\CmsFeed" type="Omikron\Factfinder\Model\Export\Feed">
         <arguments>
-            <argument name="name" xsi:type="string">FACT-Finder</argument>
-            <argument name="handlers" xsi:type="array">
-                <item name="factfinder" xsi:type="object">Omikron\Factfinder\Logger\Handler</item>
+            <argument name="columns" xsi:type="array">
+                <item name="PageId" xsi:type="string">PageId</item>
+                <item name="Master" xsi:type="string">Master</item>
+                <item name="Identifier" xsi:type="string">Identifier</item>
+                <item name="Title" xsi:type="string">Title</item>
+                <item name="ContentHeading" xsi:type="string">ContentHeading</item>
+                <item name="MetaKeywords" xsi:type="string">MetaKeywords</item>
+                <item name="MetaDescription" xsi:type="string">MetaDescription</item>
             </argument>
-        </arguments>
-    </virtualType>
-    <virtualType name="Omikron\Factfinder\Logger\Handler" type="Magento\Framework\Logger\Handler\Base">
-        <arguments>
-            <argument name="fileName" xsi:type="string">/var/log/factfinder.log</argument>
         </arguments>
     </virtualType>
     <virtualType name="Omikron\Factfinder\Model\Export\Catalog\ProductField\Brand" type="Omikron\Factfinder\Model\Export\Catalog\ProductField\GenericField">
@@ -68,13 +68,6 @@
             <argument name="attributeCode" xsi:type="string">manufacturer</argument>
         </arguments>
     </virtualType>
-
-    <type name="Magento\Framework\View\Asset\Minification">
-        <plugin name="ff.asset.minification" type="Omikron\Factfinder\Plugin\AssetMinificationPlugin" />
-    </type>
-    <type name="Omikron\Factfinder\Model\Api\PushImport">
-        <plugin name="logPushImportExceptions" type="Omikron\Factfinder\Plugin\LogExceptions" />
-    </type>
     <type name="Omikron\Factfinder\Model\Export\Catalog\DataProvider">
         <arguments>
             <argument name="entityTypes" xsi:type="array">
@@ -95,16 +88,6 @@
             </argument>
         </arguments>
     </type>
-    <type name="Omikron\Factfinder\Model\Export\Catalog\ProductField\Attributes">
-        <arguments>
-            <argument name="filter" xsi:type="object">Omikron\Factfinder\Model\Filter\ExtendedTextFilter</argument>
-        </arguments>
-    </type>
-    <type name="Omikron\Factfinder\Model\Export\Catalog\ProductType\ConfigurableDataProvider">
-        <arguments>
-            <argument name="filter" xsi:type="object">Omikron\Factfinder\Model\Filter\ExtendedTextFilter</argument>
-        </arguments>
-    </type>
     <type name="Omikron\Factfinder\Model\Export\FeedFactory">
         <arguments>
             <argument name="feedPool" xsi:type="array">
@@ -113,7 +96,26 @@
                     <item xsi:type="string" name="dataProvider">Omikron\Factfinder\Model\Export\Catalog\DataProvider</item>
                     <item xsi:type="string" name="fieldProvider">Omikron\Factfinder\Model\Export\Catalog\FieldProvider</item>
                 </item>
+                <item name="cms" xsi:type="array">
+                    <item xsi:type="string" name="generator">Omikron\Factfinder\Model\Export\CmsFeed</item>
+                    <item xsi:type="string" name="dataProvider">Omikron\Factfinder\Model\Export\Cms\DataProvider</item>
+                    <item xsi:type="array" name="fieldProvider">
+                        <item name="Content" xsi:type="object">Omikron\Factfinder\Model\Export\Cms\Field\Content</item>
+                        <item name="Deeplink" xsi:type="object">Omikron\Factfinder\Model\Export\Cms\Field\Deeplink</item>
+                        <item name="Image" xsi:type="object">Omikron\Factfinder\Model\Export\Cms\Field\Image</item>
+                    </item>
+                </item>
             </argument>
+        </arguments>
+    </type>
+    <type name="Omikron\Factfinder\Model\Export\Catalog\ProductField\Attributes">
+        <arguments>
+            <argument name="filter" xsi:type="object">Omikron\Factfinder\Model\Filter\ExtendedTextFilter</argument>
+        </arguments>
+    </type>
+    <type name="Omikron\Factfinder\Model\Export\Catalog\ProductType\ConfigurableDataProvider">
+        <arguments>
+            <argument name="filter" xsi:type="object">Omikron\Factfinder\Model\Filter\ExtendedTextFilter</argument>
         </arguments>
     </type>
     <type name="Omikron\Factfinder\Model\FtpUploader">
@@ -131,6 +133,12 @@
             <argument name="logger" xsi:type="object">Omikron\Factfinder\Logger</argument>
         </arguments>
     </type>
+    <type name="Magento\Framework\View\Asset\Minification">
+        <plugin name="ff.asset.minification" type="Omikron\Factfinder\Plugin\AssetMinificationPlugin" />
+    </type>
+    <type name="Omikron\Factfinder\Model\Api\PushImport">
+        <plugin name="logPushImportExceptions" type="Omikron\Factfinder\Plugin\LogExceptions" />
+    </type>
     <type name="Omikron\Factfinder\ViewModel\Cart">
         <arguments>
             <argument name="checkoutSession" xsi:type="object">Magento\Checkout\Model\Session\Proxy</argument>
@@ -143,10 +151,23 @@
             </argument>
         </arguments>
     </type>
+    <virtualType name="Omikron\Factfinder\Logger" type="Monolog\Logger">
+        <arguments>
+            <argument name="name" xsi:type="string">FACT-Finder</argument>
+            <argument name="handlers" xsi:type="array">
+                <item name="factfinder" xsi:type="object">Omikron\Factfinder\Logger\Handler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Omikron\Factfinder\Logger\Handler" type="Magento\Framework\Logger\Handler\Base">
+        <arguments>
+            <argument name="fileName" xsi:type="string">/var/log/factfinder.log</argument>
+        </arguments>
+    </virtualType>
     <type name="Magento\Framework\Console\CommandListInterface">
         <arguments>
             <argument name="commands" xsi:type="array">
-                <item name="omikron_factfinder_export_products" xsi:type="object">Omikron\Factfinder\Console\Command\ExportProducts</item>
+                <item name="omikron_factfinder_export" xsi:type="object">Omikron\Factfinder\Console\Command\Export</item>
             </argument>
         </arguments>
     </type>

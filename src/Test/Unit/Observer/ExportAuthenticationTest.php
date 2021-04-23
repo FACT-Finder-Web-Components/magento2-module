@@ -11,6 +11,9 @@ use Omikron\Factfinder\Model\Export\BasicAuth;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @covers ExportAuthentication
+ */
 class ExportAuthenticationTest extends TestCase
 {
     /** @var ExportAuthentication */

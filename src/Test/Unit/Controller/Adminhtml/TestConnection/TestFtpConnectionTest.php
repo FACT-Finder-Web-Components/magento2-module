@@ -13,6 +13,9 @@ use Omikron\Factfinder\Model\FtpUploader;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @covers TestFtpConnection
+ */
 class TestFtpConnectionTest extends TestCase
 {
     /** @var TestFtpConnection */

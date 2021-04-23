@@ -13,6 +13,9 @@ use Omikron\Factfinder\Model\Export\Catalog\ProductType\SimpleDataProviderFactor
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @covers FieldRoles
+ */
 class FieldRolesTest extends TestCase
 {
     /** @var MockObject|ScopeConfigInterface */
