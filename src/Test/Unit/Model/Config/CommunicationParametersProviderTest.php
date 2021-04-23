@@ -7,6 +7,9 @@ namespace Omikron\Factfinder\Model\Config;
 use Omikron\Factfinder\Api\Config\ParametersSourceInterface;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @covers CommunicationParametersProvider
+ */
 class CommunicationParametersProviderTest extends TestCase
 {
     /**

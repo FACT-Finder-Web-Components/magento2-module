@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<include xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_include.xsd">
+    <group id="cms_export" translate="label" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+        <label>CMS Export Settings</label>
+        <field id="ff_cms_blacklist" translate="label comment" type="multiselect" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="5">
+            <label>Pages Blacklist</label>
+            <comment>Selected pages will not be exported</comment>
+            <source_model>Magento\Cms\Model\Config\Source\Page</source_model>
+            <can_be_empty>1</can_be_empty>
+        </field>
+    </group>
+</include>

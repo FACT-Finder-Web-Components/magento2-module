@@ -7,6 +7,9 @@ namespace Omikron\Factfinder\Model\Export;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @covers BasicAuth
+ */
 class BasicAuthTest extends TestCase
 {
     /** @var BasicAuth */

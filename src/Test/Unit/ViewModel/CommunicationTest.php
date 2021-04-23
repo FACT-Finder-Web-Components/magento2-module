@@ -10,6 +10,9 @@ use Omikron\Factfinder\Model\FieldRoles;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @covers Communication
+ */
 class CommunicationTest extends TestCase
 {
     /** @var MockObject|FieldRoles */

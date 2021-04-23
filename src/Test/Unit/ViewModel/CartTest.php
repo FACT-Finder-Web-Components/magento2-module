@@ -9,6 +9,9 @@ use Magento\Framework\DataObject;
 use Magento\Quote\Model\Quote;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @covers Cart
+ */
 class CartTest extends TestCase
 {
     /** @var Cart */

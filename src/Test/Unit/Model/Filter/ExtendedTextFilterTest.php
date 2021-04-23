@@ -7,6 +7,9 @@ namespace Omikron\Factfinder\Model\Filter;
 use Omikron\Factfinder\Api\Filter\FilterInterface;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @covers ExtendedTextFilter
+ */
 class ExtendedTextFilterTest extends TestCase
 {
     /** @var TextFilter */

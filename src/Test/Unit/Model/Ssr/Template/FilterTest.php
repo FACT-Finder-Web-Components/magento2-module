@@ -7,6 +7,9 @@ namespace Omikron\Factfinder\Model\Ssr\Template;
 use Omikron\Factfinder\Model\FieldRoles;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @covers FilterTest
+ */
 class FilterTest extends TestCase
 {
     /** @var Filter */

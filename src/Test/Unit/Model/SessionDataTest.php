@@ -11,6 +11,9 @@ use Magento\Framework\HTTP\PhpEnvironment\RemoteAddress;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @covers SessionData
+ */
 class SessionDataTest extends TestCase
 {
     /** @var SessionData */

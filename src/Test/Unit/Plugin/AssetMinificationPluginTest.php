@@ -6,6 +6,9 @@ namespace Omikron\Factfinder\Plugin;
 
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @covers AssetMinificationPlugin
+ */
 class AssetMinificationPluginTest extends TestCase
 {
     /** @var AssetMinificationPlugin */

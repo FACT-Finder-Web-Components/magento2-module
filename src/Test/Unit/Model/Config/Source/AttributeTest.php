@@ -10,6 +10,9 @@ use Magento\Framework\DataObject;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @covers Attribute
+ */
 class AttributeTest extends TestCase
 {
     /** @var MockObject|AttributeCollectionFactory */

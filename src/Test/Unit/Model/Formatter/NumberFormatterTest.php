@@ -6,6 +6,9 @@ namespace Omikron\Factfinder\Model\Formatter;
 
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @covers NumberFormatter
+ */
 class NumberFormatterTest extends TestCase
 {
     /** @var NumberFormatter */
