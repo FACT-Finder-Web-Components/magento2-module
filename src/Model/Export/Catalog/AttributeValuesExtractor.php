@@ -38,7 +38,11 @@ class AttributeValuesExtractor
                 $values[] = $this->numberFormatter->format((float) $value);
                 break;
             case 'select':
-                $values[] = (string) $product->getAttributeText($code);
+                $value = $product->getAttributeText($code);
+                if (is_array($value)) {
+                    $value = reset($value);
+                }
+                $values[] = (string) $value;
                 break;
             case 'multiselect':
                 $values = (array) $product->getAttributeText($code);
