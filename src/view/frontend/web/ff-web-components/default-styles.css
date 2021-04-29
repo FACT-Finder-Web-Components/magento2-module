@@ -789,7 +789,7 @@ ff-slider-one-touch .ffw-triangle.ffw-active {
            top .2s ease-in,
            left .2s ease-in,
            transform .2s ease-in;
-   transform: scale(1);
+   transform: translateX(-100%) scale(1);
 }
 
 ff-slider-one-touch .ffw-triangle.ffw-no-transition {
@@ -824,11 +824,16 @@ ff-slider-one-touch .ffw-slider-button {
     border: 1px solid black;
     position: absolute;
     top: 50%;
-    transform: translate(-50%, -50%);
     z-index: 1003;
     pointer-events: auto;
     cursor: pointer;
     touch-action: none;
+}
+ff-slider-one-touch .ffw-slider-button-left {
+    transform: translate(0, -50%);
+}
+ff-slider-one-touch .ffw-slider-button-right {
+    transform: translate(0, -50%);
 }
 
 /* ---- generic ---- */
