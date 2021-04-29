@@ -149,6 +149,7 @@ You can export Your CMS pages to FACT-Finder to present them in suggest results.
   should not be visible at suggested records
 
 If you want to start using CMS export in your project, please contact a person from FACT-Finder who is assigned to your project or ask our Service Desk.
+
 **Note:** CMS Export is available only via console command
 
 ### Data Transfer Settings
@@ -264,7 +265,8 @@ You can also instantiate block in templates using the Magento Layout API, but it
 The main configuration element of Web Components `ff-communication` element is included in template `src/view/frontend/templates/ff/communication.phtml` which comes together with a dedicated view model `src/ViewModel/Communication.php`.
 This template is part of the `default` layout, added to the `after.body.start` container.
 It is essential for whole module to work, so make sure it is also included in your project.
-**Note:** Avoid overriding both the template and view model
+
+**Note:** Avoid overriding both the template and view model.
 
 ### Searchbox Integration and Functions
 
