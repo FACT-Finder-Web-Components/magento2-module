@@ -15,11 +15,15 @@ use Omikron\Factfinder\Model\FtpUploader;
 use Omikron\Factfinder\Model\StoreEmulation;
 use Omikron\Factfinder\Model\Stream\CsvFactory;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class ExportProducts extends Command
+/**
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ */
+class Export extends Command
 {
     /** @var StoreEmulation */
     private $storeEmulation;
@@ -76,8 +80,9 @@ class ExportProducts extends Command
      */
     protected function configure()
     {
-        $this->setName('factfinder:export:products')->setDescription('Export Factfinder Product Data as CSV file');
+        $this->setName('factfinder:export')->setDescription('Export Factfinder Product Data as CSV file');
 
+        $this->addArgument('type', InputArgument::REQUIRED, 'type of data to be exported. Possible values are : product, cms');
         $this->addOption('store', 's', InputOption::VALUE_OPTIONAL, 'Store ID or Store Code');
         $this->addOption('upload', 'u', InputOption::VALUE_NONE, 'Upload feed via FTP');
         $this->addOption('push-import', 'i', InputOption::VALUE_NONE, 'Push Import');
@@ -91,12 +96,12 @@ class ExportProducts extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->state->setAreaCode('frontend');
-
         foreach ($this->getStoreIds((int) $input->getOption('store')) as $storeId) {
             $this->storeEmulation->runInStore($storeId, function () use ($storeId, $input, $output) {
-                $filename = "export.{$this->communicationConfig->getChannel($storeId)}.csv";
+                $type     = $input->getArgument('type');
+                $filename = "export.{$type}.{$this->communicationConfig->getChannel($storeId)}.csv";
                 $stream   = $this->csvFactory->create(['filename' => "factfinder/{$filename}"]);
-                $this->feedGeneratorFactory->create('product')->generate($stream);
+                $this->feedGeneratorFactory->create($type)->generate($stream);
                 $path = $this->filesystem->getDirectoryWrite(DirectoryList::VAR_DIR)
                     ->getAbsolutePath('factfinder' . DIRECTORY_SEPARATOR . $filename);
                 $output->writeln("Store {$storeId}: File {$path} has been generated.");
