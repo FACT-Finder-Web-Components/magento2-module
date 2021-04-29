@@ -20,6 +20,7 @@ customise them.
     - [Advanced Settings](#advanced-settings)
     - [Activated Web Components](#activated-web-components)
     - [Export Settings](#export-settings)
+    - [CMS Export Settings](#cms-export-settings)
     - [Data Transfer Settings](#data-transfer-settings)
         - [Updating Field Roles](#updating-field-roles)
         - [Automatic Import](#automatic-import)
@@ -27,14 +28,14 @@ customise them.
     - [Integration Methods](#integration-methods)
         - [FTP Export](#ftp-export)
         - [HTTP Export](#http-export)
-    - [CMS Export Settings](#cms-export-settings)
     - [Console Command](#console-command)
 - [Web Component Integration](#web-component-integration)
+    - [Communication Element](#communication-element)
     - [Searchbox Integration and Functions](#searchbox-integration-and-functions)
     - [Process of Data Transfer between Shop and FACT-Finder](#process-of-data-transfer-between-shop-and-fact-finder)
         - [Using Proxy](#using-proxy)
     - [Using FACT-Finder on category pages](#using-fact-finder-on-category-pages)
-    - [Tracking event listeners](#tracking-event-listeners)
+    - [Tracking](#tracking)
 - [Modification examples](#modification-examples)
     - [Changing existing column names](#changing-existing-column-names)
     - [Adding new column](#adding-new-column)
@@ -138,6 +139,18 @@ Setting value to Yes will result attribute will be exported into separated colum
 - multiselect
 - all scalars
 
+### CMS Export Settings
+
+You can export Your CMS pages to FACT-Finder to present them in suggest results.
+
+![CMS Export Settings](docs/assets/cms-settings.png "CMS Export Settings - using single channel")
+
+- **Pages Blacklist** - allow user to filter out pages, which should not be exported, for example "404 Not Found page"
+  should not be visible at suggested records
+
+If you want to start using CMS export in your project, please contact a person from FACT-Finder who is assigned to your project or ask our Service Desk.
+**Note:** CMS Export is available only via console command
+
 ### Data Transfer Settings
 This option configures the connection with the FACT-Finder system via FTP. Shop data can be generated and transferred to
 FACT-Finder using FTP. FACT-Finder needs to be up to date on the product data, to ensure that components like the search work as intended.
@@ -198,18 +211,6 @@ If there's no `store id` provided, feed will be generated with the default store
 You should provide this URL in Your FACT-Finder UI
 ![FACT-Finder Import settings](docs/assets/import-settings.png "Import settings")
 
-### CMS Export Settings
-
-You can export Your CMS pages to FACT-Finder to present them in suggest results.
-
-![CMS Export Settings](docs/assets/cms-settings.png "CMS Export Settings - using single channel")
-
-- **Pages Blacklist** - allow user to filter out pages, which should not be exported, for example "404 Not Found page"
-  should not be visible at suggested records
-  
-If you want to start using CMS export in your project, please contact a person from FACT-Finder who is assigned to your project or ask our Service Desk.
-**Note:** CMS Export is available only via console command
-
 ### Console Command
 If You are a developer and want to test feed is generated correctly or You do not want to executing magento cron
 You can use console command which is implementation of Command of Symfony Console Component, builtin in Magento2. 
@@ -259,6 +260,12 @@ You can also instantiate block in templates using the Magento Layout API, but it
 ->toHtml(); ?>
 ```
 
+### Communication Element
+The main configuration element of Web Components `ff-communication` element is included in template `src/view/frontend/templates/ff/communication.phtml` which comes together with a dedicated view model `src/ViewModel/Communication.php`.
+This template is part of the `default` layout, added to the `after.body.start` container.
+It is essential for whole module to work, so make sure it is also included in your project.
+**Note:** Avoid overriding both the template and view model
+
 ### Searchbox Integration and Functions
 
 As soon as the FACT-Finder-Integration is activated in the configuration, the search box web component is automatically activated. It replaces your standard search in Magento2 2.
@@ -294,7 +301,7 @@ Module in order to preserve categories URLs and hence SEO get use of standard Ma
 Once user is landed on category page. Search request is performed immediately (thanks to `search-immediate` communication parameter usage).
 To enable that, turn on corresponding option in *Main Settings* section.
  
-### Tracking event listeners
+### Tracking
 The module uses Web Components API to track following events:
 - click on product
 - add product to cart
