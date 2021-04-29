@@ -1,6 +1,11 @@
+#Changelog
 ## [v1.6.6] - 2021.04.29
+### Changed
+- Upgrade Web Components to version 4.0.2
+
 ### Fixed
 - Prevent array to string conversion when exporting products select attribute option
+- Event data coming from searchbox element is not URLencoded before redirecting to search result page
 
 ## [v1.6.5] - 2020.12.16
 ### Changed
