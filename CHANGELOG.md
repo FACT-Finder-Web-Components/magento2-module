@@ -1,4 +1,4 @@
-#Changelog
+# Changelog
 ## [v1.6.6] - 2021.04.29
 ### Changed
 - Upgrade Web Components to version 4.0.2
