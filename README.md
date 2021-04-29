@@ -15,10 +15,12 @@ customise them.
 - [Installation](#installation)
 - [Activating the Module](#activating-the-module)
 - [Backend Configuration](#backend-configuration)
-    - [General Settings](#general-settings)
+    - [Main Settings](#main-settings)
+        - [Server Side Rendering](#server-side-rendering)
     - [Advanced Settings](#advanced-settings)
     - [Activated Web Components](#activated-web-components)
     - [Export Settings](#export-settings)
+    - [CMS Export Settings](#cms-export-settings)
     - [Data Transfer Settings](#data-transfer-settings)
         - [Updating Field Roles](#updating-field-roles)
         - [Automatic Import](#automatic-import)
@@ -28,11 +30,12 @@ customise them.
         - [HTTP Export](#http-export)
     - [Console Command](#console-command)
 - [Web Component Integration](#web-component-integration)
+    - [Communication Element](#communication-element)
     - [Searchbox Integration and Functions](#searchbox-integration-and-functions)
     - [Process of Data Transfer between Shop and FACT-Finder](#process-of-data-transfer-between-shop-and-fact-finder)
         - [Using Proxy](#using-proxy)
     - [Using FACT-Finder on category pages](#using-fact-finder-on-category-pages)
-    - [Tracking event listeners](#tracking-event-listeners)
+    - [Tracking](#tracking)
 - [Modification examples](#modification-examples)
     - [Changing existing column names](#changing-existing-column-names)
     - [Adding new column](#adding-new-column)
@@ -82,9 +85,9 @@ Also, check in the Magento 2 backend "Stores → Configuration → Advanced → 
 
 Once the FACT-Finder module is activated, you can find the configurations page under "Stores → Configuration → Catalog → FACT-Finder". Here you can customise the connection to the FACT-Finder service. You can also activate and deactivate single web components, as well as access many additional settings.
 
-### General Settings
+### Main Settings
 
-At the top of the configurations page are the general settings. The information with which the shop connects to and authorises itself to the FACT-Finder Service are entered here. In the first line, activate your FACT-Finder integration. Before any changes become active, save them by clicking "Save Config".
+At the top of the configurations page are the main settings. The information with which the shop connects to and authorises itself to the FACT-Finder Service are entered here. In the first line, activate your FACT-Finder integration. Before any changes become active, save them by clicking "Save Config".
 In some cases, you need to manually empty the cache (*Configuration* and *Page Cache*).
 Click the button "Test Connection" to check the connection to the FACT-Finder service.
 
@@ -92,7 +95,7 @@ Click the button "Test Connection" to check the connection to the FACT-Finder se
 
 Here you can also enable the rendering of category pages using FACT-Finder. More details can be found [here](#using-fact-finder-on-category-pages).
 
-At the end of the *General Settings* section is an option *Show 'Add to Cart' Button in Search Results*. Activate this option to add a button to the products displayed on the search result page, which directly
+At the end of the *Main Settings* section is an option *Show 'Add to Cart' Button in Search Results*. Activate this option to add a button to the products displayed on the search result page, which directly
 adds that product to the shopping cart. This feature works only for simple products. For configurable products user will be redirected to product page to choose specific product variant.
 Warning: The product added to the cart is identified by the variable "MasterProductNumber". To allow this function to work correctly, the field "MasterProductNumber" must be imported to the FACT-Finder backend (on fact-finder.de).   
 
@@ -100,7 +103,16 @@ By enabling option *Activate Logging*, all exceptions thrown during communicatio
 
 **Note:** that is a server side communication option: Web Components behaviour won't be affected.
 
-![General Settings](docs/assets/general-settings.png "General Settings")
+![Main Settings](docs/assets/general-settings.png "Main Settings")
+
+#### Server Side Rendering
+That option enables Server Side Rendering (SSR) for `ff-record-list` element on category and search result pages.
+That means when user navigate to a page of mentioned type, the HTML output will contain the pre-rendered custom elements.
+This is useful especially in terms of SEO because `ff-record-list` renders product data which could have much impact on page rating in browser.
+Without SSR enabled, web crawlers could not have a chance to scan the element rendered content because it will not yet be rendered on the time of scanning.
+The module uses [Mustache.php](https://github.com/bobthecow/mustache.php) library for template processing
+
+**Note:** More information about SSR concept you can find in the article [Server Side Rendering](https://web-components.fact-finder.de/documentation/4.x/server-side-rendering) from Web Components documentation.
 
 ### Advanced Settings
 
@@ -115,6 +127,7 @@ component as respectively `currency-code` and `country-code` parameters. You can
 
 ### Export Settings
 ![Product Data Export](docs/assets/export-settings.png "Product Data Export")
+
 In this section users can decide if the attributes should be exported as single fields or grouped into a multi-attribute field.
 Setting Multi-Attribute to No will result attribute being part of cumulative column FilterAttribute.
 Setting value to Yes will result attribute will be exported into separated column.
@@ -125,6 +138,19 @@ Setting value to Yes will result attribute will be exported into separated colum
 - select
 - multiselect
 - all scalars
+
+### CMS Export Settings
+
+You can export Your CMS pages to FACT-Finder to present them in suggest results.
+
+![CMS Export Settings](docs/assets/cms-settings.png "CMS Export Settings - using single channel")
+
+- **Pages Blacklist** - allow user to filter out pages, which should not be exported, for example "404 Not Found page"
+  should not be visible at suggested records
+
+If you want to start using CMS export in your project, please contact a person from FACT-Finder who is assigned to your project or ask our Service Desk.
+
+**Note:** CMS Export is available only via console command
 
 ### Data Transfer Settings
 This option configures the connection with the FACT-Finder system via FTP. Shop data can be generated and transferred to
@@ -187,13 +213,16 @@ You should provide this URL in Your FACT-Finder UI
 ![FACT-Finder Import settings](docs/assets/import-settings.png "Import settings")
 
 ### Console Command
-If You are developer and want to test feed is generated correctly or You do not want to executing magento cron
+If You are a developer and want to test feed is generated correctly or You do not want to executing magento cron
 You can use console command which is implementation of Command of Symfony Console Component, builtin in Magento2. 
-Command name: `factfinder:export:products`. You can add execution of this command to Your crontab file.
-You can customize execution be configuring following options (which all are optional)
-- store - define a store, which the product data will be taken from
-- skip-ftp-upload - skips the ftp upload
-- skip-push-import - skips triggering import
+Command name: `factfinder:export [TYPE]`. You can add execution of this command to Your crontab file.
+- Arguments:
+    - type (mandatory) - set the `FeedFactory` class with a type of data to be exported. If for a given type, no data provider exists, an exception will be thrown. Possible default values are `products` and `cms`.
+- Options (all optional)
+    - store - define a store, which the product data will be taken from
+    - skip-ftp-upload - skips the ftp upload
+    - skip-push-import - skips triggering import
+    
 ## Web Component Integration
 
 You can activate and deactivate any web components from the configurations page in the Magento 2 backend.
@@ -210,10 +239,6 @@ Since Magento 2 is using Less, all source styles are written in this stylesheet 
  
     src/view/frontend/web/css/source/_module.less
 
-Warning: After changing static content styles, you need to restart the Magento 2 environment, for Magento to be able to find them. Use this command:
-
-    php bin/magento setup:upgrade
-    php bin/magento setup:static-content:deploy  
 
 You can integrate the templates anywhere within your shop system. The recommended way is to use Magento2 layouts for that.
 As an example, the `ff-suggest` element was integrated into the `ff-searchbox` template for this SDK: 
@@ -235,6 +260,13 @@ You can also instantiate block in templates using the Magento Layout API, but it
 ->setTemplate('Omikron_Factfinder::ff/suggest.phtml')
 ->toHtml(); ?>
 ```
+
+### Communication Element
+The main configuration element of Web Components `ff-communication` element is included in template `src/view/frontend/templates/ff/communication.phtml` which comes together with a dedicated view model `src/ViewModel/Communication.php`.
+This template is part of the `default` layout, added to the `after.body.start` container.
+It is essential for whole module to work, so make sure it is also included in your project.
+
+**Note:** Avoid overriding both the template and view model.
 
 ### Searchbox Integration and Functions
 
@@ -261,24 +293,32 @@ By enabling this, once a search query is sent, it does not immediately reach FAC
     src/Controller/Proxy/Call.php
 
 which hands the request to the FACT-Finder system, receives the answer, processes it and only then returns it to the frontend/web component.
-Once response from FACT-Finder is available, proxy controller emits an `ff_proxy_post_dispatch` event which allows user to listen in order to modify and enrich recieved data.
+You can add a `afterExecute` plugin using Magento Interceptor mechanism to enrich data received from FACT-Finder.
 
 **Note:**
-Sending each request to FACT-Finder instance trough Magento, you lose on performance as each request need to be handled first by HTTP server and then, by Magento itself. This additional traffic could be easily avoided by not activating this feature if there's no clear reason to use it
+Sending each request to FACT-Finder instance trough Magento, you lose on performance as each request need to be handled first by HTTP server and then, by Magento itself. This additional traffic could be easily avoided by not activating this feature if there's no clear reason to use it.
 
 ### Using FACT-Finder on category pages
 Module in order to preserve categories URLs and hence SEO get use of standard Magento routing with the combination of FACT-Finder availability to pass custom parameters to search request.
 Once user is landed on category page. Search request is performed immediately (thanks to `search-immediate` communication parameter usage).
 To enable that, turn on corresponding option in *Main Settings* section.
  
-### Tracking event listeners
-The module defines two event listeners for the checkout process:
-* `checkout_cart_add_product_complete`: adding product to cart - defined in `frontend/events.xml`
-* `checkout_submit_all_after`: placing an order - defined in `webapi_rest/events.xml`
+### Tracking
+The module uses Web Components API to track following events:
+- click on product
+- add product to cart
+- purchase an order
+- user login
 
-If you are planning to customize the add-to-cart/checkout process, make sure that the event definitions are placed in the correct areas.
-For instance if your are not using REST API in checkout move the `checkout_submit_all_after` event listener definition from `webapi_rest/events.xml` to `frontend/events.xml`.
-If you are using custom controllers, also make sure that they  emit these events. If not, tracking will not take place.
+To track product click make sure your record template uses `data-redirect` directive described in [Tracking guide](https://web-components.fact-finder.de/documentation/4.x/tracking-guide).
+Adding to cart is tracked using WEB Components API in `src/view/frontend/web/js/catalog-add-to-cart-mixin.js:28` script.
+To make it work, make sure that you are using base `catalog-add-to-cart.js`, otherwise the mixing will not be applied. 
+Checkout tracking is done using the `ff-checkout-tracking` element.
+This element is added in `src/view/frontend/templates/ff/checkout-tracking.phtml` which extend the `checkout_onepage_success` layout.
+If you do not use this layout in your checkout make sure you append it to your own one. For that you can use the view model `src/ViewModel/Order.php` which provides all necessary data from the backend to the template.
+Login tracking is by additional `CustomerData` section `ffcommunication`.
+This section should is configured in `src/etc/frontend/sections.xml` and should react to the user login action and reload containing data after that.
+
  
 ## Modification examples
 Our Magento 2 module offers a fully working integration out of the box. However, most projects may require

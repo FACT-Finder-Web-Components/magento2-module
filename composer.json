@@ -16,7 +16,8 @@
     "magento/module-catalog": ">=103.0.0",
     "magento/module-configurable-product": ">=100.3.0",
     "magento/module-directory": ">=100.3.0",
-    "magento/module-store": ">=101.0.0"
+    "magento/module-store": ">=101.0.0",
+    "mustache/mustache": "^2.13"
   },
   "require-dev": {
     "magento/magento-coding-standard": "^6.0",
