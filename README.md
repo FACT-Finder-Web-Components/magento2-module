@@ -15,7 +15,8 @@ customise them.
 - [Installation](#installation)
 - [Activating the Module](#activating-the-module)
 - [Backend Configuration](#backend-configuration)
-    - [General Settings](#general-settings)
+    - [Main Settings](#main-settings)
+        - [Server Side Rendering](#server-side-rendering)
     - [Advanced Settings](#advanced-settings)
     - [Activated Web Components](#activated-web-components)
     - [Export Settings](#export-settings)
@@ -26,6 +27,7 @@ customise them.
     - [Integration Methods](#integration-methods)
         - [FTP Export](#ftp-export)
         - [HTTP Export](#http-export)
+    - [CMS Export Settings](#cms-export-settings)
     - [Console Command](#console-command)
 - [Web Component Integration](#web-component-integration)
     - [Searchbox Integration and Functions](#searchbox-integration-and-functions)
@@ -82,9 +84,9 @@ Also, check in the Magento 2 backend "Stores → Configuration → Advanced → 
 
 Once the FACT-Finder module is activated, you can find the configurations page under "Stores → Configuration → Catalog → FACT-Finder". Here you can customise the connection to the FACT-Finder service. You can also activate and deactivate single web components, as well as access many additional settings.
 
-### General Settings
+### Main Settings
 
-At the top of the configurations page are the general settings. The information with which the shop connects to and authorises itself to the FACT-Finder Service are entered here. In the first line, activate your FACT-Finder integration. Before any changes become active, save them by clicking "Save Config".
+At the top of the configurations page are the main settings. The information with which the shop connects to and authorises itself to the FACT-Finder Service are entered here. In the first line, activate your FACT-Finder integration. Before any changes become active, save them by clicking "Save Config".
 In some cases, you need to manually empty the cache (*Configuration* and *Page Cache*).
 Click the button "Test Connection" to check the connection to the FACT-Finder service.
 
@@ -92,7 +94,7 @@ Click the button "Test Connection" to check the connection to the FACT-Finder se
 
 Here you can also enable the rendering of category pages using FACT-Finder. More details can be found [here](#using-fact-finder-on-category-pages).
 
-At the end of the *General Settings* section is an option *Show 'Add to Cart' Button in Search Results*. Activate this option to add a button to the products displayed on the search result page, which directly
+At the end of the *Main Settings* section is an option *Show 'Add to Cart' Button in Search Results*. Activate this option to add a button to the products displayed on the search result page, which directly
 adds that product to the shopping cart. This feature works only for simple products. For configurable products user will be redirected to product page to choose specific product variant.
 Warning: The product added to the cart is identified by the variable "MasterProductNumber". To allow this function to work correctly, the field "MasterProductNumber" must be imported to the FACT-Finder backend (on fact-finder.de).   
 
@@ -100,7 +102,16 @@ By enabling option *Activate Logging*, all exceptions thrown during communicatio
 
 **Note:** that is a server side communication option: Web Components behaviour won't be affected.
 
-![General Settings](docs/assets/general-settings.png "General Settings")
+![Main Settings](docs/assets/general-settings.png "Main Settings")
+
+#### Server Side Rendering
+That option enables Server Side Rendering (SSR) for `ff-record-list` element on category and search result pages.
+That means when user navigate to a page of mentioned type, the HTML output will contain the pre-rendered custom elements.
+This is useful especially in terms of SEO because `ff-record-list` renders product data which could have much impact on page rating in browser.
+Without SSR enabled, web crawlers could not have a chance to scan the element rendered content because it will not yet be rendered on the time of scanning.
+The module uses [Mustache.php](https://github.com/bobthecow/mustache.php) library for template processing
+
+**Note:** More information about SSR concept you can find in the article [Server Side Rendering](https://web-components.fact-finder.de/documentation/4.x/server-side-rendering) from Web Components documentation.
 
 ### Advanced Settings
 
@@ -185,6 +196,18 @@ If there's no `store id` provided, feed will be generated with the default store
 
 You should provide this URL in Your FACT-Finder UI
 ![FACT-Finder Import settings](docs/assets/import-settings.png "Import settings")
+
+### CMS Export Settings
+
+You can export Your CMS pages to FACT-Finder to present them in suggest results.
+
+![CMS Export Settings](docs/assets/cms-settings.png "CMS Export Settings - using single channel")
+
+- **Pages Blacklist** - allow user to filter out pages, which should not be exported, for example "404 Not Found page"
+  should not be visible at suggested records
+  
+If you want to start using CMS export in your project, please contact a person from FACT-Finder who is assigned to your project or ask our Service Desk.
+**Note:** CMS Export is available only via console command
 
 ### Console Command
 If You are developer and want to test feed is generated correctly or You do not want to executing magento cron
