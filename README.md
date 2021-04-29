@@ -16,6 +16,7 @@ customise them.
 - [Activating the Module](#activating-the-module)
 - [Backend Configuration](#backend-configuration)
     - [Main Settings](#main-settings)
+        - [FACT-Finder version](#fact-finder-version)
         - [Server Side Rendering](#server-side-rendering)
     - [Advanced Settings](#advanced-settings)
     - [Activated Web Components](#activated-web-components)
@@ -104,6 +105,9 @@ By enabling option *Activate Logging*, all exceptions thrown during communicatio
 **Note:** that is a server side communication option: Web Components behaviour won't be affected.
 
 ![Main Settings](docs/assets/general-settings.png "Main Settings")
+
+#### FACT-Finder version
+From version 2, the module supports both `7.3` and `NG`. If you use lower version, please install [NG submodule](https://github.com/FACT-Finder-Web-Components/magento2-ffng-module)
 
 #### Server Side Rendering
 That option enables Server Side Rendering (SSR) for `ff-record-list` element on category and search result pages.
