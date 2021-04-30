@@ -270,6 +270,7 @@
 ### Added
 - Feed Export: Export feed file is now available via separate link
 
+[v1.6.6]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v1.6.6
 [v1.6.5]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v1.6.5
 [v1.6.4]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v1.6.4
 [v1.6.3]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v1.6.3
