@@ -34,7 +34,7 @@ class PriceFormatter
     {
         $priceField  = $this->fieldRoles->getFieldRole('price');
         $isNG        = $this->communicationConfig->getVersion() === Version::NG;
-        $records     = $isNG ? $searchResult['hits'] : $searchResult['records'];
+        $records     = $isNG ? $searchResult['hits'] : $searchResult['searchResult']['records'];
         $recordField = $isNG ? 'masterValues' : 'record';
 
         return array_map($this->price($priceField, $recordField), $records);

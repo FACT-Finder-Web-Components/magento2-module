@@ -41,8 +41,7 @@ class SearchAdapter
             ->withServerUrl($this->communicationConfig->getAddress())
             ->withCredentials($this->credentialsFactory->create());
 
-        $searchAdapter           =
-            (new AdapterFactory($client, $this->communicationConfig->getVersion()))->getSearchAdapter();
+        $searchAdapter           = (new AdapterFactory($client, $this->communicationConfig->getVersion()))->getSearchAdapter();
         $searchResult            = $searchAdapter->search($this->communicationConfig->getChannel(), $query, $params);
         $searchResult['records'] = $this->priceFormatter->format($searchResult);
 
