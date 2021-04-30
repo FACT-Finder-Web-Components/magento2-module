@@ -43,7 +43,7 @@ class PriceFormatter
     protected function price(string $priceField, string $recordField): callable
     {
         return function (array $record) use ($priceField, $recordField): array {
-            $record[$recordField] = array_merge($record[$recordField], [
+            $record['record'] = array_merge($record[$recordField], [
                 '__ORIG_PRICE__' => $record[$recordField][$priceField],
                 $priceField      => $this->priceCurrency->format($record[$recordField][$priceField], false)
             ]);
