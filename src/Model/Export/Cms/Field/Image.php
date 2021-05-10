@@ -5,22 +5,22 @@ declare(strict_types=1);
 namespace Omikron\Factfinder\Model\Export\Cms\Field;
 
 use Magento\Cms\Api\Data\PageInterface;
-use Magento\Email\Model\Template\Filter as TemplateFilter;
+use Magento\Email\Model\Template\Filter;
 use Omikron\Factfinder\Api\Export\Cms\PageFieldInterface;
 
 class Image implements PageFieldInterface
 {
-    /** @var TemplateFilter */
+    /** @var Filter */
     private $filter;
 
-    public function __construct(TemplateFilter $filter)
+    public function __construct(Filter $filter)
     {
         $this->filter = $filter;
     }
 
     public function getValue(PageInterface $page): string
     {
-        $pattern = '#https?://[^/\s]+/\S+\.(jpe?g|png|gif)#';
+        $pattern = '#https?://[^/\s]+/\S+\.(jpe?g|png|gif)#i';
         preg_match($pattern, $this->filter->filter((string) $page->getContent()), $result);
         return $result[0] ?? '';
     }

@@ -2,7 +2,8 @@
 ## Unreleased
 ### Fixed
 - Login tracking events were sent with each page reload after user was logged in.
-
+- Fix "Area code is not set" during installation on Magento 2.4.2
+ 
 ## [v1.6.6] - 2021.04.29
 ### Changed
 - Upgrade Web Components to version 4.0.2
