@@ -8,7 +8,7 @@ define(['Magento_Customer/js/customer-data', 'factfinder'], function (customerDa
                 const uidKey = Object.keys(localStorage).find(function (key) {
                     return key.indexOf(factfinder.common.localStorage.getItem('ff_sid')) === 0
                 });
-                factfinder.common.localStorage.setItem(uidKey, null);
+                if (uidKey) factfinder.common.localStorage.setItem(uidKey, null);
             }
 
             const storedUserId = factfinder.common.localStorage.getItem(factfinder.common.localStorage.getItem('ff_sid') + ':' + data.uid);
