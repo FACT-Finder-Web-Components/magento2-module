@@ -1,8 +1,8 @@
 # Changelog
-
 ## Unreleased
 ### Fixed
-- Login tracking events were sent with each page reload after user was logged in.
+ - Fix "Area code is not set" during installation on Magento 2.4.2
+ - Login tracking events were sent with each page reload after user was logged in.
 
 ## [v2.0.0] - 2021.04.30
 ### BREAKING
