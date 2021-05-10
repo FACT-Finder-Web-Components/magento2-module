@@ -1,6 +1,11 @@
 # Changelog
+
+## Unreleased
+### Fixed
+- Login tracking events were sent with each page reload after user was logged in.
+
 ## [v2.0.0] - 2021.04.30
-## BREAKING
+### BREAKING
 - Removed config models interfaces which appeared to be unnecessary. Their only responsibility is to fetch stored config and it is unlikely to need a different implementation.  
     - `CommunicationConfigInterface`
     - `AuthConfigInterface`
