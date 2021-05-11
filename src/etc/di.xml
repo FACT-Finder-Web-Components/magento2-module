@@ -108,6 +108,16 @@
             </argument>
         </arguments>
     </type>
+    <type name="Omikron\Factfinder\Model\Export\Cms\Field\Content">
+        <arguments>
+            <argument name="filter" xsi:type="object">Magento\Email\Model\Template\Filter\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Omikron\Factfinder\Model\Export\Cms\Field\Image">
+        <arguments>
+            <argument name="filter" xsi:type="object">Magento\Email\Model\Template\Filter\Proxy</argument>
+        </arguments>
+    </type>
     <type name="Omikron\Factfinder\Model\Export\Catalog\ProductField\Attributes">
         <arguments>
             <argument name="filter" xsi:type="object">Omikron\Factfinder\Model\Filter\ExtendedTextFilter</argument>
