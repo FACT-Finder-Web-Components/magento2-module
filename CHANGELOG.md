@@ -1,9 +1,10 @@
 # Changelog
 ## Unreleased
 ### Fixed
-- Login tracking events were sent with each page reload after user was logged in.
-- Fix "Area code is not set" during installation on Magento 2.4.2
- 
+ - Fixed "Area code is not set" during installation on Magento 2.4.2
+ - Fixed Login tracking events are sent with each page reload after user was logged in.
+ - Added missing idType attribute to ff-similar-products element 
+  
 ## [v1.6.6] - 2021.04.29
 ### Changed
 - Upgrade Web Components to version 4.0.2
