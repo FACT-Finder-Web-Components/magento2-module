@@ -1,5 +1,5 @@
 # Changelog
-## Unreleased
+## [v2.0.1] - 2021.05.14
 ### Fixed
  - Fixed "Area code is not set" during installation on Magento 2.4.2
  - Fixed Login tracking events are sent with each page reload after user was logged in.
@@ -301,6 +301,7 @@
 ### Added
 - Feed Export: Export feed file is now available via separate link
 
+[v2.0.1]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v2.0.1
 [v2.0.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v2.0.0
 [v1.6.5]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v1.6.5
 [v1.6.4]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v1.6.4
