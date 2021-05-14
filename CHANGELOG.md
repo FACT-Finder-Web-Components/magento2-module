@@ -1,9 +1,10 @@
 # Changelog
 ## Unreleased
 ### Fixed
- - Fix "Area code is not set" during installation on Magento 2.4.2
- - Login tracking events were sent with each page reload after user was logged in.
-
+ - Fixed "Area code is not set" during installation on Magento 2.4.2
+ - Fixed Login tracking events are sent with each page reload after user was logged in.
+ - Added missing idType attribute to ff-similar-products element 
+  
 ## [v2.0.0] - 2021.04.30
 ### BREAKING
 - Removed config models interfaces which appeared to be unnecessary. Their only responsibility is to fetch stored config and it is unlikely to need a different implementation.  
