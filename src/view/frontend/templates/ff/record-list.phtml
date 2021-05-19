@@ -45,3 +45,15 @@ $viewModel = $block->getViewModel();
         </ff-record>
     </ff-record-list>
 </div>
+<script>
+    require(['jquery', 'catalogAddToCart'], function ($) {
+        document.addEventListener('WebComponentsReady', function (ff) {
+            document.querySelectorAll('ff-record-list').forEach(function (recordList) {
+                recordList.addEventListener('dom-updated', function () {
+                    const addToCartForm = $('.product_addtocart_form');
+                    if (addToCartForm) addToCartForm.catalogAddToCart();
+                });
+            })
+        });
+    });
+</script>
