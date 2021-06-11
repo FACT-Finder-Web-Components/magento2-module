@@ -221,7 +221,7 @@ If You are a developer and want to test feed is generated correctly or You do no
 You can use console command which is implementation of Command of Symfony Console Component, builtin in Magento2. 
 Command name: `factfinder:export [TYPE]`. You can add execution of this command to Your crontab file.
 - Arguments:
-    - type (mandatory) - set the `FeedFactory` class with a type of data to be exported. If for a given type, no data provider exists, an exception will be thrown. Possible default values are `products` and `cms`.
+    - type (mandatory) - set the `FeedFactory` class with a type of data to be exported. If for a given type, no data provider exists, an exception will be thrown. Possible default values are `product` and `cms`.
 - Options (all optional)
     - store - define a store, which the product data will be taken from
     - skip-ftp-upload - skips the ftp upload
