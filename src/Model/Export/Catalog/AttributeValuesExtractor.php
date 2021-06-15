@@ -49,8 +49,14 @@ class AttributeValuesExtractor
                 break;
             default:
                 if (!is_scalar($value)) {
-                    $msg = "Attribute '{$code}' could not be exported. Please consider writing your own field model";
-                    throw new UnexpectedValueException($msg);
+                    switch (true) {
+                        case $value === null:
+                            $value = '';
+                            break;
+                        default:
+                            $msg = "Attribute '{$code}' could not be exported. Please consider writing your own field model";
+                            throw new UnexpectedValueException($msg);
+                    }
                 }
                 $values[] = (string) $value;
                 break;
