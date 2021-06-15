@@ -1,5 +1,7 @@
-# Changelog
-## Unreleased
+## [v2.0.2] - 2021.06.15
+### Changed
+- Upgrade Web Components to version 4.0.3
+
 ### Fixed
 - Fixed behaviour of Attribute export for products - if value is nullable, return an empty string instead of throwing exception
 
@@ -305,6 +307,7 @@
 ### Added
 - Feed Export: Export feed file is now available via separate link
 
+[v2.0.2]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v2.0.2
 [v2.0.1]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v2.0.1
 [v2.0.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v2.0.0
 [v1.6.5]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v1.6.5
