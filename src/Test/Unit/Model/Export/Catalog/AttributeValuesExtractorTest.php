@@ -2,8 +2,6 @@
 
 namespace Omikron\Factfinder\Model\Export\Catalog;
 
-use Magento\Catalog\Api\Data\ProductInterface;
-use Magento\Email\Model\Template\Filter;
 use Omikron\Factfinder\Api\Filter\FilterInterface;
 use Magento\Catalog\Model\Product;
 use Magento\Catalog\Model\ResourceModel\Eav\Attribute;
