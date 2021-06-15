@@ -1,4 +1,8 @@
 # Changelog
+
+### Fixed
+- Fixed behaviour of Attribute export for products - if value is nullable, return an empty string instead of throwing exception
+
 ## [v2.0.1] - 2021.05.14
 ### Fixed
  - Fixed "Area code is not set" during installation on Magento 2.4.2
