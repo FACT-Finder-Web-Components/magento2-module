@@ -10,6 +10,9 @@ use Omikron\Factfinder\Model\Formatter\NumberFormatter;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @covers AttributeValuesExtractor
+ */
 class AttributeValuesExtractorTest extends TestCase
 {
     /** @var NumberFormatter|MockObject  */
