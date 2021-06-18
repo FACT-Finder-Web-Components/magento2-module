@@ -65,7 +65,7 @@ class ConfigurableDataProvider extends SimpleDataProvider
             return $this->variationFactory->create([
                 'product'      => $variation,
                 'configurable' => $product,
-                'data'         => ['FilterAttributes' => '|' . implode('|', $options[$sku] ?? []) . '|'] + $data,
+                'data'         => ['FilterAttributes' => (empty($data['FilterAttributes']) ? '|' : $data['FilterAttributes']) . implode('|', $options[$sku] ?? []) . '|'] + $data,
             ]);
         };
     }
