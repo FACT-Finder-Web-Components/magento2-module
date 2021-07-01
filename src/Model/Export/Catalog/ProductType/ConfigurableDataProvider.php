@@ -5,8 +5,11 @@ declare(strict_types=1);
 namespace Omikron\Factfinder\Model\Export\Catalog\ProductType;
 
 use Magento\Catalog\Api\Data\ProductInterface;
+use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Catalog\Model\Product;
 use Magento\ConfigurableProduct\Model\Product\Type\Configurable as ConfigurableProductType;
+use Magento\Framework\Api\Filter;
+use Magento\Framework\Api\SearchCriteriaBuilder;
 use Omikron\Factfinder\Api\Export\ExportEntityInterface;
 use Omikron\Factfinder\Api\Filter\FilterInterface;
 use Omikron\Factfinder\Model\Export\Catalog\Entity\ProductVariationFactory;
@@ -23,18 +26,28 @@ class ConfigurableDataProvider extends SimpleDataProvider
     /** @var ProductVariationFactory */
     private $variationFactory;
 
+    /** @var ProductRepositoryInterface  */
+    private $productRepository;
+
+    /** @var SearchCriteriaBuilder  */
+    private $builder;
+
     public function __construct(
         Product $product,
         NumberFormatter $numberFormatter,
         ConfigurableProductType $productType,
         FilterInterface $filter,
         ProductVariationFactory $variationFactory,
+        ProductRepositoryInterface $productRepository,
+        SearchCriteriaBuilder $builder,
         array $productFields = []
     ) {
         parent::__construct($product, $numberFormatter, $productFields);
-        $this->productType      = $productType;
-        $this->filter           = $filter;
-        $this->variationFactory = $variationFactory;
+        $this->productType       = $productType;
+        $this->filter            = $filter;
+        $this->variationFactory  = $variationFactory;
+        $this->productRepository = $productRepository;
+        $this->builder           = $builder;
     }
 
     public function getEntities(): iterable
@@ -87,6 +100,9 @@ class ConfigurableDataProvider extends SimpleDataProvider
      */
     private function getChildren(Product $product): array
     {
-        return $this->productType->getUsedProducts($product);
+        return $this->productRepository
+            ->getList($this->builder->addFilter('entity_id', $this->productType->getChildrenIds($this->product->getId()), 'in')
+            ->create())
+            ->getItems();
     }
 }

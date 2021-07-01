@@ -43,6 +43,7 @@ customise them.
         - [GenericField usage](#genericfield-usage)
     - [Adding custom communication parameter](#adding-custom-communication-parameter)
     - [Adding custom product data provider](#adding-custom-product-data-provider)
+    - [Configure field to be exported from variant](#configure-field-to-be-exported-from-variant)
 - [Troubleshooting](#troubleshooting)
     - [Removing `/pub` from exported URLs](#removing-pub-from-exported-urls)
 - [Contribute](#contribute)
@@ -507,6 +508,29 @@ class CustomDataProvider implements DataProviderInterface
 ```
 
 It's a minimum configuration. `$product` constructor will be passed automatically and in method `getEntities` You should extract all required data
+
+### Configure field to be exported from variant
+By default, module exports data from configurable product. Its variants override only few of fields which you can see in class:
+
+    src/Model/Export/Catalog/Entity/ProductVariation.php
+
+This is done to provide the best performance but if you variants differs in some attributes other than configurable attributes (color, size etc.) You can configure which fields should be exported from variants.
+Use `variantFields` argument for that. 
+Here is the example from module, where we want to export `ImageURL` from variants because some configurable attribute could have an impact on the how product looks (color is a good example).
+```xml
+<type name="Omikron\Factfinder\Model\Export\Catalog\FieldProvider">
+    <arguments>
+        <argument name="productFields" xsi:type="array">
+            <item name="CategoryPath" xsi:type="object">Omikron\Factfinder\Model\Export\Catalog\ProductField\CategoryPath</item>
+            <item name="Brand" xsi:type="object">Omikron\Factfinder\Model\Export\Catalog\ProductField\Brand</item>
+            <item name="FilterAttributes" xsi:type="object">Omikron\Factfinder\Model\Export\Catalog\ProductField\FilterAttributes</item>
+        </argument>
+        <argument name="variantFields" xsi:type="array">
+            <item name="ImageURL" xsi:type="object">Omikron\Factfinder\Model\Export\Catalog\ProductField\ProductImage</item>
+        </argument>
+    </arguments>
+</type>
+```
 
 ## Troubleshooting
 

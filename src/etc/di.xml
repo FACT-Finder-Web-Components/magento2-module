@@ -81,10 +81,12 @@
     <type name="Omikron\Factfinder\Model\Export\Catalog\FieldProvider">
         <arguments>
             <argument name="productFields" xsi:type="array">
-                <item name="ImageURL" xsi:type="object">Omikron\Factfinder\Model\Export\Catalog\ProductField\ProductImage</item>
                 <item name="CategoryPath" xsi:type="object">Omikron\Factfinder\Model\Export\Catalog\ProductField\CategoryPath</item>
                 <item name="Brand" xsi:type="object">Omikron\Factfinder\Model\Export\Catalog\ProductField\Brand</item>
                 <item name="FilterAttributes" xsi:type="object">Omikron\Factfinder\Model\Export\Catalog\ProductField\FilterAttributes</item>
+            </argument>
+            <argument name="variantFields" xsi:type="array">
+                <item name="ImageURL" xsi:type="object">Omikron\Factfinder\Model\Export\Catalog\ProductField\ProductImage</item>
             </argument>
         </arguments>
     </type>
