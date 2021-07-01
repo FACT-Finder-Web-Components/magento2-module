@@ -531,6 +531,32 @@ class CustomDataProvider implements DataProviderInterface
 }
 ```
 
+### Configure field to be exported from variant
+By default, module exports data from configurable product. Its variants override only few of fields which you can see in class:
+
+    src/Model/Export/Catalog/Entity/ProductVariation.php
+
+This is done to provide the best performance but if you variants differs in some attributes other than configurable attributes (color, size etc.) You can configure which fields should be exported from variants.
+Use `variantFields` argument for that.
+Here is the example from module, where we want to export `ImageURL` from variants because some configurable attribute could have an impact on the how product looks (color is a good example).
+```xml
+<type name="Omikron\Factfinder\Model\Export\Catalog\ProductType\SimpleDataProvider">
+    <arguments>
+        <argument name="productFields" xsi:type="array">
+            <item name="ImageURL" xsi:type="object">Omikron\Factfinder\Model\Export\Catalog\ProductField\ProductImage</item>
+            <item name="CategoryPath" xsi:type="object">Omikron\Factfinder\Model\Export\Catalog\ProductField\CategoryPath</item>
+            <item name="Brand" xsi:type="object">Omikron\Factfinder\Model\Export\Catalog\ProductField\Brand</item>
+            <item name="Attributes" xsi:type="object">Omikron\Factfinder\Model\Export\Catalog\ProductField\Attributes</item>
+        </argument>
+        <argument name="variantFields" xsi:type="array">
+            <item name="ImageURL" xsi:type="object">Omikron\Factfinder\Model\Export\Catalog\ProductField\ProductImage</item>
+            <item name="Attributes" xsi:type="object">Omikron\Factfinder\Model\Export\Catalog\ProductField\Attributes</item>
+        </argument>
+    </arguments>
+</type>
+```
+**Note:** We advise to left the field you want to be exported from variant in `productFields` argument. This will prevent exporter from exporting `null` values for configurable products.
+
 It's a minimum configuration. `$product` constructor will be passed automatically and in method `getEntities` You should extract all required data
 
 ## Troubleshooting

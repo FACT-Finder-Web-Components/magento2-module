@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Omikron\Factfinder\Model\Export\Catalog\Entity;
 
 use Magento\Catalog\Model\Product;
+use Omikron\Factfinder\Api\Export\Catalog\ProductFieldInterface;
 use Omikron\Factfinder\Api\Export\ExportEntityInterface;
 use Omikron\Factfinder\Model\Formatter\NumberFormatter;
 
@@ -20,18 +21,23 @@ class ProductVariation implements ExportEntityInterface
     private $numberFormatter;
 
     /** @var array */
-    private $data;
+    private $configurableData;
+
+    /** @var array */
+    private $fields;
 
     public function __construct(
         Product $product,
         Product $configurable,
         NumberFormatter $numberFormatter,
-        array $data = []
+        array $data = [],
+        array $fields = []
     ) {
-        $this->product         = $product;
-        $this->configurable    = $configurable;
-        $this->numberFormatter = $numberFormatter;
-        $this->data            = $data;
+        $this->product          = $product;
+        $this->configurable     = $configurable;
+        $this->numberFormatter  = $numberFormatter;
+        $this->configurableData = $data;
+        $this->fields           = $fields;
     }
 
     public function getId(): int
@@ -41,13 +47,17 @@ class ProductVariation implements ExportEntityInterface
 
     public function toArray(): array
     {
-        return array_merge($this->data, [
-            'ProductNumber' => (string) $this->product->getSku(),
-            'Price'         => $this->numberFormatter->format((float) $this->product->getFinalPrice()),
-            'Availability'  => (int) $this->product->isAvailable(),
-            'HasVariants'   => 1,
-            'MagentoId'     => $this->getId(),
-        ]);
+        $baseData = [
+                'ProductNumber' => (string) $this->product->getSku(),
+                'Price'         => $this->numberFormatter->format((float) $this->product->getFinalPrice()),
+                'Availability'  => (int) $this->product->isAvailable(),
+                'HasVariants'   => 0,
+                'MagentoId'     => $this->getId(),
+            ] + $this->configurableData;
+
+        return array_merge($baseData, array_map(function (ProductFieldInterface $field): string {
+            return $field->getValue($this->product);
+        }, $this->fields));
     }
 
     public function getProduct(): Product
