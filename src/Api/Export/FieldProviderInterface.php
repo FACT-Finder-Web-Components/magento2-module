@@ -10,14 +10,20 @@ namespace Omikron\Factfinder\Api\Export;
 interface FieldProviderInterface
 {
     /**
-     * Method should return an array where
-     * a keys represents the field names and the values
-     * are a FieldInterface implementation responsible
-     * for retrieving corresponding product value
+     * Method should return an array of fields which should be taken from configurable product
      *
      * @see FieldInterface
      *
      * @return array
      */
     public function getFields(): array;
+
+    /**
+     * Method should return an array of fields which should be taken from variants
+     *
+     * @see FieldInterface
+     *
+     * @return array
+     */
+    public function getVariantFields(): array;
 }

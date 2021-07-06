@@ -1,3 +1,8 @@
+# Changelog
+## Unreleased
+### Added
+- Add possibility to export fields from variant level. Previously export took only configurable attributes from variants and rest was copied from parent
+
 ## [v2.0.2] - 2021.06.15
 ### Changed
 - Upgrade Web Components to version 4.0.3
