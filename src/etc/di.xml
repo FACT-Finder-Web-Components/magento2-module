@@ -149,6 +149,10 @@
                 <item name="Brand" xsi:type="object">Omikron\Factfinder\Model\Export\Catalog\ProductField\Brand</item>
                 <item name="Attributes" xsi:type="object">Omikron\Factfinder\Model\Export\Catalog\ProductField\Attributes</item>
             </argument>
+            <argument name="variantFields" xsi:type="array">
+                <item name="ImageURL" xsi:type="object">Omikron\Factfinder\Model\Export\Catalog\ProductField\ProductImage</item>
+                <item name="Attributes" xsi:type="object">Omikron\Factfinder\Model\Export\Catalog\ProductField\Attributes</item>
+            </argument>
         </arguments>
     </type>
     <type name="Omikron\Factfinder\Model\Export\Cms\Field\Content">

@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace Omikron\Factfinder\Model\Export\Catalog\ProductType;
 
 use Magento\Catalog\Api\Data\ProductInterface;
+use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Catalog\Model\Product;
-use Magento\ConfigurableProduct\Model\LinkManagement;
 use Magento\ConfigurableProduct\Model\Product\Type\Configurable as ConfigurableProductType;
+use Magento\Framework\Api\SearchCriteriaBuilder;
 use Omikron\Factfinder\Api\Export\ExportEntityInterface;
 use Omikron\Factfinder\Api\Filter\FilterInterface;
 use Omikron\Factfinder\Model\Export\Catalog\Entity\ProductVariationFactory;
@@ -15,9 +16,6 @@ use Omikron\Factfinder\Model\Formatter\NumberFormatter;
 
 class ConfigurableDataProvider extends SimpleDataProvider
 {
-    /** @var LinkManagement */
-    private $linkManagement;
-
     /** @var ConfigurableProductType */
     private $productType;
 
@@ -27,26 +25,36 @@ class ConfigurableDataProvider extends SimpleDataProvider
     /** @var ProductVariationFactory */
     private $variationFactory;
 
+    /** @var ProductRepositoryInterface  */
+    private $productRepository;
+
+    /** @var SearchCriteriaBuilder  */
+    private $builder;
+
     public function __construct(
         Product $product,
         NumberFormatter $numberFormatter,
-        LinkManagement $linkManagement,
         ConfigurableProductType $productType,
         FilterInterface $filter,
         ProductVariationFactory $variationFactory,
-        array $productFields = []
+        ProductRepositoryInterface $productRepository,
+        SearchCriteriaBuilder $builder,
+        array $productFields = [],
+        array $variantFields = []
     ) {
         parent::__construct($product, $numberFormatter, $productFields);
-        $this->linkManagement   = $linkManagement;
         $this->productType      = $productType;
         $this->filter           = $filter;
         $this->variationFactory = $variationFactory;
+        $this->productRepository = $productRepository;
+        $this->builder           = $builder;
+        $this->variantFields     = $variantFields;
     }
 
     public function getEntities(): iterable
     {
         yield from parent::getEntities();
-        yield from array_map($this->productVariation($this->product), $this->getChildren($this->product->getSku()));
+        yield from array_map($this->productVariation($this->product), $this->getChildren($this->product));
     }
 
     public function toArray(): array
@@ -67,11 +75,13 @@ class ConfigurableDataProvider extends SimpleDataProvider
         $data    = parent::toArray();
 
         return function (Product $variation) use ($options, $product, $data): ExportEntityInterface {
+            $sku = $variation->getSku();
             return $this->variationFactory->create([
-                'product' => $variation,
-                'configurable' => $product,
-                'data'    => ['Attributes' => '|' . implode('|', $options[$variation->getSku()] ?? []) . '|'] + $data,
-            ]);
+               'product'      => $variation,
+               'configurable' => $product,
+               'data'         => ['FilterAttributes' => '|' . implode('|', $options[$sku] ?? []) . '|'] + $data,
+               'fields'       => $this->variantFields
+           ]);
         };
     }
 
@@ -86,12 +96,15 @@ class ConfigurableDataProvider extends SimpleDataProvider
     }
 
     /**
-     * @param string $sku
+     * @param Product $product
      *
      * @return ProductInterface[]
      */
-    private function getChildren(string $sku): array
+    private function getChildren(Product $product): array
     {
-        return $this->linkManagement->getChildren($sku);
+        return $this->productRepository
+            ->getList($this->builder->addFilter('entity_id', $this->productType->getChildrenIds($this->product->getId()), 'in')
+            ->create())
+            ->getItems();
     }
 }
