@@ -1,6 +1,8 @@
 
 # DEPRECATED
-This version of module is obsolete. Please use the new version (releases staring with v2). New features and bug fixes will not be added to this version after 31.07.2021
+This version of module is obsolete. Please use the new version (releases staring with v2).
+* features and improvement will not be provided anymore after 31.07.2021. 
+* bugs fixing support will be over after 31.09.2021
 
 
 # FACT-Finder® Web Components for Magento 2
