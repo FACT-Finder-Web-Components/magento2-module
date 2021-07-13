@@ -46,6 +46,7 @@
                 <item name="ImageURL" xsi:type="string">ImageURL</item>
                 <item name="CategoryPath" xsi:type="string">CategoryPath</item>
                 <item name="FilterAttributes" xsi:type="string">FilterAttributes</item>
+                <item name="NumericalAttributes" xsi:type="string">NumericalAttributes</item>
                 <item name="HasVariants" xsi:type="string">HasVariants</item>
             </argument>
         </arguments>
@@ -84,6 +85,7 @@
                 <item name="CategoryPath" xsi:type="object">Omikron\Factfinder\Model\Export\Catalog\ProductField\CategoryPath</item>
                 <item name="Brand" xsi:type="object">Omikron\Factfinder\Model\Export\Catalog\ProductField\Brand</item>
                 <item name="FilterAttributes" xsi:type="object">Omikron\Factfinder\Model\Export\Catalog\ProductField\FilterAttributes</item>
+                <item name="NumericalAttributes" xsi:type="object">Omikron\Factfinder\Model\Export\Catalog\ProductField\NumericalAttributes</item>
             </argument>
             <argument name="variantFields" xsi:type="array">
                 <item name="ImageURL" xsi:type="object">Omikron\Factfinder\Model\Export\Catalog\ProductField\ProductImage</item>

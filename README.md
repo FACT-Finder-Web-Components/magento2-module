@@ -144,6 +144,13 @@ Setting value to Yes will result attribute will be exported into separated colum
 - multiselect
 - all scalars
 
+#### Numerical attributes
+
+Setting a multi-attribute field as numerical, will cause this field to be exported to a separate multi-attribute column named `NumericalAttributes`.
+This would easier filter configuration in FACT-Finder.
+
+**Note:** Attributes which are part of configuration are always exported to `FilterAttributes`. 
+
 ### CMS Export Settings
 
 You can export Your CMS pages to FACT-Finder to present them in suggest results.
