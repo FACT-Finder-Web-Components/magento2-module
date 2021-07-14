@@ -1,14 +1,15 @@
 # Changelog
 ## Unreleased
 ### Added
-- Add possibility to export fields from variant level. Previously export took only configurable attributes from variants and rest was copied from parent
+ - Add possibility to export fields from variant level. Previously export took only configurable attributes from variants and rest was copied from parent
+ - Use catalogAddToCart widget on `ff-record` elements 
 
 ## [v2.0.2] - 2021.06.15
 ### Changed
-- Upgrade Web Components to version 4.0.3
+ - Upgrade Web Components to version 4.0.3
 
 ### Fixed
-- Fixed behaviour of Attribute export for products - if value is nullable, return an empty string instead of throwing exception
+ - Fixed behaviour of Attribute export for products - if value is nullable, return an empty string instead of throwing exception
 
 ## [v2.0.1] - 2021.05.14
 ### Fixed
