@@ -143,7 +143,9 @@ Enter an FTP-server to which the CSV file is uploaded automatically. If you are 
 
 The CSV file uses double quotes `"` for field enclosure and a semi-colon `;` as field delimiter.
 
-The *Select additional Attributes* option offers a multiple-choice list of attributes. Select all of those you want added to the CSV file.
+The *Select Filter Attributes* option offers a multiple-choice list of attributes. Select all of those you want added to the CSV file.
+The *Select Numerical Attributes* works similar but attributes selected here will be exported in separate multi-attribute column.
+Having numerical attribtues in separate columns is optional but if you have many of these attributes, then exporting them in separate column will make configuring filters in FACT-Finder easier.  
 
 Before starting the export by clicking *Generate Export File(s) now*, you need to commit all changes by clicking "Save Config".
 The exception from that rule is `Test Connection` function which always takes the actual values from the corresponding fields. 

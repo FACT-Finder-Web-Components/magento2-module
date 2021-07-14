@@ -2,6 +2,7 @@
 ## Unreleased
 ### Added
  - Add possibility to export fields from variant level. Previously export took only configurable attributes from variants and rest was copied from parent
+ - Add possibility to select field to be exported as numerical in module configuration. Numerical fields will be exported in new multi-attribute column `NumericalAttributes`
  - Use catalogAddToCart widget on `ff-record` elements
   
 ## [v1.6.8] - 2021.06.15
