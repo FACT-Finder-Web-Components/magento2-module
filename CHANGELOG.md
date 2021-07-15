@@ -1,5 +1,5 @@
 # Changelog
-## Unreleased
+## [v1.7.0] - 2021.07.15
 ### Added
  - Add possibility to export fields from variant level. Previously export took only configurable attributes from variants and rest was copied from parent
  - Use catalogAddToCart widget on `ff-record` elements
@@ -288,6 +288,7 @@
 ### Added
 - Feed Export: Export feed file is now available via separate link
 
+[v1.7.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v1.7.0
 [v1.6.8]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v1.6.8
 [v1.6.7]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v1.6.7
 [v1.6.6]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v1.6.6
