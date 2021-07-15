@@ -46,6 +46,7 @@ customise them.
         - [GenericField usage](#genericfield-usage)
     - [Adding custom communication parameter](#adding-custom-communication-parameter)
     - [Adding custom product data provider](#adding-custom-product-data-provider)
+    - [Configure field to be exported from variant](#configure-field-to-be-exported-from-variant)
 - [Troubleshooting](#troubleshooting)
     - [Removing `/pub` from exported URLs](#removing-pub-from-exported-urls)
 - [Contribute](#contribute)
