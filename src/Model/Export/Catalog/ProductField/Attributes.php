@@ -15,7 +15,10 @@ use Omikron\Factfinder\Model\Export\Catalog\AttributeValuesExtractor;
 
 class Attributes implements ProductFieldInterface
 {
-    private const CONFIG_PATH = 'factfinder/data_transfer/ff_additional_attributes';
+    private const CONFIG_PATH_ATTRIBUTES           = 'factfinder/data_transfer/ff_additional_attributes';
+    private const CONFIG_PATH_ATTRIBUTES_NUMERICAL = 'factfinder/data_transfer/ff_additional_attributes_numerical';
+
+    protected $numerical = false;
 
     /** @var ScopeConfigInterface */
     private $scopeConfig;
@@ -28,6 +31,8 @@ class Attributes implements ProductFieldInterface
 
     /** @var AttributeValuesExtractor */
     private $valuesExtractor;
+
+    private $cachedAttributes = [];
 
     public function __construct(
         ScopeConfigInterface $scopeConfig,
@@ -45,7 +50,7 @@ class Attributes implements ProductFieldInterface
     {
         $storeId = (int) $product->getStoreId();
         $values  = '';
-        foreach ($this->getAttributes($storeId) as $attribute) {
+        foreach ($this->getAttributes($storeId, $this->numerical) as $attribute) {
             $label = $this->filter->filterValue($attribute->getStoreLabel($storeId));
             foreach ($this->valuesExtractor->getAttributeValues($product, $attribute) as $value) {
                 $values .= "|{$label}={$value}";
@@ -57,12 +62,18 @@ class Attributes implements ProductFieldInterface
 
     /**
      * @param int $storeId
+     * @param bool $numerical
      *
      * @return Attribute[]
      */
-    private function getAttributes(int $storeId): array
+    private function getAttributes(int $storeId, bool $numerical): array
     {
-        $attributes = (string) $this->scopeConfig->getValue(self::CONFIG_PATH, Scope::SCOPE_STORES, $storeId);
-        return array_filter(array_map([$this->productResource, 'getAttribute'], explode(',', $attributes)));
+        if (!isset($this->cachedAttributes[$storeId][(int) $numerical])) {
+            $configPath = $numerical ? self::CONFIG_PATH_ATTRIBUTES_NUMERICAL : self::CONFIG_PATH_ATTRIBUTES;
+            $attributes = (string) $this->scopeConfig->getValue($configPath, Scope::SCOPE_STORES, $storeId);
+            $this->cachedAttributes[$storeId][(int) $numerical] = array_filter(array_map([$this->productResource, 'getAttribute'], explode(',', $attributes)));
+        }
+
+        return $this->cachedAttributes[$storeId][(int) $numerical];
     }
 }
