@@ -50,7 +50,12 @@ class ExportFields extends AbstractFieldArray
         $this->addColumn('multi', [
             'label'    => __('Multi-Attribute'),
             'class'    => 'required-entry',
-            'renderer' => $this->getMultiRenderer(),
+            'renderer' => $this->getYesNoRenderer(),
+        ]);
+        $this->addColumn('numerical', [
+            'label'    => __('Numerical attribute'),
+            'class'    => 'required-entry',
+            'renderer' => $this->getYesNoRenderer(),
         ]);
     }
 
@@ -65,7 +70,12 @@ class ExportFields extends AbstractFieldArray
 
         $multi = $row->getData('multi');
         if ($multi !== null) {
-            $options['option_' . $this->getMultiRenderer()->calcOptionHash($multi)] = 'selected';
+            $options['option_' . $this->getYesNoRenderer()->calcOptionHash($multi)] = 'selected';
+        }
+
+        $numerical = $row->getData('numerical');
+        if ($numerical !== null) {
+            $options['option_' . $this->getYesNoRenderer()->calcOptionHash($numerical)] = 'selected';
         }
 
         $row->setData('option_extra_attrs', $options);
@@ -77,7 +87,7 @@ class ExportFields extends AbstractFieldArray
         return $this->attributeRenderer;
     }
 
-    private function getMultiRenderer(): Select
+    private function getYesNoRenderer(): Select
     {
         $this->typeRenderer = $this->typeRenderer ?? $this->createSelect($this->boolSource);
         $this->typeRenderer->setData('value', 0);

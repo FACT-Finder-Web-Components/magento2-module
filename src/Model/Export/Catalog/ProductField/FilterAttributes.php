@@ -14,6 +14,12 @@ use Omikron\Factfinder\Model\Export\Catalog\AttributeValuesExtractor;
 
 class FilterAttributes implements FieldInterface
 {
+    /** @var bool  */
+    protected $numerical = false;
+
+    /** @var string  */
+    protected $name = 'FilterAttributes';
+
     /** @var ExportConfig */
     private $exportConfig;
 
@@ -43,7 +49,7 @@ class FilterAttributes implements FieldInterface
 
     public function getName(): string
     {
-        return 'FilterAttributes';
+        return $this->name;
     }
 
     public function getValue(AbstractModel $product): string
@@ -67,7 +73,7 @@ class FilterAttributes implements FieldInterface
     private function getAttributes(int $storeId): array
     {
         if (!isset($this->attributes[$storeId])) {
-            $codes      = $this->exportConfig->getMultiAttributes($storeId);
+            $codes      = $this->exportConfig->getMultiAttributes($storeId, $this->numerical);
             $attributes = array_filter(array_map([$this->productResource, 'getAttribute'], $codes));
             $labels     = array_map($this->getAttributeLabel($storeId), $attributes);
 

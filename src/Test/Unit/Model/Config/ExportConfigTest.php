@@ -22,6 +22,16 @@ class ExportConfigTest extends TestCase
         $this->assertContains('climate', $result);
         $this->assertNotContains('color', $result);
         $this->assertNotContains('gender', $result);
+        $this->assertNotContains('size', $result);
+    }
+
+    public function test_multiattributes_are_calculated_correctly_for_numerical_attribute()
+    {
+        $result = $this->testee->getMultiAttributes(42, true);
+        $this->assertContains('size', $result);
+        $this->assertNotContains('color', $result);
+        $this->assertNotContains('gender', $result);
+        $this->assertNotContains('climate', $result);
     }
 
     public function test_single_fields_are_calculated_correctly()
@@ -49,7 +59,7 @@ class ExportConfigTest extends TestCase
         $scopeConfig  = $this->createMock(ScopeConfigInterface::class);
         $scopeConfig->method('getValue')->willReturnMap([
             ['factfinder/data_transfer/ff_push_import_type', 'store', 1, 'search,suggest'],
-            ['factfinder/export/attributes', 'stores', 42,'{"_1":{"code":"color","multi":"0"},"_2":{"code":"climate","multi":"1"},"_3":{"code":"gender","multi":"0"},"_4":{"code":"gender","multi":"0"}}']
+            ['factfinder/export/attributes', 'stores', 42,'{"_1":{"code":"color","multi":"0","numerical":"0"},"_2":{"code":"climate","multi":"1","numerical":"0"},"_3":{"code":"gender","multi":"0","numerical":"0"},"_4":{"code":"size","multi":"1","numerical":"1"}}']
         ]);
         $communicationConfig = $this->createMock(CommunicationConfig::class);
         $communicationConfig->method('getVersion')->willReturnOnConsecutiveCalls('7.3', 'ng');

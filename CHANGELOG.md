@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Added
+ - Add possibility to select field to be exported as numerical in module configuration. Numerical fields will be exported in new multi-attribute column `NumericalAttributes`   
+
 ## [v2.1.0] - 2021.07.15
 ### Added
  - Add possibility to export fields from variant level. Previously export took only configurable attributes from variants and rest was copied from parent

@@ -32,10 +32,13 @@ class ExportConfig
         $this->communicationConfig = $communicationConfig;
     }
 
-    public function getMultiAttributes(?int $storeId = null): array
+    /**
+     * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
+     */
+    public function getMultiAttributes(?int $storeId = null, bool $numerical = false): array
     {
-        return $this->getAttributeCodes($storeId, function (array $row): bool {
-            return $row['multi'];
+        return $this->getAttributeCodes($storeId, function (array $row) use ($numerical): bool {
+            return $row['multi'] && (bool) $row['numerical'] == $numerical;
         });
     }
 
