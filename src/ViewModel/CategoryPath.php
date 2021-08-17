@@ -45,6 +45,11 @@ class CategoryPath implements ArgumentInterface
         return implode(',', $path);
     }
 
+    public function getCategoryPathFieldName(): string
+    {
+        return $this->param;
+    }
+
     private function standardPath(?Category $category): array
     {
         $path  = 'ROOT';

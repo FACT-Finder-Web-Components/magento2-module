@@ -8,8 +8,13 @@
 
         <referenceBlock name="after.body.start">
             <block class="Magento\Framework\View\Element\Template" name="factfinder.history.cb" template="Omikron_Factfinder::category/history_callback.phtml" after="factfinder.communication" />
-            <block class="Magento\Framework\View\Element\Template" name="factfinder.remove_category_path.cb" template="Omikron_Factfinder::category/remove_category_path_callback.phtml" after="factfinder.communication" />
+            <block class="Magento\Framework\View\Element\Template" name="factfinder.category-filter.cb" template="Omikron_Factfinder::category/remove_category_filter_callback.phtml" after="factfinder.communication">
+                <arguments>
+                    <argument name="category_path_field_name" xsi:type="helper" helper="Omikron\Factfinder\ViewModel\CategoryPath::getCategoryPathFieldName"/>
+                </arguments>
+            </block>
         </referenceBlock>
+
         <referenceBlock name="factfinder.communication">
             <arguments>
                 <argument name="communication_parameters" xsi:type="array">

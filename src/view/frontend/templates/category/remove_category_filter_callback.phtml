@@ -1,0 +1,9 @@
+<?php /** @var Magento\Framework\View\Element\Template $block */ ?>
+
+<script>
+    document.addEventListener('ffReady', function (ff) {
+        ff.resultDispatcher.addCallback("asn", function (asnData) {
+            asnData.splice(asnData.findIndex(g=>g.__associatedFieldNameV4 === '<?= $block->getData('category_path_field_name')?>'), 1)
+        });
+    });
+</script>
