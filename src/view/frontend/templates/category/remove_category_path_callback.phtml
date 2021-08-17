@@ -1,0 +1,8 @@
+<script>
+    document.addEventListener('ffReady', function (ff) {
+        ff.resultDispatcher.addCallback("asn", function (asnData) {
+            asnData.splice(asnData.findIndex(g=>g.__associatedFieldNameV4 === 'CategoryPath'), 1)
+            console.log('remove_cp', asnData)
+        });
+    });
+</script>
