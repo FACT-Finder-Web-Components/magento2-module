@@ -1,6 +1,7 @@
 # Changelog
 ## Unreleased
 ### Added
+ - Added Single Hit Redirection feature when SSR is enabled
  - Add possibility to select field to be exported as numerical in module configuration. Numerical fields will be exported in new multi-attribute column `NumericalAttributes`   
 
 ## [v2.1.0] - 2021.07.15
