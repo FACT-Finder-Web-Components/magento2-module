@@ -7,8 +7,17 @@ $parameters = $viewModel->getParameters((array) $block->getData('communication_p
 <ff-communication<?php foreach ($parameters as $key => $value) /* @noEscape */ echo sprintf(' %s="%s"', $key, $block->escapeHtmlAttr($value)) ?>></ff-communication>
 <!-- Set FieldRoles -->
 <script>
-    document.addEventListener('ffReady', function () {
+    document.addEventListener('ffReady', function (ff) {
         factfinder.communication.fieldRoles = <?= /* @noEscape */ $viewModel->getFieldRoles() ?>;
+        ff.resultDispatcher.addCallback('paging', function(pageData){
+            const canonicalLink = document.querySelector('link[rel="canonical"]');
+            const urlPattern =  new RegExp("page=([0-9]*)");
+            if (canonicalLink && window.location.href.match(urlPattern) !== null) {
+                canonicalLink.href = canonicalLink.href.match(urlPattern) !== null
+                    ? canonicalLink.href.replace(urlPattern, 'page=' + pageData.currentPage)
+                    : canonicalLink.href + '?page=' + pageData.currentPage;
+            }
+        });
     });
 </script>
 <script type="text/x-magento-init">
