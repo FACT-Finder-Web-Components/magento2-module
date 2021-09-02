@@ -66,7 +66,9 @@ class RecordList extends Template
 
         // Add pre-rendered records
         $html = preg_replace_callback(self::RECORD_PATTERN, function (array $match) use ($result): string {
-            $template = '<template data-role="record">' . $match[0] . '</template>';
+            // $match[0] is added twice due to SSR bug in Web Components. ff-record template need to be added one time
+            // as a template and one time as regular ff-record element
+            $template = '<template data-role="record">' . $match[0] .'</template>' . $match[0];
             return array_reduce($result['records'] ?? [], $this->recordRenderer($match[0]), $template);
         }, $html);
 
