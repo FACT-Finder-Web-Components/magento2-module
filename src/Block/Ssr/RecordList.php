@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Omikron\Factfinder\Block\Ssr;
 
+use Magento\Framework\App\RequestInterface;
 use Magento\Framework\App\Response\Http as Response;
 use Magento\Framework\App\Response\RedirectInterface;
 use Magento\Framework\Serialize\SerializerInterface;
@@ -13,7 +14,8 @@ use Omikron\Factfinder\Model\Ssr\SearchAdapter;
 
 class RecordList extends Template
 {
-    private const RECORD_PATTERN = '#<ff-record[\s>].*?</ff-record>#s';
+    private const RECORD_PATTERN         = '#<ff-record[\s>].*?</ff-record>#s';
+    private const OPENING_RECORD_PATTERN = '#<ff-record#';
 
     /** @var SearchAdapter */
     protected $searchAdapter;
@@ -59,25 +61,32 @@ class RecordList extends Template
             return "<ff-record-list ssr {$attributes}>";
         }, $html);
 
-        $result = $this->searchResult($this->getRequest()->getParam('query', '*'), $this->getSearchParams());
+        $result = $this->searchResult($this->getRequest(), $this->getSearchParams());
         if ($this->shouldRedirect($result)) {
             $this->redirectToProductPage($result);
         }
 
         // Add pre-rendered records
         $html = preg_replace_callback(self::RECORD_PATTERN, function (array $match) use ($result): string {
-            // $match[0] is added twice due to SSR bug in Web Components. ff-record template need to be added one time
-            // as a template and one time as regular ff-record element
-            $template = '<template data-role="record">' . $match[0] .'</template>' . $match[0];
+            $template = '<template data-role="record">' . $match[0] .'</template>';
+            // walkaround for FFWEB-2182
+            if (!count($result['records'])) {
+                return $template . preg_replace(self::OPENING_RECORD_PATTERN, '<ff-record unresolved', $match[0]);
+            }
             return array_reduce($result['records'] ?? [], $this->recordRenderer($match[0]), $template);
         }, $html);
 
         return str_replace('{FF_SEARCH_RESULT}', $this->jsonSerializer->serialize($result), $html);
     }
 
-    protected function searchResult(string $query, array $params): array
+    protected function searchResult(RequestInterface $request, array $searchParams): array
     {
-        return $this->searchAdapter->search($query, $params);
+        $paramsString = implode('&', array_filter([
+                parse_url($request->getUriString(), PHP_URL_QUERY),
+                http_build_query($searchParams)
+            ]));
+
+        return $this->searchAdapter->search($paramsString, $this->getRequest()->getFullActionName() === 'catalog_category_view');
     }
 
     protected function recordRenderer(string $template): callable

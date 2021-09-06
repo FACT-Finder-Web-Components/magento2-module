@@ -10,6 +10,8 @@ use Magento\Framework\Controller\Result\JsonFactory;
 use Magento\Store\Model\StoreManagerInterface;
 use Omikron\FactFinder\Communication\Client\ClientBuilder;
 use Omikron\FactFinder\Communication\Resource\AdapterFactory;
+use Omikron\FactFinder\Communication\Version;
+use Omikron\Factfinder\Exception\ResponseException;
 use Omikron\Factfinder\Model\Api\CredentialsFactory;
 use Omikron\Factfinder\Model\Config\CommunicationConfig;
 use Omikron\Factfinder\Model\FieldRoles;
@@ -65,9 +67,13 @@ class Update extends Action
 
             $searchAdapter = (new AdapterFactory($client, $this->communicationConfig->getVersion()))->getSearchAdapter();
             $response      = $searchAdapter->search($this->communicationConfig->getChannel($storeId), 'Search.ff');
-
-            $this->fieldRoles->saveFieldRoles($response['fieldRoles'], $storeId);
-            $result->setData(['message' => __('Field roles updated successfully')]);
+            $searchResult  = $this->communicationConfig->getVersion() === Version::NG ? $response : $response['searchResult'];
+            if (!isset($searchResult['fieldRoles'])) {
+                $result->setData(['message' => __('Search result does not contain field roles')]);
+            } else {
+                $this->fieldRoles->saveFieldRoles($searchResult['fieldRoles'], $storeId);
+                $result->setData(['message' => __('Field roles updated successfully')]);
+            }
         } catch (ClientExceptionInterface $e) {
             $result->setData(['message' => $e->getMessage()]);
         }
