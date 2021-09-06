@@ -6,6 +6,7 @@ namespace Omikron\Factfinder\Block\Ssr;
 
 use Magento\Framework\App\Response\Http as Response;
 use Magento\Framework\App\Response\RedirectInterface;
+use Magento\Framework\App\RequestInterface;
 use Magento\Framework\Serialize\SerializerInterface;
 use Magento\Framework\View\Element\Template;
 use Omikron\Factfinder\Model\FieldRoles;
@@ -59,7 +60,7 @@ class RecordList extends Template
             return "<ff-record-list ssr {$attributes}>";
         }, $html);
 
-        $result = $this->searchResult($this->getRequest()->getParam('query', '*'), $this->getSearchParams());
+        $result = $this->searchResult($this->getRequest(), $this->getSearchParams());
         if ($this->shouldRedirect($result)) {
             $this->redirectToProductPage($result);
         }
@@ -75,9 +76,11 @@ class RecordList extends Template
         return str_replace('{FF_SEARCH_RESULT}', $this->jsonSerializer->serialize($result), $html);
     }
 
-    protected function searchResult(string $query, array $params): array
+    protected function searchResult(RequestInterface $request, array $searchParams): array
     {
-        return $this->searchAdapter->search($query, $params);
+        $paramsString = implode('&', [parse_url($request->getUriString() ,PHP_URL_QUERY), http_build_query($searchParams)]);
+
+        return $this->searchAdapter->search($paramsString);
     }
 
     protected function recordRenderer(string $template): callable

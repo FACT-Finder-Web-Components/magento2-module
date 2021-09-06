@@ -37,7 +37,7 @@ class PriceFormatter
         $records     = $isNG ? $searchResult['hits'] : $searchResult['searchResult']['records'];
         $recordField = $isNG ? 'masterValues' : 'record';
 
-        return array_map($this->price($priceField, $recordField), $records);
+        return ['records' => array_map($this->price($priceField, $recordField), $records)] + $searchResult;
     }
 
     protected function price(string $priceField, string $recordField): callable

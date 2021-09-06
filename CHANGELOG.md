@@ -1,10 +1,17 @@
 # Changelog
 ## Unreleased
+### BREAKING
+- SSR
+    Due to FACT-Finder filters format in GET request (multiple parameters with the same name `filter`) we were in need to change the implementation of:  
+    `src/Model/Ssr/SearchAdapter.php` - changed function definition 
+    `public function search(string $query = '*', array $params = []): array` to `public function search(string $paramString): array`
+    
 ### Added
-  - SSR
+ - Export:
+    - Add possibility to select field to be exported as numerical in module configuration. Numerical fields will be exported in new multi-attribute column `NumericalAttributes`
+ - SSR
     - Added Single Hit Redirection feature when SSR is enabled
-  - Export
-    - Add possibility to select field to be exported as numerical in module configuration. Numerical fields will be exported in new multi-attribute column `NumericalAttributes`   
+    - Now remembers the user selected search parameters (filters, sorting, etc.)   
 
 ### Fix
  - SSR
