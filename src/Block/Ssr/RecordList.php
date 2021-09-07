@@ -103,7 +103,7 @@ class RecordList extends Template
 
     private function shouldRedirect(array $result): bool
     {
-        $isExactSearch = isset($result['resultArticleNumberStatus']) && $result['resultArticleNumberStatus']
+        $isExactSearch = isset($result['articleNumberSearch']) && $result['articleNumberSearch']
             || isset($result['resultArticleNumberStatus']) && $result['resultArticleNumberStatus'] === 'resultsFound';
         return count($result['records']) === 1 && $isExactSearch;
     }
