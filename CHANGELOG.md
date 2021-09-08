@@ -7,7 +7,8 @@
     - Add possibility to select field to be exported as numerical in module configuration. Numerical fields will be exported in new multi-attribute column `NumericalAttributes`   
 
 ### Fix
- - Fix SSR after first search with 0 result, next will render no products even if FACT-Finder returns some
+ - SSR
+    - after first search with 0 result, next will render no products even if FACT-Finder returns them
 
 ## [v2.1.0] - 2021.07.15
 ### Added
