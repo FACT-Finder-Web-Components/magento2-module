@@ -87,6 +87,9 @@ class ConfigurableDataProvider extends SimpleDataProvider
     {
         return array_reduce($this->productType->getConfigurableOptions($product), function (array $res, array $option) {
             foreach ($option as ['sku' => $sku, 'super_attribute_label' => $label, 'option_title' => $value]) {
+                $sku = $sku ?? '';
+                $label = $label ?? '';
+                $value = $value ?? '';
                 $res[$sku][] = "{$this->filter->filterValue($label)}={$this->filter->filterValue($value)}";
             }
             return $res;
