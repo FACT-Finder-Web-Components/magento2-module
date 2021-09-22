@@ -7,6 +7,7 @@ namespace Omikron\Factfinder\Model\Api;
 use Omikron\FactFinder\Communication\Client\ClientBuilder;
 use Omikron\FactFinder\Communication\Client\ClientException;
 use Omikron\FactFinder\Communication\Resource\AdapterFactory;
+use Omikron\FactFinder\Communication\Version;
 use Omikron\Factfinder\Model\Config\CommunicationConfig;
 use Omikron\Factfinder\Model\Config\ExportConfig;
 use Psr\Log\LoggerInterface;
@@ -56,7 +57,7 @@ class PushImport
             return false;
         }
 
-        if ($importAdapter->running($channel)) {
+        if ($this->communicationConfig->getVersion() === Version::NG && $importAdapter->running($channel)) {
             throw new ClientException("Can't start a new import process. Another one is still going");
         }
 
