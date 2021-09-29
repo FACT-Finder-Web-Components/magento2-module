@@ -9,6 +9,8 @@
 ### Fix
  - SSR
     - after first search with 0 result, next will render no products even if FACT-Finder returns them
+ - Import
+    - PushImport triggers not implemented `running` method in Communication SDK for 7.3 version
 
 ## [v2.1.0] - 2021.07.15
 ### Added
