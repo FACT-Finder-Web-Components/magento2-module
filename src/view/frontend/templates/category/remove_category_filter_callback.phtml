@@ -2,15 +2,13 @@
 
 <script>
     document.addEventListener('ffReady', function (ff) {
-        const NG_VERSION = 'ng';
 
-        ff.resultDispatcher.addCallback("asn", function (asnData, eventObject) {
-            let associatedFieldName = ff.factfinder.communication.Util.extractCategoryPathFieldName();
-            let currentVersion = eventObject.version.toString().toLowerCase();
-
-            if (currentVersion === NG_VERSION) {
+        ff.resultDispatcher.addCallback("asn", function (asnData) {
+            if (factfinder.communication.Util.isNg()) {
                 asnData.splice(asnData.findIndex(element=>element.__associatedFieldNameV4 === '<?= $block->getData('category_path_field_name')?>'), 1)
             } else {
+                let associatedFieldName = ff.factfinder.communication.Util.extractCategoryPathFieldName();
+
                 asnData.forEach(function (asnDataElement) {
                     asnData.splice(asnDataElement.elements.findIndex(function (element) {
                         return element.associatedFieldName === associatedFieldName;
