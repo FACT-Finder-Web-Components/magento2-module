@@ -2,8 +2,21 @@
 
 <script>
     document.addEventListener('ffReady', function (ff) {
-        ff.resultDispatcher.addCallback("asn", function (asnData) {
-            asnData.splice(asnData.findIndex(g=>g.__associatedFieldNameV4 === '<?= $block->getData('category_path_field_name')?>'), 1)
+        const NG_VERSION = 'ng';
+
+        ff.resultDispatcher.addCallback("asn", function (asnData, eventObject) {
+            let associatedFieldName = ff.factfinder.communication.Util.extractCategoryPathFieldName();
+            let currentVersion = eventObject.version.toString().toLowerCase();
+
+            if (currentVersion === NG_VERSION) {
+                asnData.splice(asnData.findIndex(element=>element.__associatedFieldNameV4 === '<?= $block->getData('category_path_field_name')?>'), 1)
+            } else {
+                asnData.forEach(function (asnDataElement) {
+                    asnData.splice(asnDataElement.elements.findIndex(function (element) {
+                        return element.associatedFieldName === associatedFieldName;
+                    }), 1)
+                });
+            }
         });
     });
 </script>
