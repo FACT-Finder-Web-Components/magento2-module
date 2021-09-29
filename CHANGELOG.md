@@ -1,7 +1,8 @@
 # Changelog
 ## Unreleased
 ### Added
- - Add possibility to select field to be exported as numerical in module configuration. Numerical fields will be exported in new multi-attribute column `NumericalAttributes`   
+ - Add possibility to select field to be exported as numerical in module configuration. Numerical fields will be exported in new multi-attribute column `NumericalAttributes`
+ - Remove category filter from ff-asn block on Category page
 
 ## [v2.1.0] - 2021.07.15
 ### Added
