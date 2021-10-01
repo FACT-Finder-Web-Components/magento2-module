@@ -1,5 +1,5 @@
 # Changelog
-## Unreleased
+## [v2.2.0] - 2021.10.01
 ### Added
   - SSR
     - Add Single Hit Redirection feature when SSR is enabled
@@ -10,13 +10,15 @@
     
 ### Changed    
   Navigation     
-  - Remove category filter from ff-asn block on Category page
+  - Remove category filter from ff-asn block on Category pages
 
 ### Fix
  - SSR
     - after first search with 0 result, next will render no products even if FACT-Finder returns them
  - Import
     - PushImport triggers not implemented `running` method in Communication SDK for 7.3 version
+ - Export
+    - Fix export does not check if product options are not null in ConfigurableDataProvider::getOptions
 
 ## [v2.1.0] - 2021.07.15
 ### Added
@@ -332,6 +334,7 @@
 ### Added
 - Feed Export: Export feed file is now available via separate link
 
+[v2.2.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v2.2.0
 [v2.1.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v2.1.0
 [v2.0.2]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v2.0.2
 [v2.0.1]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v2.0.1

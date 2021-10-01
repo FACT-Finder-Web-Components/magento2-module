@@ -2,7 +2,6 @@
 
 <script>
     document.addEventListener('ffReady', function (ff) {
-
         ff.resultDispatcher.addCallback("asn", function (asnData) {
             if (factfinder.communication.Util.isNg()) {
                 asnData.splice(asnData.findIndex(function (element) {
@@ -13,7 +12,7 @@
 
                 asnData.splice(asnData.findIndex(function (group) {
                     return group.elements.every(function (element) {
-                        return element.associatedFieldName === associatedFieldName;
+                        return element.associatedFieldName.indexOf(associatedFieldName) === 0;
                     });
                 }), 1);
             }
