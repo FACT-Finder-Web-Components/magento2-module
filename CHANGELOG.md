@@ -2,9 +2,14 @@
 ## Unreleased
 ### Added
   - SSR
-    - Added Single Hit Redirection feature when SSR is enabled
+    - Add Single Hit Redirection feature when SSR is enabled
   - Export
-    - Add possibility to select field to be exported as numerical in module configuration. Numerical fields will be exported in new multi-attribute column `NumericalAttributes`   
+    - Add possibility to select field to be exported as numerical in module configuration. Numerical fields will be exported in new multi-attribute column `NumericalAttributes`
+  - Navigation
+    - Add `ffRedirectToSearchResultPage` function which could be used to manually redirect to search result page.
+    
+### Changed    
+  Navigation     
   - Remove category filter from ff-asn block on Category page
 
 ### Fix

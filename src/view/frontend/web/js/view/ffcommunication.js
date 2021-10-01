@@ -1,11 +1,11 @@
-define(['Magento_Customer/js/customer-data', 'factfinder'], function (customerData, factfinder) {
+define(['Magento_Customer/js/customer-data', 'factfinder','underscore',], function (customerData, factfinder, _) {
     'use strict';
 
     return function (config, element) {
         var sessionData = customerData.get('ffcommunication');
         sessionData.subscribe(function (data) {
             if (!data.uid) {
-                const uidKey = Object.keys(localStorage).find(function (key) {
+                const uidKey = _.find(Object.keys(localStorage), function (key) {
                     return key.indexOf(factfinder.common.localStorage.getItem('ff_sid')) === 0
                 });
                 if (uidKey) factfinder.common.localStorage.setItem(uidKey, null);
