@@ -5,7 +5,9 @@
 
         ff.resultDispatcher.addCallback("asn", function (asnData) {
             if (factfinder.communication.Util.isNg()) {
-                asnData.splice(asnData.findIndex(element=>element.__associatedFieldNameV4 === '<?= $block->getData('category_path_field_name')?>'), 1)
+                asnData.splice(asnData.findIndex(function (element) {
+                        return element.__associatedFieldNameV4 === '<?= $block->getData('category_path_field_name')?>'
+                    }), 1)
             } else {
                 const associatedFieldName = ff.factfinder.communication.Util.extractCategoryPathFieldName();
 
