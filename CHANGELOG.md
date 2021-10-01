@@ -5,6 +5,7 @@
     - Added Single Hit Redirection feature when SSR is enabled
   - Export
     - Add possibility to select field to be exported as numerical in module configuration. Numerical fields will be exported in new multi-attribute column `NumericalAttributes`   
+  - Remove category filter from ff-asn block on Category page
 
 ### Fix
  - SSR
