@@ -10,5 +10,18 @@ define(['factfinder'], function (factfinder) {
                 window.location = options.targetUrl + factfinder.common.dictToParameterString(factfinder.common.encodeDict(event.detail));
             }
         });
+
+        if (!window.hasOwnProperty('ffRedirectToSearchResultPage')) {
+            window.ffRedirectToSearchResultPage = function (query, addlParams) {
+                const detail = Object.assign({type: 'search', query: query}, addlParams);
+                const event = new CustomEvent('before-search', {
+                    detail: detail,
+                    bubbles: true,
+                    cancelable: true,
+                    composed: true
+                });
+                element.dispatchEvent(event);
+            }
+        }
     }
 });
