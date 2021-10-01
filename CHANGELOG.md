@@ -1,4 +1,11 @@
 # Changelog
+## [v1.8.0] - 2021.10.01
+### Added
+- Add possibility to select field to be exported as numerical in module configuration. Numerical fields will be exported in new multi-attribute column `NumericalAttributes`
+
+### Fixed
+ - Fix export does not check if product options are not null in ConfigurableDataProvider::getOptions
+
 ## [v1.7.0] - 2021.07.15
 ### Added
  - Add possibility to export fields from variant level. Previously export took only configurable attributes from variants and rest was copied from parent
@@ -289,6 +296,7 @@
 ### Added
 - Feed Export: Export feed file is now available via separate link
 
+[v1.8.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v1.8.0
 [v1.7.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v1.7.0
 [v1.6.8]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v1.6.8
 [v1.6.7]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v1.6.7
