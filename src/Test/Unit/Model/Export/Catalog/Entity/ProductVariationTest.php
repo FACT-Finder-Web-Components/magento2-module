@@ -11,6 +11,9 @@ use Omikron\Factfinder\Model\Export\Catalog\ProductField\ProductImage;
 use Omikron\Factfinder\Model\Formatter\NumberFormatter;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @covers ProductVariationTest
+ */
 class ProductVariationTest extends TestCase
 {
     public function test_variant_data_will_override_the_parent()

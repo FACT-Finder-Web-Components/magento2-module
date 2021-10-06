@@ -12,6 +12,9 @@ use Omikron\Factfinder\Model\FtpUploader;
 
 class TestFtpConnection extends Action
 {
+    /** @var string */
+    private $obscuredValue = '******';
+
     /** @var JsonFactory */
     private $jsonResultFactory;
 
@@ -39,7 +42,7 @@ class TestFtpConnection extends Action
 
         try {
             $request = $this->getRequest();
-            $params  = $this->getConfig($request->getParams()) + $this->ftpConfig->toArray();
+            $params  = $this->getConfig($this->getRealValuesFromObscured($request->getParams())) + $this->ftpConfig->toArray();
             $this->ftpUploader->testConnection($params);
         } catch (\Exception $e) {
             $message = $e->getMessage();
@@ -51,6 +54,7 @@ class TestFtpConnection extends Action
     private function getConfig(array $params): array
     {
         $prefix   = 'ff_upload_';
+
         $filtered = array_filter($params, function (string $key) use ($prefix): bool {
             return (bool) preg_match("#^{$prefix}#", $key);
         }, ARRAY_FILTER_USE_KEY);
@@ -58,5 +62,16 @@ class TestFtpConnection extends Action
         return array_combine(array_map(function (string $key) use ($prefix): string {
             return str_replace($prefix, '', $key);
         }, array_keys($filtered)), array_values($filtered));
+    }
+
+    private function getRealValuesFromObscured(array $params): array
+    {
+        if (!isset($params['ff_upload_password']) || $params['ff_upload_password'] === $this->obscuredValue) {
+            $params['ff_upload_password'] = $this->ftpConfig->getUserPassword();
+        }
+        if (!isset($params['ff_upload_key_passphrase']) || $params['ff_upload_key_passphrase'] === $this->obscuredValue) {
+            $params['ff_upload_key_passphrase'] = $this->ftpConfig->getKeyPassphrase();
+        }
+        return $params;
     }
 }

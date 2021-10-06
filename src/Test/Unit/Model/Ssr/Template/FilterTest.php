@@ -17,8 +17,8 @@ class FilterTest extends TestCase
 
     public function test_anchor_links_are_replaced()
     {
-        $from = '<a class="product-image-container" data-anchor="{{record.ProductURL}}">';
-        $to   = '<a class="product-image-container" href="{{record.ProductURL}}" data-anchor="{{record.ProductURL}}">';
+        $from = '<a class="product-image-container" data-anchor="{{record.Deeplink}}">';
+        $to   = '<a class="product-image-container" href="{{record.Deeplink}}" data-anchor="{{record.Deeplink}}">';
         $this->assertSame($this->filter->filterValue($from), $to);
     }
 

@@ -2,17 +2,58 @@
 <include xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_include.xsd">
     <group id="data_transfer" translate="label comment" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
         <label>Data transfer settings</label>
+
+        <field id="ff_upload_type" translate="label comment" type="select" sortOrder="9" showInDefault="1" showInWebsite="0" showInStore="0">
+            <label>Type</label>
+            <options>
+                <option label="FTP">ftp</option>
+                <option label="SFTP">sftp</option>
+            </options>
+        </field>
+
         <comment><![CDATA[<div class="message message-notice notice"><div data-ui-id="messages-message-success">Please always save the config in the upper right corner after making changes, especially before using the export button.</div></div>]]></comment>
         <field id="ff_upload_host" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
             <label>Upload Host</label>
-            <comment><![CDATA[Please specify the FTP server address, where the export file(s) should be uploaded. For example shopname.fact-finder.de.]]></comment>
+            <comment><![CDATA[Please specify the server address, where the export file(s) should be uploaded. For example shopname.fact-finder.de.]]></comment>
         </field>
         <field id="ff_upload_user" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
             <label>Upload User</label>
         </field>
-        <field id="ff_upload_password" translate="label" type="password" sortOrder="30" showInDefault="1" showInWebsite="0" showInStore="0">
-            <label>Upload Password</label>
+
+        <field id="ff_upload_authentication_type" translate="label comment" type="select" sortOrder="21" showInDefault="1">
+            <label>Authentication</label>
+            <options>
+                <option label="password">password</option>
+                <option label="key">key</option>
+            </options>
         </field>
+
+        <field id="ff_upload_authentication_key" translate="labff_transfer_authenticationel" type="Magento\Config\Block\System\Config\Form\Field\File" sortOrder="22" showInDefault="1" showInWebsite="1" >
+            <label>Choose key file</label>
+            <comment><![CDATA[<div class="message message-notice notice"><div data-ui-id="messages-message-success">You need to save configuration first to upload key file before testing the connection.</div></div>]]></comment>
+            <depends>
+                <field id="ff_upload_authentication_type">key</field>
+            </depends>
+            <backend_model>Omikron\Factfinder\Model\Config\Backend\Rsa</backend_model>
+            <upload_dir config="system">factfinder/sftp</upload_dir>
+        </field>
+
+        <field id="ff_upload_key_passphrase" translate="label" type="obscure" sortOrder="23" showInDefault="1" showInWebsite="0" showInStore="0">
+            <label>Key Passphrase</label>
+            <depends>
+                <field id="ff_upload_authentication_type">key</field>
+            </depends>
+            <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+        </field>
+
+        <field id="ff_upload_password" translate="label" type="obscure" sortOrder="24" showInDefault="1" showInWebsite="0" showInStore="0">
+            <depends>
+                <field id="ff_upload_authentication_type">password</field>
+            </depends>
+            <label>Upload Password</label>
+            <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+        </field>
+
         <field id="ff_upload_port" translate="label comment" type="text" sortOrder="40" showInDefault="1" showInWebsite="0" showInStore="0">
             <label>Port</label>
             <comment>Leave empty if you use default port 21.</comment>
@@ -22,7 +63,7 @@
             <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
         </field>
         <field id="ff_upload_test_connection" translate="label comment" type="button" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
-            <label>Test FTP Connection</label>
+            <label>Test Upload Connection</label>
             <frontend_model>Omikron\Factfinder\Block\Adminhtml\System\Config\Button\TestFtpConnection</frontend_model>
         </field>
         <field id="ff_update_field_roles" translate="label comment" type="button" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">

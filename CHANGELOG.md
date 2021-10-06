@@ -1,9 +1,11 @@
 # Changelog
-## Unreleased
+## [v2.3.0]
 ### Fix
  - Tracking
     - Add to cart tracking throws an error on versions less than 2.4
-
+ - Upload
+  - Implement SFTP upload with public key authentication method
+  
 ## [v2.2.0] - 2021.10.01
 ### Added
   - SSR

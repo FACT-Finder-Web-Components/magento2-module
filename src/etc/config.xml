@@ -9,7 +9,7 @@
                 <use_for_categories>1</use_for_categories>
                 <show_add_to_cart_button>1</show_add_to_cart_button>
                 <ff_enrichment>0</ff_enrichment>
-                <tracking_product_number_field_role>{"brand":"Brand","campaignProductNumber":"ProductNumber","deeplink":"ProductURL","description":"Description","displayProductNumber":"ProductNumber","ean":"EAN","imageUrl":"ImageURL","masterArticleNumber":"Master","price":"Price","productName":"Name","trackingProductNumber":"ProductNumber"}</tracking_product_number_field_role>
+                <tracking_product_number_field_role>{"brand":"Brand","campaignProductNumber":"ProductNumber","deeplink":"Deeplink","description":"Description","displayProductNumber":"ProductNumber","ean":"EAN","imageUrl":"ImageURL","masterArticleNumber":"Master","price":"Price","productName":"Name","trackingProductNumber":"ProductNumber"}</tracking_product_number_field_role>
             </general>
             <advanced>
                 <version>7.3</version>
@@ -17,6 +17,8 @@
                 <only_search_params>1</only_search_params>
             </advanced>
             <data_transfer>
+                <ff_upload_password backend_model="Magento\Config\Model\Config\Backend\Encrypted" />
+                <ff_upload_key_passphrase backend_model="Magento\Config\Model\Config\Backend\Encrypted" />
                 <ff_cron_enabled>0</ff_cron_enabled>
                 <ff_push_import_enabled>1</ff_push_import_enabled>
                 <ff_push_import_type>data,suggest</ff_push_import_type>
