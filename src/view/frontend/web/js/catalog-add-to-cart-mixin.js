@@ -8,7 +8,7 @@ define([
 
     $(document).on('ajax:addToCart', function (event, eventData) {
         const cart = customerData.get('cart');
-        const productId = _.first(eventData.productInfo, null, {id: 0}).id;
+        const productId = _.first(eventData.productIds);
         let subscription;
 
         if (productId && (!subscription || subscription.isDisposed)) {
