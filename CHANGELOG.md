@@ -1,4 +1,9 @@
 # Changelog
+## Unreleased
+### Fix
+ - Tracking
+    - Add to cart tracking throws an error on versions less than 2.4
+
 ## [v2.2.0] - 2021.10.01
 ### Added
   - SSR
