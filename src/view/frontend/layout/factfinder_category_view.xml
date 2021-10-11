@@ -18,7 +18,8 @@
         <referenceBlock name="factfinder.communication">
             <arguments>
                 <argument name="communication_parameters" xsi:type="array">
-                    <item name="add-params" xsi:type="helper" helper="Omikron\Factfinder\ViewModel\CategoryPath::getValue" />
+                    <item name="add-params" xsi:type="helper" helper="Omikron\Factfinder\ViewModel\CategoryPath::getAddParams" />
+                    <item name="category-path" xsi:type="helper" helper="Omikron\Factfinder\ViewModel\CategoryPath::getCategoryPath" />
                 </argument>
             </arguments>
         </referenceBlock>

@@ -398,7 +398,7 @@ ff-navigation #navigation-menu {
 }
 
 ff-navigation[mobile="true"] > .ffw-navigation-label {
-  display: block;
+    display: block;
 }
 
 ff-navigation[mobile="true"] > #navigation-menu:checked + label + .ffw-menu-items {
@@ -429,15 +429,15 @@ ff-navigation[mobile="true"] {
 
 /* ---- ff-navigation-item ---- */
 ff-navigation-item {
-     -webkit-box-flex: 1;
-     -ms-flex-positive: 1;
-     flex-grow: 1;
-     position: relative;
-     display: -webkit-box;
-     display: -ms-flexbox;
-     display: flex;
-     cursor: pointer;
- }
+    -webkit-box-flex: 1;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    cursor: pointer;
+}
 
 ff-navigation-item .ffw-item-caption {
     width: 100%;
@@ -778,18 +778,18 @@ ff-slider-one-touch .ffw-triangle {
     border-color: transparent transparent #89bdff transparent;
     top: 50%;
     transition:
-            top .2s ease-out,
-            left .2s ease-out,
-            transform .2s ease-out;
+        top .2s ease-out,
+        left .2s ease-out,
+        transform .2s ease-out;
     transform: translate(-50%, -50%) scale(0.25);
 }
 
 ff-slider-one-touch .ffw-triangle.ffw-active {
-   transition:
-           top .2s ease-in,
-           left .2s ease-in,
-           transform .2s ease-in;
-   transform: translateX(-100%) scale(1);
+    transition:
+        top .2s ease-in,
+        left .2s ease-in,
+        transform .2s ease-in;
+    transform: translateX(-100%) scale(1);
 }
 
 ff-slider-one-touch .ffw-triangle.ffw-no-transition {

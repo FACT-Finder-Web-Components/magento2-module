@@ -21,25 +21,51 @@ class CategoryPathTest extends TestCase
     /** @var MockObject|Category */
     private $currentCategory;
 
-    public function test_category_path_is_correctly_sorted()
-    {
-        $this->currentCategory->method('getParentCategories')
-            ->willReturn([$this->category('C', 3), $this->category('A', 1), $this->category('B', 2)]);
+    /** @var MockObject|CommunicationConfig */
+    private $communicationConfig;
 
-        $value = 'filterCategoryPathROOT=A,filterCategoryPathROOT%2FA=B,filterCategoryPathROOT%2FA%2FB=C';
-        $this->assertSame($value, (string) $this->categoryPath->getValue());
+    /** @var MockObject|Registry */
+    private $registry;
+
+    public function test_category_path_for_ng_version()
+    {
+        $this->communicationConfig->method('getVersion')->willReturn('ng');
+        $categoryPath    = $this->newCategoryPath($this->communicationConfig);
+
+        $this->currentCategory->method('getParentCategories')
+            ->willReturn([$this->category('Men', 1), $this->category('Tops', 2), $this->category('Jackets', 3)]);
+
+        $value = 'filter=CategoryPath%3AMen%2FTops%2FJackets';
+        $this->assertSame($value, (string) $categoryPath->getCategoryPath());
+    }
+
+    public function test_category_path_for_standard_version()
+    {
+        $this->communicationConfig->method('getVersion')->willReturn('7.3');
+        $categoryPath    = $this->newCategoryPath($this->communicationConfig);
+
+        $this->currentCategory->method('getParentCategories')
+            ->willReturn([$this->category('Jackets', 3), $this->category('Men', 1), $this->category('Tops', 2)]);
+
+        $value = 'filterCategoryPathROOT=Men,filterCategoryPathROOT%2FMen=Tops,filterCategoryPathROOT%2FMen%2FTops=Jackets';
+        $this->assertSame($value, (string) $categoryPath->getAddParams());
     }
 
     protected function setUp(): void
     {
+        $this->communicationConfig = $this->createMock(CommunicationConfig::class);
         $this->currentCategory = $this->createMock(Category::class);
-        $registry              = new Registry();
-        $this->categoryPath    = new CategoryPath($registry, $this->createMock(CommunicationConfig::class));
-        $registry->register('current_category', $this->currentCategory);
+        $this->registry              = new Registry();
+        $this->registry->register('current_category', $this->currentCategory);
     }
 
     private function category(string $name, int $level): Category
     {
         return $this->createConfiguredMock(Category::class, ['getName' => $name, 'getLevel' => $level]);
+    }
+
+    private function newCategoryPath(CommunicationConfig $communicationConfig): CategoryPath
+    {
+        return new CategoryPath($this->registry, $this->communicationConfig);;
     }
 }

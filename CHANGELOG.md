@@ -1,5 +1,11 @@
 # Changelog
 ## [v2.3.0]
+### Added
+- `category-path` parameter
+    - For `NG` version parameter `CategoryPath` was moved to separate parameter in `ff-communication` element
+    - For versions `7.3` and below `CategoryPath` parameter leaves in `add-params` parameter
+
+
 ### Fix
  - Tracking
     - Add to cart tracking throws an error on versions less than 2.4
