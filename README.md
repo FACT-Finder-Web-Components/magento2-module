@@ -384,7 +384,7 @@ which is relevant for your project and not part of a default Magento 2 installat
 into the DataProvider definition:
  
  ```xml
-<type name="Omikron\Factfinder\Model\Export\Catalog\ProductType\SimpleDataProvider">
+<type name="Omikron\Factfinder\Model\Export\Catalog\FieldProvider">
      <arguments>
          <argument name="productFields" xsi:type="array">
              <item name="ImageURL" xsi:type="object">Omikron\Factfinder\Model\Export\Catalog\ProductField\ProductImage</item>
