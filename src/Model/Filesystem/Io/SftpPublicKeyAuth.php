@@ -1,0 +1,68 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Omikron\Factfinder\Model\Filesystem\Io;
+
+use Exception;
+use Magento\Framework\App\Filesystem\DirectoryList;
+use Magento\Framework\Exception\FileSystemException;
+use Magento\Framework\Filesystem;
+use Magento\Framework\Filesystem\Io\Sftp as SftpBase;
+use Omikron\Factfinder\Model\Config\FtpConfig;
+use phpseclib\Crypt\RSA;
+use phpseclib\Net\SFTP;
+
+class SftpPublicKeyAuth extends SftpBase
+{
+    /** @var Filesystem */
+    private $fileSystem;
+
+    /** @var FtpConfig */
+    private $uploadConfig;
+
+    public function __construct(Filesystem $fileSystem, FtpConfig $config)
+    {
+        $this->fileSystem   = $fileSystem;
+        $this->uploadConfig = $config;
+    }
+
+    public function open(array $args = [])
+    {
+        $this->_connection = new SFTP($args['host'], $args['port'], self::REMOTE_TIMEOUT);
+        if (!$this->_connection->login($args['user'], $this->getKey($args['key_passphrase']))) {
+            throw new Exception(sprintf('Unable to open SFTP connection as %s@%s', $args['user'], $args['host']));
+        }
+    }
+
+    protected function getKey(string $passphrase): Rsa
+    {
+        $privateKey      = new Rsa();
+        $configDirectory = $this->fileSystem->getDirectoryRead(DirectoryList::CONFIG);
+        $filesInLocation = $configDirectory->read('factfinder/sftp');
+        $keyFile         = $configDirectory->readFile($filesInLocation[$this->getFileIndex($filesInLocation)]);
+
+        if ($passphrase) {
+            $privateKey->setPassword($passphrase);
+        }
+        $privateKey->loadKey($keyFile);
+
+        return $privateKey;
+    }
+
+    /**
+     * @return int
+     * @throws FileSystemException
+     *
+     */
+    private function getFileIndex(array $directoryContent): int
+    {
+        $index = array_search($this->uploadConfig->getKeyFileName(), $directoryContent);
+
+        if ($index === false) {
+            throw new FileSystemException(__('Key file with a name stored in configuration does not exist in directiory app/etc/factfinder/sftp'));
+        }
+
+        return $index;
+    }
+}

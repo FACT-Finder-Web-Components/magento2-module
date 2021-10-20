@@ -8,7 +8,7 @@ class TestFtpConnection extends Button
 {
     protected function getLabel(): string
     {
-        return (string) __('Test FTP Connection');
+        return (string) __('Test Upload Connection');
     }
 
     protected function getTargetUrl(): string
