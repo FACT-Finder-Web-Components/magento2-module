@@ -165,11 +165,16 @@ If you want to start using CMS export in your project, please contact a person f
 **Note:** CMS Export is available only via console command
 
 ### Data Transfer Settings
-This option configures the connection with the FACT-Finder system via FTP. Shop data can be generated and transferred to
-FACT-Finder using FTP. FACT-Finder needs to be up to date on the product data, to ensure that components like the search work as intended.
+This option configures the connection with the FACT-Finder system via FTP/SFTP. Shop data can be generated and transferred to
+FACT-Finder using FTP/SFTP. FACT-Finder needs to be up to date on the product data, to ensure that components like the search work as intended.
 
-Enter an FTP-server to which the CSV file is uploaded automatically. If you are not sure if Magento will be able to connect to your FTP server, please use 
-"Check FTP connection" option. 
+For FTP servers you will likely specify the user and password
+For SFTP servers you can use both authenication methods: key or password
+
+**Note** Don't forget to specify the key passhprase if it's protected
+
+Enter an server to which the CSV file is uploaded automatically. If you are not sure if Magento will be able to connect to your server, please use 
+"Check Upload connection" option. 
 
 The CSV file uses double quotes `"` for field enclosure and a semi-colon `;` as field delimiter.
 
