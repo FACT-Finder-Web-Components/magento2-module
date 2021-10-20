@@ -1,0 +1,14 @@
+<?php /** @var Magento\Framework\View\Element\Template $block */ ?>
+
+<div slot="groupCaption" class="groupCaption">{{group.name}}</div>
+<ff-asn-group-element>
+    <div slot="selected"><span class="filterName">{{element.name}}</span></div>
+    <div slot="unselected"><span class="filterName">{{element.name}}</span></div>
+</ff-asn-group-element>
+
+<div data-container="detailedLinks"><div data-content="detailedLinks"></div></div>
+<div data-container="hiddenLinks"><div data-content="hiddenLinks"></div></div>
+
+<div data-container="removeFilter"><?= $block->escapeHtml(__('Remove Filter')) ?></div>
+<div data-container="showMore"><span class="text"><?= $block->escapeHtml(__('Show More')) ?></span></div>
+<div data-container="showLess"><span class="text"><?= $block->escapeHtml(__('Show Less')) ?></span></div>

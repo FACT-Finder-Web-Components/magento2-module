@@ -1,16 +1,14 @@
 # Changelog
 ## [v2.3.0]
 ### Added
-- `category-path` parameter
-    - For `NG` version parameter `CategoryPath` was moved to separate parameter in `ff-communication` element
-    - For versions `7.3` and below `CategoryPath` parameter leaves in `add-params` parameter
-
+- Category Page
+    - for NG version implement `category-page` attribute
+ - Upload
+    - Implement SFTP upload with public key authentication method
 
 ### Fix
  - Tracking
     - Add to cart tracking throws an error on versions less than 2.4
- - Upload
-  - Implement SFTP upload with public key authentication method
   
 ## [v2.2.0] - 2021.10.01
 ### Added

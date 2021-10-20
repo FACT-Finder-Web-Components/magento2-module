@@ -37,6 +37,11 @@ class CategoryPath implements ArgumentInterface
         $this->initial = $initial;
     }
 
+    public function __toString()
+    {
+        return $this->communicationConfig->getVersion() === Version::NG ? $this->getCategoryPath() : $this->getAddParams();
+    }
+
     public function getCategoryPath(): string
     {
         if ($this->communicationConfig->getVersion() === Version::NG) return implode(',', $this->ngPath($this->getCurrentCategory()));

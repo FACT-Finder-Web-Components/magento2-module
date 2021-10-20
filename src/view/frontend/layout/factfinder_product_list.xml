@@ -10,7 +10,13 @@
         </referenceBlock>
 
         <referenceContainer name="sidebar.main">
-            <block class="Magento\Framework\View\Element\Template" name="factfinder.asn" template="Omikron_Factfinder::ff/asn.phtml" />
+            <block class="Magento\Framework\View\Element\Template" name="factfinder.asn" template="Omikron_Factfinder::ff/asn.phtml">
+                <arguments>
+                    <argument name="category_path_field_name" xsi:type="helper" helper="Omikron\Factfinder\ViewModel\CategoryPath::getCategoryPathFieldName"/>
+                    <argument name="is_category_page" xsi:type="boolean">false</argument>
+                </arguments>
+                <block class="Magento\Framework\View\Element\Template" name="factfinder.asn_group" as="asn_group" template="Omikron_Factfinder::ff/asn-group.phtml" />
+            </block>
         </referenceContainer>
 
         <referenceContainer name="content">

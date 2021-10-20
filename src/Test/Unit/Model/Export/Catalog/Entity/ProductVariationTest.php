@@ -8,11 +8,12 @@ use Magento\Catalog\Api\Data\ProductInterface;
 use Magento\Catalog\Model\Product;
 use Omikron\Factfinder\Model\Export\Catalog\FieldProvider;
 use Omikron\Factfinder\Model\Export\Catalog\ProductField\ProductImage;
+use Omikron\Factfinder\Model\Export\Catalog\Entity\ProductVariation;
 use Omikron\Factfinder\Model\Formatter\NumberFormatter;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers ProductVariationTest
+ * @covers ProductVariation
  */
 class ProductVariationTest extends TestCase
 {
