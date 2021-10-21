@@ -171,6 +171,7 @@ FACT-Finder using FTP/SFTP. FACT-Finder needs to be up to date on the product da
 For FTP servers you will likely specify the user and password
 For SFTP servers you can use both authenication methods: key or password
 
+**Note** Magento uploader does not allow files without extension. If your key file doesn't have any, please add one (for example .rsa)
 **Note** Don't forget to specify the key passhprase if it's protected
 
 Enter an server to which the CSV file is uploaded automatically. If you are not sure if Magento will be able to connect to your server, please use 

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Omikron\Factfinder\Model;
 
+use Magento\Framework\Exception\FileSystemException;
 use Magento\Framework\Filesystem\Io\IoInterface;
 use Omikron\Factfinder\Api\StreamInterface;
 use Omikron\Factfinder\Model\Config\FtpConfig;
@@ -37,9 +38,11 @@ class FtpUploader
         try {
             $this->client = $this->uploadFactory->create($params);
             $this->client->open($this->trimProtocol($params));
+            //ensure export directory is created
+            $this->createExportDirectory();
             $this->client->cd('export');
             // Check write permission
-            $this->client->write($fileName, '');
+            $this->writeFile($fileName);
             $this->client->rm($fileName);
         } finally {
             $this->client->close();
@@ -56,10 +59,10 @@ class FtpUploader
     {
         try {
             $this->client = $this->uploadFactory->create();
-
             $this->client->open($this->trimProtocol($this->config->toArray()));
+            $this->createExportDirectory();
             $this->client->cd('export');
-            $this->client->write($filename, $stream->getContent());
+            $this->writeFile($filename, $stream->getContent());
         } finally {
             $this->client->close();
         }
@@ -70,5 +73,21 @@ class FtpUploader
         preg_match('#^(?:s?ftps?)://(.+?)/?$#', $config['host'], $match);
 
         return $match ? ['host' => $match[1]] + $config : $config;
+    }
+
+    private function writeFile(string $fileName, string $content = ''): void
+    {
+        $result = $this->client->write($fileName, $content);
+        if (!$result) {
+            throw new FileSystemException(__('Failed to upload file'));
+        }
+    }
+
+    private function createExportDirectory(): void
+    {
+        $result = $this->client->mkdir('export', 0777, false);
+        if (!$result) {
+            throw new FileSystemException(__('Failed to create export directory'));
+        }
     }
 }

@@ -26,12 +26,10 @@ class Factory
 
     public function create(array $params): IoInterface
     {
-        $type = $params['type'] === 'sftp' || $this->uploadConfig->isSecure()
-            ? $params['authentication_type'] === 'key' && $this->uploadConfig->isPublicKeyAuthentication()
-                ? SftpPublicKeyAuth::class
-                : Sftp::class
-            : Ftp::class;
-
+        $type =  Ftp::class;
+        if ($params['type'] === 'sftp') {
+            $type = $params['authentication_type'] === 'key' ? SftpPublicKeyAuth::class : Sftp::class;
+        }
         return $this->objectManager->create($type);
     }
 }
