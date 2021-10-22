@@ -1,4 +1,19 @@
 # Changelog
+## v3.0.0 - 2021.10.25
+### BREAKING
+- SSR
+    Due to FACT-Finder filters format in GET request (multiple parameters with the same name `filter`) we were in need to change the implementation of:  
+    `src/Model/Ssr/SearchAdapter.php` - changed function definition 
+    `public function search(string $query = '*', array $params = []): array` to `public function search(string $paramString): array`
+    All changes in current release are related to that breaking change
+### Add
+ - SSR
+   - Now remembers the user selected search parameters (filters, sorting, etc.)
+   
+ ### Fix 
+  - Suggest 
+    - Category suggestion are redirected to search result page with query *
+               
 ## [v2.3.0] - 2021.10.25
 ### Added
 - Category Page
@@ -9,7 +24,7 @@
 ### Fix
  - Tracking
     - Add to cart tracking throws an error on versions less than 2.4
-    - click tracking is not sent correct query on category page
+    - Click tracking is not sent correct query on category page
   
 ## [v2.2.0] - 2021.10.01
 ### Added
@@ -346,6 +361,7 @@
 ### Added
 - Feed Export: Export feed file is now available via separate link
 
+[v3.0.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.0.0
 [v2.3.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v2.3.0
 [v2.2.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v2.2.0
 [v2.1.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v2.1.0
