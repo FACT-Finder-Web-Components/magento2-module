@@ -8,24 +8,26 @@
 
         <referenceBlock name="after.body.start">
             <block class="Magento\Framework\View\Element\Template" name="factfinder.history.cb" template="Omikron_Factfinder::category/history_callback.phtml" after="factfinder.communication" />
-            <block class="Magento\Framework\View\Element\Template" name="factfinder.category-filter.cb" template="Omikron_Factfinder::category/remove_category_filter_callback.phtml" after="factfinder.communication">
-                <arguments>
-                    <argument name="category_path_field_name" xsi:type="helper" helper="Omikron\Factfinder\ViewModel\CategoryPath::getCategoryPathFieldName"/>
-                </arguments>
-            </block>
         </referenceBlock>
 
         <referenceBlock name="factfinder.communication">
             <arguments>
                 <argument name="communication_parameters" xsi:type="array">
-                    <item name="add-params" xsi:type="helper" helper="Omikron\Factfinder\ViewModel\CategoryPath::getValue" />
+                    <item name="add-params" xsi:type="helper" helper="Omikron\Factfinder\ViewModel\CategoryPath::getAddParams" />
+                    <item name="category-page" xsi:type="helper" helper="Omikron\Factfinder\ViewModel\CategoryPath::getCategoryPath" />
                 </argument>
+            </arguments>
+        </referenceBlock>
+
+        <referenceBlock name="factfinder.asn">
+            <arguments>
+                <argument name="is_category_page" xsi:type="boolean">true</argument>
             </arguments>
         </referenceBlock>
 
         <referenceBlock name="factfinder.ssr.recordlist">
             <arguments>
-                <argument name="search_params" xsi:type="helper" helper="Omikron\Factfinder\ViewModel\CategoryPath::getValue" />
+                <argument name="search_params" xsi:type="helper" helper="Omikron\Factfinder\ViewModel\CategoryPath::__toString" />
             </arguments>
         </referenceBlock>
     </body>

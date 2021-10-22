@@ -38,7 +38,7 @@ class Communication implements ArgumentInterface
     public function getParameters(array $blockParams = []): array
     {
         $params = $this->parametersProvider->getParameters();
-        return array_filter($this->mergeParameters($blockParams, $params) + $blockParams + $params, 'boolval');
+        return ['version' => $params['version'] ?? 'ng'] + array_filter($this->mergeParameters($blockParams, $params) + $blockParams + $params, 'boolval');
     }
 
     public function getFieldRoles(): string

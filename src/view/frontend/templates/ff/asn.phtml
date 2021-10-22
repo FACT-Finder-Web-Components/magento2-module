@@ -1,20 +1,18 @@
-<?php /** @var Magento\Framework\View\Element\Template $block */ ?>
+<?php /** @var Magento\Framework\View\Element\Template $block */
+
+/** @var string $categoryPathFieldName */
+$categoryPathFieldName = (string) $block->getData('category_path_field_name');
+/** @var bool $isCategoryPage */
+$isCategoryPage = (bool) $block->getData('is_category_page'); ?>
+
 <div class="ff-asn">
     <ff-asn align="vertical" unresolved>
         <ff-asn-group for-group="all" class="cursor">
-            <div slot="groupCaption" class="groupCaption">{{group.name}}</div>
+            <?= $block->getChildHtml('factfinder.asn_group') ?>
+        </ff-asn-group>
 
-            <ff-asn-group-element>
-                <div slot="selected"><span class="filterName">{{element.name}}</span></div>
-                <div slot="unselected"><span class="filterName">{{element.name}}</span></div>
-            </ff-asn-group-element>
-
-            <div data-container="detailedLinks"><div data-content="detailedLinks"></div></div>
-            <div data-container="hiddenLinks"><div data-content="hiddenLinks"></div></div>
-
-            <div data-container="removeFilter"><?= $block->escapeHtml(__('Remove Filter')) ?></div>
-            <div data-container="showMore"><span class="text"><?= $block->escapeHtml(__('Show More')) ?></span></div>
-            <div data-container="showLess"><span class="text"><?= $block->escapeHtml(__('Show Less')) ?></span></div>
+        <ff-asn-group for-group="<?= /* @noEscape */ $categoryPathFieldName ?>ROOT" <?php if($isCategoryPage):?> class="hidden" <?php endif;?>>
+            <?= $block->getChildHtml('factfinder.asn_group') ?>
         </ff-asn-group>
 
         <ff-asn-group-slider>
