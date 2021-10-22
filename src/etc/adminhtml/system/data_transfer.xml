@@ -30,7 +30,7 @@
 
         <field id="ff_upload_authentication_key" translate="labff_transfer_authenticationel" type="Magento\Config\Block\System\Config\Form\Field\File" sortOrder="22" showInDefault="1" showInWebsite="1" >
             <label>Choose key file</label>
-            <comment><![CDATA[<div class="message message-notice notice"><div data-ui-id="messages-message-success">You need to save configuration first to upload key file before testing the connection.</div></div>]]></comment>
+            <comment><![CDATA[<div class="message message-notice notice">Magento uploader requires files to have an extension. Files without it will not be uploaded</div>]]></comment>
             <depends>
                 <field id="ff_upload_authentication_type">key</field>
             </depends>
