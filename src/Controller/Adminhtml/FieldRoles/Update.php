@@ -68,12 +68,13 @@ class Update extends Action
             $searchAdapter = (new AdapterFactory($client, $this->communicationConfig->getVersion()))->getSearchAdapter();
             $response      = $searchAdapter->search($this->communicationConfig->getChannel($storeId), 'Search.ff');
             $searchResult  = $this->communicationConfig->getVersion() === Version::NG ? $response : $response['searchResult'];
-            if (!isset($searchResult['fieldRoles'])) {
-                $result->setData(['message' => __('Search result does not contain field roles')]);
-            } else {
+            $result->setData(['message' => __('Search result does not contain field roles')]);
+
+            if (isset($searchResult['fieldRoles'])) {
                 $this->fieldRoles->saveFieldRoles($searchResult['fieldRoles'], $storeId);
                 $result->setData(['message' => __('Field roles updated successfully')]);
             }
+
         } catch (ClientExceptionInterface $e) {
             $result->setData(['message' => $e->getMessage()]);
         }
