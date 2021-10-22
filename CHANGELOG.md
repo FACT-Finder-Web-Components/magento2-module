@@ -1,22 +1,15 @@
 # Changelog
-## Unreleased
-### BREAKING
-- SSR
-    Due to FACT-Finder filters format in GET request (multiple parameters with the same name `filter`) we were in need to change the implementation of:  
-    `src/Model/Ssr/SearchAdapter.php` - changed function definition 
-    `public function search(string $query = '*', array $params = []): array` to `public function search(string $paramString): array`
-### Add
- - SSR
-   - Now remembers the user selected search parameters (filters, sorting, etc.)
+## [v2.3.0]
+### Added
+- Category Page
+    - for NG version implement `category-page` attribute
  - Upload
-   - Implement SFTP upload with public key authentication method     
+    - Implement SFTP upload with public key authentication method
 
 ### Fix
  - Tracking
     - Add to cart tracking throws an error on versions less than 2.4
- - Suggest
-   - Category suggestion are redirected to search result page with query *
-   
+  
 ## [v2.2.0] - 2021.10.01
 ### Added
   - SSR

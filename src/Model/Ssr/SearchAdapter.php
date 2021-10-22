@@ -4,13 +4,10 @@ declare(strict_types=1);
 
 namespace Omikron\Factfinder\Model\Ssr;
 
-use Omikron\FactFinder\Communication\Client\ClientBuilder;
-use Omikron\FactFinder\Communication\Client\ClientException;
-use Omikron\FactFinder\Communication\Resource\AdapterFactory;
-use Omikron\FactFinder\Communication\Version;
-use Omikron\Factfinder\Model\Api\CredentialsFactory;
 use Omikron\Factfinder\Model\Config\CommunicationConfig;
-use Psr\Http\Message\ResponseInterface;
+use Omikron\FactFinder\Communication\Client\ClientBuilder;
+use Omikron\FactFinder\Communication\Resource\AdapterFactory;
+use Omikron\Factfinder\Model\Api\CredentialsFactory;
 
 class SearchAdapter
 {
@@ -38,36 +35,16 @@ class SearchAdapter
         $this->priceFormatter      = $priceFormatter;
     }
 
-    public function search(string $paramString, bool $navigationRequest): array
+    public function search(string $query = '*', array $params = []): array
     {
         $client = $this->clientBuilder
             ->withServerUrl($this->communicationConfig->getAddress())
-            ->withCredentials($this->credentialsFactory->create())
-            ->withVersion($this->communicationConfig->getVersion())
-            ->build();
+            ->withCredentials($this->credentialsFactory->create());
 
-        $endpoint = $this->createEndpoint($paramString, $navigationRequest);
-        $response = $client->request('GET', $endpoint);
+        $searchAdapter           = (new AdapterFactory($client, $this->communicationConfig->getVersion()))->getSearchAdapter();
+        $searchResult            = $searchAdapter->search($this->communicationConfig->getChannel(), $query, $params);
+        $searchResult['records'] = $this->priceFormatter->format($searchResult);
 
-        if (!$response) {
-            throw new ClientException('The response was empty');
-        }
-
-        return $this->priceFormatter->format($this->searchResult($response));
-    }
-
-    private function searchResult(ResponseInterface $response): array
-    {
-        return json_decode((string) $response->getBody(), true);
-    }
-
-    private function createEndpoint(string $paramString, bool $navigationRequest)
-    {
-        $channel  = $this->communicationConfig->getChannel();
-        $endpoint = $navigationRequest ? 'navigation' : 'search';
-
-        return $this->communicationConfig->getVersion() == Version::NG
-            ? "rest/v4/{$endpoint}/{$channel}?{$paramString}"
-            : "Search.ff?channel={$channel}&{$paramString}&format=json";
+        return $searchResult;
     }
 }
