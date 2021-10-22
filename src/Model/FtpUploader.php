@@ -85,6 +85,14 @@ class FtpUploader
 
     private function createExportDirectory(): void
     {
+        $directoryExist = count(array_filter($this->client->ls(), function (array $entry) {
+                return $entry['text'] === self::EXPORT_DIRECTORY_NAME;
+            })) > 0;
+
+        if ($directoryExist) {
+            return;
+        }
+
         $result = $this->client->mkdir('export', 0777, false);
         if (!$result) {
             throw new FileSystemException(__('Failed to create export directory'));
