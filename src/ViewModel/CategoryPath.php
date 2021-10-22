@@ -29,20 +29,31 @@ class CategoryPath implements ArgumentInterface
         CommunicationConfig $communicationConfig,
         string $param = 'CategoryPath',
         array $initial = []
-    ) {
-        $this->param               = $param;
-        $this->registry            = $registry;
+    )
+    {
+        $this->param = $param;
+        $this->registry = $registry;
         $this->communicationConfig = $communicationConfig;
-        $this->initial             = $initial;
+        $this->initial = $initial;
     }
 
-    public function __toString(): string
+    public function __toString()
     {
-        $path = $this->communicationConfig->getVersion() === Version::NG
-            ? $this->ngPath($this->getCurrentCategory())
-            : $this->standardPath($this->getCurrentCategory());
+        return $this->communicationConfig->getVersion() === Version::NG ? $this->getCategoryPath() : $this->getAddParams();
+    }
 
-        return implode(',', $path);
+    public function getCategoryPath(): string
+    {
+        if ($this->communicationConfig->getVersion() === Version::NG) return implode(',', $this->ngPath($this->getCurrentCategory()));
+
+        return '';
+    }
+
+    public function getAddParams(): string
+    {
+        if ($this->communicationConfig->getVersion() === Version::NG) return '';
+
+        return implode(',', $this->standardPath($this->getCurrentCategory()));
     }
 
     public function getCategoryPathFieldName(): string
@@ -52,11 +63,11 @@ class CategoryPath implements ArgumentInterface
 
     private function standardPath(?Category $category): array
     {
-        $path  = 'ROOT';
+        $path = 'ROOT';
         $value = $this->initial;
         foreach ($this->getParentCategories($category) as $item) {
             $value[] = sprintf("filter{$this->param}%s=%s", $path, urlencode(trim($item->getName())));
-            $path    .= urlencode('/' . trim($item->getName()));
+            $path .= urlencode('/' . trim($item->getName()));
         }
 
         return $value;
@@ -64,22 +75,16 @@ class CategoryPath implements ArgumentInterface
 
     private function ngPath(?Category $category): array
     {
-        $path = implode('/', $this->getCategoryPath($category));
-
-        return $this->initial + [sprintf('filter=%s', urlencode($this->param . ':' . $path))];
+        $path = implode('/', $this->createPathFromCategory($category));
+        return [sprintf('filter=%s', urlencode($this->param . ':' . $path))];
     }
 
-    private function getCategoryPath(?Category $category): array
+    private function createPathFromCategory(?Category $category): array
     {
         return array_map(function (Category $item): string {
             return (string) $item->getName();
         }, $category ? $category->getParentCategories() : []
         );
-    }
-
-    public function getValue()
-    {
-        return $this;
     }
 
     /**
