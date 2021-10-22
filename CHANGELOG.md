@@ -1,5 +1,5 @@
 # Changelog
-## [v2.3.0]
+## [v2.3.0] - 2021.10.25
 ### Added
 - Category Page
     - for NG version implement `category-page` attribute
@@ -9,6 +9,7 @@
 ### Fix
  - Tracking
     - Add to cart tracking throws an error on versions less than 2.4
+    - click tracking is not sent correct query on category page
   
 ## [v2.2.0] - 2021.10.01
 ### Added
@@ -345,6 +346,7 @@
 ### Added
 - Feed Export: Export feed file is now available via separate link
 
+[v2.3.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v2.3.0
 [v2.2.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v2.2.0
 [v2.1.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v2.1.0
 [v2.0.2]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v2.0.2
