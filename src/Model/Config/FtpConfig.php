@@ -39,11 +39,6 @@ class FtpConfig
         return (string) $this->scopeConfig->getValue(self::FPT_UPLOAD_CONFIG_PATH . $field);
     }
 
-    public function isSecure(): bool
-    {
-        return $this->scopeConfig->isSetFlag(self::FPT_UPLOAD_CONFIG_PATH . 'type') == self::UPLOAD_TYPE_SFTP;
-    }
-
     public function isPublicKeyAuthentication(): bool
     {
         return $this->getConfig('authentication_type') === self::AUTHENTICATION_TYPE_KEY;
