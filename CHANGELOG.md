@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+ - Category Page & Search Result Page
+  - fix asn-group template has not been loaded correctly
+
 ## [v2.3.0] - 2021.10.25
 ### Added
 - Category Page
@@ -9,7 +13,7 @@
 ### Fix
  - Tracking
     - Add to cart tracking throws an error on versions less than 2.4
-    - click tracking is not sent correct query on category page
+    - Click tracking is not sent correct query on category page
   
 ## [v2.2.0] - 2021.10.01
 ### Added
