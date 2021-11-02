@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+ - Category Page & Search Result Page
+  - fix asn-group template has not been loaded correctly
+
 ## v3.0.0 - 2021.10.25
 ### BREAKING
 - SSR
