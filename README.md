@@ -382,7 +382,7 @@ Finally, run `bin/magento cache:clean config` to replace old DI configuration wi
 ### Adding new column
 The standard feed contains all data FACT-Finder® requires to work. However, you may want to export additional information
 which is relevant for your project and not part of a default Magento 2 installation.  In order to do so, let's take a look
-into the DataProvider definition:
+into the FieldProvider definition:
  
  ```xml
 <type name="Omikron\Factfinder\Model\Export\Catalog\FieldProvider">
@@ -396,21 +396,11 @@ into the DataProvider definition:
  </type>
  ```
 
-The constructor argument `productFields` stores references to specific fields that require more logic than simply retrieving
+The constructor argument `productFields` stores reference to fields that require more logic than simply retrieving
 data from the product. Let's assume we want to add a new column `BrandLogo` containing image URLs. In your module DI, add
-the new field definition:
- 
-```xml
-<type name="Omikron\Factfinder\Model\Export\Catalog\ProductType\SimpleDataProvider">
-    <arguments>
-        <argument name="productFields" xsi:type="array">
-            <item name="BrandLogo" xsi:type="object">YOUR_VENDOR\YOUR_MODULE\Model\Export\Catalog\ProductField\BrandLogo</item>
-        </argument>
-    </arguments>
-</type>
-```
+the new field definition in the same way as defaults are added.
 
-Again, there is no need to copy all other field definitions: Magento will merge the existing ones with the one you just created.
+Again, there is no need to copy all other field definitions: Magento will merge the existing columns with the one you just have added.
 In order for your field exporter to work, it has to implement `Omikron\Factfinder\Api\Export\FieldInterface`.
 Your class skeleton to export the brand logo could look like this:
  
