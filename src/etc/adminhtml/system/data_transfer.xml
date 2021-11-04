@@ -20,7 +20,11 @@
             <label>Upload User</label>
         </field>
 
-        <field id="ff_upload_authentication_type" translate="label comment" type="select" sortOrder="21" showInDefault="1">
+        <field id="ff_upload_dir" translate="label" type="text" sortOrder="21" showInDefault="1" showInWebsite="0" showInStore="0">
+            <label>Upload Directory</label>
+        </field>
+
+        <field id="ff_upload_authentication_type" translate="label comment" type="select" sortOrder="22" showInDefault="1">
             <label>Authentication</label>
             <options>
                 <option label="password">password</option>
@@ -28,7 +32,7 @@
             </options>
         </field>
 
-        <field id="ff_upload_authentication_key" translate="labff_transfer_authenticationel" type="Magento\Config\Block\System\Config\Form\Field\File" sortOrder="22" showInDefault="1" showInWebsite="1" >
+        <field id="ff_upload_authentication_key" translate="labff_transfer_authenticationel" type="Magento\Config\Block\System\Config\Form\Field\File" sortOrder="23" showInDefault="1" showInWebsite="1" >
             <label>Choose key file</label>
             <comment><![CDATA[<div class="message message-notice notice">Magento uploader requires files to have an extension. Files without it will not be uploaded</div>]]></comment>
             <depends>
@@ -38,7 +42,7 @@
             <upload_dir config="system">factfinder/sftp</upload_dir>
         </field>
 
-        <field id="ff_upload_key_passphrase" translate="label" type="obscure" sortOrder="23" showInDefault="1" showInWebsite="0" showInStore="0">
+        <field id="ff_upload_key_passphrase" translate="label" type="obscure" sortOrder="24" showInDefault="1" showInWebsite="0" showInStore="0">
             <label>Key Passphrase</label>
             <depends>
                 <field id="ff_upload_authentication_type">key</field>
@@ -46,7 +50,7 @@
             <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
         </field>
 
-        <field id="ff_upload_password" translate="label" type="obscure" sortOrder="24" showInDefault="1" showInWebsite="0" showInStore="0">
+        <field id="ff_upload_password" translate="label" type="obscure" sortOrder="25" showInDefault="1" showInWebsite="0" showInStore="0">
             <depends>
                 <field id="ff_upload_authentication_type">password</field>
             </depends>
@@ -58,29 +62,35 @@
             <label>Port</label>
             <comment>Leave empty if you use default port 21.</comment>
         </field>
+
         <field id="ff_upload_ssl" translate="label comment" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
             <label>Use SSL</label>
             <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
         </field>
+
         <field id="ff_upload_test_connection" translate="label comment" type="button" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
             <label>Test Upload Connection</label>
             <frontend_model>Omikron\Factfinder\Block\Adminhtml\System\Config\Button\TestFtpConnection</frontend_model>
         </field>
+
         <field id="ff_update_field_roles" translate="label comment" type="button" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
             <label>Update Field Roles</label>
             <frontend_model>Omikron\Factfinder\Block\Adminhtml\System\Config\Button\UpdateFieldRoles</frontend_model>
             <comment>On buttonclick Field Roles set in FACT-Finder backend will be stored in module configuration</comment>
         </field>
+
         <field id="ff_createfeed" translate="label comment" type="button" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
             <label>Generate Export File</label>
             <frontend_model>Omikron\Factfinder\Block\Adminhtml\System\Config\Button\Feed</frontend_model>
             <comment>On buttonclick CSV exports of all your products will be generated and uploaded to the specified FTP Server.</comment>
         </field>
+
         <field id="ff_push_import_enabled" translate="label comment" type="select" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
             <label>Automatic import of product data</label>
             <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
             <comment>Runs an automatic import of the product data to the FACT-Finder servers, after the FTP upload is finished.</comment>
         </field>
+
         <field id="ff_push_import_type" translate="label" type="multiselect" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="1">
             <label>Pushed import types</label>
             <options>
@@ -99,6 +109,7 @@
         <field id="ff_upload_url_user" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
             <label>Basic Auth User</label>
         </field>
+
         <field id="ff_upload_url_password" translate="label" type="obscure" sortOrder="30" showInDefault="1" showInWebsite="0" showInStore="0">
             <label>Basic Auth Password</label>
             <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
