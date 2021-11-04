@@ -12,8 +12,6 @@ use Omikron\Factfinder\Model\Filesystem\Io\Factory as UploadFactory;
 
 class FtpUploader
 {
-    private const EXPORT_DIRECTORY_NAME = 'export';
-
     /** @var FtpConfig */
     private $config;
 
@@ -40,9 +38,8 @@ class FtpUploader
         try {
             $this->client = $this->uploadFactory->create($params);
             $this->client->open($this->trimProtocol($params));
-            //ensure export directory is created
-            $this->createExportDirectory();
-            $this->client->cd('export');
+            $this->dirExist($params['dir']);
+            $this->client->cd($params['dir']);
             // Check write permission
             $this->writeFile($fileName);
             $this->client->rm($fileName);
@@ -60,10 +57,11 @@ class FtpUploader
     public function upload(string $filename, StreamInterface $stream): void
     {
         try {
+            $dir = $this->config->getUploadDirectory();
             $this->client = $this->uploadFactory->create();
             $this->client->open($this->trimProtocol($this->config->toArray()));
-            $this->createExportDirectory();
-            $this->client->cd('export');
+            $this->dirExist($dir);
+            $this->client->cd($dir);
             $this->writeFile($filename, $stream->getContent());
         } finally {
             $this->client->close();
@@ -85,19 +83,11 @@ class FtpUploader
         }
     }
 
-    private function createExportDirectory(): void
+    private function dirExist(string $dir): void
     {
-        $directoryExist = count(array_filter($this->client->ls(), function (array $entry) {
-                return $entry['text'] === self::EXPORT_DIRECTORY_NAME;
-            })) > 0;
-
-        if ($directoryExist) {
-            return;
-        }
-
-        $result = $this->client->mkdir('export', 0777, false);
+        $result = $this->client->cd($dir);
         if (!$result) {
-            throw new FileSystemException(__('Failed to create export directory'));
+            throw new FileSystemException(__('Upload directory does not exist or there is no privileges to access it.'));
         }
     }
 }
