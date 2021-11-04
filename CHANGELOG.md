@@ -1,5 +1,10 @@
 # Changelog
-## Unreleased
+## v3.0.1 - 2021.11.04
+### Add
+ - Upload
+  - Add Upload Directory field which allows user to define where uploaded file should be saved
+  
+### Fix
  - Category Page & Search Result Page
   - fix asn-group template has not been loaded correctly
 
@@ -365,6 +370,7 @@
 ### Added
 - Feed Export: Export feed file is now available via separate link
 
+[v3.0.1]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.0.1
 [v3.0.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.0.0
 [v2.3.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v2.3.0
 [v2.2.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v2.2.0
