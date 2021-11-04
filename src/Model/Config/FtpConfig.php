@@ -44,6 +44,11 @@ class FtpConfig
         return $this->getConfig('authentication_type') === self::AUTHENTICATION_TYPE_KEY;
     }
 
+    public function getUploadDirectory(): string
+    {
+        return (string) $this->getConfig('dir');
+    }
+
     public function getKeyFileName(): string
     {
         return 'factfinder/sftp/' . $this->getConfig('authentication_key');
