@@ -19,7 +19,8 @@ customise them.
         - [FACT-Finder version](#fact-finder-version)
         - [Server Side Rendering](#server-side-rendering)
     - [Advanced Settings](#advanced-settings)
-    - [Activated Web Components](#activated-web-components)
+        - [Currency and Country Settings](#currency-and-country-settings)
+    - [Optional Custom Elements](#optional-custom-elements)
     - [Export Settings](#export-settings)
     - [CMS Export Settings](#cms-export-settings)
     - [Data Transfer Settings](#data-transfer-settings)
@@ -129,6 +130,13 @@ You don't need to set currency nor country only for module purposes. It will use
 component as respectively `currency-code` and `country-code` parameters. You can find these settings under Magento General settings
 - [How to configure currency?](https://docs.magento.com/m2/ce/user_guide/stores/currency-configuration.html)
 - [How to configure country?](https://docs.magento.com/m2/ce/user_guide/stores/country-options.html)
+
+### Optional Custom Elements
+![Optional Custom Elements](docs/assets/optional-custom-elements.png "Optional Custom Elements")
+Some of the custom elements we offer works only when specific additional FACT-Finder modules has been purchased.
+Here you can disabled them, if you do not use utilize this part of FACT-Finder functionality
+
+**Note:** Paging has been added cause with infinite scrolling enabled in ff-record list, this custom element is redundant  
 
 ### Export Settings
 ![Product Data Export](docs/assets/export-settings.png "Product Data Export")

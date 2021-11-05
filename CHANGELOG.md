@@ -1,4 +1,9 @@
 # Changelog
+## Unreleased
+### Add
+ - Configuration
+    - Add Enable/Disable optional custom elements in module config page
+ 
 ## v3.0.1 - 2021.11.04
 ### Add
  - Upload

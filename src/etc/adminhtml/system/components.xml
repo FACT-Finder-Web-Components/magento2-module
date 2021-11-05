@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<include xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_include.xsd">
+    <group id="components" translate="label comment" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+        <label>Optional Custom Elements</label>
+        <field id="campaign_advisor" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Advisor Campaigns</label>
+            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+        </field>
+
+        <field id="campaign_redirect" translate="label" type="select" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Redirect Campaigns</label>
+            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+        </field>
+
+        <field id="campaign_feedbacktext" translate="label" type="select" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Feedback Campaigns</label>
+            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+        </field>
+
+        <field id="product_campaigns" translate="label" type="select" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Product Campaigns</label>
+            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+        </field>
+
+        <field id="shopping_cart_campaigns" translate="label" type="select" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Shopping Cart Campaigns</label>
+            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+        </field>
+
+        <field id="recommendation" translate="label" type="select" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Recommendations</label>
+            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+        </field>
+
+        <field id="similar_products" translate="label" type="select" sortOrder="8" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Similar products</label>
+            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+        </field>
+
+        <field id="paging" translate="label" type="select" sortOrder="9" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Paging</label>
+            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+        </field>
+    </group>
+</include>
