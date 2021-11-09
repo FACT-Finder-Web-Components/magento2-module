@@ -13,8 +13,8 @@
         </referenceContainer>
 
         <container name="factfinder.campaigns">
-            <block class="Magento\Framework\View\Element\Template" name="factfinder.campaign.advisor" template="Omikron_Factfinder::ff/campaign-advisor.phtml" />
-            <block class="Magento\Framework\View\Element\Template" name="factfinder.campaign.redirect" template="Omikron_Factfinder::ff/campaign-redirect.phtml" />
+            <block class="Magento\Framework\View\Element\Template" name="factfinder.campaign.advisor" ifconfig="factfinder/components/campaign_advisor" template="Omikron_Factfinder::ff/campaign-advisor.phtml" />
+            <block class="Magento\Framework\View\Element\Template" name="factfinder.campaign.redirect" ifconfig="factfinder/components/campaign_redirect" template="Omikron_Factfinder::ff/campaign-redirect.phtml" />
             <block class="Magento\Framework\View\Element\Template" name="factfinder.campaign.pushedproducts" template="Omikron_Factfinder::ff/campaign-pushed-products.phtml" />
         </container>
 
