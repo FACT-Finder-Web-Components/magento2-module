@@ -32,7 +32,7 @@
             </options>
         </field>
 
-        <field id="ff_upload_authentication_key" translate="labff_transfer_authenticationel" type="Magento\Config\Block\System\Config\Form\Field\File" sortOrder="23" showInDefault="1" showInWebsite="1" >
+        <field id="ff_upload_authentication_key" translate="labff_transfer_authenticationel" type="Magento\Config\Block\System\Config\Form\Field\File" sortOrder="23" showInDefault="1" >
             <label>Choose key file</label>
             <comment><![CDATA[<div class="message message-notice notice">Magento uploader requires files to have an extension. Files without it will not be uploaded</div>]]></comment>
             <depends>
@@ -63,7 +63,7 @@
             <comment>Leave empty if you use default port 21.</comment>
         </field>
 
-        <field id="ff_upload_ssl" translate="label comment" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+        <field id="ff_upload_ssl" translate="label comment" type="select" sortOrder="50" showInDefault="1">
             <label>Use SSL</label>
             <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
         </field>

@@ -58,7 +58,7 @@ class FtpUploader
     {
         try {
             $dir = $this->config->getUploadDirectory();
-            $this->client = $this->uploadFactory->create();
+            $this->client = $this->uploadFactory->create($this->config->toArray());
             $this->client->open($this->trimProtocol($this->config->toArray()));
             $this->dirExist($dir);
             $this->client->cd($dir);

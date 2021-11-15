@@ -1,8 +1,12 @@
 # Changelog
-## Unreleased
+## v3.0.2 - 2021.11.15
 ### Add
  - Configuration
     - Add Enable/Disable optional custom elements in module config page
+ 
+ ### Fix
+ - Upload
+    - Fix missing parameters passed to UploadFactory
  
 ## v3.0.1 - 2021.11.04
 ### Add
@@ -375,6 +379,7 @@
 ### Added
 - Feed Export: Export feed file is now available via separate link
 
+[v3.0.2]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.0.2
 [v3.0.1]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.0.1
 [v3.0.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.0.0
 [v2.3.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v2.3.0
