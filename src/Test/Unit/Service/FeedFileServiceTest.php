@@ -5,6 +5,9 @@ namespace Omikron\Factfinder\Service;
 
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @covers FeedFileService
+ */
 class FeedFileServiceTest extends TestCase
 {
     /** @var FeedFileService */
