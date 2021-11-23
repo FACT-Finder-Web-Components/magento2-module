@@ -33,6 +33,7 @@
                 <ff_push_import_enabled>1</ff_push_import_enabled>
                 <ff_push_import_type>data,suggest</ff_push_import_type>
                 <ff_upload_port>21</ff_upload_port>
+                <ff_upload_dir>/</ff_upload_dir>
             </data_transfer>
             <basic_auth_data_transfer>
                 <ff_upload_url_password backend_model="Magento\Config\Model\Config\Backend\Encrypted" />
