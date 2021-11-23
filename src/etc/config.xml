@@ -32,6 +32,7 @@
                 <ff_cron_enabled>0</ff_cron_enabled>
                 <ff_push_import_enabled>1</ff_push_import_enabled>
                 <ff_push_import_type>data,suggest</ff_push_import_type>
+                <ff_upload_dir>/</ff_upload_dir>
                 <ff_upload_port>21</ff_upload_port>
             </data_transfer>
             <basic_auth_data_transfer>
