@@ -22,14 +22,14 @@ class FeedFileServiceTest extends TestCase
 
     public function test_will_throw_exception_on_empty_export_type()
     {
-        $this->expectException("Exception");
+        $this->expectException('Exception');
         $this->expectExceptionMessage('Export type should not be empty');
         $this->assertSame('export.test_type.test_channel.csv', $this->feedFileService->getFeedExportFilename('', 'test_channel'));
     }
 
     public function test_will_throw_exception_on_empty_export_channel()
     {
-        $this->expectException("Exception");
+        $this->expectException('Exception');
         $this->expectExceptionMessage('Channel should not be empty');
         $this->assertSame('export.test_type.test_channel.csv', $this->feedFileService->getFeedExportFilename('test_type', ''));
     }
