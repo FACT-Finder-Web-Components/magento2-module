@@ -32,8 +32,8 @@
                 <item name="ImageURL" xsi:type="string">ImageURL</item>
                 <item name="CategoryPath" xsi:type="string">CategoryPath</item>
                 <item name="Attributes" xsi:type="string">Attributes</item>
-                <item name="NumericalAttributes" xsi:type="string">NumericalAttributes</item>
                 <item name="HasVariants" xsi:type="string">HasVariants</item>
+                <item name="NumericalAttributes" xsi:type="string">NumericalAttributes</item>
             </argument>
         </arguments>
     </virtualType>
