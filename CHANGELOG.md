@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Add
+- Unify filename creation for feed export file
+
 ## v2.3.2 - 2021.11.15
 ### Add
  - Configuration
