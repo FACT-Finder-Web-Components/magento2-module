@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Add
+- Unify filename creation for feed export file
+
 ## [v1.8.0] - 2021.10.01
 ### Added
 - Add possibility to select field to be exported as numerical in module configuration. Numerical fields will be exported in new multi-attribute column `NumericalAttributes`
