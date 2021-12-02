@@ -12,6 +12,7 @@ use Omikron\Factfinder\Api\Config\ChannelProviderInterface;
 use Omikron\Factfinder\Model\Export\FeedFactory as FeedGeneratorFactory;
 use Omikron\Factfinder\Model\StoreEmulation;
 use Omikron\Factfinder\Model\Stream\CsvFactory;
+use Omikron\Factfinder\Service\FeedFileService;
 
 class Product extends Action
 {
@@ -58,7 +59,7 @@ class Product extends Action
     {
         $storeId = (int) $this->getRequest()->getParam('store', $this->storeManager->getDefaultStoreView()->getId());
         $this->storeEmulation->runInStore($storeId, function () {
-            $filename = "export.{$this->channelProvider->getChannel()}.csv";
+            $filename = (new FeedFileService())->getFeedExportFilename($this->feedType, $this->channelProvider->getChannel());
             $stream   = $this->csvFactory->create(['filename' => "factfinder/{$filename}"]);
             $this->feedGeneratorFactory->create($this->feedType)->generate($stream);
             $this->fileFactory->create($filename, $stream->getContent());

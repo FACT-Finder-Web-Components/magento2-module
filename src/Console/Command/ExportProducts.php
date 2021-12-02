@@ -18,9 +18,12 @@ use Omikron\Factfinder\Model\Stream\CsvFactory;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Omikron\Factfinder\Service\FeedFileService;
 
 class ExportProducts extends \Symfony\Component\Console\Command\Command
 {
+    private const EXPORT_TYPE = 'product';
+
     /** @var ScopeConfigInterface */
     private $scopeConfig;
 
@@ -112,7 +115,7 @@ class ExportProducts extends \Symfony\Component\Console\Command\Command
                 (int) $storeId,
                 function () use ($storeId, $input, $output) {
                     if ($this->communicationConfig->isChannelEnabled((int) $storeId)) {
-                        $filename = "export.{$this->communicationConfig->getChannel((int) $storeId)}.csv";
+                        $filename = (new FeedFileService())->getFeedExportFilename(self::EXPORT_TYPE, $this->communicationConfig->getChannel((int) $storeId));
                         $stream = $this->csvFactory->create(['filename' => "factfinder/{$filename}"]);
                         $this->feedGeneratorFactory->create('product')->generate($stream);
                         $path = $this->filesystem->getDirectoryWrite(DirectoryList::VAR_DIR)
