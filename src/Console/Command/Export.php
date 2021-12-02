@@ -14,6 +14,7 @@ use Omikron\Factfinder\Model\Export\FeedFactory as FeedGeneratorFactory;
 use Omikron\Factfinder\Model\FtpUploader;
 use Omikron\Factfinder\Model\StoreEmulation;
 use Omikron\Factfinder\Model\Stream\CsvFactory;
+use Omikron\Factfinder\Service\FeedFileService;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -96,10 +97,12 @@ class Export extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->state->setAreaCode('frontend');
+
         foreach ($this->getStoreIds((int) $input->getOption('store')) as $storeId) {
             $this->storeEmulation->runInStore($storeId, function () use ($storeId, $input, $output) {
+                $feedFileService = new FeedFileService();
                 $type     = $input->getArgument('type');
-                $filename = "export.{$type}.{$this->communicationConfig->getChannel($storeId)}.csv";
+                $filename = $feedFileService->getFeedExportFilename($type, $this->communicationConfig->getChannel($storeId));
                 $stream   = $this->csvFactory->create(['filename' => "factfinder/{$filename}"]);
 
                 $this->feedGeneratorFactory->create($type)->generate($stream);
