@@ -1,7 +1,8 @@
 var config = {
     map: {
         '*': {
-            factfinder: 'Omikron_Factfinder/ff-web-components/bundle'
+            factfinder: 'Omikron_Factfinder/ff-web-components/bundle',
+            ffCallbacks: 'Omikron_Factfinder/js/callbacks',
         }
     },
     config: {

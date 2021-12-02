@@ -46,14 +46,27 @@ $viewModel = $block->getViewModel();
     </ff-record-list>
 </div>
 <script>
+    require(['ffCallbacks'], function (ffCallbacks) {
+        document.addEventListener('ffReady', function (ff) {
+            factfinder.communication.EventAggregator.addBeforeDispatchingCallback(function (event) {
+                if (event.type === 'search' || event.type === 'paging') {
+                    const scrollToTopCallback = ffCallbacks.scrollToCallback();
+                    event.success = factfinder.common.concatFunctions(event.success, scrollToTopCallback);
+                }
+            });
+        });
+    });
+
     require(['jquery', 'catalogAddToCart'], function ($) {
-        document.addEventListener('WebComponentsReady', function (ff) {
+        document.addEventListener('WebComponentsReady', function () {
             document.querySelectorAll('ff-record-list').forEach(function (recordList) {
                 recordList.addEventListener('dom-updated', function () {
                     const addToCartForm = $('.product_addtocart_form');
-                    if (addToCartForm) addToCartForm.catalogAddToCart();
+                    if (addToCartForm && addToCartForm.hasOwnProperty('catalogAddToCart') && typeof addToCartForm.catalogAddToCart === 'function') {
+                        addToCartForm.catalogAddToCart();
+                    }
                 });
             })
-        });
+        })
     });
 </script>
