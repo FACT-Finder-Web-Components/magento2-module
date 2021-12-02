@@ -13,6 +13,7 @@ use Omikron\Factfinder\Model\Export\FeedFactory as FeedGeneratorFactory;
 use Omikron\Factfinder\Model\FtpUploader;
 use Omikron\Factfinder\Model\StoreEmulation;
 use Omikron\Factfinder\Model\Stream\CsvFactory;
+use Omikron\Factfinder\Service\FeedFileService;
 
 class Feed
 {
@@ -77,7 +78,7 @@ class Feed
             $this->storeEmulation->runInStore((int) $store->getId(), function () use ($store) {
                 $storeId = (int) $store->getId();
                 if ($this->communicationConfig->isChannelEnabled($storeId)) {
-                    $filename = "export.{$this->communicationConfig->getChannel($storeId)}.csv";
+                    $filename = (new FeedFileService())->getFeedExportFilename($this->feedType, $this->communicationConfig->getChannel());
                     $stream   = $this->csvFactory->create(['filename' => "factfinder/{$filename}"]);
                     $this->feedGeneratorFactory->create($this->feedType)->generate($stream);
                     $this->ftpUploader->upload($filename, $stream);

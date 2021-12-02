@@ -1,9 +1,9 @@
 # Changelog
-## Unreleased 
+## Unreleased
 ### Add
+   - Unify filename creation for feed export file
    - Category Page & Search Result Page
       - add Scroll to top callback after products page change
-      
 ## v2.3.2 - 2021.11.15
 ### Add
  - Configuration
