@@ -29,6 +29,9 @@ class PushImport
     /** @var ClientBuilder */
     private $clientBuilder;
 
+    /** @var string */
+    private $pushImportResult;
+
     public function __construct(
         ClientBuilder $clientBuilder,
         CredentialsFactory $credentialsFactory,
@@ -61,10 +64,38 @@ class PushImport
             throw new ClientException("Can't start a new import process. Another one is still going");
         }
 
+        $responses = [];
         foreach ($dataTypes as $dataType) {
-            $importAdapter->import($channel, $dataType);
+            $responses = array_merge($responses, $importAdapter->import($channel, $dataType));
         }
 
+        $this->pushImportResult = $this->prepareListFromPushImportResponses($responses);
+
         return true;
+    }
+
+    public function getPushImportResult(): string
+    {
+        return $this->pushImportResult;
+    }
+
+    private function prepareListFromPushImportResponses(array $responses): string
+    {
+        $table = '<ul>';
+
+        foreach ($responses as $response) {
+            $importType = sprintf('<li><b>%s push import type</b></li>', $response['importType']);
+
+            $statusMessagesList = sprintf('<ul>%s</ul>', implode('', array_map(function ($message)
+            {return sprintf('<li>%s</li>', $message);}, $response['statusMessages'])));
+            $statusMessages = sprintf('<li><i>Status messages</i></li><li>%s</li>', $statusMessagesList);
+
+            $importType .= $statusMessages;
+            $table .= $importType;
+        }
+
+        $table .= '</ul>';
+
+        return $table;
     }
 }

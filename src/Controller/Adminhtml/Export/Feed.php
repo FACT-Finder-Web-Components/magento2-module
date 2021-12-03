@@ -71,21 +71,40 @@ class Feed extends Action
     public function execute()
     {
         $result = $this->jsonResultFactory->create();
-
         try {
             preg_match('@/store/([0-9]+)/@', (string) $this->_redirect->getRefererUrl(), $match);
             $storeId = (int) ($match[1] ?? $this->storeManager->getDefaultStoreView()->getId());
-            $this->storeEmulation->runInStore($storeId, function () use ($storeId) {
+            $messages = [];
+
+            $this->storeEmulation->runInStore($storeId, function () use ($storeId, &$messages) {
+
                 $filename = (new FeedFileService())->getFeedExportFilename($this->feedType, $this->communicationConfig->getChannel());
                 $stream   = $this->csvFactory->create(['filename' => "factfinder/{$filename}"]);
                 $this->feedGeneratorFactory->create($this->feedType)->generate($stream);
-                $this->ftpUploader->upload($filename, $stream);
-                if ($this->communicationConfig->isPushImportEnabled($storeId)) {
-                    $this->pushImport->execute($storeId);
+                $exportPath = $stream->getExportPath();
+                $messages[] = file_exists($exportPath) ? __(sprintf('<li>Feed file was generated at %s</li>', $exportPath)) : __('<li>Error while creating feed file</li>');
+
+                try{
+                    $this->ftpUploader->upload($filename, $stream);
+                    $messages[] = __('<li>File was uploaded to the FTP server.</li>');
+
+                    if ($this->communicationConfig->isPushImportEnabled($storeId)) {
+                        try{
+                            $this->pushImport->execute($storeId);
+                            $result = $this->pushImport->getPushImportResult();
+                            $messages[] = __('<li>Push import result</li><ul>' . $result . '</ul>');
+                        } catch (Exception $exception) {
+                            $messages[] = __('<li>Push import failed.</li>');
+                        }
+                    }
+                } catch (\Exception $exception) {
+                    $messages[] = __('<li>Error while uploading file to the FTP.</li><li>Push import was not started.</li>');
                 }
             });
 
-            $result->setData(['message' => __('Feed successfully generated')]);
+            $message = sprintf('<ul>%s</ul>', implode('', $messages));
+
+            $result->setData(['message' => $message]);
         } catch (\Exception $e) {
             $result->setData(['message' => $e->getMessage()]);
         }
