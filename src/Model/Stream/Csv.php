@@ -41,6 +41,11 @@ class Csv implements StreamInterface
         return $this->getStream()->readAll();
     }
 
+    public function getFeedFilePath()
+    {
+        return $this->filesystem->getDirectoryWrite(DirectoryList::VAR_DIR)->getAbsolutePath($this->filename);
+    }
+
     private function getStream(): WriteInterface
     {
         if (!$this->stream) {
