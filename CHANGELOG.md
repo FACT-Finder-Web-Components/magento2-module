@@ -1,11 +1,17 @@
 # Changelog
-## Unreleased
+## [v3.1.0] - 2021.12.03
 ### Add
-   - Unify filename creation for feed export file
-   - Category Page & Search Result Page
-      - add Scroll to top callback after products page change
+ - Category Page & Search Result Page
+  - add Scroll to top callback after products page change
+  
+### Fix
+ - Export
+  - Fix feed file names were not unified for all export methods      
       
-## v3.0.2 - 2021.11.15
+### Change
+ - Upgrade Web Components to version 4.0.5
+    
+## [v3.0.2] - 2021.11.15
 ### Add
  - Configuration
     - Add Enable/Disable optional custom elements in module config page
@@ -14,7 +20,7 @@
  - Upload
     - Fix missing parameters passed to UploadFactory
  
-## v3.0.1 - 2021.11.04
+## [v3.0.1] - 2021.11.04
 ### Add
  - Upload
   - Add Upload Directory field which allows user to define where uploaded file should be saved
@@ -23,7 +29,7 @@
  - Category Page & Search Result Page
   - fix asn-group template has not been loaded correctly
 
-## v3.0.0 - 2021.10.25
+## [v3.0.0] - 2021.10.25
 ### BREAKING
 - SSR
     Due to FACT-Finder filters format in GET request (multiple parameters with the same name `filter`) we were in need to change the implementation of:  
@@ -385,6 +391,7 @@
 ### Added
 - Feed Export: Export feed file is now available via separate link
 
+[v3.1.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.1.0
 [v3.0.2]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.0.2
 [v3.0.1]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.0.1
 [v3.0.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.0.0
