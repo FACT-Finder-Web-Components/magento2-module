@@ -1,10 +1,15 @@
 # Changelog
-## Unreleased
+## v3.1.0 - 2021.12.03
 ### Add
-   - Unify filename creation for feed export file
    - Category Page & Search Result Page
       - add Scroll to top callback after products page change
+### Fix
+    - Export
+        - Fix feed file names were not unified for all export methods      
       
+### Change
+    - Upgrade Web Components to version 4.0.3
+    
 ## v3.0.2 - 2021.11.15
 ### Add
  - Configuration
@@ -385,6 +390,7 @@
 ### Added
 - Feed Export: Export feed file is now available via separate link
 
+[v3.1.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.1.0
 [v3.0.2]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.0.2
 [v3.0.1]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.0.1
 [v3.0.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.0.0
