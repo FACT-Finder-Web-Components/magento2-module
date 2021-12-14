@@ -106,8 +106,12 @@ class ConfigurableDataProvider extends SimpleDataProvider
             ->getItems();
     }
 
-    private function getValueOrEmptyString(string $value = null): string
+    /**
+     * @param mixed $value
+     * @return string
+     */
+    private function getValueOrEmptyString($value): string
     {
-        return $value ?? '';
+        return is_string($value) ? $value : '';
     }
 }
