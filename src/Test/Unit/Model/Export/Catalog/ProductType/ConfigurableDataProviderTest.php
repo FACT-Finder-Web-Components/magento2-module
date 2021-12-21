@@ -52,7 +52,9 @@ class ConfigurableDataProviderTest extends TestCase
         $this->numberFormatMock = $this->createMock(NumberFormatter::class);
         $this->configurableProductTypeMock = $this->createMock(ConfigurableProductType::class);
         $this->filterInterfaceMock = $this->createMock(FilterInterface::class);
-        $this->variantFactoryMock = $this->createMock(ProductVariationFactory::class);
+        $this->variantFactoryMock = $this->getMockBuilder(ProductVariationFactory::class)
+            ->disableOriginalConstructor()
+            ->getMock();
         $this->builderMock = $this->createMock(SearchCriteriaBuilder::class);
 
         $this->repositoryMock->method('get')->willReturnMap(
