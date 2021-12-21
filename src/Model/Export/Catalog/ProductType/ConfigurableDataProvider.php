@@ -17,6 +17,9 @@ use Omikron\Factfinder\Model\Formatter\NumberFormatter;
 
 class ConfigurableDataProvider extends SimpleDataProvider
 {
+    /** @var string[] */
+    private const ALLOWED_TYPES = ['string', 'integer'];
+
     /** @var ConfigurableProductType */
     private $productType;
 
@@ -87,7 +90,7 @@ class ConfigurableDataProvider extends SimpleDataProvider
     {
         return array_reduce($this->productType->getConfigurableOptions($product), function (array $res, array $option) {
             foreach ($option as ['sku' => $sku, 'super_attribute_label' => $label, 'option_title' => $value]) {
-                $res[$this->getValueOrEmptyString($sku)][] = "{$this->filter->filterValue($this->getValueOrEmptyString($label))}={$this->filter->filterValue($this->getValueOrEmptyString($value))}";
+                $res[$sku][] = "{$this->filter->filterValue($this->getValueOrEmptyString($label))}={$this->filter->filterValue($this->getValueOrEmptyString($value))}";
             }
             return $res;
         }, []);
@@ -108,10 +111,10 @@ class ConfigurableDataProvider extends SimpleDataProvider
 
     /**
      * @param mixed $value
-     * @return string
+     * @return string|integer
      */
-    private function getValueOrEmptyString($value): string
+    private function getValueOrEmptyString($value)
     {
-        return is_string($value) ? $value : '';
+        return in_array(gettype($value), self::ALLOWED_TYPES) ? $value : '';
     }
 }
