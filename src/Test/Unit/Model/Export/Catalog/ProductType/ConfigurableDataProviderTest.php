@@ -4,16 +4,15 @@ declare(strict_types=1);
 
 namespace Omikron\Factfinder\Model\Export\Catalog\ProductType;
 
-use Omikron\Factfinder\Api\Filter\FilterInterface;
-use Omikron\Factfinder\Model\Export\Catalog\Entity\ProductVariationFactory;
-use Omikron\Factfinder\Model\Export\Catalog\ProductType\ConfigurableDataProvider;
-use PHPUnit\Framework\TestCase;
 use Magento\Catalog\Api\Data\ProductInterface;
 use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Catalog\Model\Product;
-use Omikron\Factfinder\Model\Formatter\NumberFormatter;
 use Magento\ConfigurableProduct\Model\Product\Type\Configurable as ConfigurableProductType;
 use Magento\Framework\Api\SearchCriteriaBuilder;
+use Omikron\Factfinder\Api\Filter\FilterInterface;
+use Omikron\Factfinder\Model\Export\Catalog\Entity\ProductVariationFactory;
+use Omikron\Factfinder\Model\Formatter\NumberFormatter;
+use PHPUnit\Framework\TestCase;
 
 class ConfigurableDataProviderTest extends TestCase
 {
