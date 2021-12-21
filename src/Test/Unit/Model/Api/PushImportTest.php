@@ -108,7 +108,7 @@ class PushImportTest extends TestCase
 
     private function importResponseOk(): ResponseInterface
     {
-        return $this->createConfiguredMock(ResponseInterface::class, ['getBody' => '{"status":"200"}']);
+        return $this->createConfiguredMock(ResponseInterface::class, ['getBody' => '{"0": {"importType": "data", "statusMessages": {},"errorMessages": {}}}']);
     }
 
     private function importResponseBad(string $errorField): ResponseInterface
