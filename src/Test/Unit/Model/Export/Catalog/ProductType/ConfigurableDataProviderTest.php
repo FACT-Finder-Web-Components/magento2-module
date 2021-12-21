@@ -57,23 +57,9 @@ class ConfigurableDataProviderTest extends TestCase
             ->getMock();
         $this->builderMock = $this->createMock(SearchCriteriaBuilder::class);
 
-        $this->repositoryMock->method('get')->willReturnMap(
-            [
-                [
-                    1, 1, $this->createConfiguredMock(
-                    ProductInterface::class,
-                    [
-                        'getName'     => 'Mocked product 1',
-                        'getSku'     => 'product_sku_1',
-                    ])
-                ],
-            ]);
-
-
         $this->productMock = $this->getMockBuilder(Product::class)
             ->disableOriginalConstructor()
             ->getMock();
-
 
         $this->configurableDataProvider = new ConfigurableDataProvider(
             $this->productMock,
