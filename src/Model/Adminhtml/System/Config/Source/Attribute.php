@@ -10,8 +10,7 @@ use Magento\Framework\Data\OptionSourceInterface;
 
 class Attribute implements OptionSourceInterface
 {
-    /** @var AttributeCollectionFactory */
-    private $collectionFactory;
+    private AttributeCollectionFactory $collectionFactory;
 
     public function __construct(AttributeCollectionFactory $collectionFactory)
     {

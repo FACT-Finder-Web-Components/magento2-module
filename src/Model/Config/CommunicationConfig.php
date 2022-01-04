@@ -21,11 +21,9 @@ class CommunicationConfig implements ParametersSourceInterface
     private const PATH_DATA_TRANSFER_IMPORT = 'factfinder/data_transfer/ff_push_import_enabled';
     private const PATH_IS_LOGGING_ENABLED   = 'factfinder/general/logging_enabled';
 
-    /** @var ScopeConfigInterface */
-    private $scopeConfig;
+    private ScopeConfigInterface $scopeConfig;
 
-    /** @var UrlInterface */
-    private $urlBuilder;
+    private UrlInterface $urlBuilder;
 
     public function __construct(ScopeConfigInterface $scopeConfig, UrlInterface $urlBuilder)
     {

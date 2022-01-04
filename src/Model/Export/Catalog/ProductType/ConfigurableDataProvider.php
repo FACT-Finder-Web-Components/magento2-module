@@ -17,20 +17,11 @@ use Omikron\Factfinder\Model\Formatter\NumberFormatter;
 
 class ConfigurableDataProvider extends SimpleDataProvider
 {
-    /** @var ConfigurableProductType */
-    private $productType;
-
-    /** @var FilterInterface */
-    private $filter;
-
-    /** @var ProductVariationFactory */
-    private $variationFactory;
-
-    /** @var ProductRepositoryInterface  */
-    private $productRepository;
-
-    /** @var SearchCriteriaBuilder  */
-    private $builder;
+    private ConfigurableProductType $productType;
+    private FilterInterface $filter;
+    private ProductVariationFactory $variationFactory;
+    private ProductRepositoryInterface $productRepository;
+    private SearchCriteriaBuilder $builder;
 
     public function __construct(
         Product $product,

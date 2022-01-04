@@ -8,6 +8,5 @@ use Omikron\Factfinder\Controller\Export\Product;
 
 class Cms extends Product
 {
-    /** @var string */
-    protected $feedType = 'cms';
+    protected string $feedType = 'cms';
 }

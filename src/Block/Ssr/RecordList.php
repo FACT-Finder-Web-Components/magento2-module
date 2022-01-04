@@ -9,6 +9,7 @@ use Magento\Framework\App\Response\Http as Response;
 use Magento\Framework\App\Response\RedirectInterface;
 use Magento\Framework\Serialize\SerializerInterface;
 use Magento\Framework\View\Element\Template;
+use Magento\Tests\NamingConvention\true\string;
 use Omikron\Factfinder\Model\FieldRoles;
 use Omikron\Factfinder\Model\Ssr\SearchAdapter;
 
@@ -17,20 +18,16 @@ class RecordList extends Template
     private const RECORD_PATTERN         = '#<ff-record[\s>].*?</ff-record>#s';
     private const OPENING_RECORD_PATTERN = '#<ff-record#';
 
-    /** @var SearchAdapter */
-    protected $searchAdapter;
+    /** @var  */
+    protected SearchAdapter $searchAdapter;
 
-    /** @var SerializerInterface */
-    protected $jsonSerializer;
+    protected SerializerInterface $jsonSerializer;
 
-    /** @var Response */
-    private $response;
+    private Response $response;
 
-    /** @var RedirectInterface */
-    private $redirect;
+    private RedirectInterface $redirect;
 
-    /** @var FieldRoles */
-    private $fieldRoles;
+    private FieldRoles $fieldRoles;
 
     public function __construct(
         Template\Context    $context,
@@ -50,10 +47,9 @@ class RecordList extends Template
     }
 
     /**
-     * @return string
      * @SuppressWarnings(PHPMD.CamelCaseMethodName)
      */
-    protected function _afterToHtml($html)
+    protected function _afterToHtml($html): string
     {
         // Resolve record list
         $html = preg_replace_callback('#<ff-record-list([^>]*?)>#s', function (array $match) {

@@ -10,8 +10,7 @@ use Mustache_Engine;
 
 class Engine implements TemplateEngineInterface
 {
-    /** @var Mustache_Engine */
-    private $engine;
+    private Mustache_Engine $engine;
 
     public function __construct(Mustache_Engine $engine)
     {

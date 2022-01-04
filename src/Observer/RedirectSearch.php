@@ -13,14 +13,9 @@ use Omikron\Factfinder\Model\Config\CommunicationConfig;
 
 class RedirectSearch implements ObserverInterface
 {
-    /** @var RedirectInterface */
-    private $redirect;
-
-    /** @var ResponseInterface */
-    private $response;
-
-    /** @var CommunicationConfig */
-    private $config;
+    private RedirectInterface $redirect;
+    private ResponseInterface $response;
+    private CommunicationConfig $config;
 
     public function __construct(
         RedirectInterface $redirect,

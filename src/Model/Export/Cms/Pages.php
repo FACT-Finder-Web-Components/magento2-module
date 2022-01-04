@@ -14,17 +14,10 @@ use Omikron\Factfinder\Model\Config\CmsConfig;
 
 class Pages implements \IteratorAggregate
 {
-    /** @var PageRepositoryInterface */
-    private $pageRepository;
-
-    /** @var SearchCriteriaBuilder */
-    private $searchCriteriaBuilder;
-
-    /** @var CmsConfig */
-    private $cmsConfig;
-
-    /** @var StoreManagerInterface */
-    private $storeManager;
+    private PageRepositoryInterface $pageRepository;
+    private SearchCriteriaBuilder $searchCriteriaBuilder;
+    private CmsConfig $cmsConfig;
+    private StoreManagerInterface $storeManager;
 
     public function __construct(
         PageRepositoryInterface $pageRepository,

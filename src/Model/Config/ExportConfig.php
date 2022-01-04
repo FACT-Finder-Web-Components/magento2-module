@@ -13,14 +13,9 @@ class ExportConfig
 {
     private const CONFIG_PATH = 'factfinder/export/attributes';
 
-    /** @var ScopeConfigInterface */
-    private $scopeConfig;
-
-    /** @var SerializerInterface */
-    private $serializer;
-
-    /** @var CommunicationConfig */
-    private $communicationConfig;
+    private ScopeConfigInterface $scopeConfig;
+    private SerializerInterface $serializer;
+    private CommunicationConfig $communicationConfig;
 
     public function __construct(
         ScopeConfigInterface $scopeConfig,

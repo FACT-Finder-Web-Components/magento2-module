@@ -22,20 +22,11 @@ class Call extends Action\Action implements Action\HttpGetActionInterface, Actio
 {
     use SkipCsrfValidation;
 
-    /** @var JsonResultFactory */
-    private $jsonResultFactory;
-
-    /** @var RawResultFactory */
-    private $rawResultFactory;
-
-    /** @var CommunicationConfig */
-    private $communicationConfig;
-
-    /** @var CredentialsFactory */
-    private $credentialsFactory;
-
-    /** @var ClientBuilder */
-    private $clientBuilder;
+    private JsonResultFactory $jsonResultFactory;
+    private RawResultFactory $rawResultFactory;
+    private CommunicationConfig $communicationConfig;
+    private CredentialsFactory $credentialsFactory;
+    private ClientBuilder $clientBuilder;
 
     public function __construct(
         Action\Context $context,

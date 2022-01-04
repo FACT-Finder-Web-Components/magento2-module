@@ -11,14 +11,9 @@ use Omikron\Factfinder\Model\FieldRoles;
 
 class PriceFormatter
 {
-    /** @var PriceCurrencyInterface */
-    private $priceCurrency;
-
-    /** @var CommunicationConfig */
-    private $communicationConfig;
-
-    /** @var FieldRoles */
-    private $fieldRoles;
+    private PriceCurrencyInterface $priceCurrency;
+    private CommunicationConfig $communicationConfig;
+    private FieldRoles $fieldRoles;
 
     public function __construct(
         CommunicationConfig $communicationConfig,

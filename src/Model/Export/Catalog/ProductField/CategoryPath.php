@@ -14,11 +14,8 @@ use Magento\Catalog\Model\Product;
 
 class CategoryPath implements FieldInterface
 {
-    /** @var CategoryRepositoryInterface */
-    private $categoryRepository;
-
-    /** @var string */
-    private $fieldName;
+    private CategoryRepositoryInterface $categoryRepository;
+    private string $fieldName;
 
     public function __construct(CategoryRepositoryInterface $categoryRepository, string $fieldName = 'CategoryPath')
     {

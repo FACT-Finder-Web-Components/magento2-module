@@ -12,20 +12,11 @@ use Omikron\Factfinder\Model\Formatter\NumberFormatter;
 
 class ProductVariation implements ExportEntityInterface
 {
-    /** @var Product */
-    private $product;
-
-    /** @var Product */
-    private $configurable;
-
-    /** @var NumberFormatter */
-    private $numberFormatter;
-
-    /** @var array */
-    private $configurableData;
-
-    /** @var FieldProvider */
-    private $fieldprovider;
+    private Product $product;
+    private Product $configurable;
+    private NumberFormatter $numberFormatter;
+    private array $configurableData;
+    private FieldProvider $fieldprovider;
 
     public function __construct(
         Product $product,

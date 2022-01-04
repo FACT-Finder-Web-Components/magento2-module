@@ -15,11 +15,8 @@ use phpseclib\Net\SFTP;
 
 class SftpPublicKeyAuth extends SftpBase
 {
-    /** @var Filesystem */
-    private $fileSystem;
-
-    /** @var FtpConfig */
-    private $uploadConfig;
+    private Filesystem $fileSystem;
+    private FtpConfig $uploadConfig;
 
     public function __construct(Filesystem $fileSystem, FtpConfig $config)
     {

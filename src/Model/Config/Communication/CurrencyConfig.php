@@ -12,11 +12,8 @@ use Omikron\Factfinder\Api\Config\ParametersSourceInterface;
 
 class CurrencyConfig implements ParametersSourceInterface
 {
-    /** @var ScopeConfigInterface */
-    private $scopeConfig;
-
-    /** @var ResolverInterface */
-    private $localeResolver;
+    private ScopeConfigInterface $scopeConfig;
+    private ResolverInterface $localeResolver;
 
     public function __construct(ScopeConfigInterface $scopeConfig, ResolverInterface $localeResolver)
     {

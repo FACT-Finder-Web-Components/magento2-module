@@ -13,17 +13,10 @@ use Omikron\Factfinder\Api\Export\FieldInterface;
 
 class DataProvider implements DataProviderInterface
 {
-    /** @var Products */
-    private $products;
-
-    /** @var ObjectManagerInterface */
-    private $objectManager;
-
-    /** @var string[] */
-    private $entityTypes;
-
-    /** @var FieldInterface[] */
-    private $productFields;
+    private Products $products;
+    private ObjectManagerInterface $objectManager;
+    private array $entityTypes;
+    private array $productFields;
 
     public function __construct(
         Products $products,

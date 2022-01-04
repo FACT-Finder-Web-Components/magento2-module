@@ -12,14 +12,9 @@ use Omikron\Factfinder\Model\Formatter\NumberFormatter;
 
 class SimpleDataProvider implements DataProviderInterface, ExportEntityInterface
 {
-    /** @var NumberFormatter */
-    protected $numberFormatter;
-
-    /** @var Product */
-    protected $product;
-
-    /** @var FieldInterface[] */
-    private $productFields;
+    protected NumberFormatter $numberFormatter;
+    protected Product $product;
+    private array $productFields;
 
     public function __construct(Product $product, NumberFormatter $numberFormatter, array $productFields = [])
     {
