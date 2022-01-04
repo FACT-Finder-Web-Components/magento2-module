@@ -9,7 +9,6 @@ use Magento\Framework\App\Response\Http as Response;
 use Magento\Framework\App\Response\RedirectInterface;
 use Magento\Framework\Serialize\SerializerInterface;
 use Magento\Framework\View\Element\Template;
-use Magento\Tests\NamingConvention\true\string;
 use Omikron\Factfinder\Model\FieldRoles;
 use Omikron\Factfinder\Model\Ssr\SearchAdapter;
 
@@ -42,11 +41,9 @@ class RecordList extends Template
     }
 
     /**
-     * @return string
-     *
      * @SuppressWarnings(PHPMD.CamelCaseMethodName)
      */
-    protected function _afterToHtml($html)
+    protected function _afterToHtml($html): string
     {
         // Resolve record list
         $html = preg_replace_callback('#<ff-record-list([^>]*?)>#s', function (array $match) {
