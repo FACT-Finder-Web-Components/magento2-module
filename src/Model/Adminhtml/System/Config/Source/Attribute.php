@@ -24,7 +24,7 @@ class Attribute implements OptionSourceInterface
 
         $options = array_filter($options, fn (array $a) => (bool)!!$a['label']);
 
-        usort($options, fn(array $a, array $b) => (int)strtolower($a['label']) <=> strtolower($b['label']));
+        usort($options, fn(array $a, array $b) => strtolower($a['label']) <=> strtolower($b['label']));
 
         return $options;
     }
