@@ -36,8 +36,6 @@ class Cart implements ArgumentInterface
      */
     public function getItemIds(): array
     {
-        return array_unique(array_map(function (QuoteItem $quoteItem): string {
-            return (string) $quoteItem->getProduct()->getData('sku');
-        }, $this->getItems()));
+        return array_unique(array_map(fn(QuoteItem $quoteItem) => (string) $quoteItem->getProduct()->getData('sku'), $this->getItems()));
     }
 }
