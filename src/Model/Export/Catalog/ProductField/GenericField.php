@@ -11,6 +11,7 @@ use Magento\Store\Model\StoreManagerInterface;
 use Omikron\Factfinder\Api\Export\FieldInterface;
 use Omikron\Factfinder\Model\Export\Catalog\AttributeValuesExtractor;
 use Magento\Catalog\Model\Product;
+use DateTime;
 
 class GenericField implements FieldInterface
 {
@@ -56,7 +57,7 @@ class GenericField implements FieldInterface
         $value = implode('|', $this->valuesExtractor->getAttributeValues($product, $this->getAttribute()));
 
         if ($this->getAttribute()->getBackendModel() == 'Magento\Eav\Model\Entity\Attribute\Backend\Datetime' && !empty($value)) {
-            $value = (new \DateTime($value))->format("Y-m-d'T'H:i:sZ");
+            $value = (new DateTime($value))->format("Y-m-d'T'H:i:sZ");
         }
 
         return $value;
