@@ -19,30 +19,36 @@ class ConfigurableDataProviderTest extends TestCase
     /** @var ConfigurableDataProvider */
     private $configurableDataProvider;
 
+    /**
+     * @covers ConfigurableDataProvider::getValueOrEmptyString
+     */
     public function test_will_return_string_on_string_value()
     {
         $getValueOrEmptyStringMethod = $this->invokeMethod($this->configurableDataProvider, 'getValueOrEmptyString', ['test']);
         $this->assertEquals('test', $getValueOrEmptyStringMethod);
     }
 
+    /**
+     * @covers ConfigurableDataProvider::getValueOrEmptyString
+     */
     public function test_will_return_empty_string_on_null_value()
     {
         $getValueOrEmptyStringMethod = $this->invokeMethod($this->configurableDataProvider, 'getValueOrEmptyString', [null]);
         $this->assertEquals('', $getValueOrEmptyStringMethod);
     }
 
+    /**
+     * @covers ConfigurableDataProvider::getValueOrEmptyString
+     */
     public function test_will_return_empty_string_on_bool_value()
     {
         $getValueOrEmptyStringMethod = $this->invokeMethod($this->configurableDataProvider, 'getValueOrEmptyString', [false]);
         $this->assertEquals('', $getValueOrEmptyStringMethod);
     }
 
-    public function test_will_return_integer_on_integer_value()
-    {
-        $getValueOrEmptyStringMethod = $this->invokeMethod($this->configurableDataProvider, 'getValueOrEmptyString', [1]);
-        $this->assertEquals(1, $getValueOrEmptyStringMethod);
-    }
-
+    /**
+     * @covers ConfigurableDataProvider::getValueOrEmptyString
+     */
     public function test_will_return_empty_string_on_array_value()
     {
         $getValueOrEmptyStringMethod = $this->invokeMethod($this->configurableDataProvider, 'getValueOrEmptyString', [[]]);
