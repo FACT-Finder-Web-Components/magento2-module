@@ -17,9 +17,6 @@ use Omikron\Factfinder\Model\Formatter\NumberFormatter;
 
 class ConfigurableDataProvider extends SimpleDataProvider
 {
-    /** @var string[] */
-    private const ALLOWED_TYPES = ['string', 'integer'];
-
     /** @var ConfigurableProductType */
     private $productType;
 
@@ -109,12 +106,8 @@ class ConfigurableDataProvider extends SimpleDataProvider
             ->getItems();
     }
 
-    /**
-     * @param mixed $value
-     * @return string|integer
-     */
-    private function getValueOrEmptyString($value)
+    private function getValueOrEmptyString($value): string
     {
-        return in_array(gettype($value), self::ALLOWED_TYPES) ? $value : '';
+        return is_string($value) ? $value : '';
     }
 }
