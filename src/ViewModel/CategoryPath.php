@@ -92,7 +92,7 @@ class CategoryPath implements ArgumentInterface
     private function getParentCategories(?Category $category): array
     {
         $categories = $category ? $category->getParentCategories() : [];
-        usort($categories, fn(Category $a, Category $b) => $a->getLevel() - $b->getLevel());
+        usort($categories, fn(Category $a, Category $b) => (int) $a->getLevel() - $b->getLevel());
 
         return $categories;
     }
