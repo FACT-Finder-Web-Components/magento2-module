@@ -25,6 +25,13 @@ class AttributeValuesExtractor
         $this->numberFormatter = $numberFormatter;
     }
 
+    /**
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+     * @param Product $product
+     * @param Attribute $attribute
+     * @return array
+     * @throws \Exception
+     */
     public function getAttributeValues(Product $product, Attribute $attribute): array
     {
         $code   = $attribute->getAttributeCode();
