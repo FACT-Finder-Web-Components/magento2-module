@@ -81,8 +81,7 @@ class CategoryPath implements ArgumentInterface
 
     private function createPathFromCategory(?Category $category): array
     {
-        return array_map(fn(Category $item) => (string) $item->getName(), $category ? $category->getParentCategories() : []
-        );
+        return array_map(fn(Category $item) => (string) $item->getName(), $category ? $category->getParentCategories() : []);
     }
 
     /**
