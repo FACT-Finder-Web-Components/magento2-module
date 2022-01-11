@@ -11,7 +11,6 @@ use Magento\Store\Model\StoreManagerInterface;
 use Omikron\Factfinder\Api\Export\FieldInterface;
 use Omikron\Factfinder\Model\Export\Catalog\AttributeValuesExtractor;
 use Magento\Catalog\Model\Product;
-use DateTime;
 
 class GenericField implements FieldInterface
 {
