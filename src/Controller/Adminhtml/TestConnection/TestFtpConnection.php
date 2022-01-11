@@ -57,7 +57,7 @@ class TestFtpConnection extends Action
 
         $filtered = array_filter($params, fn(string $key) => (bool) preg_match("#^{$prefix}#", $key), ARRAY_FILTER_USE_KEY);
 
-        return array_combine(array_map(fn(string $key) => (string)str_replace($prefix, '', $key), array_keys($filtered)), array_values($filtered));
+        return array_combine(array_map(fn(string $key) => (string) str_replace($prefix, '', $key), array_keys($filtered)), array_values($filtered));
     }
 
     private function getRealValuesFromObscured(array $params): array
