@@ -54,13 +54,7 @@ class GenericField implements FieldInterface
      */
     public function getValue(AbstractModel $product): string
     {
-        $value = implode('|', $this->valuesExtractor->getAttributeValues($product, $this->getAttribute()));
-
-        if ($this->getAttribute()->getBackendModel() == 'Magento\Eav\Model\Entity\Attribute\Backend\Datetime' && !empty($value)) {
-            $value = (new DateTime($value))->format("Y-m-d'T'H:i:sZ");
-        }
-
-        return $value;
+        return implode('|', $this->valuesExtractor->getAttributeValues($product, $this->getAttribute()));
     }
 
     private function getAttribute(): Attribute
