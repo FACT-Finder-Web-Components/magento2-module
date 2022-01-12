@@ -59,7 +59,7 @@ class AttributeValuesExtractor
                 $values[] = (new DateTime($value))->format("Y-m-d'T'");
                 break;
             case 'datetime':
-                $values[] = (new DateTime($value))->format("Y-m-d'T'H:i:sZ");
+                $values[] = (new DateTime($value))->format("Y-m-d'T'H:i:sP");
                 break;
             default:
                 if (!is_scalar($value)) {
