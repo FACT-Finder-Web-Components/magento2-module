@@ -9,6 +9,7 @@ use Magento\Catalog\Model\ResourceModel\Eav\Attribute;
 use Omikron\Factfinder\Api\Filter\FilterInterface;
 use Omikron\Factfinder\Model\Formatter\NumberFormatter;
 use UnexpectedValueException;
+use DateTime;
 
 class AttributeValuesExtractor
 {
@@ -24,6 +25,13 @@ class AttributeValuesExtractor
         $this->numberFormatter = $numberFormatter;
     }
 
+    /**
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+     * @param Product $product
+     * @param Attribute $attribute
+     * @return array
+     * @throws \Exception
+     */
     public function getAttributeValues(Product $product, Attribute $attribute): array
     {
         $code   = $attribute->getAttributeCode();
@@ -46,6 +54,12 @@ class AttributeValuesExtractor
                 break;
             case 'multiselect':
                 $values = (array) $product->getAttributeText($code);
+                break;
+            case 'date':
+                $values[] = (new DateTime($value))->format("Y-m-d'T'");
+                break;
+            case 'datetime':
+                $values[] = (new DateTime($value))->format("Y-m-d'T'H:i:sP");
                 break;
             default:
                 if (!is_scalar($value)) {
