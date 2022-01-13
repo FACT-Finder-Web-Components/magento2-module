@@ -16,26 +16,13 @@ use Omikron\Factfinder\Service\FeedFileService;
 
 class Product extends Action
 {
-    /** @var CommunicationConfig */
-    private $communicationConfig;
-
-    /** @var StoreEmulation */
-    private $storeEmulation;
-
-    /** @var FeedGeneratorFactory */
-    private $feedGeneratorFactory;
-
-    /** @var FileFactory */
-    private $fileFactory;
-
-    /** @var CsvFactory */
-    private $csvFactory;
-
-    /** @var StoreManagerInterface */
-    private $storeManager;
-
-    /** @var string */
-    protected $feedType = 'product';
+    protected string $feedType = 'product';
+    private CommunicationConfig $communicationConfig;
+    private StoreEmulation $storeEmulation;
+    private FeedGeneratorFactory $feedGeneratorFactory;
+    private FileFactory $fileFactory;
+    private CsvFactory $csvFactory;
+    private StoreManagerInterface $storeManager;
 
     public function __construct(
         Context $context,

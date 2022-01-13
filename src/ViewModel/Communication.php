@@ -11,17 +11,13 @@ use Omikron\Factfinder\Model\FieldRoles;
 
 class Communication implements ArgumentInterface
 {
-    /** @var FieldRoles */
-    private $fieldRoles;
+    private FieldRoles $fieldRoles;
 
-    /** @var SerializerInterface */
-    private $serializer;
+    private SerializerInterface $serializer;
 
-    /** @var CommunicationParametersProvider */
-    private $parametersProvider;
+    private CommunicationParametersProvider $parametersProvider;
 
-    /** @var string[] */
-    private $mergeableParams;
+    private array $mergeableParams;
 
     public function __construct(
         FieldRoles $fieldRoles,
@@ -48,12 +44,8 @@ class Communication implements ArgumentInterface
 
     private function mergeParameters(array ...$params): array
     {
-        $params = array_map(function (array $param): array {
-            return array_intersect_key($param + $this->mergeableParams, $this->mergeableParams);
-        }, $params);
+        $params = array_map(fn (array $param) => array_intersect_key($param + $this->mergeableParams, $this->mergeableParams), $params);
 
-        return array_reduce(array_keys($this->mergeableParams), function ($result, $key) use ($params) {
-            return $result + [$key => implode(',', array_filter(array_column($params, $key)))];
-        }, []);
+        return array_reduce(array_keys($this->mergeableParams), fn ($result, $key) => $result + [$key => implode(',', array_filter(array_column($params, $key)))], []);
     }
 }

@@ -10,11 +10,8 @@ use Omikron\Factfinder\Model\Config\AuthConfig;
 
 class CredentialsFactory
 {
-    /** @var AuthConfig */
-    private $authConfig;
-
-    /** @var ObjectManagerInterface */
-    private $objectManager;
+    private AuthConfig $authConfig;
+    private ObjectManagerInterface $objectManager;
 
     public function __construct(ObjectManagerInterface $objectManager, AuthConfig $authConfig)
     {

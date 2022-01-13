@@ -11,11 +11,8 @@ use Magento\Store\Model\ScopeInterface;
 
 class Ssr implements ObserverInterface
 {
-    /** @var ScopeConfigInterface */
-    private $scopeConfig;
-
-    /** @var string[] */
-    private $useForHandles;
+    private ScopeConfigInterface $scopeConfig;
+    private array $useForHandles;
 
     public function __construct(
         ScopeConfigInterface $scopeConfig,

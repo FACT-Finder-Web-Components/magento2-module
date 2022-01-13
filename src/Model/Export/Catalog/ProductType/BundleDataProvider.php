@@ -11,11 +11,8 @@ use Omikron\Factfinder\Model\Formatter\NumberFormatter;
 
 class BundleDataProvider extends SimpleDataProvider
 {
-    /** @var CatalogPrice */
-    private $priceModel;
-
-    /** @var PriceCurrency */
-    private $priceCurrency;
+    private CatalogPrice $priceModel;
+    private PriceCurrency $priceCurrency;
 
     public function __construct(
         Product $product,

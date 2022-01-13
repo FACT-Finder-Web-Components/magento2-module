@@ -13,11 +13,8 @@ use DateTime;
 
 class AttributeValuesExtractor
 {
-    /** @var FilterInterface */
-    private $filter;
-
-    /** @var NumberFormatter */
-    private $numberFormatter;
+    private FilterInterface $filter;
+    private NumberFormatter $numberFormatter;
 
     public function __construct(FilterInterface $filter, NumberFormatter $numberFormatter)
     {

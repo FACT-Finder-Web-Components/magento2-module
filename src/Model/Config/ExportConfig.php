@@ -13,14 +13,9 @@ class ExportConfig
 {
     private const CONFIG_PATH = 'factfinder/export/attributes';
 
-    /** @var ScopeConfigInterface */
-    private $scopeConfig;
-
-    /** @var SerializerInterface */
-    private $serializer;
-
-    /** @var CommunicationConfig */
-    private $communicationConfig;
+    private ScopeConfigInterface $scopeConfig;
+    private SerializerInterface $serializer;
+    private CommunicationConfig $communicationConfig;
 
     public function __construct(
         ScopeConfigInterface $scopeConfig,
@@ -37,16 +32,12 @@ class ExportConfig
      */
     public function getMultiAttributes(?int $storeId = null, bool $numerical = false): array
     {
-        return $this->getAttributeCodes($storeId, function (array $row) use ($numerical): bool {
-            return $row['multi'] && (bool) $row['numerical'] == $numerical;
-        });
+        return $this->getAttributeCodes($storeId, fn (array $row): bool => $row['multi'] && (bool) $row['numerical'] == $numerical);
     }
 
     public function getSingleFields(?int $storeId = null): array
     {
-        return $this->getAttributeCodes($storeId, function (array $row): bool {
-            return !$row['multi'];
-        });
+        return $this->getAttributeCodes($storeId, fn (array $row): bool => !$row['multi']);
     }
 
     public function getPushImportDataTypes(int $scopeId = null): array
@@ -67,8 +58,9 @@ class ExportConfig
     private function getConfigValue(?int $storeId): array
     {
         $value = $this->scopeConfig->getValue(self::CONFIG_PATH, ScopeInterface::SCOPE_STORES, $storeId);
-        return array_map(function (array $row): array {
-            return ['multi' => !!$row['multi']] + $row;
-        }, (array) $this->serializer->unserialize($value ?: '[]'));
+        return array_map(
+            fn (array $row): array => ['multi' => !!$row['multi']] + $row,
+            (array) $this->serializer->unserialize($value ?: '[]')
+        );
     }
 }

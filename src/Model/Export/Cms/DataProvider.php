@@ -10,14 +10,9 @@ use Omikron\Factfinder\Api\Export\FieldInterface;
 
 class DataProvider implements DataProviderInterface
 {
-    /** @var Pages */
-    private $pages;
-
-    /** @var PageFactory */
-    private $pageFactory;
-
-    /** @var FieldInterface[] */
-    private $pageFields;
+    private Pages $pages;
+    private PageFactory $pageFactory;
+    private array $pageFields;
 
     public function __construct(Pages $pages, PageFactory $pageFactory, array $fields)
     {

@@ -12,14 +12,9 @@ use Omikron\Factfinder\Model\Filesystem\Io\Factory as UploadFactory;
 
 class FtpUploader
 {
-    /** @var FtpConfig */
-    private $config;
-
-    /** @var UploadFactory */
-    private $uploadFactory;
-
-    /** @var IoInterface */
-    private $client;
+    private FtpConfig $config;
+    private UploadFactory $uploadFactory;
+    private IoInterface $client;
 
     public function __construct(FtpConfig $config, UploadFactory $uploadFactory)
     {

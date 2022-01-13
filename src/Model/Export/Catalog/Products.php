@@ -13,14 +13,9 @@ use Magento\Store\Model\StoreManagerInterface;
 
 class Products implements \IteratorAggregate
 {
-    /** @var ProductRepositoryInterface */
-    private $productRepository;
-
-    /** @var SearchCriteriaBuilder */
-    private $searchCriteriaBuilder;
-
-    /** @var StoreManagerInterface */
-    private $storeManager;
+    private ProductRepositoryInterface $productRepository;
+    private SearchCriteriaBuilder $searchCriteriaBuilder;
+    private StoreManagerInterface $storeManager;
 
     /** @var int */
     private $batchSize;

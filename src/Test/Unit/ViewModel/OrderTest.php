@@ -33,9 +33,10 @@ class OrderTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->orderItemsMock = array_map(function (array $data): OrderModel\Item {
-            return $this->createConfiguredMock(OrderModel\Item::class, ['getProduct' => new DataObject(['sku' => $data[0], 'qty' => $data[1]])]);
-        }, [['foo', 1], ['bar', 3], ['baz', 2]]);
+        $this->orderItemsMock = array_map(
+            fn (array $data): OrderModel\Item => $this->createConfiguredMock(OrderModel\Item::class,
+            ['getProduct' => new DataObject(['sku' => $data[0], 'qty' => $data[1]])]), [['foo', 1], ['bar', 3], ['baz', 2]]
+        );
 
         $orderMock   = $this->createConfiguredMock(OrderModel::class, ['getAllVisibleItems' => $this->orderItemsMock]);
         $sessionMock = $this->createConfiguredMock(Session::class, ['getLastRealOrder' => $orderMock]);

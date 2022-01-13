@@ -14,23 +14,12 @@ use Psr\Log\LoggerInterface;
 
 class PushImport
 {
-    /** @var CommunicationConfig */
-    private $communicationConfig;
-
-    /** @var CredentialsFactory */
-    private $credentialsFactory;
-
-    /** @var ExportConfig */
-    private $exportConfig;
-
-    /** @var LoggerInterface */
-    private $logger;
-
-    /** @var ClientBuilder */
-    private $clientBuilder;
-
-    /** @var string */
-    private $pushImportResult;
+    private CommunicationConfig $communicationConfig;
+    private CredentialsFactory $credentialsFactory;
+    private ExportConfig $exportConfig;
+    private LoggerInterface $logger;
+    private ClientBuilder $clientBuilder;
+    private string $pushImportResult;
 
     public function __construct(
         ClientBuilder $clientBuilder,
@@ -66,7 +55,7 @@ class PushImport
 
         $responses = [];
         foreach ($dataTypes as $dataType) {
-            $responses = array_merge($responses, $importAdapter->import($channel, $dataType));
+            $responses = [...$responses, ...$importAdapter->import($channel, $dataType)];
         }
 
         $this->pushImportResult = $this->prepareListFromPushImportResponses($responses);
@@ -92,10 +81,9 @@ class PushImport
         foreach ($responses as $response) {
             $importType = sprintf('<li><b>%s push import type</b></li>', $response['importType']);
 
-            $statusMessagesList = sprintf('<ul>%s</ul>', implode('', array_map(function ($message) {
-                return sprintf('<li>%s</li>', $message);
-            }, $response['statusMessages'])));
-            $statusMessages = sprintf('<li><i>Status messages</i></li><li>%s</li>', $statusMessagesList);
+            $statusList = sprintf('<ul>%s</ul>', implode('', array_map(fn (string $message): string => sprintf('<li>%s</li>', $message), $response['statusMessages'])));
+
+            $statusMessages = sprintf('<li><i>Status messages</i></li><li>%s</li>', $statusList);
 
             $importType .= $statusMessages;
             $listContent .= $importType;
@@ -110,11 +98,9 @@ class PushImport
         $listContent = '';
 
         if (!empty($responses['status'])) {
-            $statusMessagesList = sprintf('<ul>%s</ul>', implode('', array_map(function ($message) {
-                return sprintf('<li>%s</li>', $message);
-            }, $responses['status'])));
+            $statusList = sprintf('<ul>%s</ul>', implode('', array_map(fn (string $message): string => sprintf('<li>%s</li>', $message), $responses['status'])));
 
-            $statusMessages = sprintf('<li><i>Status messages</i></li><li>%s</li>', $statusMessagesList);
+            $statusMessages = sprintf('<li><i>Status messages</i></li><li>%s</li>', $statusList);
             $listContent .= $statusMessages;
         }
 
