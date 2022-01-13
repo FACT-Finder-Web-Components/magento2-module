@@ -17,20 +17,11 @@ class RecordList extends Template
     private const RECORD_PATTERN         = '#<ff-record[\s>].*?</ff-record>#s';
     private const OPENING_RECORD_PATTERN = '#<ff-record#';
 
-    /** @var SearchAdapter */
-    protected $searchAdapter;
-
-    /** @var SerializerInterface */
-    protected $jsonSerializer;
-
-    /** @var Response */
-    private $response;
-
-    /** @var RedirectInterface */
-    private $redirect;
-
-    /** @var FieldRoles */
-    private $fieldRoles;
+    protected SearchAdapter $searchAdapter;
+    protected SerializerInterface $jsonSerializer;
+    private Response $response;
+    private RedirectInterface $redirect;
+    private FieldRoles $fieldRoles;
 
     public function __construct(
         Template\Context    $context,
@@ -50,10 +41,9 @@ class RecordList extends Template
     }
 
     /**
-     * @return string
      * @SuppressWarnings(PHPMD.CamelCaseMethodName)
      */
-    protected function _afterToHtml($html)
+    protected function _afterToHtml($html): string
     {
         // Resolve record list
         $html = preg_replace_callback('#<ff-record-list([^>]*?)>#s', function (array $match) {

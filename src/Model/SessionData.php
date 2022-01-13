@@ -12,14 +12,9 @@ use Omikron\Factfinder\Api\Config\ParametersSourceInterface;
 
 class SessionData implements SectionSourceInterface, ParametersSourceInterface
 {
-    /** @var CustomerSession */
-    private $customerSession;
-
-    /** @var ScopeConfigInterface */
-    private $scopeConfig;
-
-    /** @var RemoteAddress */
-    private $remoteAddress;
+    private CustomerSession $customerSession;
+    private ScopeConfigInterface $scopeConfig;
+    private RemoteAddress $remoteAddress;
 
     public function __construct(
         CustomerSession $customerSession,

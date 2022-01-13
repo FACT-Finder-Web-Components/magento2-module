@@ -14,21 +14,11 @@ use Omikron\Factfinder\Model\Export\Catalog\ProductType\SimpleDataProviderFactor
 class FieldRoles
 {
     private const PATH_PRODUCT_FIELD_ROLE = 'factfinder/general/tracking_product_number_field_role';
-
-    /** @var SerializerInterface */
-    private $serializer;
-
-    /** @var ScopeConfigInterface */
-    private $scopeConfig;
-
-    /** @var ConfigResource */
-    private $configResource;
-
-    /** @var SimpleDataProviderFactory */
-    private $dataProviderFactory;
-
-    /** @var array */
-    private $dataProviders = [];
+    private SerializerInterface $serializer;
+    private ScopeConfigInterface $scopeConfig;
+    private ConfigResource $configResource;
+    private SimpleDataProviderFactory $dataProviderFactory;
+    private array $dataProviders = [];
 
     public function __construct(
         SerializerInterface $serializer,

@@ -12,17 +12,10 @@ use Omikron\Factfinder\Model\Config\CommunicationConfig;
 
 class CategoryPath implements ArgumentInterface
 {
-    /** @var Registry */
-    private $registry;
-
-    /** @var CommunicationConfig */
-    private $communicationConfig;
-
-    /** @var string */
-    private $param;
-
-    /** @var string[] */
-    private $initial;
+    private Registry $registry;
+    private CommunicationConfig $communicationConfig;
+    private string $param;
+    private array $initial;
 
     public function __construct(
         Registry $registry,

@@ -14,23 +14,12 @@ use Psr\Log\LoggerInterface;
 
 class PushImport
 {
-    /** @var CommunicationConfig */
-    private $communicationConfig;
-
-    /** @var CredentialsFactory */
-    private $credentialsFactory;
-
-    /** @var ExportConfig */
-    private $exportConfig;
-
-    /** @var LoggerInterface */
-    private $logger;
-
-    /** @var ClientBuilder */
-    private $clientBuilder;
-
-    /** @var string */
-    private $pushImportResult;
+    private CommunicationConfig $communicationConfig;
+    private CredentialsFactory $credentialsFactory;
+    private ExportConfig $exportConfig;
+    private LoggerInterface $logger;
+    private ClientBuilder $clientBuilder;
+    private string $pushImportResult;
 
     public function __construct(
         ClientBuilder $clientBuilder,

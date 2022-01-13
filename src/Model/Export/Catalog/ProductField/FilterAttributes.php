@@ -14,26 +14,13 @@ use Omikron\Factfinder\Model\Export\Catalog\AttributeValuesExtractor;
 
 class FilterAttributes implements FieldInterface
 {
-    /** @var bool  */
-    protected $numerical = false;
-
-    /** @var string  */
-    protected $name = 'FilterAttributes';
-
-    /** @var ExportConfig */
-    private $exportConfig;
-
-    /** @var ProductResource */
-    private $productResource;
-
-    /** @var Attribute[][] */
-    private $attributes = [];
-
-    /** @var FilterInterface */
-    private $filter;
-
-    /** @var AttributeValuesExtractor */
-    private $valuesExtractor;
+    protected bool $numerical = false;
+    protected string $name = 'FilterAttributes';
+    private ExportConfig $exportConfig;
+    private ProductResource $productResource;
+    private array $attributes = [];
+    private FilterInterface $filter;
+    private AttributeValuesExtractor $valuesExtractor;
 
     public function __construct(
         ExportConfig $exportConfig,

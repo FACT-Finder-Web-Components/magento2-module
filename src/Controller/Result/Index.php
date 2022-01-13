@@ -10,8 +10,7 @@ use Magento\Framework\View\Result\PageFactory;
 
 class Index extends Action
 {
-    /** @var PageFactory */
-    private $resultPageFactory;
+    private PageFactory $resultPageFactory;
 
     public function __construct(Context $context, PageFactory $resultPageFactory)
     {

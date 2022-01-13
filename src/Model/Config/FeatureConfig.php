@@ -11,11 +11,8 @@ class FeatureConfig
 {
     private const PATH_USE_FOR_CATEGORIES = 'factfinder/general/use_for_categories';
 
-    /** @var CommunicationConfig */
-    private $communicationConfig;
-
-    /** @var ScopeConfigInterface */
-    private $scopeConfig;
+    private CommunicationConfig $communicationConfig;
+    private ScopeConfigInterface $scopeConfig;
 
     public function __construct(ScopeConfigInterface $scopeConfig, CommunicationConfig $communicationConfig)
     {

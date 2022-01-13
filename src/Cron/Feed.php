@@ -19,32 +19,15 @@ class Feed
 {
     private const PATH_CONFIGURABLE_CRON_IS_ENABLED = 'factfinder/configurable_cron/ff_cron_enabled';
 
-    /** @var ScopeConfigInterface */
-    private $scopeConfig;
-
-    /** @var StoreEmulation */
-    private $storeEmulation;
-
-    /** @var FeedGeneratorFactory */
-    private $feedGeneratorFactory;
-
-    /** @var StoreManagerInterface */
-    private $storeManager;
-
-    /** @var CommunicationConfig */
-    private $communicationConfig;
-
-    /** @var CsvFactory */
-    private $csvFactory;
-
-    /** @var FtpUploader */
-    private $ftpUploader;
-
-    /** @var PushImport */
-    private $pushImport;
-
-    /** @var string */
-    private $feedType;
+    private ScopeConfigInterface $scopeConfig;
+    private StoreEmulation $storeEmulation;
+    private FeedGeneratorFactory $feedGeneratorFactory;
+    private StoreManagerInterface $storeManager;
+    private CommunicationConfig $communicationConfig;
+    private CsvFactory $csvFactory;
+    private FtpUploader $ftpUploader;
+    private PushImport $pushImport;
+    private string $feedType;
 
     public function __construct(
         ScopeConfigInterface $scopeConfig,

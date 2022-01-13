@@ -16,14 +16,9 @@ use Omikron\Factfinder\Model\Export\BasicAuth as Authentication;
  */
 class ExportAuthentication implements ObserverInterface
 {
-    /** @var ActionFlag */
-    private $actionFlag;
-
-    /** @var Authentication */
-    private $authentication;
-
-    /** @var Credentials */
-    private $credentials;
+    private ActionFlag $actionFlag;
+    private Authentication $authentication;
+    private Credentials $credentials;
 
     public function __construct(
         ActionFlag $actionFlag,

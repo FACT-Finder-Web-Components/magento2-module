@@ -11,8 +11,7 @@ use Magento\Quote\Model\Quote\Item as QuoteItem;
 
 class Cart implements ArgumentInterface
 {
-    /** @var Session */
-    private $checkoutSession;
+    private Session $checkoutSession;
 
     public function __construct(Session $checkoutSession)
     {

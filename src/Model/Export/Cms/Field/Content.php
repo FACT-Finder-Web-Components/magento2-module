@@ -11,8 +11,7 @@ use Omikron\Factfinder\Api\Export\FieldInterface;
 
 class Content implements FieldInterface
 {
-    /** @var Filter */
-    private $filter;
+    private Filter $filter;
 
     public function __construct(Filter $filter)
     {

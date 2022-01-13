@@ -19,8 +19,7 @@ class BehaviourConfig implements ParametersSourceInterface
     private const PATH_PARAMETER_WHITELIST = 'factfinder/advanced/parameter_whitelist';
     private const PATH_VERSION              = 'factfinder/general/version';
 
-    /** @var ScopeConfigInterface */
-    private $scopeConfig;
+    private ScopeConfigInterface $scopeConfig;
 
     public function __construct(ScopeConfigInterface $scopeConfig)
     {

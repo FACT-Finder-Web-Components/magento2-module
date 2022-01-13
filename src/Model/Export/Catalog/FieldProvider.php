@@ -11,23 +11,12 @@ use Omikron\Factfinder\Model\Export\Catalog\ProductField\GenericFieldFactory;
 
 class FieldProvider implements FieldProviderInterface
 {
-    /** @var ExportConfig */
-    private $config;
-
-    /** @var GenericFieldFactory */
-    private $fieldFactory;
-
-    /** @var FieldInterface[] */
-    private $productFieldProviders;
-
-    /** @var FieldInterface[] */
-    private $variantFieldProviders;
-
-    /** @var array */
-    private $cachedVariantFields;
-
-    /** @var array */
-    private $cachedFields;
+    private ExportConfig $config;
+    private GenericFieldFactory $fieldFactory;
+    private array $productFieldProviders;
+    private array $variantFieldProviders;
+    private array $cachedVariantFields;
+    private array $cachedFields;
 
     public function __construct
     (

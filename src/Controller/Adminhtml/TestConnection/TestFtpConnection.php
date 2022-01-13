@@ -12,17 +12,10 @@ use Omikron\Factfinder\Model\FtpUploader;
 
 class TestFtpConnection extends Action
 {
-    /** @var string */
-    private $obscuredValue = '******';
-
-    /** @var JsonFactory */
-    private $jsonResultFactory;
-
-    /** @var FtpUploader */
-    private $ftpUploader;
-
-    /** @var FtpConfig */
-    private $ftpConfig;
+    private string $obscuredValue = '******';
+    private JsonFactory $jsonResultFactory;
+    private FtpUploader $ftpUploader;
+    private FtpConfig $ftpConfig;
 
     public function __construct(
         Action\Context $context,

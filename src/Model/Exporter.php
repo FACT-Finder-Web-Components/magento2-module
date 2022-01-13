@@ -11,8 +11,7 @@ use Omikron\Factfinder\Api\StreamInterface;
 
 class Exporter implements ExporterInterface
 {
-    /** @var FilterInterface */
-    private $filter;
+    private FilterInterface $filter;
 
     public function __construct(FilterInterface $filter)
     {

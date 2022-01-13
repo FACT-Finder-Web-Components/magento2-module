@@ -12,11 +12,8 @@ use Omikron\Factfinder\Model\Config\CommunicationConfig;
 
 class Order implements ArgumentInterface
 {
-    /** @var Session */
-    private $checkoutSession;
-
-    /** @var CommunicationConfig */
-    private $communicationConfig;
+    private Session $checkoutSession;
+    private CommunicationConfig $communicationConfig;
 
     public function __construct(Session $checkoutSession, CommunicationConfig $communicationConfig)
     {

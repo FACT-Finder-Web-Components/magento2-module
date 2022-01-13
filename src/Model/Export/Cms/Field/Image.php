@@ -11,8 +11,7 @@ use Magento\Framework\Model\AbstractModel;
 
 class Image implements FieldInterface
 {
-    /** @var Filter */
-    private $filter;
+    private Filter $filter;
 
     public function __construct(Filter $filter)
     {
