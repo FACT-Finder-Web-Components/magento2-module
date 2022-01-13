@@ -14,8 +14,7 @@ class AuthConfig
     private const PATH_AUTH_PREFIX  = 'factfinder/general/prefix';
     private const PATH_AUTH_POSTFIX = 'factfinder/general/postfix';
 
-    /** @var ScopeConfigInterface */
-    private $scopeConfig;
+    private ScopeConfigInterface $scopeConfig;
 
     public function __construct(ScopeConfigInterface $scopeConfig)
     {

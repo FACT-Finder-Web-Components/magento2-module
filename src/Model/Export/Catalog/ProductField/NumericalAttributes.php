@@ -9,9 +9,6 @@ use Magento\Framework\Model\AbstractModel;
 
 class NumericalAttributes extends FilterAttributes
 {
-    /** @var string */
-    protected $name = 'NumericalAttributes';
-
-    /** @var bool */
-    protected $numerical = true;
+    protected string $name = 'NumericalAttributes';
+    protected bool $numerical = true;
 }

@@ -16,20 +16,11 @@ use Psr\Http\Client\ClientExceptionInterface;
 
 class TestConnection extends Action
 {
-    /** @var string */
-    private $obscuredValue = '******';
-
-    /** @var JsonFactory */
-    private $jsonResultFactory;
-
-    /** @var CredentialsFactory */
-    private $credentialsFactory;
-
-    /** @var AuthConfig */
-    private $authConfig;
-
-    /** @var ClientBuilder */
-    private $clientBuilder;
+    private string $obscuredValue = '******';
+    private JsonFactory $jsonResultFactory;
+    private CredentialsFactory $credentialsFactory;
+    private AuthConfig $authConfig;
+    private ClientBuilder $clientBuilder;
 
     public function __construct(
         Action\Context $context,

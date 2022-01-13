@@ -13,8 +13,7 @@ class Router implements RouterInterface
 {
     public const FRONT_NAME = 'fact-finder';
 
-    /** @var ActionFactory */
-    private $actionFactory;
+    private ActionFactory $actionFactory;
 
     public function __construct(ActionFactory $actionFactory)
     {

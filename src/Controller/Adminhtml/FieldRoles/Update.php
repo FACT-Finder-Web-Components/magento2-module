@@ -19,23 +19,12 @@ use Psr\Http\Client\ClientExceptionInterface;
 
 class Update extends Action
 {
-    /** @var JsonFactory */
-    private $jsonResultFactory;
-
-    /** @var StoreManagerInterface */
-    private $storeManager;
-
-    /** @var CommunicationConfig */
-    private $communicationConfig;
-
-    /** @var CredentialsFactory */
-    private $credentialsFactory;
-
-    /** @var FieldRoles */
-    private $fieldRoles;
-
-    /** @var ClientBuilder */
-    private $clientBuilder;
+    private JsonFactory $jsonResultFactory;
+    private StoreManagerInterface $storeManager;
+    private CommunicationConfig $communicationConfig;
+    private CredentialsFactory $credentialsFactory;
+    private FieldRoles $fieldRoles;
+    private ClientBuilder $clientBuilder;
 
     public function __construct(
         Context $context,

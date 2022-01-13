@@ -12,14 +12,9 @@ use Omikron\Factfinder\Model\Formatter\NumberFormatter;
 
 class SimpleDataProvider implements DataProviderInterface, ExportEntityInterface
 {
-    /** @var NumberFormatter */
-    protected $numberFormatter;
-
-    /** @var Product */
-    protected $product;
-
-    /** @var FieldInterface[] */
-    private $productFields;
+    protected NumberFormatter $numberFormatter;
+    protected Product $product;
+    private array $productFields;
 
     public function __construct(Product $product, NumberFormatter $numberFormatter, array $productFields = [])
     {
@@ -59,9 +54,11 @@ class SimpleDataProvider implements DataProviderInterface, ExportEntityInterface
             'MagentoId'     => $this->getId(),
         ];
 
-        return array_reduce($this->productFields, function (array $result, FieldInterface $field): array {
-            return [$field->getName() => $field->getValue($this->product)] + $result;
-        }, $data);
+        return array_reduce(
+            $this->productFields,
+            fn (array $result, FieldInterface $field): array  => [$field->getName() => $field->getValue($this->product)] + $result,
+            $data
+        );
     }
 
     public function getProduct(): Product

@@ -12,20 +12,11 @@ use Omikron\Factfinder\Model\Formatter\NumberFormatter;
 
 class ProductVariation implements ExportEntityInterface
 {
-    /** @var Product */
-    private $product;
-
-    /** @var Product */
-    private $configurable;
-
-    /** @var NumberFormatter */
-    private $numberFormatter;
-
-    /** @var array */
-    private $configurableData;
-
-    /** @var FieldProvider */
-    private $fieldprovider;
+    private Product $product;
+    private Product $configurable;
+    private NumberFormatter $numberFormatter;
+    private array $configurableData;
+    private FieldProvider $fieldprovider;
 
     public function __construct(
         Product $product,
@@ -62,9 +53,10 @@ class ProductVariation implements ExportEntityInterface
         $splicedFilterAttributes = str_replace('||', '|', $parentAttributes . $variantAttributes);
 
         return ($splicedFilterAttributes ? ['FilterAttributes' => $splicedFilterAttributes] : [])
-            + array_reduce($restFields, function (array $result, FieldInterface $field): array {
-                return [$field->getName() => $field->getValue($this->product)] + $result;
-            }, $baseData);
+            + array_reduce(
+                $restFields,
+                fn (array $result, FieldInterface $field): array => [$field->getName() => $field->getValue($this->product)] + $result,
+                $baseData);
     }
 
     public function getProduct(): Product
@@ -79,9 +71,7 @@ class ProductVariation implements ExportEntityInterface
 
     private function extractFilterAttributes(array $fields): array
     {
-        $withoutFilterAttributes = array_filter($fields, function (FieldInterface $field) {
-            return $field->getName() !== 'FilterAttributes';
-        });
+        $withoutFilterAttributes = array_filter($fields, fn (FieldInterface $field): bool => $field->getName() !== 'FilterAttributes');
 
         $filterAttributes = $fields['FilterAttributes'] ?? [];
 

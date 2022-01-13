@@ -19,32 +19,15 @@ use Omikron\Factfinder\Service\FeedFileService;
 
 class Feed extends Action
 {
-    /** @var JsonFactory */
-    private $jsonResultFactory;
-
-    /** @var CommunicationConfig */
-    private $communicationConfig;
-
-    /** @var StoreEmulation */
-    private $storeEmulation;
-
-    /** @var FeedGeneratorFactory */
-    private $feedGeneratorFactory;
-
-    /** @var CsvFactory */
-    private $csvFactory;
-
-    /** @var FtpUploader */
-    private $ftpUploader;
-
-    /** @var StoreManagerInterface */
-    private $storeManager;
-
-    /** @var PushImport */
-    private $pushImport;
-
-    /** @var string */
-    protected $feedType = 'product';
+    protected string $feedType = 'product';
+    private JsonFactory $jsonResultFactory;
+    private CommunicationConfig $communicationConfig;
+    private StoreEmulation $storeEmulation;
+    private FeedGeneratorFactory $feedGeneratorFactory;
+    private CsvFactory $csvFactory;
+    private FtpUploader $ftpUploader;
+    private StoreManagerInterface $storeManager;
+    private PushImport $pushImport;
 
     public function __construct(
         Context $context,

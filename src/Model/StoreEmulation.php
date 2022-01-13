@@ -10,11 +10,8 @@ use Magento\Store\Model\App\Emulation;
 
 class StoreEmulation
 {
-    /** @var Emulation */
-    private $emulation;
-
-    /** @var AreaList */
-    private $areaList;
+    private Emulation $emulation;
+    private AreaList $areaList;
 
     public function __construct(Emulation $emulation, AreaList $areaList)
     {

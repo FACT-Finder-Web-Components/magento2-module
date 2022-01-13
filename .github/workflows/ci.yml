@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php: ['7.3', '7.4']
+        php: ['7.4']
         deps: ['lowest', 'stable']
         exclude:
           - php: '7.4'
@@ -39,8 +39,12 @@ jobs:
           composer config --global repositories.magento composer https://repo.magento.com/
           composer update --no-ansi --no-interaction --prefer-${{ matrix.deps }}
 
+      - name: Run Static analysis
+        run: |
+            vendor/bin/phpcs -nq .
+            vendor/bin/phpmd src text phpmd.xml.dist
+
       - name: Run tests
         run: |
           vendor/bin/phpunit
-          vendor/bin/phpcs -nq .
-          vendor/bin/phpmd src text phpmd.xml.dist
+

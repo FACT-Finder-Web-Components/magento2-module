@@ -12,11 +12,8 @@ use Magento\Framework\Model\AbstractModel;
 
 class Deeplink implements FieldInterface
 {
-    /** @var UrlInterface */
-    private $urlBuilder;
-
-    /** @var StoreManagerInterface */
-    private $storeManager;
+    private UrlInterface $urlBuilder;
+    private StoreManagerInterface $storeManager;
 
     public function __construct(UrlInterface $urlBuilder, StoreManagerInterface $storeManager)
     {

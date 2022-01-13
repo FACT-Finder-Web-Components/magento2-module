@@ -26,16 +26,12 @@ class LogExceptionsTest extends TestCase
 
     public function test_proceed_if_no_exception_is_raised()
     {
-        $this->assertSame(true, $this->plugin->aroundExecute(null, function () {
-            return true;
-        }));
+        $this->assertSame(true, $this->plugin->aroundExecute(null, fn () => true));
     }
 
     public function test_return_false_on_exception()
     {
-        $this->assertSame(false, $this->plugin->aroundExecute(null, function () {
-            throw new ClientException();
-        }));
+        $this->assertSame(false, $this->plugin->aroundExecute(null, fn () => throw new ClientException()));
     }
 
     public function test_log_exception_if_logging_is_enabled()
@@ -47,9 +43,7 @@ class LogExceptionsTest extends TestCase
 
         $this->logger->expects($this->once())->method('error');
 
-        $this->assertSame(false, $this->plugin->aroundExecute(null, function () {
-            throw new ClientException();
-        }));
+        $this->assertSame(false, $this->plugin->aroundExecute(null, fn () => throw new ClientException()));
     }
 
     protected function setUp(): void
