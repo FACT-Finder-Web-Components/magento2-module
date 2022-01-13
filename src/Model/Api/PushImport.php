@@ -14,23 +14,12 @@ use Psr\Log\LoggerInterface;
 
 class PushImport
 {
-    /** @var CommunicationConfig */
-    private $communicationConfig;
-
-    /** @var CredentialsFactory */
-    private $credentialsFactory;
-
-    /** @var ExportConfig */
-    private $exportConfig;
-
-    /** @var LoggerInterface */
-    private $logger;
-
-    /** @var ClientBuilder */
-    private $clientBuilder;
-
-    /** @var string */
-    private $pushImportResult;
+    private CommunicationConfig $communicationConfig;
+    private CredentialsFactory $credentialsFactory;
+    private ExportConfig $exportConfig;
+    private LoggerInterface $logger;
+    private ClientBuilder $clientBuilder;
+    private string $pushImportResult;
 
     public function __construct(
         ClientBuilder $clientBuilder,
@@ -66,7 +55,7 @@ class PushImport
 
         $responses = [];
         foreach ($dataTypes as $dataType) {
-            $responses = array_merge($responses, $importAdapter->import($channel, $dataType));
+            $responses = [...$responses, ...$importAdapter->import($channel, $dataType)];
         }
 
         $this->pushImportResult = $this->prepareListFromPushImportResponses($responses);

@@ -20,8 +20,7 @@ class Frequency extends Value
     private const PATH_CRON_TIME   = 'ff_cron_time';
     private const CRON_STRING_PATH = 'crontab/default/jobs/factfinder_feed_export/schedule/cron_expr';
 
-    /** @var WriterInterface */
-    protected $configWriter;
+    protected WriterInterface $configWriter;
 
     public function __construct(
         Context $context,

@@ -11,14 +11,9 @@ use Omikron\Factfinder\Api\StreamInterface;
 
 class Csv implements StreamInterface
 {
-    /** @var Filesystem */
-    private $filesystem;
-
-    /** @var WriteInterface|null */
-    private $stream;
-
-    /** @var string */
-    private $filename;
+    private Filesystem $filesystem;
+    private ?WriteInterface $stream = null;
+    private string $filename;
 
     public function __construct(Filesystem $filesystem, string $filename = 'factfinder/export.csv')
     {

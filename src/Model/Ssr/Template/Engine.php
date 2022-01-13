@@ -6,12 +6,11 @@ namespace Omikron\Factfinder\Model\Ssr\Template;
 
 use Magento\Framework\View\Element\BlockInterface;
 use Magento\Framework\View\TemplateEngineInterface;
-use Mustache_Engine;
+use Mustache_Engine as Mustache;
 
 class Engine implements TemplateEngineInterface
 {
-    /** @var Mustache_Engine */
-    private $engine;
+    private Mustache $engine;
 
     public function __construct(Mustache_Engine $engine)
     {

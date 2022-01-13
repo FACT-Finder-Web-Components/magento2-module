@@ -9,8 +9,7 @@ use Omikron\Factfinder\Model\FieldRoles;
 
 class Filter implements FilterInterface
 {
-    /** @var FieldRoles */
-    private $fieldRoles;
+    private FieldRoles $fieldRoles;
 
     public function __construct(FieldRoles $fieldRoles)
     {

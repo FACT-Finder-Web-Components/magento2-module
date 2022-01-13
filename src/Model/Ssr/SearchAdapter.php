@@ -14,17 +14,10 @@ use Psr\Http\Message\ResponseInterface;
 
 class SearchAdapter
 {
-    /** @var ClientBuilder */
-    private $clientBuilder;
-
-    /** @var CommunicationConfig */
-    private $communicationConfig;
-
-    /** @var CredentialsFactory */
-    private $credentialsFactory;
-
-    /** @var PriceFormatter */
-    private $priceFormatter;
+    private ClientBuilder $clientBuilder;
+    private CommunicationConfig $communicationConfig;
+    private CredentialsFactory $credentialsFactory;
+    private PriceFormatter $priceFormatter;
 
     public function __construct(
         ClientBuilder $clientBuilder,

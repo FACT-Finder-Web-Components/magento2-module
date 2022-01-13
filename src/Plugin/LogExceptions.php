@@ -12,11 +12,8 @@ use Psr\Log\LoggerInterface;
 
 class LogExceptions
 {
-    /** @var ScopeConfigInterface */
-    private $scopeConfig;
-
-    /** @var LoggerInterface */
-    private $logger;
+    private ScopeConfigInterface $scopeConfig;
+    private LoggerInterface $logger;
 
     public function __construct(ScopeConfigInterface $scopeConfig, LoggerInterface $logger)
     {

@@ -16,17 +16,10 @@ use Omikron\Factfinder\Model\Adminhtml\System\Config\Source\Attribute as Attribu
  */
 class ExportFields extends AbstractFieldArray
 {
-    /** @var Select */
-    private $attributeRenderer;
-
-    /** @var Select */
-    private $typeRenderer;
-
-    /** @var AttributeSource */
-    private $attributeSource;
-
-    /** @var Yesno */
-    private $boolSource;
+    private Select $attributeRenderer;
+    private Select $typeRenderer;
+    private AttributeSource $attributeSource;
+    private Yesno $boolSource;
 
     public function __construct(
         Context $context,

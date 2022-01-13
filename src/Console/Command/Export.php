@@ -26,32 +26,15 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class Export extends Command
 {
-    /** @var StoreEmulation */
-    private $storeEmulation;
-
-    /** @var FeedGeneratorFactory */
-    private $feedGeneratorFactory;
-
-    /** @var StoreManagerInterface */
-    private $storeManager;
-
-    /** @var CommunicationConfig */
-    private $communicationConfig;
-
-    /** @var CsvFactory */
-    private $csvFactory;
-
-    /** @var FtpUploader */
-    private $ftpUploader;
-
-    /** @var PushImport */
-    private $pushImport;
-
-    /** @var State */
-    private $state;
-
-    /** @var Filesystem */
-    private $filesystem;
+    private StoreEmulation $storeEmulation;
+    private FeedGeneratorFactory $feedGeneratorFactory;
+    private StoreManagerInterface $storeManager;
+    private CommunicationConfig $communicationConfig;
+    private CsvFactory $csvFactory;
+    private FtpUploader $ftpUploader;
+    private PushImport $pushImport;
+    private State $state;
+    private Filesystem $filesystem;
 
     public function __construct(
         StoreManagerInterface $storeManager,
@@ -79,7 +62,7 @@ class Export extends Command
     /**
      * {@inheritdoc}
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this->setName('factfinder:export')->setDescription('Export feed data as CSV file');
 
@@ -94,7 +77,7 @@ class Export extends Command
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $this->state->setAreaCode('frontend');
         $storeIds = $this->getStoreIds((int) $input->getOption('store'));
@@ -129,9 +112,7 @@ class Export extends Command
 
     private function getStoreIds(int $storeId): array
     {
-        $storeIds = array_map(function ($store) {
-            return (int) $store->getId();
-        }, $storeId ? [$this->storeManager->getStore($storeId)] : $this->storeManager->getStores());
+        $storeIds = array_map(fn ($store) => (int) $store->getId(), $storeId ? [$this->storeManager->getStore($storeId)] : $this->storeManager->getStores());
         return array_filter($storeIds, [$this->communicationConfig, 'isChannelEnabled']);
     }
 }

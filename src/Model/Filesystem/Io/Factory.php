@@ -12,11 +12,8 @@ use Omikron\Factfinder\Model\Config\FtpConfig;
 
 class Factory
 {
-    /** @var ObjectManagerInterface */
-    private $objectManager;
-
-    /** @var FtpConfig */
-    private $uploadConfig;
+    private ObjectManagerInterface $objectManager;
+    private FtpConfig $uploadConfig;
 
     public function __construct(FtpConfig $uploadConfig, ObjectManagerInterface $objectManager)
     {

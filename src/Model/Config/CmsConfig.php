@@ -10,8 +10,7 @@ class CmsConfig
 {
     private const PATH_DISABLE_CMS_PAGES = 'factfinder/cms_export/ff_cms_blacklist';
 
-    /** @var ScopeConfigInterface */
-    private $scopeConfig;
+    private ScopeConfigInterface $scopeConfig;
 
     public function __construct(ScopeConfigInterface $scopeConfig)
     {

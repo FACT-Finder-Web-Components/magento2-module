@@ -15,17 +15,10 @@ use Omikron\Factfinder\Api\StreamInterface;
  */
 class Feed
 {
-    /** @var ExporterInterface */
-    private $exporter;
-
-    /** @var DataProviderInterface */
-    private $dataProvider;
-
-    /** @var FieldInterface[] */
-    private $fields;
-
-    /** @var array */
-    private $columns;
+    private ExporterInterface $exporter;
+    private DataProviderInterface $dataProvider;
+    private array $fields;
+    private array $columns;
 
     public function __construct(
         ExporterInterface $exporter,
