@@ -14,6 +14,6 @@ class AssetMinificationPlugin
 
     public function afterGetExcludes($subject, array $result, string $contentType): array
     {
-        return array_merge($result, $contentType === 'js' ? [self::JS_LIBRARY] : []);
+        return [...$result, ...$contentType === 'js' ? [self::JS_LIBRARY] : []];
     }
 }
