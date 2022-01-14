@@ -71,12 +71,19 @@ class Feed extends Action
     public function execute()
     {
         $result = $this->jsonResultFactory->create();
+
         try {
             preg_match('@/store/([0-9]+)/@', (string) $this->_redirect->getRefererUrl(), $match);
             $storeId = (int) ($match[1] ?? $this->storeManager->getDefaultStoreView()->getId());
             $messages = [];
 
-            $this->storeEmulation->runInStore($storeId, function () use ($storeId, &$messages) {
+            $this->storeEmulation->runInStore($storeId, function () use ($storeId, &$messages, $result) {
+
+                if (!$this->communicationConfig->isChannelEnabled()) {
+                    $message = sprintf('Integration for the channel `%s` must be enabled to run %s export', $this->communicationConfig->getChannel(), $this->feedType);
+                    $result->setData(['message' => $message]);
+                    return $result;
+                }
 
                 $filename = (new FeedFileService())->getFeedExportFilename($this->feedType, $this->communicationConfig->getChannel());
                 $stream   = $this->csvFactory->create(['filename' => "factfinder/{$filename}"]);
