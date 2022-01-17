@@ -97,8 +97,14 @@ class Export extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->state->setAreaCode('frontend');
+        $storeIds = $this->getStoreIds((int) $input->getOption('store'));
 
-        foreach ($this->getStoreIds((int) $input->getOption('store')) as $storeId) {
+        if (count($storeIds) === 0) {
+            $output->writeln(sprintf('Integration for the channel `%s` must be enabled to run %s export', $this->communicationConfig->getChannel(), $input->getArgument('type')));
+            return 0;
+        }
+
+        foreach ($storeIds as $storeId) {
             $this->storeEmulation->runInStore($storeId, function () use ($storeId, $input, $output) {
                 $feedFileService = new FeedFileService();
                 $type     = $input->getArgument('type');

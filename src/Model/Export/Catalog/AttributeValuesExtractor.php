@@ -56,10 +56,10 @@ class AttributeValuesExtractor
                 $values = (array) $product->getAttributeText($code);
                 break;
             case 'date':
-                $values[] = (new DateTime($value))->format("Y-m-d'T'");
+                $values[] = $value ? (new DateTime($value))->format("Y-m-d'T'") : '';
                 break;
             case 'datetime':
-                $values[] = (new DateTime($value))->format("Y-m-d'T'H:i:sP");
+                $values[] = $value ? (new DateTime($value))->format("Y-m-d'T'H:i:sP") : '';
                 break;
             default:
                 if (!is_scalar($value)) {
