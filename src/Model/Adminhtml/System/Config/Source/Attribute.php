@@ -20,11 +20,11 @@ class Attribute implements OptionSourceInterface
 
     public function toOptionArray()
     {
-        $options = array_map(fn(EavAttribute $attribute) => ['value' => (string) $attribute->getAttributeCode(), 'label' => (string) $attribute->getDefaultFrontendLabel()], $this->collectionFactory->create()->getItems());
+        $options = array_map(fn (EavAttribute $attribute) => ['value' => (string) $attribute->getAttributeCode(), 'label' => (string) $attribute->getDefaultFrontendLabel()], $this->collectionFactory->create()->getItems());
 
-        $options = array_filter($options, fn(array $a) => (bool) !!$a['label']);
+        $options = array_filter($options, fn (array $a) => (bool) !!$a['label']);
 
-        usort($options, fn(array $a, array $b) => strtolower($a['label']) <=> strtolower($b['label']));
+        usort($options, fn (array $a, array $b) => strtolower($a['label']) <=> strtolower($b['label']));
 
         return $options;
     }
