@@ -79,7 +79,7 @@ class Feed extends Action
 
             $this->storeEmulation->runInStore($storeId, function () use ($storeId, &$messages, $result) {
 
-                if (!$this->communicationConfig->isChannelEnabled()) {
+                if (!$this->communicationConfig->isChannelEnabled($storeId)) {
                     $message = sprintf('Integration for the channel `%s` must be enabled to run %s export', $this->communicationConfig->getChannel(), $this->feedType);
                     $result->setData(['message' => $message]);
                     return $result;
