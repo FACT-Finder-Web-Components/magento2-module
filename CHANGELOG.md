@@ -1,4 +1,16 @@
 # Changelog
+## [Unreleased]
+### Improved
+- Export
+  - improved diagnostic messages printed during running feed export in admin panel
+  - throw Exception while running export for disabled channel
+  - add support for DateTime type
+    
+### Fixed 
+ - Export
+  - fix false value coming from getConfigurableOptions breaks export 
+  - fix configurable attributes are not merged with FilterAttributes field if FilterAttributes is configured to be exported from variants 
+
 ## [v2.3.3] - 2021.12.13
 ### Add
 - Export
