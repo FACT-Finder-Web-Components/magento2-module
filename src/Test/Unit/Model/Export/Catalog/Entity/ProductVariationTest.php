@@ -6,10 +6,12 @@ namespace Omikron\Factfinder\Model\Export\Catalog\Entity;
 
 use Magento\Catalog\Api\Data\ProductInterface;
 use Magento\Catalog\Model\Product;
+use Magento\Framework\Model\AbstractModel;
 use Omikron\Factfinder\Model\Export\Catalog\FieldProvider;
+use Omikron\Factfinder\Model\Export\Catalog\ProductField\FilterAttributes;
 use Omikron\Factfinder\Model\Export\Catalog\ProductField\ProductImage;
-use Omikron\Factfinder\Model\Export\Catalog\Entity\ProductVariation;
 use Omikron\Factfinder\Model\Formatter\NumberFormatter;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -17,31 +19,24 @@ use PHPUnit\Framework\TestCase;
  */
 class ProductVariationTest extends TestCase
 {
+    /** @var MockObject|AbstractModel */
+    private $variantMock;
+
+    private $configurableProductData = [
+        'ProductNumber' => 'sku-configurable',
+        'Price'         => '8.99',
+        'HasVariants'   => 1,
+        'MagentoId'     => 1,
+        'ImageUrl'      => 'http://random-variant-image.png',
+    ];
+
     public function test_variant_data_will_override_the_parent()
     {
-        $configurableProductData = [
-            'ProductNumber' => 'sku-configurable',
-            'Price'         => '8.99',
-            'HasVariants'   => 1,
-            'MagentoId'     => 1,
-            'ImageUrl'      => 'http://random-variant-image.png'
-        ];
-
-        $variantMock = $this->createConfiguredMock(
-            Product::class,
-            [
-                'getSku'        => 'sku-variant',
-                'getFinalPrice' => '9.99',
-                'isAvailable'   => true,
-                'getId'         => 2
-            ]
-        );
-
         $fieldProviderMock = $this->createConfiguredMock(
             FieldProvider::class,
             [
                 'getVariantFields' => [
-                    'image_url' => $this->createConfiguredMock(
+                    'ImageUrl' => $this->createConfiguredMock(
                         ProductImage::class,
                         [
                             'getName'  => 'ImageUrl',
@@ -53,22 +48,70 @@ class ProductVariationTest extends TestCase
         );
 
         $productVariation = new ProductVariation(
-            $variantMock,
+            $this->variantMock,
             $this->createMock(Product::class),
             new NumberFormatter(),
             $fieldProviderMock,
-            $configurableProductData
+            $this->configurableProductData
         );
 
-        $this->assertEquals(
+        $this->containsSubset(
             [
                 'ProductNumber' => 'sku-variant',
                 'Price'         => '9.99',
                 'Availability'  => 1,
-                'HasVariants'   => 0,
                 'MagentoId'     => 2,
-                'ImageUrl'      => 'http://specific-variant-image.png'
+                'HasVariants'   => 0,
+                'ImageUrl'      => 'http://specific-variant-image.png',
             ], $productVariation->toArray()
         );
+    }
+
+    public function test_configurable_attributes_should_be_merged_with_filter_attributes()
+    {
+        $fieldProviderMock = $this->createConfiguredMock(
+            FieldProvider::class,
+            [
+                'getVariantFields' => [
+                    'FilterAttributes' => $this->createConfiguredMock(
+                        FilterAttributes::class,
+                        [
+                            'getName'  => 'FilterAttributes',
+                            'getValue' => '|Eco Collection=No|New=No|Price=52.00|Quantity=In Stock|'
+                        ]
+                    )
+                ]
+            ]
+        );
+
+        $productVariation = new ProductVariation(
+            $this->variantMock,
+            $this->createMock(Product::class),
+            new NumberFormatter(),
+            $fieldProviderMock,
+            ['FilterAttributes' => '|Color=Red|Size=XS|'] + $this->configurableProductData
+        );
+
+        $this->assertEquals('|Color=Red|Size=XS|Eco Collection=No|New=No|Price=52.00|Quantity=In Stock|',
+                            $productVariation->toArray()['FilterAttributes']
+        );
+    }
+
+    protected function setUp(): void
+    {
+        $this->variantMock = $variantMock = $this->createConfiguredMock(
+            Product::class,
+            [
+                'getSku'        => 'sku-variant',
+                'getFinalPrice' => '9.99',
+                'isAvailable'   => true,
+                'getId'         => 2
+            ]
+        );
+    }
+
+    private function containsSubset(array $expected, array $actual)
+    {
+        return $this->assertEquals($expected + $this->configurableProductData, $actual);
     }
 }
