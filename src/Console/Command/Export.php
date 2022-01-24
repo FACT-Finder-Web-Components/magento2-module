@@ -106,9 +106,7 @@ class Export extends Command
 
     private function getStoreIds(int $storeId): array
     {
-        $storeIds = array_map(function ($store) {
-            return (int) $store->getId();
-        }, $storeId ? [$this->storeManager->getStore($storeId)] : $this->storeManager->getStores());
+        $storeIds = array_map(fn ($store) => (int) $store->getId(), $storeId ? [$this->storeManager->getStore($storeId)] : $this->storeManager->getStores());
         return array_filter($storeIds, [$this->communicationConfig, 'isChannelEnabled']);
     }
 }
