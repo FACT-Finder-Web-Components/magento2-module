@@ -1,6 +1,8 @@
 # Changelog
 ## [Unreleased]
-
+### Add
+  - Product Page
+   - make `ff-similar-products` and `ff-recommendation` attribute `max-results` configurable 
 ### Improved
 - Export
   - improved diagnostic messages printed during running feed export in admin panel
