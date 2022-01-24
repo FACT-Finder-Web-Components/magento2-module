@@ -56,11 +56,13 @@ class ProductVariation implements ExportEntityInterface
                 'MagentoId'     => $this->getId(),
             ] + $this->configurableData;
 
-        return array_reduce($this->fieldprovider->getVariantFields(),
-            function (array $result, FieldInterface $field): array {
-                return [$field->getName() => $field->getValue($this->product)] + $result;
-            }, $baseData
-        );
+        list($filterAttributes, $restFields) = $this->extractFilterAttributes($this->fieldprovider->getVariantFields());
+        $splicedFilterAttributes = str_replace('||', '|', ($this->configurableData['FilterAttributes'] ?? '') . ($filterAttributes ? $filterAttributes->getValue($this->product) : ''));
+
+        return $splicedFilterAttributes ? ['FilterAttributes' => $splicedFilterAttributes] : [] + array_reduce($restFields,
+                function (array $result, FieldInterface $field): array {
+                    return [$field->getName() => $field->getValue($this->product)] + $result;
+                }, $baseData);
     }
 
     public function getProduct(): Product
@@ -71,5 +73,16 @@ class ProductVariation implements ExportEntityInterface
     public function getConfigurable(): Product
     {
         return $this->configurable;
+    }
+
+    private function extractFilterAttributes(array $fields): array
+    {
+        $withoutFilterAttributes = array_filter($fields, function (FieldInterface $field) {
+            return $field->getName() !== 'FilterAttributes';
+        });
+
+        $filterAttributes = $fields['FilterAttributes'] ?? [];
+
+        return [$filterAttributes, $withoutFilterAttributes];
     }
 }
