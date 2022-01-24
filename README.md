@@ -21,6 +21,7 @@ customise them.
     - [Advanced Settings](#advanced-settings)
         - [Currency and Country Settings](#currency-and-country-settings)
     - [Optional Custom Elements](#optional-custom-elements)
+    - [Custom Elements Options](#custom-elements-options)
     - [Export Settings](#export-settings)
     - [CMS Export Settings](#cms-export-settings)
     - [Data Transfer Settings](#data-transfer-settings)
@@ -137,6 +138,11 @@ Some of the custom elements we offer works only when specific additional FACT-Fi
 Here you can disabled them, if you do not use utilize this part of FACT-Finder functionality
 
 **Note:** Paging has been added cause with infinite scrolling enabled in ff-record list, this custom element is redundant  
+
+### Custom Elements Options
+![Custom Elements Options](docs/assets/custom-elements-options.png "Custom Elements Options")
+In this section you can find specific custom elements attributes, the values of which, you can configure.
+The values stored here are passed to specific places in the templates of the corresponding elements.
 
 ### Export Settings
 ![Product Data Export](docs/assets/export-settings.png "Product Data Export")

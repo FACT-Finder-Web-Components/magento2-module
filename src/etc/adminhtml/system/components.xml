@@ -42,4 +42,16 @@
             <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
         </field>
     </group>
+    <group id="components_options" translate="label comment" sortOrder="41" showInDefault="1" showInWebsite="1" showInStore="1">
+        <label>Custom Elements Options</label>
+        <field id="max_results_similar_products" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Max Result for Similar Articles</label>
+            <tooltip>This will apply to a template offered by the module. If you have overriden it, you must manually provide stored value to the frontend</tooltip>
+        </field>
+
+        <field id="max_results_recommendation" translate="label"  type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Max Result for Recommendation</label>
+            <tooltip>This will apply to a template offered by the module. If you have overriden it, you must manually provide stored value to the frontend</tooltip>
+        </field>
+    </group>
 </include>
