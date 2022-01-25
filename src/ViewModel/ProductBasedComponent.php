@@ -14,6 +14,7 @@ use Magento\Framework\View\Element\Block\ArgumentInterface;
 class ProductBasedComponent implements ArgumentInterface
 {
     private const PATH_SHOW_ADD_TO_CART_BUTTON = 'factfinder/general/show_add_to_cart_button';
+    private const PATH_MAX_RESULT = 'factfinder/components_options/max_results_';
 
     /** @var Image */
     private $imageHelper;
@@ -57,5 +58,13 @@ class ProductBasedComponent implements ArgumentInterface
     public function isAddToCartEnabled(): bool
     {
         return $this->scopeConfig->isSetFlag(self::PATH_SHOW_ADD_TO_CART_BUTTON);
+    }
+
+    public function getMaxResult(string $component): int
+    {
+        $storedValue      = (int) $this->scopeConfig->getValue(self::PATH_MAX_RESULT . $component);
+        $defaultMaxResult = 4;
+
+        return $storedValue > 0 ? $storedValue : $defaultMaxResult;
     }
 }
