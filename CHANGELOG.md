@@ -4,12 +4,15 @@
   - Product Page
    - make `ff-similar-products` and `ff-recommendation` attribute `max-results` configurable 
 
-### Improved
+### Improve
 - Export
   - improved diagnostic messages printed during running feed export in admin panel
   - throw Exception while running export for disabled channel
   - add support for DateTime type
-    
+
+### Change
+ - Upgrade Web Components to version 4.0.6
+        
 ### Fixed 
  - Export
   - fix false value coming from getConfigurableOptions breaks export 
