@@ -1,5 +1,5 @@
 # Changelog
-## [Unreleased]
+## [v3.2.0] - 2022.01.26
 ### Add
   - Product Page
    - make `ff-similar-products` and `ff-recommendation` attribute `max-results` configurable 
@@ -410,6 +410,7 @@
 ### Added
 - Feed Export: Export feed file is now available via separate link
 
+[v3.2.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.2.0
 [v3.1.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.1.0
 [v3.0.2]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.0.2
 [v3.0.1]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.0.1
