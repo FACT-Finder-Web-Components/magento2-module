@@ -109,7 +109,10 @@ class RecordList extends Template
 
     protected function redirectToProductPage(array $result): void
     {
-        $this->redirect->redirect($this->response, $result['records'][0]['record'][$this->fieldRoles->getFieldRole('deeplink')]);
+        $deepLink = $result['records'][0]['record'][$this->fieldRoles->getFieldRole('deeplink')];
+        $productPageUrl = $this->isAbsoluteUrl($deepLink) ? $deepLink : $this->removeForwardSlash($deepLink);
+
+        $this->redirect->redirect($this->response, $productPageUrl);
     }
 
     private function shouldRedirect(array $result): bool
@@ -117,5 +120,24 @@ class RecordList extends Template
         $isExactSearch = isset($result['articleNumberSearch']) && $result['articleNumberSearch']
             || isset($result['resultArticleNumberStatus']) && $result['resultArticleNumberStatus'] === 'resultsFound';
         return count($result['records']) === 1 && $isExactSearch;
+    }
+
+    private function isAbsoluteUrl(string $url): bool
+    {
+        $isAbsoluteUrl = preg_match('%^(?:(?:https?|ftp)://)(?:\S+(?::\S*)?@|\d{1,3}(?:\.\d{1,3}){3}|(?:(?:[a-z\d\x{00a1}-\x{ffff}]+-?)*[a-z\d\x{00a1}-\x{ffff}]+)(?:\.(?:[a-z\d\x{00a1}-\x{ffff}]+-?)*[a-z\d\x{00a1}-\x{ffff}]+)*(?:\.[a-z\x{00a1}-\x{ffff}]{2,6}))(?::\d+)?(?:[^\s]*)?$%iu', $url);
+
+        if ($isAbsoluteUrl === 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private function removeForwardSlash(string $url): string
+    {
+        $pattern = '/\//';
+        $replacement = '';
+
+        return preg_replace($pattern, $replacement, $url);
     }
 }
