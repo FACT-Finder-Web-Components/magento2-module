@@ -1,4 +1,8 @@
 # Changelog
+### Fix
+ - Category Page
+  - Fix category path is not correctly sorted if the parent category has id with greater number than its childs
+  
 ## [v2.4.0] - 2022.01.26
 ### Add
   - Product Page
@@ -392,6 +396,7 @@
 ### Added
 - Feed Export: Export feed file is now available via separate link
 
+[v2.4.1]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v2.4.1
 [v2.4.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v2.4.0
 [v2.3.3]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v2.3.3
 [v2.3.2]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v2.3.2
