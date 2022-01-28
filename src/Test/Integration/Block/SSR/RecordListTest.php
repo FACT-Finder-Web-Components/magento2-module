@@ -32,6 +32,7 @@ class RecordListTest extends \PHPUnit\Framework\TestCase
     /** @var MockObject|Redirect */
     private $redirectMock;
 
+    /** @var RecordList  */
     private $recordList;
 
     public function test_will_redirect_to_product_page_on_articleNumberSearch()
