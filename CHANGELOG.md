@@ -1,8 +1,8 @@
 # Changelog
-## [Unreleased]
+## [v3.2.1] - 2022.01.28
 ### Fix
  - Category Page
-  - Fix category path is not correctly sorted if the parent category has id with greater number than its childs
+  - fix category path is not correctly sorted if the parent category has id with greater number than its child
   
 ## [v3.2.0] - 2022.01.26
 ### Add
