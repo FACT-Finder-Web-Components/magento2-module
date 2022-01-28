@@ -55,7 +55,7 @@ class PushImport
 
         $responses = [];
         foreach ($dataTypes as $dataType) {
-            $responses = array_merge($responses, $importAdapter->import($channel, $dataType));
+            $responses = [...$responses, ...$importAdapter->import($channel, $dataType)];
         }
 
         $this->pushImportResult = $this->prepareListFromPushImportResponses($responses);
