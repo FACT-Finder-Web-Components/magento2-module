@@ -15,7 +15,11 @@ use Omikron\FactFinder\Communication\Client\ClientBuilder;
 use Omikron\FactFinder\Communication\Client\ClientInterface;
 use Omikron\Factfinder\Model\Config\CommunicationConfig;
 use Omikron\Factfinder\Model\FieldRoles;
+use Omikron\Factfinder\Model\Ssr\SearchAdapter;
 use PHPUnit\Framework\MockObject\MockObject;
+use Magento\Framework\View\Element\Template;
+use Magento\Framework\Serialize\SerializerInterface;
+use Magento\Framework\App\Response\Http as HttpResponse;
 
 class RecordListTest extends \PHPUnit\Framework\TestCase
 {
@@ -28,9 +32,11 @@ class RecordListTest extends \PHPUnit\Framework\TestCase
     /** @var MockObject|Redirect */
     private $redirectMock;
 
+    private $recordList;
+
     public function test_will_redirect_to_product_page_on_articleNumberSearch()
     {
-        $body         = include(__DIR__ . '/../../_files/ng_search_response.phpN');
+        $body         = include(__DIR__ . '/../../_files/ng_search_response.php');
         $responseMock = new Response(200, [], $body);
         $this->clientMock
             ->expects($this->atLeastOnce())
@@ -41,6 +47,27 @@ class RecordListTest extends \PHPUnit\Framework\TestCase
         $this->redirectMock->expects($this->once())->method('redirect');
 
         $block->toHtml();
+    }
+
+    public function test_will_detect_relative_url()
+    {
+        $isAbsoluteUrlMethod = $this->invokeMethod($this->recordList, 'isAbsoluteUrl', ['/relative-url']);
+        $this->assertEquals(false, $isAbsoluteUrlMethod);
+
+    }
+
+    public function test_will_remove_forward_slash()
+    {
+        $removeForwardSlashMethod = $this->invokeMethod($this->recordList, 'removeForwardSlash', ['/relative-url']);
+        $this->assertEquals('relative-url', $removeForwardSlashMethod);
+    }
+
+    public function invokeMethod(&$object, $methodName, array $parameters = array())
+    {
+        $reflection = new \ReflectionClass(get_class($object));
+        $method = $reflection->getMethod($methodName);
+        $method->setAccessible(true);
+        return $method->invokeArgs($object, $parameters);
     }
 
     protected function setUp(): void
@@ -74,6 +101,8 @@ class RecordListTest extends \PHPUnit\Framework\TestCase
         $this->objectManager->addSharedInstance($communicationConfigMock, CommunicationConfig::class);
         $this->objectManager->addSharedInstance($this->redirectMock, Redirect::class);
         $this->objectManager->addSharedInstance($fieldRolesMock, FieldRoles::class);
+
+        $this->recordList = new RecordList($this->createMock(Template\Context::class), $this->createMock(SearchAdapter::class), $this->createMock(SerializerInterface::class), $this->createMock(HttpResponse::class), $this->redirectMock, $fieldRolesMock);
     }
 
     protected function tearDown(): void
