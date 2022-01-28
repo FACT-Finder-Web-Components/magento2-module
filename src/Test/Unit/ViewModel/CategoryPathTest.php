@@ -33,7 +33,7 @@ class CategoryPathTest extends TestCase
         $categoryPath    = $this->newCategoryPath($this->communicationConfig);
 
         $this->currentCategory->method('getParentCategories')
-            ->willReturn([$this->category('Men', 1), $this->category('Tops', 2), $this->category('Jackets', 3)]);
+            ->willReturn([$this->category('Tops', 2), $this->category('Jackets', 3), $this->category('Men', 1)]);
 
         $value = 'filter=CategoryPath%3AMen%2FTops%2FJackets';
         $this->assertSame($value, (string) $categoryPath->getCategoryPath());
