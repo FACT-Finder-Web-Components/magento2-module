@@ -57,12 +57,14 @@ class ProductVariation implements ExportEntityInterface
             ] + $this->configurableData;
 
         list($filterAttributes, $restFields) = $this->extractFilterAttributes($this->fieldprovider->getVariantFields());
-        $splicedFilterAttributes = str_replace('||', '|', ($this->configurableData['FilterAttributes'] ?? '') . ($filterAttributes ? $filterAttributes->getValue($this->product) : ''));
+        $parentAttributes        = $this->configurableData['FilterAttributes'] ?? '';
+        $variantAttributes       = $filterAttributes ? $filterAttributes->getValue($this->product) : '';
+        $splicedFilterAttributes = str_replace('||', '|', $parentAttributes . $variantAttributes);
 
-        return $splicedFilterAttributes ? ['FilterAttributes' => $splicedFilterAttributes] : [] + array_reduce($restFields,
-                function (array $result, FieldInterface $field): array {
-                    return [$field->getName() => $field->getValue($this->product)] + $result;
-                }, $baseData);
+        return ($splicedFilterAttributes ? ['FilterAttributes' => $splicedFilterAttributes] : [])
+            + array_reduce($restFields, function (array $result, FieldInterface $field): array {
+                return [$field->getName() => $field->getValue($this->product)] + $result;
+            }, $baseData);
     }
 
     public function getProduct(): Product
