@@ -1,4 +1,9 @@
 # Changelog
+## [v2.4.2] - 2022.02.02
+### Fix
+ - Export
+  - fix variant base values are not exported if FilterAttributes are not configured to be exported from variant level 
+
 ## [v2.4.1] - 2022.01.28
 ### Fix
  - Category Page
@@ -397,6 +402,7 @@
 ### Added
 - Feed Export: Export feed file is now available via separate link
 
+[v2.4.2]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v2.4.2
 [v2.4.1]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v2.4.1
 [v2.4.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v2.4.0
 [v2.3.3]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v2.3.3
