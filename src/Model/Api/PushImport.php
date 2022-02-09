@@ -81,9 +81,13 @@ class PushImport
 
     private function prepareListFromPushImportResponses(array $responses): string
     {
-        $table = '<ul>';
+        $table = '';
 
         foreach ($responses as $response) {
+            if (empty($response['importType'])) {
+                continue;
+            }
+
             $importType = sprintf('<li><b>%s push import type</b></li>', $response['importType']);
 
             $statusMessagesList = sprintf('<ul>%s</ul>', implode('', array_map(function ($message)
@@ -94,8 +98,10 @@ class PushImport
             $table .= $importType;
         }
 
-        $table .= '</ul>';
+        if ('' === $table) {
+            return $table;
+        }
 
-        return $table;
+        return '<ul>'.$table.'</ul>';
     }
 }
