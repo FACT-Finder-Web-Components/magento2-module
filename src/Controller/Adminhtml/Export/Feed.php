@@ -99,8 +99,12 @@ class Feed extends Action
                         try{
                             $this->pushImport->execute($storeId);
                             $result = $this->pushImport->getPushImportResult();
-                            $messages[] = __('<li>Push import result</li><ul>' . $result . '</ul>');
-                        } catch (Exception $exception) {
+                            if (empty($result)) {
+                                $messages[] = __('<li>Push import successful.</li>');
+                            } else {
+                                $messages[] = __('<li>Push import result:' . $result . '</li>');
+                            }
+                        } catch (\Exception $exception) {
                             $messages[] = __('<li>Push import failed.</li>');
                         }
                     }
