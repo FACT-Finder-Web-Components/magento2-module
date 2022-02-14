@@ -7,7 +7,12 @@
  - Configuration
   - fix Update FieldRoles uses wrong scope name while saving to database 
   - fix PushImport data types are fetched with wrong scope
-  
+- Category Page
+  - fix encoding for special characters in category names 
+    
+### Change
+ - Upgrade Web Components to version 4.0.7
+   
 ## [v3.2.2] - 2022.02.02
 ### Fix
  - Export

@@ -63,11 +63,12 @@ class CategoryPath implements ArgumentInterface
 
     private function standardPath(?Category $category): array
     {
-        $path = 'ROOT';
+        $path  = 'ROOT';
         $value = $this->initial;
         foreach ($this->getParentCategories($category) as $item) {
-            $value[] = sprintf("filter{$this->param}%s=%s", $path, urlencode(trim($item->getName())));
-            $path .= urlencode('/' . trim($item->getName()));
+            $categoryName = trim($item->getName());
+            $value[]      = sprintf("filter{$this->param}%s=%s", $path, urlencode($categoryName));
+            $path         .= urlencode('/' . $this->encodeCategoryName($categoryName));
         }
 
         return $value;
@@ -76,7 +77,7 @@ class CategoryPath implements ArgumentInterface
     private function ngPath(?Category $category): array
     {
         $path = array_map(function (Category $item): string {
-            return (string) $item->getName();
+            return (string) $this->encodeCategoryName(trim($item->getName()));
         }, $category ? $this->getParentCategories($category) : []);
 
         return [sprintf('filter=%s', urlencode($this->param . ':' . implode('/', $path)))];
@@ -92,8 +93,7 @@ class CategoryPath implements ArgumentInterface
         $categories = $category ? $category->getParentCategories() : [];
         usort($categories, function (Category $a, Category $b): int {
             return $a->getLevel() - $b->getLevel();
-        }
-        );
+        });
 
         return $categories;
     }
@@ -101,5 +101,12 @@ class CategoryPath implements ArgumentInterface
     private function getCurrentCategory(): ?Category
     {
         return $this->registry->registry('current_category');
+    }
+
+    private function encodeCategoryName(string $path): string
+    {
+        //important! do not override this method
+        return preg_replace('/\+/', '%2B',
+            preg_replace('/\//', '%2F', preg_replace('/%/', '%25', $path)));
     }
 }
