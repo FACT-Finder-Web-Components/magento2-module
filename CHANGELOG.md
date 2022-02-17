@@ -1,4 +1,9 @@
 # Changelog
+## Unreleased
+### Fix 
+ - Fix error while push import feed using CLI after generate it for API version 7.x
+ - Fix content of informational modal window after feed export for API version 7.x
+
 ## [v2.4.2] - 2022.02.02
 ### Fix
  - Export
