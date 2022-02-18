@@ -6,6 +6,7 @@ namespace Omikron\Factfinder\Model\Config;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Serialize\Serializer\Json;
+use Magento\Store\Model\ScopeInterface as Scope;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -58,8 +59,8 @@ class ExportConfigTest extends TestCase
     {
         $scopeConfig  = $this->createMock(ScopeConfigInterface::class);
         $scopeConfig->method('getValue')->willReturnMap([
-            ['factfinder/data_transfer/ff_push_import_type', 'store', 1, 'search,suggest'],
-            ['factfinder/export/attributes', 'stores', 42,'{"_1":{"code":"color","multi":"0","numerical":"0"},"_2":{"code":"climate","multi":"1","numerical":"0"},"_3":{"code":"gender","multi":"0","numerical":"0"},"_4":{"code":"size","multi":"1","numerical":"1"}}']
+            ['factfinder/data_transfer/ff_push_import_type', Scope::SCOPE_STORES, 1, 'search,suggest'],
+            ['factfinder/export/attributes', Scope::SCOPE_STORES, 42,'{"_1":{"code":"color","multi":"0","numerical":"0"},"_2":{"code":"climate","multi":"1","numerical":"0"},"_3":{"code":"gender","multi":"0","numerical":"0"},"_4":{"code":"size","multi":"1","numerical":"1"}}']
         ]);
         $communicationConfig = $this->createMock(CommunicationConfig::class);
         $communicationConfig->method('getVersion')->willReturnOnConsecutiveCalls('7.3', 'ng');

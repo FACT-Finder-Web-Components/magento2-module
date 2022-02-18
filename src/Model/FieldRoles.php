@@ -45,8 +45,7 @@ class FieldRoles
     public function getFieldRoles(int $scopeId = null): array
     {
         try {
-            $scope  = $scopeId ? Scope::SCOPE_STORE : ScopeConfigInterface::SCOPE_TYPE_DEFAULT;
-            $config = $this->scopeConfig->getValue(self::PATH_PRODUCT_FIELD_ROLE, $scope, $scopeId);
+            $config = $this->scopeConfig->getValue(self::PATH_PRODUCT_FIELD_ROLE, Scope::SCOPE_STORES, $scopeId);
             return (array) $this->serializer->unserialize($config);
         } catch (\InvalidArgumentException $e) {
             return [];
@@ -62,8 +61,7 @@ class FieldRoles
     {
         try {
             $roles = (string) $this->serializer->serialize($fieldRoles);
-            $scope = $scopeId ? Scope::SCOPE_STORE : ScopeConfigInterface::SCOPE_TYPE_DEFAULT;
-            $this->configResource->saveConfig(self::PATH_PRODUCT_FIELD_ROLE, $roles, $scope, $scopeId);
+            $this->configResource->saveConfig(self::PATH_PRODUCT_FIELD_ROLE, $roles, Scope::SCOPE_STORES, $scopeId);
             return true;
         } catch (\InvalidArgumentException $e) {
             return false;
