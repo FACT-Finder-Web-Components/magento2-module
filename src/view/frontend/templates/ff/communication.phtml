@@ -8,6 +8,7 @@ $parameters = $viewModel->getParameters((array) $block->getData('communication_p
 <!-- Set FieldRoles -->
 <script>
     document.addEventListener('ffReady', function () {
+        factfinder.sdk = 'm2-v3.2.2';
         factfinder.communication.fieldRoles = <?= /* @noEscape */ $viewModel->getFieldRoles() ?>;
     });
 </script>
