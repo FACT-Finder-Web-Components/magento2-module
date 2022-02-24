@@ -82,7 +82,7 @@ class RecordList extends Template
     protected function searchResult(RequestInterface $request, array $searchParams): array
     {
         $paramsString = implode('&', array_filter([
-                parse_url($request->getUriString() ?? '', PHP_URL_QUERY),
+                parse_url($request->getUriString(), PHP_URL_QUERY),
                 http_build_query($searchParams)
             ]));
 
