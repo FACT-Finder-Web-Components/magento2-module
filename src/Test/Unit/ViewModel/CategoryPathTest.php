@@ -33,9 +33,9 @@ class CategoryPathTest extends TestCase
         $categoryPath    = $this->newCategoryPath($this->communicationConfig);
 
         $this->currentCategory->method('getParentCategories')
-            ->willReturn([$this->category('Tops', 2), $this->category('Jackets', 3), $this->category('Men', 1)]);
+            ->willReturn([$this->category('Men 100%', 1), $this->category('Tops & 1/2', 2), $this->category('Jackets +Size ', 3)]);
 
-        $value = 'filter=CategoryPath%3AMen%2FTops%2FJackets';
+        $value = 'filter=CategoryPath%3AMen+100%2525%2FTops+%26+1%252F2%2FJackets+%252BSize';
         $this->assertSame($value, (string) $categoryPath->getCategoryPath());
     }
 
@@ -45,10 +45,23 @@ class CategoryPathTest extends TestCase
         $categoryPath    = $this->newCategoryPath($this->communicationConfig);
 
         $this->currentCategory->method('getParentCategories')
-            ->willReturn([$this->category('Jackets', 3), $this->category('Men', 1), $this->category('Tops', 2)]);
+            ->willReturn([$this->category('Jackets +Size', 3), $this->category('Men 100%', 1), $this->category('Tops & 1/2', 2)]);
 
-        $value = 'filterCategoryPathROOT=Men,filterCategoryPathROOT%2FMen=Tops,filterCategoryPathROOT%2FMen%2FTops=Jackets';
+        $value = 'filterCategoryPathROOT=Men+100%25,filterCategoryPathROOT%2FMen+100%2525=Tops+%26+1%2F2,filterCategoryPathROOT%2FMen+100%2525%2FTops+%26+1%252F2=Jackets+%2BSize';
         $this->assertSame($value, (string) $categoryPath->getAddParams());
+    }
+
+    public function test_category_names_are_trimmed()
+    {
+        $this->communicationConfig->method('getVersion')->willReturn('ng');
+        $categoryPath    = $this->newCategoryPath($this->communicationConfig);
+
+        $this->currentCategory->method('getParentCategories')
+            ->willReturn([$this->category('Men ', 1), $this->category(' Tops ', 2)]);
+
+        $value = 'filter=CategoryPath%3AMen%2FTops';
+        $this->assertSame($value, (string) $categoryPath->getCategoryPath());
+
     }
 
     protected function setUp(): void
