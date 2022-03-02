@@ -52,7 +52,7 @@ class ExportConfig
     public function getPushImportDataTypes(int $scopeId = null): array
     {
         $configPath = 'factfinder/data_transfer/ff_push_import_type';
-        $dataTypes  = (string) $this->scopeConfig->getValue($configPath, ScopeInterface::SCOPE_STORE, $scopeId);
+        $dataTypes  = (string) $this->scopeConfig->getValue($configPath, ScopeInterface::SCOPE_STORES, $scopeId);
         $isNg       = $this->communicationConfig->getVersion() === Version::NG;
 
         return explode(',', $isNg ? $dataTypes : str_replace('search', 'data', $dataTypes));

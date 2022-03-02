@@ -8,6 +8,7 @@ use Magento\Catalog\Api\Data\ProductInterface;
 use Magento\Config\Model\ResourceModel\Config as ConfigResource;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Serialize\Serializer\Json as JsonSerializer;
+use Magento\Store\Model\ScopeInterface as Scope;
 use Omikron\Factfinder\Model\Export\Catalog\ProductType\SimpleDataProvider;
 use Omikron\Factfinder\Model\Export\Catalog\ProductType\SimpleDataProviderFactory;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -48,14 +49,14 @@ class FieldRolesTest extends TestCase
         $valueToSave = ['description' => 'Description', 'masterArticleNumber' => 'Master'];
         $this->configResourceMock->expects($this->once())
             ->method('saveConfig')
-            ->with('factfinder/general/tracking_product_number_field_role', $this->serializer->serialize($valueToSave));
+            ->with('factfinder/general/tracking_product_number_field_role', $this->serializer->serialize($valueToSave), Scope::SCOPE_STORES);
         $this->assertTrue($this->fieldRoles->saveFieldRoles($valueToSave, 1));
     }
 
     public function test_field_role_to_attribute_returns_correct_array_value()
     {
         $productMock = $this->createConfiguredMock(ProductInterface::class, ['getSku' => 'sku-1']);
-        $this->scopeConfigMock->method('getValue')->with('factfinder/general/tracking_product_number_field_role')->willReturn($this->roles);
+        $this->scopeConfigMock->method('getValue')->with('factfinder/general/tracking_product_number_field_role', Scope::SCOPE_STORES)->willReturn($this->roles);
         $this->dataProvider->expects($this->once())->method('toArray')->willReturn([
             'ProductNumber' => 'sku-1',
             'Master'        => 'sku-1',
