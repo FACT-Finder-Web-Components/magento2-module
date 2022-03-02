@@ -1,9 +1,12 @@
 # Changelog
 ## Unreleased
-### Fix 
- - Fix error while push import feed using CLI after generate it for API version 7.x
- - Fix content of informational modal window after feed export for API version 7.x
-
+ - Import 
+  - fix error while push import feed using CLI after generate it for API version 7.x
+  - fix content of informational modal window after feed export for API version 7.x
+ - Configuration
+  - fix Update FieldRoles uses wrong scope name while saving to database 
+  - fix PushImport data types are fetched with wrong scope
+  
 ## [v2.4.2] - 2022.02.02
 ### Fix
  - Export
