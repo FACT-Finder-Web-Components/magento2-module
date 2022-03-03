@@ -9,9 +9,11 @@
   - fix PushImport data types are fetched with wrong scope
 - Category Page
   - fix encoding for special characters in category names 
-    
+- SSR
+ - add detection of relative url and remove forwardslash for correct redirecting to product page
+      
 ### Change
- - Upgrade Web Components to version 4.0.7
+ - Upgrade Web Components to version 4.0.8
    
 ## [v3.2.2] - 2022.02.02
 ### Fix
@@ -22,7 +24,7 @@
 ### Fix
  - Category Page
   - fix category path is not correctly sorted if the parent category has id with greater number than its child
-  
+
 ## [v3.2.0] - 2022.01.26
 ### Add
   - Product Page
