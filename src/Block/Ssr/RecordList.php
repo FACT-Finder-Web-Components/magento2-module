@@ -62,6 +62,7 @@ class RecordList extends Template
         $result = $this->searchResult($this->getRequest()->getParam('query', '*'), $this->getSearchParams());
         if ($this->shouldRedirect($result)) {
             $this->redirectToProductPage($result);
+            return;
         }
 
         // Add pre-rendered records
@@ -100,7 +101,10 @@ class RecordList extends Template
 
     protected function redirectToProductPage(array $result): void
     {
-        $this->redirect->redirect($this->response, $result['records'][0]['record'][$this->fieldRoles->getFieldRole('deeplink')]);
+        $deepLink = $result['records'][0]['record'][$this->fieldRoles->getFieldRole('deeplink')];
+        $productPageUrl = $this->isAbsoluteUrl($deepLink) ? $deepLink : $this->removeForwardSlash($deepLink);
+
+        $this->redirect->redirect($this->response, $productPageUrl);
     }
 
     private function shouldRedirect(array $result): bool
@@ -108,5 +112,15 @@ class RecordList extends Template
         $isExactSearch = isset($result['articleNumberSearch']) && $result['articleNumberSearch']
             || isset($result['resultArticleNumberStatus']) && $result['resultArticleNumberStatus'] === 'resultsFound';
         return count($result['records']) === 1 && $isExactSearch;
+    }
+
+    private function isAbsoluteUrl(string $url): bool
+    {
+        return (bool) preg_match('#http(s)?:\/\/#iu', $url);
+    }
+
+    private function removeForwardSlash(string $url): string
+    {
+        return preg_replace('/\//', '', $url);
     }
 }
