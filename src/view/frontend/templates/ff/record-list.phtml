@@ -49,7 +49,7 @@ $viewModel = $block->getViewModel();
     require(['ffCallbacks'], function (ffCallbacks) {
         document.addEventListener('ffReady', function (ff) {
             factfinder.communication.EventAggregator.addBeforeDispatchingCallback(function (event) {
-                if (event.type === 'search' || event.type === 'paging') {
+                if ((event.type === 'search' && !event.searchImmediate) || event.type === 'paging') {
                     const scrollToTopCallback = ffCallbacks.scrollToCallback();
                     event.success = factfinder.common.concatFunctions(event.success, scrollToTopCallback);
                 }
@@ -57,14 +57,17 @@ $viewModel = $block->getViewModel();
         });
     });
 
-    require(['jquery', 'catalogAddToCart'], function ($) {
+    require(['jquery', 'underscore', 'catalogAddToCart'], function ($, _) {
         document.addEventListener('WebComponentsReady', function () {
             document.querySelectorAll('ff-record-list').forEach(function (recordList) {
-                recordList.addEventListener('dom-updated', function () {
-                    const addToCartForm = $('.product_addtocart_form');
-                    if (addToCartForm && addToCartForm.hasOwnProperty('catalogAddToCart') && typeof addToCartForm.catalogAddToCart === 'function') {
-                        addToCartForm.catalogAddToCart();
-                    }
+                recordList.addEventListener('dom-updated', function (updatedRecordList) {
+                    const addToCartForms = updatedRecordList.target.querySelectorAll('ff-record .product_addtocart_form');
+                    _.each(addToCartForms, function (form) {
+                        const jquedForm = $(form);
+                        if (typeof jquedForm.catalogAddToCart === 'function') {
+                            jquedForm.catalogAddToCart();
+                        }
+                    });
                 });
             })
         })
