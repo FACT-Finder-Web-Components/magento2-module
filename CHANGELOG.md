@@ -1,5 +1,5 @@
 # Changelog
-## Unreleased
+## [v2.5.0] - 2022.03.04
  - Import 
   - fix error while push import feed using CLI after generate it for API version 7.x
   - fix content of informational modal window after feed export for API version 7.x
@@ -420,6 +420,7 @@
 ### Added
 - Feed Export: Export feed file is now available via separate link
 
+[v2.5.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v2.5.0
 [v2.4.2]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v2.4.2
 [v2.4.1]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v2.4.1
 [v2.4.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v2.4.0
