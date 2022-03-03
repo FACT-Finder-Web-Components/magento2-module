@@ -1,5 +1,5 @@
 # Changelog
-## Unreleased
+## [v3.3.0] - 2022.03.04
 ### Fix
  - Import 
   - fix error while push import feed using CLI after generate it for API version 7.x
@@ -439,6 +439,7 @@
 ### Added
 - Feed Export: Export feed file is now available via separate link
 
+[v3.3.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.3.0
 [v3.2.2]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.2.2
 [v3.2.1]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.2.1
 [v3.2.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.2.0
