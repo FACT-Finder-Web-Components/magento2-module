@@ -64,6 +64,7 @@ class RecordList extends Template
         $result = $this->searchResult($this->getRequest(), $this->getSearchParams());
         if ($this->shouldRedirect($result)) {
             $this->redirectToProductPage($result);
+            return;
         }
 
         // Add pre-rendered records
@@ -82,7 +83,7 @@ class RecordList extends Template
     protected function searchResult(RequestInterface $request, array $searchParams): array
     {
         $paramsString = implode('&', array_filter([
-                parse_url($request->getUriString(), PHP_URL_QUERY),
+                parse_url($request->getRequestString(), PHP_URL_QUERY),
                 http_build_query($searchParams)
             ]));
 
@@ -124,16 +125,11 @@ class RecordList extends Template
 
     private function isAbsoluteUrl(string $url): bool
     {
-        $isAbsoluteUrl = preg_match('%^(?:(?:https?|ftp)://)(?:\S+(?::\S*)?@|\d{1,3}(?:\.\d{1,3}){3}|(?:(?:[a-z\d\x{00a1}-\x{ffff}]+-?)*[a-z\d\x{00a1}-\x{ffff}]+)(?:\.(?:[a-z\d\x{00a1}-\x{ffff}]+-?)*[a-z\d\x{00a1}-\x{ffff}]+)*(?:\.[a-z\x{00a1}-\x{ffff}]{2,6}))(?::\d+)?(?:[^\s]*)?$%iu', $url);
-
-        return $isAbsoluteUrl === 1;
+        return (bool) preg_match('#http(s)?:\/\/#iu', $url);
     }
 
     private function removeForwardSlash(string $url): string
     {
-        $pattern = '/\//';
-        $replacement = '';
-
-        return preg_replace($pattern, $replacement, $url);
+        return preg_replace('/\//', '', $url);
     }
 }
