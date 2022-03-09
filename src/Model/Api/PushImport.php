@@ -81,10 +81,9 @@ class PushImport
         foreach ($responses as $response) {
             $importType = sprintf('<li><b>%s push import type</b></li>', $response['importType']);
 
-            $statusMessagesList = sprintf('<ul>%s</ul>', implode('', array_map(function ($message) {
-                return sprintf('<li>%s</li>', $message);
-            }, $response['statusMessages'])));
-            $statusMessages = sprintf('<li><i>Status messages</i></li><li>%s</li>', $statusMessagesList);
+            $statusList = sprintf('<ul>%s</ul>', implode('', array_map(fn (string $message): string => sprintf('<li>%s</li>', $message), $response['statusMessages'])));
+
+            $statusMessages = sprintf('<li><i>Status messages</i></li><li>%s</li>', $statusList);
 
             $importType .= $statusMessages;
             $listContent .= $importType;
@@ -99,11 +98,9 @@ class PushImport
         $listContent = '';
 
         if (!empty($responses['status'])) {
-            $statusMessagesList = sprintf('<ul>%s</ul>', implode('', array_map(function ($message) {
-                return sprintf('<li>%s</li>', $message);
-            }, $responses['status'])));
+            $statusList = sprintf('<ul>%s</ul>', implode('', array_map(fn (string $message): string => sprintf('<li>%s</li>', $message), $responses['status'])));
 
-            $statusMessages = sprintf('<li><i>Status messages</i></li><li>%s</li>', $statusMessagesList);
+            $statusMessages = sprintf('<li><i>Status messages</i></li><li>%s</li>', $statusList);
             $listContent .= $statusMessages;
         }
 

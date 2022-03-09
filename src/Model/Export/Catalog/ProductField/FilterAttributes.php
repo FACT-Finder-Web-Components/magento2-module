@@ -71,8 +71,6 @@ class FilterAttributes implements FieldInterface
 
     private function getAttributeLabel(int $storeId): callable
     {
-        return function (Attribute $attribute) use ($storeId): string {
-            return $this->filter->filterValue((string) $attribute->getStoreLabel($storeId));
-        };
+        return fn (Attribute $attribute): string => $this->filter->filterValue((string) $attribute->getStoreLabel($storeId));
     }
 }

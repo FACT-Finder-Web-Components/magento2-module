@@ -56,7 +56,7 @@ customise them.
 This module supports:
 
 - Magento 2 version 2.3 and higher
-- PHP version 7.2 and higher  
+- PHP version 7.4 and higher  
 
 ## Installation
 

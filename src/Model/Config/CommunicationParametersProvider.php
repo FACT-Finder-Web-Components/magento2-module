@@ -17,8 +17,6 @@ class CommunicationParametersProvider implements ParametersSourceInterface
 
     public function getParameters(): array
     {
-        return array_reduce($this->sources, function (array $params, ParametersSourceInterface $source): array {
-            return array_merge($params, $source->getParameters());
-        }, []);
+        return array_reduce($this->sources, fn (array $params, ParametersSourceInterface $source): array => array_merge($params, $source->getParameters()), []);
     }
 }

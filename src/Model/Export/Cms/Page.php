@@ -36,8 +36,10 @@ class Page implements ExportEntityInterface
             'MetaDescription' => (string) $this->page->getMetaDescription(),
         ];
 
-        return array_reduce($this->pageFields, function (array $result, FieldInterface $field): array {
-            return [$field->getName() => $field->getValue($this->page)] + $result;
-        }, $data);
+        return array_reduce(
+            $this->pageFields,
+            fn (array $result, FieldInterface $field): array => [$field->getName() => $field->getValue($this->page)] + $result,
+            $data
+        );
     }
 }

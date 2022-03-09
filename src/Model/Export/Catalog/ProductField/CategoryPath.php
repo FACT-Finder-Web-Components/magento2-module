@@ -35,13 +35,12 @@ class CategoryPath implements FieldInterface
      */
     public function getValue(AbstractModel $product): string
     {
-        $paths = array_map(function (int $categoryId) use ($product): array {
-            return $this->getPath($categoryId, $product->getStore());
-        }, $product->getCategoryIds());
+        $paths = array_map(
+            fn (int $categoryId): array => $this->getPath($categoryId, $product->getStore()),
+            $product->getCategoryIds()
+        );
 
-        return implode('|', array_map(function (array $path): string {
-            return implode('/', array_map('urlencode', $path));
-        }, array_filter($paths)));
+        return implode('|', array_map(fn (array $path): string => implode('/', array_map('urlencode', $path)), array_filter($paths)));
     }
 
     /**
@@ -54,9 +53,10 @@ class CategoryPath implements FieldInterface
     {
         try {
             $storeId = (int) $store->getId();
-            return array_map(function (int $id) use ($storeId): string {
-                return trim($this->getCategory($id, $storeId)->getName());
-            }, $this->getPathIds($this->getCategory($categoryId, $storeId), $store));
+            return array_map(
+                fn (int $id): string => trim($this->getCategory($id, $storeId)->getName()),
+                $this->getPathIds($this->getCategory($categoryId, $storeId), $store)
+            );
         } catch (NoSuchEntityException $e) {
             return [];
         }

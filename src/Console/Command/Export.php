@@ -77,7 +77,7 @@ class Export extends Command
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output): void
+    protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->state->setAreaCode('frontend');
         $storeIds = $this->getStoreIds((int) $input->getOption('store'));

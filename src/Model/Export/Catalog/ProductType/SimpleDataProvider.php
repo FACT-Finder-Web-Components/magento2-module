@@ -54,9 +54,11 @@ class SimpleDataProvider implements DataProviderInterface, ExportEntityInterface
             'MagentoId'     => $this->getId(),
         ];
 
-        return array_reduce($this->productFields, function (array $result, FieldInterface $field): array {
-            return [$field->getName() => $field->getValue($this->product)] + $result;
-        }, $data);
+        return array_reduce(
+            $this->productFields,
+            fn (array $result, FieldInterface $field): array  => [$field->getName() => $field->getValue($this->product)] + $result,
+            $data
+        );
     }
 
     public function getProduct(): Product

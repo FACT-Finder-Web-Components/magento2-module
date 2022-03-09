@@ -1,4 +1,8 @@
 # Changelog
+## [v4.0.0]
+### BREAKING
+ - drop PHP 7.3 support
+
 ## [v3.3.0] - 2022.03.04
 ### Fix
  - Import 
