@@ -40,7 +40,7 @@ jobs:
           composer update --no-ansi --no-interaction --prefer-${{ matrix.deps }}
 
       - name: Run Static analysis
-        - run: |
+        run: |
             vendor/bin/phpcs -nq .
             vendor/bin/phpmd src text phpmd.xml.dist
 
