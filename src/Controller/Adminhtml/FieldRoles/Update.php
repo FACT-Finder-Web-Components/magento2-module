@@ -48,6 +48,7 @@ class Update extends Action
     {
         $result = $this->jsonResultFactory->create();
         try {
+            //@phpcs:ignore Magento2.Legacy.ObsoleteResponse.RedirectResponseMethodFound
             preg_match('@/store/([0-9]+)/@', (string) $this->_redirect->getRefererUrl(), $match);
             $storeId = (int) ($match[1] ?? $this->storeManager->getDefaultStoreView()->getId());
             $client  = $this->clientBuilder

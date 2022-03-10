@@ -3,6 +3,7 @@
 
 namespace Omikron\Factfinder\Service;
 
+use Magento\Framework\Exception\InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -25,15 +26,15 @@ class FeedFileServiceTest extends TestCase
 
     public function test_will_throw_exception_on_empty_export_type()
     {
-        $this->expectException('Exception');
-        $this->expectExceptionMessage('Export type should not be empty');
+        $this->expectException('Magento\Framework\Exception\InvalidArgumentException');
+        $this->expectExceptionMessage('Argument $exportType must not be empty');
         $this->assertSame('export.test_type.test_channel.csv', $this->feedFileService->getFeedExportFilename('', 'test_channel'));
     }
 
     public function test_will_throw_exception_on_empty_export_channel()
     {
-        $this->expectException('Exception');
-        $this->expectExceptionMessage('Channel should not be empty');
+        $this->expectException('Magento\Framework\Exception\InvalidArgumentException');
+        $this->expectExceptionMessage('Argument $channel must not be empty');
         $this->assertSame('export.test_type.test_channel.csv', $this->feedFileService->getFeedExportFilename('test_type', ''));
     }
 
@@ -49,6 +50,5 @@ class FeedFileServiceTest extends TestCase
     protected function setUp(): void
     {
         $this->feedFileService = new FeedFileService();
-
     }
 }

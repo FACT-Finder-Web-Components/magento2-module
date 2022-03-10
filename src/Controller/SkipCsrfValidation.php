@@ -1,5 +1,5 @@
 <?php
-
+//@
 declare(strict_types=1);
 
 namespace Omikron\Factfinder\Controller;
@@ -11,6 +11,7 @@ use Magento\Framework\App\RequestInterface;
  * Implementation of CsrfAwareActionInterface.
  *
  * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+ * @codingStandardsIgnoreFile
  */
 trait SkipCsrfValidation
 {

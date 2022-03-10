@@ -41,7 +41,8 @@ jobs:
 
       - name: Run Static analysis
         run: |
-            vendor/bin/phpcs -nq .
+            vendor/bin/phpcs --config-set installed_paths vendor/magento/magento-coding-standard,vendor/phpcompatibility/php-compatibility
+            vendor/bin/phpcs --standard=phpcs.xml.dist --extensions=php,phtml src
             vendor/bin/phpmd src text phpmd.xml.dist
 
       - name: Run tests

@@ -20,42 +20,42 @@ class ConfigurableDataProviderTest extends TestCase
     private $configurableDataProvider;
 
     /**
-     * @covers ConfigurableDataProvider::getValueOrEmptyString
+     * @covers ConfigurableDataProvider::valueOrEmptyStr
      */
     public function test_will_return_string_on_string_value()
     {
-        $getValueOrEmptyStringMethod = $this->invokeMethod($this->configurableDataProvider, 'getValueOrEmptyString', ['test']);
-        $this->assertEquals('test', $getValueOrEmptyStringMethod);
+        $valueOrEmptyStrMethod = $this->invokeMethod($this->configurableDataProvider, 'valueOrEmptyStr', ['test']);
+        $this->assertEquals('test', $valueOrEmptyStrMethod);
     }
 
     /**
-     * @covers ConfigurableDataProvider::getValueOrEmptyString
+     * @covers ConfigurableDataProvider::valueOrEmptyStr
      */
     public function test_will_return_empty_string_on_null_value()
     {
-        $getValueOrEmptyStringMethod = $this->invokeMethod($this->configurableDataProvider, 'getValueOrEmptyString', [null]);
-        $this->assertEquals('', $getValueOrEmptyStringMethod);
+        $valueOrEmptyStrMethod = $this->invokeMethod($this->configurableDataProvider, 'valueOrEmptyStr', [null]);
+        $this->assertEquals('', $valueOrEmptyStrMethod);
     }
 
     /**
-     * @covers ConfigurableDataProvider::getValueOrEmptyString
+     * @covers ConfigurableDataProvider::valueOrEmptyStr
      */
     public function test_will_return_empty_string_on_bool_value()
     {
-        $getValueOrEmptyStringMethod = $this->invokeMethod($this->configurableDataProvider, 'getValueOrEmptyString', [false]);
-        $this->assertEquals('', $getValueOrEmptyStringMethod);
+        $valueOrEmptyStrMethod = $this->invokeMethod($this->configurableDataProvider, 'valueOrEmptyStr', [false]);
+        $this->assertEquals('', $valueOrEmptyStrMethod);
     }
 
     /**
-     * @covers ConfigurableDataProvider::getValueOrEmptyString
+     * @covers ConfigurableDataProvider::valueOrEmptyStr
      */
     public function test_will_return_empty_string_on_array_value()
     {
-        $getValueOrEmptyStringMethod = $this->invokeMethod($this->configurableDataProvider, 'getValueOrEmptyString', [[]]);
-        $this->assertEquals('', $getValueOrEmptyStringMethod);
+        $valueOrEmptyStrMethod = $this->invokeMethod($this->configurableDataProvider, 'valueOrEmptyStr', [[]]);
+        $this->assertEquals('', $valueOrEmptyStrMethod);
     }
 
-    public function invokeMethod(&$object, $methodName, array $parameters = array())
+    public function invokeMethod(&$object, $methodName, array $parameters = [])
     {
         $reflection = new \ReflectionClass(get_class($object));
         $method = $reflection->getMethod($methodName);

@@ -54,7 +54,7 @@ class RecordList extends Template
         $result = $this->searchResult($this->getRequest(), $this->getSearchParams());
         if ($this->shouldRedirect($result)) {
             $this->redirectToProductPage($result);
-            return;
+            return '';
         }
 
         // Add pre-rendered records
@@ -73,7 +73,7 @@ class RecordList extends Template
     protected function searchResult(RequestInterface $request, array $searchParams): array
     {
         $paramsString = implode('&', array_filter([
-                parse_url($request->getRequestString(), PHP_URL_QUERY),
+                parse_url($request->getRequestString(), PHP_URL_QUERY), //@phpcs:ignore Magento2.Functions.DiscouragedFunction.Discouraged
                 http_build_query($searchParams)
             ]));
 

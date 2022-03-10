@@ -70,7 +70,9 @@ class PushImport
 
     private function prepareListFromPushImportResponses(array $responses): string
     {
-        return strtolower($this->communicationConfig->getVersion()) === 'ng' ? $this->ngResponse($responses) : $this->standardResponse($responses);
+        return strtolower($this->communicationConfig->getVersion()) === 'ng'
+            ? $this->ngResponse($responses)
+            : $this->standardResponse($responses);
     }
 
     private function ngResponse(array $responses): string
@@ -81,7 +83,10 @@ class PushImport
         foreach ($responses as $response) {
             $importType = sprintf('<li><b>%s push import type</b></li>', $response['importType']);
 
-            $statusList = sprintf('<ul>%s</ul>', implode('', array_map(fn (string $message): string => sprintf('<li>%s</li>', $message), $response['statusMessages'])));
+            $statusList = sprintf(
+                '<ul>%s</ul>',
+                implode('', array_map(fn (string $message): string => sprintf('<li>%s</li>', $message), $response['statusMessages']))
+            );
 
             $statusMessages = sprintf('<li><i>Status messages</i></li><li>%s</li>', $statusList);
 
@@ -98,7 +103,10 @@ class PushImport
         $listContent = '';
 
         if (!empty($responses['status'])) {
-            $statusList = sprintf('<ul>%s</ul>', implode('', array_map(fn (string $message): string => sprintf('<li>%s</li>', $message), $responses['status'])));
+            $statusList = sprintf(
+                '<ul>%s</ul>',
+                implode('', array_map(fn (string $message): string => sprintf('<li>%s</li>', $message), $responses['status']))
+            );
 
             $statusMessages = sprintf('<li><i>Status messages</i></li><li>%s</li>', $statusList);
             $listContent .= $statusMessages;

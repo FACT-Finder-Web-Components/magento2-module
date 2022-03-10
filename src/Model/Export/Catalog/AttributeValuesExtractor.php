@@ -29,6 +29,7 @@ class AttributeValuesExtractor
      * @return array
      * @throws \Exception
      */
+    //phpcs:ignore Generic.Metrics.CyclomaticComplexity.TooHigh
     public function getAttributeValues(Product $product, Attribute $attribute): array
     {
         $code   = $attribute->getAttributeCode();

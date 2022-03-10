@@ -34,7 +34,8 @@ class Communication implements ArgumentInterface
     public function getParameters(array $blockParams = []): array
     {
         $params = $this->parametersProvider->getParameters();
-        return ['version' => $params['version'] ?? 'ng'] + array_filter($this->mergeParameters($blockParams, $params) + $blockParams + $params, 'boolval');
+        return ['version' => $params['version'] ?? 'ng']
+            + array_filter($this->mergeParameters($blockParams, $params) + $blockParams + $params, 'boolval');
     }
 
     public function getFieldRoles(): string
@@ -46,6 +47,7 @@ class Communication implements ArgumentInterface
     {
         $params = array_map(fn (array $param) => array_intersect_key($param + $this->mergeableParams, $this->mergeableParams), $params);
 
-        return array_reduce(array_keys($this->mergeableParams), fn ($result, $key) => $result + [$key => implode(',', array_filter(array_column($params, $key)))], []);
+        return array_reduce(array_keys($this->mergeableParams), fn ($result, $key) => $result
+            + [$key => implode(',', array_filter(array_column($params, $key)))], []);
     }
 }

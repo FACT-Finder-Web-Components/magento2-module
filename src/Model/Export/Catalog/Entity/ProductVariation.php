@@ -56,7 +56,8 @@ class ProductVariation implements ExportEntityInterface
             + array_reduce(
                 $restFields,
                 fn (array $result, FieldInterface $field): array => [$field->getName() => $field->getValue($this->product)] + $result,
-                $baseData);
+                $baseData
+            );
     }
 
     public function getProduct(): Product

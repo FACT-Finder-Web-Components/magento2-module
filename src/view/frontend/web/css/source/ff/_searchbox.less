@@ -1,65 +1,65 @@
 .search-wrapper {
-  .header & {
-    margin: 8px 30px 0 200px;
-  }
+    .header & {
+        margin: 8px 30px 0 200px;
+    }
 }
 
 .ff-searchbox {
-  display: flex;
-  flex-direction: row;
-  align-items: stretch;
-  border: 1px solid lightgray;
-  padding: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    border: 1px solid lightgray;
+    padding: 10px;
 
-  .header & {
-    padding: 5px;
-  }
-
-  > * {
-    margin: 0 5px;
-
-    .header &:last-child {
-      order: -1;
-    }
-  }
-
-  .input-text {
-    border: 0;
-    flex: 1 1 auto;
-    background: transparent;
-
-    &:focus {
-      box-shadow: none;
-    }
-  }
-
-  button {
-    .lib-button-icon(@_icon-font-content: @icon-search);
-    padding: 0;
-    border: 0;
-    background: transparent;
-    box-shadow: none;
-    opacity: .5;
-
-    &::before {
-      line-height: 1em;
+    .header & {
+        padding: 5px;
     }
 
-    span {
-      .lib-visually-hidden();
+    > * {
+        margin: 0 5px;
+
+        .header &:last-child {
+            order: -1;
+        }
     }
-  }
+
+    .input-text {
+        border: 0;
+        flex: 1 1 auto;
+        background: transparent;
+
+        &:focus {
+            box-shadow: none;
+        }
+    }
+
+    button {
+        .lib-button-icon(@_icon-font-content: @icon-search);
+        padding: 0;
+        border: 0;
+        background: transparent;
+        box-shadow: none;
+        opacity: .5;
+
+        &::before {
+            line-height: 1em;
+        }
+
+        span {
+            .lib-visually-hidden();
+        }
+    }
 }
 
 .media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
-  .header .search-wrapper {
-    margin-top: 0;
-    margin-left: 160px;
-  }
+    .header .search-wrapper {
+        margin-top: 0;
+        margin-left: 160px;
+    }
 }
 
 .media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__s) {
-  .ff-searchbox > * {
-    order: unset !important;
-  }
+    .ff-searchbox > * {
+        order: unset !important;
+    }
 }

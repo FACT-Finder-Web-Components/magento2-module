@@ -18,8 +18,7 @@ class FieldProvider implements FieldProviderInterface
     private array $cachedVariantFields;
     private array $cachedFields;
 
-    public function __construct
-    (
+    public function __construct(
         ExportConfig $config,
         GenericFieldFactory $fieldFactory,
         array $productFields = [],

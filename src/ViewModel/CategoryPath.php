@@ -102,7 +102,18 @@ class CategoryPath implements ArgumentInterface
     private function encodeCategoryName(string $path): string
     {
         //important! do not override this method
-        return preg_replace('/\+/', '%2B',
-            preg_replace('/\//', '%2F', preg_replace('/%/', '%25', $path)));
+        return preg_replace(
+            '/\+/',
+            '%2B',
+            preg_replace(
+                '/\//',
+                '%2F',
+                preg_replace(
+                    '/%/',
+                    '%25',
+                    $path
+                )
+            )
+        );
     }
 }

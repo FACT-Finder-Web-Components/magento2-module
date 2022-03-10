@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Omikron\Factfinder\Model\Export\Catalog\Entity;
 
-use Magento\Catalog\Api\Data\ProductInterface;
 use Magento\Catalog\Model\Product;
 use Magento\Framework\Model\AbstractModel;
 use Omikron\Factfinder\Model\Export\Catalog\FieldProvider;
@@ -63,7 +62,8 @@ class ProductVariationTest extends TestCase
                 'MagentoId'     => 2,
                 'HasVariants'   => 0,
                 'ImageUrl'      => 'http://specific-variant-image.png',
-            ], $productVariation->toArray()
+            ],
+            $productVariation->toArray()
         );
     }
 
@@ -92,8 +92,9 @@ class ProductVariationTest extends TestCase
             ['FilterAttributes' => '|Color=Red|Size=XS|'] + $this->configurableProductData
         );
 
-        $this->assertEquals('|Color=Red|Size=XS|Eco Collection=No|New=No|Price=52.00|Quantity=In Stock|',
-                            $productVariation->toArray()['FilterAttributes']
+        $this->assertEquals(
+            '|Color=Red|Size=XS|Eco Collection=No|New=No|Price=52.00|Quantity=In Stock|',
+            $productVariation->toArray()['FilterAttributes']
         );
     }
 

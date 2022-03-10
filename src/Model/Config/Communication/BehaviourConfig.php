@@ -37,7 +37,9 @@ class BehaviourConfig implements ParametersSourceInterface
             'parameter-whitelist'         => $this->getConfig(self::PATH_PARAMETER_WHITELIST),
         ];
 
-        if ($this->getVersion() === Version::NG) $parameters['category-page'] = '';
+        if ($this->getVersion() === Version::NG) {
+            $parameters['category-page'] = '';
+        }
 
         return $parameters;
     }
