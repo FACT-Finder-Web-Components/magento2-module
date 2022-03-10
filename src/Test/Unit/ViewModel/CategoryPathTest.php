@@ -61,7 +61,6 @@ class CategoryPathTest extends TestCase
 
         $value = 'filter=CategoryPath%3AMen%2FTops';
         $this->assertSame($value, (string) $categoryPath->getCategoryPath());
-
     }
 
     protected function setUp(): void
@@ -77,8 +76,8 @@ class CategoryPathTest extends TestCase
         return $this->createConfiguredMock(Category::class, ['getName' => $name, 'getLevel' => $level]);
     }
 
-    private function newCategoryPath(CommunicationConfig $communicationConfig): CategoryPath
+    private function newCategoryPath(): CategoryPath
     {
-        return new CategoryPath($this->registry, $this->communicationConfig);;
+        return new CategoryPath($this->registry, $this->communicationConfig);
     }
 }

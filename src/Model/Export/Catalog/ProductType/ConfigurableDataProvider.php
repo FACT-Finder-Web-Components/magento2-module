@@ -76,9 +76,11 @@ class ConfigurableDataProvider extends SimpleDataProvider
 
     private function getOptions(Product $product): array
     {
+        $sanitize = fn(string $phrase): string => $this->filter->filterValue($this->valueOrEmptyStr($phrase));
+
         return array_reduce($this->productType->getConfigurableOptions($product), function (array $res, array $option) {
             foreach ($option as ['sku' => $sku, 'super_attribute_label' => $label, 'option_title' => $value]) {
-                $res[$sku][] = "{$this->filter->filterValue($this->getValueOrEmptyString($label))}={$this->filter->filterValue($this->getValueOrEmptyString($value))}";
+                $res[$sku][] = "{$sanitize($label)}={$sanitize($value)}";
             }
             return $res;
         }, []);
@@ -92,12 +94,12 @@ class ConfigurableDataProvider extends SimpleDataProvider
     private function getChildren(Product $product): array
     {
         return $this->productRepository
-            ->getList($this->builder->addFilter('entity_id', $this->productType->getChildrenIds($this->product->getId()), 'in')
+            ->getList($this->builder->addFilter('entity_id', $this->productType->getChildrenIds($product->getId()), 'in')
             ->create())
             ->getItems();
     }
 
-    private function getValueOrEmptyString($value): string
+    private function valueOrEmptyStr($value): string
     {
         return is_string($value) ? $value : '';
     }

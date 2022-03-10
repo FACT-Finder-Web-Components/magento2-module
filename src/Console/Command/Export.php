@@ -83,7 +83,7 @@ class Export extends Command
         $storeIds = $this->getStoreIds((int) $input->getOption('store'));
 
         if (count($storeIds) === 0) {
-            $output->writeln(sprintf('Integration for the channel `%s` must be enabled to run %s export', $this->communicationConfig->getChannel(), $input->getArgument('type')));
+            $output->writeln(sprintf('Integration for the channel `%s` is not enabled', $this->communicationConfig->getChannel()));
             return 0;
         }
 
@@ -95,7 +95,10 @@ class Export extends Command
                 $stream   = $this->csvFactory->create(['filename' => "factfinder/{$filename}"]);
 
                 $this->feedGeneratorFactory->create($type)->generate($stream);
-                $path = $this->filesystem->getDirectoryWrite(DirectoryList::VAR_DIR)->getAbsolutePath('factfinder' . DIRECTORY_SEPARATOR . $filename);
+                $path = $this->filesystem
+                    ->getDirectoryWrite(DirectoryList::VAR_DIR)
+                    ->getAbsolutePath('factfinder' . DIRECTORY_SEPARATOR . $filename);
+
                 $output->writeln("Store {$storeId}: File {$path} has been generated.");
 
                 if ($input->getOption('upload')) {
@@ -112,7 +115,11 @@ class Export extends Command
 
     private function getStoreIds(int $storeId): array
     {
-        $storeIds = array_map(fn ($store) => (int) $store->getId(), $storeId ? [$this->storeManager->getStore($storeId)] : $this->storeManager->getStores());
+        $storeIds = array_map(
+            fn ($store) => (int) $store->getId(),
+            $storeId ? [$this->storeManager->getStore($storeId)] : $this->storeManager->getStores()
+        );
+
         return array_filter($storeIds, [$this->communicationConfig, 'isChannelEnabled']);
     }
 }

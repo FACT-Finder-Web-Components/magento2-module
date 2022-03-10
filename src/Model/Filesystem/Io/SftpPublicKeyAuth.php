@@ -57,7 +57,7 @@ class SftpPublicKeyAuth extends SftpBase
         $index = array_search($this->uploadConfig->getKeyFileName(), $directoryContent);
 
         if ($index === false) {
-            throw new FileSystemException(__('Key file with a name stored in configuration does not exist in directiory app/etc/factfinder/sftp'));
+            throw new FileSystemException(__('The key file does not exist'));
         }
 
         return $index;

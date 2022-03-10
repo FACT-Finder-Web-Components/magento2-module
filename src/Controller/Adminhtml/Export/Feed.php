@@ -56,30 +56,31 @@ class Feed extends Action
         $result = $this->jsonResultFactory->create();
 
         try {
+            //@phpcs:ignore Magento2.Legacy.ObsoleteResponse.RedirectResponseMethodFound
             preg_match('@/store/([0-9]+)/@', (string) $this->_redirect->getRefererUrl(), $match);
             $storeId = (int) ($match[1] ?? $this->storeManager->getDefaultStoreView()->getId());
             $messages = [];
 
             $this->storeEmulation->runInStore($storeId, function () use ($storeId, &$messages, $result) {
 
+                $channel = $this->communicationConfig->getChannel();
                 if (!$this->communicationConfig->isChannelEnabled($storeId)) {
-                    $message = sprintf('Integration for the channel `%s` must be enabled to run %s export', $this->communicationConfig->getChannel(), $this->feedType);
+                    $message = sprintf('Integration for the channel `%s` is not enabled', $channel);
                     $result->setData(['message' => $message]);
                     return $result;
                 }
 
-                $filename = (new FeedFileService())->getFeedExportFilename($this->feedType, $this->communicationConfig->getChannel());
+                $filename = (new FeedFileService())->getFeedExportFilename($this->feedType, $channel);
                 $stream   = $this->csvFactory->create(['filename' => "factfinder/{$filename}"]);
                 $this->feedGeneratorFactory->create($this->feedType)->generate($stream);
-                $exportPath = $stream->getExportPath();
-                $messages[] = file_exists($exportPath) ? __(sprintf('<li>Feed file was generated at %s</li>', $exportPath)) : __('<li>Error while creating feed file</li>');
+                $messages[] = __(sprintf('<li>Feed file for channel %s has been generated</li>', $filename));
 
-                try{
+                try {
                     $this->ftpUploader->upload($filename, $stream);
                     $messages[] = __('<li>File was uploaded to the FTP server.</li>');
 
                     if ($this->communicationConfig->isPushImportEnabled($storeId)) {
-                        try{
+                        try {
                             $this->pushImport->execute($storeId);
                             $result = $this->pushImport->getPushImportResult();
                             $messages[] = __('<li>Push import result</li><ul>' . $result . '</ul>');

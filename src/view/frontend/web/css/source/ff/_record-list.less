@@ -1,35 +1,35 @@
 ff-record {
-  .product-image {
-    &-container {
-      display: block;
+    .product-image {
+        &-container {
+            display: block;
+        }
+
+        &-wrapper {
+            padding-bottom: 100%;
+        }
     }
 
-    &-wrapper {
-      padding-bottom: 100%;
-    }
-  }
+    .product-item-actions {
+        .actions-primary {
+            display: block;
+        }
 
-  .product-item-actions {
-    .actions-primary {
-      display: block;
+        .tocart {
+            width: 100%;
+        }
     }
-
-    .tocart {
-      width: 100%;
-    }
-  }
 }
 
 .ff-products-per-page {
-  .label {
-    display: none;
-  }
+    .label {
+        display: none;
+    }
 }
 
 .media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
-  .ff-products-per-page {
-    .label {
-      display: inline;
+    .ff-products-per-page {
+        .label {
+            display: inline;
+        }
     }
-  }
 }

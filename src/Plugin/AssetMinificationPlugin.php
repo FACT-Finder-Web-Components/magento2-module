@@ -10,7 +10,7 @@ namespace Omikron\Factfinder\Plugin;
 class AssetMinificationPlugin
 {
     /** Web Components library location */
-    const JS_LIBRARY = '/Omikron_Factfinder/ff-web-components/';
+    public const JS_LIBRARY = '/Omikron_Factfinder/ff-web-components/';
 
     public function afterGetExcludes($subject, array $result, string $contentType): array
     {

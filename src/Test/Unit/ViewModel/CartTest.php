@@ -24,8 +24,10 @@ class CartTest extends TestCase
 
     protected function setUp(): void
     {
-        $quoteItems = array_map(fn (string $sku): Quote\Item =>$this->createConfiguredMock(Quote\Item::class, ['getProduct' => new DataObject(['sku' => $sku])]),
-            ['foo', 'bar', 'baz']);
+        $quoteItems = array_map(
+            fn (string $sku): Quote\Item =>$this->createConfiguredMock(Quote\Item::class, ['getProduct' => new DataObject(['sku' => $sku])]),
+            ['foo', 'bar', 'baz']
+        );
 
         $quoteMock   = $this->createConfiguredMock(Quote::class, ['getAllVisibleItems' => $quoteItems]);
         $sessionMock = $this->createConfiguredMock(Session::class, ['getQuote' => $quoteMock]);

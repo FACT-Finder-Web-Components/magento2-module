@@ -97,7 +97,8 @@ class RecordListTest extends AbstractController
                     ['price', null, 'Price'],
                     ['deeplink', null, 'Deeplink'],
                     ['imageUrl', null, 'ImageURl']
-                ]);
+                ]
+            );
 
         //enable ssr
         $this->_objectManager->get(\Magento\Config\Model\ResourceModel\Config::class)->saveConfig('factfinder/general/use_ssr', 1);
