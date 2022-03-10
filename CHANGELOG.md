@@ -1,7 +1,12 @@
 # Changelog
-## [v4.0.0]
+## [v4.0.0-rc.1] - 2022.03.10
 ### BREAKING
  - drop PHP 7.3 support
+ - add PHP7.4 syntaxt
+
+### Change
+ - use Magento/Coding-Standards for code styles
+ - fix all possible warnings/errors reported by PHP_CodeSniffer in source code files 
 
 ## [v3.3.0] - 2022.03.04
 ### Fix
@@ -443,6 +448,7 @@
 ### Added
 - Feed Export: Export feed file is now available via separate link
 
+[v4.0.0-rc.1]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v4.0.0-rc.1
 [v3.3.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.3.0
 [v3.2.2]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.2.2
 [v3.2.1]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.2.1
