@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Omikron\Factfinder\Model\Export\Catalog\ProductType;
 
-use Magento\Catalog\Api\Data\ProductInterface;
 use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Catalog\Model\Product;
 use Magento\ConfigurableProduct\Model\Product\Type\Configurable as ConfigurableProductType;
@@ -53,6 +52,15 @@ class ConfigurableDataProviderTest extends TestCase
     {
         $valueOrEmptyStrMethod = $this->invokeMethod($this->configurableDataProvider, 'valueOrEmptyStr', [[]]);
         $this->assertEquals('', $valueOrEmptyStrMethod);
+    }
+
+    public function test_will_no_throw_error_if_there_is_no_chlidren_ids()
+    {
+        $this->productMock->method('getId')->willReturn('1');
+        $this->configurableProductTypeMock->method('getChildrenIds')->with('1')
+            ->willReturn([]);
+        $variants = $this->invokeMethod($this->configurableDataProvider, 'getChildren', [$this->productMock]);
+        $this->assertEquals([], $variants);
     }
 
     public function invokeMethod(&$object, $methodName, array $parameters = [])
