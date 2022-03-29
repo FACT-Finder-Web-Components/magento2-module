@@ -1,4 +1,10 @@
 # Changelog
+## [Unreleased]
+
+### Fix
+ - Export
+  - fix `Model\Export\Catalog\ProductType\ConfigurableDataProvider::getChildren` throws an SQL syntax error if configurable product has no variants assigned   
+
 ## [v3.3.0] - 2022.03.04
 ### Fix
  - Import 
