@@ -100,6 +100,11 @@ class ConfigurableDataProvider extends SimpleDataProvider
      */
     private function getChildren(Product $product): array
     {
+        $childrenIds = $this->productType->getChildrenIds($product->getId());
+        //if $childrenIds is empty the entity_id filter will thrown an SQL syntax error
+        if (empty($childrenIds)) {
+            return [];
+        }
         return $this->productRepository
             ->getList($this->builder->addFilter('entity_id', $this->productType->getChildrenIds($this->product->getId()), 'in')
             ->create())
