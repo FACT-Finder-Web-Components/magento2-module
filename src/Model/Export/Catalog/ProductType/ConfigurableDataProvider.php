@@ -8,7 +8,6 @@ use Magento\Catalog\Api\Data\ProductInterface;
 use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Catalog\Model\Product;
 use Magento\ConfigurableProduct\Model\Product\Type\Configurable as ConfigurableProductType;
-use Magento\Framework\Api\Filter;
 use Magento\Framework\Api\SearchCriteriaBuilder;
 use Omikron\Factfinder\Api\Export\ExportEntityInterface;
 use Omikron\Factfinder\Api\Filter\FilterInterface;
@@ -93,8 +92,13 @@ class ConfigurableDataProvider extends SimpleDataProvider
      */
     private function getChildren(Product $product): array
     {
+        $childrenIds = $this->productType->getChildrenIds($product->getId());
+        //if $childrenIds is empty the entity_id filter will thrown an SQL syntax error
+        if (empty($childrenIds)) {
+            return [];
+        }
         return $this->productRepository
-            ->getList($this->builder->addFilter('entity_id', $this->productType->getChildrenIds($product->getId()), 'in')
+            ->getList($this->builder->addFilter('entity_id', $childrenIds, 'in')
             ->create())
             ->getItems();
     }

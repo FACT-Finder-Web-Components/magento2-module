@@ -1,4 +1,10 @@
 # Changelog
+## [Unreleased]
+
+### Fix
+ - Export
+  - fix `Model\Export\Catalog\ProductType\ConfigurableDataProvider::getChildren` throws an SQL syntax error if configurable product has no variants assigned   
+
 ## [v4.0.0-rc.1] - 2022.03.10
 ### BREAKING
  - drop PHP 7.3 support
