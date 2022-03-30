@@ -12,7 +12,7 @@ class Stdout implements StreamInterface
 {
     private DriverInterface $file;
 
-    public function __construct(DriverInterfac $file)
+    public function __construct(DriverInterface $file)
     {
         $this->file = $file;
     }
@@ -25,5 +25,15 @@ class Stdout implements StreamInterface
     public function getContent(): string
     {
         throw new BadMethodCallException('Not implemented');
+    }
+
+    /**
+     * @SuppressWarnings(PHPMD)
+     */
+    public function finalize(): void
+    {
+        //after export we need to exit, output has been sent to STDOUT so it is not possible to upload it
+        //@phpcs:ignore Magento2.Security.LanguageConstruct.ExitUsage
+        exit();
     }
 }

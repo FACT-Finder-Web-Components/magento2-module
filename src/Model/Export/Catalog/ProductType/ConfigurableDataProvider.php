@@ -77,7 +77,7 @@ class ConfigurableDataProvider extends SimpleDataProvider
     {
         $sanitize = fn(string $phrase): string => $this->filter->filterValue($this->valueOrEmptyStr($phrase));
 
-        return array_reduce($this->productType->getConfigurableOptions($product), function (array $res, array $option) {
+        return array_reduce($this->productType->getConfigurableOptions($product), function (array $res, array $option) use ($sanitize) {
             foreach ($option as ['sku' => $sku, 'super_attribute_label' => $label, 'option_title' => $value]) {
                 $res[$sku][] = "{$sanitize($label)}={$sanitize($value)}";
             }

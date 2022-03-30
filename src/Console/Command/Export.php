@@ -4,16 +4,14 @@ declare(strict_types=1);
 
 namespace Omikron\Factfinder\Console\Command;
 
-use Magento\Framework\App\Filesystem\DirectoryList;
 use Magento\Framework\App\State;
-use Magento\Framework\Filesystem;
 use Magento\Store\Model\StoreManagerInterface;
 use Omikron\Factfinder\Model\Api\PushImport;
 use Omikron\Factfinder\Model\Config\CommunicationConfig;
 use Omikron\Factfinder\Model\Export\FeedFactory as FeedGeneratorFactory;
 use Omikron\Factfinder\Model\FtpUploader;
 use Omikron\Factfinder\Model\StoreEmulation;
-use Omikron\Factfinder\Model\Stream\CsvFactory;
+use Omikron\Factfinder\Api\StreamInterfaceFactory;
 use Omikron\Factfinder\Service\FeedFileService;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -30,33 +28,33 @@ class Export extends Command
     private FeedGeneratorFactory $feedGeneratorFactory;
     private StoreManagerInterface $storeManager;
     private CommunicationConfig $communicationConfig;
-    private CsvFactory $csvFactory;
+    private StreamInterfaceFactory $streamFactory;
     private FtpUploader $ftpUploader;
     private PushImport $pushImport;
     private State $state;
-    private Filesystem $filesystem;
+    private FeedFileService $feedFileService;
 
     public function __construct(
         StoreManagerInterface $storeManager,
         FeedGeneratorFactory $feedFactory,
         StoreEmulation $emulation,
-        CsvFactory $csvFactory,
+        StreamInterfaceFactory $streamFactory,
         FtpUploader $ftpUploader,
         CommunicationConfig $communicationConfig,
         PushImport $pushImport,
         State $state,
-        Filesystem $filesystem
+        FeedFileService $feedFileService
     ) {
         parent::__construct();
         $this->storeManager         = $storeManager;
         $this->feedGeneratorFactory = $feedFactory;
         $this->storeEmulation       = $emulation;
-        $this->csvFactory           = $csvFactory;
+        $this->streamFactory        = $streamFactory;
         $this->ftpUploader          = $ftpUploader;
         $this->communicationConfig  = $communicationConfig;
         $this->pushImport           = $pushImport;
         $this->state                = $state;
-        $this->filesystem           = $filesystem;
+        $this->feedFileService      = $feedFileService;
     }
 
     /**
@@ -81,24 +79,20 @@ class Export extends Command
     {
         $this->state->setAreaCode('frontend');
         $storeIds = $this->getStoreIds((int) $input->getOption('store'));
+        $type     = $input->getArgument('type');
 
         if (count($storeIds) === 0) {
-            $output->writeln(sprintf('Integration for the channel `%s` is not enabled', $this->communicationConfig->getChannel()));
+            $output->writeln('There is no integration enabled for any store');
             return 0;
         }
 
         foreach ($storeIds as $storeId) {
-            $this->storeEmulation->runInStore($storeId, function () use ($storeId, $input, $output) {
-                $feedFileService = new FeedFileService();
-                $type     = $input->getArgument('type');
-                $filename = $feedFileService->getFeedExportFilename($type, $this->communicationConfig->getChannel($storeId));
-                $stream   = $this->csvFactory->create(['filename' => "factfinder/{$filename}"]);
+            $this->storeEmulation->runInStore($storeId, function () use ($storeId, $input, $output, $type) {
+                $filename        = $this->feedFileService->getFeedExportFilename($type, $this->communicationConfig->getChannel($storeId));
+                $stream          = $this->streamFactory->create(['filename' => "factfinder/{$filename}"]);
+                $path            = $this->feedFileService->getExportPath($filename);
 
                 $this->feedGeneratorFactory->create($type)->generate($stream);
-                $path = $this->filesystem
-                    ->getDirectoryWrite(DirectoryList::VAR_DIR)
-                    ->getAbsolutePath('factfinder' . DIRECTORY_SEPARATOR . $filename);
-
                 $output->writeln("Store {$storeId}: File {$path} has been generated.");
 
                 if ($input->getOption('upload')) {

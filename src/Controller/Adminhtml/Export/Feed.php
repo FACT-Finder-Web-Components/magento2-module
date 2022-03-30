@@ -14,7 +14,7 @@ use Omikron\Factfinder\Model\Config\CommunicationConfig;
 use Omikron\Factfinder\Model\Export\FeedFactory as FeedGeneratorFactory;
 use Omikron\Factfinder\Model\FtpUploader;
 use Omikron\Factfinder\Model\StoreEmulation;
-use Omikron\Factfinder\Model\Stream\CsvFactory;
+use Omikron\Factfinder\Api\StreamInterfaceFactory;
 use Omikron\Factfinder\Service\FeedFileService;
 
 class Feed extends Action
@@ -24,31 +24,46 @@ class Feed extends Action
     private CommunicationConfig $communicationConfig;
     private StoreEmulation $storeEmulation;
     private FeedGeneratorFactory $feedGeneratorFactory;
-    private CsvFactory $csvFactory;
+    private StreamInterfaceFactory $streamFactory;
     private FtpUploader $ftpUploader;
     private StoreManagerInterface $storeManager;
     private PushImport $pushImport;
 
+    /**
+     * @param Context                $context
+     * @param JsonFactory            $jsonResultFactory
+     * @param CommunicationConfig    $communicationConfig
+     * @param StoreEmulation         $storeEmulation
+     * @param FeedGeneratorFactory   $feedGeneratorFactory
+     * @param StreamInterfaceFactory $streamFactory
+     * @param FtpUploader            $ftpUploader
+     * @param PushImport             $pushImport
+     * @param StoreManagerInterface  $storeManager
+     * @param FeedFileService        $feedFileService
+     * @SuppressWarnings(PHPMD)
+     */
     public function __construct(
         Context $context,
         JsonFactory $jsonResultFactory,
         CommunicationConfig $communicationConfig,
         StoreEmulation $storeEmulation,
         FeedGeneratorFactory $feedGeneratorFactory,
-        CsvFactory $csvFactory,
+        StreamInterfaceFactory $streamFactory,
         FtpUploader $ftpUploader,
         PushImport $pushImport,
-        StoreManagerInterface $storeManager
+        StoreManagerInterface $storeManager,
+        FeedFileService $feedFileService
     ) {
         parent::__construct($context);
         $this->jsonResultFactory    = $jsonResultFactory;
         $this->communicationConfig  = $communicationConfig;
         $this->storeEmulation       = $storeEmulation;
         $this->feedGeneratorFactory = $feedGeneratorFactory;
-        $this->csvFactory           = $csvFactory;
+        $this->streamFactory        = $streamFactory;
         $this->ftpUploader          = $ftpUploader;
         $this->pushImport           = $pushImport;
         $this->storeManager         = $storeManager;
+        $this->feedFileService      = $feedFileService;
     }
 
     public function execute()
@@ -70,10 +85,12 @@ class Feed extends Action
                     return $result;
                 }
 
-                $filename = (new FeedFileService())->getFeedExportFilename($this->feedType, $channel);
-                $stream   = $this->csvFactory->create(['filename' => "factfinder/{$filename}"]);
+                $filename = $this->feedFileService->getFeedExportFilename($this->feedType, $channel);
+                $stream   = $this->streamFactory->create(['filename' => "factfinder/{$filename}"]);
+                $path     = $this->feedFileService->getExportPath($filename);
+
                 $this->feedGeneratorFactory->create($this->feedType)->generate($stream);
-                $messages[] = __(sprintf('<li>Feed file for channel %s has been generated</li>', $filename));
+                $messages[] = __('<li>Feed file for channel %1 has been generated under %2</li>', $channel, "$path/$filename");
 
                 try {
                     $this->ftpUploader->upload($filename, $stream);
