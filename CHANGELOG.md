@@ -1,14 +1,29 @@
 # Changelog
-## [Unreleased]
-
+## [v4.0.0-rc.2]
+### BREAKING
+    - `Omikron\Factfinder\Controller\Adminhtml\Export\Feed`
+        - change constructor argument `Omikron\Factfinder\Model\Stream\CsvFactory` to `Omikron\Factfinder\Api\StreamInterfaceFactory`
+     - `Omikron\Factfinder\Controller\Export\Product`
+        - change constructor argument `Omikron\Factfinder\Model\Stream\CsvFactory` to `Omikron\Factfinder\Api\StreamInterfaceFactory`
+    - `Omikron\Factfinder\Console\Command\Export`
+        - change constructor argument `Omikron\Factfinder\Model\Stream\CsvFactory` to `Omikron\Factfinder\Api\StreamInterfaceFactory`
+    - `Omikron\Factfinder\Cron\Feed`
+        - change constructor argument `Omikron\Factfinder\Model\Stream\CsvFactory` to `Omikron\Factfinder\Api\StreamInterfaceFactory`
+        
+### Add
+   - `Omikron\Factfinder\Controller\Adminhtml\Export\Feed`, `Omikron\Factfinder\Controller\Export\Product`, `Omikron\Factfinder\Console\Command\Export`, `Omikron\Factfinder\Cron\Feed`
+     - add possibility to pass custom implementation of `Omikron\Factfinder\Api\StreamInterface`
+   - `Omikron\Factfinder\Model\Stream\Csv`
+     - Throws an `RuntimeException` if feed file is empty or contains only headers
+         
 ### Fix
  - Export
-  - fix `Model\Export\Catalog\ProductType\ConfigurableDataProvider::getChildren` throws an SQL syntax error if configurable product has no variants assigned   
+   - fix `Model\Export\Catalog\ProductType\ConfigurableDataProvider::getChildren` throws an SQL syntax error if configurable product has no variants assigned   
 
 ## [v4.0.0-rc.1] - 2022.03.10
 ### BREAKING
  - drop PHP 7.3 support
- - add PHP7.4 syntaxt
+ - add PHP7.4 syntax
 
 ### Change
  - use Magento/Coding-Standards for code styles

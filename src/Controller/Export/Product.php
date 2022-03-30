@@ -11,7 +11,7 @@ use Magento\Store\Model\StoreManagerInterface;
 use Omikron\Factfinder\Model\Config\CommunicationConfig;
 use Omikron\Factfinder\Model\Export\FeedFactory as FeedGeneratorFactory;
 use Omikron\Factfinder\Model\StoreEmulation;
-use Omikron\Factfinder\Model\Stream\CsvFactory;
+use Omikron\Factfinder\Api\StreamInterfaceFactory;
 use Omikron\Factfinder\Service\FeedFileService;
 
 class Product extends Action
@@ -21,8 +21,9 @@ class Product extends Action
     private StoreEmulation $storeEmulation;
     private FeedGeneratorFactory $feedGeneratorFactory;
     private FileFactory $fileFactory;
-    private CsvFactory $csvFactory;
+    private StreamInterfaceFactory $streamFactory;
     private StoreManagerInterface $storeManager;
+    private FeedFileService $feedFileService;
 
     public function __construct(
         Context $context,
@@ -30,24 +31,26 @@ class Product extends Action
         StoreEmulation $storeEmulation,
         FeedGeneratorFactory $feedGeneratorFactory,
         FileFactory $fileFactory,
-        CsvFactory $csvFactory,
-        StoreManagerInterface $storeManager
+        StreamInterfaceFactory $streamFactory,
+        StoreManagerInterface $storeManager,
+        FeedFileService $feedFileService
     ) {
         parent::__construct($context);
         $this->communicationConfig  = $communicationConfig;
         $this->storeEmulation       = $storeEmulation;
         $this->feedGeneratorFactory = $feedGeneratorFactory;
-        $this->csvFactory           = $csvFactory;
+        $this->streamFactory        = $streamFactory;
         $this->fileFactory          = $fileFactory;
         $this->storeManager         = $storeManager;
+        $this->feedFileService      = $feedFileService;
     }
 
     public function execute()
     {
         $storeId = (int) $this->getRequest()->getParam('store', $this->storeManager->getDefaultStoreView()->getId());
         $this->storeEmulation->runInStore($storeId, function () {
-            $filename = (new FeedFileService())->getFeedExportFilename($this->feedType, $this->communicationConfig->getChannel());
-            $stream   = $this->csvFactory->create(['filename' => "factfinder/{$filename}"]);
+            $filename = $this->feedFileService->getFeedExportFilename($this->feedType, $this->communicationConfig->getChannel());
+            $stream   = $this->streamFactory->create(['filename' => "factfinder/{$filename}"]);
             $this->feedGeneratorFactory->create($this->feedType)->generate($stream);
             $this->fileFactory->create($filename, $stream->getContent());
         });

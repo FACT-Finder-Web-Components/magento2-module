@@ -8,6 +8,8 @@ use Magento\Framework\App\Filesystem\DirectoryList;
 use Magento\Framework\Filesystem;
 use Magento\Framework\Filesystem\File\WriteInterface;
 use Omikron\Factfinder\Api\StreamInterface;
+use RuntimeException;
+use SplFileObject;
 
 class Csv implements StreamInterface
 {
@@ -36,11 +38,6 @@ class Csv implements StreamInterface
         return $this->getStream()->readAll();
     }
 
-    public function getExportPath(): string
-    {
-        return $this->filesystem->getDirectoryWrite(DirectoryList::VAR_DIR)->getAbsolutePath($this->filename);
-    }
-
     private function getStream(): WriteInterface
     {
         if (!$this->stream) {
@@ -51,6 +48,13 @@ class Csv implements StreamInterface
         return $this->stream;
     }
 
+    public function finalize(): void
+    {
+        if ($this->countLines() <= 1) {
+            throw new RuntimeException('Feed file is empty!');
+        }
+    }
+
     public function __destruct()
     {
         if ($this->stream) {
@@ -58,5 +62,13 @@ class Csv implements StreamInterface
             $this->stream->close();
             $this->stream = null;
         }
+    }
+
+    private function countLines(): int
+    {
+        $directory = $this->filesystem->getDirectoryWrite(DirectoryList::VAR_DIR);
+        $fileCheck = new SplFileObject($directory->getAbsolutePath($this->filename), 'r');
+        $fileCheck->seek(PHP_INT_MAX);
+        return $fileCheck->key();
     }
 }

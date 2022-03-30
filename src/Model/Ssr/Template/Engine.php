@@ -12,7 +12,7 @@ class Engine implements TemplateEngineInterface
 {
     private Mustache $engine;
 
-    public function __construct(Mustache_Engine $engine)
+    public function __construct(Mustache $engine)
     {
         $this->engine = $engine;
     }

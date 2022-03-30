@@ -37,6 +37,7 @@ class Feed
         $columns = $this->getColumns($this->fields);
         $stream->addEntity($columns);
         $this->exporter->exportEntities($stream, $this->dataProvider, $columns);
+        $stream->finalize();
     }
 
     private function getColumns(array $fields): array
