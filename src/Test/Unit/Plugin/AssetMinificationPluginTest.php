@@ -11,8 +11,7 @@ use PHPUnit\Framework\TestCase;
  */
 class AssetMinificationPluginTest extends TestCase
 {
-    /** @var AssetMinificationPlugin */
-    private $plugin;
+    private AssetMinificationPlugin $plugin;
 
     public function test_js_library_is_added_to_the_exclusion()
     {

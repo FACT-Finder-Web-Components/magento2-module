@@ -15,14 +15,13 @@ use Psr\Log\LoggerInterface;
  */
 class LogExceptionsTest extends TestCase
 {
-    /** @var LogExceptions */
-    private $plugin;
+    private LogExceptions $plugin;
 
     /** @var MockObject|LoggerInterface */
-    private $logger;
+    private MockObject $logger;
 
     /** @var MockObject|ScopeConfigInterface */
-    private $scopeConfig;
+    private MockObject $scopeConfig;
 
     public function test_proceed_if_no_exception_is_raised()
     {

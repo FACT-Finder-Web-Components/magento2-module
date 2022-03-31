@@ -11,8 +11,7 @@ use PHPUnit\Framework\TestCase;
  */
 class NumberFormatterTest extends TestCase
 {
-    /** @var NumberFormatter */
-    private $formatter;
+    private NumberFormatter $formatter;
 
     public function test_it_formats_the_number_with_right_precision()
     {

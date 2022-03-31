@@ -15,11 +15,10 @@ use PHPUnit\Framework\TestCase;
  */
 class AttributeValuesExtractorTest extends TestCase
 {
-    /** @var NumberFormatter|MockObject  */
-    private $numberFormatter;
+    private AttributeValuesExtractor $attributeExtractor;
 
-    /** @var AttributeValuesExtractor  */
-    private $attributeExtractor;
+    /** @var NumberFormatter|MockObject  */
+    private MockObject $numberFormatter;
 
     public function test_it_returns_scalar_value()
     {

@@ -19,7 +19,7 @@ use PHPUnit\Framework\TestCase;
 class ProductVariationTest extends TestCase
 {
     /** @var MockObject|AbstractModel */
-    private $variantMock;
+    private MockObject $variantMock;
 
     private $configurableProductData = [
         'ProductNumber' => 'sku-configurable',

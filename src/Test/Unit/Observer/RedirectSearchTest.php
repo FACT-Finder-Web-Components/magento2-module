@@ -18,17 +18,16 @@ use PHPUnit\Framework\TestCase;
  */
 class RedirectSearchTest extends TestCase
 {
-    /** @var RedirectSearch */
-    private $observer;
+    private RedirectSearch $observer;
 
     /** @var MockObject|CommunicationConfig */
-    private $config;
+    private MockObject $config;
 
     /** @var MockObject|RedirectInterface */
-    private $redirect;
+    private MockObject $redirect;
 
     /** @var MockObject|ResponseInterface */
-    private $response;
+    private MockObject $response;
 
     public function test_it_is_an_observer()
     {

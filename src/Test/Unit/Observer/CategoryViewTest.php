@@ -18,14 +18,13 @@ use PHPUnit\Framework\TestCase;
  */
 class CategoryViewTest extends TestCase
 {
-    /** @var CategoryView */
-    private $testee;
+    private CategoryView $testee;
 
     /** @var MockObject|Registry */
-    private $registry;
+    private MockObject $registry;
 
     /** @var MockObject|FeatureConfig */
-    private $config;
+    private MockObject $config;
 
     public function test_only_activate_for_category_pages()
     {

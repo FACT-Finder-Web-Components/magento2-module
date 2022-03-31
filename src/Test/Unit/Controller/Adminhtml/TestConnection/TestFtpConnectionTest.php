@@ -18,17 +18,16 @@ use PHPUnit\Framework\TestCase;
  */
 class TestFtpConnectionTest extends TestCase
 {
-    /** @var TestFtpConnection */
-    private $controller;
+    private TestFtpConnection $controller;
 
     /** @var MockObject|RequestInterface */
-    private $request;
+    private MockObject $request;
 
     /** @var MockObject|FtpUploader */
-    private $ftpUploader;
+    private MockObject $ftpUploader;
 
     /** @var MockObject|JsonResult */
-    private $jsonResult;
+    private MockObject $jsonResult;
 
     public function test_prevent_errors_without_post_data()
     {
@@ -71,10 +70,10 @@ class TestFtpConnectionTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->request      = $this->createConfiguredMock(RequestInterface::class, ['getParams' =>[]]);
-        $this->ftpUploader  = $this->createMock(FtpUploader::class);
-        $this->jsonResult   = $this->createConfiguredMock(JsonResult::class, ['setData' => $this]);
-        $this->controller   = new TestFtpConnection(
+        $this->request     = $this->createConfiguredMock(RequestInterface::class, ['getParams' => []]);
+        $this->ftpUploader = $this->createMock(FtpUploader::class);
+        $this->jsonResult  = $this->createConfiguredMock(JsonResult::class, ['setData' => $this]);
+        $this->controller  = new TestFtpConnection(
             $this->createConfiguredMock(Context::class, ['getRequest' => $this->request]),
             $this->createConfiguredMock(JsonFactory::class, ['create' => $this->jsonResult]),
             $this->ftpUploader,

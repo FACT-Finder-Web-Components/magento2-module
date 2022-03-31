@@ -22,14 +22,13 @@ use Psr\Http\Message\ResponseInterface;
  */
 class TestConnectionTest extends TestCase
 {
-    /** @var TestConnection */
-    private $controller;
+    private TestConnection $controller;
 
     /** @var MockObject|RequestInterface */
-    private $request;
+    private MockObject $request;
 
     /** @var MockObject|Builder */
-    private $builderMock;
+    private MockObject $builderMock;
 
     public function test_prevent_errors_without_post_data()
     {

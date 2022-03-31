@@ -16,16 +16,16 @@ use PHPUnit\Framework\TestCase;
 class CommunicationTest extends TestCase
 {
     /** @var MockObject|FieldRoles */
-    private $fieldRolesMock;
+    private MockObject $fieldRolesMock;
 
     /** @var MockObject|SerializerInterface */
-    private $serializerMock;
+    private MockObject $serializerMock;
 
     /** @var MockObject|CommunicationParametersProvider */
-    private $parametersProviderMock;
+    private MockObject $parametersProviderMock;
 
     /** @var Communication */
-    private $communication;
+    private Communication $communication;
 
     public function test_get_parameters_filter_null_values()
     {

@@ -12,8 +12,7 @@ use PHPUnit\Framework\TestCase;
  */
 class BasicAuthTest extends TestCase
 {
-    /** @var BasicAuth */
-    private $basicAuth;
+    private BasicAuth $basicAuth;
 
     public function test_it_authenticates_the_user_with_valid_credentials()
     {

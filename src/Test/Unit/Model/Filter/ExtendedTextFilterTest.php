@@ -12,8 +12,7 @@ use PHPUnit\Framework\TestCase;
  */
 class ExtendedTextFilterTest extends TestCase
 {
-    /** @var TextFilter */
-    private $filter;
+    private TextFilter $filter;
 
     public function test_it_is_a_filter()
     {

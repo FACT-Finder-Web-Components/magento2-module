@@ -18,10 +18,10 @@ use Psr\Http\Message\StreamInterface;
 class ProxyCallTest extends AbstractController
 {
     /** @var MockObject|ClientBuilder */
-    private $clientBuilderMock;
+    private MockObject $clientBuilderMock;
 
     /** @var MockObject|ClientInterface */
-    private $clientMock;
+    private MockObject $clientMock;
 
     public function test_JSON_endpoints_are_accepted_by_the_proxy_controller()
     {

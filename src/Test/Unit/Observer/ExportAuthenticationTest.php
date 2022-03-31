@@ -16,14 +16,13 @@ use PHPUnit\Framework\TestCase;
  */
 class ExportAuthenticationTest extends TestCase
 {
-    /** @var ExportAuthentication */
-    private $observer;
+    private ExportAuthentication $observer;
 
     /** @var MockObject|ActionFlag */
-    private $flagMock;
+    private MockObject $flagMock;
 
     /** @var MockObject|Authentication */
-    private $authMock;
+    private MockObject $authMock;
 
     public function test_it_checks_user_authentication_before_dispatch()
     {

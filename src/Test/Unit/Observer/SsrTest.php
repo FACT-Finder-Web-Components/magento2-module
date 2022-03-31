@@ -9,18 +9,17 @@ use Magento\Framework\Event\Observer;
 use Magento\Framework\View\Layout\ProcessorInterface;
 use Magento\Framework\View\LayoutInterface;
 use PHPUnit\Framework\TestCase;
-use PHPUnit_Framework_MockObject_MockObject as MockObject;
+use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * @covers Ssr
  */
 class SsrTest extends TestCase
 {
-    /** @var Ssr */
-    private $observer;
+    private Ssr $observer;
 
     /** @var MockObject|ScopeConfigInterface */
-    private $scopeConfig;
+    private MockObject $scopeConfigMock;
 
     public function test_add_handle_to_layout()
     {
@@ -51,13 +50,13 @@ class SsrTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->scopeConfig = $this->createMock(ScopeConfigInterface::class);
-        $this->observer    = new Ssr($this->scopeConfig, ['handle_with_ssr']);
+        $this->scopeConfigMock = $this->createMock(ScopeConfigInterface::class);
+        $this->observer        = new Ssr($this->scopeConfigMock, ['handle_with_ssr']);
     }
 
     private function featureActive(bool $active): void
     {
-        $this->scopeConfig->method('isSetFlag')
+        $this->scopeConfigMock->method('isSetFlag')
             ->with('factfinder/general/use_ssr', $this->stringStartsWith('store'), $this->anything())
             ->willReturn($active);
     }

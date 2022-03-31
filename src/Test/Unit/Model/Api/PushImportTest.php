@@ -19,23 +19,22 @@ use Psr\Log\LoggerInterface;
  */
 class PushImportTest extends TestCase
 {
+    private PushImport $pushImport;
+
     /** @var MockObject|ClientInterface */
-    private $factFinderClientMock;
+    private MockObject $factFinderClientMock;
 
     /** @var MockObject|CommunicationConfig */
-    private $communicationConfigMock;
+    private MockObject $communicationConfigMock;
 
     /** @var MockObject|ExportConfig */
-    private $exportConfigMock;
+    private MockObject $exportConfigMock;
 
     /** @var MockObject|ClientBuilder */
-    private $builderMock;
+    private MockObject $builderMock;
 
     /** @var MockObject|ClientInterface */
-    private $clientMock;
-
-    /** @var PushImport */
-    private $pushImport;
+    private MockObject $clientMock;
 
     public function test_should_throw_if_import_is_running()
     {
