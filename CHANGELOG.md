@@ -1,5 +1,5 @@
 # Changelog
-## [v4.0.0-rc.2]
+## [v4.0.0-rc.2] - 2022.03.31
 ### BREAKING
     - `Omikron\Factfinder\Controller\Adminhtml\Export\Feed`
         - change constructor argument `Omikron\Factfinder\Model\Stream\CsvFactory` to `Omikron\Factfinder\Api\StreamInterfaceFactory`
@@ -469,6 +469,7 @@
 ### Added
 - Feed Export: Export feed file is now available via separate link
 
+[v4.0.0-rc.2]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v4.0.0-rc.2
 [v4.0.0-rc.1]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v4.0.0-rc.1
 [v3.3.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.3.0
 [v3.2.2]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.2.2
