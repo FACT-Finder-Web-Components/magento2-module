@@ -15,17 +15,14 @@ use PHPUnit\Framework\TestCase;
  */
 class CategoryPathTest extends TestCase
 {
-    /** @var CategoryPath */
-    private $categoryPath;
+    private CategoryPath $categoryPath;
+    private Registry $registry;
 
     /** @var MockObject|Category */
-    private $currentCategory;
+    private MockObject $currentCategory;
 
     /** @var MockObject|CommunicationConfig */
-    private $communicationConfig;
-
-    /** @var MockObject|Registry */
-    private $registry;
+    private MockObject $communicationConfig;
 
     public function test_category_path_for_ng_version()
     {

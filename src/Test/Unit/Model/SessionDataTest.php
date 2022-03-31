@@ -16,17 +16,16 @@ use PHPUnit\Framework\TestCase;
  */
 class SessionDataTest extends TestCase
 {
-    /** @var SessionData */
-    private $sessionData;
+    private SessionData $sessionData;
 
     /** @var MockObject|CustomerSession */
-    private $sessionMock;
+    private MockObject $sessionMock;
 
     /** @var MockObject|ScopeConfigInterface */
-    private $scopeConfigMock;
+    private MockObject $scopeConfigMock;
 
-    /** @var RemoteAddress|ScopeConfigInterface */
-    private $remoteAddressMock;
+    /** @var MockObject|RemoteAddress */
+    private MockObject $remoteAddressMock;
 
     /**
      * @testdox User ID is fetched from the customer session

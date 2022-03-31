@@ -19,14 +19,13 @@ use PHPUnit\Framework\MockObject\MockObject;
 
 class RecordListTest extends AbstractController
 {
-    /** @var MockObject|ClientInterface */
-    private $clientMock;
+    private ObjectManagerInterface $objectManager;
 
-    /** @var ObjectManagerInterface */
-    private $objectManager;
+    /** @var MockObject|ClientInterface */
+    private MockObject $clientMock;
 
     /** @var MockObject|Redirect */
-    private $redirectMock;
+    private MockObject $redirectMock;
 
     public function test_will_redirect_to_product_page_on_articleNumberSearch()
     {

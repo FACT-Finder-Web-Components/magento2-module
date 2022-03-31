@@ -18,14 +18,13 @@ use PHPUnit\Framework\TestCase;
  */
 class CategoryPathTest extends TestCase
 {
-    /** @var CategoryPath */
-    private $categoryPath;
+    private CategoryPath $categoryPath;
 
     /** @var MockObject|CategoryRepositoryInterface */
-    private $repositoryMock;
+    private MockObject $repositoryMock;
 
     /** @var MockObject|AbstractModel */
-    private $productMock;
+    private MockObject $productMock;
 
     public function test_path_will_be_encoded()
     {

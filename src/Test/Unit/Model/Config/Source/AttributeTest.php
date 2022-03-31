@@ -15,11 +15,10 @@ use PHPUnit\Framework\TestCase;
  */
 class AttributeTest extends TestCase
 {
-    /** @var MockObject|AttributeCollectionFactory */
-    private $attributeCollectionFactory;
+    private Attribute $sourceModel;
 
-    /** @var Attribute */
-    private $sourceModel;
+    /** @var MockObject|AttributeCollectionFactory */
+    private MockObject $attributeCollectionFactory;
 
     public function test_items_are_sorted_correctly()
     {

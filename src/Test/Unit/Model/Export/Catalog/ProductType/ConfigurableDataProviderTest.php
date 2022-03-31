@@ -12,12 +12,34 @@ use Omikron\Factfinder\Api\Filter\FilterInterface;
 use Omikron\Factfinder\Model\Export\Catalog\Entity\ProductVariationFactory;
 use Omikron\Factfinder\Model\Formatter\NumberFormatter;
 use Omikron\Factfinder\Test\TestHelper;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class ConfigurableDataProviderTest extends TestCase
 {
     /** @var ConfigurableDataProvider */
     private $configurableDataProvider;
+
+    /** @var MockObject|ProductRepositoryInterface */
+    private MockObject $repositoryMock;
+
+    /** @var MockObject|NumberFormatter */
+    private MockObject $numberFormatMock;
+
+    /** @var MockObject|ConfigurableProductType| */
+    private MockObject $configurableProductTypeMock;
+
+    /** @var MockObject|FilterInterface */
+    private MockObject $filterMock;
+
+    /** @var MockObject|ProductVariationFactory| */
+    private MockObject $variantFactoryMock;
+
+    /** @var MockObject|SearchCriteriaBuilder */
+    private MockObject $builderMock;
+
+    /** @var MockObject|Product */
+    private MockObject $productMock;
 
     /**
      * @covers ConfigurableDataProvider::valueOrEmptyStr
@@ -69,14 +91,14 @@ class ConfigurableDataProviderTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->repositoryMock = $this->createMock(ProductRepositoryInterface::class);
-        $this->numberFormatMock = $this->createMock(NumberFormatter::class);
+        $this->repositoryMock              = $this->createMock(ProductRepositoryInterface::class);
+        $this->numberFormatMock            = $this->createMock(NumberFormatter::class);
         $this->configurableProductTypeMock = $this->createMock(ConfigurableProductType::class);
-        $this->filterInterfaceMock = $this->createMock(FilterInterface::class);
-        $this->variantFactoryMock = $this->getMockBuilder(ProductVariationFactory::class)
+        $this->filterMock                  = $this->createMock(FilterInterface::class);
+        $this->variantFactoryMock          = $this->getMockBuilder(ProductVariationFactory::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $this->builderMock = $this->createMock(SearchCriteriaBuilder::class);
+        $this->builderMock                 = $this->createMock(SearchCriteriaBuilder::class);
 
         $this->productMock = $this->getMockBuilder(Product::class)
             ->disableOriginalConstructor()
@@ -86,7 +108,7 @@ class ConfigurableDataProviderTest extends TestCase
             $this->productMock,
             $this->numberFormatMock,
             $this->configurableProductTypeMock,
-            $this->filterInterfaceMock,
+            $this->filterMock,
             $this->variantFactoryMock,
             $this->repositoryMock,
             $this->builderMock

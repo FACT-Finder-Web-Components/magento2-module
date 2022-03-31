@@ -14,8 +14,7 @@ use PHPUnit\Framework\TestCase;
  */
 class CartTest extends TestCase
 {
-    /** @var Cart */
-    private $cart;
+    private Cart $cart;
 
     public function test_get_item_ids()
     {

@@ -16,10 +16,9 @@ use PHPUnit\Framework\TestCase;
  */
 class OrderTest extends TestCase
 {
-    /** @var Order */
-    private $order;
+    private Order $order;
 
-    private $orderItemsMock;
+    private array $orderItemsMock;
 
     public function test_returns_order_items()
     {

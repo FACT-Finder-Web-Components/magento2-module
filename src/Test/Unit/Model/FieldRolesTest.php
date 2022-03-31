@@ -19,20 +19,20 @@ use PHPUnit\Framework\TestCase;
  */
 class FieldRolesTest extends TestCase
 {
-    /** @var MockObject|ScopeConfigInterface */
-    private $scopeConfigMock;
-
-    /** @var MockObject|ConfigResource */
-    private $configResourceMock;
-
     /** @var FieldRoles */
-    private $fieldRoles;
+    private FieldRoles $fieldRoles;
 
     /** @var JsonSerializer */
     private $serializer;
 
-    /** @var SimpleDataProvider */
-    private $dataProvider;
+    /** @var MockObject|ScopeConfigInterface */
+    private MockObject $scopeConfigMock;
+
+    /** @var MockObject|ConfigResource */
+    private MockObject $configResourceMock;
+
+    /** @var MockObject|SimpleDataProvider */
+    private MockObject $dataProviderMock;
 
     /** @var string */
     private $roles = '{"description":"Description","masterArticleNumber":"Master","price":"Price","productName":"Name","trackingProductNumber":"ProductNumber","brand":"Brand"}';
@@ -57,7 +57,7 @@ class FieldRolesTest extends TestCase
     {
         $productMock = $this->createConfiguredMock(ProductInterface::class, ['getSku' => 'sku-1']);
         $this->scopeConfigMock->method('getValue')->with('factfinder/general/tracking_product_number_field_role', Scope::SCOPE_STORES)->willReturn($this->roles);
-        $this->dataProvider->expects($this->once())->method('toArray')->willReturn([
+        $this->dataProviderMock->expects($this->once())->method('toArray')->willReturn([
             'ProductNumber' => 'sku-1',
             'Master'        => 'sku-1',
             'Name'          => 'product name',
@@ -80,13 +80,13 @@ class FieldRolesTest extends TestCase
         $this->serializer         = new JsonSerializer();
         $this->scopeConfigMock    = $this->createMock(ScopeConfigInterface::class);
         $this->configResourceMock = $this->createMock(ConfigResource::class);
-        $this->dataProvider       = $this->createMock(SimpleDataProvider::class);
+        $this->dataProviderMock   = $this->createMock(SimpleDataProvider::class);
 
         $dataProviderFactory = $this->getMockBuilder(SimpleDataProviderFactory::class)
             ->disableOriginalConstructor()
             ->setMethods(['create'])
             ->getMock();
-        $dataProviderFactory->method('create')->willReturn($this->dataProvider);
+        $dataProviderFactory->method('create')->willReturn($this->dataProviderMock);
 
         $this->fieldRoles = new FieldRoles(
             $this->serializer,
