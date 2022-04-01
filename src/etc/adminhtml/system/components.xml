@@ -53,5 +53,16 @@
             <label>Max Result for Recommendation</label>
             <tooltip>This will apply to a template offered by the module. If you have overriden it, you must manually provide stored value to the frontend</tooltip>
         </field>
+
+        <field id="products_per_page" translate="label comment" sortOrder="10" showInDefault="1" showInWebsite="1">
+            <label>Product per Page Configuration</label>
+            <frontend_model>Omikron\Factfinder\Block\Adminhtml\System\Config\Field\ProductsPerPage</frontend_model>
+            <backend_model>Magento\Config\Model\Config\Backend\Serialized\ArraySerialized</backend_model>
+            <comment>
+                This configuration allows you to add new product per page entries to the existing default entry which you define in FACT-Finder UI.
+                Please remember that the default entry received from FACT-Finder response will be always put as first.
+                Because of that, all entries here should have bigger values than default entry. There is no possibility to sort all entries before rendering
+            </comment>
+        </field>
     </group>
 </include>
