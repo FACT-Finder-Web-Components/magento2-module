@@ -1,4 +1,9 @@
 # Changelog
+# [Unreleased]
+### Add
+ - Search Result Page, Category Page
+  - add Products per Page configurartion which allows user to define custom configuration without any change in code
+
 ## [v2.5.0] - 2022.03.04
  - Import 
   - fix error while push import feed using CLI after generate it for API version 7.x
