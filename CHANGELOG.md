@@ -1,6 +1,8 @@
 # Changelog
 ## [Unreleased]
-
+### Add
+ - Search Result Page, Category Page
+  - add Products per Page configurartion which allows user to define custom configuration without any change in code 
 ### Fix
  - Export
   - fix `Model\Export\Catalog\ProductType\ConfigurableDataProvider::getChildren` throws an SQL syntax error if configurable product has no variants assigned   

@@ -19,6 +19,12 @@
             <block class="Magento\Framework\View\Element\Template" name="factfinder.communication" ifconfig="factfinder/general/is_enabled" template="Omikron_Factfinder::ff/communication.phtml" before="-">
                 <arguments>
                     <argument name="view_model" xsi:type="object">Omikron\Factfinder\ViewModel\Communication</argument>
+                    <argument name="ppp" xsi:type="helper" helper="Omikron\Factfinder\ViewModel\Cart::getItemIds" />
+                </arguments>
+            </block>
+            <block class="Magento\Framework\View\Element\Template" name="factfinder.communication.ppp" ifconfig="factfinder/general/is_enabled" template="Omikron_Factfinder::ff/products-per-page-configuration.phtml" after="factfinder.communication">
+                <arguments>
+                    <argument name="view_model" xsi:type="object">Omikron\Factfinder\ViewModel\ProductsPerPage</argument>
                 </arguments>
             </block>
             <block class="Magento\Framework\View\Element\Template" name="factfinder.search.redirect" ifconfig="factfinder/general/is_enabled" template="Omikron_Factfinder::ff/search-redirect.phtml" after="factfinder.communication" />
