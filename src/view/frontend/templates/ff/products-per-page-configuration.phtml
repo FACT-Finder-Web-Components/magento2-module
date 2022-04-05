@@ -1,0 +1,15 @@
+<?php
+/** @var Magento\Framework\View\Element\Template $block */
+/** @var Omikron\Factfinder\ViewModel\ProductsPerPage $viewModel */
+$viewModel  = $block->getViewModel();
+?>
+
+<script>
+    document.addEventListener('ffReady', function () {
+        const conf = <?= /* @noEscape */ $viewModel->getProductsPerPageConfiguration() ?>;
+        if (conf.length > 0) {
+            const first = [factfinder.communication.pppConf.entries[0]];
+            factfinder.communication.pppConf.entries  = first.concat(conf);
+        }
+    });
+</script>
