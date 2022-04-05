@@ -1,5 +1,5 @@
 # Changelog
-# [Unreleased]
+## [v2.6.0] - 2022.04.05
 ### Add
  - Search Result Page, Category Page
   - add Products per Page configurartion which allows user to define custom configuration without any change in code
@@ -429,6 +429,7 @@
 ### Added
 - Feed Export: Export feed file is now available via separate link
 
+[v2.6.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v2.6.0
 [v2.5.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v2.5.0
 [v2.4.2]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v2.4.2
 [v2.4.1]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v2.4.1
