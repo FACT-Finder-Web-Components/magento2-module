@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Omikron\Factfinder\Model\Export\Catalog\ProductType;
 
-use Magento\Catalog\Api\Data\ProductInterface;
 use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Catalog\Model\Product;
 use Magento\ConfigurableProduct\Model\Product\Type\Configurable as ConfigurableProductType;
@@ -12,6 +11,7 @@ use Magento\Framework\Api\SearchCriteriaBuilder;
 use Omikron\Factfinder\Api\Filter\FilterInterface;
 use Omikron\Factfinder\Model\Export\Catalog\Entity\ProductVariationFactory;
 use Omikron\Factfinder\Model\Formatter\NumberFormatter;
+use Omikron\Factfinder\Test\TestHelper;
 use PHPUnit\Framework\TestCase;
 
 class ConfigurableDataProviderTest extends TestCase
@@ -24,7 +24,7 @@ class ConfigurableDataProviderTest extends TestCase
      */
     public function test_will_return_string_on_string_value()
     {
-        $getValueOrEmptyStringMethod = $this->invokeMethod($this->configurableDataProvider, 'getValueOrEmptyString', ['test']);
+        $getValueOrEmptyStringMethod = TestHelper::invokeMethod($this->configurableDataProvider, 'getValueOrEmptyString', ['test']);
         $this->assertEquals('test', $getValueOrEmptyStringMethod);
     }
 
@@ -33,7 +33,7 @@ class ConfigurableDataProviderTest extends TestCase
      */
     public function test_will_return_empty_string_on_null_value()
     {
-        $getValueOrEmptyStringMethod = $this->invokeMethod($this->configurableDataProvider, 'getValueOrEmptyString', [null]);
+        $getValueOrEmptyStringMethod = TestHelper::invokeMethod($this->configurableDataProvider, 'getValueOrEmptyString', [null]);
         $this->assertEquals('', $getValueOrEmptyStringMethod);
     }
 
@@ -42,7 +42,7 @@ class ConfigurableDataProviderTest extends TestCase
      */
     public function test_will_return_empty_string_on_bool_value()
     {
-        $getValueOrEmptyStringMethod = $this->invokeMethod($this->configurableDataProvider, 'getValueOrEmptyString', [false]);
+        $getValueOrEmptyStringMethod = TestHelper::invokeMethod($this->configurableDataProvider, 'getValueOrEmptyString', [false]);
         $this->assertEquals('', $getValueOrEmptyStringMethod);
     }
 
@@ -51,16 +51,20 @@ class ConfigurableDataProviderTest extends TestCase
      */
     public function test_will_return_empty_string_on_array_value()
     {
-        $getValueOrEmptyStringMethod = $this->invokeMethod($this->configurableDataProvider, 'getValueOrEmptyString', [[]]);
+        $getValueOrEmptyStringMethod = TestHelper::invokeMethod($this->configurableDataProvider, 'getValueOrEmptyString', [[]]);
         $this->assertEquals('', $getValueOrEmptyStringMethod);
     }
 
-    public function invokeMethod(&$object, $methodName, array $parameters = array())
+    /**
+     * @covers ConfigurableDataProvider::getChildren
+     */
+    public function test_will_no_throw_error_if_there_is_no_chlidren_ids()
     {
-        $reflection = new \ReflectionClass(get_class($object));
-        $method = $reflection->getMethod($methodName);
-        $method->setAccessible(true);
-        return $method->invokeArgs($object, $parameters);
+        $this->productMock->method('getId')->willReturn('1');
+        $this->configurableProductTypeMock->method('getChildrenIds')->with('1')
+            ->willReturn([0 => []]);
+        $variants = TestHelper::invokeMethod($this->configurableDataProvider, 'getChildren', [$this->productMock]);
+        $this->assertEquals([], $variants);
     }
 
     protected function setUp(): void
