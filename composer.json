@@ -23,7 +23,7 @@
     "magento/magento-coding-standard": "^6.0",
     "pdepend/pdepend": "^2.8",
     "phpmd/phpmd": "^2.9",
-    "phpunit/phpunit": ">=6.5 <10.0"
+    "phpunit/phpunit": ">=9.5 <10.0"
   },
   "autoload": {
     "files": [
