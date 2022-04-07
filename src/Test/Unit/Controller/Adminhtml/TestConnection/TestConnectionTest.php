@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Omikron\Factfinder\Controller\Adminhtml\TestConnection;
+namespace Omikron\Factfinder\Test\Unit\Controller\Adminhtml\TestConnection;
 
 use Magento\Backend\App\Action\Context;
 use Magento\Framework\App\RequestInterface;

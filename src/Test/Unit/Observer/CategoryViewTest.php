@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Omikron\Factfinder\Observer;
+namespace Omikron\Factfinder\Test\Unit\Observer;
 
 use Magento\Catalog\Model\Category;
 use Magento\Framework\Event\Observer;

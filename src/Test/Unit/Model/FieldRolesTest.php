@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Omikron\Factfinder\Model;
+namespace Omikron\Factfinder\Test\Unit\Model;
 
 use Magento\Catalog\Api\Data\ProductInterface;
 use Magento\Config\Model\ResourceModel\Config as ConfigResource;

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Omikron\Factfinder\Model\Ssr\Template;
+namespace Omikron\Factfinder\Test\Unit\Model\Ssr\Template;
 
 use Omikron\Factfinder\Model\FieldRoles;
 use PHPUnit\Framework\TestCase;

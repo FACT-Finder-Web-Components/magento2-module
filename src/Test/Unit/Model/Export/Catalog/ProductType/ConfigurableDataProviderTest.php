@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Omikron\Factfinder\Model\Export\Catalog\ProductType;
+namespace Omikron\Factfinder\Test\Unit\Model\Export\Catalog\ProductType;
 
 use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Catalog\Model\Product;

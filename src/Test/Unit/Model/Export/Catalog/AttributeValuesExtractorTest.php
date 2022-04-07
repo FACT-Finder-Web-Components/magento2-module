@@ -1,6 +1,6 @@
 <?php
 
-namespace Omikron\Factfinder\Model\Export\Catalog;
+namespace Omikron\Factfinder\Test\Unit\Model\Export\Catalog;
 
 use Omikron\Factfinder\Api\Filter\FilterInterface;
 use Magento\Catalog\Model\Product;
