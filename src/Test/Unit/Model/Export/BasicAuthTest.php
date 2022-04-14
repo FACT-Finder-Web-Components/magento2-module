@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Omikron\Factfinder\Model\Export;
+namespace Omikron\Factfinder\Test\Unit\Model\Export;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use PHPUnit\Framework\TestCase;

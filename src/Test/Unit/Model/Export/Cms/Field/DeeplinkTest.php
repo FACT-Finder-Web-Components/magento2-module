@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Omikron\Factfinder\Model\Export\Cms\Field;
+namespace Omikron\Factfinder\Test\Unit\Model\Export\Cms\Field;
 
 use Magento\Cms\Api\Data\PageInterface;
 use Magento\Framework\Model\AbstractModel;

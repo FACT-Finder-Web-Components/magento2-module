@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Omikron\Factfinder\Model;
+namespace Omikron\Factfinder\Test\Unit\Model;
 
 use Magento\Customer\CustomerData\SectionSourceInterface;
 use Magento\Customer\Model\Session as CustomerSession;

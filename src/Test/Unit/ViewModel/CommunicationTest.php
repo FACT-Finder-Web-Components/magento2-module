@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Omikron\Factfinder\ViewModel;
+namespace Omikron\Factfinder\Test\Unit\ViewModel;
 
 use Magento\Framework\Serialize\SerializerInterface;
 use Omikron\Factfinder\Model\Config\CommunicationParametersProvider;

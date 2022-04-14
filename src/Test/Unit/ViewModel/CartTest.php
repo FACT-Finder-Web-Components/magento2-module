@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Omikron\Factfinder\ViewModel;
+namespace Omikron\Factfinder\Test\Unit\ViewModel;
 
 use Magento\Checkout\Model\Session;
 use Magento\Framework\DataObject;

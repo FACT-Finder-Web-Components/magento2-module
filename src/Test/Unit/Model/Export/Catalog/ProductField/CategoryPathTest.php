@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Omikron\Factfinder\Model\Export\Catalog\ProductField;
+namespace Omikron\Factfinder\Test\Unit\Model\Export\Catalog\ProductField;
 
 use Magento\Catalog\Api\CategoryRepositoryInterface;
 use Magento\Catalog\Api\Data\CategoryInterface;

@@ -34,7 +34,7 @@ class ProductsPerPage implements ArgumentInterface
                     'default'  => false
                 ];
         }, array_values($this->serializer->unserialize($storedValue ?: '[]')));
-
+      
         return count($unserialized) ? $this->serializer->serialize($unserialized) : '[]';
     }
 }

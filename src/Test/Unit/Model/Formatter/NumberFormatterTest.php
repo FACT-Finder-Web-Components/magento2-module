@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Omikron\Factfinder\Model\Formatter;
+namespace Omikron\Factfinder\Test\Unit\Model\Formatter;
 
 use PHPUnit\Framework\TestCase;
 

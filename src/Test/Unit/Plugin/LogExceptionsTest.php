@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Omikron\Factfinder\Plugin;
+namespace Omikron\Factfinder\Test\Unit\Plugin;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Omikron\FactFinder\Communication\Client\ClientException;
