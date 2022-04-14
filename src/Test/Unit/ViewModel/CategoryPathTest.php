@@ -6,6 +6,7 @@ namespace Omikron\Factfinder\Test\Unit\ViewModel;
 
 use Magento\Catalog\Model\Category;
 use Magento\Framework\Registry;
+use Omikron\Factfinder\ViewModel\CategoryPath;
 use Omikron\Factfinder\Model\Config\CommunicationConfig;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;

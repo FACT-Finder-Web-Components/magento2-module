@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Omikron\Factfinder\Test\Unit\Model\Filter;
 
 use Omikron\Factfinder\Api\Filter\FilterInterface;
+use Omikron\Factfinder\Model\Filter\TextFilter;
 use PHPUnit\Framework\TestCase;
 
 /**

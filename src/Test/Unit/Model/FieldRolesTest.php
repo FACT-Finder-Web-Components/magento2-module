@@ -9,6 +9,7 @@ use Magento\Config\Model\ResourceModel\Config as ConfigResource;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Serialize\Serializer\Json as JsonSerializer;
 use Magento\Store\Model\ScopeInterface as Scope;
+use Omikron\Factfinder\Model\FieldRoles;
 use Omikron\Factfinder\Model\Export\Catalog\ProductType\SimpleDataProvider;
 use Omikron\Factfinder\Model\Export\Catalog\ProductType\SimpleDataProviderFactory;
 use PHPUnit\Framework\MockObject\MockObject;

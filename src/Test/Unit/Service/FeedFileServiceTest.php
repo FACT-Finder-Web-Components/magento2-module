@@ -1,8 +1,8 @@
 <?php
 
-
 namespace Omikron\Factfinder\Service;
 
+use Omikron\Factfinder\Service\FeedFileService;
 use PHPUnit\Framework\TestCase;
 
 /**

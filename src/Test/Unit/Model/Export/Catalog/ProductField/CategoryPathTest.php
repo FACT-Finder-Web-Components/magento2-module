@@ -8,6 +8,7 @@ use Magento\Catalog\Api\CategoryRepositoryInterface;
 use Magento\Catalog\Api\Data\CategoryInterface;
 use Magento\Framework\Model\AbstractModel;
 use Magento\Store\Model\Store;
+use Omikron\Factfinder\Model\Export\Catalog\ProductField\CategoryPath;
 use PHPUnit\Framework\Constraint\LogicalNot;
 use PHPUnit\Framework\Constraint\RegularExpression;
 use PHPUnit\Framework\MockObject\MockObject;

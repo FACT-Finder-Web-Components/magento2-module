@@ -8,6 +8,7 @@ use Magento\Backend\App\Action\Context;
 use Magento\Framework\App\RequestInterface;
 use Magento\Framework\Controller\Result\Json as JsonResult;
 use Magento\Framework\Controller\Result\JsonFactory;
+use Omikron\Factfinder\Controller\Adminhtml\TestConnection\TestFtpConnection;
 use Omikron\Factfinder\Model\Config\FtpConfig;
 use Omikron\Factfinder\Model\FtpUploader;
 use PHPUnit\Framework\MockObject\MockObject;

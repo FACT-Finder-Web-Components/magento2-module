@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Omikron\Factfinder\Test\Unit\Plugin;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
+use Omikron\Factfinder\Plugin\LogExceptions;
 use Omikron\FactFinder\Communication\Client\ClientException;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;

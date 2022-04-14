@@ -7,6 +7,7 @@ namespace Omikron\Factfinder\Test\Unit\Model\Export\Catalog\Entity;
 use Magento\Catalog\Api\Data\ProductInterface;
 use Magento\Catalog\Model\Product;
 use Magento\Framework\Model\AbstractModel;
+use Omikron\Factfinder\Model\Export\Catalog\Entity\ProductVariation;
 use Omikron\Factfinder\Model\Export\Catalog\FieldProvider;
 use Omikron\Factfinder\Model\Export\Catalog\ProductField\FilterAttributes;
 use Omikron\Factfinder\Model\Export\Catalog\ProductField\ProductImage;

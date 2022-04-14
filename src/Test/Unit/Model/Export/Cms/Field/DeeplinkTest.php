@@ -9,6 +9,7 @@ use Magento\Framework\Model\AbstractModel;
 use Magento\Framework\UrlInterface;
 use Magento\Store\Api\Data\StoreInterface;
 use Magento\Store\Model\StoreManagerInterface;
+use Omikron\Factfinder\Model\Export\Cms\Field\Deeplink;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 

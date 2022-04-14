@@ -7,6 +7,8 @@ namespace Omikron\Factfinder\Test\Unit\Model\Api;
 use Omikron\FactFinder\Communication\Client\ClientBuilder;
 use Omikron\FactFinder\Communication\Client\ClientInterface;
 use Omikron\FactFinder\Communication\Credentials;
+use Omikron\Factfinder\Model\Api\PushImport;
+use Omikron\Factfinder\Model\Api\CredentialsFactory;
 use Omikron\Factfinder\Model\Config\CommunicationConfig;
 use Omikron\Factfinder\Model\Config\ExportConfig;
 use PHPUnit\Framework\MockObject\MockObject;

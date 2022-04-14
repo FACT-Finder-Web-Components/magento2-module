@@ -7,6 +7,7 @@ namespace Omikron\Factfinder\Test\Unit\ViewModel;
 use Magento\Checkout\Model\Session;
 use Magento\Framework\DataObject;
 use Magento\Quote\Model\Quote;
+use Omikron\Factfinder\ViewModel\Cart;
 use PHPUnit\Framework\TestCase;
 
 /**

@@ -8,6 +8,7 @@ use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Catalog\Model\Product;
 use Magento\ConfigurableProduct\Model\Product\Type\Configurable as ConfigurableProductType;
 use Magento\Framework\Api\SearchCriteriaBuilder;
+use Omikron\Factfinder\Model\Export\Catalog\ProductType\ConfigurableDataProvider;
 use Omikron\Factfinder\Api\Filter\FilterInterface;
 use Omikron\Factfinder\Model\Export\Catalog\Entity\ProductVariationFactory;
 use Omikron\Factfinder\Model\Formatter\NumberFormatter;

@@ -11,6 +11,7 @@ use Magento\Framework\Controller\Result\JsonFactory;
 use Omikron\FactFinder\Communication\Client\ClientBuilder;
 use Omikron\FactFinder\Communication\Client\ClientInterface;
 use Omikron\FactFinder\Communication\Credentials;
+use Omikron\Factfinder\Controller\Adminhtml\TestConnection\TestConnection;
 use Omikron\Factfinder\Model\Api\CredentialsFactory;
 use Omikron\Factfinder\Model\Config\AuthConfig;
 use PHPUnit\Framework\MockObject\MockObject;

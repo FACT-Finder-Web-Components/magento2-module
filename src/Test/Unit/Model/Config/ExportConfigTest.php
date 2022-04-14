@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Omikron\Factfinder\Test\Unit\Model\Config;
 
+use Omikron\Factfinder\Model\Config\ExportConfig;
+use Omikron\Factfinder\Model\Config\CommunicationConfig;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Serialize\Serializer\Json;
 use Magento\Store\Model\ScopeInterface as Scope;

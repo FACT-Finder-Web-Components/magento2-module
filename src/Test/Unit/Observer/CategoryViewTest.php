@@ -9,6 +9,7 @@ use Magento\Framework\Event\Observer;
 use Magento\Framework\Registry;
 use Magento\Framework\View\Layout\ProcessorInterface;
 use Magento\Framework\View\LayoutInterface;
+use Omikron\Factfinder\Observer\CategoryView;
 use Omikron\Factfinder\Model\Config\FeatureConfig;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;

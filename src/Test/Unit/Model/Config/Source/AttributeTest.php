@@ -7,6 +7,7 @@ namespace Omikron\Factfinder\Test\Unit\Model\Config\Source;
 use Magento\Eav\Model\Entity\Attribute\AbstractAttribute as EavAttribute;
 use Magento\Eav\Model\ResourceModel\Entity\Attribute\CollectionFactory as AttributeCollectionFactory;
 use Magento\Framework\DataObject;
+use Omikron\Factfinder\Model\Adminhtml\System\Config\Source\Attribute;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 

@@ -6,6 +6,8 @@ namespace Omikron\Factfinder\Test\Unit\Model\Config;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Store\Model\ScopeInterface;
+use Omikron\Factfinder\Model\Config\FeatureConfig;
+use Omikron\Factfinder\Model\Config\CommunicationConfig;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 

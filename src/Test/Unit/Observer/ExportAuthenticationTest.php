@@ -7,6 +7,7 @@ namespace Omikron\Factfinder\Test\Unit\Observer;
 use Magento\Framework\App\ActionFlag;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\HTTP\Authentication;
+use Omikron\Factfinder\Observer\ExportAuthentication;
 use Omikron\Factfinder\Model\Export\BasicAuth;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;

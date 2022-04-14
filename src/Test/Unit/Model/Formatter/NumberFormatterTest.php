@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Omikron\Factfinder\Test\Unit\Model\Formatter;
 
+use Omikron\Factfinder\Model\Formatter\NumberFormatter;
 use PHPUnit\Framework\TestCase;
 
 /**

@@ -6,6 +6,7 @@ namespace Omikron\Factfinder\Test\Unit\Model\Export\Cms\Field;
 
 use Magento\Cms\Api\Data\PageInterface;
 use Magento\Email\Model\Template\Filter;
+use Omikron\Factfinder\Model\Export\Cms\Field\Image;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Magento\Framework\Model\AbstractModel;

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Omikron\Factfinder\Test\Unit\Model\Export;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
+use Omikron\Factfinder\Model\Export\BasicAuth;
 use PHPUnit\Framework\TestCase;
 
 /**

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Omikron\Factfinder\Test\Unit\Plugin;
 
+use Omikron\Factfinder\Plugin\AssetMinificationPlugin;
 use PHPUnit\Framework\TestCase;
 
 /**

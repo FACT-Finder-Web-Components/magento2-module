@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Omikron\Factfinder\Test\Unit\Model\Config;
 
+use Omikron\Factfinder\Model\Config\CommunicationParametersProvider;
 use Omikron\Factfinder\Api\Config\ParametersSourceInterface;
 use PHPUnit\Framework\TestCase;
 
