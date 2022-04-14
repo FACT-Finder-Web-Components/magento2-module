@@ -34,12 +34,13 @@ class ProductPerPageTest extends TestCase
         $this->assertStringContainsString('{"value":"8","selected":false,"default":false}', $actual);
     }
 
-    public function test_return_empty_string_if_no_stored_values()
+
+    public function test_return_empty_array_literal_if_no_stored_values()
     {
         $this->scopeConfigMock->method('getValue')->with('factfinder/components_options/products_per_page')
             ->willReturn(null);
 
-        $this->assertEquals('', $this->productsPerPage->getProductsPerPageConfiguration());
+        $this->assertEquals('[]', $this->productsPerPage->getProductsPerPageConfiguration());
     }
 
     protected function setUp(): void
