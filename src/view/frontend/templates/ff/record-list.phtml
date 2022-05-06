@@ -46,6 +46,14 @@ $viewModel = $block->getViewModel();
     </ff-record-list>
 </div>
 <script>
+    document.addEventListener('ffReady', function (ff) {
+        ff.communication.ResultDispatcher.addCallback(`records`, records => {
+            if (ff.communication.Util.isNg()) {
+                records.forEach(rec => rec.record.HasVariants = rec.record.HasVariants || rec.variantValues.some(variant => parseInt(variant.HasVariants) === 1));
+            }
+        });
+    });
+
     require(['ffCallbacks'], function (ffCallbacks) {
         document.addEventListener('ffReady', function (ff) {
             factfinder.communication.EventAggregator.addBeforeDispatchingCallback(function (event) {
