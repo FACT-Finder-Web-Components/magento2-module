@@ -1,4 +1,9 @@
 # Changelog
+## Unreleased
+### Fix
+ - Category Page & Search Result Page
+  - fix "Add to cart" button randomly shows on configurable products tiles 
+  
 ## [v3.4.0] - 2022.04.05
 ### Add
  - Search Result Page, Category Page
