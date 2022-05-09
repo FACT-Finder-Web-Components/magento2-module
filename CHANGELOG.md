@@ -3,7 +3,10 @@
 ### Add
  - Search Result Page, Category Page
   - add Products per Page configurartion which allows user to define custom configuration without any change in code
-  
+### Fix
+ - Category Page & Search Result Page
+  - fix "Add to cart" button randomly shows on configurable products tiles 
+
 ## [v4.0.0-rc.2] - 2022.03.31
 ### BREAKING
     - `Omikron\Factfinder\Controller\Adminhtml\Export\Feed`
