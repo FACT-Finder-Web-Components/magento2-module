@@ -1,5 +1,5 @@
 # Changelog
-## Unreleased
+## [v3.4.1] - 2022.05.11
 ### Fix
  - Category Page & Search Result Page
   - fix "Add to cart" button randomly shows on configurable products tiles 
@@ -452,6 +452,7 @@
 ### Added
 - Feed Export: Export feed file is now available via separate link
 
+[v3.4.1]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.4.1
 [v3.4.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.4.0
 [v3.3.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.3.0
 [v3.2.2]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.2.2
