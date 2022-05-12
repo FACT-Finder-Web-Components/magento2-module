@@ -1,4 +1,10 @@
 # Changelog
+## Unreleased
+
+### Add
+ - Export
+  - Add new category feed export that could be used as a suggest enrichment
+
 ## [v3.4.1] - 2022.05.11
 ### Fix
  - Category Page & Search Result Page

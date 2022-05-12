@@ -6,9 +6,11 @@ namespace Omikron\Factfinder\Model\Export\Category;
 
 use IteratorAggregate;
 use Magento\Catalog\Api\CategoryListInterface;
+use Magento\Catalog\Api\Data\CategoryInterface;
+use Magento\Catalog\Model\Category;
 use Magento\Framework\Api\SearchCriteriaBuilder;
-use Magento\Store\Model\Store;
 use Magento\Store\Model\StoreManagerInterface;
+use Traversable;
 
 class Categories implements IteratorAggregate
 {
@@ -26,20 +28,24 @@ class Categories implements IteratorAggregate
         $this->categoryList          = $categoryList;
     }
 
-    public function getIterator()
+    /**
+     * @return \Traversable|CategoryInterface[]
+     */
+    public function getIterator(): Traversable
     {
         yield from $this->categoryList->getList($this->getCriteria()->create())->getItems();
     }
 
     private function getCriteria(): SearchCriteriaBuilder
     {
-        return  $this->searchCriteriaBuilder;
-
-        $inStores = [
-            Store::DEFAULT_STORE_ID,
-            (int) $this->storeManager->getStore()->getId()
-        ];
-
-        return $this->searchCriteriaBuilder->addFilter('store_id', $inStores, 'in');
+        return $this->searchCriteriaBuilder
+            ->addFilter(
+                'entity_id',
+                [
+                    Category::TREE_ROOT_ID,
+                    $this->storeManager->getStore()->getRootCategoryId()
+                ],
+                'nin'
+            );
     }
 }

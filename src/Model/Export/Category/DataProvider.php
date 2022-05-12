@@ -31,9 +31,12 @@ class DataProvider implements DataProviderInterface
     {
         yield from [];
         foreach ($this->categories as $category) {
-            yield $this->categoryFactory->create(['category'       => $category,
-                                                  'categoryFields' => $this->fields
-                                                 ]);
+            yield $this->categoryFactory->create(
+                [
+                    'category'       => $category,
+                    'categoryFields' => $this->fields
+                ]
+            );
         }
     }
 }

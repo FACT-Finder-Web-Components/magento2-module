@@ -9,6 +9,9 @@ use Magento\Framework\Serialize\Serializer\Json;
 use Omikron\Factfinder\ViewModel\ProductsPerPage;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @covers ProductsPerPage
+ */
 class ProductPerPageTest extends TestCase
 {
     /** @var ProductsPerPage */

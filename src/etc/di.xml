@@ -68,9 +68,9 @@
         <arguments>
             <argument name="columns" xsi:type="array">
                 <item name="Name" xsi:type="string">Name</item>
-                <item name="SourceField" xsi:type="string">SourceField</item>
+                <item name="sourceField" xsi:type="string">sourceField</item>
                 <item name="Deeplink" xsi:type="string">Deeplink</item>
-                <item name="ParentCategory" xsi:type="string">ParentCategory</item>
+                <item name="parentCategory" xsi:type="string">parentCategory</item>
             </argument>
         </arguments>
     </virtualType>
@@ -123,8 +123,7 @@
                     <item xsi:type="string" name="generator">Omikron\Factfinder\Model\Export\CategoryFeed</item>
                     <item xsi:type="string" name="dataProvider">Omikron\Factfinder\Model\Export\Category\DataProvider</item>
                     <item xsi:type="array" name="fieldProvider">
-                        <item name="ParentCategory" xsi:type="object">Omikron\Factfinder\Model\Export\Category\Field\ParentCategory</item>
-                        <item name="Deeplink" xsi:type="object">Omikron\Factfinder\Model\Export\Category\Field\Deeplink</item>
+                        <item name="parentCategory" xsi:type="object">Omikron\Factfinder\Model\Export\Category\Field\ParentCategory</item>
                     </item>
                 </item>
             </argument>

@@ -31,7 +31,8 @@ class Category implements ExportEntityInterface
     {
         $data = [
             'Name'        => (string) $this->category->getName(),
-            'SourceField' => 'CategoryPath',
+            'sourceField' => 'CategoryPath',
+            'Deeplink'    => (string) $this->category->getUrl(),
         ];
 
         return array_reduce($this->categoryFields, function (array $result, FieldInterface $field) {
