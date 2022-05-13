@@ -15,7 +15,11 @@ class DataProvider implements DataProviderInterface
 {
     private Products $products;
     private ObjectManagerInterface $objectManager;
+
+    /** @var string[] */
     private array $entityTypes;
+
+    /** @var string[] */
     private array $productFields;
 
     public function __construct(

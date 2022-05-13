@@ -18,6 +18,10 @@ class FieldRoles
     private ScopeConfigInterface $scopeConfig;
     private ConfigResource $configResource;
     private SimpleDataProviderFactory $dataProviderFactory;
+
+    /**
+     * [sku = string[]]
+     */
     private array $dataProviders = [];
 
     public function __construct(

@@ -13,9 +13,17 @@ class FieldProvider implements FieldProviderInterface
 {
     private ExportConfig $config;
     private GenericFieldFactory $fieldFactory;
+
+    /** @var FieldProviderInterface[]  */
     private array $productFieldProviders;
+
+    /** @var FieldProviderInterface[]  */
     private array $variantFieldProviders;
+
+    /** @var string[]  */
     private array $cachedVariantFields = [];
+
+    /** @var string[]  */
     private array $cachedFields = [];
 
     public function __construct(
