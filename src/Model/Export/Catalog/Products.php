@@ -10,6 +10,7 @@ use Magento\Catalog\Model\Product\Attribute\Source\Status;
 use Magento\Catalog\Model\Product\Visibility;
 use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Store\Model\StoreManagerInterface;
+use Traversable;
 
 class Products implements \IteratorAggregate
 {
@@ -33,9 +34,9 @@ class Products implements \IteratorAggregate
     }
 
     /**
-     * @return \Traversable|ProductInterface[]
+     * @return Traversable|ProductInterface[]
      */
-    public function getIterator()
+    public function getIterator(): Traversable
     {
         $page = 1;
         while (true) {
