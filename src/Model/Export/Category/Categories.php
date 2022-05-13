@@ -29,7 +29,7 @@ class Categories implements IteratorAggregate
     }
 
     /**
-     * @return \Traversable|CategoryInterface[]
+     * @return Traversable|CategoryInterface[]
      */
     public function getIterator(): Traversable
     {

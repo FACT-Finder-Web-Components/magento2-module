@@ -10,7 +10,7 @@
     }
   ],
   "require": {
-    "php": "^7.4",
+    "php": "~7.4.0||~8.1.0",
     "omikron/factfinder-communication-sdk": "^0.9",
     "magento/framework": ">=102.0.0",
     "magento/module-catalog": ">=103.0.0",
