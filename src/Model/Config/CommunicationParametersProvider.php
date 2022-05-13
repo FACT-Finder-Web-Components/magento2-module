@@ -8,6 +8,7 @@ use Omikron\Factfinder\Api\Config\ParametersSourceInterface;
 
 class CommunicationParametersProvider implements ParametersSourceInterface
 {
+    /** @var ParametersSourceInterface[] */
     private array $sources;
 
     public function __construct(array $parametersSource = [])

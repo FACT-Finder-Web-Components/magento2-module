@@ -9,6 +9,7 @@ use Magento\Framework\DataObject;
 use Magento\Sales\Model\Order as OrderModel;
 use Omikron\Factfinder\Model\Config\CommunicationConfig;
 use Omikron\Factfinder\ViewModel\Order;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -18,6 +19,7 @@ class OrderTest extends TestCase
 {
     private Order $order;
 
+    /** @var MockObject|Item[]  */
     private array $orderItemsMock;
 
     public function test_returns_order_items()

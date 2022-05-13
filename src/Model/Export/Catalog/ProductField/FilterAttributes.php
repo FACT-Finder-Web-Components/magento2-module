@@ -18,9 +18,13 @@ class FilterAttributes implements FieldInterface
     protected string $name = 'FilterAttributes';
     private ExportConfig $exportConfig;
     private ProductResource $productResource;
-    private array $attributes = [];
     private FilterInterface $filter;
     private AttributeValuesExtractor $valuesExtractor;
+
+    /**
+     *  [storeId => string[]]
+     */
+    private array $attributes = [];
 
     public function __construct(
         ExportConfig $exportConfig,

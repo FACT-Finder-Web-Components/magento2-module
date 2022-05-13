@@ -38,7 +38,8 @@ class Page implements ExportEntityInterface
 
         return array_reduce(
             $this->pageFields,
-            fn (array $result, FieldInterface $field): array => [$field->getName() => $field->getValue($this->page)] + $result,
+            fn (array $result, FieldInterface $field): array =>
+                [$field->getName() => $field->getValue($this->page)] + $result,
             $data
         );
     }

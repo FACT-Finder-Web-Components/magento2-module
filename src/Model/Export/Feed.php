@@ -17,7 +17,11 @@ class Feed
 {
     private ExporterInterface $exporter;
     private DataProviderInterface $dataProvider;
+
+    /** @var FieldInterface[]  */
     private array $fields;
+
+    /** @var string[]  */
     private array $columns;
 
     public function __construct(
