@@ -53,7 +53,6 @@ class Products implements \IteratorAggregate
     {
         return $this->searchCriteriaBuilder
             ->addFilter('status', Status::STATUS_ENABLED)
-            ->addFilter('entity_id', '1')
             ->addFilter('store_id', $this->storeManager->getStore()->getId())
             ->addFilter('visibility', Visibility::VISIBILITY_NOT_VISIBLE, 'neq')
             ->setPageSize($this->batchSize)

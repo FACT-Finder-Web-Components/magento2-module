@@ -2,44 +2,52 @@
 
 declare(strict_types=1);
 
-namespace Omikron\Factfinder\Test\Unit\Model\Export\Catalog\ProductField;
+namespace Omikron\Factfinder\Test\Unit\Model\Formatter;
 
 use Magento\Catalog\Api\CategoryRepositoryInterface;
 use Magento\Catalog\Api\Data\CategoryInterface;
-use Magento\Framework\Model\AbstractModel;
 use Magento\Store\Model\Store;
-use Omikron\Factfinder\Model\Export\Catalog\ProductField\CategoryPath;
-use PHPUnit\Framework\MockObject\MockObject;
+use Omikron\Factfinder\Model\Formatter\CategoryPathFormatter;
+use PHPUnit\Framework\Constraint\LogicalNot;
+use PHPUnit\Framework\Constraint\RegularExpression;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers CategoryPath
+ * @covers CategoryPathFormatterTest
  */
-class CategoryPathTest extends TestCase
+class CategoryPathFormatterTest extends TestCase
 {
-    /** @var CategoryPath */
-    private $categoryPath;
+    /** @var CategoryPathFormatter */
+    private $categoryPathFormatter;
 
-    /** @var MockObject|CategoryRepositoryInterface */
-    private $repositoryMock;
-
-    /** @var MockObject|AbstractModel */
-    private $productMock;
-
-    public function test_multiple_category_branches_will_be_exported()
+    public function test_path_will_be_encoded()
     {
-        $this->productMock->method('getCategoryIds')->willReturn(['5', '6']);
-        $path = $this->categoryPath->getValue($this->productMock);
-        $this->assertEquals(
-            $path,
-            'Clothes/Trousers+%26+Pants/5%2F6+Length+Trousers|Clothes/Trousers+%26+Pants/Short+Trousers'
-        );
+        $storeMock = $this->createConfiguredMock(Store::class, [
+            'getId'             => 1,
+            'getRootCategoryId' => 2
+        ]);
+
+        $path = $this->categoryPathFormatter->format(5, $storeMock);
+        $this->assertStringContains(urlencode('Trousers & Pants'), $path);
+        $this->assertStringContains(urlencode('5/6 Length Trousers'), $path);
+    }
+
+    public function test_invisible_categories_will_be_skipped()
+    {
+        $storeMock = $this->createConfiguredMock(Store::class, [
+            'getId'             => 1,
+            'getRootCategoryId' => 2
+        ]);
+
+        $path = $this->categoryPathFormatter->format(5, $storeMock);
+        $this->assertStringNotContains('Root Catalog', $path);
+        $this->assertStringNotContains('Default Category', $path);
     }
 
     protected function setUp(): void
     {
-        $this->repositoryMock = $this->createMock(CategoryRepositoryInterface::class);
-        $this->repositoryMock->method('get')->willReturnMap(
+        $repositoryMock = $this->createMock(CategoryRepositoryInterface::class);
+        $repositoryMock->method('get')->willReturnMap(
             [
                 [
                     1,
@@ -127,17 +135,17 @@ class CategoryPathTest extends TestCase
                 ],
             ]
         );
-        $this->productMock = $this->getMockBuilder(AbstractModel::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['getStore', 'getCategoryIds'])
-            ->getMock();
 
-        $this->productMock->method('getStore')
-            ->willReturn($this->createConfiguredMock(Store::class, [
-                'getId'             => 1,
-                'getRootCategoryId' => 2
-            ]));
+        $this->categoryPathFormatter = new CategoryPathFormatter($repositoryMock);
+    }
 
-        $this->categoryPath = new CategoryPath($this->repositoryMock, 'CategoryPath');
+    private function assertStringContains(string $pattern, string $string)
+    {
+        $this->assertThat($string, new RegularExpression('/' . preg_quote($pattern) . '/'), $string);
+    }
+
+    private function assertStringNotContains(string $pattern, string $string)
+    {
+        $this->assertThat($string, new LogicalNot(new RegularExpression('/' . preg_quote($pattern) . '/')));
     }
 }

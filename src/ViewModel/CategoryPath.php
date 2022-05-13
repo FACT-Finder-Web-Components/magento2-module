@@ -15,6 +15,8 @@ class CategoryPath implements ArgumentInterface
     private Registry $registry;
     private CommunicationConfig $communicationConfig;
     private string $param;
+
+    /** @var string[]  */
     private array $initial;
 
     public function __construct(
