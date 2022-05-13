@@ -13,11 +13,9 @@ class ProductsPerPage implements ArgumentInterface
 {
     private const PRODUCT_PER_PAGE_CONFIG_PATH = 'factfinder/components_options/products_per_page';
 
-    /** @var ScopeConfigInterface */
-    private $scopeConfig;
+    private ScopeConfigInterface $scopeConfig;
 
-    /** @var SerializerInterface */
-    private $serializer;
+    private SerializerInterface $serializer;
 
     public function __construct(ScopeConfigInterface $scopeConfig, Json $json)
     {
