@@ -12,6 +12,8 @@ class DataProvider implements DataProviderInterface
 {
     private Pages $pages;
     private PageFactory $pageFactory;
+
+    /** @var string[] */
     private array $pageFields;
 
     public function __construct(Pages $pages, PageFactory $pageFactory, array $fields)

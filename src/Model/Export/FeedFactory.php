@@ -11,6 +11,8 @@ use Omikron\Factfinder\Api\Export\FieldProviderInterface;
 class FeedFactory
 {
     private ObjectManagerInterface $objectManager;
+
+    /** @var string[] */
     private array $feedPool;
 
     public function __construct(

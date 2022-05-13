@@ -15,8 +15,10 @@ class ProductVariation implements ExportEntityInterface
     private Product $product;
     private Product $configurable;
     private NumberFormatter $numberFormatter;
-    private array $configurableData;
     private FieldProvider $fieldprovider;
+
+    /** @var string[] */
+    private array $configurableData;
 
     public function __construct(
         Product $product,

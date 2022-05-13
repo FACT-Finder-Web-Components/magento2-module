@@ -14,6 +14,8 @@ class SimpleDataProvider implements DataProviderInterface, ExportEntityInterface
 {
     protected NumberFormatter $numberFormatter;
     protected Product $product;
+
+    /** @var string[]  */
     private array $productFields;
 
     public function __construct(Product $product, NumberFormatter $numberFormatter, array $productFields = [])

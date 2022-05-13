@@ -7,6 +7,7 @@ namespace Omikron\Factfinder\Test\Unit\ViewModel;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Serialize\Serializer\Json;
 use Omikron\Factfinder\ViewModel\ProductsPerPage;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -14,10 +15,10 @@ use PHPUnit\Framework\TestCase;
  */
 class ProductPerPageTest extends TestCase
 {
-    /** @var ProductsPerPage */
-    private $productsPerPage;
+    private ProductsPerPage $productsPerPage;
 
-    private $scopeConfigMock;
+    /** @var MockObject|ScopeConfigInterface  */
+    private MockObject $scopeConfigMock;
 
     public function test_will_unserialize_stored_values()
     {
