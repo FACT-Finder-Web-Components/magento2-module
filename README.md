@@ -28,6 +28,7 @@ customise them.
         - [Updating Field Roles](#updating-field-roles)
         - [Automatic Import](#automatic-import)
 - [Data Export](#data-export)
+    - [Feed Types](#feed-types)
     - [Integration Methods](#integration-methods)
         - [FTP Export](#ftp-export)
         - [HTTP Export](#http-export)
@@ -213,7 +214,18 @@ should be imported automatically
 This is a multiselect field so You can select both of them
 
 ## Data Export
-In following section You'll get information how, to integrate Your feed with FACT-Finder. Feed is built the same way, regardless of chosen method, so You can choose from one of possible methods.  
+In following section You'll get information how, to integrate Your feed with FACT-Finder. Feed is built the same way, regardless of chosen method, so You can choose from one of possible methods.
+
+### Feed Types
+Modules is capable of exporting feeds in one of the following types
+ - Product
+ - CMS
+ - Category
+ 
+Product is the main feed that will be used by FACT-Finder to produce search result for your shop.
+CMS could be used as an separate search result source (if you have search functionality in your blog) or to enriche suggestions (if you want to suggest blog articles related to user search query).
+Category is used to enrich suggestions by adding categories URLs category to specific suggest items  
+   
 ### Integration Methods
 #### FTP export
 This method exports feed from shop system and uploads it to FTP server. In order to use this method of export, You need to have FTP server configured (described in section [Data Transfer Settings](#data-transfer-settings)).
