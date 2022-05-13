@@ -1,5 +1,5 @@
 # Changelog
-## [Unreleased]
+## [v4.0.0-rc.3] - 2022.05.13
 ### Add
  - Export
   - Add new category feed export that could be used as a suggest enrichment
@@ -492,10 +492,11 @@
 ### Added
 - Feed Export: Export feed file is now available via separate link
 
+[v4.0.0-rc.3]:  https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v4.0.0-rc.2
 [v3.4.1]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.4.1
 [v3.4.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.4.0
-[v4.0.0-rc.2]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v4.0.0-rc.2
-[v4.0.0-rc.1]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v4.0.0-rc.1
+[v4.0.0-rc.2]:  https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v4.0.0-rc.2
+[v4.0.0-rc.1]:  https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v4.0.0-rc.1
 [v3.3.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.3.0
 [v3.2.2]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.2.2
 [v3.2.1]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.2.1
