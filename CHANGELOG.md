@@ -1,11 +1,26 @@
 # Changelog
 ## [Unreleased]
 ### Add
+ - Export
+  - Add new category feed export that could be used as a suggest enrichment
  - Search Result Page, Category Page
   - add Products per Page configurartion which allows user to define custom configuration without any change in code
 ### Fix
  - Category Page & Search Result Page
   - fix "Add to cart" button randomly shows on configurable products tiles 
+
+## [v3.4.1] - 2022.05.11
+### Fix
+ - Category Page & Search Result Page
+  - fix "Add to cart" button randomly shows on configurable products tiles 
+  
+## [v3.4.0] - 2022.04.05
+### Add
+ - Search Result Page, Category Page
+  - add Products per Page configurartion which allows user to define custom configuration without any change in code 
+### Fix
+ - Export
+  - fix `Model\Export\Catalog\ProductType\ConfigurableDataProvider::getChildren` throws an SQL syntax error if configurable product has no variants assigned   
 
 ## [v4.0.0-rc.2] - 2022.03.31
 ### BREAKING
@@ -477,6 +492,8 @@
 ### Added
 - Feed Export: Export feed file is now available via separate link
 
+[v3.4.1]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.4.1
+[v3.4.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.4.0
 [v4.0.0-rc.2]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v4.0.0-rc.2
 [v4.0.0-rc.1]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v4.0.0-rc.1
 [v3.3.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.3.0
