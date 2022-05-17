@@ -6,8 +6,8 @@ namespace Omikron\Factfinder\Model\Ssr;
 
 use Magento\Framework\Pricing\PriceCurrencyInterface;
 use Omikron\Factfinder\Model\Config\CommunicationConfig;
-use Omikron\FactFinder\Communication\Version;
 use Omikron\Factfinder\Model\FieldRoles;
+use Omikron\FactFinder\Communication\Version;
 
 class PriceFormatter
 {
