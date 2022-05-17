@@ -68,6 +68,13 @@ class FieldRoles
         }
     }
 
+    /**
+     * @deprecated this function will be removed in v4 of the module. I is no longer used
+     * @param ProductInterface $product
+     * @param string           $roleName
+     *
+     * @return string
+     */
     public function fieldRoleToAttribute(ProductInterface $product, string $roleName): string
     {
         $sku = $product->getSku();
