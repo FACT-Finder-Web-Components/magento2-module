@@ -19,11 +19,6 @@ class FieldRoles
     private ConfigResource $configResource;
     private SimpleDataProviderFactory $dataProviderFactory;
 
-    /**
-     * [sku = string[]]
-     */
-    private array $dataProviders = [];
-
     public function __construct(
         SerializerInterface $serializer,
         ScopeConfigInterface $scopeConfig,
@@ -60,15 +55,5 @@ class FieldRoles
         } catch (\InvalidArgumentException $e) {
             return false;
         }
-    }
-
-    public function fieldRoleToAttribute(ProductInterface $product, string $roleName): string
-    {
-        $sku = $product->getSku();
-        if (!isset($this->dataProviders[$sku])) {
-            $this->dataProviders[$sku] = $this->dataProviderFactory->create(['product' => $product])->toArray();
-        }
-
-        return (string) $this->dataProviders[$sku][$this->getFieldRole($roleName)] ?? '';
     }
 }

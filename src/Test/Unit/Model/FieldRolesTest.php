@@ -53,28 +53,6 @@ class FieldRolesTest extends TestCase
         $this->assertTrue($this->fieldRoles->saveFieldRoles($valueToSave, 1));
     }
 
-    public function test_field_role_to_attribute_returns_correct_array_value()
-    {
-        $productMock = $this->createConfiguredMock(ProductInterface::class, ['getSku' => 'sku-1']);
-        $this->scopeConfigMock->method('getValue')->with('factfinder/general/tracking_product_number_field_role', Scope::SCOPE_STORES)->willReturn($this->roles);
-        $this->dataProviderMock->expects($this->once())->method('toArray')->willReturn([
-            'ProductNumber' => 'sku-1',
-            'Master'        => 'sku-1',
-            'Name'          => 'product name',
-            'Description'   => 'product description',
-            'Short'         => 'product short description',
-            'Deeplink'      => 'http://magneto2/product-link.html',
-            'Price'         => '9.99',
-            'Brand'         => 'Product brand',
-            'Availability'  => 1,
-            'MagentoId'     => 11,
-        ]);
-        $brandAttributeValue  = $this->fieldRoles->fieldRoleToAttribute($productMock, 'brand');
-        $masterAttributeValue = $this->fieldRoles->fieldRoleToAttribute($productMock, 'masterArticleNumber');
-        $this->assertSame('Product brand', $brandAttributeValue);
-        $this->assertSame('sku-1', $masterAttributeValue);
-    }
-
     protected function setUp(): void
     {
         $this->serializer         = new JsonSerializer();
