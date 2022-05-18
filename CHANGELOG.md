@@ -1,6 +1,9 @@
 # Changelog
 ## Unreleased
-
+### Fix
+ - Configuration
+  - fix "Update FieldRoles" does not map some of the field roles in NG format to 7.3 which is used by the Web Components
+   
 ### Add
  - Export
   - Add new category feed export that could be used as a suggest enrichment
