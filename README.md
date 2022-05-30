@@ -1,3 +1,9 @@
+# DEPRECATED
+This version of module is obsolete. Please use the new version (v3).
+* features and improvement are not provided anymore
+* bugs fixing support will be over after 31.07.2022
+
+
 # FACT-Finder® Web Components for Magento 2
 
 [![Packagist Version](https://img.shields.io/packagist/v/omikron/magento2-factfinder)](https://packagist.org/packages/omikron/magento2-factfinder)
