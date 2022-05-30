@@ -1,8 +1,10 @@
 # Changelog
-## Unreleased
+## [v2.6.2] - 2022.05.30
 ### Fix
  - Configuration
   - fix "Update FieldRoles" does not map some of the field roles in NG format to 7.3 which is used by the Web Components
+### Change
+ - upgrade Web Components to version [4.0.10](https://github.com/FACT-Finder-Web-Components/ff-web-components/releases/tag/4.0.10)
 
 ## [v2.6.1] - 2022.05.11
 ### Fix
@@ -439,6 +441,7 @@
 ### Added
 - Feed Export: Export feed file is now available via separate link
 
+[v2.6.2]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v2.6.2
 [v2.6.1]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v2.6.1
 [v2.6.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v2.6.0
 [v2.5.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v2.5.0
