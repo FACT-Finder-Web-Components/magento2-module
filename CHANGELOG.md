@@ -1,5 +1,5 @@
 # Changelog
-## Unreleased
+## [v3.5.0] - 2022.05.30
 ### Fix
  - Configuration
   - fix "Update FieldRoles" does not map some of the field roles in NG format to 7.3 which is used by the Web Components
@@ -8,6 +8,9 @@
  - Export
   - Add new category feed export that could be used as a suggest enrichment
 
+### Change
+ - upgrade Web Components to version [4.0.10](https://github.com/FACT-Finder-Web-Components/ff-web-components/releases/tag/4.0.10)
+   
 ## [v3.4.1] - 2022.05.11
 ### Fix
  - Category Page & Search Result Page
@@ -461,6 +464,7 @@
 ### Added
 - Feed Export: Export feed file is now available via separate link
 
+[v3.5.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.5.0
 [v3.4.1]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.4.1
 [v3.4.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.4.0
 [v3.3.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.3.0
