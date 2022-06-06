@@ -1,6 +1,6 @@
 <?php
 
-namespace Omikron\Factfinder\Service;
+namespace Omikron\Factfinder\Test\Unit\Service;
 
 use Omikron\Factfinder\Service\FeedFileService;
 use PHPUnit\Framework\TestCase;
