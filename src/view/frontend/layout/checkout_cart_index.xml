@@ -15,6 +15,7 @@
             <block class="Magento\Framework\View\Element\Template" name="factfinder.recommendation.cart" ifconfig="factfinder/components/ff_recommendation" template="Omikron_Factfinder::ff/recommendation.phtml">
                 <arguments>
                     <argument name="record_id" xsi:type="helper" helper="Omikron\Factfinder\ViewModel\Cart::getItemIds" />
+                    <argument name="max_results" xsi:type="helper" helper="Omikron\Factfinder\ViewModel\ProductBasedComponent::getMaxResult" />
                 </arguments>
             </block>
         </referenceContainer>
