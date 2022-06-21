@@ -1,6 +1,6 @@
 <?php
 
-namespace Omikron\Factfinder\Service;
+namespace Omikron\Factfinder\Test\Unit\Service;
 
 use Magento\Framework\Filesystem;
 use PHPUnit\Framework\TestCase;
