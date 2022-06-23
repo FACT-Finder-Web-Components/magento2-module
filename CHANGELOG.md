@@ -1,4 +1,9 @@
 # Changelog
+## Unreleased
+### Fix
+ - Cart Page
+  - fix array to string conversion error in recommendation template 
+ 
 ## [v3.5.0] - 2022.05.30
 ### Fix
  - Configuration
