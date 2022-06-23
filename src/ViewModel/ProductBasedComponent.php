@@ -53,7 +53,7 @@ class ProductBasedComponent implements ArgumentInterface
         return $this->scopeConfig->isSetFlag(self::PATH_SHOW_ADD_TO_CART_BUTTON);
     }
 
-    public function getMaxResult(string $component): int
+    public function getMaxResult(string $component = 'recommendation'): int
     {
         $storedValue      = (int) $this->scopeConfig->getValue(self::PATH_MAX_RESULT . $component);
         $defaultMaxResult = 4;

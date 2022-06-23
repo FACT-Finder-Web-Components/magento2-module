@@ -3,7 +3,9 @@
 ### Fix
  - Configuration
   - fix "Update FieldRoles" does not map some of the field roles in NG format to 7.3 which is used by the Web Components
-
+ - Cart Page
+  - fix array to string conversion error in recommendation template 
+ 
 ## [v4.0.0-rc.3] - 2022.05.13
 ### Add
  - Export
