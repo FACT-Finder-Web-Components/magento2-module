@@ -3,7 +3,9 @@
 /** @var ?Omikron\Factfinder\ViewModel\ProductBasedComponent $viewModel */
 $viewModel = $block->getViewModel();
 ?>
-<ff-recommendation max-results="<?=$block->escapeHtmlAttr($viewModel ? $viewModel->getMaxResult('recommendation') : $block->getData('record_id')) ?>" record-id="<?= $block->escapeHtmlAttr($viewModel ? $viewModel->getProduct()->getSku() : implode(',', (array) $block->getData('record_id'))) ?>" unresolved>
+<ff-recommendation max-results="<?=$block->escapeHtmlAttr($viewModel ? $viewModel->getMaxResult('recommendation') : $block->getData('max_results')) ?>"
+                   record-id="<?= $block->escapeHtmlAttr($viewModel ? $viewModel->getProduct()->getSku() : implode(',', (array) $block->getData('record_id'))) ?>"
+                   unresolved>
     <div class="block upsell">
         <div class="block-title title">
             <strong role="heading" aria-level="2"><?= $block->escapeHtml(__('Recommendations')) ?></strong>
