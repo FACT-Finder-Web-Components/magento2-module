@@ -1,5 +1,5 @@
 # Changelog
-## Unreleased
+## [v3.5.1] - 2022.06.27
 ### Fix
  - Cart Page
   - fix array to string conversion error in recommendation template 
@@ -469,6 +469,7 @@
 ### Added
 - Feed Export: Export feed file is now available via separate link
 
+[v3.5.1]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.5.1
 [v3.5.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.5.0
 [v3.4.1]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.4.1
 [v3.4.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.4.0
