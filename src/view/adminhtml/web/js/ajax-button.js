@@ -23,9 +23,11 @@ define(['jquery', 'Magento_Ui/js/modal/alert'], function ($, alert) {
 
         getFields: function () {
             var pattern = this.options.pattern;
-            return this.element.closest('fieldset').serializeArray().reduce(function (fields, field) {
-                if (pattern.test(field.name)) fields[field.name.match(pattern)[1]] = field.value;
-                return fields;
+            var inputs = Array.from(this.element.closest('fieldset').find('input, select')).filter(field => !field.name.includes('_inherit'));
+
+            return inputs.reduce(function (acc, input) {
+                if (pattern.test(input.name)) acc[input.name.match(pattern)[1]] = input.value;
+                return acc;
             }, {});
         }
     });
