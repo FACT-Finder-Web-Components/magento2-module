@@ -3,6 +3,8 @@
 ### Fix
  - Cart Page
   - fix array to string conversion error in recommendation template 
+ - Configuration
+  - fix Test Connection and Test Upload Connection do not work on a store scope
  
 ## [v3.5.0] - 2022.05.30
 ### Fix
