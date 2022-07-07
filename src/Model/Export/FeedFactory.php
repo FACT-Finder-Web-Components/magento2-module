@@ -24,7 +24,7 @@ class FeedFactory
         $this->feedPool      = $feedPool;
     }
 
-    public function create(string $type): Feed
+    public function create(string $type, array $data = []): Feed
     {
         if (!isset($this->feedPool[$type])) {
             throw new InvalidArgumentException(sprintf('There is no feed configuration for the given type: %s', $type));
@@ -37,7 +37,7 @@ class FeedFactory
                 return $fieldProvider->getFields() + $fieldProvider->getVariantFields();
             }, $this->objectManager->create($fieldProvider));
 
-        $dataProvider = $this->objectManager->create($this->feedPool[$type]['dataProvider'], ['fields' => $fields]);
+        $dataProvider = $this->objectManager->create($this->feedPool[$type]['dataProvider'], ['fields' => $fields, 'data' => $data]);
 
         return $this->objectManager->create($this->feedPool[$type]['generator'], ['dataProvider' => $dataProvider, 'fields' => $fields]); // phpcs:ignore
     }
