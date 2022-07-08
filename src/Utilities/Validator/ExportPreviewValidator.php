@@ -34,11 +34,15 @@ class ExportPreviewValidator implements Validator
     public function validate(): void
     {
         if ($this->entityId === 0) {
-            throw new ExportPreviewValidationException(sprintf('Entity with ID "%s" does not exist.', $this->entityId));
+            throw new ExportPreviewValidationException(sprintf('Product with ID "%s" does not exist.', $this->entityId));
         }
 
         /** @var Product $product */
         $product = $this->productRepository->getById($this->entityId);
+
+        if ($product === null) {
+            throw new ExportPreviewValidationException(sprintf('Product with ID "%s" does not exist.', $this->entityId));
+        }
 
         if ($product->isAvailable() === false) {
             throw new ExportPreviewValidationException(sprintf('Product "%s" (ID: %s) is not enabled.', $product->getName(), $product->getId()));
