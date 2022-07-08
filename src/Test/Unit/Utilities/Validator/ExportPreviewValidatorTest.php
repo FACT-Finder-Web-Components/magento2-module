@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Omikron\Factfinder\Test\Unit\Utilities\Validator;
 
 use Magento\Catalog\Api\ProductRepositoryInterface;
+use Magento\Catalog\Model\Product;
 use Omikron\Factfinder\Exception\ExportPreviewValidationException;
 use Omikron\Factfinder\Utilities\Validator\ExportPreviewValidator;
 use Magento\ConfigurableProduct\Model\Product\Type\Configurable as ConfigurableType;
@@ -50,6 +51,25 @@ class ExportPreviewValidatorTest extends TestCase
 
         // When
         $validator = new ExportPreviewValidator($entityId, $this->repository, $this->configurableType);
+
+        // Then
+        $validator->validate();
+    }
+
+    public function testShouldThrowExceptionWhenProductIsNotAvailable()
+    {
+        // Expect
+        $entityId = 2;
+        $product = $this->createMock(Product::class);
+        $product->method('getName')->willReturn('Bike');
+        $product->method('getId')->willReturn(2);
+        $product->method('isAvailable')->willReturn(false);
+        $repository = $this->createConfiguredMock(ProductRepositoryInterface::class, ['getById' => $product]);
+        $this->expectException(ExportPreviewValidationException::class);
+        $this->expectExceptionMessage(sprintf('Product will not be exported. Reason: Product "%s" (ID: %s) is not enabled.', $product->getName(), $product->getId()));
+
+        // When
+        $validator = new ExportPreviewValidator($entityId, $repository, $this->configurableType);
 
         // Then
         $validator->validate();
