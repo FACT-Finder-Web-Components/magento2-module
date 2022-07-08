@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
+    <section name="CustomElementsSection">
+        <element name="ffcommunication" type="block" selector="ff-communication"/>
+        <element name="ffsuggest" type="block" selector="ff-suggest"/>
+        <element name="ffsearchbox" type="block" selector="ff-searchbox"/>
+        <element name="ffSuggestItem" type="block" selector="ff-suggest-item"/>
+    </section>
+</sections>

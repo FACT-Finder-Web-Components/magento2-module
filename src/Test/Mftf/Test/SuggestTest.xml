@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="SuggestTest">
+        <annotations>
+            <features value="Frontend"/>
+            <stories value="Web Components works on storefront"/>
+            <title value="ff-suggest element check"/>
+            <description value="User should be able to see ff suggest items after they search for something"/>
+            <severity value="CRITICAL"/>
+            <group value="catalog"/>
+        </annotations>
+
+        <before>
+            <amOnPage url="/" stepKey="goToHomePage"/>
+        </before>
+        <seeElementInDOM selector="{{CustomElementsSection.ffsuggest}}" stepKey="checkFFSuggestExist"/>
+        <seeElementInDOM selector="{{CustomElementsSection.ffsearchbox}}" stepKey="checkFFSearchboxExist"/>
+        <fillField selector="{{CustomElementsSection.ffsearchbox}} .input-text" userInput="bag" stepKey="fillSearchbox"/>
+        <waitForAjaxLoad stepKey="waitForAjaxLoad" time="10"/>
+        <seeElement selector="ff-suggest-item" stepKey="checkSuggestItemExist"/>
+        <grabTextFrom selector="ff-suggest-item .product-name" stepKey="grabProductNameFromSuggestItem"/>
+
+        <assertEquals stepKey="checkNameIsCorrect">
+            <actualResult type="const">$grabProductNameFromSuggestItem</actualResult>
+            <expectedResult type="string">Joust Duffle Bag</expectedResult>
+        </assertEquals>
+    </test>
+</tests>

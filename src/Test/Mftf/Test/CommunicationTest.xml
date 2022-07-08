@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="CommunicationTest">
+        <annotations>
+            <features value="Frontend"/>
+            <stories value="Web Components works on storefront"/>
+            <title value="ff-communication element check"/>
+            <description value="User should be able to see ff-communication in DOM once module and the integration are enabled "/>
+            <severity value="CRITICAL"/>
+            <group value="catalog"/>
+        </annotations>
+
+        <before>
+            <amOnPage url="/" stepKey="goToHomePage"/>
+        </before>
+        <seeElementInDOM selector="{{CustomElementsSection.ffcommunication}}" stepKey="checkFFCommunicationExist"/>
+    </test>
+</tests>
