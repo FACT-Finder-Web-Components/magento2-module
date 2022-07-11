@@ -6,11 +6,15 @@ namespace Omikron\Factfinder\Test\Unit\Utilities\Validator;
 
 use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Catalog\Model\Product;
+use Magento\Catalog\Model\Product\Visibility;
 use Omikron\Factfinder\Exception\ExportPreviewValidationException;
 use Omikron\Factfinder\Utilities\Validator\ExportPreviewValidator;
 use Magento\ConfigurableProduct\Model\Product\Type\Configurable as ConfigurableType;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @covers ExportPreviewValidator
+ */
 class ExportPreviewValidatorTest extends TestCase
 {
     /** @var ConfigurableType */
@@ -62,7 +66,7 @@ class ExportPreviewValidatorTest extends TestCase
         $entityId = 2;
         $product = $this->createMock(Product::class);
         $product->method('getName')->willReturn('Bike');
-        $product->method('getId')->willReturn(2);
+        $product->method('getId')->willReturn($entityId);
         $product->method('isAvailable')->willReturn(false);
         $repository = $this->createConfiguredMock(ProductRepositoryInterface::class, ['getById' => $product]);
         $this->expectException(ExportPreviewValidationException::class);
@@ -70,6 +74,27 @@ class ExportPreviewValidatorTest extends TestCase
 
         // When
         $validator = new ExportPreviewValidator($entityId, $repository, $this->configurableType);
+
+        // Then
+        $validator->validate();
+    }
+
+    public function testShouldThrowExceptionWhenProductIsNotVariantAndVisibilityIsSetToNotVisibleIndividually()
+    {
+        // Expect & Given
+        $entityId = 3;
+        $product = $this->createMock(Product::class);
+        $product->method('getName')->willReturn('Bike');
+        $product->method('getId')->willReturn($entityId);
+        $product->method('getVisibility')->willReturn(Visibility::VISIBILITY_NOT_VISIBLE);
+        $configurableType = $this->createMock(ConfigurableType::class);
+        $configurableType->method('getParentIdsByChild')->willReturn([]);
+        $repository = $this->createConfiguredMock(ProductRepositoryInterface::class, ['getById' => $product]);
+        $this->expectException(ExportPreviewValidationException::class);
+        $this->expectExceptionMessage(sprintf('Product will not be exported. Reason: Product "%s" (ID: %s) has "Visibility" set to "Not Visible Individually".', $product->getName(), $product->getId()));
+
+        // When
+        $validator = new ExportPreviewValidator($entityId, $repository, $configurableType);
 
         // Then
         $validator->validate();
