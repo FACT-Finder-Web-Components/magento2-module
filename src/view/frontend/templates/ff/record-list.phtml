@@ -22,6 +22,13 @@ $viewModel = $block->getViewModel();
                             </span>
                         </span>
                     </div>
+                    <div class="price-box price-final_price" data-role="priceBox">
+                        <span class="price-container price-final_price tax weee">
+                            <span data-price-amount="{{{record.__ORIG_FAKE_PRICE__}}}" data-price-type="finalPrice" class="price-wrapper">
+                                <span class="price">{{record.FakePrice}}</span>
+                            </span>
+                        </span>
+                    </div>
 
                     <?php if ($viewModel->isAddToCartEnabled()): ?>
                         {{^record.HasVariants}}
@@ -46,6 +53,33 @@ $viewModel = $block->getViewModel();
     </ff-record-list>
 </div>
 <script>
+    document.addEventListener("ffReady", function (event) {
+        const resultDispatcher = event.resultDispatcher;
+        const eventAggregator = event.eventAggregator;
+
+        // task 1.
+        resultDispatcher.subscribe("records", function (records, event) {
+            records.map(record => {
+                record.record.__ORIG_FAKE_PRICE__ = 999;
+                record.record.FakePrice = '$999.00';
+
+                return record;
+            }, []);
+        });
+
+        // task 2.
+        // resultDispatcher.subscribe("result", function (result, event) {
+        //     result.groups = [];
+        // });
+
+        // task 3.
+        // eventAggregator.addBeforeDispatchingCallback(function (event) {
+        //     if (event.type === "filter") {
+        //         eventAggregator.currentSearchResult.groups = [];
+        //     }
+        // });
+    });
+
     document.addEventListener('ffReady', function (event) {
         event.resultDispatcher.addCallback(`records`, function (records) {
             if (event.factfinder.communication.Util.isNg()) {
