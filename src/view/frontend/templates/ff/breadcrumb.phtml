@@ -1,8 +1,10 @@
 <?php /** @var Magento\Framework\View\Element\Template $block */ ?>
 <div class="ff-breadcrumb-trail">
-    <ff-breadcrumb-trail unresolved></ff-breadcrumb-trail>
     <ff-template scope="result" unresolved>
         <span class="description"><?= $block->escapeHtml(__('Your search for:')) ?></span>
+    </ff-template>
+    <ff-breadcrumb-trail unresolved></ff-breadcrumb-trail>
+    <ff-template scope="result" unresolved>
         <?= $block->escapeHtml(__('produced <span>{{resultCount}}</span> results'), ['span']) ?>
     </ff-template>
 </div>
