@@ -32,5 +32,12 @@
     "psr-4": {
       "Omikron\\Factfinder\\": "src"
     }
+  },
+  "config": {
+    "allow-plugins": {
+      "magento/*": true,
+      "omikron/*": true,
+      "mustache/mustache": true
+    }
   }
 }
