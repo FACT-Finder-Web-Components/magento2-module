@@ -28,7 +28,7 @@ class ExportPreviewDataProvider implements DataProviderInterface
         ObjectManagerInterface $objectManager,
         array $fields,
         array $entityTypes,
-        array $data,
+        array $data
     ) {
         $this->products      = $products;
         $this->objectManager = $objectManager;

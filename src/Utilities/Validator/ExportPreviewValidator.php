@@ -19,7 +19,7 @@ class ExportPreviewValidator implements Validator
     public function __construct(
         ProductRepositoryInterface $productRepository,
         ConfigurableType $configurableType,
-        int $entityId,
+        int $entityId
     ) {
         $this->productRepository = $productRepository;
         $this->configurableType  = $configurableType;

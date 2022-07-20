@@ -29,7 +29,7 @@ class Preview extends Action
         JsonFactory $jsonResultFactory,
         FeedGeneratorFactory $feedGeneratorFactory,
         ProductRepositoryInterface $productRepository,
-        ConfigurableType $configurableType,
+        ConfigurableType $configurableType
     ) {
         parent::__construct($context);
         $this->jsonResultFactory = $jsonResultFactory;

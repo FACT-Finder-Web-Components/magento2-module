@@ -18,7 +18,7 @@ class ExportPreviewProducts implements \IteratorAggregate
 
     public function __construct(
         ProductRepositoryInterface $productRepository,
-        RequestInterface $request,
+        RequestInterface $request
     ) {
         $this->productRepository = $productRepository;
         $this->request           = $request;

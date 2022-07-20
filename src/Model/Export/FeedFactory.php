@@ -17,7 +17,7 @@ class FeedFactory
 
     public function __construct(
         ObjectManagerInterface $objectManager,
-        array $feedPool,
+        array $feedPool
     ) {
         $this->objectManager = $objectManager;
         $this->feedPool      = $feedPool;
