@@ -1,4 +1,9 @@
 # Changelog
+## Unreleased
+### Add
+- Product view, Export Preview
+  - added button on product page which open new page with preview of the exported values 
+
 ## [v3.5.1] - 2022.06.27
 ### Fix
  - Cart Page
