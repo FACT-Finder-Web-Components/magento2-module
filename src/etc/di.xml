@@ -31,6 +31,7 @@
             <argument name="instanceName" xsi:type="string">Magento\Catalog\Model\ResourceModel\Product\Attribute\Collection</argument>
         </arguments>
     </virtualType>
+    <virtualType name="Omikron\Factfinder\Model\Export\ExportPreviewProductFeed" type="Omikron\Factfinder\Model\Export\CatalogFeed" />
     <virtualType name="Omikron\Factfinder\Model\Export\CatalogFeed" type="Omikron\Factfinder\Model\Export\Feed">
         <arguments>
             <argument name="columns" xsi:type="array">
@@ -90,6 +91,16 @@
             </argument>
         </arguments>
     </type>
+    <type name="Omikron\Factfinder\Model\Export\Catalog\ExportPreviewDataProvider">
+        <arguments>
+            <argument name="entityTypes" xsi:type="array">
+                <item name="simple" xsi:type="string">Omikron\Factfinder\Model\Export\Catalog\ProductType\SimpleDataProvider</item>
+                <item name="configurable" xsi:type="string">Omikron\Factfinder\Model\Export\Catalog\ProductType\ConfigurableDataProvider</item>
+                <item name="grouped" xsi:type="string">Omikron\Factfinder\Model\Export\Catalog\ProductType\GroupedDataProvider</item>
+                <item name="bundle" xsi:type="string">Omikron\Factfinder\Model\Export\Catalog\ProductType\BundleDataProvider</item>
+            </argument>
+        </arguments>
+    </type>
     <type name="Omikron\Factfinder\Model\Export\Catalog\FieldProvider">
         <arguments>
             <argument name="productFields" xsi:type="array">
@@ -106,6 +117,11 @@
     <type name="Omikron\Factfinder\Model\Export\FeedFactory">
         <arguments>
             <argument name="feedPool" xsi:type="array">
+                <item name="exportPreviewProduct" xsi:type="array">
+                    <item xsi:type="string" name="generator">Omikron\Factfinder\Model\Export\ExportPreviewProductFeed</item>
+                    <item xsi:type="string" name="dataProvider">Omikron\Factfinder\Model\Export\Catalog\ExportPreviewDataProvider</item>
+                    <item xsi:type="string" name="fieldProvider">Omikron\Factfinder\Model\Export\Catalog\FieldProvider</item>
+                </item>
                 <item name="product" xsi:type="array">
                     <item xsi:type="string" name="generator">Omikron\Factfinder\Model\Export\CatalogFeed</item>
                     <item xsi:type="string" name="dataProvider">Omikron\Factfinder\Model\Export\Catalog\DataProvider</item>
