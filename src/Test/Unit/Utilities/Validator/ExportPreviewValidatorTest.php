@@ -41,7 +41,7 @@ class ExportPreviewValidatorTest extends TestCase
 
         // When & Then
         foreach ($entityIds as $entityId) {
-            $validator = new ExportPreviewValidator($entityId, $this->repository, $this->configurableType);
+            $validator = new ExportPreviewValidator($this->repository, $this->configurableType, $entityId);
             $validator->validate();
         }
     }
@@ -54,7 +54,7 @@ class ExportPreviewValidatorTest extends TestCase
         $this->expectExceptionMessage(sprintf('Product will not be exported. Reason: Product with ID "%s" does not exist.', $entityId));
 
         // When
-        $validator = new ExportPreviewValidator($entityId, $this->repository, $this->configurableType);
+        $validator = new ExportPreviewValidator($this->repository, $this->configurableType, $entityId);
 
         // Then
         $validator->validate();
@@ -73,7 +73,7 @@ class ExportPreviewValidatorTest extends TestCase
         $this->expectExceptionMessage(sprintf('Product will not be exported. Reason: Product "%s" (ID: %s) is not enabled.', $product->getName(), $product->getId()));
 
         // When
-        $validator = new ExportPreviewValidator($entityId, $repository, $this->configurableType);
+        $validator = new ExportPreviewValidator($repository, $this->configurableType, $entityId);
 
         // Then
         $validator->validate();
@@ -94,7 +94,7 @@ class ExportPreviewValidatorTest extends TestCase
         $this->expectExceptionMessage(sprintf('Product will not be exported. Reason: Product "%s" (ID: %s) has "Visibility" set to "Not Visible Individually".', $product->getName(), $product->getId()));
 
         // When
-        $validator = new ExportPreviewValidator($entityId, $repository, $configurableType);
+        $validator = new ExportPreviewValidator($repository, $configurableType, $entityId);
 
         // Then
         $validator->validate();

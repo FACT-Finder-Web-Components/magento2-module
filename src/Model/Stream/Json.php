@@ -8,7 +8,6 @@ use Omikron\Factfinder\Api\StreamInterface;
 
 class Json implements StreamInterface
 {
-    /** @var array */
     private $stream = [];
 
     public function addEntity(array $entity): void

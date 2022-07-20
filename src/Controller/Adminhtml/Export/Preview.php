@@ -57,7 +57,7 @@ class Preview extends Action
 
         try {
             $entityId = (int) $this->request->getParam('entityId', 0);
-            (new ExportPreviewValidator($entityId, $this->productRepository, $this->configurableType))->validate();
+            (new ExportPreviewValidator($this->productRepository, $this->configurableType, $entityId))->validate();
 
             return $response->setData($this->getExportData($entityId));
         } catch (\Throwable $e) {

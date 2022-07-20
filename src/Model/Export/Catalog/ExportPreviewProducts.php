@@ -17,7 +17,6 @@ class ExportPreviewProducts implements \IteratorAggregate
     /** @var RequestInterface */
     private $request;
 
-    /** @var int */
     private $entityId = 0;
 
     public function __construct(
