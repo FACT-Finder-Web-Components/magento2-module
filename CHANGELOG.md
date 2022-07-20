@@ -1,5 +1,8 @@
 # Changelog
 ## Unreleased
+### Add
+- Product view, Export Preview
+    - added button on product page which open new page with preview of the exported values
 ### Fix
  - Configuration
   - fix "Update FieldRoles" does not map some of the field roles in NG format to 7.3 which is used by the Web Components
