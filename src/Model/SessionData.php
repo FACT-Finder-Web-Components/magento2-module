@@ -31,9 +31,9 @@ class SessionData implements SectionSourceInterface, ParametersSourceInterface
         $this->remoteAddress   = $remoteAddress;
     }
 
-    public function getUserId(): int
+    public function getUserId(): string
     {
-        return (int) $this->customerSession->getCustomerId();
+        return (string) $this->customerSession->getCustomerId();
     }
 
     /**
