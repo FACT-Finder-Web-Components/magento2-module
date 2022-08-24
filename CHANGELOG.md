@@ -1,4 +1,9 @@
 # Changelog
+## Unreleased
+### Add
+- Export
+    - adjust code to make compatibility with PHP 8.1
+
 ## [v3.5.2] - 2022.08.08
 ### Add
 - Product view, Export Preview
