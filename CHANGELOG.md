@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Change
+- increase api version from v4 to v5
+
 ## [v3.5.2] - 2022.08.08
 ### Add
 - Product view, Export Preview
