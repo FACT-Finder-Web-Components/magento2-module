@@ -39,5 +39,4 @@ jobs:
       - name: Run tests
         run: |
           vendor/bin/phpunit
-          vendor/bin/phpcs --config-set installed_paths vendor/magento/magento-coding-standard,vendor/phpcompatibility/php-compatibility
           vendor/bin/phpmd src text phpmd.xml.dist
