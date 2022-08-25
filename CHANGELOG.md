@@ -1,9 +1,14 @@
 # Changelog
-## Unreleased
+## [v3.6.0] - 2022.08.25
+### BREAKING
+ - `Omikron\Factfinder\Model\Export\Catalog\Products`
+  - function `getIterator` has now returned type `\Traversable`
+ - `Omikron\Factfinder\Model\SessionData`
+  - function `getUserId` has returned type changed from `int` to `string`
+  - drop support for PHP 7.3
+
 ### Add
-- Export
-  - adjust code to make compatibility with PHP 8.1
-  
+ - add support for PHP 7.4 and PHP 8.1 (PHP 8.0 is not used by any version of the Magento2)
 - Configuration
   - add anonymize `user-id` in tracking requests option
   
@@ -484,6 +489,7 @@
 ### Added
 - Feed Export: Export feed file is now available via separate link
 
+[v3.6.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.6.0
 [v3.5.2]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.5.2
 [v3.5.1]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.5.1
 [v3.5.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.5.0
