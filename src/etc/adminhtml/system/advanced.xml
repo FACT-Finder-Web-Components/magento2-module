@@ -38,5 +38,10 @@
             <comment>Determines if parameters which are written into the URL should be kept.</comment>
             <tooltip>Comma-separated value</tooltip>
         </field>
+        <field id="anonymize_user_id" translate="label comment" type="select" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Anonymize user id</label>
+            <comment>Sends hashed user id with tracking requests</comment>
+            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+        </field>
     </group>
 </include>

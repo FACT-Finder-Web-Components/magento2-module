@@ -2,8 +2,11 @@
 ## Unreleased
 ### Add
 - Export
-    - adjust code to make compatibility with PHP 8.1
-
+  - adjust code to make compatibility with PHP 8.1
+  
+- Configuration
+  - add anonymize `user-id` in tracking requests option
+  
 ## [v3.5.2] - 2022.08.08
 ### Add
 - Product view, Export Preview

@@ -123,9 +123,12 @@ The module uses [Mustache.php](https://github.com/bobthecow/mustache.php) librar
 **Note:** More information about SSR concept you can find in the article [Server Side Rendering](https://web-components.fact-finder.de/documentation/4.x/server-side-rendering) from Web Components documentation.
 
 ### Advanced Settings
-
+![Main Settings](docs/assets/advanced-settings.png "Advanced Settings")
 Advanced Settings contains additional parameters used for the `ff-communication` web component. Each setting is set to a
-default value and has a short explanatory text attached.  
+default value and has a short explanatory text attached.
+
+Anonymization of the `user-id` hashes every user id that is send with a tracking request to the FACT-Finder®. 
+By default a standard auto incremented identiefier is used.  
  
 #### Currency and Country Settings
 You don't need to set currency nor country only for module purposes. It will use currently used currency and pass this information to `ff-communication`
