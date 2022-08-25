@@ -40,7 +40,7 @@ class Products implements \IteratorAggregate
     /**
      * @return \Traversable|ProductInterface[]
      */
-    public function getIterator()
+    public function getIterator(): \Traversable
     {
         $page = 1;
         while (true) {
