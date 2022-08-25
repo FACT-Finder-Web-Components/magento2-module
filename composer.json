@@ -21,7 +21,7 @@
     "ext-json": "*"
   },
   "require-dev": {
-    "magento/magento-coding-standard": "*",
+    "magento/magento-coding-standard": "* ",
     "pdepend/pdepend": "^2.8",
     "phpmd/phpmd": "^2.9",
     "phpunit/phpunit": ">=9.5 <10.0"
@@ -32,6 +32,13 @@
     ],
     "psr-4": {
       "Omikron\\Factfinder\\": "src"
+    }
+  },
+  "config": {
+    "allow-plugins": {
+      "magento/*": true,
+      "omikron/*": true,
+      "mustache/mustache": true
     }
   }
 }
