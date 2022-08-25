@@ -184,6 +184,10 @@
     <type name="Omikron\Factfinder\Model\FieldRoles">
         <plugin name="mapFieldRoles" type="Omikron\Factfinder\Plugin\MapFieldRoles"/>
     </type>
+    <type name="Omikron\Factfinder\Model\SessionData">
+        <plugin name="anonymizeUserId" type="Omikron\Factfinder\Plugin\AnonymizeUserId"/>
+    </type>
+
     <type name="Magento\Framework\View\Asset\Minification">
         <plugin name="ff.asset.minification" type="Omikron\Factfinder\Plugin\AssetMinificationPlugin" />
     </type>

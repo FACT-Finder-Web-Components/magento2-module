@@ -10,6 +10,9 @@ use Omikron\Factfinder\Plugin\MapFieldRoles;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @covers MapFieldRoles
+ */
 class MapFieldRolesTest extends TestCase
 {
     /** @var MockObject|CommunicationConfig */

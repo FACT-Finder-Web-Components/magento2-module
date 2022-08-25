@@ -33,15 +33,15 @@ class SessionDataTest extends TestCase
     public function test_not_logged_in()
     {
         $this->sessionMock->method('getCustomerId')->willReturn(123456);
-        $this->assertSame(123456, $this->sessionData->getUserId());
+        $this->assertSame('123456', $this->sessionData->getUserId());
     }
 
     /**
-     * @testdox User ID is 0 if the customer is not logged in
+     * @testdox User ID is an empty string if the customer is not logged in
      */
     public function test_not_logged_id()
     {
-        $this->assertSame(0, $this->sessionData->getUserId());
+        $this->assertSame('', $this->sessionData->getUserId());
     }
 
     public function test_it_implements_the_customer_section_source_interface()
@@ -52,7 +52,7 @@ class SessionDataTest extends TestCase
     public function test_it_collects_the_customer_data()
     {
         $this->sessionMock->method('getCustomerId')->willReturn(123456);
-        $expected = ['uid' => 123456];
+        $expected = ['uid' => '123456'];
         $actual   = $this->sessionData->getSectionData();
         $this->assertEquals($expected['uid'], $actual['uid']);
     }
