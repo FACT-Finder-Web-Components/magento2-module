@@ -7,11 +7,6 @@
     <arg name="ignore" value="*/vendor/*,src/Test/Integration/_files/*" />
 
     <config name="ignore_warnings_on_exit" value="1" />
-
-    <rule ref="vendor/magento/magento-coding-standard/Magento2">
-        <exclude name="Magento2.Annotation" />
-    </rule>
-
     <rule ref="Generic.CodeAnalysis.EmptyStatement" />
     <rule ref="Generic.CodeAnalysis.UnusedFunctionParameter">
         <exclude-pattern>*/Observer/*</exclude-pattern>
