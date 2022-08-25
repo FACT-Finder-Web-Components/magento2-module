@@ -67,7 +67,7 @@ class SearchAdapter
         $endpoint = $navigationRequest ? 'navigation' : 'search';
 
         return $this->communicationConfig->getVersion() == Version::NG
-            ? "rest/v4/{$endpoint}/{$channel}?{$paramString}"
+            ? "rest/v5/{$endpoint}/{$channel}?{$paramString}"
             : "Search.ff?channel={$channel}&{$paramString}&format=json";
     }
 }

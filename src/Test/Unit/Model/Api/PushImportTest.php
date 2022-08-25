@@ -42,7 +42,7 @@ class PushImportTest extends TestCase
     public function test_should_throw_if_import_is_running()
     {
         $this->exportConfigMock->method('getPushImportDataTypes')->with($this->anything())->willReturn(['search','suggest']);
-        $this->clientMock->method('request')->with('GET', 'rest/v4/import/running', $this->anything())
+        $this->clientMock->method('request')->with('GET', 'rest/v5/import/running', $this->anything())
             ->willReturn($this->importRunningResponse());
         $this->expectExceptionMessage("Can't start a new import process. Another one is still going");
         $this->pushImport->execute(1);

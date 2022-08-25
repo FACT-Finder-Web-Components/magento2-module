@@ -83,6 +83,6 @@ class CommunicationConfig implements ParametersSourceInterface
 
     private function getApi(): string
     {
-        return 'v4';
+        return 'v5';
     }
 }
