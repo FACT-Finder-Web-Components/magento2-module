@@ -11,13 +11,17 @@ define(['Magento_Customer/js/customer-data', 'factfinder','underscore',], functi
                 if (uidKey) factfinder.common.localStorage.setItem(uidKey, null);
             }
 
-            const storedUserId = factfinder.common.localStorage.getItem(factfinder.common.localStorage.getItem('ff_sid') + ':' + data.uid);
-            if (data.uid && data.uid !== element.userId && (!storedUserId || storedUserId !== data.uid.toString())) {
-                element.userId = data.uid;
+            if (data.uid) {
+                element.setAttribute('user-id', data.uid);
             }
 
-            if (data.internal) element.addParams = (element.addParams ? element.addParams + ',' : '') + 'log=internal';
+            if (data.internal) {
+                element.setAttribute('add-params', (element.addParams ? element.addParams + ',' : '') + 'log=internal');
+            }
         });
         sessionData.valueHasMutated();
     };
 });
+
+
+
