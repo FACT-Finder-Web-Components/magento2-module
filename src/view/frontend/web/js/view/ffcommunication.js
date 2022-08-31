@@ -22,6 +22,3 @@ define(['Magento_Customer/js/customer-data', 'factfinder','underscore',], functi
         sessionData.valueHasMutated();
     };
 });
-
-
-
