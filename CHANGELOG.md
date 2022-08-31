@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Change
+- upgrade of package versions
+
 ## [v3.6.0] - 2022.08.25
 ### BREAKING
  - `Omikron\Factfinder\Model\Export\Catalog\Products`
