@@ -28,7 +28,8 @@ define([
                         id: cartItem.product_sku,
                         price: cartItem.product_price_value,
                         masterId: eventData.sku || cartItem.product_sku,
-                        count: parseInt(qtyInput.value)
+                        count: parseInt(qtyInput.value),
+                        userId: factfinder.communication.globalCommunicationParameter.userId
                     });
                 }
 
