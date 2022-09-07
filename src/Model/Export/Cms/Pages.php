@@ -42,7 +42,7 @@ class Pages implements \IteratorAggregate
      * @return \Traversable|PageInterface[]
      * @throws LocalizedException
      */
-    public function getIterator()
+    public function getIterator(): \Traversable
     {
         $query = $this->getQuery()->create();
         yield from $this->pageRepository->getList($query)->getItems();
