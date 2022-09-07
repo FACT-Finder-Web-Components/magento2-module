@@ -2,6 +2,11 @@
 ## Unreleased
 ### Change
 - upgrade of package versions
+- Pages
+  - added return types for getIterator method
+- Export Preview
+  - added return types for getIterator method
+  - declare Throwable type for constructor of ExportPreviewValidationException
 
 ### Add
  - Tracking

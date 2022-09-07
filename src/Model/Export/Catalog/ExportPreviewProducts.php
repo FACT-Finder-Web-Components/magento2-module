@@ -8,6 +8,7 @@ use Magento\Catalog\Api\Data\ProductInterface;
 use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Catalog\Model\Product;
 use Magento\Framework\App\RequestInterface;
+use Traversable;
 
 class ExportPreviewProducts implements \IteratorAggregate
 {
@@ -28,9 +29,9 @@ class ExportPreviewProducts implements \IteratorAggregate
     }
 
     /**
-     * @return \Traversable|ProductInterface[]
+     * @return Traversable|ProductInterface[]
      */
-    public function getIterator()
+    public function getIterator(): Traversable
     {
         $entityId = $this->getEntityId();
 

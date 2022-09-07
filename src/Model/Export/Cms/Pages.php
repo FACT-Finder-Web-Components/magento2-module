@@ -11,6 +11,7 @@ use Magento\Framework\Exception\LocalizedException;
 use Magento\Store\Model\Store;
 use Magento\Store\Model\StoreManagerInterface;
 use Omikron\Factfinder\Model\Config\CmsConfig;
+use Traversable;
 
 class Pages implements \IteratorAggregate
 {
@@ -39,10 +40,10 @@ class Pages implements \IteratorAggregate
     }
 
     /**
-     * @return \Traversable|PageInterface[]
+     * @return Traversable|PageInterface[]
      * @throws LocalizedException
      */
-    public function getIterator()
+    public function getIterator(): Traversable
     {
         $query = $this->getQuery()->create();
         yield from $this->pageRepository->getList($query)->getItems();
