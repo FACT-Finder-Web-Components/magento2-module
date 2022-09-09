@@ -1,12 +1,7 @@
 # Changelog
-## Unreleased
-### Change
-- upgrade of package versions
-- Pages
-  - added return types for getIterator method
-- Export Preview
-  - added return types for getIterator method
-  - declare Throwable type for constructor of ExportPreviewValidationException
+## [v3.7.0] - 2022.09.09
+### Fix
+- Fixes problem with the compilation and returned type of `getIterator` method
 
 ### Add
  - Tracking
@@ -502,6 +497,7 @@
 ### Added
 - Feed Export: Export feed file is now available via separate link
 
+[v3.7.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.7.0
 [v3.6.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.6.0
 [v3.5.2]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.5.2
 [v3.5.1]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.5.1
