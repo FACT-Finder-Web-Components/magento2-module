@@ -15,6 +15,7 @@
         <arguments>
             <argument name="sectionSourceMap" xsi:type="array">
                 <item name="ffcommunication" xsi:type="string">Omikron\Factfinder\Model\SessionData</item>
+                <item name="login-tracking" xsi:type="string">Omikron\Factfinder\Model\SessionData</item>
             </argument>
         </arguments>
     </type>

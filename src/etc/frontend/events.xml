@@ -22,4 +22,10 @@
     <event name="controller_action_predispatch_factfinder_export_cms">
         <observer name="ff_export_authentication" instance="Omikron\Factfinder\Observer\ExportAuthentication" />
     </event>
+    <event name="customer_login">
+        <observer name="ff_set_user_has_logged_in" instance="Omikron\Factfinder\Observer\SetUserHasLoggedIn" />
+    </event>
+    <event name="customer_customer_authenticated">
+        <observer name="ff_set_user_has_logged_in" instance="Omikron\Factfinder\Observer\SetUserHasLoggedIn" />
+    </event>
 </config>
