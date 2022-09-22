@@ -2,7 +2,9 @@
 /** @var Magento\Framework\View\Element\Template $block */
 /** @var Omikron\Factfinder\ViewModel\Communication $viewModel */
 $viewModel  = $block->getViewModel();
-$parameters = $viewModel->getParameters((array) $block->getData('communication_parameters'));
+$communicationParameters = (array) $block->getData('communication_parameters');
+$parameters = $viewModel->getParameters($communicationParameters);
+$searchImmediate = $communicationParameters['search-immediate'] ?? 'false';
 ?>
 <ff-communication<?php foreach ($parameters as $key => $value) /* @noEscape */ echo sprintf(' %s="%s"', $key, $block->escapeHtmlAttr($value)) ?>></ff-communication>
 <!-- Set FieldRoles -->
@@ -12,11 +14,38 @@ $parameters = $viewModel->getParameters((array) $block->getData('communication_p
         factfinder.communication.fieldRoles = <?= /* @noEscape */ $viewModel->getFieldRoles() ?>;
     });
 </script>
-<script type="text/x-magento-init">
-    {
-        "ff-communication": {
-            "Omikron_Factfinder/js/view/ffcommunication": {},
-            "Omikron_Factfinder/js/view/track-login": {}
-        }
-    }
+
+<script>
+    document.addEventListener('ffCommunicationReady', e => {
+        debugger;
+        window.SEND_SEARCH_IMMEDIATE = <?= $searchImmediate ?>;
+        window.searchImmediate = e.searchImmediate;
+        // e.detail.myCallback = () => console.log("JESTEM CALLBACKIEM");
+        // passCallback(e.detail.MyCallback);
+        require(['jquery'], function ($) {
+            // customerData.reload(['ffcommunication']);
+            const hasJustLoggedIn = $.mage.cookies.get('has_just_logged_in');
+            const userId = $.mage.cookies.get('user_id');
+
+            if (userId) {
+                console.warn('wk login');
+                factfinder.communication.sessionManager.setLoginData(userId)
+
+                if (hasJustLoggedIn) {
+                    console.warn('Logged in!');
+                    factfinder.communication.Tracking.loginWithConfig();
+                    jQuery.mage.cookies.clear('has_just_logged_in');
+                }
+
+            } else {
+                console.warn('wk logout');
+                factfinder.communication.sessionManager.clearLoginData();
+            }
+
+            if (<?=$searchImmediate ?>) {
+                e.searchImmediate();
+            }
+
+        });
+    });
 </script>

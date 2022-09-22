@@ -28,4 +28,7 @@
     <event name="customer_customer_authenticated">
         <observer name="ff_set_user_has_logged_in" instance="Omikron\Factfinder\Observer\SetUserHasLoggedIn" />
     </event>
+    <event name="customer_logout">
+        <observer name="ff_set_user_has_logged_out" instance="Omikron\Factfinder\Observer\RemoveUserIdCookie" />
+    </event>
 </config>

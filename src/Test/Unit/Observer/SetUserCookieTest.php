@@ -9,24 +9,32 @@ use Magento\Framework\Session\Config\ConfigInterface as SessionConfig;
 use Magento\Framework\Stdlib\Cookie\CookieMetadataFactory;
 use Magento\Framework\Stdlib\Cookie\PublicCookieMetadata;
 use Magento\Framework\Stdlib\CookieManagerInterface;
-use Omikron\Factfinder\Observer\SetUserHasLoggedIn;
+use Omikron\Factfinder\Model\SessionData;
+use Omikron\Factfinder\Observer\SetUserCookie;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers SetUserHasLoggedIn
+ * @covers SetUserCookie
  */
-class SetUserHasLoggedInTest extends TestCase
+class SetUserCookieTest extends TestCase
 {
     private MockObject $cookieManager;
     private MockObject $cookieMetadata;
-    private SetUserHasLoggedIn $observer;
+    private MockObject $sessionData;
+    private SetUserCookie $observer;
 
-    public function test_it_adds_cookie()
+    public function test_it_adds_cookies()
     {
         $this->cookieMetadata->expects($this->once())->method('setHttpOnly')->with(false);
-        $this->cookieManager->expects($this->once())->method('setPublicCookie')
-            ->with('has_just_logged_in', 1, $this->cookieMetadata);
+        $userId = md5('some user id');
+        $hasLoggedIn = 1;
+        $this->sessionData->method('getUserId')->willReturn($userId);
+        $this->cookieManager->expects($this->exactly(2))->method('setPublicCookie')->withConsecutive(
+            ['user_id', $userId, $this->cookieMetadata],
+            ['has_just_logged_in', $hasLoggedIn, $this->cookieMetadata]
+        );
+
         $this->observer->execute(new Observer());
     }
 
@@ -45,12 +53,14 @@ class SetUserHasLoggedInTest extends TestCase
         $this->cookieMetadata->method('setSecure')->willReturn($this->cookieMetadata);
         $this->cookieMetadata->method('setHttpOnly')->willReturn($this->cookieMetadata);
         $cookieMetadataFactory->method('createPublicCookieMetadata')->willReturn($this->cookieMetadata);
+        $this->sessionData = $this->createMock(SessionData::class);
 
         $sessionConfig  = $this->createMock(SessionConfig::class);
-        $this->observer = new SetUserHasLoggedIn(
+        $this->observer = new SetUserCookie(
             $this->cookieManager,
             $cookieMetadataFactory,
-            $sessionConfig
+            $sessionConfig,
+            $this->sessionData
         );
     }
 }

@@ -10,24 +10,8 @@ use Magento\Framework\Session\Config\ConfigInterface as SessionConfig;
 use Magento\Framework\Stdlib\Cookie\CookieMetadataFactory;
 use Magento\Framework\Stdlib\CookieManagerInterface;
 
-class SetUserHasLoggedIn implements ObserverInterface
+class SetUserCookie extends UserCookie implements ObserverInterface
 {
-    private const HAS_JUST_LOGGED_IN_COOKIE_NAME = 'has_just_logged_in';
-
-    private CookieManagerInterface $cookieManager;
-    private CookieMetadataFactory $cookieMetadataFactory;
-    private SessionConfig $sessionConfig;
-
-    public function __construct(
-        CookieManagerInterface $cookieManager,
-        CookieMetadataFactory  $cookieMetadataFactory,
-        SessionConfig          $sessionConfig
-    ) {
-        $this->cookieManager         = $cookieManager;
-        $this->cookieMetadataFactory = $cookieMetadataFactory;
-        $this->sessionConfig         = $sessionConfig;
-    }
-
     /**
      * @param Observer $_
      *
@@ -43,6 +27,7 @@ class SetUserHasLoggedIn implements ObserverInterface
             ->setSecure($this->sessionConfig->getCookieSecure())
             ->setHttpOnly(false);
 
+        $this->cookieManager->setPublicCookie(self::USER_ID_COOKIE_NAME,  $this->sessionData->getUserId(), $cookieMetadata);
         $this->cookieManager->setPublicCookie(self::HAS_JUST_LOGGED_IN_COOKIE_NAME, 1, $cookieMetadata);
     }
 }
