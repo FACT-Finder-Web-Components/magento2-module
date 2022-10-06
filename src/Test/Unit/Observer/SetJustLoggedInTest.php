@@ -15,9 +15,9 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers SetUserCookie
+ * @covers SetJustLoggedIn
  */
-class SetUserCookieTest extends TestCase
+class SetJustLoggedInTest extends TestCase
 {
     private MockObject $cookieManager;
     private MockObject $cookieMetadata;

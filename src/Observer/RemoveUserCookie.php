@@ -7,7 +7,7 @@ namespace Omikron\Factfinder\Observer;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
 
-class RemoveUserCookie extends UserCookie implements ObserverInterface
+class RemoveUserCookie extends CookieModifierObserver implements ObserverInterface
 {
     /**
      * @param Observer $_

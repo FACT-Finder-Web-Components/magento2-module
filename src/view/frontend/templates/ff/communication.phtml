@@ -17,11 +17,9 @@ $searchImmediate = $communicationParameters['search-immediate'] ?? 'false';
 
 <script>
     document.addEventListener('ffCommunicationReady', e => {
-        debugger;
-        window.SEND_SEARCH_IMMEDIATE = <?= $searchImmediate ?>;
-        window.searchImmediate = e.searchImmediate;
         // e.detail.myCallback = () => console.log("JESTEM CALLBACKIEM");
         // passCallback(e.detail.MyCallback);
+
         require(['jquery'], function ($) {
             // customerData.reload(['ffcommunication']);
             const hasJustLoggedIn = $.mage.cookies.get('has_just_logged_in');
@@ -42,10 +40,9 @@ $searchImmediate = $communicationParameters['search-immediate'] ?? 'false';
                 factfinder.communication.sessionManager.clearLoginData();
             }
 
-            if (<?=$searchImmediate ?>) {
+            if (<?= $searchImmediate ?>) {
                 e.searchImmediate();
             }
-
         });
     });
 </script>
