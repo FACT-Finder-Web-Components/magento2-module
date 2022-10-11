@@ -31,8 +31,8 @@ class SetJustLoggedInTest extends TestCase
         $hasLoggedIn = 1;
         $this->sessionData->method('getUserId')->willReturn($userId);
         $this->cookieManager->expects($this->exactly(2))->method('setPublicCookie')->withConsecutive(
-            ['user_id', $userId, $this->cookieMetadata],
-            ['has_just_logged_in', $hasLoggedIn, $this->cookieMetadata]
+            ['ff_user_id', $userId, $this->cookieMetadata],
+            ['ff_has_just_logged_in', $hasLoggedIn, $this->cookieMetadata]
         );
 
         $this->observer->execute(new Observer());

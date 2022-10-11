@@ -16,33 +16,41 @@ $searchImmediate = $communicationParameters['search-immediate'] ?? 'false';
 </script>
 
 <script>
-    document.addEventListener('ffCommunicationReady', e => {
-        // e.detail.myCallback = () => console.log("JESTEM CALLBACKIEM");
-        // passCallback(e.detail.MyCallback);
+    document.addEventListener('ffCommunicationReady', ({ factfinder, searchImmediate }) => {
+        const cookies = document.cookie.split('; ').reduce((acc, cookie) => {
+            const cookieData = cookie.split('=');
+            const [key, value] = cookieData;
+            acc[key] = value;
 
-        require(['jquery'], function ($) {
-            // customerData.reload(['ffcommunication']);
-            const hasJustLoggedIn = $.mage.cookies.get('has_just_logged_in');
-            const userId = $.mage.cookies.get('user_id');
+            return acc;
+        }, {});
 
-            if (userId) {
-                console.warn('wk login');
-                factfinder.communication.sessionManager.setLoginData(userId)
+        const clearCookie = (name) => {
+            document.cookie = name+'=; Max-Age=-1;';
+        }
 
-                if (hasJustLoggedIn) {
-                    console.warn('Logged in!');
-                    factfinder.communication.Tracking.loginWithConfig();
-                    jQuery.mage.cookies.clear('has_just_logged_in');
-                }
+        if (cookies['ff_user_id']) {
+            console.warn('wk login');
+            // factfinder.communication.sessionManager.setLoginData(cookies['ff_user_id'])
 
-            } else {
-                console.warn('wk logout');
-                factfinder.communication.sessionManager.clearLoginData();
+            if (cookies['ff_has_just_logged_in']) {
+                console.warn('Has just Logged in!');
+                clearCookie('ff_has_just_logged_in');
+                // factfinder.communication.Tracking.loginWithConfig();
             }
+        } else {
+            console.warn('wk logout');
+            // factfinder.communication.sessionManager.clearLoginData();
 
-            if (<?= $searchImmediate ?>) {
-                e.searchImmediate();
+            if (cookies['ff_has_just_logged_out']) {
+                console.warn('Has just Logged out!');
+                clearCookie('ff_has_just_logged_out');
+                // factfinder.communication.sessionManager.clearAllSessionData();
             }
-        });
+        }
+
+        if (<?= $searchImmediate ?>) {
+            searchImmediate();
+        }
     });
 </script>

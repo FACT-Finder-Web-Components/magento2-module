@@ -22,16 +22,13 @@
     <event name="controller_action_predispatch_factfinder_export_cms">
         <observer name="ff_export_authentication" instance="Omikron\Factfinder\Observer\ExportAuthentication"/>
     </event>
-    <event name="customer_login">
-        <observer name="ff_set_user_has_logged_in" instance="Omikron\Factfinder\Observer\SetJustLoggedIn"/>
-    </event>
     <event name="customer_customer_authenticated">
-        <observer name="ff_set_user_has_logged_in" instance="Omikron\Factfinder\Observer\SetJustLoggedIn"/>
+        <observer name="ff_set_user_has_logged_in" instance="Omikron\Factfinder\Observer\HasJustLoggedIn"/>
     </event>
     <event name="customer_logout">
-        <observer name="ff_set_user_has_logged_out" instance="Omikron\Factfinder\Observer\RemoveUserCookie"/>
+        <observer name="ff_set_user_has_logged_out" instance="Omikron\Factfinder\Observer\HasJustLoggedOut"/>
     </event>
     <event name="controller_action_postdispatch">
-        <observer name="check_login_state" instance="Omikron\Factfinder\Observer\CheckLoginState"/>
+        <observer name="check_login_state" instance="Omikron\Factfinder\Observer\LoginState"/>
     </event>
 </config>
