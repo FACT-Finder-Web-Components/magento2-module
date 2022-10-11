@@ -6,12 +6,11 @@ namespace Omikron\Factfinder\Plugin;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Store\Model\ScopeInterface;
-use Magento\Store\Model\ScopeInterface as Scope;
 use Omikron\Factfinder\Model\SessionData;
 
 class AnonymizeUserId
 {
-    private const PATH_ANONYMIZE_USER_ID   = 'factfinder/advanced/anonymize_user_id';
+    private const PATH_ANONYMIZE_USER_ID = 'factfinder/advanced/anonymize_user_id';
 
     private $scopeConfig;
 

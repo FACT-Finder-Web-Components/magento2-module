@@ -30,22 +30,18 @@ $searchImmediate = $communicationParameters['search-immediate'] ?? 'false';
         }
 
         if (cookies['ff_user_id']) {
-            console.warn('wk login');
-            // factfinder.communication.sessionManager.setLoginData(cookies['ff_user_id'])
+            factfinder.communication.sessionManager.setLoginData(cookies['ff_user_id'])
 
             if (cookies['ff_has_just_logged_in']) {
-                console.warn('Has just Logged in!');
                 clearCookie('ff_has_just_logged_in');
-                // factfinder.communication.Tracking.loginWithConfig();
+                factfinder.communication.Tracking.loginWithConfig();
             }
         } else {
-            console.warn('wk logout');
-            // factfinder.communication.sessionManager.clearLoginData();
+            factfinder.communication.sessionManager.clearLoginData();
 
             if (cookies['ff_has_just_logged_out']) {
-                console.warn('Has just Logged out!');
                 clearCookie('ff_has_just_logged_out');
-                // factfinder.communication.sessionManager.clearAllSessionData();
+                factfinder.communication.sessionManager.clearAllSessionData();
             }
         }
 
