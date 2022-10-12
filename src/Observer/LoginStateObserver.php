@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Omikron\Factfinder\Observer;
 
+use DateTime;
+use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Framework\Session\Config\ConfigInterface as SessionConfig;
 use Omikron\Factfinder\Model\SessionData;
@@ -30,11 +32,14 @@ abstract class LoginStateObserver implements ObserverInterface
         setcookie(
             $name,
             $value,
-            (new \DateTime())->modify('+1 hour')->getTimestamp(),
+            (new DateTime())->modify('+1 hour')->getTimestamp(),
             '/'
         );
     }
 
+    /**
+     * @SuppressWarnings(PHPMD)
+     */
     protected function clearCookie(string $name): void
     {
         unset($_COOKIE[$name]);

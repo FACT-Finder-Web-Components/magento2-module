@@ -8,6 +8,11 @@ use Magento\Framework\Event\Observer;
 
 class LoginState extends LoginStateObserver
 {
+    /**
+     * @param Observer $_
+     *
+     * @SuppressWarnings(PHPMD)
+     */
     public function execute(Observer $observer)
     {
         if ($this->sessionData->getUserId() === '') {
