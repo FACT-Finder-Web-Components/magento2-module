@@ -8,7 +8,7 @@ use Magento\Framework\Event\ObserverInterface;
 use Magento\Framework\Session\Config\ConfigInterface as SessionConfig;
 use Omikron\Factfinder\Model\SessionData;
 
-abstract  class LoginStateObserver implements ObserverInterface
+abstract class LoginStateObserver implements ObserverInterface
 {
     public const HAS_JUST_LOGGED_IN = 'ff_has_just_logged_in';
     public const HAS_JUST_LOGGED_OUT = 'ff_has_just_logged_out';
