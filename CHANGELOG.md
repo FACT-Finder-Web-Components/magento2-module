@@ -1,5 +1,5 @@
 # Changelog
-## Unreleased
+## [v3.7.1] - 2022.10.17
 ### Change
 - Upgrade Web Components version to v4.2.1
 - introduce new way of user login tracking event
@@ -502,6 +502,7 @@
 ### Added
 - Feed Export: Export feed file is now available via separate link
 
+[v3.7.1]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.7.1
 [v3.7.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.7.0
 [v3.6.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.6.0
 [v3.5.2]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.5.2
