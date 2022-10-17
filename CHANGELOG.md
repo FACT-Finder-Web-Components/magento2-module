@@ -1,4 +1,9 @@
 # Changelog
+## Unreleased
+### Change
+- Upgrade Web Components version to v4.2.1
+- introduce new way of user login tracking event
+
 ## [v3.7.0] - 2022.09.09
 ### Fix
 - Fixes problem with the compilation and returned type of `getIterator` method

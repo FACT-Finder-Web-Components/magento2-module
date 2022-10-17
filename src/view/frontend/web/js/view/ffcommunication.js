@@ -11,10 +11,6 @@ define(['Magento_Customer/js/customer-data', 'factfinder','underscore',], functi
                 if (uidKey) factfinder.common.localStorage.setItem(uidKey, null);
             }
 
-            if (data.uid) {
-                element.setAttribute('user-id', data.uid);
-            }
-
             if (data.internal) {
                 element.setAttribute('add-params', (element.addParams ? element.addParams + ',' : '') + 'log=internal');
             }
