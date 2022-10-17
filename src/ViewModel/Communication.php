@@ -25,6 +25,10 @@ class Communication implements ArgumentInterface
 
     public function getParameters(array $blockParams = []): array
     {
+        if (isset($blockParams['search-immediate'])) {
+            unset($blockParams['search-immediate']);
+        }
+
         $params = $this->parametersProvider->getParameters();
         return ['version' => $params['version'] ?? 'ng']
             + array_filter($this->mergeParameters($blockParams, $params) + $blockParams + $params, 'boolval');

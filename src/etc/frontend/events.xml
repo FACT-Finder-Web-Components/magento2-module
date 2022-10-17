@@ -1,25 +1,34 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
     <event name="layout_load_before">
-        <observer name="ff_category_view" instance="Omikron\Factfinder\Observer\CategoryView" />
-        <observer name="ff_recordlist_ssr" instance="Omikron\Factfinder\Observer\Ssr" />
+        <observer name="ff_category_view" instance="Omikron\Factfinder\Observer\CategoryView"/>
+        <observer name="ff_recordlist_ssr" instance="Omikron\Factfinder\Observer\Ssr"/>
     </event>
     <event name="controller_action_predispatch_catalogsearch_result_index">
-        <observer name="ff_redirect_search" instance="Omikron\Factfinder\Observer\RedirectSearch" />
+        <observer name="ff_redirect_search" instance="Omikron\Factfinder\Observer\RedirectSearch"/>
     </event>
     <event name="controller_action_predispatch_catalogsearch_advanced_index">
-        <observer name="ff_redirect_search" instance="Omikron\Factfinder\Observer\RedirectSearch" />
+        <observer name="ff_redirect_search" instance="Omikron\Factfinder\Observer\RedirectSearch"/>
     </event>
     <event name="controller_action_predispatch_catalogsearch_advanced_result">
-        <observer name="ff_redirect_search" instance="Omikron\Factfinder\Observer\RedirectSearch" />
+        <observer name="ff_redirect_search" instance="Omikron\Factfinder\Observer\RedirectSearch"/>
     </event>
     <event name="controller_action_predispatch_search_term_popular">
-        <observer name="ff_redirect_search" instance="Omikron\Factfinder\Observer\RedirectSearch" />
+        <observer name="ff_redirect_search" instance="Omikron\Factfinder\Observer\RedirectSearch"/>
     </event>
     <event name="controller_action_predispatch_factfinder_export_product">
-        <observer name="ff_export_authentication" instance="Omikron\Factfinder\Observer\ExportAuthentication" />
+        <observer name="ff_export_authentication" instance="Omikron\Factfinder\Observer\ExportAuthentication"/>
     </event>
     <event name="controller_action_predispatch_factfinder_export_cms">
-        <observer name="ff_export_authentication" instance="Omikron\Factfinder\Observer\ExportAuthentication" />
+        <observer name="ff_export_authentication" instance="Omikron\Factfinder\Observer\ExportAuthentication"/>
+    </event>
+    <event name="customer_customer_authenticated">
+        <observer name="ff_set_user_has_logged_in" instance="Omikron\Factfinder\Observer\HasJustLoggedIn"/>
+    </event>
+    <event name="customer_logout">
+        <observer name="ff_set_user_has_logged_out" instance="Omikron\Factfinder\Observer\HasJustLoggedOut"/>
+    </event>
+    <event name="controller_action_postdispatch">
+        <observer name="check_login_state" instance="Omikron\Factfinder\Observer\LoginState"/>
     </event>
 </config>
