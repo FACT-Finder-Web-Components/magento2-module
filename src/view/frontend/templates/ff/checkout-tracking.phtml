@@ -1,12 +1,12 @@
 <?php
 /** @var Magento\Framework\View\Element\Template $block */
-/** @var Magento\Quote\Model\Quote\Item $item */
+/** @var Magento\Sales\Model\Order\Item $item */
 ?>
 <ff-checkout-tracking>
     <?php foreach ($block->getData('items') as $item): ?>
         <ff-checkout-tracking-item
             record-id="<?= /* @noEscape */ $item->getSku() ?>"
-            count="<?= /* @noEscape */ $item->getQty() ?>"
+            count="<?= /* @noEscape */ $item->getQtyOrdered() ?>"
             channel="<?= /* @noEscape */ $block->getData('channel') ?>">
         </ff-checkout-tracking-item>
     <?php endforeach; ?>
