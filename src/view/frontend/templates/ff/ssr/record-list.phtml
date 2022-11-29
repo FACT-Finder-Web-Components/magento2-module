@@ -3,11 +3,9 @@
 ?>
 <?= $block->getChildHtml() ?>
 <script>
-    require(['factfinder'], function (ff) {
-        document.addEventListener('WebComponentsReady', function (event) {
-            const searchResult = {FF_SEARCH_RESULT};
-            ff.communication.EventAggregator.currentSearchResult = searchResult;
-            ff.communication.ResultDispatcher.dispatchRaw(searchResult);
-        });
+    document.addEventListener('ffCommunicationReady', function ({factfinder}) {
+        const searchResult = {FF_SEARCH_RESULT};
+        factfinder.communication.EventAggregator.currentSearchResult = searchResult;
+        factfinder.communication.ResultDispatcher.dispatchRaw(searchResult);
     });
 </script>
