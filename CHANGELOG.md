@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Fix
+- Fixes problem with not working filters when category page fired in new tab
+
 ## [v3.7.1] - 2022.10.17
 ### Change
 - Upgrade Web Components version to v4.2.1
