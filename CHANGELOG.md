@@ -1,7 +1,8 @@
 # Changelog
-## Unreleased
+## [v3.7.2] - 2022.11.29
 ### Fix
-- Fixes problem with not working filters when category page fired in new tab
+- Category page
+  - Fixes problem with not working filters when category page fired in new tab
 
 ## [v3.7.1] - 2022.10.17
 ### Change
@@ -506,6 +507,7 @@
 ### Added
 - Feed Export: Export feed file is now available via separate link
 
+[v3.7.2]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.7.2
 [v3.7.1]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.7.1
 [v3.7.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.7.0
 [v3.6.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.6.0
