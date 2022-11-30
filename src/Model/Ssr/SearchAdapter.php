@@ -64,10 +64,11 @@ class SearchAdapter
     private function createEndpoint(string $paramString, bool $navigationRequest)
     {
         $channel  = $this->communicationConfig->getChannel();
+        $apiVersion  = $this->communicationConfig->getApiVersion();
         $endpoint = $navigationRequest ? 'navigation' : 'search';
 
         return $this->communicationConfig->getVersion() == Version::NG
-            ? "rest/v4/{$endpoint}/{$channel}?{$paramString}"
+            ? "rest/{$apiVersion}/{$endpoint}/{$channel}?{$paramString}"
             : "Search.ff?channel={$channel}&{$paramString}&format=json";
     }
 }

@@ -59,11 +59,6 @@ class CommunicationConfig implements ParametersSourceInterface
         return (string) $this->scopeConfig->getValue(self::PATH_VERSION, ScopeInterface::SCOPE_STORES);
     }
 
-    public function getApiVersion(): string
-    {
-        return (string) $this->scopeConfig->getValue(self::PATH_API_VERSION, ScopeInterface::SCOPE_STORES);
-    }
-
     public function isLoggingEnabled(): bool
     {
         return $this->scopeConfig->isSetFlag(self::PATH_IS_LOGGING_ENABLED, ScopeInterface::SCOPE_STORES);
@@ -75,7 +70,12 @@ class CommunicationConfig implements ParametersSourceInterface
                 'url'     => $this->getServerUrl(),
                 'version' => $this->getVersion(),
                 'channel' => $this->getChannel(),
-            ] + ($this->getVersion() === Version::NG ? ['api' => $this->getApi()] : []);
+            ] + ($this->getVersion() === Version::NG ? ['api' => $this->getApiVersion()] : []);
+    }
+
+    public function getApiVersion(): string
+    {
+        return (string) $this->scopeConfig->getValue(self::PATH_API_VERSION, ScopeInterface::SCOPE_STORES) ?? 'v4';
     }
 
     private function getServerUrl(): string
@@ -85,10 +85,5 @@ class CommunicationConfig implements ParametersSourceInterface
         }
 
         return $this->getAddress();
-    }
-
-    private function getApi(): string
-    {
-        return 'v4';
     }
 }
