@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Add
+- Add option to switch between Api Version
+
 ## [v3.7.2] - 2022.11.29
 ### Fix
 - Category page
