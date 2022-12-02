@@ -11,12 +11,8 @@ use Magento\Framework\Model\AbstractModel;
 
 class Image implements FieldInterface
 {
-    private Filter $filter;
-
-    public function __construct(Filter $filter)
-    {
-        $this->filter = $filter;
-    }
+    public function __construct(private readonly Filter $filter)
+    {}
 
     public function getName(): string
     {

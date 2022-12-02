@@ -11,12 +11,7 @@ use Omikron\Factfinder\Api\StreamInterface;
 
 class Exporter implements ExporterInterface
 {
-    private FilterInterface $filter;
-
-    public function __construct(FilterInterface $filter)
-    {
-        $this->filter = $filter;
-    }
+    public function __construct(private readonly FilterInterface $filter) {}
 
     public function exportEntities(StreamInterface $stream, DataProviderInterface $dataProvider, array $columns): void
     {
@@ -28,6 +23,6 @@ class Exporter implements ExporterInterface
 
     private function prepareRow(array $entityData, array $emptyRecord): array
     {
-        return array_map([$this->filter, 'filterValue'], array_merge($emptyRecord, array_intersect_key($entityData, $emptyRecord)));
+        return array_map([$this->filter, 'filterValue'], [...$emptyRecord, ...array_intersect_key($entityData, $emptyRecord)]);
     }
 }

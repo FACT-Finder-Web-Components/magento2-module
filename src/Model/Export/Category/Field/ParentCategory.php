@@ -10,13 +10,8 @@ use Omikron\Factfinder\Model\Formatter\CategoryPathFormatter;
 
 class ParentCategory implements FieldInterface
 {
-    /** @var CategoryPathFormatter  */
-    private $categoryPathFormatter;
-
-    public function __construct(CategoryPathFormatter $categoryPathFormatter)
-    {
-        $this->categoryPathFormatter = $categoryPathFormatter;
-    }
+    public function __construct(private readonly CategoryPathFormatter $categoryPathFormatter)
+    {}
 
     public function getName(): string
     {

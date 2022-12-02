@@ -13,19 +13,16 @@ use DateTime;
 
 class AttributeValuesExtractor
 {
-    private FilterInterface $filter;
-    private NumberFormatter $numberFormatter;
-
-    public function __construct(FilterInterface $filter, NumberFormatter $numberFormatter)
-    {
-        $this->filter          = $filter;
-        $this->numberFormatter = $numberFormatter;
-    }
+    public function __construct(
+        private readonly FilterInterface $filter,
+        private readonly NumberFormatter $numberFormatter
+    ) {}
 
     /**
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
-     * @param Product $product
+     * @param Product   $product
      * @param Attribute $attribute
+     *
      * @return array
      * @throws \Exception
      */
@@ -66,7 +63,8 @@ class AttributeValuesExtractor
                             $value = '';
                             break;
                         default:
-                            $msg = "Attribute '{$code}' could not be exported. Please consider writing your own field model";
+                            $msg =
+                                "Attribute '{$code}' could not be exported. Please consider writing your own field model";
                             throw new UnexpectedValueException($msg);
                     }
                 }
@@ -74,6 +72,10 @@ class AttributeValuesExtractor
                 break;
         }
 
-        return array_filter(array_map([$this->filter, 'filterValue'], $values));
+        return array_filter(array_map([
+                                          $this->filter,
+                                          'filterValue'
+                                      ], $values)
+        );
     }
 }

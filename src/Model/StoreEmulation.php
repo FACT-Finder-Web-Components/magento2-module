@@ -10,13 +10,8 @@ use Magento\Store\Model\App\Emulation;
 
 class StoreEmulation
 {
-    private Emulation $emulation;
-    private AreaList $areaList;
-
-    public function __construct(Emulation $emulation, AreaList $areaList)
+    public function __construct(private readonly Emulation $emulation, private readonly AreaList $areaList)
     {
-        $this->emulation = $emulation;
-        $this->areaList  = $areaList;
     }
 
     public function runInStore(int $storeId, callable $proceed)

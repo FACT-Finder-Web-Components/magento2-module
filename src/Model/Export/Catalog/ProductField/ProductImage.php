@@ -10,13 +10,10 @@ use Omikron\Factfinder\Api\Export\FieldInterface;
 
 class ProductImage implements FieldInterface
 {
-    private ImageHelper $imageHelper;
-    private string $imageId;
-
-    public function __construct(ImageHelper $imageHelper, string $imageId = 'ff_export_image_url')
+    public function __construct(
+        private readonly ImageHelper $imageHelper,
+        private readonly string $imageId = 'ff_export_image_url')
     {
-        $this->imageHelper = $imageHelper;
-        $this->imageId     = $imageId;
     }
 
     public function getName(): string

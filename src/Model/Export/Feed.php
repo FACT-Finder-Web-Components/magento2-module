@@ -15,26 +15,12 @@ use Omikron\Factfinder\Api\StreamInterface;
  */
 class Feed
 {
-    private ExporterInterface $exporter;
-    private DataProviderInterface $dataProvider;
-
-    /** @var FieldInterface[]  */
-    private array $fields;
-
-    /** @var string[]  */
-    private array $columns;
-
     public function __construct(
-        ExporterInterface $exporter,
-        DataProviderInterface $dataProvider,
-        array $fields,
-        array $columns
-    ) {
-        $this->exporter     = $exporter;
-        $this->dataProvider = $dataProvider;
-        $this->fields       = $fields;
-        $this->columns      = $columns;
-    }
+        private readonly ExporterInterface $exporter,
+        private readonly DataProviderInterface $dataProvider,
+        private readonly array $fields,
+        private readonly array $columns
+    ) {}
 
     public function generate(StreamInterface $stream): void
     {
@@ -46,7 +32,7 @@ class Feed
 
     private function getColumns(array $fields): array
     {
-        return array_values(array_unique(array_merge($this->columns, array_map([$this, 'getFieldName'], $fields))));
+        return array_values(array_unique([...$this->columns, ...array_map([$this, 'getFieldName'], $fields)]));
     }
 
     private function getFieldName(FieldInterface $field): string

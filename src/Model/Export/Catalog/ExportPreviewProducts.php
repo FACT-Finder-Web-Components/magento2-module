@@ -12,21 +12,10 @@ use Traversable;
 
 class ExportPreviewProducts implements \IteratorAggregate
 {
-    /** @var ProductRepositoryInterface */
-    private $productRepository;
-
-    /** @var RequestInterface */
-    private $request;
-
-    private $entityId = 0;
-
     public function __construct(
-        ProductRepositoryInterface $productRepository,
-        RequestInterface $request
-    ) {
-        $this->productRepository = $productRepository;
-        $this->request           = $request;
-    }
+        private readonly ProductRepositoryInterface $productRepository,
+        private readonly RequestInterface $request
+    ) {}
 
     /**
      * @return Traversable|ProductInterface[]

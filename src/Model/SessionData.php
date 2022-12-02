@@ -12,19 +12,11 @@ use Omikron\Factfinder\Api\Config\ParametersSourceInterface;
 
 class SessionData implements SectionSourceInterface, ParametersSourceInterface
 {
-    private CustomerSession $customerSession;
-    private ScopeConfigInterface $scopeConfig;
-    private RemoteAddress $remoteAddress;
-
     public function __construct(
-        CustomerSession $customerSession,
-        ScopeConfigInterface $scopeConfig,
-        RemoteAddress $remoteAddress
-    ) {
-        $this->customerSession = $customerSession;
-        $this->scopeConfig     = $scopeConfig;
-        $this->remoteAddress   = $remoteAddress;
-    }
+        private readonly CustomerSession      $customerSession,
+        private readonly ScopeConfigInterface $scopeConfig,
+        private readonly RemoteAddress $remoteAddress
+    ) {}
 
     public function getUserId(): string
     {
@@ -50,6 +42,7 @@ class SessionData implements SectionSourceInterface, ParametersSourceInterface
     private function isInternal(): bool
     {
         $internalIps = explode(',', (string) $this->scopeConfig->getValue('factfinder/advanced/internal_ips'));
+
         return in_array($this->remoteAddress->getRemoteAddress(), array_map('trim', $internalIps));
     }
 }

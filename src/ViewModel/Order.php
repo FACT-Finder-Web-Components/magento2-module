@@ -12,14 +12,8 @@ use Omikron\Factfinder\Model\Config\CommunicationConfig;
 
 class Order implements ArgumentInterface
 {
-    private Session $checkoutSession;
-    private CommunicationConfig $communicationConfig;
-
-    public function __construct(Session $checkoutSession, CommunicationConfig $communicationConfig)
-    {
-        $this->checkoutSession     = $checkoutSession;
-        $this->communicationConfig = $communicationConfig;
-    }
+    public function __construct(private readonly Session $checkoutSession, private readonly CommunicationConfig $communicationConfig)
+    {}
 
     /**
      * @return OrderItem[]

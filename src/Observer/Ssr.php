@@ -11,18 +11,10 @@ use Magento\Store\Model\ScopeInterface;
 
 class Ssr implements ObserverInterface
 {
-    private ScopeConfigInterface $scopeConfig;
-
-    /** @var string[]  */
-    private array $useForHandles;
-
     public function __construct(
-        ScopeConfigInterface $scopeConfig,
-        array $useForHandles = ['factfinder_result_index', 'factfinder_category_view']
-    ) {
-        $this->scopeConfig   = $scopeConfig;
-        $this->useForHandles = $useForHandles;
-    }
+        private readonly ScopeConfigInterface $scopeConfig,
+        private readonly array $useForHandles = ['factfinder_result_index', 'factfinder_category_view']
+    ) {}
 
     public function execute(Observer $observer)
     {

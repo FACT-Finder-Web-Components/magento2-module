@@ -10,14 +10,8 @@ use Omikron\Factfinder\Api\Export\FieldInterface;
 
 class Page implements ExportEntityInterface
 {
-    private PageInterface $page;
-    private array $pageFields;
-
-    public function __construct(PageInterface $page, array $pageFields = [])
-    {
-        $this->page       = $page;
-        $this->pageFields = $pageFields;
-    }
+    public function __construct(private readonly PageInterface $page, private readonly  array $pageFields = [])
+    {}
 
     public function getId(): int
     {

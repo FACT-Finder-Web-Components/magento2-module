@@ -10,14 +10,8 @@ use Omikron\Factfinder\Api\Filter\FilterInterface;
 
 class Loader implements Mustache_Loader
 {
-    private Mustache_Loader $loader;
-    private FilterInterface $filter;
-
-    public function __construct(Mustache_Loader $loader, FilterInterface $filter)
-    {
-        $this->loader = $loader;
-        $this->filter = $filter;
-    }
+    public function __construct(private readonly Mustache_Loader $loader, private readonly FilterInterface $filter)
+    {}
 
     /**
      * @inheritDoc

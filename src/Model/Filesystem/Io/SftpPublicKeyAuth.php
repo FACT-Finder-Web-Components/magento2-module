@@ -15,14 +15,10 @@ use phpseclib\Net\SFTP;
 
 class SftpPublicKeyAuth extends SftpBase
 {
-    private Filesystem $fileSystem;
-    private FtpConfig $uploadConfig;
-
-    public function __construct(Filesystem $fileSystem, FtpConfig $config)
-    {
-        $this->fileSystem   = $fileSystem;
-        $this->uploadConfig = $config;
-    }
+    public function __construct(
+        private readonly Filesystem $fileSystem,
+        private readonly FtpConfig $config
+    ) {}
 
     public function open(array $args = [])
     {

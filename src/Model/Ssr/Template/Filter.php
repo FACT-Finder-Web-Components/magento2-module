@@ -9,12 +9,7 @@ use Omikron\Factfinder\Model\FieldRoles;
 
 class Filter implements FilterInterface
 {
-    private FieldRoles $fieldRoles;
-
-    public function __construct(FieldRoles $fieldRoles)
-    {
-        $this->fieldRoles = $fieldRoles;
-    }
+    public function __construct(private readonly FieldRoles $fieldRoles) {}
 
     public function filterValue(string $value): string
     {

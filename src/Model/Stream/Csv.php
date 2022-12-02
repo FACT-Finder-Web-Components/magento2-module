@@ -13,15 +13,10 @@ use SplFileObject;
 
 class Csv implements StreamInterface
 {
-    private Filesystem $filesystem;
-    private ?WriteInterface $stream = null;
-    private string $filename;
-
-    public function __construct(Filesystem $filesystem, string $filename = 'factfinder/export.csv')
-    {
-        $this->filesystem = $filesystem;
-        $this->filename   = $filename;
-    }
+    public function __construct(
+        private readonly Filesystem $filesystem,
+        private readonly string     $filename = 'factfinder/export.csv'
+    ) {}
 
     /**
      * @param array $entity
@@ -45,6 +40,7 @@ class Csv implements StreamInterface
             $this->stream = $directory->openFile($directory->getAbsolutePath($this->filename), 'w+');
             $this->stream->lock();
         }
+
         return $this->stream;
     }
 
@@ -69,6 +65,7 @@ class Csv implements StreamInterface
         $directory = $this->filesystem->getDirectoryWrite(DirectoryList::VAR_DIR);
         $fileCheck = new SplFileObject($directory->getAbsolutePath($this->filename), 'r');
         $fileCheck->seek(PHP_INT_MAX);
+
         return $fileCheck->key();
     }
 }

@@ -13,12 +13,8 @@ class AnonymizeUserId
 {
     private const PATH_ANONYMIZE_USER_ID   = 'factfinder/advanced/anonymize_user_id';
 
-    private $scopeConfig;
-
-    public function __construct(ScopeConfigInterface $scopeConfig)
-    {
-        $this->scopeConfig = $scopeConfig;
-    }
+    public function __construct(private readonly ScopeConfigInterface $scopeConfig)
+    {}
 
     /**
      * @param SessionData $_

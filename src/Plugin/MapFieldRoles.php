@@ -10,12 +10,7 @@ use Omikron\Factfinder\Model\FieldRoles;
 
 class MapFieldRoles
 {
-    private CommunicationConfig $communicationConfig;
-
-    public function __construct(CommunicationConfig $communicationConfig)
-    {
-        $this->communicationConfig = $communicationConfig;
-    }
+    public function __construct(private readonly CommunicationConfig $communicationConfig) {}
 
     /**
      * @param FieldRoles $subject

@@ -10,18 +10,11 @@ use Omikron\Factfinder\Api\Export\FieldInterface;
 
 class DataProvider implements DataProviderInterface
 {
-    private Pages $pages;
-    private PageFactory $pageFactory;
-
-    /** @var string[] */
-    private array $pageFields;
-
-    public function __construct(Pages $pages, PageFactory $pageFactory, array $fields)
-    {
-        $this->pages       = $pages;
-        $this->pageFactory = $pageFactory;
-        $this->pageFields  = $fields;
-    }
+    public function __construct(
+        private readonly Pages $pages,
+        private readonly  PageFactory $pageFactory,
+        private readonly  array $fields
+    ) {}
 
     /**
      * @return ExportEntityInterface[]

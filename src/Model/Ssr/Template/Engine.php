@@ -10,12 +10,7 @@ use Mustache_Engine as Mustache;
 
 class Engine implements TemplateEngineInterface
 {
-    private Mustache $engine;
-
-    public function __construct(Mustache $engine)
-    {
-        $this->engine = $engine;
-    }
+    public function __construct(private readonly Mustache $engine) {}
 
     public function render(BlockInterface $block, $templateFile, array $dictionary = [])
     {

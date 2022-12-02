@@ -11,22 +11,15 @@ use Omikron\Factfinder\Model\FieldRoles;
 
 class Communication implements ArgumentInterface
 {
-    private FieldRoles $fieldRoles;
-    private SerializerInterface $serializer;
-    private CommunicationParametersProvider $parametersProvider;
-
     /** @var string[] */
     private array $mergeableParams;
 
     public function __construct(
-        FieldRoles $fieldRoles,
-        SerializerInterface $serializer,
-        CommunicationParametersProvider $parametersProvider,
-        array $mergeableParams = ['add-params', 'add-tracking-params', 'keep-url-params', 'parameter-whitelist']
+        private readonly FieldRoles                      $fieldRoles,
+        private readonly SerializerInterface             $serializer,
+        private readonly CommunicationParametersProvider $parametersProvider,
+        array                                            $mergeableParams = ['add-params', 'add-tracking-params', 'keep-url-params', 'parameter-whitelist']
     ) {
-        $this->parametersProvider = $parametersProvider;
-        $this->fieldRoles         = $fieldRoles;
-        $this->serializer         = $serializer;
         $this->mergeableParams    = array_combine($mergeableParams, array_fill(0, count($mergeableParams), ''));
     }
 

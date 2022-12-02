@@ -19,53 +19,21 @@ class Feed
 {
     private const PATH_CONFIGURABLE_CRON_IS_ENABLED = 'factfinder/configurable_cron/ff_cron_enabled';
 
-    private ScopeConfigInterface $scopeConfig;
-    private StoreEmulation $storeEmulation;
-    private FeedGeneratorFactory $feedGeneratorFactory;
-    private StoreManagerInterface $storeManager;
-    private CommunicationConfig $communicationConfig;
-    private StreamInterfaceFactory $streamFactory;
-    private FtpUploader $ftpUploader;
-    private PushImport $pushImport;
-    private FeedFileService $feedFileService;
-    private string $feedType;
-
     /**
-     * @param ScopeConfigInterface   $scopeConfig
-     * @param StoreManagerInterface  $storeManager
-     * @param FeedGeneratorFactory   $feedFactory
-     * @param StoreEmulation         $emulation
-     * @param StreamInterfaceFactory $streamFactory
-     * @param FtpUploader            $ftpUploader
-     * @param CommunicationConfig    $communicationConfig
-     * @param PushImport             $pushImport
-     * @param FeedFileService        $feedFileService
-     * @param string                 $type
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
-        ScopeConfigInterface $scopeConfig,
-        StoreManagerInterface $storeManager,
-        FeedGeneratorFactory $feedFactory,
-        StoreEmulation $emulation,
-        StreamInterfaceFactory $streamFactory,
-        FtpUploader $ftpUploader,
-        CommunicationConfig $communicationConfig,
-        PushImport $pushImport,
-        FeedFileService $feedFileService,
-        string $type
-    ) {
-        $this->scopeConfig          = $scopeConfig;
-        $this->storeManager         = $storeManager;
-        $this->feedGeneratorFactory = $feedFactory;
-        $this->storeEmulation       = $emulation;
-        $this->streamFactory       = $streamFactory;
-        $this->ftpUploader          = $ftpUploader;
-        $this->communicationConfig  = $communicationConfig;
-        $this->pushImport           = $pushImport;
-        $this->feedFileService      = $feedFileService;
-        $this->feedType             = $type;
-    }
+        private readonly ScopeConfigInterface   $scopeConfig,
+        private readonly StoreManagerInterface  $storeManager,
+        private readonly FeedGeneratorFactory   $feedGeneratorFactory,
+        private readonly StoreEmulation         $storeEmulation,
+        private readonly StreamInterfaceFactory $streamFactory,
+        private readonly FtpUploader            $ftpUploader,
+        private readonly CommunicationConfig    $communicationConfig,
+        private readonly PushImport             $pushImport,
+        private readonly FeedFileService        $feedFileService,
+        private readonly string                 $feedTypetype
+    ) {}
 
     public function execute(): void
     {
@@ -75,9 +43,11 @@ class Feed
 
         foreach ($this->storeManager->getStores() as $store) {
             $this->storeEmulation->runInStore((int) $store->getId(), function () use ($store) {
-                $storeId = (int) $store->getId();
+                $storeId = $store->getId();
                 if ($this->communicationConfig->isChannelEnabled($storeId)) {
-                    $filename = (new FeedFileService())->getFeedExportFilename($this->feedType, $this->communicationConfig->getChannel());
+                    $filename = $this->feedFileService->getFeedExportFilename($this->feedType,
+                                                                              $this->communicationConfig->getChannel()
+                    );
                     $stream   = $this->streamFactory->create(['filename' => "factfinder/{$filename}"]);
                     $this->feedGeneratorFactory->create($this->feedType)->generate($stream);
                     $this->ftpUploader->upload($filename, $stream);

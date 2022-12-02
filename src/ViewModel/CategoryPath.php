@@ -12,24 +12,12 @@ use Omikron\Factfinder\Model\Config\CommunicationConfig;
 
 class CategoryPath implements ArgumentInterface
 {
-    private Registry $registry;
-    private CommunicationConfig $communicationConfig;
-    private string $param;
-
-    /** @var string[]  */
-    private array $initial;
-
     public function __construct(
-        Registry            $registry,
-        CommunicationConfig $communicationConfig,
-        string              $param = 'CategoryPath',
-        array               $initial = []
-    ) {
-        $this->param               = $param;
-        $this->registry            = $registry;
-        $this->communicationConfig = $communicationConfig;
-        $this->initial             = $initial;
-    }
+        private readonly Registry            $registry,
+        private readonly CommunicationConfig $communicationConfig,
+        private readonly string              $param = 'CategoryPath',
+        private readonly array               $initial = []
+    ) {}
 
     public function __toString()
     {

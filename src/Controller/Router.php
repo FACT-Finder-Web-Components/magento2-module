@@ -13,12 +13,7 @@ class Router implements RouterInterface
 {
     public const FRONT_NAME = 'fact-finder';
 
-    private ActionFactory $actionFactory;
-
-    public function __construct(ActionFactory $actionFactory)
-    {
-        $this->actionFactory = $actionFactory;
-    }
+    public function __construct(private readonly ActionFactory $actionFactory) {}
 
     /**
      * Test the incoming requests for matches to the factfinder url pattern

@@ -14,24 +14,12 @@ use Traversable;
 
 class Products implements \IteratorAggregate
 {
-    private ProductRepositoryInterface $productRepository;
-    private SearchCriteriaBuilder $searchCriteriaBuilder;
-    private StoreManagerInterface $storeManager;
-
-    /** @var int */
-    private $batchSize;
-
     public function __construct(
-        ProductRepositoryInterface $productRepository,
-        SearchCriteriaBuilder $searchCriteriaBuilder,
-        StoreManagerInterface $storeManager,
-        int $batchSize = 300
-    ) {
-        $this->productRepository     = $productRepository;
-        $this->searchCriteriaBuilder = $searchCriteriaBuilder;
-        $this->storeManager          = $storeManager;
-        $this->batchSize             = $batchSize;
-    }
+        private readonly ProductRepositoryInterface $productRepository,
+        private readonly SearchCriteriaBuilder $searchCriteriaBuilder,
+        private readonly StoreManagerInterface $storeManager,
+        private readonly int $batchSize = 300
+    ) {}
 
     /**
      * @return Traversable|ProductInterface[]

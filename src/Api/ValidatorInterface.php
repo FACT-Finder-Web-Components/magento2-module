@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Omikron\Factfinder\Utilities\Validator;
+namespace Omikron\Factfinder\Api;
 
 use Omikron\Factfinder\Exception\ExportPreviewValidationException;
 
-interface Validator
+interface ValidatorInterface
 {
     /**
      * @throws ExportPreviewValidationException

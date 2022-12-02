@@ -12,17 +12,11 @@ use Omikron\Factfinder\Model\Formatter\NumberFormatter;
 
 class SimpleDataProvider implements DataProviderInterface, ExportEntityInterface
 {
-    protected NumberFormatter $numberFormatter;
-    protected Product $product;
-
-    /** @var string[]  */
-    private array $productFields;
-
-    public function __construct(Product $product, NumberFormatter $numberFormatter, array $productFields = [])
+    public function __construct(
+        protected readonly Product $product,
+        protected readonly NumberFormatter $numberFormatter,
+        protected readonly array $productFields = [])
     {
-        $this->product         = $product;
-        $this->numberFormatter = $numberFormatter;
-        $this->productFields   = $productFields;
     }
 
     /**

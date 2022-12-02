@@ -17,32 +17,18 @@ use Omikron\Factfinder\Service\FeedFileService;
 class Product extends Action
 {
     protected string $feedType = 'product';
-    private CommunicationConfig $communicationConfig;
-    private StoreEmulation $storeEmulation;
-    private FeedGeneratorFactory $feedGeneratorFactory;
-    private FileFactory $fileFactory;
-    private StreamInterfaceFactory $streamFactory;
-    private StoreManagerInterface $storeManager;
-    private FeedFileService $feedFileService;
 
     public function __construct(
-        Context $context,
-        CommunicationConfig $communicationConfig,
-        StoreEmulation $storeEmulation,
-        FeedGeneratorFactory $feedGeneratorFactory,
-        FileFactory $fileFactory,
-        StreamInterfaceFactory $streamFactory,
-        StoreManagerInterface $storeManager,
-        FeedFileService $feedFileService
+        Context                                 $context,
+        private readonly CommunicationConfig    $communicationConfig,
+        private readonly StoreEmulation         $storeEmulation,
+        private readonly FeedGeneratorFactory   $feedGeneratorFactory,
+        private readonly FileFactory            $fileFactory,
+        private readonly StreamInterfaceFactory $streamFactory,
+        private readonly StoreManagerInterface  $storeManager,
+        private readonly FeedFileService $feedFileService
     ) {
         parent::__construct($context);
-        $this->communicationConfig  = $communicationConfig;
-        $this->storeEmulation       = $storeEmulation;
-        $this->feedGeneratorFactory = $feedGeneratorFactory;
-        $this->streamFactory        = $streamFactory;
-        $this->fileFactory          = $fileFactory;
-        $this->storeManager         = $storeManager;
-        $this->feedFileService      = $feedFileService;
     }
 
     public function execute()

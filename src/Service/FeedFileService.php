@@ -12,19 +12,8 @@ class FeedFileService
 {
     private const FEED_FILENAME_PATTERN = 'export.%type%.%channel%.csv';
 
-    private FileSystem $fileSystem;
+    public function __construct(private readonly Filesystem $fileSystem) {}
 
-    public function __construct(Filesystem $fileSystem)
-    {
-        $this->fileSystem = $fileSystem;
-    }
-
-    /**
-     * @param string $exportType
-     * @param string $channel
-     * @return string
-     * @throws Exception
-     */
     public function getFeedExportFilename(string $exportType, string $channel): string
     {
         if (empty($exportType)) {

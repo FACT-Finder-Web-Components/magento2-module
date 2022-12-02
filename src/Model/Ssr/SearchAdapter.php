@@ -14,22 +14,12 @@ use Psr\Http\Message\ResponseInterface;
 
 class SearchAdapter
 {
-    private ClientBuilder $clientBuilder;
-    private CommunicationConfig $communicationConfig;
-    private CredentialsFactory $credentialsFactory;
-    private PriceFormatter $priceFormatter;
-
     public function __construct(
-        ClientBuilder $clientBuilder,
-        CommunicationConfig $communicationConfig,
-        CredentialsFactory $credentialsFactory,
-        PriceFormatter $priceFormatter
-    ) {
-        $this->clientBuilder       = $clientBuilder;
-        $this->communicationConfig = $communicationConfig;
-        $this->credentialsFactory  = $credentialsFactory;
-        $this->priceFormatter      = $priceFormatter;
-    }
+        private readonly ClientBuilder $clientBuilder,
+        private readonly CommunicationConfig $communicationConfig,
+        private readonly CredentialsFactory $credentialsFactory,
+        private readonly PriceFormatter $priceFormatter
+    ) {}
 
     public function search(string $paramString, bool $navigationRequest): array
     {

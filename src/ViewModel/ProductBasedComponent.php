@@ -16,22 +16,12 @@ class ProductBasedComponent implements ArgumentInterface
     private const PATH_SHOW_ADD_TO_CART_BUTTON = 'factfinder/general/show_add_to_cart_button';
     private const PATH_MAX_RESULT = 'factfinder/components_options/max_results_';
 
-    private Image $imageHelper;
-    private ScopeConfigInterface $scopeConfig;
-    private UrlInterface $urlBuilder;
-    private Registry $registry;
-
     public function __construct(
-        Image $imageHelper,
-        ScopeConfigInterface $scopeConfig,
-        UrlInterface $urlBuilder,
-        Registry $registry
-    ) {
-        $this->imageHelper = $imageHelper;
-        $this->scopeConfig = $scopeConfig;
-        $this->urlBuilder  = $urlBuilder;
-        $this->registry    = $registry;
-    }
+        private readonly Image                $imageHelper,
+        private readonly ScopeConfigInterface $scopeConfig,
+        private readonly UrlInterface         $urlBuilder,
+        private readonly Registry $registry
+    ) {}
 
     public function getProduct(): ProductInterface
     {

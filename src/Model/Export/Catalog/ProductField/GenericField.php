@@ -14,22 +14,12 @@ use Magento\Catalog\Model\Product;
 
 class GenericField implements FieldInterface
 {
-    private ProductAttributeRepositoryInterface $attributeRepository;
-    private AttributeValuesExtractor $valuesExtractor;
-    private string $attributeCode;
-    private Attribute $attribute;
-    private StoreManagerInterface $storeManager;
-
     public function __construct(
-        ProductAttributeRepositoryInterface $attributeRepository,
-        AttributeValuesExtractor $valuesExtractor,
-        StoreManagerInterface $storeManager,
-        string $attributeCode
+        private readonly ProductAttributeRepositoryInterface $attributeRepository,
+        private readonly  AttributeValuesExtractor $valuesExtractor,
+        private readonly StoreManagerInterface $storeManager,
+        private readonly  string $attributeCode
     ) {
-        $this->valuesExtractor     = $valuesExtractor;
-        $this->attributeCode       = $attributeCode;
-        $this->attributeRepository = $attributeRepository;
-        $this->storeManager        = $storeManager;
     }
 
     public function getName(): string

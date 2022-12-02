@@ -16,20 +16,13 @@ use Omikron\Factfinder\Model\Adminhtml\System\Config\Source\Attribute as Attribu
  */
 class ExportFields extends AbstractFieldArray
 {
-    private Select $attributeRenderer;
-    private Select $typeRenderer;
-    private AttributeSource $attributeSource;
-    private Yesno $boolSource;
-
     public function __construct(
-        Context $context,
-        AttributeSource $attributeSource,
-        Yesno $boolSource,
-        array $data = []
+        private readonly Context         $context,
+        private readonly AttributeSource $attributeSource,
+        private readonly Yesno           $boolSource,
+        private readonly array           $data = []
     ) {
         parent::__construct($context, $data);
-        $this->attributeSource = $attributeSource;
-        $this->boolSource      = $boolSource;
     }
 
     protected function _prepareToRender()
@@ -77,6 +70,7 @@ class ExportFields extends AbstractFieldArray
     private function getAttributeRenderer(): Select
     {
         $this->attributeRenderer = $this->attributeRenderer ?? $this->createSelect($this->attributeSource);
+
         return $this->attributeRenderer;
     }
 
@@ -84,12 +78,14 @@ class ExportFields extends AbstractFieldArray
     {
         $this->typeRenderer = $this->typeRenderer ?? $this->createSelect($this->boolSource);
         $this->typeRenderer->setData('value', 0);
+
         return $this->typeRenderer;
     }
 
     private function createSelect(OptionSourceInterface $optionSource): Select
     {
         $block = $this->getLayout()->createBlock(Select::class, '', ['data' => ['is_render_to_js_template' => true]]);
+
         return $block->setOptions($optionSource->toOptionArray());
     }
 }

@@ -10,18 +10,10 @@ use Omikron\Factfinder\Api\Export\FieldProviderInterface;
 
 class FeedFactory
 {
-    private ObjectManagerInterface $objectManager;
-
-    /** @var string[] */
-    private array $feedPool;
-
     public function __construct(
-        ObjectManagerInterface $objectManager,
-        array $feedPool
-    ) {
-        $this->objectManager = $objectManager;
-        $this->feedPool      = $feedPool;
-    }
+        private readonly ObjectManagerInterface $objectManager,
+        private readonly array $feedPool
+    ) {}
 
     public function create(string $type, array $data = []): Feed
     {

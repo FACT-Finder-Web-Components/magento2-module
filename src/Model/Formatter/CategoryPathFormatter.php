@@ -11,13 +11,7 @@ use Magento\Store\Model\Store;
 
 class CategoryPathFormatter
 {
-    /** @var CategoryRepositoryInterface */
-    private $categoryRepository;
-
-    public function __construct(CategoryRepositoryInterface $categoryRepository)
-    {
-        $this->categoryRepository = $categoryRepository;
-    }
+    public function __construct(private readonly CategoryRepositoryInterface $categoryRepository) {}
 
     public function format(int $categoryId, Store $store): string
     {

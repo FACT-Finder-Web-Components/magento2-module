@@ -8,22 +8,11 @@ use Omikron\Factfinder\Api\Export\DataProviderInterface;
 
 class DataProvider implements DataProviderInterface
 {
-    private Categories $categories;
-
-    private CategoryFactory $categoryFactory;
-
-    /** @var string[] */
-    private array $fields;
-
     public function __construct(
-        Categories      $categories,
-        CategoryFactory $categoryFactory,
-        array           $fields
-    ) {
-        $this->categories      = $categories;
-        $this->categoryFactory = $categoryFactory;
-        $this->fields          = $fields;
-    }
+        private readonly Categories      $categories,
+        private readonly CategoryFactory $categoryFactory,
+        private readonly array           $fields
+    ) {}
 
     public function getEntities(): iterable
     {

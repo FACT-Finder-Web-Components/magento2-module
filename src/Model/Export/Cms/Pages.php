@@ -15,22 +15,12 @@ use Traversable;
 
 class Pages implements \IteratorAggregate
 {
-    private PageRepositoryInterface $pageRepository;
-    private SearchCriteriaBuilder $searchCriteriaBuilder;
-    private CmsConfig $cmsConfig;
-    private StoreManagerInterface $storeManager;
-
     public function __construct(
-        PageRepositoryInterface $pageRepository,
-        SearchCriteriaBuilder $searchCriteriaBuilder,
-        CmsConfig $cmsConfig,
-        StoreManagerInterface $storeManager
-    ) {
-        $this->pageRepository        = $pageRepository;
-        $this->searchCriteriaBuilder = $searchCriteriaBuilder;
-        $this->cmsConfig             = $cmsConfig;
-        $this->storeManager          = $storeManager;
-    }
+        private readonly PageRepositoryInterface $pageRepository,
+        private readonly SearchCriteriaBuilder $searchCriteriaBuilder,
+        private readonly CmsConfig $cmsConfig,
+        private readonly StoreManagerInterface $storeManager
+    ) {}
 
     /**
      * @return Traversable|PageInterface[]

@@ -11,19 +11,11 @@ use Omikron\FactFinder\Communication\Version;
 
 class PriceFormatter
 {
-    private PriceCurrencyInterface $priceCurrency;
-    private CommunicationConfig $communicationConfig;
-    private FieldRoles $fieldRoles;
-
     public function __construct(
-        CommunicationConfig $communicationConfig,
-        PriceCurrencyInterface $priceCurrency,
-        FieldRoles $fieldRoles
-    ) {
-        $this->communicationConfig = $communicationConfig;
-        $this->priceCurrency       = $priceCurrency;
-        $this->fieldRoles          = $fieldRoles;
-    }
+        private readonly CommunicationConfig $communicationConfig,
+        private readonly PriceCurrencyInterface $priceCurrency,
+        private readonly FieldRoles $fieldRoles
+    ) {}
 
     public function format(array $searchResult): array
     {

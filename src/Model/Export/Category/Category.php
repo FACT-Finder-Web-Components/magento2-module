@@ -10,17 +10,8 @@ use Omikron\Factfinder\Api\Export\FieldInterface;
 
 class Category implements ExportEntityInterface
 {
-    /** @var CategoryInterface */
-    private $category;
-
-    /** @var array */
-    private $categoryFields;
-
-    public function __construct(CategoryInterface $category, array $categoryFields)
-    {
-        $this->category       = $category;
-        $this->categoryFields = $categoryFields;
-    }
+    public function __construct(private readonly CategoryInterface $category, private readonly  array $categoryFields)
+    {}
 
     public function getId(): int
     {

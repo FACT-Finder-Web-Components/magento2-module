@@ -16,28 +16,17 @@ use Omikron\Factfinder\Model\Formatter\NumberFormatter;
 
 class ConfigurableDataProvider extends SimpleDataProvider
 {
-    private ConfigurableProductType $productType;
-    private FilterInterface $filter;
-    private ProductVariationFactory $variationFactory;
-    private ProductRepositoryInterface $productRepository;
-    private SearchCriteriaBuilder $builder;
-
     public function __construct(
-        Product $product,
-        NumberFormatter $numberFormatter,
-        ConfigurableProductType $productType,
-        FilterInterface $filter,
-        ProductVariationFactory $variationFactory,
-        ProductRepositoryInterface $productRepository,
-        SearchCriteriaBuilder $builder,
-        array $productFields = []
+        protected readonly Product                  $product,
+        protected readonly NumberFormatter          $numberFormatter,
+        private readonly ConfigurableProductType    $productType,
+        private readonly FilterInterface            $filter,
+        private readonly ProductVariationFactory    $variationFactory,
+        private readonly ProductRepositoryInterface $productRepository,
+        private readonly SearchCriteriaBuilder      $builder,
+        protected readonly array                    $productFields = []
     ) {
         parent::__construct($product, $numberFormatter, $productFields);
-        $this->productType       = $productType;
-        $this->filter            = $filter;
-        $this->variationFactory  = $variationFactory;
-        $this->productRepository = $productRepository;
-        $this->builder           = $builder;
     }
 
     public function getEntities(): iterable
@@ -50,6 +39,7 @@ class ConfigurableDataProvider extends SimpleDataProvider
     {
         $data = ['HasVariants' => 1] + parent::toArray();
 
+        //flattening the array, array_merge must stay
         $options = array_merge([], ...array_values($this->getOptions($this->product)));
         if ($options) {
             $data['FilterAttributes'] = ($data['FilterAttributes'] ?: '|') . implode('|', array_unique($options)) . '|';

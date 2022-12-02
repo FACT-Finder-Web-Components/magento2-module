@@ -10,12 +10,7 @@ use Omikron\Factfinder\Api\StreamInterface;
 
 class Stdout implements StreamInterface
 {
-    private DriverInterface $file;
-
-    public function __construct(DriverInterface $file)
-    {
-        $this->file = $file;
-    }
+    public function __construct(private readonly DriverInterface $file) {}
 
     public function addEntity(array $entity): void
     {

@@ -10,12 +10,9 @@ use Magento\Framework\View\Result\PageFactory;
 
 class Index extends Action
 {
-    private PageFactory $resultPageFactory;
-
-    public function __construct(Context $context, PageFactory $resultPageFactory)
+    public function __construct(Context $context, private readonly PageFactory $resultPageFactory)
     {
         parent::__construct($context);
-        $this->resultPageFactory = $resultPageFactory;
     }
 
     public function execute()

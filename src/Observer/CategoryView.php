@@ -12,14 +12,7 @@ use Omikron\Factfinder\Model\Config\FeatureConfig;
 
 class CategoryView implements ObserverInterface
 {
-    private Registry $registry;
-    private FeatureConfig $config;
-
-    public function __construct(Registry $registry, FeatureConfig $config)
-    {
-        $this->registry = $registry;
-        $this->config   = $config;
-    }
+    public function __construct(private readonly Registry $registry, private readonly FeatureConfig $config) {}
 
     public function execute(Observer $observer)
     {

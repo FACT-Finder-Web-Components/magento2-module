@@ -24,37 +24,18 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class Export extends Command
 {
-    private StoreEmulation $storeEmulation;
-    private FeedGeneratorFactory $feedGeneratorFactory;
-    private StoreManagerInterface $storeManager;
-    private CommunicationConfig $communicationConfig;
-    private StreamInterfaceFactory $streamFactory;
-    private FtpUploader $ftpUploader;
-    private PushImport $pushImport;
-    private State $state;
-    private FeedFileService $feedFileService;
-
     public function __construct(
-        StoreManagerInterface $storeManager,
-        FeedGeneratorFactory $feedFactory,
-        StoreEmulation $emulation,
-        StreamInterfaceFactory $streamFactory,
-        FtpUploader $ftpUploader,
-        CommunicationConfig $communicationConfig,
-        PushImport $pushImport,
-        State $state,
-        FeedFileService $feedFileService
+        private readonly StoreManagerInterface  $storeManager,
+        private readonly FeedGeneratorFactory   $feedGeneratorFactory,
+        private readonly StoreEmulation         $storeEmulation,
+        private readonly StreamInterfaceFactory $streamFactory,
+        private readonly FtpUploader            $ftpUploader,
+        private readonly CommunicationConfig    $communicationConfig,
+        private readonly PushImport             $pushImport,
+        private readonly State                  $state,
+        private readonly FeedFileService        $feedFileService
     ) {
         parent::__construct();
-        $this->storeManager         = $storeManager;
-        $this->feedGeneratorFactory = $feedFactory;
-        $this->storeEmulation       = $emulation;
-        $this->streamFactory        = $streamFactory;
-        $this->ftpUploader          = $ftpUploader;
-        $this->communicationConfig  = $communicationConfig;
-        $this->pushImport           = $pushImport;
-        $this->state                = $state;
-        $this->feedFileService      = $feedFileService;
     }
 
     /**

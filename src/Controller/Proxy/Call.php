@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Omikron\Factfinder\Controller\Proxy;
 
 use Magento\Framework\App\Action;
+use Magento\Framework\App\Action\Context;
+use Magento\Framework\App\Action\HttpPostActionInterface;
 use Magento\Framework\App\CsrfAwareActionInterface;
 use Magento\Framework\Controller\Result\Json;
 use Magento\Framework\Controller\Result\JsonFactory as JsonResultFactory;
@@ -18,30 +20,19 @@ use Omikron\Factfinder\Model\Config\CommunicationConfig;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Message\ResponseInterface;
 
-class Call extends Action\Action implements Action\HttpGetActionInterface, Action\HttpPostActionInterface, CsrfAwareActionInterface
+class Call extends Action\Action implements Action\HttpGetActionInterface, HttpPostActionInterface, CsrfAwareActionInterface
 {
     use SkipCsrfValidation;
 
-    private JsonResultFactory $jsonResultFactory;
-    private RawResultFactory $rawResultFactory;
-    private CommunicationConfig $communicationConfig;
-    private CredentialsFactory $credentialsFactory;
-    private ClientBuilder $clientBuilder;
-
     public function __construct(
-        Action\Context $context,
-        JsonResultFactory $jsonResultFactory,
-        RawResultFactory $rawResultFactory,
-        CommunicationConfig $communicationConfig,
-        CredentialsFactory $credentialsFactory,
-        ClientBuilder $clientBuilder
+        Context                              $context,
+        private readonly JsonResultFactory   $jsonResultFactory,
+        private readonly RawResultFactory    $rawResultFactory,
+        private readonly CommunicationConfig $communicationConfig,
+        private readonly CredentialsFactory  $credentialsFactory,
+        private readonly ClientBuilder       $clientBuilder
     ) {
         parent::__construct($context);
-        $this->jsonResultFactory   = $jsonResultFactory;
-        $this->rawResultFactory    = $rawResultFactory;
-        $this->communicationConfig = $communicationConfig;
-        $this->credentialsFactory  = $credentialsFactory;
-        $this->clientBuilder       = $clientBuilder;
     }
 
     public function execute()

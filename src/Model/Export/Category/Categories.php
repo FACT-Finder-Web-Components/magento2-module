@@ -14,19 +14,11 @@ use Traversable;
 
 class Categories implements IteratorAggregate
 {
-    private SearchCriteriaBuilder $searchCriteriaBuilder;
-    private StoreManagerInterface $storeManager;
-    private CategoryListInterface $categoryList;
-
     public function __construct(
-        SearchCriteriaBuilder $searchCriteriaBuilder,
-        StoreManagerInterface $storeManager,
-        CategoryListInterface $categoryList
-    ) {
-        $this->searchCriteriaBuilder = $searchCriteriaBuilder;
-        $this->storeManager          = $storeManager;
-        $this->categoryList          = $categoryList;
-    }
+        private readonly SearchCriteriaBuilder $searchCriteriaBuilder,
+        private readonly StoreManagerInterface $storeManager,
+        private readonly CategoryListInterface $categoryList
+    ) {}
 
     /**
      * @return Traversable|CategoryInterface[]
