@@ -52,7 +52,12 @@ class PushImport
             ->withServerUrl($this->communicationConfig->getAddress())
             ->withCredentials($this->credentialsFactory->create());
 
-        $importAdapter = (new AdapterFactory($clientBuilder, $this->communicationConfig->getVersion()))->getImportAdapter();
+        $adapterFactory = new AdapterFactory(
+            $clientBuilder,
+            $this->communicationConfig->getVersion(),
+            $this->communicationConfig->getApiVersion()
+        );
+        $importAdapter = $adapterFactory->getImportAdapter();
         $channel       = $this->communicationConfig->getChannel($storeId);
         $dataTypes     = $this->exportConfig->getPushImportDataTypes($storeId);
 
