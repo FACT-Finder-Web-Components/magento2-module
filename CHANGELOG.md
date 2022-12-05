@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Add
+- Add option to switch between Api Version
+
 ## [v4.0.1] - 2023.02.07
 ### Add
 - Upgrade Web Components to v4.2.3
@@ -17,7 +21,7 @@
 ## [v3.7.2] - 2022.11.29
 ### Fix
 - Category page
-    - Fixes problem with not working filters when category page fired in new tab
+  - Fixes problem with not working filters when category page fired in new tab
 
 ## [v3.7.1] - 2022.10.17
 ### Change
@@ -68,17 +72,7 @@
 
 ### Change
  - upgrade Web Components to version [4.0.10](https://github.com/FACT-Finder-Web-Components/ff-web-components/releases/tag/4.0.10)
-
-## [v4.0.0-rc.3] - 2022.05.13
-### Add
- - Export
-  - Add new category feed export that could be used as a suggest enrichment
- - Search Result Page, Category Page
-  - add Products per Page configurartion which allows user to define custom configuration without any change in code
-### Fix
- - Category Page & Search Result Page
-  - fix "Add to cart" button randomly shows on configurable products tiles
-
+   
 ## [v3.4.1] - 2022.05.11
 ### Fix
  - Category Page & Search Result Page
@@ -91,36 +85,6 @@
 ### Fix
  - Export
   - fix `Model\Export\Catalog\ProductType\ConfigurableDataProvider::getChildren` throws an SQL syntax error if configurable product has no variants assigned   
-
-## [v4.0.0-rc.2] - 2022.03.31
-### BREAKING
-    - `Omikron\Factfinder\Controller\Adminhtml\Export\Feed`
-        - change constructor argument `Omikron\Factfinder\Model\Stream\CsvFactory` to `Omikron\Factfinder\Api\StreamInterfaceFactory`
-     - `Omikron\Factfinder\Controller\Export\Product`
-        - change constructor argument `Omikron\Factfinder\Model\Stream\CsvFactory` to `Omikron\Factfinder\Api\StreamInterfaceFactory`
-    - `Omikron\Factfinder\Console\Command\Export`
-        - change constructor argument `Omikron\Factfinder\Model\Stream\CsvFactory` to `Omikron\Factfinder\Api\StreamInterfaceFactory`
-    - `Omikron\Factfinder\Cron\Feed`
-        - change constructor argument `Omikron\Factfinder\Model\Stream\CsvFactory` to `Omikron\Factfinder\Api\StreamInterfaceFactory`
-
-### Add
-- `Omikron\Factfinder\Controller\Adminhtml\Export\Feed`, `Omikron\Factfinder\Controller\Export\Product`, `Omikron\Factfinder\Console\Command\Export`, `Omikron\Factfinder\Cron\Feed`
-    - add possibility to pass custom implementation of `Omikron\Factfinder\Api\StreamInterface`
-- `Omikron\Factfinder\Model\Stream\Csv`
-    - Throws an `RuntimeException` if feed file is empty or contains only headers
-
-### Fix
-- Export
-    - fix `Model\Export\Catalog\ProductType\ConfigurableDataProvider::getChildren` throws an SQL syntax error if configurable product has no variants assigned
-
-## [v4.0.0-rc.1] - 2022.03.10
-### BREAKING
-- drop PHP 7.3 support
-- add PHP7.4 syntax
-
-### Change
-- use Magento/Coding-Standards for code styles
-- fix all possible warnings/errors reported by PHP_CodeSniffer in source code files
 
 ## [v3.3.0] - 2022.03.04
 ### Fix
@@ -562,9 +526,6 @@
 ### Added
 - Feed Export: Export feed file is now available via separate link
 
-[v4.0.1]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v4.0.1
-[v4.0.0-rc.4]:  https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v4.0.0-rc.4
-[v3.7.3]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.7.3
 [v3.7.2]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.7.2
 [v3.7.1]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.7.1
 [v3.7.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.7.0
@@ -572,11 +533,8 @@
 [v3.5.2]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.5.2
 [v3.5.1]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.5.1
 [v3.5.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.5.0
-[v4.0.0-rc.3]:  https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v4.0.0-rc.3
 [v3.4.1]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.4.1
 [v3.4.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.4.0
-[v4.0.0-rc.2]:  https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v4.0.0-rc.2
-[v4.0.0-rc.1]:  https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v4.0.0-rc.1
 [v3.3.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.3.0
 [v3.2.2]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.2.2
 [v3.2.1]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.2.1
