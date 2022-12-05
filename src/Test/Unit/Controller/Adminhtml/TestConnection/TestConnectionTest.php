@@ -38,6 +38,7 @@ class TestConnectionTest extends TestCase
         $this->request->method('getParam')->willReturnMap([
             ['address', null, 'https://fake-factfinder.de/fact-finder'],
             ['version', null, 'ng'],
+            ['ff_api_version', null, 'v5'],
             ['channel', null, 'foo'],
         ]);
 

@@ -65,7 +65,12 @@ class Update extends Action
                 ->withCredentials($this->credentialsFactory->create())
                 ->withServerUrl($this->communicationConfig->getAddress());
 
-            $searchAdapter = (new AdapterFactory($client, $this->communicationConfig->getVersion()))->getSearchAdapter();
+            $adapterFactory = new AdapterFactory(
+                $client,
+                $this->communicationConfig->getVersion(),
+                $this->communicationConfig->getApiVersion()
+            );
+            $searchAdapter = $adapterFactory->getSearchAdapter();
             $response      = $searchAdapter->search($this->communicationConfig->getChannel($storeId), 'Search.ff');
             $searchResult  = $this->communicationConfig->getVersion() === Version::NG ? $response : $response['searchResult'];
             $result->setData(['message' => __('Search result does not contain field roles')]);

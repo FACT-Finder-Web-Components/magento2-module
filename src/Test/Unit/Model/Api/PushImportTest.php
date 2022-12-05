@@ -42,7 +42,7 @@ class PushImportTest extends TestCase
     public function test_should_throw_if_import_is_running()
     {
         $this->exportConfigMock->method('getPushImportDataTypes')->with($this->anything())->willReturn(['search','suggest']);
-        $this->clientMock->method('request')->with('GET', 'rest/v4/import/running', $this->anything())
+        $this->clientMock->method('request')->with('GET', 'rest/v5/import/running', $this->anything())
             ->willReturn($this->importRunningResponse());
         $this->expectExceptionMessage("Can't start a new import process. Another one is still going");
         $this->pushImport->execute(1);
@@ -79,6 +79,7 @@ class PushImportTest extends TestCase
         $this->communicationConfigMock = $this->createMock(CommunicationConfig::class);
         $this->communicationConfigMock->method('getAddress')->willReturn('http://fake-factfinder.com/FACT-Finder-7.3');
         $this->communicationConfigMock->method('getVersion')->willReturn('ng');
+        $this->communicationConfigMock->method('getApiVersion')->willReturn('v5');
 
         $this->exportConfigMock = $this->createMock(ExportConfig::class);
         $this->clientMock       = $this->createMock(ClientInterface::class);
