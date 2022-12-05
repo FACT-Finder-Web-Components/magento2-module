@@ -27,6 +27,13 @@
                 <option label="7.2">7.2</option>
             </options>
         </field>
+        <field id="ff_api_version" translate="label comment" type="select" sortOrder="13" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>FACT-Finder Api version</label>
+            <options>
+                <option label="v4">v4</option>
+                <option label="v5">v5</option>
+            </options>
+        </field>
         <field id="username" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
             <label>Username</label>
             <validate>required-entry</validate>
