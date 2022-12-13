@@ -3,6 +3,7 @@
 namespace Omikron\Factfinder\Test\Unit\Service;
 
 use Magento\Framework\Filesystem;
+use Omikron\Factfinder\Service\FeedFileService;
 use PHPUnit\Framework\TestCase;
 use \InvalidArgumentException;
 
