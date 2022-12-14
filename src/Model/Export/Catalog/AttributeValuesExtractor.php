@@ -13,9 +13,13 @@ use DateTime;
 
 class AttributeValuesExtractor
 {
+    /**
+     * phpcs:disable Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore
+     * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.BraceOnSameLine
+     */
     public function __construct(
         private readonly FilterInterface $filter,
-        private readonly NumberFormatter $numberFormatter
+        private readonly NumberFormatter $numberFormatter,
     ) {}
 
     /**
@@ -72,10 +76,14 @@ class AttributeValuesExtractor
                 break;
         }
 
-        return array_filter(array_map([
-                                          $this->filter,
-                                          'filterValue'
-                                      ], $values)
+        return array_filter(
+            array_map(
+                [
+                    $this->filter,
+                    'filterValue'
+                ],
+                $values
+            )
         );
     }
 }

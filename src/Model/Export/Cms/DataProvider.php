@@ -6,14 +6,17 @@ namespace Omikron\Factfinder\Model\Export\Cms;
 
 use Omikron\Factfinder\Api\Export\DataProviderInterface;
 use Omikron\Factfinder\Api\Export\ExportEntityInterface;
-use Omikron\Factfinder\Api\Export\FieldInterface;
 
 class DataProvider implements DataProviderInterface
 {
+    /**
+     * phpcs:disable Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore
+     * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.BraceOnSameLine
+     */
     public function __construct(
         private readonly Pages $pages,
-        private readonly  PageFactory $pageFactory,
-        private readonly  array $fields
+        private readonly PageFactory $pageFactory,
+        private readonly array $fields,
     ) {}
 
     /**

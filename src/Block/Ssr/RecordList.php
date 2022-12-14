@@ -40,7 +40,7 @@ class RecordList extends Template
             $attributes = preg_replace('#\sunresolved\s?#s', '', $match[1]);
 
             return "<ff-record-list ssr {$attributes}>";
-        },                            $html);
+        }, $html);
 
         $result = $this->searchResult($this->getRequest(), $this->getSearchParams());
         if ($this->shouldRedirect($result)) {
@@ -58,7 +58,7 @@ class RecordList extends Template
             }
 
             return array_reduce($result['records'] ?? [], $this->recordRenderer($match[0]), $template);
-        },                            $html);
+        }, $html);
 
         return str_replace('{FF_SEARCH_RESULT}', $this->jsonSerializer->serialize($result), $html);
     }

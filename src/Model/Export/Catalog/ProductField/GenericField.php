@@ -14,13 +14,16 @@ use Magento\Catalog\Model\Product;
 
 class GenericField implements FieldInterface
 {
+    /**
+     * phpcs:disable Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore
+     * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.BraceOnSameLine
+     */
     public function __construct(
         private readonly ProductAttributeRepositoryInterface $attributeRepository,
-        private readonly  AttributeValuesExtractor $valuesExtractor,
+        private readonly AttributeValuesExtractor $valuesExtractor,
         private readonly StoreManagerInterface $storeManager,
-        private readonly  string $attributeCode
-    ) {
-    }
+        private readonly string $attributeCode,
+    ) {}
 
     public function getName(): string
     {

@@ -21,12 +21,15 @@ abstract class LoginStateObserver implements ObserverInterface
 
     public function __construct(
         SessionData $sessionData,
-        SessionConfig $sessionConfig
+        SessionConfig $sessionConfig,
     ) {
         $this->sessionData = $sessionData;
         $this->sessionConfig = $sessionConfig;
     }
 
+    /**
+     * phpcs:disable Magento2.Functions.DiscouragedFunction.Discouraged
+     */
     protected function setCookie(string $name, string $value): void
     {
         setcookie(
@@ -39,6 +42,8 @@ abstract class LoginStateObserver implements ObserverInterface
 
     /**
      * @SuppressWarnings(PHPMD)
+     * phpcs:disable Magento2.Security.Superglobal.SuperglobalUsageWarning
+     * phpcs:disable Magento2.Functions.DiscouragedFunction.Discouraged
      */
     protected function clearCookie(string $name): void
     {

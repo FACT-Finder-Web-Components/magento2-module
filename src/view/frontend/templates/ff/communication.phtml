@@ -45,7 +45,7 @@ $searchImmediate = $communicationParameters['search-immediate'] ?? 'false';
             }
         }
 
-        if (<?= $searchImmediate ?>) {
+        if (<?= $block->escapeHtmlAttr($searchImmediate) ?>) {
             searchImmediate();
         }
     });

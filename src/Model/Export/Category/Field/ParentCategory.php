@@ -10,8 +10,11 @@ use Omikron\Factfinder\Model\Formatter\CategoryPathFormatter;
 
 class ParentCategory implements FieldInterface
 {
-    public function __construct(private readonly CategoryPathFormatter $categoryPathFormatter)
-    {}
+    /**
+     * phpcs:disable Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore
+     * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.BraceOnSameLine
+     */
+    public function __construct(private readonly CategoryPathFormatter $categoryPathFormatter) {}
 
     public function getName(): string
     {

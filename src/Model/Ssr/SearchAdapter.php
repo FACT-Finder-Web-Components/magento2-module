@@ -13,11 +13,15 @@ use Psr\Http\Message\ResponseInterface;
 
 class SearchAdapter
 {
+    /**
+     * phpcs:disable Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore
+     * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.BraceOnSameLine
+     */
     public function __construct(
         private readonly ClientBuilder $clientBuilder,
         private readonly CommunicationConfig $communicationConfig,
         private readonly CredentialsFactory $credentialsFactory,
-        private readonly PriceFormatter $priceFormatter
+        private readonly PriceFormatter $priceFormatter,
     ) {}
 
     public function search(string $paramString, bool $navigationRequest): array

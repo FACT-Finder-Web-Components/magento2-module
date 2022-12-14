@@ -12,10 +12,14 @@ use Omikron\Factfinder\Api\Config\ParametersSourceInterface;
 
 class SessionData implements SectionSourceInterface, ParametersSourceInterface
 {
+    /**
+     * phpcs:disable Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore
+     * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.BraceOnSameLine
+     */
     public function __construct(
         private readonly CustomerSession      $customerSession,
         private readonly ScopeConfigInterface $scopeConfig,
-        private readonly RemoteAddress $remoteAddress
+        private readonly RemoteAddress        $remoteAddress,
     ) {}
 
     public function getUserId(): string

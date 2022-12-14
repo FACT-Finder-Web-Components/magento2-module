@@ -18,9 +18,14 @@ class Communication implements ArgumentInterface
         private readonly FieldRoles                      $fieldRoles,
         private readonly SerializerInterface             $serializer,
         private readonly CommunicationParametersProvider $parametersProvider,
-        array                                            $mergeableParams = ['add-params', 'add-tracking-params', 'keep-url-params', 'parameter-whitelist']
+        array $mergeableParams = [
+            'add-params',
+            'add-tracking-params',
+            'keep-url-params',
+            'parameter-whitelist'
+        ],
     ) {
-        $this->mergeableParams    = array_combine($mergeableParams, array_fill(0, count($mergeableParams), ''));
+        $this->mergeableParams = array_combine($mergeableParams, array_fill(0, count($mergeableParams), ''));
     }
 
     public function getParameters(array $blockParams = []): array

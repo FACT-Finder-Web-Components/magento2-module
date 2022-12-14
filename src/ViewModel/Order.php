@@ -12,8 +12,14 @@ use Omikron\Factfinder\Model\Config\CommunicationConfig;
 
 class Order implements ArgumentInterface
 {
-    public function __construct(private readonly Session $checkoutSession, private readonly CommunicationConfig $communicationConfig)
-    {}
+    /**
+     * phpcs:disable Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore
+     * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.BraceOnSameLine
+     */
+    public function __construct(
+        private readonly Session $checkoutSession,
+        private readonly CommunicationConfig $communicationConfig,
+    ) {}
 
     /**
      * @return OrderItem[]

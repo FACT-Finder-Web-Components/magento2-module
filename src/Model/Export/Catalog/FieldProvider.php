@@ -11,11 +11,15 @@ use Omikron\Factfinder\Model\Export\Catalog\ProductField\GenericFieldFactory;
 
 class FieldProvider implements FieldProviderInterface
 {
+    /**
+     * phpcs:disable Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore
+     * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.BraceOnSameLine
+     */
     public function __construct(
         private readonly ExportConfig $config,
         private readonly GenericFieldFactory $fieldFactory,
         private readonly array $productFields = [],
-        private readonly array $variantFields = []
+        private readonly array $variantFields = [],
     ) {}
 
     public function getVariantFields(): array
