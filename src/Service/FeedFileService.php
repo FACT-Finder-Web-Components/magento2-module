@@ -12,6 +12,10 @@ class FeedFileService
 {
     private const FEED_FILENAME_PATTERN = 'export.%type%.%channel%.csv';
 
+    /**
+     * phpcs:disable Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore
+     * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.BraceOnSameLine
+     */
     public function __construct(private readonly Filesystem $fileSystem) {}
 
     public function getFeedExportFilename(string $exportType, string $channel): string

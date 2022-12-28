@@ -21,6 +21,8 @@ class Feed
 
     /**
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
+     * phpcs:disable Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore
+     * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.BraceOnSameLine
      */
     public function __construct(
         private readonly ScopeConfigInterface   $scopeConfig,
@@ -32,7 +34,7 @@ class Feed
         private readonly CommunicationConfig    $communicationConfig,
         private readonly PushImport             $pushImport,
         private readonly FeedFileService        $feedFileService,
-        private readonly string                 $feedTypetype
+        private readonly string                 $feedTypetype,
     ) {}
 
     public function execute(): void
@@ -45,8 +47,9 @@ class Feed
             $this->storeEmulation->runInStore((int) $store->getId(), function () use ($store) {
                 $storeId = $store->getId();
                 if ($this->communicationConfig->isChannelEnabled($storeId)) {
-                    $filename = $this->feedFileService->getFeedExportFilename($this->feedType,
-                                                                              $this->communicationConfig->getChannel()
+                    $filename = $this->feedFileService->getFeedExportFilename(
+                        $this->feedType,
+                        $this->communicationConfig->getChannel()
                     );
                     $stream   = $this->streamFactory->create(['filename' => "factfinder/{$filename}"]);
                     $this->feedGeneratorFactory->create($this->feedType)->generate($stream);

@@ -17,14 +17,14 @@ use Omikron\Factfinder\Model\Formatter\NumberFormatter;
 class ConfigurableDataProvider extends SimpleDataProvider
 {
     public function __construct(
-        protected readonly Product                  $product,
-        protected readonly NumberFormatter          $numberFormatter,
+        protected Product                  $product,
+        protected NumberFormatter          $numberFormatter,
         private readonly ConfigurableProductType    $productType,
         private readonly FilterInterface            $filter,
         private readonly ProductVariationFactory    $variationFactory,
         private readonly ProductRepositoryInterface $productRepository,
         private readonly SearchCriteriaBuilder      $builder,
-        protected readonly array                    $productFields = []
+        protected array                    $productFields = []
     ) {
         parent::__construct($product, $numberFormatter, $productFields);
     }

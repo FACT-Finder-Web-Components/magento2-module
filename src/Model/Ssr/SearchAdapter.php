@@ -6,7 +6,6 @@ namespace Omikron\Factfinder\Model\Ssr;
 
 use Omikron\FactFinder\Communication\Client\ClientBuilder;
 use Omikron\FactFinder\Communication\Client\ClientException;
-use Omikron\FactFinder\Communication\Resource\AdapterFactory;
 use Omikron\FactFinder\Communication\Version;
 use Omikron\Factfinder\Model\Api\CredentialsFactory;
 use Omikron\Factfinder\Model\Config\CommunicationConfig;
@@ -14,11 +13,15 @@ use Psr\Http\Message\ResponseInterface;
 
 class SearchAdapter
 {
+    /**
+     * phpcs:disable Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore
+     * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.BraceOnSameLine
+     */
     public function __construct(
         private readonly ClientBuilder $clientBuilder,
         private readonly CommunicationConfig $communicationConfig,
         private readonly CredentialsFactory $credentialsFactory,
-        private readonly PriceFormatter $priceFormatter
+        private readonly PriceFormatter $priceFormatter,
     ) {}
 
     public function search(string $paramString, bool $navigationRequest): array
@@ -47,10 +50,11 @@ class SearchAdapter
     private function createEndpoint(string $paramString, bool $navigationRequest)
     {
         $channel  = $this->communicationConfig->getChannel();
+        $apiVersion  = $this->communicationConfig->getApiVersion();
         $endpoint = $navigationRequest ? 'navigation' : 'search';
 
         return $this->communicationConfig->getVersion() == Version::NG
-            ? "rest/v4/{$endpoint}/{$channel}?{$paramString}"
+            ? "rest/{$apiVersion}/{$endpoint}/{$channel}?{$paramString}"
             : "Search.ff?channel={$channel}&{$paramString}&format=json";
     }
 }

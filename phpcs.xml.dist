@@ -52,4 +52,7 @@
         <exclude-pattern>*.phtml</exclude-pattern>
     </rule>
     <rule ref="Squiz.Strings.DoubleQuoteUsage.NotRequired" />
+    <rule ref="Magento2.Security.InsecureFunction.FoundWithAlternative">
+        <exclude-pattern>*Test.php</exclude-pattern>
+    </rule>
 </ruleset>

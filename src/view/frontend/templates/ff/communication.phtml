@@ -2,7 +2,9 @@
 /** @var Magento\Framework\View\Element\Template $block */
 /** @var Omikron\Factfinder\ViewModel\Communication $viewModel */
 $viewModel  = $block->getViewModel();
-$parameters = $viewModel->getParameters((array) $block->getData('communication_parameters'));
+$communicationParameters = (array) $block->getData('communication_parameters');
+$parameters = $viewModel->getParameters($communicationParameters);
+$searchImmediate = $communicationParameters['search-immediate'] ?? 'false';
 ?>
 <ff-communication<?php foreach ($parameters as $key => $value) /* @noEscape */ echo sprintf(' %s="%s"', $key, $block->escapeHtmlAttr($value)) ?>></ff-communication>
 <!-- Set FieldRoles -->
@@ -12,10 +14,39 @@ $parameters = $viewModel->getParameters((array) $block->getData('communication_p
         factfinder.communication.fieldRoles = <?= /* @noEscape */ $viewModel->getFieldRoles() ?>;
     });
 </script>
-<script type="text/x-magento-init">
-    {
-        "ff-communication": {
-            "Omikron_Factfinder/js/view/ffcommunication": {}
+
+<script>
+    document.addEventListener('ffCommunicationReady', ({ factfinder, searchImmediate }) => {
+        const cookies = document.cookie.split('; ').reduce((acc, cookie) => {
+            const cookieData = cookie.split('=');
+            const [key, value] = cookieData;
+            acc[key] = value;
+
+            return acc;
+        }, {});
+
+        const clearCookie = (name) => {
+            document.cookie = name+'=; Max-Age=-1;';
         }
-    }
+
+        if (cookies['ff_user_id']) {
+            factfinder.communication.sessionManager.setLoginData(cookies['ff_user_id'])
+
+            if (cookies['ff_has_just_logged_in']) {
+                clearCookie('ff_has_just_logged_in');
+                factfinder.communication.Tracking.loginWithConfig();
+            }
+        } else {
+            factfinder.communication.sessionManager.clearLoginData();
+
+            if (cookies['ff_has_just_logged_out']) {
+                clearCookie('ff_has_just_logged_out');
+                factfinder.communication.sessionManager.clearAllSessionData();
+            }
+        }
+
+        if (<?= $block->escapeHtmlAttr($searchImmediate) ?>) {
+            searchImmediate();
+        }
+    });
 </script>

@@ -44,7 +44,12 @@ class TestConnection extends Action
                 ->withCredentials($this->getCredentials($this->getRequest()->getParams()))
                 ->withServerUrl($request->getParam('address'));
 
-            $searchAdapter = (new AdapterFactory($clientBuilder, $request->getParam('version')))->getSearchAdapter();
+            $adapterFactory = new AdapterFactory(
+                $clientBuilder,
+                $request->getParam('version'),
+                $request->getParam('ff_api_version')
+            );
+            $searchAdapter = $adapterFactory->getSearchAdapter();
             $searchAdapter->search($request->getParam('channel'), '*');
 
             $message = new Phrase('Connection successfully established.');

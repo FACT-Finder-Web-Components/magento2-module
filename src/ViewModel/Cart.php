@@ -11,8 +11,11 @@ use Magento\Quote\Model\Quote\Item as QuoteItem;
 
 class Cart implements ArgumentInterface
 {
-    public function __construct(private readonly Session $checkoutSession)
-    {}
+    /**
+     * phpcs:disable Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore
+     * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.BraceOnSameLine
+     */
+    public function __construct(private readonly Session $checkoutSession) {}
 
     /**
      * @return QuoteItem[]

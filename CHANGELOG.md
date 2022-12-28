@@ -1,5 +1,14 @@
 # Changelog
 ## Unreleased
+### Add
+- Add option to switch between Api Version
+
+## [v3.7.2] - 2022.11.29
+### Fix
+- Category page
+    - Fixes problem with not working filters when category page fired in new tab
+
+## [v3.7.1] - 2022.10.17
 ### Change
 - upgrade of package versions
 - Pages
@@ -7,6 +16,12 @@
 - Export Preview
   - added return types for getIterator method
   - declare Throwable type for constructor of ExportPreviewValidationException
+- Upgrade Web Components version to v4.2.1
+- introduce new way of user login tracking event
+
+## [v3.7.0] - 2022.09.09
+### Fix
+- Fixes problem with the compilation and returned type of `getIterator` method
 
 ### Add
  - Tracking
@@ -49,16 +64,6 @@
 ### Change
  - upgrade Web Components to version [4.0.10](https://github.com/FACT-Finder-Web-Components/ff-web-components/releases/tag/4.0.10)
    
-## [v4.0.0-rc.3] - 2022.05.13
-### Add
- - Export
-  - Add new category feed export that could be used as a suggest enrichment
- - Search Result Page, Category Page
-  - add Products per Page configurartion which allows user to define custom configuration without any change in code
-### Fix
- - Category Page & Search Result Page
-  - fix "Add to cart" button randomly shows on configurable products tiles 
-
 ## [v3.4.1] - 2022.05.11
 ### Fix
  - Category Page & Search Result Page
@@ -512,6 +517,11 @@
 ### Added
 - Feed Export: Export feed file is now available via separate link
 
+[v3.7.2]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.7.2
+[v3.7.1]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.7.1
+[v3.7.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.7.0
+[v3.6.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.6.0
+[v3.5.2]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.5.2
 [v3.5.1]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.5.1
 [v3.5.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.5.0
 [v3.4.1]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.4.1

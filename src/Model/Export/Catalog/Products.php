@@ -14,11 +14,15 @@ use Traversable;
 
 class Products implements \IteratorAggregate
 {
+    /**
+     * phpcs:disable Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore
+     * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.BraceOnSameLine
+     */
     public function __construct(
         private readonly ProductRepositoryInterface $productRepository,
         private readonly SearchCriteriaBuilder $searchCriteriaBuilder,
         private readonly StoreManagerInterface $storeManager,
-        private readonly int $batchSize = 300
+        private readonly int $batchSize = 300,
     ) {}
 
     /**

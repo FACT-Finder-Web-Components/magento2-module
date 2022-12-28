@@ -10,11 +10,14 @@ use Omikron\Factfinder\Api\Export\FieldInterface;
 
 class ProductImage implements FieldInterface
 {
+    /**
+     * phpcs:disable Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore
+     * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.BraceOnSameLine
+     */
     public function __construct(
         private readonly ImageHelper $imageHelper,
-        private readonly string $imageId = 'ff_export_image_url')
-    {
-    }
+        private readonly string $imageId = 'ff_export_image_url',
+    ) {}
 
     public function getName(): string
     {

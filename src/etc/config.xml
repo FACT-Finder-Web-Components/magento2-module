@@ -13,6 +13,7 @@
             </general>
             <advanced>
                 <version>7.3</version>
+                <ff_api_version>v4</ff_api_version>
                 <use_url_parameter>1</use_url_parameter>
                 <only_search_params>1</only_search_params>
             </advanced>
