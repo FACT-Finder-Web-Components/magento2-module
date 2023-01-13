@@ -1,5 +1,5 @@
 # Changelog
-## Unreleased
+## [v3.7.3] - 2023.01.13
 ### Add
 - Add option to switch between Api Version
 
@@ -511,6 +511,7 @@
 ### Added
 - Feed Export: Export feed file is now available via separate link
 
+[v3.7.3]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.7.3
 [v3.7.2]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.7.2
 [v3.7.1]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.7.1
 [v3.7.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.7.0
