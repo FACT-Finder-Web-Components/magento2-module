@@ -20,6 +20,9 @@ class Json implements StreamInterface
         return json_encode($this->stream);
     }
 
+    /**
+     * @SuppressWarnings(PHPMD)
+     */
     public function finalize(): void
     {
         //@phpcs:ignore Magento2.Security.LanguageConstruct.ExitUsage
