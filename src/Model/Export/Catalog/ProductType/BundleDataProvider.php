@@ -12,11 +12,11 @@ use Omikron\Factfinder\Model\Formatter\NumberFormatter;
 class BundleDataProvider extends SimpleDataProvider
 {
     public function __construct(
-        protected readonly Product         $product,
-        protected readonly NumberFormatter $numberFormatter,
+        protected Product         $product,
+        protected NumberFormatter $numberFormatter,
         private readonly PriceCurrency     $priceCurrency,
         private readonly CatalogPrice      $priceModel,
-        protected readonly array             $productFields = []
+        protected array             $productFields = []
     ) {
         parent::__construct($product, $numberFormatter, $productFields);
     }

@@ -8,7 +8,7 @@ use Omikron\Factfinder\Api\StreamInterface;
 
 class Json implements StreamInterface
 {
-    private $stream = [];
+    private array $stream = [];
 
     public function addEntity(array $entity): void
     {
@@ -18,5 +18,14 @@ class Json implements StreamInterface
     public function getContent(): string
     {
         return json_encode($this->stream);
+    }
+
+    /**
+     * @SuppressWarnings(PHPMD)
+     */
+    public function finalize(): void
+    {
+        //@phpcs:ignore Magento2.Security.LanguageConstruct.ExitUsage
+        exit();
     }
 }
