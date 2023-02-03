@@ -19,4 +19,9 @@ class Json implements StreamInterface
     {
         return json_encode($this->stream);
     }
+
+    public function finalize(): void
+    {
+        exit();
+    }
 }

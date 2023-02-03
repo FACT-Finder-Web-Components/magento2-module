@@ -9,5 +9,5 @@ use Omikron\Factfinder\Controller\Export\Product;
 class Category extends Product
 {
     /** @var string */
-    protected $feedType = 'category';
+    protected string $feedType = 'category';
 }
