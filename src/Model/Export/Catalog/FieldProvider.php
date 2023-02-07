@@ -4,13 +4,15 @@ declare(strict_types=1);
 
 namespace Omikron\Factfinder\Model\Export\Catalog;
 
-use Omikron\Factfinder\Api\Export\FieldInterface;
 use Omikron\Factfinder\Api\Export\FieldProviderInterface;
 use Omikron\Factfinder\Model\Config\ExportConfig;
 use Omikron\Factfinder\Model\Export\Catalog\ProductField\GenericFieldFactory;
 
 class FieldProvider implements FieldProviderInterface
 {
+    private ?array $cachedFields;
+    private ?array $cachedVariantFields;
+
     /**
      * phpcs:disable Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore
      * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.BraceOnSameLine
@@ -24,16 +26,16 @@ class FieldProvider implements FieldProviderInterface
 
     public function getVariantFields(): array
     {
-        if (!$this->cachedVariantFields) {
-            $this->cachedVariantFields = $this->getFrom($this->variantFieldProviders);
+        if (!isset($this->cachedVariantFields)) {
+            $this->cachedVariantFields = $this->getFrom($this->variantFields);
         }
         return $this->cachedVariantFields;
     }
 
     public function getFields(): array
     {
-        if (!$this->cachedFields) {
-            $this->cachedFields = $this->getFrom($this->productFieldProviders);
+        if (!isset($this->cachedFields)) {
+            $this->cachedFields = $this->getFrom($this->productFields);
         }
         return $this->cachedFields;
     }

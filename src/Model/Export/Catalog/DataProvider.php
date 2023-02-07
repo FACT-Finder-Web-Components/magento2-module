@@ -9,7 +9,6 @@ use Magento\Catalog\Model\Product\Type as ProductType;
 use Magento\Framework\ObjectManagerInterface;
 use Omikron\Factfinder\Api\Export\DataProviderInterface;
 use Omikron\Factfinder\Api\Export\ExportEntityInterface;
-use Omikron\Factfinder\Api\Export\FieldInterface;
 
 class DataProvider implements DataProviderInterface
 {
@@ -38,6 +37,6 @@ class DataProvider implements DataProviderInterface
     private function entitiesFrom(ProductInterface $product): DataProviderInterface
     {
         $type = $this->entityTypes[$product->getTypeId()] ?? $this->entityTypes[ProductType::DEFAULT_TYPE];
-        return $this->objectManager->create($type, ['product' => $product, 'productFields' => $this->productFields]); // phpcs:ignore
+        return $this->objectManager->create($type, ['product' => $product, 'productFields' => $this->fields]); // phpcs:ignore
     }
 }
