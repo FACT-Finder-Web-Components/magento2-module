@@ -1,5 +1,14 @@
 # Changelog
+## Unreleased
+### Add
+- Upgrade Web Components to v4.2.3
+### Fix
+- fix problem during DI compilation
+- fix TypeError on HTTP product export
+
 ## [v4.0.0-rc.4] - 2023.01.13
+### Change
+- upgrade code to php 8.1
 
 ## [v3.7.3] - 2023.01.13
 ### Add
