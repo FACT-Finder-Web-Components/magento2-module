@@ -1,5 +1,5 @@
 # Changelog
-## Unreleased
+## [v4.0.1] - 2023.02.07
 ### Add
 - Upgrade Web Components to v4.2.3
 ### Fix
@@ -562,6 +562,7 @@
 ### Added
 - Feed Export: Export feed file is now available via separate link
 
+[v4.0.1]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v4.0.1
 [v4.0.0-rc.4]:  https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v4.0.0-rc.4
 [v3.7.3]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.7.3
 [v3.7.2]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v3.7.2
