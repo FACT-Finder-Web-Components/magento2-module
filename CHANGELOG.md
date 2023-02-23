@@ -2,6 +2,10 @@
 ## Unreleased
 ### Add
 - Add option to switch between Api Version
+### Change
+- Upgrade Web Components to 4.2.4
+### Fix
+- Fix export error when Configurable has no children
 
 ## [v4.0.1] - 2023.02.07
 ### Add
