@@ -84,7 +84,7 @@ class ConfigurableDataProvider extends SimpleDataProvider
     {
         $childrenIds = $this->productType->getChildrenIds($product->getId());
         //if $childrenIds is empty the entity_id filter will thrown an SQL syntax error
-        if (empty($childrenIds)) {
+        if (empty($childrenIds) || empty($childrenIds[0])) {
             return [];
         }
         return $this->productRepository
