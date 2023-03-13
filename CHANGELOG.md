@@ -1,6 +1,7 @@
 # Changelog
 ## Unreleased
 ### Change
+- Upgrade Web Components version to v4.2.5
 - Export
   - Upgrade phpseclib to phpseclib3
   - Fix upload data feed via SFTP using key auth
