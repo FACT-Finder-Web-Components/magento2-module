@@ -1,4 +1,10 @@
 # Changelog
+## Unreleased
+### Change
+- Export
+  - Upgrade phpseclib to phpseclib3
+  - Fix upload data feed via SFTP using key auth
+
 ## [v4.1.0] - 2023.02.23
 ### Add
 - Add option to switch between Api Version
