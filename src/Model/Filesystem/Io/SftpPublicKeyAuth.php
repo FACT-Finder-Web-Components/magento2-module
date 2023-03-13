@@ -10,8 +10,9 @@ use Magento\Framework\Exception\FileSystemException;
 use Magento\Framework\Filesystem;
 use Magento\Framework\Filesystem\Io\Sftp as SftpBase;
 use Omikron\Factfinder\Model\Config\FtpConfig;
-use phpseclib\Crypt\RSA;
-use phpseclib\Net\SFTP;
+use phpseclib3\Crypt\PublicKeyLoader;
+use phpseclib3\Crypt\Common\PrivateKey;
+use phpseclib3\Net\SFTP;
 
 class SftpPublicKeyAuth extends SftpBase
 {
@@ -32,17 +33,19 @@ class SftpPublicKeyAuth extends SftpBase
         }
     }
 
-    protected function getKey(string $passphrase): Rsa
+    /**
+     * @SuppressWarnings(PHPMD.StaticAccess)
+     */
+    protected function getKey(string $passphrase): PrivateKey
     {
-        $privateKey      = new Rsa();
         $configDirectory = $this->fileSystem->getDirectoryRead(DirectoryList::CONFIG);
         $filesInLocation = $configDirectory->read('factfinder/sftp');
         $keyFile         = $configDirectory->readFile($filesInLocation[$this->getFileIndex($filesInLocation)]);
+        $privateKey      = PublicKeyLoader::loadPrivateKey($keyFile);
 
         if ($passphrase) {
-            $privateKey->setPassword($passphrase);
+            $privateKey = PublicKeyLoader::loadPrivateKey($keyFile, $passphrase);
         }
-        $privateKey->loadKey($keyFile);
 
         return $privateKey;
     }

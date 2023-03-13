@@ -76,6 +76,8 @@ class ConfigurableDataProvider extends SimpleDataProvider
     }
 
     /**
+     * phpcs:disable PSR2.ControlStructures.ControlStructureSpacing.SpacingAfterOpenBrace
+     *
      * @param Product $product
      *
      * @return ProductInterface[]
