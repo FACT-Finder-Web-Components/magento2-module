@@ -34,7 +34,7 @@ class AttributeValuesExtractor
     public function getAttributeValues(Product $product, Attribute $attribute): array
     {
         $code   = $attribute->getAttributeCode();
-        $value  = $product->getDataUsingMethod($code);
+        $value  = $product->getDataUsingMethod($code) ?? $product->getData($code);
         $values = [];
 
         switch ($attribute->getFrontendInput()) {

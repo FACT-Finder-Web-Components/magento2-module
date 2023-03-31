@@ -1,4 +1,9 @@
 # Changelog
+## Unreleased
+### Fix
+- Export
+  - Fix problem with attribute values which are null in feeds with attributes that contain a number in the code
+
 ## [v4.1.1] - 2023.03.13
 ### Change
 - Upgrade Web Components version to v4.2.5
