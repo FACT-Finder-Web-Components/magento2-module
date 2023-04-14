@@ -10,7 +10,7 @@ $searchImmediate = $communicationParameters['search-immediate'] ?? 'false';
 <!-- Set FieldRoles -->
 <script>
     document.addEventListener('ffReady', function () {
-        factfinder.sdk = 'm2-v4.1.1';
+        factfinder.sdk = 'm2-v4.1.2';
         factfinder.communication.fieldRoles = <?= /* @noEscape */ $viewModel->getFieldRoles() ?>;
     });
 </script>

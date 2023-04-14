@@ -1,5 +1,5 @@
 # Changelog
-## Unreleased
+## [v4.1.2] - 2023.04.14
 ### Fix
 - Export
   - Fix problem with attribute values which are null in feeds with attributes that contain a number in the code
@@ -544,6 +544,7 @@
 ### Added
 - Feed Export: Export feed file is now available via separate link
 
+[v4.1.2]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v4.1.2
 [v4.1.1]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v4.1.1
 [v4.1.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v4.1.0
 [v4.0.1]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v4.0.1
