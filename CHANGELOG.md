@@ -3,6 +3,8 @@
 ### Fix
 - Export
   - Fix problem with attribute values which are null in feeds with attributes that contain a number in the code
+### Change
+- Upgrade Web Components version to v4.2.6
 
 ## [v4.1.1] - 2023.03.13
 ### Change
