@@ -12,6 +12,7 @@ use Omikron\Factfinder\Model\Config\ExportConfig;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\StreamInterface;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -98,17 +99,23 @@ class PushImportTest extends TestCase
 
     private function importRunningResponse(): ResponseInterface
     {
-        return $this->createConfiguredMock(ResponseInterface::class, ['getBody' => 'true']);
+        $body = $this->createConfiguredMock(StreamInterface::class, ['__toString' => 'true']);
+
+        return $this->createConfiguredMock(ResponseInterface::class, ['getBody' => $body]);
     }
 
     private function importNotRunningResponse(): ResponseInterface
     {
-        return $this->createConfiguredMock(ResponseInterface::class, ['getBody' => 'false']);
+        $body = $this->createConfiguredMock(StreamInterface::class, ['__toString' => 'false']);
+
+        return $this->createConfiguredMock(ResponseInterface::class, ['getBody' => $body]);
     }
 
     private function importResponseOk(): ResponseInterface
     {
-        return $this->createConfiguredMock(ResponseInterface::class, ['getBody' => '{"0": {"importType": "data", "statusMessages": {},"errorMessages": {}}}']);
+        $body = $this->createConfiguredMock(StreamInterface::class, ['getContents' => '{"0": {"importType": "data", "statusMessages": {},"errorMessages": {}}}']);
+
+        return $this->createConfiguredMock(ResponseInterface::class, ['getBody' => $body]);
     }
 
     private function importResponseBad(string $errorField): ResponseInterface

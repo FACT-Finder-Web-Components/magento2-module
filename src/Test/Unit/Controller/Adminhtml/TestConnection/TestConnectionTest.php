@@ -16,6 +16,7 @@ use Omikron\Factfinder\Model\Config\AuthConfig;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\StreamInterface;
 
 /**
  * @covers TestConnection
@@ -48,7 +49,8 @@ class TestConnectionTest extends TestCase
     {
         $credentialsFactory = $this->createConfiguredMock(CredentialsFactory::class, ['create' => $this->createMock(Credentials::class)]);
         $this->request      = $this->createMock(RequestInterface::class);
-        $clientMock         = $this->createConfiguredMock(ClientInterface::class, ['request' => $this->createConfiguredMock(ResponseInterface::class, ['getBody' => '{"status":"200"}'])]);
+        $body               = $this->createConfiguredMock(StreamInterface::class, ['getContents' => '{"status":"200"}']);
+        $clientMock         = $this->createConfiguredMock(ClientInterface::class, ['request' => $this->createConfiguredMock(ResponseInterface::class, ['getBody' => $body])]);
         $this->builderMock  = $this->createMock(ClientBuilder::class);
 
         $this->builderMock->method('withVersion')->willReturn($this->builderMock);
