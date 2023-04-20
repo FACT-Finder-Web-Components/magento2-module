@@ -93,6 +93,12 @@
     </type>
     <type name="Omikron\Factfinder\Model\Export\Catalog\ExportPreviewDataProvider">
         <arguments>
+            <argument name="productFields" xsi:type="array">
+                <item name="CategoryPath" xsi:type="object">Omikron\Factfinder\Model\Export\Catalog\ProductField\CategoryPath</item>
+                <item name="Brand" xsi:type="object">Omikron\Factfinder\Model\Export\Catalog\ProductField\Brand</item>
+                <item name="FilterAttributes" xsi:type="object">Omikron\Factfinder\Model\Export\Catalog\ProductField\FilterAttributes</item>
+                <item name="NumericalAttributes" xsi:type="object">Omikron\Factfinder\Model\Export\Catalog\ProductField\NumericalAttributes</item>
+            </argument>
             <argument name="entityTypes" xsi:type="array">
                 <item name="simple" xsi:type="string">Omikron\Factfinder\Model\Export\Catalog\ProductType\SimpleDataProvider</item>
                 <item name="configurable" xsi:type="string">Omikron\Factfinder\Model\Export\Catalog\ProductType\ConfigurableDataProvider</item>

@@ -20,7 +20,7 @@ class ExportPreviewDataProvider implements DataProviderInterface
     public function __construct(
         private readonly ExportPreviewProducts $products,
         private readonly ObjectManagerInterface $objectManager,
-        private readonly array $fields,
+        private readonly array $productFields,
         private readonly array $entityTypes,
         private readonly array $data,
     ) {}

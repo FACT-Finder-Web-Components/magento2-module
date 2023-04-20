@@ -25,7 +25,5 @@ class Json implements StreamInterface
      */
     public function finalize(): void
     {
-        //@phpcs:ignore Magento2.Security.LanguageConstruct.ExitUsage
-        exit();
     }
 }

@@ -1,6 +1,7 @@
 # Changelog
 ## Unreleased
 ### Fix
+- Export preview
 - Export
   - Fix problem with attribute values which are null in feeds with attributes that contain a number in the code
 
