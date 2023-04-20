@@ -99,12 +99,16 @@ class PushImportTest extends TestCase
 
     private function importRunningResponse(): ResponseInterface
     {
-        return $this->createConfiguredMock(ResponseInterface::class, ['getBody' => 'true']);
+        $body = $this->createConfiguredMock(StreamInterface::class, ['__toString' => 'true']);
+
+        return $this->createConfiguredMock(ResponseInterface::class, ['getBody' => $body]);
     }
 
     private function importNotRunningResponse(): ResponseInterface
     {
-        return $this->createConfiguredMock(ResponseInterface::class, ['getBody' => 'false']);
+        $body = $this->createConfiguredMock(StreamInterface::class, ['__toString' => 'false']);
+
+        return $this->createConfiguredMock(ResponseInterface::class, ['getBody' => $body]);
     }
 
     private function importResponseOk(): ResponseInterface
