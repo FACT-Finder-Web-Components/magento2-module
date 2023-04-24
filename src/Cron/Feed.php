@@ -34,7 +34,7 @@ class Feed
         private readonly CommunicationConfig    $communicationConfig,
         private readonly PushImport             $pushImport,
         private readonly FeedFileService        $feedFileService,
-        private readonly string                 $feedTypetype,
+        private readonly string                 $feedType,
     ) {}
 
     public function execute(): void
