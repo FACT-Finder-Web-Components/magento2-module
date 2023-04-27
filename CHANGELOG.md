@@ -1,4 +1,7 @@
 # Changelog
+## Unreleased
+### Fix
+- Fix problem with export cron configuration
 ## [v4.1.2] - 2023.04.14
 ### Fix
 - Export preview
