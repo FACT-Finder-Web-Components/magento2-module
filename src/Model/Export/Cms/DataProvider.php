@@ -26,7 +26,7 @@ class DataProvider implements DataProviderInterface
     {
         yield from [];
         foreach ($this->pages as $page) {
-            yield $this->pageFactory->create(['page' => $page, 'pageFields' => $this->pageFields]);
+            yield $this->pageFactory->create(['page' => $page, 'pageFields' => $this->fields]);
         }
     }
 }
