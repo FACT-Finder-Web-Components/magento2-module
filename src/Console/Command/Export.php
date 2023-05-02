@@ -86,6 +86,8 @@ class Export extends Command
                 }
             });
         }
+
+        return 0;
     }
 
     private function getStoreIds(int $storeId): array

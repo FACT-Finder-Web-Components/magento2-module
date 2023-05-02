@@ -2,6 +2,7 @@
 ## Unreleased
 ### Fix
 - Fix problem with export cron configuration
+- Fix invalid return type for CLI export
 ## [v4.1.2] - 2023.04.14
 ### Fix
 - Export preview
