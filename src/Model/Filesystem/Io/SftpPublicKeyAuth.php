@@ -22,7 +22,7 @@ class SftpPublicKeyAuth extends SftpBase
      */
     public function __construct(
         private readonly Filesystem $fileSystem,
-        private readonly FtpConfig $config,
+        private readonly FtpConfig $uploadConfig,
     ) {}
 
     public function open(array $args = [])
