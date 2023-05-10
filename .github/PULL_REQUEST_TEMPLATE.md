@@ -1,6 +1,8 @@
-- Solves issue: 
-- Description: 
-- Tested with Magento editions/versions: 
-- Tested with PHP versions: 
-
-**Please note that the source and target branch must be `master` ([details](https://github.com/FACT-Finder-Web-Components/magento2-module/blob/HEAD/.github/CONTRIBUTING.md)).**
+- Solves issue:
+    - Issue or task number/code, for example: FFWEB-2718
+- Description:
+    - changes description
+- Tested with Magento editions/versions:
+    - For example: 2.4.6
+- Tested with PHP versions:
+    - For example: 8.1

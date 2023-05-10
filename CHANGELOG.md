@@ -3,6 +3,7 @@
 ### Fix
 - Fix problem with export cron configuration
 - Fix invalid return type for CLI export
+- Fix problem with SFTP key auth connection
 ## [v4.1.2] - 2023.04.14
 ### Fix
 - Export preview
