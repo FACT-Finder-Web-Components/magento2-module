@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Omikron\Factfinder\ViewModel;
 
+use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Serialize\SerializerInterface;
 use Omikron\Factfinder\Model\Config\CommunicationParametersProvider;
 use Omikron\Factfinder\Model\FieldRoles;
@@ -23,6 +24,9 @@ class CommunicationTest extends TestCase
 
     /** @var MockObject|CommunicationParametersProvider */
     private MockObject $parametersProviderMock;
+
+    /** @var MockObject|ScopeConfigInterface  */
+    private MockObject $scopeConfigMock;
 
     /** @var Communication */
     private Communication $communication;
@@ -55,6 +59,7 @@ class CommunicationTest extends TestCase
         $this->parametersProviderMock = $this->createMock(CommunicationParametersProvider::class);
         $this->fieldRolesMock         = $this->createMock(FieldRoles::class);
         $this->serializerMock         = $this->createMock(SerializerInterface::class);
+        $this->scopeConfigMock        = $this->createMock(ScopeConfigInterface::class);
 
         $this->parametersProviderMock->method('getParameters')->willReturn([
             'url'        => 'http://some-url',
@@ -68,7 +73,8 @@ class CommunicationTest extends TestCase
         $this->communication = new Communication(
             $this->fieldRolesMock,
             $this->serializerMock,
-            $this->parametersProviderMock
+            $this->parametersProviderMock,
+            $this->scopeConfigMock,
         );
     }
 }
