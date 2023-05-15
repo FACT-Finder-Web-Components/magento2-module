@@ -68,7 +68,11 @@ class RecordList extends Template
         $paramsString = implode('&', array_filter([
                 parse_url($request->getRequestString(), PHP_URL_QUERY), //@phpcs:ignore Magento2.Functions.DiscouragedFunction.Discouraged
                 http_build_query($searchParams)
-            ]));
+        ]));
+
+        if (!str_contains($paramsString, 'sid') && $request->getCookie('ffwebc_sid', null) && !empty($paramsString)) {
+            $paramsString = sprintf('%s&sid=%s', $paramsString, $request->getCookie('ffwebc_sid', ''));
+        }
 
         return $this->searchAdapter->search($paramsString, $this->getRequest()->getFullActionName() === 'catalog_category_view');
     }
