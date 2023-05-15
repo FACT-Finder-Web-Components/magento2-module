@@ -1,6 +1,7 @@
 # Changelog
 ## Unreleased
 ### Fix
+- Add missing `sid` parameter for SSR FactFinder request
 - Fix problem with export cron configuration
 - Fix invalid return type for CLI export
 - Fix problem with SFTP key auth connection
