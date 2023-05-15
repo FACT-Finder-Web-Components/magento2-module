@@ -1,5 +1,5 @@
 # Changelog
-## Unreleased
+## [v4.1.3] - 2023.05.15
 ### Fix
 - Add missing `sid` parameter for SSR FactFinder request
 - Fix problem with export cron configuration
@@ -554,6 +554,7 @@
 ### Added
 - Feed Export: Export feed file is now available via separate link
 
+[v4.1.3]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v4.1.3
 [v4.1.2]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v4.1.2
 [v4.1.1]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v4.1.1
 [v4.1.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v4.1.0
