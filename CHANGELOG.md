@@ -5,6 +5,9 @@
 - Fix problem with export cron configuration
 - Fix invalid return type for CLI export
 - Fix problem with SFTP key auth connection
+### Change
+- Upgrade Web Components version to v4.2.7
+
 ## [v4.1.2] - 2023.04.14
 ### Fix
 - Export preview
