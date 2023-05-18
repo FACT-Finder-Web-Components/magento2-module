@@ -65,14 +65,20 @@ class RecordList extends Template
 
     protected function searchResult(RequestInterface $request, array $searchParams): array
     {
+        //workaround for FFWEB-2720
+        if (!empty($request->getCookie('ffwebc_sid', null))) {
+            $sid = sprintf('sid=%s', $request->getCookie('ffwebc_sid', ''));
+        } elseif (!empty($_COOKIE['ffwebc_sid'])) {
+            $sid = sprintf('sid=%s', $_COOKIE['ffwebc_sid']);
+        } else {
+            $sid = 'sid=';
+        }
+
         $paramsString = implode('&', array_filter([
                 parse_url($request->getRequestString(), PHP_URL_QUERY), //@phpcs:ignore Magento2.Functions.DiscouragedFunction.Discouraged
-                http_build_query($searchParams)
+                http_build_query($searchParams),
+                $sid
         ]));
-
-        if (!str_contains($paramsString, 'sid') && $request->getCookie('ffwebc_sid', null) && !empty($paramsString)) {
-            $paramsString = sprintf('%s&sid=%s', $paramsString, $request->getCookie('ffwebc_sid', ''));
-        }
 
         return $this->searchAdapter->search($paramsString, $this->getRequest()->getFullActionName() === 'catalog_category_view');
     }

@@ -2,6 +2,7 @@
 ## Unreleased
 ### Fix
 - Create one `ffwebc-sid` cookie per session
+- Improve transfer `sid` param for SSR request
 
 ## [v4.1.3] - 2023.05.15
 ### Fix
