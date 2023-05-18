@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Fix
+- Create one `ffwebc-sid` cookie per session
+
 ## [v4.1.3] - 2023.05.15
 ### Fix
 - Add missing `sid` parameter for SSR FactFinder request
