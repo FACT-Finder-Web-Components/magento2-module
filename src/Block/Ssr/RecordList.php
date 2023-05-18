@@ -68,8 +68,8 @@ class RecordList extends Template
         //workaround for FFWEB-2720
         if (!empty($request->getCookie('ffwebc_sid', null))) {
             $sid = sprintf('sid=%s', $request->getCookie('ffwebc_sid', ''));
-        } elseif (!empty($_COOKIE['ffwebc_sid'])) {
-            $sid = sprintf('sid=%s', $_COOKIE['ffwebc_sid']);
+        } elseif (!empty($_COOKIE['ffwebc_sid'])) { //@phpcs:ignore Magento2.Security.Superglobal.SuperglobalUsageWarning
+            $sid = sprintf('sid=%s', $_COOKIE['ffwebc_sid']); //@phpcs:ignore Magento2.Security.Superglobal.SuperglobalUsageWarning
         } else {
             $sid = 'sid=';
         }
