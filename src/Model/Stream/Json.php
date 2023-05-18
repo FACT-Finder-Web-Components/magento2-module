@@ -23,7 +23,7 @@ class Json implements StreamInterface
     /**
      * @SuppressWarnings(PHPMD)
      */
-    public function finalize(): void
+    public function finalize(): void //phpcs:ignore Magento2.CodeAnalysis.EmptyBlock.DetectedFunction
     {
     }
 }
