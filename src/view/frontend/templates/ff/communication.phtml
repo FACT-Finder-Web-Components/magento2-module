@@ -46,7 +46,10 @@ $searchImmediate = $communicationParameters['search-immediate'] ?? 'false';
         }
 
         <?php if ($viewModel->isSsrEnable()): ?>
-            document.cookie = 'ffwebc_sid=' + factfinder.common.localStorage.getItem('ff_sid') + '; path=/;';
+            const eventAggregator = factfinder.communication.EventAggregator;
+            eventAggregator.addBeforeDispatchingCallback(function (event) {
+                document.cookie = 'ffwebc_sid=' + factfinder.common.localStorage.getItem('ff_sid') + '; path=/;';
+            });
         <?php endif; ?>
 
         if (<?= /** @SuppressWarnings(PHPMD) */ $searchImmediate ?>) {
