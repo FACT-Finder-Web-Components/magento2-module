@@ -1,8 +1,9 @@
 # Changelog
-## Unreleased
+## [v4.1.4] - 2023.05.22
 ### Fix
-- Create one `ffwebc-sid` cookie per session
+- Create one `ffwebc_sid` cookie per session
 - Improve transfer `sid` param for SSR request
+- Implement hooking into the pipeline for create `sid` cookie
 
 ## [v4.1.3] - 2023.05.15
 ### Fix
@@ -559,6 +560,7 @@
 ### Added
 - Feed Export: Export feed file is now available via separate link
 
+[v4.1.4]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v4.1.4
 [v4.1.3]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v4.1.3
 [v4.1.2]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v4.1.2
 [v4.1.1]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v4.1.1
