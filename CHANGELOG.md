@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Fix
+- Fix sending sid for first session request (when SSR is active)
+
 ## [v4.1.4] - 2023.05.22
 ### Fix
 - Create one `ffwebc_sid` cookie per session
