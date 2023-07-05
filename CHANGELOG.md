@@ -1,5 +1,5 @@
 # Changelog
-## Unreleased
+## [v4.1.5] - 2023.07.05
 ### Fix
 - Fix sending sid for first session request (when SSR is active)
 
@@ -564,6 +564,7 @@
 ### Added
 - Feed Export: Export feed file is now available via separate link
 
+[v4.1.5]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v4.1.5
 [v4.1.4]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v4.1.4
 [v4.1.3]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v4.1.3
 [v4.1.2]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v4.1.2
