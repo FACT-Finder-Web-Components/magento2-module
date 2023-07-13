@@ -19,7 +19,7 @@ class PushImport
     private ExportConfig $exportConfig;
     private LoggerInterface $logger;
     private ClientBuilder $clientBuilder;
-    private string $pushImportResult;
+    private string $pushImportResult = '';
 
     public function __construct(
         ClientBuilder $clientBuilder,

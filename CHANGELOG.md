@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Fix
+- Set default value for $pushImportResult to prevent initialization exception
+
 ## [v4.1.5] - 2023.07.05
 ### Fix
 - Fix sending sid for first session request (when SSR is active)
