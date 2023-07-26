@@ -45,7 +45,7 @@ class Feed
 
         foreach ($this->storeManager->getStores() as $store) {
             $this->storeEmulation->runInStore((int) $store->getId(), function () use ($store) {
-                $storeId = $store->getId();
+                $storeId = (int) $store->getId();
                 if ($this->communicationConfig->isChannelEnabled($storeId)) {
                     $filename = $this->feedFileService->getFeedExportFilename(
                         $this->feedType,
