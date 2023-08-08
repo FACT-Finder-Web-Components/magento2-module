@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Fix
+- Fix problems in factfinder_feed_export cron job by casting `storeid` to int.
+
 ## [v4.1.6] - 2023.07.19
 ### Fix
 - Set default value for $pushImportResult to prevent initialization exception
