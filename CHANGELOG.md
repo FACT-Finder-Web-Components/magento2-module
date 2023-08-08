@@ -1,5 +1,5 @@
 # Changelog
-## Unreleased
+## [v4.1.7] - 2023.08.08
 ### Fix
 - Fix problems in factfinder_feed_export cron job by casting `storeid` to int.
 
@@ -572,6 +572,7 @@
 ### Added
 - Feed Export: Export feed file is now available via separate link
 
+[v4.1.7]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v4.1.7
 [v4.1.6]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v4.1.6
 [v4.1.5]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v4.1.5
 [v4.1.4]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v4.1.4
