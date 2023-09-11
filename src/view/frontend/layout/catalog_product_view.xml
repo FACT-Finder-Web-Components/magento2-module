@@ -7,6 +7,11 @@
                     <argument name="view_model" xsi:type="object">Omikron\Factfinder\ViewModel\ProductBasedComponent</argument>
                 </arguments>
             </block>
+            <block class="Magento\Framework\View\Element\Template" name="factfinder.campaign.pushed.products" template="Omikron_Factfinder::ff/campaign-pushed-products.phtml">
+                <arguments>
+                    <argument name="flag" xsi:type="string">is-product-campaign</argument>
+                </arguments>
+            </block>
             <block class="Magento\Framework\View\Element\Template" name="factfinder.recommendation" ifconfig="factfinder/components/recommendation" template="Omikron_Factfinder::ff/recommendation.phtml">
                 <arguments>
                     <argument name="view_model" xsi:type="object">Omikron\Factfinder\ViewModel\ProductBasedComponent</argument>

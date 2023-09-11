@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Add
+- Add product campaign to product detail page
+
 ## [v4.1.7] - 2023.08.08
 ### Fix
 - Fix problems in factfinder_feed_export cron job by casting `storeid` to int.
