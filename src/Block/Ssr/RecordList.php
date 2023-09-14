@@ -45,8 +45,8 @@ class RecordList extends Template
         $result = $this->searchResult($this->getRequest(), $this->getSearchParams());
 
         //Support redirect campaigns for SSR
-        if ($redirectDestination = $this->getRedirectCampaign($result)) {
-            $this->redirect->redirect($this->response, $redirectDestination);
+        if ($this->getRedirectCampaign($result)) {
+            $this->redirect->redirect($this->response, $this->getRedirectCampaign($result));
 
             return '';
         }
