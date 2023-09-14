@@ -2,6 +2,7 @@
 ## Unreleased
 ### Add
 - Add product campaign to product detail page
+- Support redirect campaigns for SSR
 
 ## [v4.1.7] - 2023.08.08
 ### Fix
