@@ -43,6 +43,14 @@ class RecordList extends Template
         }, $html);
 
         $result = $this->searchResult($this->getRequest(), $this->getSearchParams());
+
+        //Support redirect campaigns for SSR
+        if ($this->getRedirectCampaign($result)) {
+            $this->redirect->redirect($this->response, $this->getRedirectCampaign($result));
+
+            return '';
+        }
+
         if ($this->shouldRedirect($result)) {
             $this->redirectToProductPage($result);
 
@@ -125,5 +133,16 @@ class RecordList extends Template
     private function removeForwardSlash(string $url): string
     {
         return preg_replace('/\//', '', $url);
+    }
+
+    private function getRedirectCampaign(array $result): ?string
+    {
+        if (!empty($result['campaigns'])) {
+            $campaign = array_search('REDIRECT', array_column($result['campaigns'], 'flavour'));
+
+            return $result['campaigns'][$campaign]['target']['destination'] ?? null;
+        }
+
+        return null;
     }
 }
