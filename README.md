@@ -122,6 +122,8 @@ The module uses [Mustache.php](https://github.com/bobthecow/mustache.php) librar
 
 **Note:** More information about SSR concept you can find in the article [Server Side Rendering](https://web-components.fact-finder.de/documentation/4.x/server-side-rendering) from Web Components documentation.
 
+**Note:** If you have a problem with displaying Fact-Finder campaign while using SSR please set a delay time for loading the SSR component. The number of seconds depends on your website speed.
+
 ### Advanced Settings
 
 Advanced Settings contains additional parameters used for the `ff-communication` web component. Each setting is set to a
