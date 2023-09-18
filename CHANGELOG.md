@@ -1,12 +1,10 @@
 # Changelog
-## Unreleased
+## [v4.2.0] - 2023.09.18
 ### Add
 - Add product campaign to product detail page
 - Support redirect campaigns for SSR
-
 ### Fix
 - Fix displaying Fact-Finder campaigns for SSR
-
 ### Change
 - Upgrade Web Components version to v4.2.8
 
@@ -583,6 +581,7 @@
 ### Added
 - Feed Export: Export feed file is now available via separate link
 
+[v4.2.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v4.2.0
 [v4.1.7]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v4.1.7
 [v4.1.6]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v4.1.6
 [v4.1.5]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v4.1.5
