@@ -7,6 +7,9 @@
 ### Fix
 - Fix displaying Fact-Finder campaigns for SSR
 
+### Change
+- Upgrade Web Components version to v4.2.8
+
 ## [v4.1.7] - 2023.08.08
 ### Fix
 - Fix problems in factfinder_feed_export cron job by casting `storeid` to int.
