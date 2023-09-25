@@ -1,5 +1,5 @@
 # Changelog
-### Fix
+## [v4.2.1] - 2023.09.25
 - Fix problem with ssr/record-list.phtml template
 
 ## [v4.2.0] - 2023.09.18
@@ -584,6 +584,7 @@
 ### Added
 - Feed Export: Export feed file is now available via separate link
 
+[v4.2.1]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v4.2.1
 [v4.2.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v4.2.0
 [v4.1.7]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v4.1.7
 [v4.1.6]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v4.1.6
