@@ -1,4 +1,7 @@
 # Changelog
+### Fix
+- Fix problem with ssr/record-list.phtml template
+
 ## [v4.2.0] - 2023.09.18
 ### Add
 - Add product campaign to product detail page
