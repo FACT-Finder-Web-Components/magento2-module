@@ -10,6 +10,7 @@ use Magento\Framework\Phrase;
 use Omikron\FactFinder\Communication\Client\ClientBuilder;
 use Omikron\FactFinder\Communication\Credentials;
 use Omikron\FactFinder\Communication\Resource\AdapterFactory;
+use Omikron\Factfinder\Logger\FactFinderLogger;
 use Omikron\Factfinder\Model\Api\CredentialsFactory;
 use Omikron\Factfinder\Model\Config\AuthConfig;
 use Psr\Http\Client\ClientExceptionInterface;
@@ -21,19 +22,22 @@ class TestConnection extends Action
     private CredentialsFactory $credentialsFactory;
     private AuthConfig $authConfig;
     private ClientBuilder $clientBuilder;
+    private FactFinderLogger $logger;
 
     public function __construct(
         Action\Context $context,
         JsonFactory $jsonResultFactory,
         CredentialsFactory $credentialsFactory,
         AuthConfig $authConfig,
-        ClientBuilder $clientBuilder
+        ClientBuilder $clientBuilder,
+        FactFinderLogger $logger
     ) {
         parent::__construct($context);
         $this->jsonResultFactory  = $jsonResultFactory;
         $this->credentialsFactory = $credentialsFactory;
         $this->authConfig         = $authConfig;
         $this->clientBuilder      = $clientBuilder;
+        $this->logger = $logger;
     }
 
     public function execute()
@@ -54,6 +58,10 @@ class TestConnection extends Action
 
             $message = new Phrase('Connection successfully established.');
         } catch (ClientExceptionInterface $e) {
+            $this->logger->error(new Phrase(
+                'FACT-Finder response exception: %1, thrown at %2',
+                [$e->getMessage(), $e->getTraceAsString()]
+            ));
             $message = $e->getMessage();
         }
 

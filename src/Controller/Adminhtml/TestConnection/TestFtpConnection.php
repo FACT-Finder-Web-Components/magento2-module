@@ -7,6 +7,7 @@ namespace Omikron\Factfinder\Controller\Adminhtml\TestConnection;
 use Magento\Backend\App\Action;
 use Magento\Framework\Controller\Result\JsonFactory;
 use Magento\Framework\Phrase;
+use Omikron\Factfinder\Logger\FactFinderLogger;
 use Omikron\Factfinder\Model\Config\FtpConfig;
 use Omikron\Factfinder\Model\FtpUploader;
 
@@ -16,17 +17,20 @@ class TestFtpConnection extends Action
     private JsonFactory $jsonResultFactory;
     private FtpUploader $ftpUploader;
     private FtpConfig $ftpConfig;
+    private FactFinderLogger $logger;
 
     public function __construct(
         Action\Context $context,
         JsonFactory $jsonResultFactory,
         FtpUploader $ftpUploader,
-        FtpConfig $ftpConfig
+        FtpConfig $ftpConfig,
+        FactFinderLogger $logger
     ) {
         parent::__construct($context);
         $this->jsonResultFactory = $jsonResultFactory;
         $this->ftpUploader       = $ftpUploader;
         $this->ftpConfig         = $ftpConfig;
+        $this->logger            = $logger;
     }
 
     public function execute()
@@ -38,6 +42,10 @@ class TestFtpConnection extends Action
             $params  = $this->getConfig($this->getRealValuesFromObscured($request->getParams())) + $this->ftpConfig->toArray();
             $this->ftpUploader->testConnection($params);
         } catch (\Exception $e) {
+            $this->logger->error(new Phrase(
+                'FACT-Finder FTP exception: %1, thrown at %2',
+                [$e->getMessage(), $e->getTraceAsString()]
+            ));
             $message = $e->getMessage();
         }
 
