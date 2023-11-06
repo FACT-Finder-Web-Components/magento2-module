@@ -1,5 +1,11 @@
 # Changelog
+##  Unreleased
+### Add
+- Add campaigns to category view page
+- Improve logging system
+
 ## [v4.2.1] - 2023.09.25
+### Fix
 - Fix problem with ssr/record-list.phtml template
 
 ## [v4.2.0] - 2023.09.18

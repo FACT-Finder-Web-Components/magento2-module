@@ -11,6 +11,7 @@ use Magento\Framework\Controller\Result\JsonFactory;
 use Omikron\FactFinder\Communication\Client\ClientBuilder;
 use Omikron\FactFinder\Communication\Client\ClientInterface;
 use Omikron\FactFinder\Communication\Credentials;
+use Omikron\Factfinder\Logger\FactFinderLogger;
 use Omikron\Factfinder\Model\Api\CredentialsFactory;
 use Omikron\Factfinder\Model\Config\AuthConfig;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -63,7 +64,8 @@ class TestConnectionTest extends TestCase
             $this->createConfiguredMock(JsonFactory::class, ['create' => $this->createMock(JsonResult::class)]),
             $credentialsFactory,
             $this->createMock(AuthConfig::class),
-            $this->builderMock
+            $this->builderMock,
+            $this->createMock(FactFinderLogger::class)
         );
     }
 }
