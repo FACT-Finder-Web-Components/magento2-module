@@ -8,6 +8,7 @@ use Magento\Backend\App\Action\Context;
 use Magento\Framework\App\RequestInterface;
 use Magento\Framework\Controller\Result\Json as JsonResult;
 use Magento\Framework\Controller\Result\JsonFactory;
+use Omikron\Factfinder\Logger\FactFinderLogger;
 use Omikron\Factfinder\Model\Config\FtpConfig;
 use Omikron\Factfinder\Model\FtpUploader;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -77,7 +78,8 @@ class TestFtpConnectionTest extends TestCase
             $this->createConfiguredMock(Context::class, ['getRequest' => $this->request]),
             $this->createConfiguredMock(JsonFactory::class, ['create' => $this->jsonResult]),
             $this->ftpUploader,
-            $this->createMock(FtpConfig::class)
+            $this->createMock(FtpConfig::class),
+            $this->createMock(FactFinderLogger::class)
         );
     }
 }
