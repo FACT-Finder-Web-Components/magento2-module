@@ -10,7 +10,7 @@ use \InvalidArgumentException;
 
 class FeedFileService
 {
-    private const FEED_FILENAME_PATTERN = 'export.%type%.%channel%.csv';
+    private const FEED_FILENAME_PATTERN = 'export.%channel%.csv';
 
     /**
      * phpcs:disable Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore
@@ -28,7 +28,7 @@ class FeedFileService
             throw new InvalidArgumentException('Channel must not be empty');
         }
 
-        return str_replace(['%type%', '%channel%'], [$exportType, $channel], self::FEED_FILENAME_PATTERN);
+        return str_replace(['%channel%'], [$channel], self::FEED_FILENAME_PATTERN);
     }
 
     public function getExportPath(string $fileName): string
