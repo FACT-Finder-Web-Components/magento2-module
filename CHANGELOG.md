@@ -1,4 +1,7 @@
 # Changelog
+##  Unreleased
+### Add
+- Add landing page campaign
 ## [v4.2.2] - 2023.11.10
 ### Add
 - Add campaigns to category view page

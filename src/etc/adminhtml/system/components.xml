@@ -27,6 +27,11 @@
             <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
         </field>
 
+        <field id="campaign_landing_page" translate="label" type="select" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Landing Page Campaigns</label>
+            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+        </field>
+
         <field id="recommendation" translate="label" type="select" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1">
             <label>Recommendations</label>
             <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
