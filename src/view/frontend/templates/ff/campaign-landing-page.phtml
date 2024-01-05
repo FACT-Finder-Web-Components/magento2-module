@@ -1,0 +1,7 @@
+<?php
+/** @var Magento\Framework\View\Element\Template $block */
+$objectManagerCms = \Magento\Framework\App\ObjectManager::getInstance();
+$cmsPage = $objectManagerCms->get('\Magento\Cms\Model\Page');
+?>
+
+<ff-campaign-landing-page page-id="<?=  $cmsPage->getIdentifier() ?>"></ff-campaign-landing-page>
