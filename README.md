@@ -142,6 +142,8 @@ Here you can disabled them, if you do not use utilize this part of FACT-Finder f
 
 **Note:** Paging has been added cause with infinite scrolling enabled in ff-record list, this custom element is redundant  
 
+**Note:** Page id in Landing page campaign base on Magento CMS page Identifier name
+
 ### Custom Elements Options
 ![Custom Elements Options](docs/assets/custom-elements-options.png "Custom Elements Options")
 In this section you can find specific custom elements attributes, the values of which, you can configure.
