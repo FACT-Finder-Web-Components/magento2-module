@@ -4,6 +4,8 @@
 [![Build status](https://github.com/FACT-Finder-Web-Components/magento2-module/workflows/build/badge.svg)](https://github.com/FACT-Finder-Web-Components/magento2-module/actions)
 [![GitHub contributors](https://img.shields.io/github/contributors/FACT-Finder-Web-Components/magento2-module)](https://github.com/FACT-Finder-Web-Components/magento2-module/graphs/contributors)
 
+This is a new version of SDK (not released yet). Support for new WebComponents v. NG
+
 This document helps you integrate the FACT-Finder Web Components SDK into your Magento 2 Shop. In addition, it gives a
 concise overview of its primary functions. The first chapter *Installation* walks you through the suggested installation
 processes. The second chapter “Backend Configuration” explains the customisation options in the Magento 2 backend. The
