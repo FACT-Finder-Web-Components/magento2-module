@@ -10,13 +10,13 @@
     }
   ],
   "require": {
-    "php": "~8.1.0 || ~8.2.0",
-    "omikron/factfinder-communication-sdk": "^0.9.7",
-    "magento/framework": "~103.0.6",
-    "magento/module-catalog": "~104.0.6",
-    "magento/module-configurable-product": "~100.4.6",
-    "magento/module-directory": "~100.4.6",
-    "magento/module-store": "~101.1.6",
+    "php": "~8.1.0||~8.2.0||~8.3.0",
+    "omikron/factfinder-communication-sdk": "^0.9.8",
+    "magento/framework": "^103.0.6",
+    "magento/module-catalog": "^104.0.6",
+    "magento/module-configurable-product": "^100.4.6",
+    "magento/module-directory": "^100.4.6",
+    "magento/module-store": "^101.1.6",
     "mustache/mustache": "^2.14",
     "ext-json": "*",
     "phpseclib/phpseclib": "~3.0"
@@ -39,7 +39,19 @@
     "allow-plugins": {
       "magento/*": true,
       "omikron/*": true,
-      "mustache/mustache": true
+      "mustache/mustache": true,
+      "dealerdirect/phpcodesniffer-composer-installer": true
     }
+  },
+  "minimum-stability": "stable",
+  "prefer-stable": true,
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://repo.magento.com/"
+    }
+  ],
+  "extra": {
+    "magento-force": "override"
   }
 }
