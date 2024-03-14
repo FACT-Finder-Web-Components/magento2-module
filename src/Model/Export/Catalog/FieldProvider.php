@@ -22,7 +22,8 @@ class FieldProvider implements FieldProviderInterface
         private readonly GenericFieldFactory $fieldFactory,
         private readonly array $productFields = [],
         private readonly array $variantFields = [],
-    ) {}
+    ) {
+    }
 
     public function getVariantFields(): array
     {

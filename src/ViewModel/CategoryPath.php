@@ -21,7 +21,8 @@ class CategoryPath implements ArgumentInterface
         private readonly CommunicationConfig $communicationConfig,
         private readonly string              $param = 'CategoryPath',
         private readonly array               $initial = [],
-    ) {}
+    ) {
+    }
 
     public function __toString()
     {

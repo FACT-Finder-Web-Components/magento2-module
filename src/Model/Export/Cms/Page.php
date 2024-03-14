@@ -17,7 +17,8 @@ class Page implements ExportEntityInterface
     public function __construct(
         private readonly PageInterface $page,
         private readonly array $pageFields = [],
-    ) {}
+    ) {
+    }
 
     public function getId(): int
     {
@@ -38,8 +39,7 @@ class Page implements ExportEntityInterface
 
         return array_reduce(
             $this->pageFields,
-            fn (array $result, FieldInterface $field): array =>
-                [$field->getName() => $field->getValue($this->page)] + $result,
+            fn (array $result, FieldInterface $field): array => [$field->getName() => $field->getValue($this->page)] + $result,
             $data
         );
     }

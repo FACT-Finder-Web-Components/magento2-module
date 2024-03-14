@@ -19,7 +19,8 @@ class CategoryView implements ObserverInterface
     public function __construct(
         private readonly Registry $registry,
         private readonly FeatureConfig $config,
-    ) {}
+    ) {
+    }
 
     public function execute(Observer $observer)
     {

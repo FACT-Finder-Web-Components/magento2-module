@@ -16,7 +16,9 @@ class BasicAuth
      * phpcs:disable Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore
      * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.BraceOnSameLine
      */
-    public function __construct(private readonly ScopeConfigInterface $scopeConfig) {}
+    public function __construct(private readonly ScopeConfigInterface $scopeConfig)
+    {
+    }
 
     public function authenticate(string $username, string $password): bool
     {

@@ -1,7 +1,7 @@
 <?php
-/** @var Magento\Framework\View\Element\Template $block */
+/** @var Magento\Framework\Escaper $escaper */
 $objectManagerCms = \Magento\Framework\App\ObjectManager::getInstance();
-$cmsPage = $objectManagerCms->get('\Magento\Cms\Model\Page');
+$cmsPage = $objectManagerCms->get(\Magento\Cms\Model\Page::class);
 ?>
 
-<ff-campaign-landing-page page-id="<?=  $cmsPage->getIdentifier() ?>"></ff-campaign-landing-page>
+<ff-campaign-landing-page page-id="<?= $escaper->escapeHtml($cmsPage->getIdentifier()) ?>"></ff-campaign-landing-page>

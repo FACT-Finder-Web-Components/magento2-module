@@ -1,14 +1,15 @@
 <?php
 /** @var Magento\Framework\View\Element\Template $block */
 /** @var ?Omikron\Factfinder\ViewModel\ProductBasedComponent $viewModel */
+/** @var Magento\Framework\Escaper $escaper */
 $viewModel = $block->getViewModel();
 ?>
-<ff-recommendation max-results="<?=$block->escapeHtmlAttr($viewModel ? $viewModel->getMaxResult('recommendation') : $block->getData('max_results')) ?>"
-                   record-id="<?= $block->escapeHtmlAttr($viewModel ? $viewModel->getProduct()->getSku() : implode(',', (array) $block->getData('record_id'))) ?>"
+<ff-recommendation max-results="<?=$escaper->escapeHtmlAttr($viewModel ? $viewModel->getMaxResult('recommendation') : $block->getData('max_results')) ?>"
+                   record-id="<?= $escaper->escapeHtmlAttr($viewModel ? $viewModel->getProduct()->getSku() : implode(',', (array) $block->getData('record_id'))) ?>"
                    unresolved>
     <div class="block upsell">
         <div class="block-title title">
-            <strong role="heading" aria-level="2"><?= $block->escapeHtml(__('Recommendations')) ?></strong>
+            <strong role="heading" aria-level="2"><?= $escaper->escapeHtml(__('Recommendations')) ?></strong>
         </div>
         <div class="block-content content"><?= /* @noEscape */ $block->getBlockHtml('factfinder.recordlist.unsubscribed') ?></div>
     </div>

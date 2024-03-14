@@ -17,7 +17,8 @@ class FeedFactory
     public function __construct(
         private readonly ObjectManagerInterface $objectManager,
         private readonly array $feedPool
-    ) {}
+    ) {
+    }
 
     public function create(string $type, array $data = []): Feed
     {

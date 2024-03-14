@@ -1,10 +1,14 @@
 <?php
+/** @var Magento\Framework\Escaper $escaper */
 /** @var Magento\Framework\View\Element\Template $block */
 /** @var Omikron\Factfinder\ViewModel\ProductBasedComponent $viewModel */
 $viewModel = $block->getViewModel();
 ?>
 <div class="products wrapper grid products-grid">
-    <ff-record-list class="products list items product-items" subscribe="<?= $block->getData('subscribe') ? 'true' : 'false' ?>" unresolved>
+    <ff-record-list class="products list items product-items"
+                    subscribe="<?= $block->getData('subscribe') ? $escaper->escapeHtml('true') : $escaper->escapeHtml('false') ?>"
+                    unresolved
+    >
         <ff-record class="item product product-item">
             <div class="product-item-info" data-container="product-grid">
                 <a class="product-image-container" data-redirect="{{record.Deeplink}}" data-anchor="{{record.Deeplink}}" data-redirect-target="_self">
@@ -28,11 +32,11 @@ $viewModel = $block->getViewModel();
                         <div class="product-item-inner">
                             <div class="product actions product-item-actions">
                                 <div class="actions-primary">
-                                    <form action="<?= $block->escapeUrl($viewModel->getAddToCartUrl()) ?>" method="post" class="product_addtocart_form" novalidate="novalidate">
+                                    <form action="<?= $escaper->escapeUrl($viewModel->getAddToCartUrl()) ?>" method="post" class="product_addtocart_form" novalidate="novalidate">
                                         <?= /* @noEscape */ $block->getBlockHtml('formkey') ?>
                                         <input type="hidden" name="product" value="{{record.MagentoId}}"/>
                                         <button type="submit" title="Add to Cart" class="action tocart primary">
-                                            <span><?= $block->escapeHtml(__('Add to Cart')) ?></span>
+                                            <span><?= $escaper->escapeHtml(__('Add to Cart')) ?></span>
                                         </button>
                                     </form>
                                 </div>

@@ -23,7 +23,8 @@ class Products implements \IteratorAggregate
         private readonly SearchCriteriaBuilder $searchCriteriaBuilder,
         private readonly StoreManagerInterface $storeManager,
         private readonly int $batchSize = 300,
-    ) {}
+    ) {
+    }
 
     /**
      * @return Traversable|ProductInterface[]

@@ -25,7 +25,8 @@
     "pdepend/pdepend": "^2.16",
     "phpmd/phpmd" : "^2.15",
     "phpunit/phpunit": "~9.5.0",
-    "magento/magento-coding-standard": "*"
+    "magento/magento-coding-standard": "*",
+    "friendsofphp/php-cs-fixer": "^3.51"
   },
   "autoload": {
     "files": [

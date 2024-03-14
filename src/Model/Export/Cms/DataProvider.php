@@ -17,7 +17,8 @@ class DataProvider implements DataProviderInterface
         private readonly Pages $pages,
         private readonly PageFactory $pageFactory,
         private readonly array $fields,
-    ) {}
+    ) {
+    }
 
     /**
      * @return ExportEntityInterface[]

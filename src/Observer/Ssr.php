@@ -18,7 +18,8 @@ class Ssr implements ObserverInterface
     public function __construct(
         private readonly ScopeConfigInterface $scopeConfig,
         private readonly array $useForHandles = ['factfinder_result_index', 'factfinder_category_view'],
-    ) {}
+    ) {
+    }
 
     public function execute(Observer $observer)
     {

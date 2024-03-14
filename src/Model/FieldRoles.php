@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Omikron\Factfinder\Model;
 
-use Magento\Catalog\Api\Data\ProductInterface;
 use Magento\Config\Model\ResourceModel\Config as ConfigResource;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Serialize\SerializerInterface;
@@ -24,7 +23,8 @@ class FieldRoles
         private readonly ScopeConfigInterface $scopeConfig,
         private readonly ConfigResource $configResource,
         private readonly SimpleDataProviderFactory $dataProviderFactory
-    ) {}
+    ) {
+    }
 
     public function getFieldRoles(int $scopeId = null): array
     {

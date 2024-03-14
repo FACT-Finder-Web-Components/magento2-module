@@ -6,7 +6,6 @@ namespace Omikron\Factfinder\Model\Export;
 
 use Omikron\Factfinder\Api\Export\DataProviderInterface;
 use Omikron\Factfinder\Api\Export\FieldInterface;
-use Omikron\Factfinder\Api\Export\FieldProviderInterface;
 use Omikron\Factfinder\Api\ExporterInterface;
 use Omikron\Factfinder\Api\StreamInterface;
 
@@ -24,7 +23,8 @@ class Feed
         private readonly DataProviderInterface $dataProvider,
         private readonly array $fields,
         private readonly array $columns
-    ) {}
+    ) {
+    }
 
     public function generate(StreamInterface $stream): void
     {

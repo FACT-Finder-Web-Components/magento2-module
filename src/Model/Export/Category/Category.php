@@ -17,7 +17,8 @@ class Category implements ExportEntityInterface
     public function __construct(
         private readonly CategoryInterface $category,
         private readonly array $categoryFields,
-    ) {}
+    ) {
+    }
 
     public function getId(): int
     {
@@ -34,8 +35,7 @@ class Category implements ExportEntityInterface
 
         return array_reduce(
             $this->categoryFields,
-            fn (array $result, FieldInterface $field): array =>
-                [$field->getName() => $field->getValue($this->category)] + $result,
+            fn (array $result, FieldInterface $field): array => [$field->getName() => $field->getValue($this->category)] + $result,
             $data
         );
     }

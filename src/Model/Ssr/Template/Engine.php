@@ -14,7 +14,9 @@ class Engine implements TemplateEngineInterface
      * phpcs:disable Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore
      * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.BraceOnSameLine
      */
-    public function __construct(private readonly Mustache $engine) {}
+    public function __construct(private readonly Mustache $engine)
+    {
+    }
 
     public function render(BlockInterface $block, $templateFile, array $dictionary = [])
     {

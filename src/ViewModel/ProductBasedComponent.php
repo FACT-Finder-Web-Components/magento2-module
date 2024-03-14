@@ -25,7 +25,8 @@ class ProductBasedComponent implements ArgumentInterface
         private readonly ScopeConfigInterface $scopeConfig,
         private readonly UrlInterface         $urlBuilder,
         private readonly Registry             $registry,
-    ) {}
+    ) {
+    }
 
     public function getProduct(): ProductInterface
     {

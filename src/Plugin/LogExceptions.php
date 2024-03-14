@@ -19,7 +19,8 @@ class LogExceptions
     public function __construct(
         private readonly ScopeConfigInterface $scopeConfig,
         private readonly LoggerInterface $logger,
-    ) {}
+    ) {
+    }
 
     /**
      * @param PushImport $subject

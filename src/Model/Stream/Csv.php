@@ -22,7 +22,8 @@ class Csv implements StreamInterface
     public function __construct(
         private readonly Filesystem $filesystem,
         private readonly string     $filename = 'factfinder/export.csv'
-    ) {}
+    ) {
+    }
 
     /**
      * @param array $entity

@@ -16,7 +16,8 @@ class DataProvider implements DataProviderInterface
         private readonly Categories      $categories,
         private readonly CategoryFactory $categoryFactory,
         private readonly array           $fields
-    ) {}
+    ) {
+    }
 
     public function getEntities(): iterable
     {

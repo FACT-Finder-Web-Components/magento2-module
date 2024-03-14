@@ -17,7 +17,8 @@ class Loader implements Mustache_Loader
     public function __construct(
         private readonly Mustache_Loader $loader,
         private readonly FilterInterface $filter,
-    ) {}
+    ) {
+    }
 
     /**
      * @inheritDoc

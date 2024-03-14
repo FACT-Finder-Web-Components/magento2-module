@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace Omikron\Factfinder\Model\Export\Catalog\ProductField;
 
 use Magento\Catalog\Api\ProductAttributeRepositoryInterface;
+use Magento\Catalog\Model\Product;
 use Magento\Catalog\Model\ResourceModel\Eav\Attribute;
 use Magento\Framework\Model\AbstractModel;
 use Magento\Store\Model\StoreManagerInterface;
 use Omikron\Factfinder\Api\Export\FieldInterface;
 use Omikron\Factfinder\Model\Export\Catalog\AttributeValuesExtractor;
-use Magento\Catalog\Model\Product;
 
+#[AllowDynamicProperties]
 class GenericField implements FieldInterface
 {
     /**
@@ -23,7 +24,8 @@ class GenericField implements FieldInterface
         private readonly AttributeValuesExtractor $valuesExtractor,
         private readonly StoreManagerInterface $storeManager,
         private readonly string $attributeCode,
-    ) {}
+    ) {
+    }
 
     public function getName(): string
     {

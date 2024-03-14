@@ -24,7 +24,8 @@ class Pages implements \IteratorAggregate
         private readonly SearchCriteriaBuilder   $searchCriteriaBuilder,
         private readonly CmsConfig               $cmsConfig,
         private readonly StoreManagerInterface   $storeManager,
-    ) {}
+    ) {
+    }
 
     /**
      * @return Traversable|PageInterface[]

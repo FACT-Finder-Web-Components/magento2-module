@@ -6,13 +6,12 @@ namespace Omikron\Factfinder\Cron;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Store\Model\StoreManagerInterface;
-use Omikron\FactFinder\Communication\Resource\Builder;
+use Omikron\Factfinder\Api\StreamInterfaceFactory;
 use Omikron\Factfinder\Model\Api\PushImport;
 use Omikron\Factfinder\Model\Config\CommunicationConfig;
 use Omikron\Factfinder\Model\Export\FeedFactory as FeedGeneratorFactory;
 use Omikron\Factfinder\Model\FtpUploader;
 use Omikron\Factfinder\Model\StoreEmulation;
-use Omikron\Factfinder\Api\StreamInterfaceFactory;
 use Omikron\Factfinder\Service\FeedFileService;
 
 class Feed
@@ -35,7 +34,8 @@ class Feed
         private readonly PushImport             $pushImport,
         private readonly FeedFileService        $feedFileService,
         private readonly string                 $feedType,
-    ) {}
+    ) {
+    }
 
     public function execute(): void
     {

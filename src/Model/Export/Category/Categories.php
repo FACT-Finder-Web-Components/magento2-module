@@ -22,7 +22,8 @@ class Categories implements IteratorAggregate
         private readonly SearchCriteriaBuilder $searchCriteriaBuilder,
         private readonly StoreManagerInterface $storeManager,
         private readonly CategoryListInterface $categoryList,
-    ) {}
+    ) {
+    }
 
     /**
      * @return Traversable|CategoryInterface[]

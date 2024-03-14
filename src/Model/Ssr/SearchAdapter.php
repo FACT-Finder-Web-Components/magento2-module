@@ -22,7 +22,8 @@ class SearchAdapter
         private readonly CommunicationConfig $communicationConfig,
         private readonly CredentialsFactory $credentialsFactory,
         private readonly PriceFormatter $priceFormatter,
-    ) {}
+    ) {
+    }
 
     public function search(string $paramString, bool $navigationRequest): array
     {

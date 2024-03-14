@@ -17,7 +17,8 @@ class ProductImage implements FieldInterface
     public function __construct(
         private readonly ImageHelper $imageHelper,
         private readonly string $imageId = 'ff_export_image_url',
-    ) {}
+    ) {
+    }
 
     public function getName(): string
     {

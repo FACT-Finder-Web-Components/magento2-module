@@ -1,6 +1,6 @@
-<?php /** @var Magento\Framework\View\Element\Template $block */ ?>
+<?php /** @var Magento\Framework\Escaper $escaper */ ?>
 <div class="ff-products-per-page">
-    <span class="label"><?= $block->escapeHtml(__('Show')) ?></span>
+    <span class="label"><?= $escaper->escapeHtml(__('Show')) ?></span>
     <ff-products-per-page-select class="sorter-options" unresolved></ff-products-per-page-select>
-    <span class="limiter-text"><?= $block->escapeHtml(__('products per page')) ?></span>
+    <span class="limiter-text"><?= $escaper->escapeHtml(__('products per page')) ?></span>
 </div>

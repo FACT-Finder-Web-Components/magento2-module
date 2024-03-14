@@ -9,7 +9,6 @@ use Magento\Catalog\Model\Product\Type as ProductType;
 use Magento\Framework\ObjectManagerInterface;
 use Omikron\Factfinder\Api\Export\DataProviderInterface;
 use Omikron\Factfinder\Api\Export\ExportEntityInterface;
-use Omikron\Factfinder\Api\Export\FieldInterface;
 
 class ExportPreviewDataProvider implements DataProviderInterface
 {
@@ -23,7 +22,8 @@ class ExportPreviewDataProvider implements DataProviderInterface
         private readonly array $productFields,
         private readonly array $entityTypes,
         private readonly array $data,
-    ) {}
+    ) {
+    }
 
     /**
      * @return ExportEntityInterface[]

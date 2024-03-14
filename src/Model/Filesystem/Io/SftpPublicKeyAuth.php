@@ -10,8 +10,8 @@ use Magento\Framework\Exception\FileSystemException;
 use Magento\Framework\Filesystem;
 use Magento\Framework\Filesystem\Io\Sftp as SftpBase;
 use Omikron\Factfinder\Model\Config\FtpConfig;
-use phpseclib3\Crypt\PublicKeyLoader;
 use phpseclib3\Crypt\Common\PrivateKey;
+use phpseclib3\Crypt\PublicKeyLoader;
 use phpseclib3\Net\SFTP;
 
 class SftpPublicKeyAuth extends SftpBase
@@ -23,7 +23,8 @@ class SftpPublicKeyAuth extends SftpBase
     public function __construct(
         private readonly Filesystem $fileSystem,
         private readonly FtpConfig $uploadConfig,
-    ) {}
+    ) {
+    }
 
     public function open(array $args = [])
     {

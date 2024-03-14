@@ -1,13 +1,14 @@
 <?php
 /** @var Magento\Framework\View\Element\Template $block */
 /** @var Omikron\Factfinder\ViewModel\ProductBasedComponent|null $viewModel */
+/** @var Magento\Framework\Escaper $escaper */
 $viewModel = $block->getViewModel();
 ?>
 
-<ff-similar-products <?php if ($viewModel): ?> max-results="<?= $block->escapeHtmlAttr($viewModel->getMaxResult('similar_products')) ?>" record-id="<?= $block->escapeHtmlAttr($viewModel->getProduct()->getSku()) ?>" id-type="productNumber" <?php endif; ?> unresolved>
+<ff-similar-products <?php if ($viewModel): ?> max-results="<?= $escaper->escapeHtmlAttr($viewModel->getMaxResult('similar_products')) ?>" record-id="<?= $escaper->escapeHtmlAttr($viewModel->getProduct()->getSku()) ?>" id-type="productNumber" <?php endif; ?> unresolved>
     <div class="block upsell" data-limit="0" data-shuffle="0">
         <div class="block-title title">
-            <strong id="block-upsell-heading" role="heading" aria-level="2"><?= $block->escapeHtml(__('Similar products')) ?></strong>
+            <strong id="block-upsell-heading" role="heading" aria-level="2"><?= $escaper->escapeHtml(__('Similar products')) ?></strong>
         </div>
         <div class="block-content content" aria-labelledby="block-upsell-heading">
             <?= /* @noEscape */ $block->getBlockHtml('factfinder.recordlist.unsubscribed') ?>

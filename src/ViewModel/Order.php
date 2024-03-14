@@ -19,7 +19,8 @@ class Order implements ArgumentInterface
     public function __construct(
         private readonly Session $checkoutSession,
         private readonly CommunicationConfig $communicationConfig,
-    ) {}
+    ) {
+    }
 
     /**
      * @return OrderItem[]

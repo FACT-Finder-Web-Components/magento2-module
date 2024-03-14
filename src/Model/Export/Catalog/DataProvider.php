@@ -21,7 +21,8 @@ class DataProvider implements DataProviderInterface
         private readonly ObjectManagerInterface $objectManager,
         private readonly array $fields,
         private readonly array $entityTypes,
-    ) {}
+    ) {
+    }
 
     /**
      * @return ExportEntityInterface[]

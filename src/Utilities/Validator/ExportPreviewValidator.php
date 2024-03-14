@@ -21,7 +21,8 @@ class ExportPreviewValidator implements ValidatorInterface
         private readonly ProductRepositoryInterface $productRepository,
         private readonly ConfigurableType           $configurableType,
         private readonly int                        $entityId,
-    ) {}
+    ) {
+    }
 
     public function validate(): void
     {

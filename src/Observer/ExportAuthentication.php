@@ -24,7 +24,8 @@ class ExportAuthentication implements ObserverInterface
         private readonly ActionFlag     $actionFlag,
         private readonly Authentication $authentication,
         private readonly Credentials    $credentials,
-    ) {}
+    ) {
+    }
 
     public function execute(Observer $observer)
     {

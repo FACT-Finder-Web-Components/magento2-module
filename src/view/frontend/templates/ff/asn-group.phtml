@@ -1,4 +1,4 @@
-<?php /** @var Magento\Framework\View\Element\Template $block */ ?>
+<?php /** @var Magento\Framework\Escaper $escaper */ ?>
 
 <div slot="groupCaption" class="groupCaption">{{group.name}}</div>
 <ff-asn-group-element>
@@ -9,6 +9,6 @@
 <div data-container="detailedLinks"><div data-content="detailedLinks"></div></div>
 <div data-container="hiddenLinks"><div data-content="hiddenLinks"></div></div>
 
-<div data-container="removeFilter"><?= $block->escapeHtml(__('Remove Filter')) ?></div>
-<div data-container="showMore"><span class="text"><?= $block->escapeHtml(__('Show More')) ?></span></div>
-<div data-container="showLess"><span class="text"><?= $block->escapeHtml(__('Show Less')) ?></span></div>
+<div data-container="removeFilter"><?= $escaper->escapeHtml(__('Remove Filter')) ?></div>
+<div data-container="showMore"><span class="text"><?= $escaper->escapeHtml(__('Show More')) ?></span></div>
+<div data-container="showLess"><span class="text"><?= $escaper->escapeHtml(__('Show Less')) ?></span></div>

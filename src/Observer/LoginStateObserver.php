@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Omikron\Factfinder\Observer;
 
 use DateTime;
-use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Framework\Session\Config\ConfigInterface as SessionConfig;
 use Omikron\Factfinder\Model\SessionData;

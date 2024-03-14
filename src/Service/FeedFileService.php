@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Omikron\Factfinder\Service;
 
+use InvalidArgumentException;
 use Magento\Framework\App\Filesystem\DirectoryList;
 use Magento\Framework\Filesystem;
-use \InvalidArgumentException;
 
 class FeedFileService
 {
@@ -16,7 +16,9 @@ class FeedFileService
      * phpcs:disable Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore
      * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.BraceOnSameLine
      */
-    public function __construct(private readonly Filesystem $fileSystem) {}
+    public function __construct(private readonly Filesystem $fileSystem)
+    {
+    }
 
     public function getFeedExportFilename(string $exportType, string $channel): string
     {

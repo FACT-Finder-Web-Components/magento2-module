@@ -21,7 +21,8 @@ class RedirectSearch implements ObserverInterface
         private readonly RedirectInterface $redirect,
         private readonly ResponseInterface $response,
         private readonly CommunicationConfig $config,
-    ) {}
+    ) {
+    }
 
     public function execute(Observer $observer)
     {

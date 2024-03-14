@@ -20,7 +20,8 @@ class SessionData implements SectionSourceInterface, ParametersSourceInterface
         private readonly CustomerSession      $customerSession,
         private readonly ScopeConfigInterface $scopeConfig,
         private readonly RemoteAddress        $remoteAddress,
-    ) {}
+    ) {
+    }
 
     public function getUserId(): string
     {

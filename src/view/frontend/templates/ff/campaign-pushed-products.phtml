@@ -1,5 +1,8 @@
-<?php /** @var Magento\Framework\View\Element\Template $block */ ?>
+<?php
+/** @var Magento\Framework\View\Element\Template $block */
+/** @var Magento\Framework\Escaper $escaper */
+?>
 <ff-campaign-pushed-products <?= /* @noEscape */ $block->getFlag() ?> unresolved>
-    <span><?= $block->escapeHtml(__('Product Campaign')) ?></span>
+    <span><?= $escaper->escapeHtml(__('Product Campaign')) ?></span>
     <?= /* @noEscape */ $block->getBlockHtml('factfinder.recordlist.unsubscribed') ?>
 </ff-campaign-pushed-products>

@@ -2,9 +2,9 @@
 
 namespace Omikron\Factfinder\Model\Export\Catalog;
 
-use Omikron\Factfinder\Api\Filter\FilterInterface;
 use Magento\Catalog\Model\Product;
 use Magento\Catalog\Model\ResourceModel\Eav\Attribute;
+use Omikron\Factfinder\Api\Filter\FilterInterface;
 use Omikron\Factfinder\Model\Filter\TextFilter;
 use Omikron\Factfinder\Model\Formatter\NumberFormatter;
 use PHPUnit\Framework\MockObject\MockObject;

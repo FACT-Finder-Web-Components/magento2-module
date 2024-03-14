@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Omikron\Factfinder\Test\Unit\Plugin;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
-use Omikron\Factfinder\Model\SessionData;
 use Magento\Store\Model\ScopeInterface;
+use Omikron\Factfinder\Model\SessionData;
 use Omikron\Factfinder\Plugin\AnonymizeUserId;
 use PHPUnit\Framework\TestCase;
 

@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Omikron\Factfinder\Test\Integration\Model;
 
-use PHPUnit\Framework\TestCase;
-use Magento\TestFramework\Helper\Bootstrap;
-use Magento\Framework\ObjectManagerInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Framework\ObjectManagerInterface;
+use Magento\TestFramework\Helper\Bootstrap;
 use Omikron\Factfinder\Model\FieldRoles as FieldRolesModel;
+use PHPUnit\Framework\TestCase;
 
 class FieldRolesTest extends TestCase
 {
