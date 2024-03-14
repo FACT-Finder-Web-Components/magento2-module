@@ -15,10 +15,6 @@ use Omikron\Factfinder\Model\Export\Catalog\AttributeValuesExtractor;
 #[AllowDynamicProperties]
 class GenericField implements FieldInterface
 {
-    /**
-     * phpcs:disable Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore
-     * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.BraceOnSameLine
-     */
     public function __construct(
         private readonly ProductAttributeRepositoryInterface $attributeRepository,
         private readonly AttributeValuesExtractor $valuesExtractor,

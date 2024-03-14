@@ -13,10 +13,6 @@ use Omikron\Factfinder\Model\Config\CommunicationConfig;
 
 class RedirectSearch implements ObserverInterface
 {
-    /**
-     * phpcs:disable Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore
-     * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.BraceOnSameLine
-     */
     public function __construct(
         private readonly RedirectInterface $redirect,
         private readonly ResponseInterface $response,

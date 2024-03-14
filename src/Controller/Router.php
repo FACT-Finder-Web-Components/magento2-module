@@ -13,10 +13,6 @@ class Router implements RouterInterface
 {
     public const FRONT_NAME = 'fact-finder';
 
-    /**
-     * phpcs:disable Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore
-     * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.BraceOnSameLine
-     */
     public function __construct(private readonly ActionFactory $actionFactory)
     {
     }

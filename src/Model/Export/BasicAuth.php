@@ -12,10 +12,6 @@ class BasicAuth
     private const CONFIG_PATH_USERNAME = 'factfinder/basic_auth_data_transfer/ff_upload_url_user';
     private const CONFIG_PATH_PASSWORD = 'factfinder/basic_auth_data_transfer/ff_upload_url_password';
 
-    /**
-     * phpcs:disable Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore
-     * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.BraceOnSameLine
-     */
     public function __construct(private readonly ScopeConfigInterface $scopeConfig)
     {
     }

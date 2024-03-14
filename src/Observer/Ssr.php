@@ -11,10 +11,6 @@ use Magento\Store\Model\ScopeInterface;
 
 class Ssr implements ObserverInterface
 {
-    /**
-     * phpcs:disable Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore
-     * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.BraceOnSameLine
-     */
     public function __construct(
         private readonly ScopeConfigInterface $scopeConfig,
         private readonly array $useForHandles = ['factfinder_result_index', 'factfinder_category_view'],

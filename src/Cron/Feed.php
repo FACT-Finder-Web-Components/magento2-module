@@ -18,11 +18,6 @@ class Feed
 {
     private const PATH_CONFIGURABLE_CRON_IS_ENABLED = 'factfinder/configurable_cron/ff_cron_enabled';
 
-    /**
-     * @SuppressWarnings(PHPMD.ExcessiveParameterList)
-     * phpcs:disable Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore
-     * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.BraceOnSameLine
-     */
     public function __construct(
         private readonly ScopeConfigInterface   $scopeConfig,
         private readonly StoreManagerInterface  $storeManager,

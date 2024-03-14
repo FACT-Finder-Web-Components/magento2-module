@@ -16,10 +16,6 @@ class ProductBasedComponent implements ArgumentInterface
     private const PATH_SHOW_ADD_TO_CART_BUTTON = 'factfinder/general/show_add_to_cart_button';
     private const PATH_MAX_RESULT = 'factfinder/components_options/max_results_';
 
-    /**
-     * phpcs:disable Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore
-     * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.BraceOnSameLine
-     */
     public function __construct(
         private readonly Image                $imageHelper,
         private readonly ScopeConfigInterface $scopeConfig,

@@ -12,10 +12,6 @@ use Omikron\Factfinder\Api\Export\ExportEntityInterface;
 
 class ExportPreviewDataProvider implements DataProviderInterface
 {
-    /**
-     * phpcs:disable Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore
-     * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.BraceOnSameLine
-     */
     public function __construct(
         private readonly ExportPreviewProducts $products,
         private readonly ObjectManagerInterface $objectManager,

@@ -12,10 +12,6 @@ use Psr\Log\LoggerInterface;
 
 class LogExceptions
 {
-    /**
-     * phpcs:disable Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore
-     * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.BraceOnSameLine
-     */
     public function __construct(
         private readonly ScopeConfigInterface $scopeConfig,
         private readonly LoggerInterface $logger,

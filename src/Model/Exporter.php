@@ -11,10 +11,6 @@ use Omikron\Factfinder\Api\StreamInterface;
 
 class Exporter implements ExporterInterface
 {
-    /**
-     * phpcs:disable Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore
-     * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.BraceOnSameLine
-     */
     public function __construct(private readonly FilterInterface $filter)
     {
     }

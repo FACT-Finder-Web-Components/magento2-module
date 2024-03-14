@@ -14,10 +14,6 @@ class FieldRoles
 {
     private const PATH_PRODUCT_FIELD_ROLE = 'factfinder/general/tracking_product_number_field_role';
 
-    /**
-     * phpcs:disable Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore
-     * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.BraceOnSameLine
-     */
     public function __construct(
         private readonly SerializerInterface $serializer,
         private readonly ScopeConfigInterface $scopeConfig,

@@ -16,10 +16,6 @@ use phpseclib3\Net\SFTP;
 
 class SftpPublicKeyAuth extends SftpBase
 {
-    /**
-     * phpcs:disable Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore
-     * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.BraceOnSameLine
-     */
     public function __construct(
         private readonly Filesystem $fileSystem,
         private readonly FtpConfig $uploadConfig,

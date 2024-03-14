@@ -12,10 +12,6 @@ class AnonymizeUserId
 {
     private const PATH_ANONYMIZE_USER_ID = 'factfinder/advanced/anonymize_user_id';
 
-    /**
-     * phpcs:disable Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore
-     * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.BraceOnSameLine
-     */
     public function __construct(private readonly ScopeConfigInterface $scopeConfig)
     {
     }
