@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Omikron\Factfinder\Model\Export\Cms\Field;
 
-use Magento\Cms\Api\Data\PageInterface;
 use Magento\Framework\Model\AbstractModel;
 use Magento\Framework\UrlInterface;
 use Magento\Store\Api\Data\StoreInterface;

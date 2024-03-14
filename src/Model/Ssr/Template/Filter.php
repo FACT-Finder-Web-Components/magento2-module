@@ -9,11 +9,9 @@ use Omikron\Factfinder\Model\FieldRoles;
 
 class Filter implements FilterInterface
 {
-    /**
-     * phpcs:disable Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore
-     * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.BraceOnSameLine
-     */
-    public function __construct(private readonly FieldRoles $fieldRoles) {}
+    public function __construct(private readonly FieldRoles $fieldRoles)
+    {
+    }
 
     public function filterValue(string $value): string
     {

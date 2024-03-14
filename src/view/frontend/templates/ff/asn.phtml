@@ -1,4 +1,6 @@
-<?php /** @var Magento\Framework\View\Element\Template $block */
+<?php
+/** @var Magento\Framework\View\Element\Template $block */
+/** @var Magento\Framework\Escaper $escaper */
 
 /** @var string $categoryPathFieldName */
 $categoryPathFieldName = (string) $block->getData('category_path_field_name');
@@ -28,7 +30,7 @@ $isCategoryPage = (bool) $block->getData('is_category_page'); ?>
                 </ff-slider>
             </ff-slider-control>
 
-            <div data-container="removeFilter"><?= $block->escapeHtml(__('Remove Filter')) ?></div>
+            <div data-container="removeFilter"><?= $escaper->escapeHtml(__('Remove Filter')) ?></div>
         </ff-asn-group-slider>
     </ff-asn>
 </div>

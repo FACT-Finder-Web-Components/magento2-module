@@ -4,23 +4,20 @@ declare(strict_types=1);
 
 namespace Omikron\Factfinder\Model\Export\Catalog;
 
+use DateTime;
 use Magento\Catalog\Model\Product;
 use Magento\Catalog\Model\ResourceModel\Eav\Attribute;
 use Omikron\Factfinder\Api\Filter\FilterInterface;
 use Omikron\Factfinder\Model\Formatter\NumberFormatter;
 use UnexpectedValueException;
-use DateTime;
 
 class AttributeValuesExtractor
 {
-    /**
-     * phpcs:disable Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore
-     * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.BraceOnSameLine
-     */
     public function __construct(
         private readonly FilterInterface $filter,
         private readonly NumberFormatter $numberFormatter,
-    ) {}
+    ) {
+    }
 
     /**
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)

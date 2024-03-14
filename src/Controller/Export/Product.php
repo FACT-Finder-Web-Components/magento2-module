@@ -8,10 +8,10 @@ use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\App\Response\Http\FileFactory;
 use Magento\Store\Model\StoreManagerInterface;
+use Omikron\Factfinder\Api\StreamInterfaceFactory;
 use Omikron\Factfinder\Model\Config\CommunicationConfig;
 use Omikron\Factfinder\Model\Export\FeedFactory as FeedGeneratorFactory;
 use Omikron\Factfinder\Model\StoreEmulation;
-use Omikron\Factfinder\Api\StreamInterfaceFactory;
 use Omikron\Factfinder\Service\FeedFileService;
 
 class Product extends Action

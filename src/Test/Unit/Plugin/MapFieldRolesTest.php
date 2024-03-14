@@ -34,7 +34,7 @@ class MapFieldRolesTest extends TestCase
     public function test_it_will_map_field_roles_in_ng()
     {
         $this->configMock->method('getVersion')->willReturn('ng');
-        $callbackMock = fn(array $fieldRoles, int $storeId) => $this->assertArrayHasKey('masterArticleNumber', $fieldRoles);
+        $callbackMock = fn (array $fieldRoles, int $storeId) => $this->assertArrayHasKey('masterArticleNumber', $fieldRoles);
         $this->plugin->aroundSaveFieldRoles($this->createMock(FieldRoles::class), $callbackMock, $this->fieldRoles, 1);
     }
 

@@ -11,7 +11,6 @@ use Magento\Store\Model\StoreManagerInterface;
 use Omikron\FactFinder\Communication\Client\ClientBuilder;
 use Omikron\FactFinder\Communication\Resource\AdapterFactory;
 use Omikron\FactFinder\Communication\Version;
-use Omikron\Factfinder\Exception\ResponseException;
 use Omikron\Factfinder\Model\Api\CredentialsFactory;
 use Omikron\Factfinder\Model\Config\CommunicationConfig;
 use Omikron\Factfinder\Model\FieldRoles;

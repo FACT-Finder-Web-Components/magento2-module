@@ -6,7 +6,6 @@ namespace Omikron\Factfinder\Model\Export;
 
 use Omikron\Factfinder\Api\Export\DataProviderInterface;
 use Omikron\Factfinder\Api\Export\FieldInterface;
-use Omikron\Factfinder\Api\Export\FieldProviderInterface;
 use Omikron\Factfinder\Api\ExporterInterface;
 use Omikron\Factfinder\Api\StreamInterface;
 
@@ -15,16 +14,13 @@ use Omikron\Factfinder\Api\StreamInterface;
  */
 class Feed
 {
-    /**
-     * phpcs:disable Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore
-     * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.BraceOnSameLine
-     */
     public function __construct(
         private readonly ExporterInterface $exporter,
         private readonly DataProviderInterface $dataProvider,
         private readonly array $fields,
         private readonly array $columns
-    ) {}
+    ) {
+    }
 
     public function generate(StreamInterface $stream): void
     {

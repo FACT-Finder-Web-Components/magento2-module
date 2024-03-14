@@ -29,7 +29,7 @@ class RecordListTest extends AbstractController
 
     public function test_will_redirect_to_product_page_on_articleNumberSearch()
     {
-        $body         = include(__DIR__ . '/../../_files/ng_search_response.php');
+        $body         = include __DIR__ . '/../../_files/ng_search_response.php';
         $responseMock = new Response(200, [], $body);
         $this->clientMock
             ->expects($this->atLeastOnce())
@@ -42,7 +42,7 @@ class RecordListTest extends AbstractController
 
     public function test_will_not_redirect_to_product_page_if_not_articleNumberSearch()
     {
-        $body                      = json_decode(include(__DIR__ . '/../../_files/ng_search_response.php'));
+        $body                      = json_decode(include __DIR__ . '/../../_files/ng_search_response.php');
         $body->articleNumberSearch = false;
         $responseMock              = new Response(200, [], json_encode($body));
 
@@ -58,7 +58,7 @@ class RecordListTest extends AbstractController
     public function test_will_not_lead_to_home_page_when_have_relative_product_url()
     {
         $this->_objectManager->removeSharedInstance(Redirect::class);
-        $body                                  = json_decode(include(__DIR__ . '/../../_files/ng_search_response.php'));
+        $body                                  = json_decode(include __DIR__ . '/../../_files/ng_search_response.php');
         $body->hits[0]->masterValues->Deeplink = '/joust-duffle-bag.html';
         $responseMock                          = new Response(200, [], json_encode($body));
 

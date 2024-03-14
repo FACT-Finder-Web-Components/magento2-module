@@ -10,14 +10,11 @@ use Omikron\Factfinder\Api\Export\FieldProviderInterface;
 
 class FeedFactory
 {
-    /**
-     * phpcs:disable Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore
-     * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.BraceOnSameLine
-     */
     public function __construct(
         private readonly ObjectManagerInterface $objectManager,
         private readonly array $feedPool
-    ) {}
+    ) {
+    }
 
     public function create(string $type, array $data = []): Feed
     {

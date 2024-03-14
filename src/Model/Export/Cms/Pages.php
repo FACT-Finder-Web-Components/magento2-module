@@ -15,16 +15,13 @@ use Traversable;
 
 class Pages implements \IteratorAggregate
 {
-    /**
-     * phpcs:disable Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore
-     * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.BraceOnSameLine
-     */
     public function __construct(
         private readonly PageRepositoryInterface $pageRepository,
         private readonly SearchCriteriaBuilder   $searchCriteriaBuilder,
         private readonly CmsConfig               $cmsConfig,
         private readonly StoreManagerInterface   $storeManager,
-    ) {}
+    ) {
+    }
 
     /**
      * @return Traversable|PageInterface[]

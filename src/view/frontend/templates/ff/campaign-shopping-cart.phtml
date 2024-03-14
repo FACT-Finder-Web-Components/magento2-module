@@ -1,4 +1,5 @@
 <?php
 /** @var Magento\Framework\View\Element\Template $block */
+/** @var Magento\Framework\Escaper $escaper */
 ?>
-<ff-campaign-shopping-cart record-id="<?= $block->escapeHtmlAttr(implode(',', (array) $block->getData('record_id'))) ?>"></ff-campaign-shopping-cart>
+<ff-campaign-shopping-cart record-id="<?= $escaper->escapeHtmlAttr(implode(',', (array) $block->getData('record_id'))) ?>"></ff-campaign-shopping-cart>

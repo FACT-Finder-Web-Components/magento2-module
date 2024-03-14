@@ -15,14 +15,11 @@ class Csv implements StreamInterface
 {
     private ?WriteInterface $stream;
 
-    /**
-     * phpcs:disable Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore
-     * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.BraceOnSameLine
-     */
     public function __construct(
         private readonly Filesystem $filesystem,
         private readonly string     $filename = 'factfinder/export.csv'
-    ) {}
+    ) {
+    }
 
     /**
      * @param array $entity

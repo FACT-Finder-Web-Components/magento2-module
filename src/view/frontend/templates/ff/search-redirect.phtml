@@ -1,8 +1,11 @@
-<?php /** @var Magento\Framework\View\Element\Template $block */ ?>
+<?php
+/** @var Magento\Framework\View\Element\Template $block */
+/** @var Magento\Framework\Escaper $escaper */
+?>
 <script type="text/x-magento-init">
 {
   ".search-wrapper": {
-    "Omikron_Factfinder/js/search-redirect": {"targetUrl": "<?= $block->escapeJs($block->getUrl('factfinder/result')) ?>"}
+    "Omikron_Factfinder/js/search-redirect": {"targetUrl": "<?= $escaper->escapeJs($block->getUrl('factfinder/result')) ?>"}
   }
 }
 </script>

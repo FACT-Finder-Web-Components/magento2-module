@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace Omikron\Factfinder\Model\Export\Cms\Field;
 
-use Magento\Cms\Api\Data\PageInterface;
 use Magento\Email\Model\Template\Filter;
+use Magento\Framework\Model\AbstractModel;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Magento\Framework\Model\AbstractModel;
 
 /**
  * @covers Image

@@ -12,14 +12,11 @@ use Omikron\Factfinder\Model\Config\FeatureConfig;
 
 class CategoryView implements ObserverInterface
 {
-    /**
-     * phpcs:disable Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore
-     * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.BraceOnSameLine
-     */
     public function __construct(
         private readonly Registry $registry,
         private readonly FeatureConfig $config,
-    ) {}
+    ) {
+    }
 
     public function execute(Observer $observer)
     {

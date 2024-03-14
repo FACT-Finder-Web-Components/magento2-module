@@ -10,11 +10,9 @@ use Omikron\Factfinder\Api\StreamInterface;
 
 class Stdout implements StreamInterface
 {
-    /**
-     * phpcs:disable Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore
-     * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.BraceOnSameLine
-     */
-    public function __construct(private readonly DriverInterface $file) {}
+    public function __construct(private readonly DriverInterface $file)
+    {
+    }
 
     public function addEntity(array $entity): void
     {

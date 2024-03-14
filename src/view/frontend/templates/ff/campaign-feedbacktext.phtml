@@ -1,2 +1,5 @@
-<?php /** @var Magento\Framework\View\Element\Template $block */ ?>
-<ff-campaign-feedbacktext label="<?= $block->escapeHtml($block->getLabel()) ?>" <?= /* @noEscape */ $block->getFlag() ?> unresolved>{{{text}}}</ff-campaign-feedbacktext>
+<?php
+/** @var Magento\Framework\View\Element\Template $block */
+/** @var Magento\Framework\Escaper $escaper */
+?>
+<ff-campaign-feedbacktext label="<?= $escaper->escapeHtml($block->getLabel()) ?>" <?= /* @noEscape */ $block->getFlag() ?> unresolved>{{{text}}}</ff-campaign-feedbacktext>

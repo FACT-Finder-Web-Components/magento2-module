@@ -1,12 +1,14 @@
 <?php
 /** @var Magento\Framework\View\Element\Template $block */
 /** @var Omikron\Factfinder\ViewModel\Communication $viewModel */
+/** @var Magento\Framework\Escaper $escaper */
 $viewModel  = $block->getViewModel();
 $communicationParameters = (array) $block->getData('communication_parameters');
 $parameters = $viewModel->getParameters($communicationParameters);
 $searchImmediate = $communicationParameters['search-immediate'] ?? 'false';
 ?>
-<ff-communication<?php foreach ($parameters as $key => $value) /* @noEscape */ echo sprintf(' %s="%s"', $key, $block->escapeHtmlAttr($value)) ?>></ff-communication>
+<ff-communication<?php foreach ($parameters as $key => $value) { /* @noEscape */ echo sprintf(' %s="%s"', $key, $escaper->escapeHtmlAttr($value));} ?>>
+</ff-communication>
 
 <?php if ($viewModel->isSsrEnable()): ?>
     <script>

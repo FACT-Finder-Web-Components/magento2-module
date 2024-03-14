@@ -16,15 +16,12 @@ use Omikron\Factfinder\Model\Export\BasicAuth as Authentication;
  */
 class ExportAuthentication implements ObserverInterface
 {
-    /**
-     * phpcs:disable Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore
-     * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.BraceOnSameLine
-     */
     public function __construct(
         private readonly ActionFlag     $actionFlag,
         private readonly Authentication $authentication,
         private readonly Credentials    $credentials,
-    ) {}
+    ) {
+    }
 
     public function execute(Observer $observer)
     {

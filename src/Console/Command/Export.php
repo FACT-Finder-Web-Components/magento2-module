@@ -6,12 +6,12 @@ namespace Omikron\Factfinder\Console\Command;
 
 use Magento\Framework\App\State;
 use Magento\Store\Model\StoreManagerInterface;
+use Omikron\Factfinder\Api\StreamInterfaceFactory;
 use Omikron\Factfinder\Model\Api\PushImport;
 use Omikron\Factfinder\Model\Config\CommunicationConfig;
 use Omikron\Factfinder\Model\Export\FeedFactory as FeedGeneratorFactory;
 use Omikron\Factfinder\Model\FtpUploader;
 use Omikron\Factfinder\Model\StoreEmulation;
-use Omikron\Factfinder\Api\StreamInterfaceFactory;
 use Omikron\Factfinder\Service\FeedFileService;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;

@@ -9,21 +9,17 @@ use Magento\Catalog\Model\Product\Type as ProductType;
 use Magento\Framework\ObjectManagerInterface;
 use Omikron\Factfinder\Api\Export\DataProviderInterface;
 use Omikron\Factfinder\Api\Export\ExportEntityInterface;
-use Omikron\Factfinder\Api\Export\FieldInterface;
 
 class ExportPreviewDataProvider implements DataProviderInterface
 {
-    /**
-     * phpcs:disable Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore
-     * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.BraceOnSameLine
-     */
     public function __construct(
         private readonly ExportPreviewProducts $products,
         private readonly ObjectManagerInterface $objectManager,
         private readonly array $productFields,
         private readonly array $entityTypes,
         private readonly array $data,
-    ) {}
+    ) {
+    }
 
     /**
      * @return ExportEntityInterface[]

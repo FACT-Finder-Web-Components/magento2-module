@@ -1,6 +1,7 @@
 <?php
+/** @var Magento\Framework\Escaper $escaper */
 /** @var Magento\Framework\View\Element\Template $block */
 /** @var Omikron\Factfinder\ViewModel\ProductBasedComponent $viewModel */
 $viewModel = $block->getViewModel();
 ?>
-<ff-campaign-product record-id="<?= $block->escapeHtmlAttr($viewModel->getProduct()->getSku()) ?>"></ff-campaign-product>
+<ff-campaign-product record-id="<?= $escaper->escapeHtmlAttr($viewModel->getProduct()->getSku()) ?>"></ff-campaign-product>

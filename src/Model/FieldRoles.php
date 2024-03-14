@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Omikron\Factfinder\Model;
 
-use Magento\Catalog\Api\Data\ProductInterface;
 use Magento\Config\Model\ResourceModel\Config as ConfigResource;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Serialize\SerializerInterface;
@@ -15,16 +14,13 @@ class FieldRoles
 {
     private const PATH_PRODUCT_FIELD_ROLE = 'factfinder/general/tracking_product_number_field_role';
 
-    /**
-     * phpcs:disable Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore
-     * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.BraceOnSameLine
-     */
     public function __construct(
         private readonly SerializerInterface $serializer,
         private readonly ScopeConfigInterface $scopeConfig,
         private readonly ConfigResource $configResource,
         private readonly SimpleDataProviderFactory $dataProviderFactory
-    ) {}
+    ) {
+    }
 
     public function getFieldRoles(int $scopeId = null): array
     {

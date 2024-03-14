@@ -6,21 +6,17 @@ namespace Omikron\Factfinder\ViewModel;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Serialize\Serializer\Json;
-use Magento\Framework\Serialize\SerializerInterface;
 use Magento\Framework\View\Element\Block\ArgumentInterface;
 
 class ProductsPerPage implements ArgumentInterface
 {
     private const PRODUCT_PER_PAGE_CONFIG_PATH = 'factfinder/components_options/products_per_page';
 
-    /**
-     * phpcs:disable Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore
-     * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.BraceOnSameLine
-     */
     public function __construct(
         private readonly ScopeConfigInterface $scopeConfig,
         private readonly Json $serializer
-    ) {}
+    ) {
+    }
 
     public function getProductsPerPageConfiguration(): string
     {

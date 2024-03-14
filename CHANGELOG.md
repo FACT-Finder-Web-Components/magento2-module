@@ -1,4 +1,14 @@
 # Changelog
+## Unreleased
+### BREAKING
+- Add support for PHP v8.2 and v8.3
+- Upgrade magento libraries
+- Upgrade composer dependencies
+- Fix deprecations for magento/framework
+
+### Remove
+- Remove SSR rendering delay time 
+
 ## [v4.3.0] - 2024.01.16
 ### Add
 - Add landing page campaign

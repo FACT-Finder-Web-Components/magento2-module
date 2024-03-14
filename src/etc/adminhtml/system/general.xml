@@ -66,21 +66,6 @@
             <label>Use server-side rendering?</label>
             <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
         </field>
-        <field id="ssr_delay_time" translate="label comment" type="select" sortOrder="77" showInDefault="1" showInWebsite="0" showInStore="0">
-            <label>Delay time for loading SSR component</label>
-            <options>
-                <option label="0 second">0</option>
-                <option label="1 second">1</option>
-                <option label="2 seconds">2</option>
-                <option label="3 seconds">3</option>
-                <option label="4 seconds">4</option>
-                <option label="5 seconds">5</option>
-            </options>
-            <comment>How many seconds wait to load the SSR component?  If your Fact-Finder campaigns do not display correctly, please set this value to 1 or more depending on your webpage speed. Default value 0.</comment>
-            <depends>
-                <field id="use_ssr">1</field>
-            </depends>
-        </field>
         <field id="show_add_to_cart_button" translate="label" type="select" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
             <label>Show 'Add to Cart' button in search results</label>
             <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>

@@ -65,7 +65,7 @@ class ConfigurableDataProvider extends SimpleDataProvider
 
     private function getOptions(Product $product): array
     {
-        $sanitize = fn(mixed $phrase): string => $this->filter->filterValue($this->valueOrEmptyStr($phrase));
+        $sanitize = fn (mixed $phrase): string => $this->filter->filterValue($this->valueOrEmptyStr($phrase));
 
         return array_reduce($this->productType->getConfigurableOptions($product), function (array $res, array $option) use ($sanitize) {
             foreach ($option as ['sku' => $sku, 'super_attribute_label' => $label, 'option_title' => $value]) {

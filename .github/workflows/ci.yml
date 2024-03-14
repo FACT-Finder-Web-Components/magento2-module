@@ -38,7 +38,7 @@ jobs:
 
       - name: Run Static analysis
         run: |
-            vendor/bin/phpcs --config-set installed_paths vendor/magento/magento-coding-standard,vendor/phpcompatibility/php-compatibility
+            vendor/bin/phpcs --config-set installed_paths vendor/magento/magento-coding-standard,vendor/magento/php-compatibility-fork
             vendor/bin/phpcs --standard=phpcs.xml.dist --extensions=php,phtml src
             vendor/bin/phpmd src text phpmd.xml.dist
 

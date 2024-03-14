@@ -10,14 +10,11 @@ use Omikron\Factfinder\Api\Filter\FilterInterface;
 
 class Loader implements Mustache_Loader
 {
-    /**
-     * phpcs:disable Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore
-     * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.BraceOnSameLine
-     */
     public function __construct(
         private readonly Mustache_Loader $loader,
         private readonly FilterInterface $filter,
-    ) {}
+    ) {
+    }
 
     /**
      * @inheritDoc

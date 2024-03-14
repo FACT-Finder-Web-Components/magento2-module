@@ -1,5 +1,5 @@
-<?php /** @var Magento\Framework\View\Element\Template $block */ ?>
+<?php /** @var Magento\Framework\Escaper $escaper */ ?>
 <div class="ff-sortbox">
-    <span><?= $block->escapeHtml(__('Sort By')) ?></span>
+    <span><?= $escaper->escapeHtml(__('Sort By')) ?></span>
     <ff-sortbox-select class="sorter-options" unresolved></ff-sortbox-select>
 </div>

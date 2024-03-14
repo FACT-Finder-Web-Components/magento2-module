@@ -7,9 +7,9 @@ namespace Omikron\Factfinder\Test\Unit\Utilities\Validator;
 use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Catalog\Model\Product;
 use Magento\Catalog\Model\Product\Visibility;
+use Magento\ConfigurableProduct\Model\Product\Type\Configurable as ConfigurableType;
 use Omikron\Factfinder\Exception\ExportPreviewValidationException;
 use Omikron\Factfinder\Utilities\Validator\ExportPreviewValidator;
-use Magento\ConfigurableProduct\Model\Product\Type\Configurable as ConfigurableType;
 use PHPUnit\Framework\TestCase;
 
 /**

@@ -1,10 +1,13 @@
-<?php /** @var Magento\Framework\View\Element\Template $block */ ?>
+<?php
+/** @var Magento\Framework\View\Element\Template $block */
+/** @var Magento\Framework\Escaper $escaper */
+?>
 <div class="search-wrapper">
     <div class="top-search-box">
         <ff-searchbox class="ff-searchbox" suggest-onfocus="true" use-suggest="true" select-onclick="true" unresolved>
-            <input class="input-text" placeholder="<?= $block->escapeHtmlAttr(__('Search…')) ?>"/>
+            <input class="input-text" placeholder="<?= $escaper->escapeHtmlAttr(__('Search…')) ?>"/>
             <ff-searchbutton>
-                <button><span><?= $block->escapeHtml(__('Search…')) ?></span></button>
+                <button><span><?= $escaper->escapeHtml(__('Search…')) ?></span></button>
             </ff-searchbutton>
         </ff-searchbox>
     </div>
