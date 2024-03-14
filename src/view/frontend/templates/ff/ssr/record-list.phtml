@@ -1,15 +1,11 @@
 <?php
 /** @var Magento\Framework\View\Element\Template $block */
-$delayTime = $this->helper(Omikron\Factfinder\Helper\ConfigurationHelper::class)->getConfig('factfinder/general/ssr_delay_time');
 ?>
 <?= $block->getChildHtml() ?>
 <script>
     document.addEventListener('ffCommunicationReady', function ({factfinder}) {
         const searchResult = {FF_SEARCH_RESULT};
         factfinder.communication.EventAggregator.currentSearchResult = searchResult;
-        setTimeout(function () {
-            factfinder.communication.ResultDispatcher.dispatchRaw(searchResult);
-        },
-        <?= $delayTime * 1000 ?>)
+        factfinder.communication.ResultDispatcher.dispatchRaw(searchResult);
     });
 </script>

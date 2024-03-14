@@ -8,6 +8,9 @@ use Omikron\Factfinder\Api\Filter\FilterInterface;
 
 class TextFilter implements FilterInterface
 {
+    /**
+     * phpcs:disable Magento2.Functions.DiscouragedFunction.Discouraged
+     */
     public function filterValue(string $value): string
     {
         // phpcs:ignore
