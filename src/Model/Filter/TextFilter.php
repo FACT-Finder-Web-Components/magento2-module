@@ -15,7 +15,7 @@ class TextFilter implements FilterInterface
         $value = preg_replace($tags, ' <$1', $value); // Add one space in front of block elements before stripping tags
         $value = strip_tags($value);
         $value = htmlentities($value);
-        $value = htmlspecialchars_decode($value);
+        $value = html_entity_decode($value);
         $value = preg_replace('#\s+#u', ' ', $value);
         $value = preg_replace('#[[:^print:]]#u', '', $value);
         return trim($value);
