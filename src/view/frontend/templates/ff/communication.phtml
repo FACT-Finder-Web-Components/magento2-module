@@ -7,8 +7,37 @@ $communicationParameters = (array) $block->getData('communication_parameters');
 $parameters = $viewModel->getParameters($communicationParameters);
 $searchImmediate = $communicationParameters['search-immediate'] ?? 'false';
 ?>
-<ff-communication<?php foreach ($parameters as $key => $value) { /* @noEscape */ echo sprintf(' %s="%s"', $key, $escaper->escapeHtmlAttr($value));} ?>>
-</ff-communication>
+<!--<ff-communication--><?php //foreach ($parameters as $key => $value) { /* @noEscape */ echo sprintf(' %s="%s"', $key, $escaper->escapeHtmlAttr($value));} ?><!-->-->
+<!--</ff-communication>-->
+
+<script>
+    document.addEventListener(`ffCoreReady`, ({ factfinder }) => {
+
+        //Debug webc
+        factfinder.config.debug = true;
+
+
+        const cfg = factfinder.config.defaults.general;
+
+        cfg.url = `<?= $escaper->escapeUrl($parameters['url'])?>`;
+        cfg.channel = `<?= $escaper->escapeUrl($parameters['channel'])?>`;
+
+        factfinder.config.fieldRoles = <?= /* @noEscape */ $viewModel->getFieldRoles() ?>;
+
+        // This is also the best place to invoke a search request replacing the `search-immediate` attribute.
+
+        // Search redirect
+        factfinder.request.before.search(({ searchParams, searchOptions }) => {
+            // If the search request was invoked by `ff-searchbox`, `searchOptions.requestOptions.origin` will be a reference to the `ff-searchbox` element.
+            if (searchOptions.requestOptions.origin.tagName === `FF-SEARCHBOX`) {
+                window.location.href =  `/factfinder/result?query=${searchParams.query}`;
+
+                // Cancel the pipeline to avoid sending a search request to FactFinder before the redirect is complete.
+                return false;
+            }
+        });
+    });
+</script>
 
 <?php if ($viewModel->isSsrEnable()): ?>
     <script>
@@ -42,13 +71,12 @@ $searchImmediate = $communicationParameters['search-immediate'] ?? 'false';
     </script>
 <?php endif; ?>
 
-<!-- Set FieldRoles -->
-<script>
-    document.addEventListener('ffReady', function () {
-        factfinder.sdk = 'm2-v4.3.0';
-        factfinder.communication.fieldRoles = <?= /* @noEscape */ $viewModel->getFieldRoles() ?>;
-    });
-</script>
+<!-- Set SDK version -->
+<!--<script>-->
+<!--    document.addEventListener(`_ffSdkVersion`, ({ setSdkVersion }) => {-->
+<!--        setSdkVersion(`m2`);-->
+<!--    });-->
+<!--</script>-->
 
 <script>
     document.addEventListener('ffCommunicationReady', ({ factfinder, searchImmediate }) => {

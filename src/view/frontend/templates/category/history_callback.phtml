@@ -1,5 +1,5 @@
 <script>
-    document.addEventListener('ffReady', function (ff) {
+    document.addEventListener('ffCoreReady', function (ff) {
         ff.eventAggregator.addBeforeHistoryPushCallback(function (res, event, url) {
             url = url.replace(/filter=CategoryPath[^&]+&?/, '').replace(/filterCategoryPathROOT[^&]+&?/g, '');
             ff.factfinder.communication.Util.pushParameterToHistory(res, url, event);

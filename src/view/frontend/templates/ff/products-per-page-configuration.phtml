@@ -5,7 +5,7 @@ $viewModel  = $block->getViewModel();
 ?>
 
 <script>
-    document.addEventListener('ffReady', function () {
+    document.addEventListener('ffCoreReady', function () {
         const conf = <?= /* @noEscape */ $viewModel->getProductsPerPageConfiguration() ?>;
         if (conf.length > 0) {
             const first = [factfinder.communication.pppConf.entries[0]];
