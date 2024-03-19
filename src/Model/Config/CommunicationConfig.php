@@ -21,6 +21,7 @@ class CommunicationConfig implements ParametersSourceInterface
     private const PATH_USE_PROXY            = 'factfinder/general/ff_enrichment';
     private const PATH_DATA_TRANSFER_IMPORT = 'factfinder/data_transfer/ff_push_import_enabled';
     private const PATH_IS_LOGGING_ENABLED   = 'factfinder/general/logging_enabled';
+    private const PATH_FF_API_KEY           = 'factfinder/general/ff_api_key';
 
     private ScopeConfigInterface $scopeConfig;
 
@@ -57,6 +58,11 @@ class CommunicationConfig implements ParametersSourceInterface
         return (string) $this->scopeConfig->getValue(self::PATH_VERSION, ScopeInterface::SCOPE_STORES);
     }
 
+    public function getApiKey(): string
+    {
+        return (string) $this->scopeConfig->getValue(self::PATH_FF_API_KEY, ScopeInterface::SCOPE_STORES);
+    }
+
     public function isLoggingEnabled(): bool
     {
         return $this->scopeConfig->isSetFlag(self::PATH_IS_LOGGING_ENABLED, ScopeInterface::SCOPE_STORES);
@@ -65,10 +71,10 @@ class CommunicationConfig implements ParametersSourceInterface
     public function getParameters(): array
     {
         return [
-                'url'     => $this->getServerUrl(),
-                'version' => $this->getVersion(),
-                'channel' => $this->getChannel(),
-            ] + ($this->getVersion() === Version::NG ? ['api' => $this->getApiVersion()] : []);
+            'url'     => $this->getServerUrl(),
+            'channel' => $this->getChannel(),
+            'api_key' => $this->getApiKey(),
+        ];
     }
 
     public function getApiVersion(): string

@@ -49,45 +49,45 @@ $viewModel = $block->getViewModel();
         </ff-record>
     </ff-record-list>
 </div>
-<script>
-    document.addEventListener('ffReady', function (event) {
-        event.resultDispatcher.addCallback(`records`, function (records) {
-            if (event.factfinder.communication.Util.isNg()) {
-                records.forEach(function (rec) {
-                    rec.record.HasVariants =
-                        parseInt(rec.record.HasVariants) ||
-                        rec.variantValues.some(function (variant) {
-                            return parseInt(variant.HasVariants) === 1;
-                    });
-                });
-            }
-        });
-    });
-
-    require(['ffCallbacks'], function (ffCallbacks) {
-        document.addEventListener('ffReady', function (ff) {
-            factfinder.communication.EventAggregator.addBeforeDispatchingCallback(function (event) {
-                if ((event.type === 'search' && !event.searchImmediate) || event.type === 'paging') {
-                    const scrollToTopCallback = ffCallbacks.scrollToCallback();
-                    event.success = factfinder.common.concatFunctions(event.success, scrollToTopCallback);
-                }
-            });
-        });
-    });
-
-    require(['jquery', 'underscore', 'catalogAddToCart'], function ($, _) {
-        document.addEventListener('WebComponentsReady', function () {
-            document.querySelectorAll('ff-record-list').forEach(function (recordList) {
-                recordList.addEventListener('dom-updated', function (updatedRecordList) {
-                    const addToCartForms = updatedRecordList.target.querySelectorAll('ff-record .product_addtocart_form');
-                    _.each(addToCartForms, function (form) {
-                        const jquedForm = $(form);
-                        if (typeof jquedForm.catalogAddToCart === 'function') {
-                            jquedForm.catalogAddToCart();
-                        }
-                    });
-                });
-            })
-        })
-    });
-</script>
+<!--<script>-->
+<!--    document.addEventListener('ffCoreReady', function (event) {-->
+<!--        event.resultDispatcher.addCallback(`records`, function (records) {-->
+<!--            if (event.factfinder.communication.Util.isNg()) {-->
+<!--                records.forEach(function (rec) {-->
+<!--                    rec.record.HasVariants =-->
+<!--                        parseInt(rec.record.HasVariants) ||-->
+<!--                        rec.variantValues.some(function (variant) {-->
+<!--                            return parseInt(variant.HasVariants) === 1;-->
+<!--                    });-->
+<!--                });-->
+<!--            }-->
+<!--        });-->
+<!--    });-->
+<!---->
+<!--    require(['ffCallbacks'], function (ffCallbacks) {-->
+<!--        document.addEventListener('ffCoreReady', function (ff) {-->
+<!--            factfinder.communication.EventAggregator.addBeforeDispatchingCallback(function (event) {-->
+<!--                if ((event.type === 'search' && !event.searchImmediate) || event.type === 'paging') {-->
+<!--                    const scrollToTopCallback = ffCallbacks.scrollToCallback();-->
+<!--                    event.success = factfinder.common.concatFunctions(event.success, scrollToTopCallback);-->
+<!--                }-->
+<!--            });-->
+<!--        });-->
+<!--    });-->
+<!---->
+<!--    require(['jquery', 'underscore', 'catalogAddToCart'], function ($, _) {-->
+<!--        document.addEventListener('ffCoreReady', function () {-->
+<!--            document.querySelectorAll('ff-record-list').forEach(function (recordList) {-->
+<!--                recordList.addEventListener('dom-updated', function (updatedRecordList) {-->
+<!--                    const addToCartForms = updatedRecordList.target.querySelectorAll('ff-record .product_addtocart_form');-->
+<!--                    _.each(addToCartForms, function (form) {-->
+<!--                        const jquedForm = $(form);-->
+<!--                        if (typeof jquedForm.catalogAddToCart === 'function') {-->
+<!--                            jquedForm.catalogAddToCart();-->
+<!--                        }-->
+<!--                    });-->
+<!--                });-->
+<!--            })-->
+<!--        })-->
+<!--    });-->
+<!--</script>-->

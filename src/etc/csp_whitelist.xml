@@ -12,6 +12,7 @@
                 <value id="factfinder_at" type="host">*.fact-finder.at</value>
                 <value id="factfinder_ch" type="host">*.fact-finder.ch</value>
                 <value id="factfinder_cloud" type="host">*.fact-finder.cloud</value>
+                <value id="factfinder_ff_labs" type="host">*.ff-labs.de</value>
             </values>
         </policy>
     </policies>

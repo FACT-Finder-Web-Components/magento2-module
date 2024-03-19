@@ -5,83 +5,108 @@
 $viewModel  = $block->getViewModel();
 $communicationParameters = (array) $block->getData('communication_parameters');
 $parameters = $viewModel->getParameters($communicationParameters);
-$searchImmediate = $communicationParameters['search-immediate'] ?? 'false';
 ?>
-<ff-communication<?php foreach ($parameters as $key => $value) { /* @noEscape */ echo sprintf(' %s="%s"', $key, $escaper->escapeHtmlAttr($value));} ?>>
-</ff-communication>
 
-<?php if ($viewModel->isSsrEnable()): ?>
-    <script>
-            function generateSid() {
-                var length = 30;
-                var characterSet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-                var text = "";
-                for (var i = 0; i < length; i++) {
-                    text += characterSet.charAt(Math.floor(Math.random() * characterSet.length));
-                }
-                return text;
-            }
-
-            const ffCookies = document.cookie.split('; ').reduce((acc, cookie) => {
-                const cookieData = cookie.split('=');
-                const [key, value] = cookieData;
-                acc[key] = value;
-
-                return acc;
-            }, {});
-
-            const ffcommunication = document.querySelector('ff-communication');
-
-            if (!ffCookies['ffwebc_sid']) {
-                const sid = generateSid();
-                document.cookie = 'ffwebc_sid=' + sid + '; path=/;';
-                ffcommunication.setAttribute('sid', sid);
-            } else {
-                ffcommunication.setAttribute('sid', ffCookies['ffwebc_sid']);
-            }
-    </script>
-<?php endif; ?>
-
-<!-- Set FieldRoles -->
+<!--Init webcomponents-->
 <script>
-    document.addEventListener('ffReady', function () {
-        factfinder.sdk = 'm2-v4.3.0';
-        factfinder.communication.fieldRoles = <?= /* @noEscape */ $viewModel->getFieldRoles() ?>;
+    document.addEventListener(`ffCoreReady`, ({ factfinder }) => {
+        //Debug webc
+        factfinder.config.debug = true;
+
+        const cfg = factfinder.config.defaults.general;
+        cfg.url = `<?= $escaper->escapeUrl($parameters['url'])?>`;
+        cfg.channel = `<?= $escaper->escapeHtml($parameters['channel'])?>`;
+        factfinder.config.apiKey = `<?= $escaper->escapeHtml($parameters['api_key'])?>`;
+        factfinder.config.fieldRoles = <?= /* @noEscape */ $viewModel->getFieldRoles() ?>;
+
+        // This is also the best place to invoke a search request replacing the `search-immediate` attribute.
+
+        factfinder.request.before.search(({ searchParams, searchOptions }) => {
+            // If the search request was invoked by `ff-searchbox`, `searchOptions.requestOptions.origin` will be a reference to the `ff-searchbox` element.
+            if (searchOptions?.requestOptions?.origin?.tagName === `FF-SEARCHBOX`) {
+                window.location.href =  `/factfinder/result?query=${searchParams.query}`;
+
+                // Cancel the pipeline to avoid sending a search request to FactFinder before the redirect is complete.
+                return false;
+            }
+        });
     });
 </script>
 
+<!-- Set SDK version -->
 <script>
-    document.addEventListener('ffCommunicationReady', ({ factfinder, searchImmediate }) => {
-        const cookies = document.cookie.split('; ').reduce((acc, cookie) => {
-            const cookieData = cookie.split('=');
-            const [key, value] = cookieData;
-            acc[key] = value;
-
-            return acc;
-        }, {});
-
-        const clearCookie = (name) => {
-            document.cookie = name+'=; Max-Age=-1;';
-        }
-
-        if (cookies['ff_user_id']) {
-            factfinder.communication.sessionManager.setLoginData(cookies['ff_user_id'])
-
-            if (cookies['ff_has_just_logged_in']) {
-                clearCookie('ff_has_just_logged_in');
-                factfinder.communication.Tracking.loginWithConfig();
-            }
-        } else {
-            factfinder.communication.sessionManager.clearLoginData();
-
-            if (cookies['ff_has_just_logged_out']) {
-                clearCookie('ff_has_just_logged_out');
-                factfinder.communication.sessionManager.clearAllSessionData();
-            }
-        }
-
-        if (<?= /** @SuppressWarnings(PHPMD) */ $searchImmediate ?>) {
-            searchImmediate();
-        }
+    document.addEventListener(`_ffSdkVersion`, ({ setSdkVersion }) => {
+        setSdkVersion(`m2-5.0.0`);
     });
 </script>
+
+
+<?php //if ($viewModel->isSsrEnable()): ?>
+<!--    <script>-->
+<!--            function generateSid() {-->
+<!--                var length = 30;-->
+<!--                var characterSet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";-->
+<!--                var text = "";-->
+<!--                for (var i = 0; i < length; i++) {-->
+<!--                    text += characterSet.charAt(Math.floor(Math.random() * characterSet.length));-->
+<!--                }-->
+<!--                return text;-->
+<!--            }-->
+<!---->
+<!--            const ffCookies = document.cookie.split('; ').reduce((acc, cookie) => {-->
+<!--                const cookieData = cookie.split('=');-->
+<!--                const [key, value] = cookieData;-->
+<!--                acc[key] = value;-->
+<!---->
+<!--                return acc;-->
+<!--            }, {});-->
+<!---->
+<!--            const ffcommunication = document.querySelector('ff-communication');-->
+<!---->
+<!--            if (!ffCookies['ffwebc_sid']) {-->
+<!--                const sid = generateSid();-->
+<!--                document.cookie = 'ffwebc_sid=' + sid + '; path=/;';-->
+<!--                ffcommunication.setAttribute('sid', sid);-->
+<!--            } else {-->
+<!--                ffcommunication.setAttribute('sid', ffCookies['ffwebc_sid']);-->
+<!--            }-->
+<!--    </script>-->
+<?php //endif; ?>
+
+
+
+<!--<script>-->
+<!--    document.addEventListener('ffCoreReady', ({ factfinder, searchImmediate }) => {-->
+<!--        const cookies = document.cookie.split('; ').reduce((acc, cookie) => {-->
+<!--            const cookieData = cookie.split('=');-->
+<!--            const [key, value] = cookieData;-->
+<!--            acc[key] = value;-->
+<!---->
+<!--            return acc;-->
+<!--        }, {});-->
+<!---->
+<!--        const clearCookie = (name) => {-->
+<!--            document.cookie = name+'=; Max-Age=-1;';-->
+<!--        }-->
+<!---->
+<!--        if (cookies['ff_user_id']) {-->
+<!--            factfinder.communication.sessionManager.setLoginData(cookies['ff_user_id'])-->
+<!---->
+<!--            if (cookies['ff_has_just_logged_in']) {-->
+<!--                clearCookie('ff_has_just_logged_in');-->
+<!--                factfinder.communication.Tracking.loginWithConfig();-->
+<!--            }-->
+<!--        } else {-->
+<!--            factfinder.communication.sessionManager.clearLoginData();-->
+<!---->
+<!--            if (cookies['ff_has_just_logged_out']) {-->
+<!--                clearCookie('ff_has_just_logged_out');-->
+<!--                factfinder.communication.sessionManager.clearAllSessionData();-->
+<!--            }-->
+<!--        }-->
+<!---->
+<!--        if (--><?php //= /** @SuppressWarnings(PHPMD) */ $searchImmediate ?>//) {
+<!--//            searchImmediate();-->
+<!--//        }-->
+<!--//    });-->
+<!--//</script>-->
