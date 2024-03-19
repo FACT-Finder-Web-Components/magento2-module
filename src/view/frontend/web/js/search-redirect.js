@@ -4,19 +4,6 @@ define(['factfinder'], function (factfinder) {
     return function (options, element) {
         if (!options.targetUrl || window.location.href.indexOf(options.targetUrl) === 0) return;
 
-        // element.addEventListener("ffCoreReady", ({ factfinder }) => {
-        //     factfinder.request.before.search(({ searchParams, searchOptions }) => {
-        //
-        //         // If the search request was invoked by `ff-searchbox`, `searchOptions.requestOptions.origin` will be a reference to the `ff-searchbox` element.
-        //         if (searchOptions.requestOptions.origin.tagName === `FF-SEARCHBOX`) {
-        //             window.location.href =  `/factfinder/result?query=${searchParams.query}`;
-        //
-        //             // Cancel the pipeline to avoid sending a search request to FactFinder before the redirect is complete.
-        //             return false;
-        //         }
-        //     });
-        // });
-
         element.addEventListener('before-search', function (event) {
             if (['productDetail', 'getRecords'].lastIndexOf(event.detail.type) === -1) {
                 event.preventDefault();
