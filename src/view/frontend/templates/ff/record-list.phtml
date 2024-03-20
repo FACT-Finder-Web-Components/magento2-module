@@ -11,18 +11,18 @@ $viewModel = $block->getViewModel();
     >
         <ff-record class="item product product-item">
             <div class="product-item-info" data-container="product-grid">
-                <a class="product-image-container" data-redirect="{{record.Deeplink}}" data-anchor="{{record.Deeplink}}" data-redirect-target="_self">
+                <a class="product-image-container" data-redirect="{{masterValues.Deeplink}}" data-anchor="{{masterValues.Deeplink}}" data-redirect-target="_self">
                     <span class="product-image-wrapper">
-                        <img class="product-image-photo" data-image="{{record.ImageUrl}}" alt="{{record.Name}}"/>
+                        <img class="product-image-photo" data-image="{{masterValues.ImageUrl}}" alt="{{masterValues.Name}}"/>
                     </span>
                 </a>
 
                 <div class="product details product-item-details">
-                    <div class="product name product-item-name">{{record.Name}}</div>
+                    <div class="product name product-item-name">{{masterValues.Name}}</div>
                     <div class="price-box price-final_price" data-role="priceBox">
                         <span class="price-container price-final_price tax weee">
-                            <span data-price-amount="{{{record.__ORIG_PRICE__}}}" data-price-type="finalPrice" class="price-wrapper">
-                                <span class="price">{{record.Price}}</span>
+                            <span data-price-amount="{{masterValues.Price}}" data-price-type="finalPrice" class="price-wrapper">
+                                <span class="price">{{masterValues.Price}}</span>
                             </span>
                         </span>
                     </div>
@@ -49,45 +49,30 @@ $viewModel = $block->getViewModel();
         </ff-record>
     </ff-record-list>
 </div>
-<!--<script>-->
-<!--    document.addEventListener('ffCoreReady', function (event) {-->
-<!--        event.resultDispatcher.addCallback(`records`, function (records) {-->
-<!--            if (event.factfinder.communication.Util.isNg()) {-->
-<!--                records.forEach(function (rec) {-->
-<!--                    rec.record.HasVariants =-->
-<!--                        parseInt(rec.record.HasVariants) ||-->
-<!--                        rec.variantValues.some(function (variant) {-->
-<!--                            return parseInt(variant.HasVariants) === 1;-->
-<!--                    });-->
-<!--                });-->
-<!--            }-->
-<!--        });-->
-<!--    });-->
-<!---->
-<!--    require(['ffCallbacks'], function (ffCallbacks) {-->
-<!--        document.addEventListener('ffCoreReady', function (ff) {-->
-<!--            factfinder.communication.EventAggregator.addBeforeDispatchingCallback(function (event) {-->
-<!--                if ((event.type === 'search' && !event.searchImmediate) || event.type === 'paging') {-->
-<!--                    const scrollToTopCallback = ffCallbacks.scrollToCallback();-->
-<!--                    event.success = factfinder.common.concatFunctions(event.success, scrollToTopCallback);-->
-<!--                }-->
-<!--            });-->
-<!--        });-->
-<!--    });-->
-<!---->
-<!--    require(['jquery', 'underscore', 'catalogAddToCart'], function ($, _) {-->
-<!--        document.addEventListener('ffCoreReady', function () {-->
-<!--            document.querySelectorAll('ff-record-list').forEach(function (recordList) {-->
-<!--                recordList.addEventListener('dom-updated', function (updatedRecordList) {-->
-<!--                    const addToCartForms = updatedRecordList.target.querySelectorAll('ff-record .product_addtocart_form');-->
-<!--                    _.each(addToCartForms, function (form) {-->
-<!--                        const jquedForm = $(form);-->
-<!--                        if (typeof jquedForm.catalogAddToCart === 'function') {-->
-<!--                            jquedForm.catalogAddToCart();-->
-<!--                        }-->
-<!--                    });-->
-<!--                });-->
-<!--            })-->
-<!--        })-->
-<!--    });-->
-<!--</script>-->
+
+<script>
+    // Execute search request
+    document.addEventListener(`ffCoreReady`, ({ factfinder }) => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const query = urlParams.get('query');
+        factfinder.request.search({ query: query }, { requestOptions: { origin: `searchImmediately` } });
+    });
+</script>
+
+<script>
+    require(['jquery', 'underscore', 'catalogAddToCart'], function ($, _) {
+        document.addEventListener('ffCoreReady', function () {
+            document.querySelectorAll('ff-record-list').forEach(function (recordList) {
+                recordList.addEventListener('dom-updated', function (updatedRecordList) {
+                    const addToCartForms = updatedRecordList.target.querySelectorAll('ff-record .product_addtocart_form');
+                    _.each(addToCartForms, function (form) {
+                        const jquedForm = $(form);
+                        if (typeof jquedForm.catalogAddToCart === 'function') {
+                            jquedForm.catalogAddToCart();
+                        }
+                    });
+                });
+            })
+        })
+    });
+</script>
