@@ -1,6 +1,6 @@
 <?php /** @var Magento\Framework\Escaper $escaper */ ?>
 <div class="ff-result-count">
-    <ff-template scope="result" unresolved>
-        <span><?= $escaper->escapeHtml(__('{{resultCount}} Items')) ?></span>
+    <ff-template scope="search" unresolved>
+        <span><?= $escaper->escapeHtml(__('{{totalHits}} Items')) ?></span>
     </ff-template>
 </div>

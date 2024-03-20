@@ -1,10 +1,14 @@
 <?php /** @var Magento\Framework\Escaper $escaper */ ?>
 <div class="ff-breadcrumb-trail">
-    <ff-template scope="result" unresolved>
+    <ff-template scope="search" unresolved>
         <span class="description"><?= $escaper->escapeHtml(__('Your search for:')) ?></span>
     </ff-template>
-    <ff-breadcrumb-trail unresolved></ff-breadcrumb-trail>
-    <ff-template scope="result" unresolved>
-        <?= $escaper->escapeHtml(__('produced <span>{{resultCount}}</span> results'), ['span']) ?>
+
+    <ff-breadcrumb-trail>
+        <ff-breadcrumb-trail-item type="search">{{breadCrumbTrail.text}} {{item.text}}</ff-breadcrumb-trail-item>
+    </ff-breadcrumb-trail>
+
+    <ff-template scope="search" unresolved>
+        <?= $escaper->escapeHtml(__('produced <span>{{totalHits}}</span> results'), ['span']) ?>
     </ff-template>
 </div>
