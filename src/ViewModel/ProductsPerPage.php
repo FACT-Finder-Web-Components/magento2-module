@@ -25,6 +25,6 @@ class ProductsPerPage implements ArgumentInterface
         $unserialized = array_values($this->serializer->unserialize($storedValue ?: '[]'));
         $pppConfig = array_column($unserialized, 'value');
 
-        return count($pppConfig) ? implode(", ", $pppConfig) : self::DEFAULT_PRODUCT_PER_PAGE_CONFIG;
+        return count($pppConfig) ? implode(', ', $pppConfig) : self::DEFAULT_PRODUCT_PER_PAGE_CONFIG;
     }
 }
