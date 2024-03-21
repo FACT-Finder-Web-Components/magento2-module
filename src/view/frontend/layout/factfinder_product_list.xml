@@ -27,7 +27,11 @@
 
             <container name="factfinder.toolbar.bottom" htmlTag="div" htmlClass="toolbar toolbar-products toolbar-factfinder">
                 <block class="Magento\Framework\View\Element\Template" name="factfinder.paging.bottom" ifconfig="factfinder/components/paging" template="Omikron_Factfinder::ff/paging.phtml" />
-                <block class="Magento\Framework\View\Element\Template" name="factfinder.ppp" template="Omikron_Factfinder::ff/products-per-page.phtml" />
+                <block class="Magento\Framework\View\Element\Template" name="factfinder.ppp" ifconfig="factfinder/general/is_enabled" template="Omikron_Factfinder::ff/products-per-page.phtml" >
+                    <arguments>
+                        <argument name="view_model" xsi:type="object">Omikron\Factfinder\ViewModel\ProductsPerPage</argument>
+                    </arguments>
+                </block>
             </container>
         </referenceContainer>
 
