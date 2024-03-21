@@ -1,6 +1,14 @@
-<?php /** @var Magento\Framework\Escaper $escaper */ ?>
+<?php
+/** @var Magento\Framework\Escaper $escaper */
+/** @var Magento\Framework\View\Element\Template $block */
+/** @var Omikron\Factfinder\ViewModel\ProductsPerPage $viewModel */
+$viewModel  = $block->getViewModel();
+?>
+
 <div class="ff-products-per-page">
     <span class="label"><?= $escaper->escapeHtml(__('Show')) ?></span>
-    <ff-products-per-page-select class="sorter-options" unresolved></ff-products-per-page-select>
+    <ff-products-per-page-select values="<?= $escaper->escapeHtml($viewModel->getProductsPerPageConfiguration()) ?>">
+        <option data-template>{{value}}</option>
+    </ff-products-per-page-select>
     <span class="limiter-text"><?= $escaper->escapeHtml(__('products per page')) ?></span>
 </div>
