@@ -11,7 +11,7 @@ use Magento\Framework\View\Element\Block\ArgumentInterface;
 class ProductsPerPage implements ArgumentInterface
 {
     private const PRODUCT_PER_PAGE_CONFIG_PATH = 'factfinder/components_options/products_per_page';
-    private const DEFAULT_PRODUCT_PER_PAGE_CONFIG = '10, 15, 20, 30, 50';
+    public const DEFAULT_PRODUCT_PER_PAGE_CONFIG = '10, 15, 20, 30, 50';
 
     public function __construct(
         private readonly ScopeConfigInterface $scopeConfig,

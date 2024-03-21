@@ -35,7 +35,7 @@ class ProductPerPageTest extends TestCase
 
         $actual = $this->productsPerPage->getProductsPerPageConfiguration();
 
-        $this->assertStringContainsString('{"value":"8","selected":false,"default":false}', $actual);
+        $this->assertStringContainsString('8, 12, 16', $actual);
     }
 
     public function test_return_empty_array_literal_if_no_stored_values()
@@ -43,7 +43,7 @@ class ProductPerPageTest extends TestCase
         $this->scopeConfigMock->method('getValue')->with('factfinder/components_options/products_per_page')
             ->willReturn(null);
 
-        $this->assertEquals('[]', $this->productsPerPage->getProductsPerPageConfiguration());
+        $this->assertEquals(ProductsPerPage::DEFAULT_PRODUCT_PER_PAGE_CONFIG, $this->productsPerPage->getProductsPerPageConfiguration());
     }
 
     protected function setUp(): void
