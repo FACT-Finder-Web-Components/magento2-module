@@ -19,6 +19,14 @@ $parameters = $viewModel->getParameters($communicationParameters);
         factfinder.config.apiKey = `<?= $escaper->escapeHtml($parameters['api_key'])?>`;
         factfinder.config.fieldRoles = <?= /* @noEscape */ $viewModel->getFieldRoles() ?>;
 
+        factfinder.config.formatting = {
+            locale: `<?= $escaper->escapeUrl($parameters['currency-country-code'])?>`,
+            formatOptions: {
+                style: `currency`,
+                currency: `<?= $escaper->escapeUrl($parameters['currency-code'])?>`,
+            },
+        };
+
         // This is also the best place to invoke a search request replacing the `search-immediate` attribute.
 
         factfinder.request.before.search(({ searchParams, searchOptions }) => {
