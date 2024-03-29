@@ -11,11 +11,9 @@ use Omikron\Factfinder\Api\Export\FieldInterface;
 
 class Content implements FieldInterface
 {
-    /**
-     * phpcs:disable Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore
-     * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.BraceOnSameLine
-     */
-    public function __construct(private readonly Filter $filter) {}
+    public function __construct(private readonly Filter $filter)
+    {
+    }
 
     public function getName(): string
     {

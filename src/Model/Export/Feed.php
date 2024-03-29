@@ -24,7 +24,8 @@ class Feed
         private readonly DataProviderInterface $dataProvider,
         private readonly array $fields,
         private readonly array $columns
-    ) {}
+    ) {
+    }
 
     public function generate(StreamInterface $stream): void
     {

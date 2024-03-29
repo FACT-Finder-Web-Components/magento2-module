@@ -12,14 +12,11 @@ use Traversable;
 
 class ExportPreviewProducts implements \IteratorAggregate
 {
-    /**
-     * phpcs:disable Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore
-     * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.BraceOnSameLine
-     */
     public function __construct(
         private readonly ProductRepositoryInterface $productRepository,
         private readonly RequestInterface $request,
-    ) {}
+    ) {
+    }
 
     /**
      * @return Traversable|ProductInterface[]

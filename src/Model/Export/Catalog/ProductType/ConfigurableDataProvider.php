@@ -7,6 +7,7 @@ namespace Omikron\Factfinder\Model\Export\Catalog\ProductType;
 use Magento\Catalog\Api\Data\ProductInterface;
 use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Catalog\Model\Product;
+use Magento\CatalogInventory\Model\Stock\StockItemRepository as StockItem;
 use Magento\ConfigurableProduct\Model\Product\Type\Configurable as ConfigurableProductType;
 use Magento\Framework\Api\SearchCriteriaBuilder;
 use Omikron\Factfinder\Api\Export\ExportEntityInterface;
@@ -24,9 +25,10 @@ class ConfigurableDataProvider extends SimpleDataProvider
         private readonly ProductVariationFactory    $variationFactory,
         private readonly ProductRepositoryInterface $productRepository,
         private readonly SearchCriteriaBuilder      $builder,
+        StockItem $stockItem,
         protected array                    $productFields = []
     ) {
-        parent::__construct($product, $numberFormatter, $productFields);
+        parent::__construct($product, $numberFormatter, $stockItem, $productFields);
     }
 
     public function getEntities(): iterable
@@ -65,7 +67,7 @@ class ConfigurableDataProvider extends SimpleDataProvider
 
     private function getOptions(Product $product): array
     {
-        $sanitize = fn(mixed $phrase): string => $this->filter->filterValue($this->valueOrEmptyStr($phrase));
+        $sanitize = fn (mixed $phrase): string => $this->filter->filterValue($this->valueOrEmptyStr($phrase));
 
         return array_reduce($this->productType->getConfigurableOptions($product), function (array $res, array $option) use ($sanitize) {
             foreach ($option as ['sku' => $sku, 'super_attribute_label' => $label, 'option_title' => $value]) {

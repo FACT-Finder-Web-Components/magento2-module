@@ -24,7 +24,8 @@
     "pdepend/pdepend": "^2.8",
     "phpmd/phpmd": "^2.9",
     "phpunit/phpunit": "~9.5.0",
-    "magento/magento-coding-standard": "*"
+    "magento/magento-coding-standard": "*",
+    "friendsofphp/php-cs-fixer": "^3.51"
   },
   "autoload": {
     "files": [
@@ -38,7 +39,19 @@
     "allow-plugins": {
       "magento/*": true,
       "omikron/*": true,
-      "mustache/mustache": true
+      "mustache/mustache": true,
+      "dealerdirect/phpcodesniffer-composer-installer": true
     }
+  },
+  "minimum-stability": "stable",
+  "prefer-stable": true,
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://repo.magento.com/"
+    }
+  ],
+  "extra": {
+    "magento-force": "override"
   }
 }

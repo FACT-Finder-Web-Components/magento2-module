@@ -13,16 +13,13 @@ class FieldProvider implements FieldProviderInterface
     private ?array $cachedFields;
     private ?array $cachedVariantFields;
 
-    /**
-     * phpcs:disable Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore
-     * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.BraceOnSameLine
-     */
     public function __construct(
         private readonly ExportConfig $config,
         private readonly GenericFieldFactory $fieldFactory,
         private readonly array $productFields = [],
         private readonly array $variantFields = [],
-    ) {}
+    ) {
+    }
 
     public function getVariantFields(): array
     {
