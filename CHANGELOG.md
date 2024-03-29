@@ -1,4 +1,7 @@
 # Changelog
+## Unreleased
+### Fix
+- Fix availability column data for UI export type
 ## [v4.3.0] - 2024.01.16
 ### Add
 - Add landing page campaign
