@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Omikron\Factfinder\Model\Export\Catalog\Entity;
 
 use Magento\Catalog\Model\Product;
+use Magento\CatalogInventory\Model\Stock\StockItemRepository;
 use Magento\Framework\Model\AbstractModel;
 use Omikron\Factfinder\Model\Export\Catalog\FieldProvider;
 use Omikron\Factfinder\Model\Export\Catalog\ProductField\FilterAttributes;
@@ -51,6 +52,7 @@ class ProductVariationTest extends TestCase
             $this->createMock(Product::class),
             new NumberFormatter(),
             $fieldProviderMock,
+            $this->createMock(StockItemRepository::class),
             $this->configurableProductData
         );
 

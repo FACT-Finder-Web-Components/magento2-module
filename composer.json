@@ -38,7 +38,8 @@
     "allow-plugins": {
       "magento/*": true,
       "omikron/*": true,
-      "mustache/mustache": true
+      "mustache/mustache": true,
+      "dealerdirect/phpcodesniffer-composer-installer": true
     }
   }
 }
