@@ -42,12 +42,15 @@
       "dealerdirect/phpcodesniffer-composer-installer": true
     }
   },
-  "scripts": {
-    "post-install-cmd": [
-      "([ $COMPOSER_DEV_MODE -eq 0 ] || vendor/bin/phpcs --config-set installed_paths ../../magento/magento-coding-standard/,../../magento/php-compatibility-fork)"
-    ],
-    "post-update-cmd": [
-      "([ $COMPOSER_DEV_MODE -eq 0 ] || vendor/bin/phpcs --config-set installed_paths ../../magento/magento-coding-standard/,../../magento/php-compatibility-fork)"
-    ]
+  "minimum-stability": "stable",
+  "prefer-stable": true,
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://repo.magento.com/"
+    }
+  ],
+  "extra": {
+    "magento-force": "override"
   }
 }
