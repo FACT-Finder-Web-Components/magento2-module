@@ -11,11 +11,9 @@ use Magento\Framework\Model\AbstractModel;
 
 class Image implements FieldInterface
 {
-    /**
-     * phpcs:disable Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore
-     * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.BraceOnSameLine
-     */
-    public function __construct(private readonly Filter $filter) {}
+    public function __construct(private readonly Filter $filter)
+    {
+    }
 
     public function getName(): string
     {

@@ -20,7 +20,7 @@ class Attribute implements OptionSourceInterface
     public function toOptionArray()
     {
         $options = array_map(
-            fn(EavAttribute $attr) => [
+            fn (EavAttribute $attr) => [
                 'value' => (string) $attr->getAttributeCode(),
                 'label' => (string) $attr->getDefaultFrontendLabel()
             ],

@@ -11,11 +11,9 @@ use Magento\Store\Model\Store;
 
 class CategoryPathFormatter
 {
-    /**
-     * phpcs:disable Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore
-     * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.BraceOnSameLine
-     */
-    public function __construct(private readonly CategoryRepositoryInterface $categoryRepository) {}
+    public function __construct(private readonly CategoryRepositoryInterface $categoryRepository)
+    {
+    }
 
     public function format(int $categoryId, Store $store): string
     {

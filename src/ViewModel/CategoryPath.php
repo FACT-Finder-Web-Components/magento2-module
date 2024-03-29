@@ -12,16 +12,13 @@ use Omikron\Factfinder\Model\Config\CommunicationConfig;
 
 class CategoryPath implements ArgumentInterface
 {
-    /**
-     * phpcs:disable Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore
-     * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.BraceOnSameLine
-     */
     public function __construct(
         private readonly Registry            $registry,
         private readonly CommunicationConfig $communicationConfig,
         private readonly string              $param = 'CategoryPath',
         private readonly array               $initial = [],
-    ) {}
+    ) {
+    }
 
     public function __toString()
     {

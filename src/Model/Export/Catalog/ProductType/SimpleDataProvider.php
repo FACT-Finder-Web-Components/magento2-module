@@ -13,16 +13,13 @@ use Omikron\Factfinder\Model\Formatter\NumberFormatter;
 
 class SimpleDataProvider implements DataProviderInterface, ExportEntityInterface
 {
-    /**
-     * phpcs:disable Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore
-     * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.BraceOnSameLine
-     */
     public function __construct(
         protected Product $product,
         protected NumberFormatter $numberFormatter,
         protected StockItem $stockItem,
         protected array $productFields = [],
-    ) {}
+    ) {
+    }
 
     /**
      * @inheritdoc
@@ -57,7 +54,7 @@ class SimpleDataProvider implements DataProviderInterface, ExportEntityInterface
 
         return array_reduce(
             $this->productFields,
-            fn (array $result, FieldInterface $field): array  => [$field->getName() => $field->getValue($this->product)] + $result,
+            fn (array $result, FieldInterface $field): array => [$field->getName() => $field->getValue($this->product)] + $result,
             $data
         );
     }

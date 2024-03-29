@@ -35,7 +35,8 @@ class Feed
         private readonly PushImport             $pushImport,
         private readonly FeedFileService        $feedFileService,
         private readonly string                 $feedType,
-    ) {}
+    ) {
+    }
 
     public function execute(): void
     {

@@ -15,7 +15,6 @@ use Magento\Framework\DataObject;
  */
 class ProductsPerPage extends AbstractFieldArray
 {
-
     protected function _prepareToRender()
     {
         $this->_addAfter = false;

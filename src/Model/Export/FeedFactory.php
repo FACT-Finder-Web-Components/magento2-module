@@ -17,7 +17,8 @@ class FeedFactory
     public function __construct(
         private readonly ObjectManagerInterface $objectManager,
         private readonly array $feedPool
-    ) {}
+    ) {
+    }
 
     public function create(string $type, array $data = []): Feed
     {
@@ -29,7 +30,7 @@ class FeedFactory
         $fields = is_array($fieldProvider)
             ? $fieldProvider
             : call_user_func( //@phpcs:ignore Magento2.Functions.DiscouragedFunction.Discouraged
-                fn (FieldProviderInterface $fieldProvider) : array => $fieldProvider->getFields() + $fieldProvider->getVariantFields(),
+                fn (FieldProviderInterface $fieldProvider): array => $fieldProvider->getFields() + $fieldProvider->getVariantFields(),
                 $this->objectManager->create($fieldProvider)
             );
 

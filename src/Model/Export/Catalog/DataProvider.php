@@ -12,16 +12,13 @@ use Omikron\Factfinder\Api\Export\ExportEntityInterface;
 
 class DataProvider implements DataProviderInterface
 {
-    /**
-     * phpcs:disable Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore
-     * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.BraceOnSameLine
-     */
     public function __construct(
         private readonly Products $products,
         private readonly ObjectManagerInterface $objectManager,
         private readonly array $fields,
         private readonly array $entityTypes,
-    ) {}
+    ) {
+    }
 
     /**
      * @return ExportEntityInterface[]
