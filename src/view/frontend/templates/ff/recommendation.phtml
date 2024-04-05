@@ -5,7 +5,7 @@
 $viewModel = $block->getViewModel();
 ?>
 <ff-recommendation max-results="<?=$escaper->escapeHtmlAttr($viewModel ? $viewModel->getMaxResult('recommendation') : $block->getData('max_results')) ?>"
-                   record-id="<?= $escaper->escapeHtmlAttr($viewModel ? $viewModel->getProduct()->getSku() : implode(',', (array) $block->getData('record_id'))) ?>"
+                   product-number="<?= $escaper->escapeHtmlAttr($viewModel ? $viewModel->getProduct()->getSku() : implode(',', (array) $block->getData('record_id'))) ?>"
                    unresolved>
     <div class="block upsell">
         <div class="block-title title">
