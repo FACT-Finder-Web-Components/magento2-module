@@ -4,4 +4,4 @@
 /** @var Omikron\Factfinder\ViewModel\ProductBasedComponent $viewModel */
 $viewModel = $block->getViewModel();
 ?>
-<ff-campaign-product record-id="<?= $escaper->escapeHtmlAttr($viewModel->getProduct()->getSku()) ?>"></ff-campaign-product>
+<ff-campaign-product product-id="<?= $escaper->escapeHtmlAttr($viewModel->getProduct()->getSku()) ?>"></ff-campaign-product>
