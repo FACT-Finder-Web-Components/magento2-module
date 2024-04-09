@@ -1,5 +1,7 @@
 <?php /** @var Magento\Framework\Escaper $escaper */ ?>
 <div class="ff-sortbox">
     <span><?= $escaper->escapeHtml(__('Sort By')) ?></span>
-    <ff-sortbox-select class="sorter-options" unresolved></ff-sortbox-select>
+    <ff-sortbox-select class="sorter-options" unresolved>
+        <option>{{description}}</option>
+    </ff-sortbox-select>
 </div>
