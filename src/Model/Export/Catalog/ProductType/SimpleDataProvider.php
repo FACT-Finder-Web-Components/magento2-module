@@ -70,8 +70,12 @@ class SimpleDataProvider implements DataProviderInterface, ExportEntityInterface
             return $this->product->isAvailable();
         }
 
-        $quantity = $this->stockItem->get($this->product->getId());
+        try {
+            $quantity = $this->stockItem->get($this->product->getId());
 
-        return $quantity->getIsInStock();
+            return (bool) $quantity->getIsInStock();
+        } catch (\Exception $e) {
+            return $this->product->isAvailable();
+        }
     }
 }
