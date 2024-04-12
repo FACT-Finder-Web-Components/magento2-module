@@ -1,4 +1,8 @@
 # Changelog
+## [v4.3.2] - 2024.04.12
+### Fix
+- Handle export problem for Multi Source Inventory module
+
 ## [v4.3.1] - 2024.04.02
 ### Fix
 - Fix availability column data for UI export type
@@ -601,6 +605,7 @@
 ### Added
 - Feed Export: Export feed file is now available via separate link
 
+[v4.3.2]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v4.3.2
 [v4.3.1]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v4.3.1
 [v4.3.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v4.3.0
 [v4.2.2]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v4.2.2
