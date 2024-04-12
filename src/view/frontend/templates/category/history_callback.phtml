@@ -1,9 +1,47 @@
+<!--<script>-->
+<!--    document.addEventListener('ffCoreReady', function (ff) {-->
+<!--        ff.eventAggregator.addBeforeHistoryPushCallback(function (res, event, url) {-->
+<!--            url = url.replace(/filter=CategoryPath[^&]+&?/, '').replace(/filterCategoryPathROOT[^&]+&?/g, '');-->
+<!--            ff.factfinder.communication.Util.pushParameterToHistory(res, url, event);-->
+<!--            return false;-->
+<!--        });-->
+<!--    });-->
+<!--</script>-->
 <script>
-    document.addEventListener('ffCoreReady', function (ff) {
-        ff.eventAggregator.addBeforeHistoryPushCallback(function (res, event, url) {
-            url = url.replace(/filter=CategoryPath[^&]+&?/, '').replace(/filterCategoryPathROOT[^&]+&?/g, '');
-            ff.factfinder.communication.Util.pushParameterToHistory(res, url, event);
-            return false;
-        });
+    document.addEventListener(`ffCoreReady`, ({ factfinder }) => {
+        //     const cfg = factfinder.config.defaults.general;
+        //
+        //     cfg.url = `https://your-instance.fact-finder.de/fact-finder`;
+        //     cfg.channel = `your-channel`;
+        //
+        //     factfinder.config.apiKey = `your.apiKey`;
+        //
+        //     factfinder.request.search(
+        //
+        //         // Typically, you would make your server application insert the query string here
+        //         // before responding to the client.
+        //         { query: `dynamically generated query` },
+        //
+        //         // Specifying `origin` is optional.
+        //         // You can use it to tell your 'before search' listeners who initiated the request
+        //         // and allow them to react appropriately.
+        //         { requestOptions: { origin: `searchImmediately` } }
+        //     );
+        // });
+
+        factfinder.config.categoryPage = [
+            factfinder.utils.filterBuilders.categoryFilter(`Category`, ["Women", "Bottoms"]),
+        ];
+
+        factfinder.request.navigation(
+            // Typically, you would make your server application insert the query string here
+            // before responding to the client.
+            { filters: ['CategoryPath': ['Women/Bottoms/Pants'] },
+            //
+            // // Specifying `origin` is optional.
+            // // You can use it to tell your 'before search' listeners who initiated the request
+            // // and allow them to react appropriately.
+            {requestOptions: {origin: `searchImmediately`}}
+        );
     });
 </script>
