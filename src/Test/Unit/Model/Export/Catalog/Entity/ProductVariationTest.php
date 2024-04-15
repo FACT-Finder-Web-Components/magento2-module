@@ -8,6 +8,8 @@ use Magento\Catalog\Model\Product;
 use Magento\CatalogInventory\Api\Data\StockItemInterface;
 use Magento\CatalogInventory\Model\Stock\StockItemRepository;
 use Magento\Framework\Model\AbstractModel;
+use Magento\Inventory\Model\SourceItem;
+use Magento\Inventory\Model\SourceItem\Command\GetSourceItemsBySku;
 use Omikron\Factfinder\Model\Export\Catalog\FieldProvider;
 use Omikron\Factfinder\Model\Export\Catalog\ProductField\FilterAttributes;
 use Omikron\Factfinder\Model\Export\Catalog\ProductField\ProductImage;
@@ -48,16 +50,16 @@ class ProductVariationTest extends TestCase
             ]
         );
 
+        $sourceItems = [1 => $this->createConfiguredMock(SourceItem::class, ['getStatus' => 1])];
+//        $sourceItems = [];
+
         $productVariation = new ProductVariation(
             $this->variantMock,
             $this->createMock(Product::class),
             new NumberFormatter(),
             $fieldProviderMock,
-            $this->createConfiguredMock(StockItemRepository::class, [
-                'get' => $this->createConfiguredMock(
-                    StockItemInterface::class, [
-                        'getIsInStock' => true
-                ])
+            $this->createConfiguredMock(GetSourceItemsBySku::class, [
+                'execute' => $sourceItems
             ]),
             $this->configurableProductData
         );

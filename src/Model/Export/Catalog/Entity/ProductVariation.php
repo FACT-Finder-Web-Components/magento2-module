@@ -93,7 +93,7 @@ class ProductVariation implements ExportEntityInterface
 
         $sourceItems = $this->getSourceItemsBySku->execute($this->product->getSku());
 
-        foreach ($sourceItems as $sourceItemId => $sourceItem) {
+        foreach ($sourceItems as $sourceItem) {
             if ($sourceItem->getStatus()) {
                 return true;
             }
