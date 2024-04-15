@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace Omikron\Factfinder\Model\Export\Catalog\Entity;
 
 use Magento\Catalog\Model\Product;
-use Magento\CatalogInventory\Api\Data\StockItemInterface;
-use Magento\CatalogInventory\Model\Stock\StockItemRepository;
 use Magento\Framework\Model\AbstractModel;
 use Magento\Inventory\Model\SourceItem;
 use Magento\Inventory\Model\SourceItem\Command\GetSourceItemsBySku;
@@ -50,16 +48,13 @@ class ProductVariationTest extends TestCase
             ]
         );
 
-        $sourceItems = [1 => $this->createConfiguredMock(SourceItem::class, ['getStatus' => 1])];
-//        $sourceItems = [];
-
         $productVariation = new ProductVariation(
             $this->variantMock,
             $this->createMock(Product::class),
             new NumberFormatter(),
             $fieldProviderMock,
             $this->createConfiguredMock(GetSourceItemsBySku::class, [
-                'execute' => $sourceItems
+                'execute' => [$this->createConfiguredMock(SourceItem::class, ['getStatus' => 1])]
             ]),
             $this->configurableProductData
         );
@@ -99,11 +94,8 @@ class ProductVariationTest extends TestCase
             $this->createMock(Product::class),
             new NumberFormatter(),
             $fieldProviderMock,
-            $this->createConfiguredMock(StockItemRepository::class, [
-                'get' => $this->createConfiguredMock(
-                    StockItemInterface::class, [
-                    'getIsInStock' => true
-                ])
+            $this->createConfiguredMock(GetSourceItemsBySku::class, [
+                'execute' => [$this->createConfiguredMock(SourceItem::class, ['getStatus' => 1])]
             ]),
             ['FilterAttributes' => '|Color=Red|Size=XS|'] + $this->configurableProductData
         );
