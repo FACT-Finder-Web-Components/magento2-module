@@ -1,4 +1,9 @@
 # Changelog
+## Unreleased
+### Fix
+- Support MSI - checking all inventory sources during export feed
+- Fix feed path for UI export type
+
 ## [v4.3.2] - 2024.04.12
 ### Fix
 - Handle export problem for Multi Source Inventory module
