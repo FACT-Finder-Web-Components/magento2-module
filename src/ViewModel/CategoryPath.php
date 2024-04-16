@@ -26,13 +26,16 @@ class CategoryPath implements ArgumentInterface
         ) : $this->getAddParams();
     }
 
-    public function getCategoryPath(): string
+    public function getCategoryPath(): array
     {
-        if ($this->communicationConfig->getVersion() === Version::NG) {
-            return implode(',', $this->ngPath($this->getCurrentCategory()));
+        $values = [];
+
+        foreach ($this->getParentCategories($this->getCurrentCategory()) as $item) {
+            $categoryName = trim($item->getName());
+            $values[]      = $categoryName;
         }
 
-        return '';
+        return $values;
     }
 
     public function getAddParams(): string

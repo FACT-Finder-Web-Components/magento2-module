@@ -8,6 +8,11 @@
 
         <referenceBlock name="after.body.start">
             <block class="Magento\Framework\View\Element\Template" name="factfinder.history.cb" template="Omikron_Factfinder::category/history_callback.phtml" after="factfinder.communication" />
+            <block class="Magento\Framework\View\Element\Template" name="factfinder.category.page" template="Omikron_Factfinder::category/category_page.phtml" after="factfinder.communication" >
+                <arguments>
+                    <argument name="category_path" xsi:type="helper" helper="Omikron\Factfinder\ViewModel\CategoryPath::getCategoryPath" />
+                </arguments>
+            </block>
         </referenceBlock>
 
         <referenceBlock name="factfinder.communication">
@@ -25,9 +30,9 @@
             </arguments>
         </referenceBlock>
 
-        <referenceBlock name="factfinder.ssr.recordlist">
+        <referenceBlock name="factfinder.recordlist">
             <arguments>
-                <argument name="search_params" xsi:type="helper" helper="Omikron\Factfinder\ViewModel\CategoryPath::__toString" />
+                <argument name="is_search_request" xsi:type="boolean">false</argument>
             </arguments>
         </referenceBlock>
 
