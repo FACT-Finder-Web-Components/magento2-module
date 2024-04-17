@@ -90,7 +90,7 @@ class Feed extends Action
                 $path     = $this->feedFileService->getExportPath($filename);
 
                 $this->feedGeneratorFactory->create($this->feedType)->generate($stream);
-                $messages[] = __('<li>Feed file for channel %1 has been generated under %2</li>', $channel, "$path/$filename");
+                $messages[] = __('<li>Feed file for channel %1 has been generated under %2</li>', $channel, $path);
 
                 try {
                     $this->ftpUploader->upload($filename, $stream);

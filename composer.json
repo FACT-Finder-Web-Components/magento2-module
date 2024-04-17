@@ -17,6 +17,7 @@
     "magento/module-configurable-product": "~100.4.4",
     "magento/module-directory": "~100.4.4",
     "magento/module-store": "~101.1.4",
+    "magento/module-inventory": "1.2.*",
     "mustache/mustache": "^2.13",
     "ext-json": "*"
   },

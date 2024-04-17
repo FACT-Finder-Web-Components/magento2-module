@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Omikron\Factfinder\Model\Export\Catalog\ProductType;
 
 use Magento\Catalog\Model\Product;
-use Magento\CatalogInventory\Model\Stock\StockItemRepository as StockItem;
+use Magento\Inventory\Model\SourceItem\Command\GetSourceItemsBySku;
 use Omikron\Factfinder\Api\Export\FieldInterface;
 use Omikron\Factfinder\Api\Export\DataProviderInterface;
 use Omikron\Factfinder\Api\Export\ExportEntityInterface;
@@ -16,7 +16,7 @@ class SimpleDataProvider implements DataProviderInterface, ExportEntityInterface
     public function __construct(
         protected Product $product,
         protected NumberFormatter $numberFormatter,
-        protected StockItem $stockItem,
+        protected GetSourceItemsBySku $getSourceItemsBySku,
         protected array $productFields = [],
     ) {
     }
@@ -70,12 +70,14 @@ class SimpleDataProvider implements DataProviderInterface, ExportEntityInterface
             return $this->product->isAvailable();
         }
 
-        try {
-            $quantity = $this->stockItem->get($this->product->getId());
+        $sourceItems = $this->getSourceItemsBySku->execute($this->product->getSku());
 
-            return (bool) $quantity->getIsInStock();
-        } catch (\Exception $e) {
-            return $this->product->isAvailable();
+        foreach ($sourceItems as $sourceItem) {
+            if ($sourceItem->getStatus()) {
+                return true;
+            }
         }
+
+        return false;
     }
 }
