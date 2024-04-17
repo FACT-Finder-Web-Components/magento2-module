@@ -1,5 +1,5 @@
 # Changelog
-## Unreleased
+## [v4.3.3] - 2024.04.17
 ### Fix
 - Support MSI - checking all inventory sources during export feed
 - Fix feed path for UI export type
@@ -610,6 +610,7 @@
 ### Added
 - Feed Export: Export feed file is now available via separate link
 
+[v4.3.3]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v4.3.3
 [v4.3.2]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v4.3.2
 [v4.3.1]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v4.3.1
 [v4.3.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v4.3.0
