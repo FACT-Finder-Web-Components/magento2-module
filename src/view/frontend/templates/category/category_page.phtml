@@ -1,0 +1,15 @@
+<?php
+/** @var Magento\Framework\View\Element\Template $block */
+/** @var Magento\Framework\Escaper $escaper */
+$categoryPath = (array) $block->getData('category_path');
+?>
+
+<script>
+    document.addEventListener(`ffCoreReady`, ({ factfinder }) => {
+        factfinder.config.categoryPage = [
+            factfinder.utils.filterBuilders.categoryFilter(`CategoryPath`, <?= $escaper->escapeJs(json_encode($categoryPath)); ?> )
+        ];
+
+        factfinder.request.navigation({'filters': factfinder.config.categoryPage}, { requestOptions: { origin: `searchImmediately` } });
+    });
+</script>
