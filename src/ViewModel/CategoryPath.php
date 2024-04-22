@@ -65,16 +65,6 @@ class CategoryPath implements ArgumentInterface
         return $value;
     }
 
-    private function ngPath(?Category $category): array
-    {
-        $path = array_map(
-            fn (Category $item): string => (string) $this->encodeCategoryName(trim($item->getName())),
-            $category ? $this->getParentCategories($category) : []
-        );
-
-        return [sprintf('filter=%s', urlencode($this->param . ':' . implode('/', $path)))];
-    }
-
     /**
      * @param Category|null $category
      *
