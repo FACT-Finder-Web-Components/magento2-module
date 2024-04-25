@@ -695,62 +695,6 @@ ff-search-feedback .ffw-transformX {
     transform: translate(100%) !important;
 }
 
-/* ---- ff-tag-cloud ---- */
-
-ff-tag-cloud {
-    display: block;
-    max-width: 600px;
-}
-
-ff-tag-cloud .ffw-tagCloudContainer {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-}
-
-ff-tag-cloud .ffw-tagCloudLink {
-    padding: 2px;
-}
-
-/* ---- ff-loading-spinner ---- */
-
-ff-loading-spinner {
-    display: block;
-}
-
-ff-loading-spinner .ffw-path {
-    stroke-dasharray: 187;
-    stroke-dashoffset: 0;
-    transform-origin: center;
-    animation: ffw-spinner-dash 1.3s linear infinite;
-}
-
-ff-loading-spinner .ffw-spinner {
-    animation: ffw-spinner-rotation 1.3s linear infinite;
-}
-
-@keyframes ffw-spinner-rotation {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(270deg);
-    }
-}
-
-@keyframes ffw-spinner-dash {
-    0% {
-        stroke-dashoffset: 187;
-    }
-    50% {
-        stroke-dashoffset: 44.5;
-        transform: rotate(135deg);
-    }
-    100% {
-        stroke-dashoffset: 187;
-        transform: rotate(450deg);
-    }
-}
 
 /* ---- generic ---- */
 

@@ -29,13 +29,13 @@ $isSearchRequest = (bool) $block->getData('is_search_request');
                     </div>
 
                     <?php if ($viewModel->isAddToCartEnabled()): ?>
-                        {{^record.HasVariants}}
+                        {{^masterValues.HasVariants}}
                         <div class="product-item-inner">
                             <div class="product actions product-item-actions">
                                 <div class="actions-primary">
                                     <form action="<?= $escaper->escapeUrl($viewModel->getAddToCartUrl()) ?>" method="post" class="product_addtocart_form" novalidate="novalidate">
                                         <?= /* @noEscape */ $block->getBlockHtml('formkey') ?>
-                                        <input type="hidden" name="product" value="{{record.MagentoId}}"/>
+                                        <input type="hidden" name="product" value="{{masterValues.MagentoId}}"/>
                                         <button type="submit" title="Add to Cart" class="action tocart primary">
                                             <span><?= $escaper->escapeHtml(__('Add to Cart')) ?></span>
                                         </button>
@@ -43,7 +43,7 @@ $isSearchRequest = (bool) $block->getData('is_search_request');
                                 </div>
                             </div>
                         </div>
-                        {{/record.HasVariants}}
+                        {{/masterValues.HasVariants}}
                     <?php endif; ?>
                 </div>
             </div>
