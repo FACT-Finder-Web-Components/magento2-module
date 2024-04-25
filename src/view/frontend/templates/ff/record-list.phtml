@@ -29,7 +29,7 @@ $isSearchRequest = (bool) $block->getData('is_search_request');
                     </div>
 
                     <?php if ($viewModel->isAddToCartEnabled()): ?>
-                        {{^record.HasVariants}}
+                        {{^masterValues.HasVariants}}
                         <div class="product-item-inner">
                             <div class="product actions product-item-actions">
                                 <div class="actions-primary">
@@ -43,7 +43,7 @@ $isSearchRequest = (bool) $block->getData('is_search_request');
                                 </div>
                             </div>
                         </div>
-                        {{/record.HasVariants}}
+                        {{/masterValues.HasVariants}}
                     <?php endif; ?>
                 </div>
             </div>
