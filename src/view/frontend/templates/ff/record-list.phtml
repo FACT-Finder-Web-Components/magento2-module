@@ -35,7 +35,7 @@ $isSearchRequest = (bool) $block->getData('is_search_request');
                                 <div class="actions-primary">
                                     <form action="<?= $escaper->escapeUrl($viewModel->getAddToCartUrl()) ?>" method="post" class="product_addtocart_form" novalidate="novalidate">
                                         <?= /* @noEscape */ $block->getBlockHtml('formkey') ?>
-                                        <input type="hidden" name="product" value="{{record.MagentoId}}"/>
+                                        <input type="hidden" name="product" value="{{masterValues.MagentoId}}"/>
                                         <button type="submit" title="Add to Cart" class="action tocart primary">
                                             <span><?= $escaper->escapeHtml(__('Add to Cart')) ?></span>
                                         </button>
