@@ -2,12 +2,14 @@
 /** @var Magento\Framework\View\Element\Template $block */
 /** @var Magento\Framework\Escaper $escaper */
 $categoryPath = (array) $block->getData('category_path');
+//var_dump(json_encode($categoryPath)); die();
 ?>
 
 <script>
     document.addEventListener(`ffCoreReady`, ({ factfinder }) => {
         factfinder.config.categoryPage = [
-            factfinder.utils.filterBuilders.categoryFilter(`CategoryPath`, <?= $escaper->escapeJs(json_encode($categoryPath)); ?> )
+            //factfinder.utils.filterBuilders.categoryFilter(`CategoryPath`, <?php //= $escaper->escapeJs(json_encode($categoryPath)); ?>// )
+            factfinder.utils.filterBuilders.categoryFilter(`CategoryPath`, <?= json_encode($categoryPath); ?>)
         ];
 
         factfinder.request.navigation({'filters': factfinder.config.categoryPage}, { requestOptions: { origin: `searchImmediately` } });
