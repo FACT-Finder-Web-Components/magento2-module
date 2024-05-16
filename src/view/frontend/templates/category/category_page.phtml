@@ -9,7 +9,7 @@ $categoryPath = (array) $block->getData('category_path');
     document.addEventListener(`ffCoreReady`, ({ factfinder }) => {
         factfinder.config.categoryPage = [
             //factfinder.utils.filterBuilders.categoryFilter(`CategoryPath`, <?php //= $escaper->escapeJs(json_encode($categoryPath)); ?>// )
-            factfinder.utils.filterBuilders.categoryFilter(`CategoryPath`, <?= json_encode($categoryPath); ?>)
+            factfinder.utils.filterBuilders.categoryFilter(`CategoryPath`, <?= /* @noEscape */ json_encode($categoryPath); ?>)
         ];
 
         factfinder.request.navigation({'filters': factfinder.config.categoryPage}, { requestOptions: { origin: `searchImmediately` } });
