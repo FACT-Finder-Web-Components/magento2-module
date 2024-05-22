@@ -5,6 +5,7 @@
 - Upgrade magento libraries
 - Upgrade composer dependencies
 - Fix deprecations for magento/framework
+- New SSR implementation for NG WebComponents
 
 ### Remove
 - Remove SSR rendering delay time 

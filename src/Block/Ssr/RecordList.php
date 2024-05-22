@@ -35,13 +35,6 @@ class RecordList extends Template
      */
     protected function _afterToHtml($html): string
     {
-        // Resolve record list
-        $html = preg_replace_callback('#<ff-record-list([^>]*?)>#s', function (array $match) {
-            $attributes = preg_replace('#\sunresolved\s?#s', '', $match[1]);
-
-            return "<ff-record-list ssr {$attributes}>";
-        }, $html);
-
         $result = $this->searchResult($this->getRequest(), $this->getSearchParams());
 
         //Support redirect campaigns for SSR
@@ -62,10 +55,10 @@ class RecordList extends Template
             $template = '<template data-role="record">' . $match[0] . '</template>';
             // walkaround for FFWEB-2182
             if (!count($result['records'])) {
-                return $template . preg_replace(self::OPENING_RECORD_PATTERN, '<ff-record unresolved', $match[0]);
+                return preg_replace(self::OPENING_RECORD_PATTERN, '<ff-record unresolved', $match[0]) . $template;
             }
 
-            return array_reduce($result['records'] ?? [], $this->recordRenderer($match[0]), $template);
+            return array_reduce($result['records'] ?? [], $this->recordRenderer($match[0]), '') . $template;
         }, $html);
 
         return str_replace('{FF_SEARCH_RESULT}', $this->jsonSerializer->serialize($result), $html);

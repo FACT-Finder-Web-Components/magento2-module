@@ -34,7 +34,14 @@
             <block class="Magento\Framework\View\Element\Template" name="factfinder.suggest" as="suggest" ifconfig="factfinder/general/is_enabled" template="Omikron_Factfinder::ff/suggest.phtml" />
         </referenceBlock>
 
-        <block class="Omikron\Factfinder\Block\Ssr\RecordList" name="factfinder.ssr.recordlist" template="Omikron_Factfinder::ff/ssr/record-list.phtml" />
+        <block class="Omikron\Factfinder\Block\Ssr\RecordList" name="factfinder.ssr.recordlist" template="Omikron_Factfinder::ff/ssr/record-list.phtml" >
+            <arguments>
+                <argument name="view_model" xsi:type="object">Omikron\Factfinder\ViewModel\ProductBasedComponent</argument>
+                <argument name="is_search_request" xsi:type="boolean">true</argument>
+                <argument name="subscribe" xsi:type="boolean">true</argument>
+            </arguments>
+        </block>
+
 
         <referenceContainer name="content">
             <block class="Magento\Framework\View\Element\Template" name="factfinder.campaignlandingpage" ifconfig="factfinder/components/campaign_landing_page" template="Omikron_Factfinder::ff/campaign-landing-page.phtml" />
