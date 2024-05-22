@@ -2,4 +2,8 @@
 
 use Magento\Framework\Component\ComponentRegistrar;
 
-ComponentRegistrar::register(ComponentRegistrar::MODULE, 'Omikron_Factfinder', __DIR__);
+ComponentRegistrar::register(
+    ComponentRegistrar::MODULE,
+    'Omikron_Factfinder',
+    __DIR__
+);

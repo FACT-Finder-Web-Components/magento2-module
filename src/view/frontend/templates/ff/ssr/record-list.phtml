@@ -1,11 +1,80 @@
 <?php
+/** @var Magento\Framework\Escaper $escaper */
 /** @var Magento\Framework\View\Element\Template $block */
+/** @var Omikron\Factfinder\ViewModel\ProductBasedComponent $viewModel */
+$viewModel = $block->getViewModel();
+$isSearchRequest = (bool) $block->getData('is_search_request');
 ?>
-<?= $block->getChildHtml() ?>
+<div class="products wrapper grid products-grid">
+    <ff-record-list ssr class="products list items product-items"
+                    subscribe="<?= $block->getData('subscribe') ? $escaper->escapeHtml('true') : $escaper->escapeHtml('false') ?>"
+                    unresolved
+    >
+        <ff-record class="item product product-item">
+            <div class="product-item-info" data-container="product-grid">
+                <a class="product-image-container" data-redirect="{{masterValues.Deeplink}}" data-anchor="{{masterValues.Deeplink}}" data-redirect-target="_self">
+                <span class="product-image-wrapper">
+                    <img class="product-image-photo" data-image="{{masterValues.ImageUrl}}" alt="{{masterValues.Name}}"/>
+                </span>
+                </a>
+
+                <div class="product details product-item-details">
+                    <div class="product name product-item-name">{{masterValues.Name}}</div>
+                    <div class="price-box price-final_price" data-role="priceBox">
+                    <span class="price-container price-final_price tax weee">
+                        <span data-price-amount="{{masterValues.Price}}" data-price-type="finalPrice" class="price-wrapper">
+                            <span class="price">${{masterValues.Price}}</span>
+                        </span>
+                    </span>
+                    </div>
+
+                    <?php if ($viewModel->isAddToCartEnabled()): ?>
+                        <div class="product-item-inner">
+                            <div class="product actions product-item-actions">
+                                <div class="actions-primary">
+                                    <form action="<?= $escaper->escapeUrl($viewModel->getAddToCartUrl()) ?>" method="post" class="product_addtocart_form" novalidate="novalidate">
+                                        <?= /* @noEscape */ $block->getBlockHtml('formkey') ?>
+                                        <input type="hidden" name="product" value="{{masterValues.MagentoId}}"/>
+                                        <button type="submit" title="Add to Cart" class="action tocart primary">
+                                            <span><?= $escaper->escapeHtml(__('Add to Cart')) ?></span>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+
+                </div>
+            </div>
+        </ff-record>
+    </ff-record-list>
+</div>
+
 <script>
-    document.addEventListener('ffCommunicationReady', function ({factfinder}) {
+    require(['jquery', 'underscore', 'catalogAddToCart'], function ($, _) {
+        document.addEventListener('ffCoreReady', function () {
+            document.querySelectorAll('ff-record-list').forEach(function (recordList) {
+                recordList.addEventListener('dom-updated', function (updatedRecordList) {
+                    const addToCartForms = updatedRecordList.target.querySelectorAll('ff-record .product_addtocart_form');
+                    _.each(addToCartForms, function (form) {
+                        const jquedForm = $(form);
+                        if (typeof jquedForm.catalogAddToCart === 'function') {
+                            jquedForm.catalogAddToCart();
+                        }
+                    });
+                });
+            })
+        })
+    });
+</script>
+
+<script>
+    document.addEventListener('ffCoreReady', function ({factfinder}) {
         const searchResult = {FF_SEARCH_RESULT};
-        factfinder.communication.EventAggregator.currentSearchResult = searchResult;
-        factfinder.communication.ResultDispatcher.dispatchRaw(searchResult);
+        <?php if ($isSearchRequest): ?>
+            factfinder.response.dispatch.ssrSearch(searchResult);
+        <?php else: ?>
+            factfinder.response.dispatch.ssrNavigation(searchResult);
+        <?php endif; ?>
     });
 </script>

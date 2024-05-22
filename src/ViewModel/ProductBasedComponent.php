@@ -15,6 +15,7 @@ class ProductBasedComponent implements ArgumentInterface
 {
     private const PATH_SHOW_ADD_TO_CART_BUTTON = 'factfinder/general/show_add_to_cart_button';
     private const PATH_MAX_RESULT = 'factfinder/components_options/max_results_';
+    private const PATH_USE_SRR = 'factfinder/general/use_ssr';
 
     public function __construct(
         private readonly Image                $imageHelper,
@@ -50,5 +51,10 @@ class ProductBasedComponent implements ArgumentInterface
         $defaultMaxResult = 4;
 
         return $storedValue > 0 ? $storedValue : $defaultMaxResult;
+    }
+
+    public function isSsrEnable(): bool
+    {
+        return (bool) $this->scopeConfig->isSetFlag(self::PATH_USE_SRR);
     }
 }

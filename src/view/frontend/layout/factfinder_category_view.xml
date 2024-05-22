@@ -30,7 +30,7 @@
             </arguments>
         </referenceBlock>
 
-        <referenceBlock name="factfinder.recordlist">
+        <referenceBlock name="factfinder.ssr.recordlist">
             <arguments>
                 <argument name="is_search_request" xsi:type="boolean">false</argument>
             </arguments>

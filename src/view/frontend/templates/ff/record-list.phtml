@@ -10,47 +10,49 @@ $isSearchRequest = (bool) $block->getData('is_search_request');
                     subscribe="<?= $block->getData('subscribe') ? $escaper->escapeHtml('true') : $escaper->escapeHtml('false') ?>"
                     unresolved
     >
-        <ff-record class="item product product-item">
-            <div class="product-item-info" data-container="product-grid">
-                <a class="product-image-container" data-redirect="{{masterValues.Deeplink}}" data-anchor="{{masterValues.Deeplink}}" data-redirect-target="_self">
-                    <span class="product-image-wrapper">
-                        <img class="product-image-photo" data-image="{{masterValues.ImageUrl}}" alt="{{masterValues.Name}}"/>
-                    </span>
-                </a>
-
-                <div class="product details product-item-details">
-                    <div class="product name product-item-name">{{masterValues.Name}}</div>
-                    <div class="price-box price-final_price" data-role="priceBox">
-                        <span class="price-container price-final_price tax weee">
-                            <span data-price-amount="{{masterValues.Price}}" data-price-type="finalPrice" class="price-wrapper">
-                                <span class="price">{{$ masterValues.Price}}</span>
-                            </span>
+        <template data-role="record">
+            <ff-record class="item product product-item">
+                <div class="product-item-info" data-container="product-grid">
+                    <a class="product-image-container" data-redirect="{{masterValues.Deeplink}}" data-anchor="{{masterValues.Deeplink}}" data-redirect-target="_self">
+                        <span class="product-image-wrapper">
+                            <img class="product-image-photo" data-image="{{masterValues.ImageUrl}}" alt="{{masterValues.Name}}"/>
                         </span>
-                    </div>
+                    </a>
 
-                    <?php if ($viewModel->isAddToCartEnabled()): ?>
-                        <div class="product-item-inner">
-                            <div class="product actions product-item-actions">
-                                <div class="actions-primary">
-                                    <form action="<?= $escaper->escapeUrl($viewModel->getAddToCartUrl()) ?>" method="post" class="product_addtocart_form" novalidate="novalidate">
-                                        <?= /* @noEscape */ $block->getBlockHtml('formkey') ?>
-                                        <input type="hidden" name="product" value="{{masterValues.MagentoId}}"/>
-                                        <button type="submit" title="Add to Cart" class="action tocart primary">
-                                            <span><?= $escaper->escapeHtml(__('Add to Cart')) ?></span>
-                                        </button>
-                                    </form>
+                    <div class="product details product-item-details">
+                        <div class="product name product-item-name">{{masterValues.Name}}</div>
+                        <div class="price-box price-final_price" data-role="priceBox">
+                            <span class="price-container price-final_price tax weee">
+                                <span data-price-amount="{{masterValues.Price}}" data-price-type="finalPrice" class="price-wrapper">
+                                    <span class="price">${{masterValues.Price}}</span>
+                                </span>
+                            </span>
+                        </div>
+
+                        <?php if ($viewModel->isAddToCartEnabled()): ?>
+                            <div class="product-item-inner">
+                                <div class="product actions product-item-actions">
+                                    <div class="actions-primary">
+                                        <form action="<?= $escaper->escapeUrl($viewModel->getAddToCartUrl()) ?>" method="post" class="product_addtocart_form" novalidate="novalidate">
+                                            <?= /* @noEscape */ $block->getBlockHtml('formkey') ?>
+                                            <input type="hidden" name="product" value="{{masterValues.MagentoId}}"/>
+                                            <button type="submit" title="Add to Cart" class="action tocart primary">
+                                                <span><?= $escaper->escapeHtml(__('Add to Cart')) ?></span>
+                                            </button>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    <?php endif; ?>
+                        <?php endif; ?>
 
+                    </div>
                 </div>
-            </div>
-        </ff-record>
+            </ff-record>
+        </template>
     </ff-record-list>
 </div>
 
-<?php if ($isSearchRequest): ?>
+<?php if ($isSearchRequest && !$viewModel->isSsrEnable()): ?>
     <script>
         // Execute search request
         document.addEventListener(`ffCoreReady`, ({ factfinder }) => {
