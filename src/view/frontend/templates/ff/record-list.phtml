@@ -3,7 +3,6 @@
 /** @var Magento\Framework\View\Element\Template $block */
 /** @var Omikron\Factfinder\ViewModel\ProductBasedComponent $viewModel */
 $viewModel = $block->getViewModel();
-$isSearchRequest = (bool) $block->getData('is_search_request');
 ?>
 <div class="products wrapper grid products-grid">
     <ff-record-list class="products list items product-items"
@@ -51,17 +50,6 @@ $isSearchRequest = (bool) $block->getData('is_search_request');
         </template>
     </ff-record-list>
 </div>
-
-<?php if ($isSearchRequest && !$viewModel->isSsrEnable()): ?>
-    <script>
-        // Execute search request
-        document.addEventListener(`ffCoreReady`, ({ factfinder }) => {
-            const urlParams = new URLSearchParams(window.location.search);
-            const query = urlParams.get('query');
-            factfinder.request.search({ query: query }, { requestOptions: { origin: `searchImmediately` } });
-        });
-    </script>
-<?php endif; ?>
 
 <script>
     require(['jquery', 'underscore', 'catalogAddToCart'], function ($, _) {

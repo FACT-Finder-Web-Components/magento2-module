@@ -5,11 +5,12 @@
 $viewModel  = $block->getViewModel();
 $communicationParameters = (array) $block->getData('communication_parameters');
 $parameters = $viewModel->getParameters($communicationParameters);
+$searchImmediate = $communicationParameters['search-immediate'] ?? 'false';
 ?>
 
-<!--Init webcomponents-->
+<!--Main FF Web-components Initialisation -->
 <script>
-    document.addEventListener(`ffCoreReady`, ({ factfinder }) => {
+    document.addEventListener(`ffCoreReady`, ({ factfinder, initialSearch }) => {
         //Debug webc
         factfinder.config.debug = true;
 
@@ -28,6 +29,11 @@ $parameters = $viewModel->getParameters($communicationParameters);
         };
 
         // This is also the best place to invoke a search request replacing the `search-immediate` attribute.
+
+        if (<?= /** @SuppressWarnings(PHPMD) */ $searchImmediate ?>){
+            const searchParams = factfinder.utils.env.searchParamsFromUrl();
+            initialSearch(searchParams, { requestOptions: { origin: `initialSearch` } });
+        }
 
         factfinder.request.before.search(({ searchParams, searchOptions }) => {
             // If the search request was invoked by `ff-searchbox`, `searchOptions.requestOptions.origin` will be a reference to the `ff-searchbox` element.
@@ -113,8 +119,5 @@ $parameters = $viewModel->getParameters($communicationParameters);
 <!--            }-->
 <!--        }-->
 <!---->
-<!--        if (--><?php //= /** @SuppressWarnings(PHPMD) */ $searchImmediate ?>
-<!--//            searchImmediate();-->
-<!--//        }-->
 <!--//    });-->
 <!--//</script>-->
