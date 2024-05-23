@@ -20,6 +20,7 @@
                 <argument name="communication_parameters" xsi:type="array">
                     <item name="add-params" xsi:type="helper" helper="Omikron\Factfinder\ViewModel\CategoryPath::getAddParams" />
                     <item name="category-page" xsi:type="helper" helper="Omikron\Factfinder\ViewModel\CategoryPath::getCategoryPath" />
+                    <item name="search-immediate" xsi:type="string">false</item>
                 </argument>
             </arguments>
         </referenceBlock>
