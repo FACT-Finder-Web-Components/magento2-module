@@ -24,8 +24,6 @@ class Communication implements ArgumentInterface
         private readonly ScopeConfigInterface            $scopeConfig,
         array $mergeableParams = [
             'add-params',
-            'add-tracking-params',
-            'keep-url-params',
             'parameter-whitelist'
         ],
     ) {
@@ -39,6 +37,7 @@ class Communication implements ArgumentInterface
         }
 
         $params = $this->parametersProvider->getParameters();
+
         return ['version' => $params['version'] ?? 'ng']
             + array_filter($this->mergeParameters($blockParams, $params) + $blockParams + $params, 'boolval');
     }
