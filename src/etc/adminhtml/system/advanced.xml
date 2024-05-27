@@ -5,23 +5,25 @@
         <comment>The advanced settings can change how the search works. Please edit them with caution and only if you know what they are doing.</comment>
         <field id="internal_ips" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
             <label>Internal IPs</label>
-            <tooltip>Comma-separated value</tooltip>
-            <comment>Requests from these IPs will be excluded from your license plan</comment>
+            <tooltip>Requests from these IPs will be excluded from your license plan</tooltip>
         </field>
         <field id="parameter_whitelist" translate="label comment tooltip" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
             <label>Parameter whitelist</label>
-            <comment>If any URL parameters are omitted through other attributes like use-url-parameter="false" or only-search-params you can add specific important parameters manually. Just use a comma separated list like: parameter-whitelist="param1,myParam"</comment>
-            <tooltip>Comma-separated value</tooltip>
+            <frontend_model>Omikron\Factfinder\Block\Adminhtml\System\Config\Field\ParameterWhitelist</frontend_model>
+            <backend_model>Magento\Config\Model\Config\Backend\Serialized\ArraySerialized</backend_model>
+            <tooltip>Specifies a list of search parameter names (as they appear in a _SearchParams_ object) that shall be considered for stringification.
+                Search parameters that are not listed are discarded and will not appear in the URL.</tooltip>
         </field>
         <field id="add_params" translate="label comment tooltip" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
-            <label>Add search parameters</label>
-            <comment>With this property you can deliver standard parameters which will then be attached to the search request. Example: param1=abc,param2=xyz.</comment>
-            <tooltip>Comma-separated value</tooltip>
+            <label>Add URL parameters</label>
+            <frontend_model>Omikron\Factfinder\Block\Adminhtml\System\Config\Field\AddUrlParameters</frontend_model>
+            <backend_model>Magento\Config\Model\Config\Backend\Serialized\ArraySerialized</backend_model>
+            <tooltip>With this property you can deliver standard parameters which will then be attached to the search or navigation request.</tooltip>
         </field>
         <field id="anonymize_user_id" translate="label comment" type="select" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
             <label>Anonymize user id</label>
-            <comment>Sends hashed user id with tracking requests</comment>
             <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+            <tooltip>Sends hashed user id with tracking requests</tooltip>
         </field>
     </group>
 </include>

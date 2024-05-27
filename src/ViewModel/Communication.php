@@ -14,20 +14,12 @@ class Communication implements ArgumentInterface
 {
     private const PATH_USE_SRR = 'factfinder/general/use_ssr';
 
-    /** @var string[] */
-    private array $mergeableParams;
-
     public function __construct(
         private readonly FieldRoles                      $fieldRoles,
         private readonly SerializerInterface             $serializer,
         private readonly CommunicationParametersProvider $parametersProvider,
         private readonly ScopeConfigInterface            $scopeConfig,
-        array $mergeableParams = [
-            'add-params',
-            'parameter-whitelist'
-        ],
     ) {
-        $this->mergeableParams = array_combine($mergeableParams, array_fill(0, count($mergeableParams), ''));
     }
 
     public function getParameters(array $blockParams = []): array
@@ -54,9 +46,8 @@ class Communication implements ArgumentInterface
 
     private function mergeParameters(array ...$params): array
     {
-        $params = array_map(fn (array $param) => array_intersect_key($param + $this->mergeableParams, $this->mergeableParams), $params);
+        $params = array_map(fn (array $param) => array_intersect_key($param, []), $params);
 
-        return array_reduce(array_keys($this->mergeableParams), fn ($result, $key) => $result
-            + [$key => implode(',', array_filter(array_column($params, $key)))], []);
+        return $params;
     }
 }

@@ -20,6 +20,19 @@ $searchImmediate = $communicationParameters['search-immediate'] ?? 'false';
         factfinder.config.apiKey = `<?= $escaper->escapeHtml($parameters['api_key'])?>`;
         factfinder.config.fieldRoles = <?= /* @noEscape */ $viewModel->getFieldRoles() ?>;
 
+        <?php if(!empty($parameters['add-params'])) : ?>
+            factfinder.routing.setUrlParamOptionsListener(() => ({
+                postStringifier: pairs => {
+                    <?php foreach ($parameters['add-params'] as $name => $value ) {
+                        echo "pairs.push({ key: `{$name}`, value:  `{$value}` });";
+                    }
+                    ?>
+
+                    return pairs;
+                },
+            }));
+        <?php endif; ?>
+
         factfinder.config.formatting = {
             locale: `<?= $escaper->escapeUrl($parameters['currency-country-code'])?>`,
             formatOptions: {
@@ -30,7 +43,7 @@ $searchImmediate = $communicationParameters['search-immediate'] ?? 'false';
 
         // This is also the best place to invoke a search request replacing the `search-immediate` attribute.
 
-        if (<?= /** @SuppressWarnings(PHPMD) */ $searchImmediate ?>){
+        if (<?= /** @SuppressWarnings(PHPMD) */ $searchImmediate ?>) {
             const searchParams = factfinder.utils.env.searchParamsFromUrl();
             initialSearch(searchParams, { requestOptions: { origin: `initialSearch` } });
         }
@@ -38,7 +51,12 @@ $searchImmediate = $communicationParameters['search-immediate'] ?? 'false';
         factfinder.request.before.search(({ searchParams, searchOptions }) => {
             // If the search request was invoked by `ff-searchbox`, `searchOptions.requestOptions.origin` will be a reference to the `ff-searchbox` element.
             if (searchOptions?.requestOptions?.origin?.tagName === `FF-SEARCHBOX`) {
-                window.location.href =  `/factfinder/result?query=${searchParams.query}`;
+                <?php if(!empty($parameters['add-params'])) : ?>
+                window.location.href =  `/factfinder/result?query=${searchParams.query}&<?= http_build_query($parameters['add-params']) ?>`;
+                <?php else : ?>
+                    window.location.href =  `/factfinder/result?query=${searchParams.query}`;
+                <?php endif; ?>
+
 
                 // Cancel the pipeline to avoid sending a search request to FactFinder before the redirect is complete.
                 return false;

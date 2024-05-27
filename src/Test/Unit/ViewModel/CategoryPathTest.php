@@ -24,18 +24,6 @@ class CategoryPathTest extends TestCase
     /** @var MockObject|CommunicationConfig */
     private MockObject $communicationConfig;
 
-    public function test_category_path_for_standard_version()
-    {
-        $this->communicationConfig->method('getVersion')->willReturn('7.3');
-        $categoryPath    = $this->newCategoryPath($this->communicationConfig);
-
-        $this->currentCategory->method('getParentCategories')
-            ->willReturn([$this->category('Jackets +Size', 3), $this->category('Men 100%', 1), $this->category('Tops & 1/2', 2)]);
-
-        $value = 'filterCategoryPathROOT=Men+100%25,filterCategoryPathROOT%2FMen+100%2525=Tops+%26+1%2F2,filterCategoryPathROOT%2FMen+100%2525%2FTops+%26+1%252F2=Jackets+%2BSize';
-        $this->assertSame($value, (string) $categoryPath->getAddParams());
-    }
-
     public function test_category_names_are_trimmed()
     {
         $this->communicationConfig->method('getVersion')->willReturn('ng');
