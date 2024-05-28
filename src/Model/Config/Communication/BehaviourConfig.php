@@ -23,8 +23,8 @@ class BehaviourConfig implements ParametersSourceInterface
     public function getParameters(): array
     {
         $parameters = [
-            'add-params'                  => $this->getAddParams(), // postStringifier
-            'parameter-whitelist'         => $this->getConfig(self::PATH_PARAMETER_WHITELIST), // allow setUrlParamOptionsListener
+            'add-params'          => $this->getAddParams(),
+            'parameter-whitelist' => $this->getParameterWhitelist(),
         ];
 
         return $parameters;
@@ -41,5 +41,15 @@ class BehaviourConfig implements ParametersSourceInterface
         $unserialized = array_values($this->serializer->unserialize($storedValue ?: '[]'));
 
         return array_column($unserialized, 'value', 'name');
+    }
+
+    private function getParameterWhitelist(): string
+    {
+        $storedValue  = $this->scopeConfig->getValue(self::PATH_PARAMETER_WHITELIST);
+        $unserialized = array_values($this->serializer->unserialize($storedValue ?: '[]'));
+        $params = array_column($unserialized, 'name');
+        array_walk($params, fn(&$x) => $x = "'$x'");
+
+        return rtrim(implode(', ', $params));
     }
 }
