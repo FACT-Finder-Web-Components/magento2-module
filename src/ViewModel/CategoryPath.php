@@ -23,7 +23,7 @@ class CategoryPath implements ArgumentInterface
     public function __toString()
     {
         return $this->communicationConfig->getVersion() === Version::NG ? $this->getCategoryPath(
-        ) : $this->getAddParams();
+        ) : '';
     }
 
     public function getCategoryPath(): array
@@ -32,37 +32,15 @@ class CategoryPath implements ArgumentInterface
 
         foreach ($this->getParentCategories($this->getCurrentCategory()) as $item) {
             $categoryName = trim($item->getName());
-            $values[]      = $categoryName;
+            $values[]     = $categoryName;
         }
 
         return $values;
     }
 
-    public function getAddParams(): string
-    {
-        if ($this->communicationConfig->getVersion() === Version::NG) {
-            return '';
-        }
-
-        return implode(',', $this->standardPath($this->getCurrentCategory()));
-    }
-
     public function getCategoryPathFieldName(): string
     {
         return $this->param;
-    }
-
-    private function standardPath(?Category $category): array
-    {
-        $path  = 'ROOT';
-        $value = $this->initial;
-        foreach ($this->getParentCategories($category) as $item) {
-            $categoryName = trim($item->getName());
-            $value[]      = sprintf("filter{$this->param}%s=%s", $path, urlencode($categoryName));
-            $path         .= urlencode('/' . $this->encodeCategoryName($categoryName));
-        }
-
-        return $value;
     }
 
     /**
@@ -81,23 +59,5 @@ class CategoryPath implements ArgumentInterface
     private function getCurrentCategory(): ?Category
     {
         return $this->registry->registry('current_category');
-    }
-
-    private function encodeCategoryName(string $path): string
-    {
-        //important! do not override this method
-        return preg_replace(
-            '/\+/',
-            '%2B',
-            preg_replace(
-                '/\//',
-                '%2F',
-                preg_replace(
-                    '/%/',
-                    '%25',
-                    $path
-                )
-            )
-        );
     }
 }

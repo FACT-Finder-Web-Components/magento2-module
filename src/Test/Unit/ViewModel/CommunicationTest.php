@@ -42,7 +42,7 @@ class CommunicationTest extends TestCase
         $parameters  = $this->communication->getParameters($blockParams);
 
         $this->assertArrayHasKey('add-params', $parameters);
-        $this->assertSame('param1=123,param2=abc', $parameters['add-params']);
+        $this->assertSame('param1=123', $parameters['add-params']);
     }
 
     public function test_multiple_boolean_values_will_be_overwritten()
