@@ -32,6 +32,12 @@ $searchImmediate = $communicationParameters['search-immediate'] ?? 'false';
             }));
         <?php endif; ?>
 
+        <?php if(!empty($parameters['parameter-whitelist'])) : ?>
+            factfinder.routing.setUrlParamOptionsListener(() => ({
+                allow: [<?= /* @noEscape */ $parameters['parameter-whitelist']; ?>],
+            }));
+        <?php endif; ?>
+
         factfinder.config.formatting = {
             locale: `<?= $escaper->escapeUrl($parameters['currency-country-code'])?>`,
             formatOptions: {
@@ -55,7 +61,6 @@ $searchImmediate = $communicationParameters['search-immediate'] ?? 'false';
                 <?php else : ?>
                     window.location.href =  `/factfinder/result?query=${searchParams.query}`;
                 <?php endif; ?>
-
 
                 // Cancel the pipeline to avoid sending a search request to FactFinder before the redirect is complete.
                 return false;
