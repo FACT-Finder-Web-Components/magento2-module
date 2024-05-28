@@ -48,7 +48,7 @@ class BehaviourConfig implements ParametersSourceInterface
         $storedValue  = $this->scopeConfig->getValue(self::PATH_PARAMETER_WHITELIST);
         $unserialized = array_values($this->serializer->unserialize($storedValue ?: '[]'));
         $params = array_column($unserialized, 'name');
-        array_walk($params, fn(&$x) => $x = "'$x'");
+        array_walk($params, fn(&$param) => $param = "'$param'");
 
         return rtrim(implode(', ', $params));
     }
