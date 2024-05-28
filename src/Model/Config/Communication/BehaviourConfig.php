@@ -30,11 +30,6 @@ class BehaviourConfig implements ParametersSourceInterface
         return $parameters;
     }
 
-    private function getConfig(string $path): string
-    {
-        return (string) $this->scopeConfig->getValue($path, ScopeInterface::SCOPE_STORES);
-    }
-
     private function getAddParams(): array
     {
         $storedValue  = $this->scopeConfig->getValue(self::PATH_ADD_PARAMS);
