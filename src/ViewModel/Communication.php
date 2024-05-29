@@ -30,7 +30,7 @@ class Communication implements ArgumentInterface
 
         $params = $this->parametersProvider->getParameters();
 
-        return ['version' => $params['version'] ?? 'ng']
+        return ['version' => 'ng']
             + array_filter($this->mergeParameters($blockParams, $params) + $blockParams + $params, 'boolval');
     }
 

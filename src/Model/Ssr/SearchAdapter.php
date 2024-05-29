@@ -6,7 +6,6 @@ namespace Omikron\Factfinder\Model\Ssr;
 
 use Omikron\FactFinder\Communication\Client\ClientBuilder;
 use Omikron\FactFinder\Communication\Client\ClientException;
-use Omikron\FactFinder\Communication\Version;
 use Omikron\Factfinder\Model\Api\CredentialsFactory;
 use Omikron\Factfinder\Model\Config\CommunicationConfig;
 use Psr\Http\Message\ResponseInterface;
@@ -50,8 +49,6 @@ class SearchAdapter
         $apiVersion  = $this->communicationConfig->getApiVersion();
         $endpoint = $navigationRequest ? 'navigation' : 'search';
 
-        return $this->communicationConfig->getVersion() == Version::NG
-            ? "rest/{$apiVersion}/{$endpoint}/{$channel}?{$paramString}"
-            : "Search.ff?channel={$channel}&{$paramString}&format=json";
+        return "rest/{$apiVersion}/{$endpoint}/{$channel}?{$paramString}";
     }
 }

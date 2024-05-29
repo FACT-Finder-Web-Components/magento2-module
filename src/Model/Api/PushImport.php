@@ -7,7 +7,6 @@ namespace Omikron\Factfinder\Model\Api;
 use Omikron\FactFinder\Communication\Client\ClientBuilder;
 use Omikron\FactFinder\Communication\Client\ClientException;
 use Omikron\FactFinder\Communication\Resource\AdapterFactory;
-use Omikron\FactFinder\Communication\Version;
 use Omikron\Factfinder\Model\Config\CommunicationConfig;
 use Omikron\Factfinder\Model\Config\ExportConfig;
 use Psr\Log\LoggerInterface;
@@ -54,7 +53,7 @@ class PushImport
             return false;
         }
 
-        if ($this->communicationConfig->getVersion() === Version::NG && $importAdapter->running($channel)) {
+        if ($importAdapter->running($channel)) {
             throw new ClientException("Can't start a new import process. Another one is still going");
         }
 
@@ -75,9 +74,7 @@ class PushImport
 
     private function prepareListFromPushImportResponses(array $responses): string
     {
-        return strtolower($this->communicationConfig->getVersion()) === 'ng'
-            ? $this->ngResponse($responses)
-            : $this->standardResponse($responses);
+        return $this->ngResponse($responses);
     }
 
     private function ngResponse(array $responses): string
@@ -97,24 +94,6 @@ class PushImport
 
             $importType .= $statusMessages;
             $listContent .= $importType;
-        }
-
-        return sprintf($list, $listContent);
-    }
-
-    private function standardResponse(array $responses): string
-    {
-        $list = '<ul>%s</ul>';
-        $listContent = '';
-
-        if (!empty($responses['status'])) {
-            $statusList = sprintf(
-                '<ul>%s</ul>',
-                implode('', array_map(fn (string $message): string => sprintf('<li>%s</li>', $message), $responses['status']))
-            );
-
-            $statusMessages = sprintf('<li><i>Status messages</i></li><li>%s</li>', $statusList);
-            $listContent .= $statusMessages;
         }
 
         return sprintf($list, $listContent);

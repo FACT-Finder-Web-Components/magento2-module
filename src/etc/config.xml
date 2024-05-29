@@ -12,10 +12,6 @@
                 <ff_enrichment>0</ff_enrichment>
                 <tracking_product_number_field_role>{"brand":"Brand","campaignProductNumber":"ProductNumber","deeplink":"Deeplink","description":"Description","displayProductNumber":"ProductNumber","ean":"EAN","imageUrl":"ImageURL","masterArticleNumber":"Master","price":"Price","productName":"Name","trackingProductNumber":"ProductNumber"}</tracking_product_number_field_role>
             </general>
-            <advanced>
-                <version>7.3</version>
-                <ff_api_version>v4</ff_api_version>
-            </advanced>
             <components>
                 <campaign_advisor>1</campaign_advisor>
                 <campaign_redirect>1</campaign_redirect>
