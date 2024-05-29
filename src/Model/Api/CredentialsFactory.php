@@ -25,8 +25,8 @@ class CredentialsFactory
               [
                 'username' => $this->authConfig->getUsername(),
                 'password' => $this->authConfig->getPassword(),
-                'prefix'   => $this->authConfig->getAuthenticationPrefix(),
-                'postfix'  => $this->authConfig->getAuthenticationPostfix()
+                'prefix'   => '',
+                'postfix'  => '',
               ]);
     }
 }

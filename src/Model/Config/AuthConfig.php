@@ -11,8 +11,6 @@ class AuthConfig
 {
     private const PATH_USERNAME     = 'factfinder/general/username';
     private const PATH_PASSWORD     = 'factfinder/general/password';
-    private const PATH_AUTH_PREFIX  = 'factfinder/general/prefix';
-    private const PATH_AUTH_POSTFIX = 'factfinder/general/postfix';
 
     private ScopeConfigInterface $scopeConfig;
 
@@ -29,15 +27,5 @@ class AuthConfig
     public function getPassword(): string
     {
         return (string) $this->scopeConfig->getValue(self::PATH_PASSWORD, Scope::SCOPE_STORE);
-    }
-
-    public function getAuthenticationPrefix(): string
-    {
-        return (string) $this->scopeConfig->getValue(self::PATH_AUTH_PREFIX, Scope::SCOPE_STORE);
-    }
-
-    public function getAuthenticationPostfix(): string
-    {
-        return (string) $this->scopeConfig->getValue(self::PATH_AUTH_POSTFIX, Scope::SCOPE_STORE);
     }
 }

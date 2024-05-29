@@ -10,7 +10,6 @@ use Magento\Framework\Controller\Result\JsonFactory;
 use Magento\Store\Model\StoreManagerInterface;
 use Omikron\FactFinder\Communication\Client\ClientBuilder;
 use Omikron\FactFinder\Communication\Resource\AdapterFactory;
-use Omikron\FactFinder\Communication\Version;
 use Omikron\Factfinder\Model\Api\CredentialsFactory;
 use Omikron\Factfinder\Model\Config\CommunicationConfig;
 use Omikron\Factfinder\Model\FieldRoles;
@@ -60,8 +59,7 @@ class Update extends Action
                 $this->communicationConfig->getApiVersion()
             );
             $searchAdapter = $adapterFactory->getSearchAdapter();
-            $response      = $searchAdapter->search($this->communicationConfig->getChannel($storeId), 'Search.ff');
-            $searchResult  = $this->communicationConfig->getVersion() === Version::NG ? $response : $response['searchResult'];
+            $searchResult  = $searchAdapter->search($this->communicationConfig->getChannel($storeId), 'Search.ff');
             $result->setData(['message' => __('Search result does not contain field roles')]);
 
             if (isset($searchResult['fieldRoles'])) {

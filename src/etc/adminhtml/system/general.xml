@@ -19,21 +19,21 @@
             <label>Channel</label>
             <validate>required-entry</validate>
         </field>
-        <field id="version" translate="label comment" type="select" sortOrder="12" showInDefault="1" showInWebsite="1" showInStore="1">
-            <label>FACT-Finder version</label>
-            <options>
-                <option label="NG">ng</option>
-                <option label="7.3">7.3</option>
-                <option label="7.2">7.2</option>
-            </options>
-        </field>
-        <field id="ff_api_version" translate="label comment" type="select" sortOrder="13" showInDefault="1" showInWebsite="1" showInStore="1">
-            <label>FACT-Finder Api version</label>
-            <options>
-                <option label="v4">v4</option>
-                <option label="v5">v5</option>
-            </options>
-        </field>
+<!--        <field id="version" translate="label comment" type="select" sortOrder="12" showInDefault="1" showInWebsite="1" showInStore="1">-->
+<!--            <label>FACT-Finder version</label>-->
+<!--            <options>-->
+<!--                <option label="NG">ng</option>-->
+<!--                <option label="7.3">7.3</option>-->
+<!--                <option label="7.2">7.2</option>-->
+<!--            </options>-->
+<!--        </field>-->
+<!--        <field id="ff_api_version" translate="label comment" type="select" sortOrder="13" showInDefault="1" showInWebsite="1" showInStore="1">-->
+<!--            <label>FACT-Finder Api version</label>-->
+<!--            <options>-->
+<!--                <option label="v4">v4</option>-->
+<!--                <option label="v5">v5</option>-->
+<!--            </options>-->
+<!--        </field>-->
         <field id="username" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
             <label>Username</label>
             <validate>required-entry</validate>
@@ -45,18 +45,6 @@
         <field id="ff_api_key" translate="label" type="obscure" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
             <label>API key</label>
             <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
-        </field>
-        <field id="prefix" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
-            <label>Authentication Prefix</label>
-            <depends>
-                <field negative="1" id="factfinder/general/version">ng</field>
-            </depends>
-        </field>
-        <field id="postfix" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
-            <label>Authentication Postfix</label>
-            <depends>
-                <field negative="1" id="factfinder/general/version">ng</field>
-            </depends>
         </field>
         <field id="ff_build_connection" translate="label comment" type="button" sortOrder="71" showInDefault="1" showInWebsite="1" showInStore="1">
             <label>Test Connection</label>

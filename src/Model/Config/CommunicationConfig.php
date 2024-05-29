@@ -8,15 +8,12 @@ use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\UrlInterface;
 use Magento\Store\Model\ScopeInterface;
 use Omikron\Factfinder\Api\Config\ParametersSourceInterface;
-use Omikron\FactFinder\Communication\Version;
 use Omikron\Factfinder\Controller\Router;
 
 class CommunicationConfig implements ParametersSourceInterface
 {
     private const PATH_CHANNEL              = 'factfinder/general/channel';
     private const PATH_ADDRESS              = 'factfinder/general/address';
-    private const PATH_VERSION              = 'factfinder/general/version';
-    private const PATH_API_VERSION          = 'factfinder/general/ff_api_version';
     private const PATH_IS_ENABLED           = 'factfinder/general/is_enabled';
     private const PATH_USE_PROXY            = 'factfinder/general/ff_enrichment';
     private const PATH_DATA_TRANSFER_IMPORT = 'factfinder/data_transfer/ff_push_import_enabled';
@@ -55,7 +52,7 @@ class CommunicationConfig implements ParametersSourceInterface
 
     public function getVersion(): string
     {
-        return (string) $this->scopeConfig->getValue(self::PATH_VERSION, ScopeInterface::SCOPE_STORES);
+        return 'ng';
     }
 
     public function getApiKey(): string
@@ -79,7 +76,7 @@ class CommunicationConfig implements ParametersSourceInterface
 
     public function getApiVersion(): string
     {
-        return (string) $this->scopeConfig->getValue(self::PATH_API_VERSION, ScopeInterface::SCOPE_STORES) ?? 'v4';
+        return 'v5';
     }
 
     private function getServerUrl(): string

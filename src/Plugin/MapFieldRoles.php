@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Omikron\Factfinder\Plugin;
 
-use Omikron\FactFinder\Communication\Version;
 use Omikron\Factfinder\Model\Config\CommunicationConfig;
 use Omikron\Factfinder\Model\FieldRoles;
 
@@ -24,9 +23,7 @@ class MapFieldRoles
      */
     public function aroundSaveFieldRoles(FieldRoles $subject, callable $proceed, array $fieldRoles, int $storeId)
     {
-        $isNg = $this->communicationConfig->getVersion() === Version::NG;
-
-        return $proceed($isNg ? $this->map($fieldRoles) : $fieldRoles, $storeId);
+        return $proceed($this->map($fieldRoles), $storeId);
     }
 
     protected function map(array $fieldRoles): array

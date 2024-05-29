@@ -44,12 +44,8 @@ class ExportConfigTest extends TestCase
         $this->assertCount(2, $result);
     }
 
-    public function test_correct_push_data_types_are_returned_for_different_ff_versions()
+    public function test_correct_push_data_types_are_returned()
     {
-        $result = $this->testee->getPushImportDataTypes(1);
-        $this->assertContains('data', $result);
-        $this->assertNotContains('search', $result);
-
         $result = $this->testee->getPushImportDataTypes(1);
         $this->assertContains('search', $result);
         $this->assertNotContains('data', $result);
@@ -63,7 +59,7 @@ class ExportConfigTest extends TestCase
             ['factfinder/export/attributes', Scope::SCOPE_STORES, 42,'{"_1":{"code":"color","multi":"0","numerical":"0"},"_2":{"code":"climate","multi":"1","numerical":"0"},"_3":{"code":"gender","multi":"0","numerical":"0"},"_4":{"code":"size","multi":"1","numerical":"1"}}']
         ]);
         $communicationConfig = $this->createMock(CommunicationConfig::class);
-        $communicationConfig->method('getVersion')->willReturnOnConsecutiveCalls('7.3', 'ng');
+        $communicationConfig->method('getVersion')->willReturn('ng');
         $this->testee = new ExportConfig($scopeConfig, new Json(), $communicationConfig);
     }
 }

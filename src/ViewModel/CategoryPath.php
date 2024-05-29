@@ -7,7 +7,6 @@ namespace Omikron\Factfinder\ViewModel;
 use Magento\Catalog\Model\Category;
 use Magento\Framework\Registry;
 use Magento\Framework\View\Element\Block\ArgumentInterface;
-use Omikron\FactFinder\Communication\Version;
 use Omikron\Factfinder\Model\Config\CommunicationConfig;
 
 class CategoryPath implements ArgumentInterface
@@ -18,12 +17,6 @@ class CategoryPath implements ArgumentInterface
         private readonly string              $param = 'CategoryPath',
         private readonly array               $initial = [],
     ) {
-    }
-
-    public function __toString()
-    {
-        return $this->communicationConfig->getVersion() === Version::NG ? $this->getCategoryPath(
-        ) : '';
     }
 
     public function getCategoryPath(): array

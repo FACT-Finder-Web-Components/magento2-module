@@ -10,6 +10,7 @@ use Magento\Framework\Phrase;
 use Omikron\FactFinder\Communication\Client\ClientBuilder;
 use Omikron\FactFinder\Communication\Credentials;
 use Omikron\FactFinder\Communication\Resource\AdapterFactory;
+use Omikron\FactFinder\Communication\Version;
 use Omikron\Factfinder\Logger\FactFinderLogger;
 use Omikron\Factfinder\Model\Api\CredentialsFactory;
 use Omikron\Factfinder\Model\Config\AuthConfig;
@@ -50,8 +51,8 @@ class TestConnection extends Action
 
             $adapterFactory = new AdapterFactory(
                 $clientBuilder,
-                $request->getParam('version'),
-                $request->getParam('ff_api_version')
+                Version::NG,
+                'v5'
             );
             $searchAdapter = $adapterFactory->getSearchAdapter();
             $searchAdapter->search($request->getParam('channel'), '*');

@@ -63,7 +63,7 @@ class CommunicationTest extends TestCase
 
         $this->parametersProviderMock->method('getParameters')->willReturn([
             'url'        => 'http://some-url',
-            'version'    => '7.3',
+            'version'    => 'ng',
             'user-id'    => null,
             'channel'    => 'some-channel',
             'use-cache'  => 'true',

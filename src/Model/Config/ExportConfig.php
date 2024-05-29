@@ -7,7 +7,6 @@ namespace Omikron\Factfinder\Model\Config;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Serialize\SerializerInterface;
 use Magento\Store\Model\ScopeInterface;
-use Omikron\FactFinder\Communication\Version;
 
 class ExportConfig
 {
@@ -44,20 +43,21 @@ class ExportConfig
     {
         $configPath = 'factfinder/data_transfer/ff_push_import_type';
         $dataTypes  = (string) $this->scopeConfig->getValue($configPath, ScopeInterface::SCOPE_STORES, $scopeId);
-        $isNg       = $this->communicationConfig->getVersion() === Version::NG;
 
-        return explode(',', $isNg ? $dataTypes : str_replace('search', 'data', $dataTypes));
+        return explode(',', $dataTypes);
     }
 
     private function getAttributeCodes(?int $storeId, callable $condition): array
     {
         $rows = array_filter($this->getConfigValue($storeId), $condition);
+
         return array_values(array_unique(array_column($rows, 'code')));
     }
 
     private function getConfigValue(?int $storeId): array
     {
         $value = $this->scopeConfig->getValue(self::CONFIG_PATH, ScopeInterface::SCOPE_STORES, $storeId);
+
         return array_map(
             fn (array $row): array => ['multi' => !!$row['multi']] + $row,
             (array) $this->serializer->unserialize($value ?: '[]')
