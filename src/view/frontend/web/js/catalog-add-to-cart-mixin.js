@@ -22,15 +22,14 @@ define([
                 });
 
                 if (qtyInput && cartItem) {
-                    const track = new factfinder.communication.Tracking12();
-                    track.cart({
-                        channel: factfinder.communication.globalSearchParameter.channel,
+                    const track = factfinder.tracking;
+                    track.cart([{
                         id: cartItem.product_sku,
                         price: cartItem.product_price_value,
                         masterId: eventData.sku || cartItem.product_sku,
                         count: parseInt(qtyInput.value),
-                        userId: factfinder.communication.globalCommunicationParameter.userId
-                    });
+                        sid: JSON.parse(localStorage.ffwebco).sid
+                    }]);
                 }
 
                 subscription.dispose();

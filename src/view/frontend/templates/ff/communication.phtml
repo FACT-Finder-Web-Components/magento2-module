@@ -109,37 +109,35 @@ $searchImmediate = $communicationParameters['search-immediate'] ?? 'false';
     </script>
 <?php endif; ?>
 
+<script>
+    document.addEventListener('ffCoreReady', ({ factfinder }) => {
+        const cookies = document.cookie.split('; ').reduce((acc, cookie) => {
+            const cookieData = cookie.split('=');
+            const [key, value] = cookieData;
+            acc[key] = value;
 
+            return acc;
+        }, {});
 
-<!--<script>-->
-<!--    document.addEventListener('ffCoreReady', ({ factfinder, searchImmediate }) => {-->
-<!--        const cookies = document.cookie.split('; ').reduce((acc, cookie) => {-->
-<!--            const cookieData = cookie.split('=');-->
-<!--            const [key, value] = cookieData;-->
-<!--            acc[key] = value;-->
-<!---->
-<!--            return acc;-->
-<!--        }, {});-->
-<!---->
-<!--        const clearCookie = (name) => {-->
-<!--            document.cookie = name+'=; Max-Age=-1;';-->
-<!--        }-->
-<!---->
-<!--        if (cookies['ff_user_id']) {-->
-<!--            factfinder.communication.sessionManager.setLoginData(cookies['ff_user_id'])-->
-<!---->
-<!--            if (cookies['ff_has_just_logged_in']) {-->
-<!--                clearCookie('ff_has_just_logged_in');-->
-<!--                factfinder.communication.Tracking.loginWithConfig();-->
-<!--            }-->
-<!--        } else {-->
-<!--            factfinder.communication.sessionManager.clearLoginData();-->
-<!---->
-<!--            if (cookies['ff_has_just_logged_out']) {-->
-<!--                clearCookie('ff_has_just_logged_out');-->
-<!--                factfinder.communication.sessionManager.clearAllSessionData();-->
-<!--            }-->
-<!--        }-->
-<!---->
-<!--//    });-->
-<!--//</script>-->
+        const clearCookie = (name) => {
+            document.cookie = name+'=; Max-Age=-1;';
+        }
+
+        if (cookies['ff_user_id']) {
+            factfinder.config.defaults.general.userId = cookies['ff_user_id'];
+
+            if (cookies['ff_has_just_logged_in']) {
+                clearCookie('ff_has_just_logged_in');
+                factfinder.tracking.login([{
+                    sid: JSON.parse(localStorage.ffwebco).sid,
+                    userId: factfinder.config.defaults.general.userId
+                }]);
+            }
+        } else {
+            if (cookies['ff_has_just_logged_out']) {
+                clearCookie('ff_has_just_logged_out');
+                factfinder.config.defaults.general.userId = undefined
+            }
+        }
+   });
+</script>
