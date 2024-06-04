@@ -27,6 +27,7 @@ class Feed extends Action
     private FtpUploader $ftpUploader;
     private StoreManagerInterface $storeManager;
     private PushImport $pushImport;
+    private FeedFileService $feedFileService;
 
     /**
      * @param Context                $context
