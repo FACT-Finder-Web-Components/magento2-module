@@ -3,6 +3,6 @@
 - Description:
     - changes description
 - Tested with Magento editions/versions:
-    - For example: 2.4.6
+    - 2.4.7
 - Tested with PHP versions:
-    - For example: 8.1
+    - 8.3

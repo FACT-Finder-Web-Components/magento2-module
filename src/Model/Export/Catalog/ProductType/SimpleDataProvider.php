@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace Omikron\Factfinder\Model\Export\Catalog\ProductType;
 
 use Magento\Catalog\Model\Product;
+use Magento\CatalogInventory\Model\Stock\StockItemRepository as StockItem;
+use Omikron\Factfinder\Api\Export\FieldInterface;
 use Omikron\Factfinder\Api\Export\DataProviderInterface;
 use Omikron\Factfinder\Api\Export\ExportEntityInterface;
-use Omikron\Factfinder\Api\Export\FieldInterface;
 use Omikron\Factfinder\Model\Formatter\NumberFormatter;
 
 class SimpleDataProvider implements DataProviderInterface, ExportEntityInterface
@@ -15,6 +16,7 @@ class SimpleDataProvider implements DataProviderInterface, ExportEntityInterface
     public function __construct(
         protected Product $product,
         protected NumberFormatter $numberFormatter,
+        protected StockItem $stockItem,
         protected array $productFields = [],
     ) {
     }
@@ -45,7 +47,7 @@ class SimpleDataProvider implements DataProviderInterface, ExportEntityInterface
             'Short'         => (string) $this->product->getData('short_description'),
             'Deeplink'      => (string) $this->product->getUrlInStore(),
             'Price'         => $this->numberFormatter->format((float) $this->product->getFinalPrice()),
-            'Availability'  => (int) $this->product->isAvailable(),
+            'Availability'  => (int) $this->getAvailability(),
             'HasVariants'   => 0,
             'MagentoId'     => $this->getId(),
         ];
@@ -60,5 +62,16 @@ class SimpleDataProvider implements DataProviderInterface, ExportEntityInterface
     public function getProduct(): Product
     {
         return $this->product;
+    }
+
+    private function getAvailability(): bool
+    {
+        if ($this->product->hasData('is_salable')) {
+            return $this->product->isAvailable();
+        }
+
+        $quantity = $this->stockItem->get($this->product->getId());
+
+        return $quantity->getIsInStock();
     }
 }

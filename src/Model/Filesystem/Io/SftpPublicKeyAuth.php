@@ -25,6 +25,7 @@ class SftpPublicKeyAuth extends SftpBase
     public function open(array $args = [])
     {
         $this->_connection = new SFTP($args['host'], $args['port'], self::REMOTE_TIMEOUT);
+
         if (!$this->_connection->login($args['user'], $this->getKey($args['key_passphrase']))) {
             throw new Exception(sprintf('Unable to open SFTP connection as %s@%s', $args['user'], $args['host']));
         }
@@ -38,13 +39,12 @@ class SftpPublicKeyAuth extends SftpBase
         $configDirectory = $this->fileSystem->getDirectoryRead(DirectoryList::CONFIG);
         $filesInLocation = $configDirectory->read('factfinder/sftp');
         $keyFile         = $configDirectory->readFile($filesInLocation[$this->getFileIndex($filesInLocation)]);
-        $privateKey      = PublicKeyLoader::loadPrivateKey($keyFile);
 
         if ($passphrase) {
-            $privateKey = PublicKeyLoader::loadPrivateKey($keyFile, $passphrase);
+            return PublicKeyLoader::loadPrivateKey($keyFile, $passphrase);
         }
 
-        return $privateKey;
+        return PublicKeyLoader::loadPrivateKey($keyFile);
     }
 
     /**

@@ -20,10 +20,11 @@
             <backend_model>Magento\Config\Model\Config\Backend\Serialized\ArraySerialized</backend_model>
             <tooltip>With this property you can deliver standard parameters which will then be attached to the search or navigation request.</tooltip>
         </field>
-        <field id="anonymize_user_id" translate="label comment" type="select" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
-            <label>Anonymize user id</label>
-            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-            <tooltip>Sends hashed user id with tracking requests</tooltip>
-        </field>
+<!-- Anonymize user id will be implemented in the future       -->
+<!--        <field id="anonymize_user_id" translate="label comment" type="select" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">-->
+<!--            <label>Anonymize user id</label>-->
+<!--            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>-->
+<!--            <tooltip>Sends hashed user id with tracking requests</tooltip>-->
+<!--        </field>-->
     </group>
 </include>

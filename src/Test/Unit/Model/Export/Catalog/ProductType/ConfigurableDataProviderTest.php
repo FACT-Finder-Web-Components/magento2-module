@@ -6,6 +6,8 @@ namespace Omikron\Factfinder\Model\Export\Catalog\ProductType;
 
 use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Catalog\Model\Product;
+use Magento\CatalogInventory\Api\Data\StockItemInterface;
+use Magento\CatalogInventory\Model\Stock\StockItemRepository;
 use Magento\ConfigurableProduct\Model\Product\Type\Configurable as ConfigurableProductType;
 use Magento\Framework\Api\SearchCriteriaBuilder;
 use Omikron\Factfinder\Api\Filter\FilterInterface;
@@ -111,7 +113,13 @@ class ConfigurableDataProviderTest extends TestCase
             $this->filterMock,
             $this->variantFactoryMock,
             $this->repositoryMock,
-            $this->builderMock
+            $this->builderMock,
+            $this->createConfiguredMock(StockItemRepository::class, [
+                'get' => $this->createConfiguredMock(
+                    StockItemInterface::class,
+                    ['getIsInStock' => true]
+                )
+            ]),
         );
     }
 }

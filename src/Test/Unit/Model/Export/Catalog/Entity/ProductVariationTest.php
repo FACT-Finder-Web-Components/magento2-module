@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Omikron\Factfinder\Model\Export\Catalog\Entity;
 
 use Magento\Catalog\Model\Product;
+use Magento\CatalogInventory\Api\Data\StockItemInterface;
+use Magento\CatalogInventory\Model\Stock\StockItemRepository;
 use Magento\Framework\Model\AbstractModel;
 use Omikron\Factfinder\Model\Export\Catalog\FieldProvider;
 use Omikron\Factfinder\Model\Export\Catalog\ProductField\FilterAttributes;
@@ -51,6 +53,14 @@ class ProductVariationTest extends TestCase
             $this->createMock(Product::class),
             new NumberFormatter(),
             $fieldProviderMock,
+            $this->createConfiguredMock(StockItemRepository::class, [
+                'get' => $this->createConfiguredMock(
+                    StockItemInterface::class,
+                    [
+                    'getIsInStock' => true
+                    ]
+                )
+            ]),
             $this->configurableProductData
         );
 
@@ -89,6 +99,14 @@ class ProductVariationTest extends TestCase
             $this->createMock(Product::class),
             new NumberFormatter(),
             $fieldProviderMock,
+            $this->createConfiguredMock(StockItemRepository::class, [
+                'get' => $this->createConfiguredMock(
+                    StockItemInterface::class,
+                    [
+                    'getIsInStock' => true
+                    ]
+                )
+            ]),
             ['FilterAttributes' => '|Color=Red|Size=XS|'] + $this->configurableProductData
         );
 
@@ -100,7 +118,7 @@ class ProductVariationTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->variantMock = $variantMock = $this->createConfiguredMock(
+        $this->variantMock = $this->createConfiguredMock(
             Product::class,
             [
                 'getSku'        => 'sku-variant',
