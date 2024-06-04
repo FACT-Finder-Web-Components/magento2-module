@@ -55,9 +55,11 @@ class ProductVariationTest extends TestCase
             $fieldProviderMock,
             $this->createConfiguredMock(StockItemRepository::class, [
                 'get' => $this->createConfiguredMock(
-                    StockItemInterface::class, [
+                    StockItemInterface::class,
+                    [
                     'getIsInStock' => true
-                ])
+                    ]
+                )
             ]),
             $this->configurableProductData
         );
@@ -99,9 +101,11 @@ class ProductVariationTest extends TestCase
             $fieldProviderMock,
             $this->createConfiguredMock(StockItemRepository::class, [
                 'get' => $this->createConfiguredMock(
-                    StockItemInterface::class, [
+                    StockItemInterface::class,
+                    [
                     'getIsInStock' => true
-                ])
+                    ]
+                )
             ]),
             ['FilterAttributes' => '|Color=Red|Size=XS|'] + $this->configurableProductData
         );
@@ -114,7 +118,7 @@ class ProductVariationTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->variantMock = $variantMock = $this->createConfiguredMock(
+        $this->variantMock = $this->createConfiguredMock(
             Product::class,
             [
                 'getSku'        => 'sku-variant',

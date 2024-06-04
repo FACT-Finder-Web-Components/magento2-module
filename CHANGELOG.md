@@ -5,7 +5,7 @@
 - Upgrade magento libraries
 - Upgrade composer dependencies
 - Fix deprecations for magento/framework
-- Upgrade FactFinder WebComponents to version 5.x
+- Upgrade FACT-Finder Web-Components to version 5.x
 - New SSR implementation for NG WebComponents
 - Upgrade bundle.js for new NG WebComponents
 - Upgrade SDK to support Magento v2.4.7

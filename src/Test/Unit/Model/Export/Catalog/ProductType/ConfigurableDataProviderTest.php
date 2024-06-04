@@ -116,9 +116,9 @@ class ConfigurableDataProviderTest extends TestCase
             $this->builderMock,
             $this->createConfiguredMock(StockItemRepository::class, [
                 'get' => $this->createConfiguredMock(
-                    StockItemInterface::class, [
-                    'getIsInStock' => true
-                ])
+                    StockItemInterface::class,
+                    ['getIsInStock' => true]
+                )
             ]),
         );
     }
