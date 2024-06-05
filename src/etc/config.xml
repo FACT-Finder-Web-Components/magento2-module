@@ -10,7 +10,7 @@
                 <use_for_categories>1</use_for_categories>
                 <show_add_to_cart_button>1</show_add_to_cart_button>
                 <ff_enrichment>0</ff_enrichment>
-                <tracking_product_number_field_role>{"brand":"Brand","campaignProductNumber":"ProductNumber","deeplink":"Deeplink","description":"Description","displayProductNumber":"ProductNumber","ean":"EAN","imageUrl":"ImageURL","masterArticleNumber":"Master","price":"Price","productName":"Name","trackingProductNumber":"ProductNumber"}</tracking_product_number_field_role>
+                <tracking_product_number_field_role>{"brand":"Brand","deeplink":"Deeplink","description":"Description","ean":"EAN","imageUrl":"ImageURL","masterId":"Master","price":"Price","productName":"Name","productNumber":"ProductNumber"}</tracking_product_number_field_role>
             </general>
             <components>
                 <campaign_advisor>1</campaign_advisor>
