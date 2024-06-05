@@ -9,8 +9,9 @@ use Magento\Store\Model\ScopeInterface as Scope;
 
 class AuthConfig
 {
-    private const PATH_USERNAME     = 'factfinder/general/username';
-    private const PATH_PASSWORD     = 'factfinder/general/password';
+    private const PATH_USERNAME = 'factfinder/general/username';
+    private const PATH_PASSWORD = 'factfinder/general/password';
+    private const PATH_API_KEY  = 'factfinder/general/ff_api_key';
 
     private ScopeConfigInterface $scopeConfig;
 
@@ -27,5 +28,10 @@ class AuthConfig
     public function getPassword(): string
     {
         return (string) $this->scopeConfig->getValue(self::PATH_PASSWORD, Scope::SCOPE_STORE);
+    }
+
+    public function getApiKey(): string
+    {
+        return (string) $this->scopeConfig->getValue(self::PATH_API_KEY, Scope::SCOPE_STORE);
     }
 }

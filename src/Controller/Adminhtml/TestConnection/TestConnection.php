@@ -8,37 +8,24 @@ use Magento\Backend\App\Action;
 use Magento\Framework\Controller\Result\JsonFactory;
 use Magento\Framework\Phrase;
 use Omikron\FactFinder\Communication\Client\ClientBuilder;
-use Omikron\FactFinder\Communication\Credentials;
 use Omikron\FactFinder\Communication\Resource\AdapterFactory;
 use Omikron\FactFinder\Communication\Version;
 use Omikron\Factfinder\Logger\FactFinderLogger;
-use Omikron\Factfinder\Model\Api\CredentialsFactory;
 use Omikron\Factfinder\Model\Config\AuthConfig;
 use Psr\Http\Client\ClientExceptionInterface;
 
 class TestConnection extends Action
 {
     private string $obscuredValue = '******';
-    private JsonFactory $jsonResultFactory;
-    private CredentialsFactory $credentialsFactory;
-    private AuthConfig $authConfig;
-    private ClientBuilder $clientBuilder;
-    private FactFinderLogger $logger;
 
     public function __construct(
         Action\Context $context,
-        JsonFactory $jsonResultFactory,
-        CredentialsFactory $credentialsFactory,
-        AuthConfig $authConfig,
-        ClientBuilder $clientBuilder,
-        FactFinderLogger $logger
+        private readonly JsonFactory $jsonResultFactory,
+        private readonly AuthConfig $authConfig,
+        private readonly ClientBuilder $clientBuilder,
+        private readonly FactFinderLogger $logger
     ) {
         parent::__construct($context);
-        $this->jsonResultFactory  = $jsonResultFactory;
-        $this->credentialsFactory = $credentialsFactory;
-        $this->authConfig         = $authConfig;
-        $this->clientBuilder      = $clientBuilder;
-        $this->logger = $logger;
     }
 
     public function execute()
@@ -46,7 +33,7 @@ class TestConnection extends Action
         try {
             $request       = $this->getRequest();
             $clientBuilder = $this->clientBuilder
-                ->withCredentials($this->getCredentials($this->getRequest()->getParams()))
+                ->withApiKey($this->getApiKey($this->getRequest()->getParams()))
                 ->withServerUrl($request->getParam('address'));
 
             $adapterFactory = new AdapterFactory(
@@ -69,13 +56,13 @@ class TestConnection extends Action
         return $this->jsonResultFactory->create()->setData(['message' => $message]);
     }
 
-    private function getCredentials(array $params): Credentials
+    private function getApiKey(array $params): string
     {
         // The password wasn't edited, load it from config
-        if (!isset($params['password']) || $params['password'] === $this->obscuredValue) {
-            $params['password'] = $this->authConfig->getPassword();
+        if (!isset($params['ff_api_key']) || $params['ff_api_key'] === $this->obscuredValue) {
+            $params['ff_api_key'] = $this->authConfig->getApiKey();
         }
 
-        return $this->credentialsFactory->create($params);
+        return $params['ff_api_key'];
     }
 }

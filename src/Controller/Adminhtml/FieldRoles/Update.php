@@ -10,47 +10,34 @@ use Magento\Framework\Controller\Result\JsonFactory;
 use Magento\Store\Model\StoreManagerInterface;
 use Omikron\FactFinder\Communication\Client\ClientBuilder;
 use Omikron\FactFinder\Communication\Resource\AdapterFactory;
-use Omikron\Factfinder\Model\Api\CredentialsFactory;
+use Omikron\Factfinder\Model\Config\AuthConfig;
 use Omikron\Factfinder\Model\Config\CommunicationConfig;
 use Omikron\Factfinder\Model\FieldRoles;
 use Psr\Http\Client\ClientExceptionInterface;
 
 class Update extends Action
 {
-    private JsonFactory $jsonResultFactory;
-    private StoreManagerInterface $storeManager;
-    private CommunicationConfig $communicationConfig;
-    private CredentialsFactory $credentialsFactory;
-    private FieldRoles $fieldRoles;
-    private ClientBuilder $clientBuilder;
-
     public function __construct(
         Context $context,
-        JsonFactory $jsonFactory,
-        StoreManagerInterface $storeManager,
-        CommunicationConfig $communicationConfig,
-        CredentialsFactory $credentialsFactory,
-        FieldRoles $fieldRoles,
-        ClientBuilder $clientBuilder
+        private readonly JsonFactory $jsonFactory,
+        private readonly StoreManagerInterface $storeManager,
+        private readonly CommunicationConfig $communicationConfig,
+        private readonly AuthConfig $authConfig,
+        private readonly FieldRoles $fieldRoles,
+        private readonly ClientBuilder $clientBuilder
     ) {
         parent::__construct($context);
-        $this->jsonResultFactory   = $jsonFactory;
-        $this->storeManager        = $storeManager;
-        $this->communicationConfig = $communicationConfig;
-        $this->credentialsFactory  = $credentialsFactory;
-        $this->fieldRoles          = $fieldRoles;
-        $this->clientBuilder       = $clientBuilder;
     }
 
     public function execute()
     {
-        $result = $this->jsonResultFactory->create();
+        $result = $this->jsonFactory->create();
         try {
             //@phpcs:ignore Magento2.Legacy.ObsoleteResponse.RedirectResponseMethodFound
             preg_match('@/store/([0-9]+)/@', (string) $this->_redirect->getRefererUrl(), $match);
             $storeId = (int) ($match[1] ?? $this->storeManager->getDefaultStoreView()->getId());
             $client  = $this->clientBuilder
-                ->withCredentials($this->credentialsFactory->create())
+                ->withApiKey($this->authConfig->getApiKey())
                 ->withServerUrl($this->communicationConfig->getAddress());
 
             $adapterFactory = new AdapterFactory(

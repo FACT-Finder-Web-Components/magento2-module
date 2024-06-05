@@ -15,7 +15,7 @@ use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NotFoundException;
 use Omikron\FactFinder\Communication\Client\ClientBuilder;
 use Omikron\Factfinder\Controller\SkipCsrfValidation;
-use Omikron\Factfinder\Model\Api\CredentialsFactory;
+use Omikron\Factfinder\Model\Config\AuthConfig;
 use Omikron\Factfinder\Model\Config\CommunicationConfig;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -29,7 +29,7 @@ class Call extends Action\Action implements Action\HttpGetActionInterface, HttpP
         private readonly JsonResultFactory   $jsonResultFactory,
         private readonly RawResultFactory    $rawResultFactory,
         private readonly CommunicationConfig $communicationConfig,
-        private readonly CredentialsFactory  $credentialsFactory,
+        private readonly AuthConfig          $authConfig,
         private readonly ClientBuilder       $clientBuilder
     ) {
         parent::__construct($context);
@@ -47,12 +47,13 @@ class Call extends Action\Action implements Action\HttpGetActionInterface, HttpP
 
         try {
             $client = $this->clientBuilder
-                ->withCredentials($this->credentialsFactory->create())
+                ->withApiKey($this->authConfig->getApiKey())
                 ->withServerUrl($this->communicationConfig->getAddress())
                 ->withVersion($this->communicationConfig->getVersion())
                 ->build();
 
             $method = $this->getRequest()->getMethod();
+
             switch ($method) {
                 case 'GET':
                     $query = (string) parse_url($url, PHP_URL_QUERY); // phpcs:ignore
@@ -73,6 +74,7 @@ class Call extends Action\Action implements Action\HttpGetActionInterface, HttpP
     private function getEndpoint(string $currentUrl): string
     {
         preg_match('#/([A-Za-z]+\.ff|rest/v[^\?]*)#', $currentUrl, $match);
+
         return $match[1] ?? '';
     }
 
