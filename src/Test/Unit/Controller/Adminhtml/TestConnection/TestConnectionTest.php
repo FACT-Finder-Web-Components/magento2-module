@@ -10,9 +10,7 @@ use Magento\Framework\Controller\Result\Json as JsonResult;
 use Magento\Framework\Controller\Result\JsonFactory;
 use Omikron\FactFinder\Communication\Client\ClientBuilder;
 use Omikron\FactFinder\Communication\Client\ClientInterface;
-use Omikron\FactFinder\Communication\Credentials;
 use Omikron\Factfinder\Logger\FactFinderLogger;
-use Omikron\Factfinder\Model\Api\CredentialsFactory;
 use Omikron\Factfinder\Model\Config\AuthConfig;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -48,7 +46,6 @@ class TestConnectionTest extends TestCase
 
     protected function setUp(): void
     {
-        $credentialsFactory = $this->createConfiguredMock(CredentialsFactory::class, ['create' => $this->createMock(Credentials::class)]);
         $this->request      = $this->createMock(RequestInterface::class);
         $body               = $this->createConfiguredMock(StreamInterface::class, ['getContents' => '{"status":"200"}']);
         $clientMock         = $this->createConfiguredMock(ClientInterface::class, ['request' => $this->createConfiguredMock(ResponseInterface::class, ['getBody' => $body])]);
@@ -56,13 +53,12 @@ class TestConnectionTest extends TestCase
 
         $this->builderMock->method('withVersion')->willReturn($this->builderMock);
         $this->builderMock->method('withServerUrl')->willReturn($this->builderMock);
-        $this->builderMock->method('withCredentials')->willReturn($this->builderMock);
+        $this->builderMock->method('withApiKey')->willReturn($this->builderMock);
         $this->builderMock->method('build')->willReturn($clientMock);
 
         $this->controller = new TestConnection(
             $this->createConfiguredMock(Context::class, ['getRequest' => $this->request]),
             $this->createConfiguredMock(JsonFactory::class, ['create' => $this->createMock(JsonResult::class)]),
-            $credentialsFactory,
             $this->createMock(AuthConfig::class),
             $this->builderMock,
             $this->createMock(FactFinderLogger::class)

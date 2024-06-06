@@ -6,7 +6,7 @@ namespace Omikron\Factfinder\Model\Ssr;
 
 use Omikron\FactFinder\Communication\Client\ClientBuilder;
 use Omikron\FactFinder\Communication\Client\ClientException;
-use Omikron\Factfinder\Model\Api\CredentialsFactory;
+use Omikron\Factfinder\Model\Config\AuthConfig;
 use Omikron\Factfinder\Model\Config\CommunicationConfig;
 use Psr\Http\Message\ResponseInterface;
 
@@ -15,7 +15,7 @@ class SearchAdapter
     public function __construct(
         private readonly ClientBuilder $clientBuilder,
         private readonly CommunicationConfig $communicationConfig,
-        private readonly CredentialsFactory $credentialsFactory,
+        private readonly AuthConfig $authConfig,
         private readonly PriceFormatter $priceFormatter,
     ) {
     }
@@ -24,7 +24,7 @@ class SearchAdapter
     {
         $client = $this->clientBuilder
             ->withServerUrl($this->communicationConfig->getAddress())
-            ->withCredentials($this->credentialsFactory->create())
+            ->withApiKey($this->authConfig->getApiKey())
             ->withVersion($this->communicationConfig->getVersion())
             ->build();
 
