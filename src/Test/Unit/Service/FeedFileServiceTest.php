@@ -28,14 +28,14 @@ class FeedFileServiceTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Export type must not be empty');
-        $this->assertSame('export.test_type.test_channel.csv', $this->feedFileService->getFeedExportFilename('', 'test_channel'));
+        $this->assertSame('exportData.test_type.test_channel.csv', $this->feedFileService->getFeedExportFilename('', 'test_channel'));
     }
 
     public function test_will_throw_exception_on_empty_export_channel()
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Channel must not be empty');
-        $this->assertSame('export.test_type.test_channel.csv', $this->feedFileService->getFeedExportFilename('test_type', ''));
+        $this->assertSame('exportData.test_type.test_channel.csv', $this->feedFileService->getFeedExportFilename('test_type', ''));
     }
 
     public static function validDataProvider(): array
