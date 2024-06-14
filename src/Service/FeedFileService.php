@@ -10,7 +10,7 @@ use Magento\Framework\Filesystem;
 
 class FeedFileService
 {
-    private const FEED_FILENAME_PATTERN = 'export.%type%.%channel%.csv';
+    private const FEED_FILENAME_PATTERN = 'export.%type%Data.%channel%.csv';
 
     public function __construct(private readonly Filesystem $fileSystem)
     {
