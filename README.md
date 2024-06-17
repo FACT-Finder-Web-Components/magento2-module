@@ -4,7 +4,7 @@
 [![Build status](https://github.com/FACT-Finder-Web-Components/magento2-module/workflows/build/badge.svg)](https://github.com/FACT-Finder-Web-Components/magento2-module/actions)
 [![GitHub contributors](https://img.shields.io/github/contributors/FACT-Finder-Web-Components/magento2-module)](https://github.com/FACT-Finder-Web-Components/magento2-module/graphs/contributors)
 
-This is a new version of SDK (not released yet). Support for new WebComponents v. NG
+This is a new version of SDK (not released yet). Support for new WebComponents v5 NG
 
 This document helps you integrate the FACT-Finder Web Components SDK into your Magento 2 Shop. In addition, it gives a
 concise overview of its primary functions. The first chapter *Installation* walks you through the suggested installation
@@ -67,7 +67,7 @@ To install module, open your terminal and run the command:
 
     composer require omikron/magento2-factfinder
 
-Optionally, you can specify a version constraint, e.g. `omikron/magento2-factfinder:^1.3`. Refer to Composer manual
+Optionally, you can specify a version constraint, e.g. `omikron/magento2-factfinder:^5.0`. Refer to Composer manual
 for more information. If, for some reason, `composer` is not available globally, proceed to install it following the
 instructions available on the [project website](https://getcomposer.org/doc/00-intro.md).
 
@@ -84,7 +84,7 @@ As a final step, check the module activation by running:
 
 The module should now appear in the upper list *List of enabled modules*.
 
-Also, check in the Magento 2 backend "Stores → Configuration → Advanced → Advanced" if the module output is activated.
+Also, check in the Magento 2 backend "Stores → Configuration → Catalog → FACT-Finder" if the module output is activated.
 
 ![Module configuration](docs/assets/admin-section.png "Module configuration")
 
@@ -95,10 +95,10 @@ Once the FACT-Finder module is activated, you can find the configurations page u
 ### Main Settings
 
 At the top of the configurations page are the main settings. The information with which the shop connects to and authorises itself to the FACT-Finder Service are entered here. In the first line, activate your FACT-Finder integration. Before any changes become active, save them by clicking "Save Config".
-In some cases, you need to manually empty the cache (*Configuration* and *Page Cache*).
+In some cases, you need to manually empty the cache (System → Cache Management → Flush Magento Cache ).
 Click the button "Test Connection" to check the connection to the FACT-Finder service.
 
-**Note:** the channel name needs to be entered correctly to establish a connection.
+**Note:** the **channel name, server URL and API key** need to be entered correctly to establish a connection.
 
 Here you can also enable the rendering of category pages using FACT-Finder. More details can be found [here](#using-fact-finder-on-category-pages).
 
@@ -113,7 +113,7 @@ By enabling option *Activate Logging*, all exceptions thrown during communicatio
 ![Main Settings](docs/assets/general-settings.png "Main Settings")
 
 #### FACT-Finder version
-From version 2, the module supports both `7.3` and `NG`. If you use lower version, please install [NG submodule](https://github.com/FACT-Finder-Web-Components/magento2-ffng-module)
+From version 5, the module supports only `NG` FACT-Finder version. If you use lower version, please use SDK [version 4.x](https://github.com/FACT-Finder-Web-Components/magento2-module/tree/release/4.x)
 
 #### Server Side Rendering
 That option enables Server Side Rendering (SSR) for `ff-record-list` element on category and search result pages.
@@ -126,7 +126,7 @@ The module uses [Mustache.php](https://github.com/bobthecow/mustache.php) librar
 
 ### Advanced Settings
 
-Advanced Settings contains additional parameters used for the `ff-communication` web component. Each setting is set to a
+Advanced Settings contains additional parameters used for the WebComponents configurations. Each setting is set to a
 default value and has a short explanatory text attached.  
  
 #### Currency and Country Settings
@@ -194,14 +194,12 @@ For SFTP servers you can use both authenication methods: key or password
 **Note** Don't forget to specify the key passhprase if it's protected
 
 Enter an server to which the CSV file is uploaded automatically. If you are not sure if Magento will be able to connect to your server, please use 
-"Check Upload connection" option. 
+"Test Upload connection" button. 
 
 The CSV file uses double quotes `"` for field enclosure and a semi-colon `;` as field delimiter.
 
-The *Select additional Attributes* option offers a multiple-choice list of attributes. Select all of those you want added to the CSV file.
-
 Before starting the export by clicking *Generate Export File(s) now*, you need to commit all changes by clicking "Save Config".
-The exception from that rule is `Test Connection` function which always takes the actual values from the corresponding fields.
+The exception to that rule is `Test Connection` function which always takes the actual values from the corresponding fields.
 
 ![Data Transfer Settings](docs/assets/data-transfer-settings.png "Data Transfer Settings")
 
@@ -213,15 +211,17 @@ To updates field roles, use the button `Update Field Roles`
 Once the feed file is uploaded (using [FTP Export](#ftp-export)), in order FACT-Finder to start serving new data, import needs to be triggered. Module allows
 You to enable automatic import which makes FACT-Finder import will be triggered, right after the feed file is uploaded onto FTP server. You can also select which of data types
 should be imported automatically
-- Data (Search)
+- Search
 - Suggest
-This is a multiselect field so You can select both of them
+- Recommendation 
+
+This is a multiselect field, so You can select all of them
 
 ## Data Export
 In following section You'll get information how, to integrate Your feed with FACT-Finder. Feed is built the same way, regardless of chosen method, so You can choose from one of possible methods.
 
 ### Feed Types
-Modules is capable of exporting feeds in one of the following types
+Module ise capable of exporting feeds in one of the following types
  - Product
  - CMS
  - Category
@@ -240,8 +240,7 @@ Then You can click the button (visible below) to generate and then, upload file 
 Using of that button is dedicated mostly for ad-hoc export. In production environment You'll rather use Cron job which will do the same work without forcing You to click the export button each time You want to send new data to FACT-Finder.
 To configure Cron, please activate the option *Generate Export Files(s) automatically* and the export will be generated every day at 01:00 server time.
 
-In file [crontab.xml](src/etc/crontab.xml) You can see a expression `<schedule>0 1 * * *</schedule>` which is a default value however You can define your own cron expression in the module configuration (section visible below).
-Value set here, will override the default crontab config.
+You can define your own cron expression in the module configuration (section visible below).
 Please remember that this setting is only for that specific task ran under Magento supervisor. It won't work until You have not system Cron configured. To do that, You'll need to add Magento Cron entrypoint to Your system crontab file. 
 Read this [tutorial](https://devdocs.magento.com/guides/v2.3/config-guide/cli/config-cli-subcommands-cron.html) for more information
   
@@ -309,8 +308,8 @@ You can also instantiate block in templates using the Magento Layout API, but it
 ->toHtml(); ?>
 ```
 
-### Communication Element
-The main configuration element of Web Components `ff-communication` element is included in template `src/view/frontend/templates/ff/communication.phtml` which comes together with a dedicated view model `src/ViewModel/Communication.php`.
+### Configuration Element
+The main configuration element of Web Components `communication` element is included in template `src/view/frontend/templates/ff/communication.phtml` which comes together with a dedicated view model `src/ViewModel/Communication.php`.
 This template is part of the `default` layout, added to the `after.body.start` container.
 It is essential for whole module to work, so make sure it is also included in your project.
 
@@ -348,7 +347,7 @@ Sending each request to FACT-Finder instance trough Magento, you lose on perform
 
 ### Using FACT-Finder on category pages
 Module in order to preserve categories URLs and hence SEO get use of standard Magento routing with the combination of FACT-Finder availability to pass custom parameters to search request.
-Once user is landed on category page. Search request is performed immediately (thanks to `search-immediate` communication parameter usage).
+Once user is landed on category page. Search request is performed immediately (thanks to `searchImmediately` parameter usage).
 To enable that, turn on corresponding option in *Main Settings* section.
  
 ### Tracking
@@ -364,12 +363,10 @@ To make it work, make sure that you are using base `catalog-add-to-cart.js`, oth
 Checkout tracking is done using the `ff-checkout-tracking` element.
 This element is added in `src/view/frontend/templates/ff/checkout-tracking.phtml` which extend the `checkout_onepage_success` layout.
 If you do not use this layout in your checkout make sure you append it to your own one. For that you can use the view model `src/ViewModel/Order.php` which provides all necessary data from the backend to the template.
-Login tracking is by additional `CustomerData` section `ffcommunication`.
-This section should is configured in `src/etc/frontend/sections.xml` and should react to the user login action and reload containing data after that.
-
+Login tracking is done by API call ` factfinder.tracking.login` in `src/view/frontend/templates/ff/communication.phtml`.
  
 ## Modification examples
-Our Magento 2 module offers a fully working integration out of the box. However, most projects may require
+Our Magento 2 module offers a fully working integration out of the box for default Magento2 Luma theme. Most projects may require
 modifications in order to fit their needs. Here are some common customization examples.
 
 ### Changing existing column names
@@ -469,39 +466,6 @@ The constructor for this class requires only an attribute code to be exported.
 
 Now run `bin/magento cache:clean config` to use the new DI configuration.
 
-### Adding custom communication parameter
-Module configuration allows You to pass constant values to each params, however sometimes You may need to provide variable value i.e. depending on currently logged customer. In order to do that, You should create
-custom Parameter Provider.
-
-```php
-class CustomAddParams implements \Omikron\Factfinder\Api\Config\ParametersSourceInterface
-{
-       public function getParameters(): array
-       {
-           return [
-               'add-params'  => $this->getMyVariableParameters(),
-           ];
-       }
-}
-```
-
-All registered Parameters Providers are executed in loop its results are stored in associative array which in result will be passed to the frontend.
-
-Please keep in mind, that on this level of execution, parameters will be overridden each time, Parameter Provider returns a value with a key
-which already exist in the result array. By using Magento dependency injection mechanism Your Parameter Providers added from project level will be evaluated last, but If You
-want to add more than one, You need to maintain their order. In following example, if parameter arrays provided by CustomProviderFirst and CustomProviderSecond have an intersection, for given key, the value
-from CustomProviderSecond will be returned in a result
-   
-```xml
-    <type name="Omikron\Factfinder\Model\Config\CommunicationParametersProvider">
-        <arguments>
-            <argument name="parametersSource" xsi:type="array">
-                <item name="first" xsi:type="object">YOUR_VENDOR\YOUR_MODULE\Model\Config\CustomProviderFirst</item>
-                <item name="second" xsi:type="object">YOUR_VENDOR\YOUR_MODULE\Model\Config\CustomProviderSecond</item>
-            </argument>
-        </arguments>
-    </type>
- ```
 
 ### Adding custom product data provider
 If You are in need to define new product types, and its data cannot be provided by any of existing Data Providers, You should create
