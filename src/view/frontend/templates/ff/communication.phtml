@@ -11,9 +11,6 @@ $searchImmediate = $communicationParameters['search-immediate'] ?? 'false';
 <!--Main FF Web-components Initialisation -->
 <script>
     document.addEventListener(`ffCoreReady`, ({ factfinder, initialSearch }) => {
-        //Debug webc
-        factfinder.config.debug = true;
-
         const cfg = factfinder.config.defaults.general;
         cfg.url = `<?= $escaper->escapeUrl($parameters['url'])?>`;
         cfg.channel = `<?= $escaper->escapeHtml($parameters['channel'])?>`;
@@ -46,13 +43,6 @@ $searchImmediate = $communicationParameters['search-immediate'] ?? 'false';
             },
         };
 
-        // This is also the best place to invoke a search request replacing the `search-immediate` attribute.
-
-        if (<?= /** @SuppressWarnings(PHPMD) */ $searchImmediate ?>) {
-            const searchParams = factfinder.utils.env.searchParamsFromUrl();
-            initialSearch(searchParams, { requestOptions: { origin: `initialSearch` } });
-        }
-
         factfinder.request.before.search(({ searchParams, searchOptions }) => {
             // If the search request was invoked by `ff-searchbox`, `searchOptions.requestOptions.origin` will be a reference to the `ff-searchbox` element.
             if (searchOptions?.requestOptions?.origin?.tagName === `FF-SEARCHBOX`) {
@@ -66,6 +56,13 @@ $searchImmediate = $communicationParameters['search-immediate'] ?? 'false';
                 return false;
             }
         });
+
+        // This is also the best place to invoke a search request replacing the `search-immediate` attribute.
+
+        if (<?= /** @SuppressWarnings(PHPMD) */ $searchImmediate ?>) {
+            const searchParams = factfinder.utils.env.searchParamsFromUrl();
+            initialSearch(searchParams, { requestOptions: { origin: `initialSearch` } });
+        }
     });
 </script>
 

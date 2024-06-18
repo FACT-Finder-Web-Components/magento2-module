@@ -27,7 +27,7 @@
                 <ff_upload_key_passphrase backend_model="Magento\Config\Model\Config\Backend\Encrypted" />
                 <ff_cron_enabled>0</ff_cron_enabled>
                 <ff_push_import_enabled>1</ff_push_import_enabled>
-                <ff_push_import_type>data,suggest</ff_push_import_type>
+                <ff_push_import_type>search,suggest</ff_push_import_type>
                 <ff_upload_port>21</ff_upload_port>
                 <ff_upload_dir>/</ff_upload_dir>
             </data_transfer>

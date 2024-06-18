@@ -1,5 +1,5 @@
 - Solves issue:
-    - Issue or task number/code, for example: FFWEB-2718
+    - FFWEB-3018
 - Description:
     - changes description
 - Tested with Magento editions/versions:
