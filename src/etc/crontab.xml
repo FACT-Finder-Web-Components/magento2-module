@@ -2,7 +2,7 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
     <group id="default">
         <job name="factfinder_feed_export" instance="ProductExportCron" method="execute">
-            <schedule>0 1 * * *</schedule>
+            <config_path>crontab/default/jobs/factfinder_feed_export/schedule/cron_expr</config_path>
         </job>
     </group>
 </config>
