@@ -3,10 +3,11 @@
     <group id="advanced" translate="label" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
         <label>Advanced Settings</label>
         <comment>The advanced settings can change how the search works. Please edit them with caution and only if you know what they are doing.</comment>
-        <field id="internal_ips" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
-            <label>Internal IPs</label>
-            <tooltip>Requests from these IPs will be excluded from your license plan</tooltip>
-        </field>
+<!--Internal_ips  will be implemented as feature request      -->
+<!--        <field id="internal_ips" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">-->
+<!--            <label>Internal IPs</label>-->
+<!--            <tooltip>Requests from these IPs will be excluded from your license plan</tooltip>-->
+<!--        </field>-->
         <field id="parameter_whitelist" translate="label comment tooltip" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
             <label>Parameter whitelist</label>
             <frontend_model>Omikron\Factfinder\Block\Adminhtml\System\Config\Field\ParameterWhitelist</frontend_model>

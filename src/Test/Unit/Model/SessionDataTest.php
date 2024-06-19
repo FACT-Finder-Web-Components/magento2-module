@@ -60,23 +60,23 @@ class SessionDataTest extends TestCase
     /**
      * @dataProvider remoteAddressProvider
      */
-    public function test_it_tracks_internal_requests(string $config, string $address, bool $result)
-    {
-        $this->scopeConfigMock->method('getValue')->willReturn($config);
-        $this->remoteAddressMock->method('getRemoteAddress')->willReturn($address);
-
-        $expected = ['internal' => $result];
-        $actual = $this->sessionData->getSectionData();
-        $this->assertEquals($expected['internal'], $actual['internal']);
-    }
-
-    public function remoteAddressProvider()
-    {
-        return [
-            ['127.0.0.1,8.8.8.8', '127.0.0.1', true],
-            ['127.0.0.1,8.8.8.8', '4.4.4.4', false],
-        ];
-    }
+//    public function test_it_tracks_internal_requests(string $config, string $address, bool $result)
+//    {
+//        $this->scopeConfigMock->method('getValue')->willReturn($config);
+//        $this->remoteAddressMock->method('getRemoteAddress')->willReturn($address);
+//
+//        $expected = ['internal' => $result];
+//        $actual = $this->sessionData->getSectionData();
+//        $this->assertEquals($expected['internal'], $actual['internal']);
+//    }
+//
+//    public function remoteAddressProvider()
+//    {
+//        return [
+//            ['127.0.0.1,8.8.8.8', '127.0.0.1', true],
+//            ['127.0.0.1,8.8.8.8', '4.4.4.4', false],
+//        ];
+//    }
 
     protected function setUp(): void
     {
