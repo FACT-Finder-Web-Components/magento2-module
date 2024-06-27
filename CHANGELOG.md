@@ -16,6 +16,9 @@
 ### Fix
 - Support MSI - checking all inventory sources for feed export
 
+### Add
+- Add migration guide for upgrade WebComponents from v4 to v5
+
 ## [v4.3.0] - 2024.01.16
 ### Add
 - Add landing page campaign
