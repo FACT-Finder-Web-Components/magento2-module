@@ -13,7 +13,7 @@ use SplFileObject;
 
 class Csv implements StreamInterface
 {
-    private ?WriteInterface $stream;
+    private ?WriteInterface $stream = null;
 
     public function __construct(
         private readonly Filesystem $filesystem,
