@@ -140,6 +140,8 @@ component as respectively `currency-code` and `country-code` parameters. You can
 Some of the custom elements we offer works only when specific additional FACT-Finder modules has been purchased.
 Here you can disabled them, if you do not use utilize this part of FACT-Finder functionality
 
+**Note:** Feedback campaign support only labels: **above search result**. More labels needs some simple code customisation.
+
 **Note:** Paging has been added cause with infinite scrolling enabled in ff-record list, this custom element is redundant  
 
 **Note:** Page id in Landing page campaign base on Magento CMS page Identifier name
