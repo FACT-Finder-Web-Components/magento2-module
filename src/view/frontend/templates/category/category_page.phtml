@@ -6,10 +6,12 @@ $categoryPath = (array) $block->getData('category_path');
 
 <script>
     document.addEventListener(`ffCoreReady`, ({ factfinder }) => {
-        factfinder.config.categoryPage = [
-            factfinder.utils.filterBuilders.categoryFilter(`CategoryPath`, <?= /* @noEscape */ json_encode($categoryPath); ?>)
-        ];
+        factfinder.config.setAppConfig({
+            categoryPage: [
+                factfinder.utils.filterBuilders.categoryFilter(`CategoryPath`, <?= /* @noEscape */ json_encode($categoryPath); ?>)
+            ],
+        });
 
-        factfinder.request.navigation({'filters': factfinder.config.categoryPage}, { requestOptions: { origin: `searchImmediately` } });
+        factfinder.request.navigation({'filters': factfinder.config.get().appConfig.categoryPage}, { requestOptions: { origin: `searchImmediately` } });
     });
 </script>

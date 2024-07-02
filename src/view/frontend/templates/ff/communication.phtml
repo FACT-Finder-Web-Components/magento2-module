@@ -10,12 +10,25 @@ $searchImmediate = $communicationParameters['search-immediate'] ?? 'false';
 
 <!--Main FF Web-components Initialisation -->
 <script>
-    document.addEventListener(`ffCoreReady`, ({ factfinder, initialSearch }) => {
-        const cfg = factfinder.config.defaults.general;
-        cfg.url = `<?= $escaper->escapeUrl($parameters['url'])?>`;
-        cfg.channel = `<?= $escaper->escapeHtml($parameters['channel'])?>`;
-        factfinder.config.apiKey = `<?= $escaper->escapeHtml($parameters['api_key'])?>`;
-        factfinder.config.fieldRoles = <?= /* @noEscape */ $viewModel->getFieldRoles() ?>;
+    document.addEventListener(`ffCoreReady`, ({ factfinder, init, initialSearch }) => {
+
+        init({
+            ff: {
+                url: `<?= $escaper->escapeUrl($parameters['url'])?>`,
+                channel: `<?= $escaper->escapeHtml($parameters['channel'])?>`,
+                apiKey: `<?= $escaper->escapeHtml($parameters['api_key'])?>`,
+            },
+            appConfig: {
+                fieldRoles: <?= /* @noEscape */ $viewModel->getFieldRoles() ?>,
+                formatting: {
+                    locale: `<?= $escaper->escapeUrl($parameters['currency-country-code'])?>`,
+                    formatOptions: {
+                        style: `currency`,
+                        currency: `<?= $escaper->escapeUrl($parameters['currency-code'])?>`,
+                    },
+                },
+            },
+        });
 
         <?php if(!empty($parameters['add-params'])) : ?>
             factfinder.routing.setUrlParamOptionsListener(() => ({
@@ -35,16 +48,7 @@ $searchImmediate = $communicationParameters['search-immediate'] ?? 'false';
             }));
         <?php endif; ?>
 
-        factfinder.config.formatting = {
-            locale: `<?= $escaper->escapeUrl($parameters['currency-country-code'])?>`,
-            formatOptions: {
-                style: `currency`,
-                currency: `<?= $escaper->escapeUrl($parameters['currency-code'])?>`,
-            },
-        };
-
         factfinder.request.before.search(({ searchParams, searchOptions }) => {
-            // If the search request was invoked by `ff-searchbox`, `searchOptions.requestOptions.origin` will be a reference to the `ff-searchbox` element.
             if (searchOptions?.requestOptions?.origin?.tagName === `FF-SEARCHBOX`) {
                 <?php if(!empty($parameters['add-params'])) : ?>
                     window.location.href =  `/factfinder/result?query=${searchParams.query}&<?= /* @noEscape */ http_build_query($parameters['add-params']) ?>`;
@@ -56,8 +60,6 @@ $searchImmediate = $communicationParameters['search-immediate'] ?? 'false';
                 return false;
             }
         });
-
-        // This is also the best place to invoke a search request replacing the `search-immediate` attribute.
 
         if (<?= /** @SuppressWarnings(PHPMD) */ $searchImmediate ?>) {
             const searchParams = factfinder.utils.env.searchParamsFromUrl();
@@ -98,9 +100,9 @@ $searchImmediate = $communicationParameters['search-immediate'] ?? 'false';
                 if (!ffCookies['ffwebc_sid']) {
                     const sid = generateSid();
                     document.cookie = 'ffwebc_sid=' + sid + '; path=/;';
-                    factfinder.config.defaults.general.sid = sid;
+                    factfinder.config.setFFParams({sid: sid});
                 } else {
-                    factfinder.config.defaults.general.sid = ffCookies['ffwebc_sid'];
+                    factfinder.config.setFFParams({sid: ffCookies['ffwebc_sid']});
                 }
             });
     </script>
@@ -121,19 +123,19 @@ $searchImmediate = $communicationParameters['search-immediate'] ?? 'false';
         }
 
         if (cookies['ff_user_id']) {
-            factfinder.config.defaults.general.userId = cookies['ff_user_id'];
+            factfinder.config.setFFParams({userId: cookies['ff_user_id']});
 
             if (cookies['ff_has_just_logged_in']) {
                 clearCookie('ff_has_just_logged_in');
                 factfinder.tracking.login([{
                     sid: JSON.parse(localStorage.ffwebco).sid,
-                    userId: factfinder.config.defaults.general.userId
+                    userId: factfinder.config.get().ffParams.userId
                 }]);
             }
         } else {
             if (cookies['ff_has_just_logged_out']) {
                 clearCookie('ff_has_just_logged_out');
-                factfinder.config.defaults.general.userId = undefined
+                factfinder.config.setFFParams({userId: undefined});
             }
         }
    });
