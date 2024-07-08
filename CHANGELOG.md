@@ -1,13 +1,13 @@
 # Changelog
-## Unreleased
+## [v5.0.0] - 2024.07.08
 ### BREAKING
+- Upgrade FACT-Finder Web-Components to version 5.0.0-pre.1
+- Drop support for FACT-Finder Web-Components v4
 - Add support for PHP v8.2 and v8.3
 - Upgrade magento libraries
 - Upgrade composer dependencies
 - Fix deprecations for magento/framework
-- Upgrade FACT-Finder Web-Components to version 5.x
 - New SSR implementation for NG WebComponents
-- Upgrade bundle.js for new NG WebComponents
 - Upgrade SDK to support Magento v2.4.7
 
 ### Remove
@@ -614,6 +614,7 @@
 ### Added
 - Feed Export: Export feed file is now available via separate link
 
+[v5.0.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v5.0.0
 [v4.3.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v4.3.0
 [v4.2.2]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v4.2.2
 [v4.2.1]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v4.2.1
