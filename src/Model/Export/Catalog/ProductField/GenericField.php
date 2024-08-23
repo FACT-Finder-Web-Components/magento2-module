@@ -14,6 +14,8 @@ use Magento\Catalog\Model\Product;
 
 class GenericField implements FieldInterface
 {
+    private ?Attribute $attribute = null;
+
     public function __construct(
         private readonly ProductAttributeRepositoryInterface $attributeRepository,
         private readonly AttributeValuesExtractor $valuesExtractor,
