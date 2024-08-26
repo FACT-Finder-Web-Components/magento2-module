@@ -1,4 +1,7 @@
 # Changelog
+## Unreleased
+- Add support for PHP v8.2 and v8.3
+
 ## [v4.3.3] - 2024.04.17
 ### Fix
 - Support MSI - checking all inventory sources during export feed
