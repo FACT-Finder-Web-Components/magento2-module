@@ -26,8 +26,7 @@
     "phpmd/phpmd": "^2.9",
     "phpunit/phpunit": "~9.5.0",
     "magento/magento-coding-standard": "*",
-    "friendsofphp/php-cs-fixer": "^3.51",
-    "dealerdirect/phpcodesniffer-composer-installer": true
+    "friendsofphp/php-cs-fixer": "^3.51"
   },
   "autoload": {
     "files": [
