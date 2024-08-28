@@ -38,7 +38,7 @@ class Csv implements StreamInterface
 
     private function getStream(): WriteInterface
     {
-        if ($this->stream) {
+        if (!$this->stream) {
             $directory    = $this->filesystem->getDirectoryWrite(DirectoryList::VAR_DIR);
             $this->stream = $directory->openFile($directory->getAbsolutePath($this->filename), 'w+');
             $this->stream->lock();
