@@ -10,9 +10,10 @@ use Magento\Catalog\Model\Product;
 use Magento\Framework\App\RequestInterface;
 use Traversable;
 
-#[\AllowDynamicProperties]
 class ExportPreviewProducts implements \IteratorAggregate
 {
+    private int $entityId = 0;
+
     public function __construct(
         private readonly ProductRepositoryInterface $productRepository,
         private readonly RequestInterface $request,

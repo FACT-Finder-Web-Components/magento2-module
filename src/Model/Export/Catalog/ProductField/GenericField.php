@@ -12,7 +12,6 @@ use Omikron\Factfinder\Api\Export\FieldInterface;
 use Omikron\Factfinder\Model\Export\Catalog\AttributeValuesExtractor;
 use Magento\Catalog\Model\Product;
 
-#[\AllowDynamicProperties]
 class GenericField implements FieldInterface
 {
     private ?Attribute $attribute = null;
