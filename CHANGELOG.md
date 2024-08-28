@@ -1,6 +1,7 @@
 # Changelog
 ## Unreleased
 - Add support for PHP v8.2 and v8.3
+- Add support for Magento 2.4.7
 
 ## [v4.3.3] - 2024.04.17
 ### Fix
