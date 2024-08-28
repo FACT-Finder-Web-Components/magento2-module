@@ -13,7 +13,7 @@ use SplFileObject;
 
 class Csv implements StreamInterface
 {
-    private ?WriteInterface $stream;
+    private ?WriteInterface $stream = null;
 
     public function __construct(
         private readonly Filesystem $filesystem,
@@ -38,7 +38,7 @@ class Csv implements StreamInterface
 
     private function getStream(): WriteInterface
     {
-        if (!isset($this->stream)) {
+        if (!$this->stream) {
             $directory    = $this->filesystem->getDirectoryWrite(DirectoryList::VAR_DIR);
             $this->stream = $directory->openFile($directory->getAbsolutePath($this->filename), 'w+');
             $this->stream->lock();
