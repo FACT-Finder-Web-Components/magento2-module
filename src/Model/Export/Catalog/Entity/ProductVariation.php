@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Omikron\Factfinder\Model\Export\Catalog\Entity;
 
 use Magento\Catalog\Model\Product;
-use Magento\CatalogInventory\Model\Stock\StockItemRepository as StockItem;
+use Magento\Inventory\Model\SourceItem\Command\GetSourceItemsBySku;
 use Omikron\Factfinder\Api\Export\ExportEntityInterface;
 use Omikron\Factfinder\Api\Export\FieldInterface;
 use Omikron\Factfinder\Model\Export\Catalog\FieldProvider;
@@ -20,14 +20,14 @@ class ProductVariation implements ExportEntityInterface
 
     /** @var string[] */
     private array $configurableData;
-    private StockItem $stockItem;
+    private GetSourceItemsBySku $getSourceItemsBySku;
 
     public function __construct(
         Product $product,
         Product $configurable,
         NumberFormatter $numberFormatter,
         FieldProvider $variantFieldProvider,
-        StockItem $stockItem,
+        GetSourceItemsBySku $getSourceItemsBySku,
         array $data = []
     ) {
         $this->product          = $product;
@@ -35,7 +35,7 @@ class ProductVariation implements ExportEntityInterface
         $this->numberFormatter  = $numberFormatter;
         $this->configurableData = $data;
         $this->fieldprovider    = $variantFieldProvider;
-        $this->stockItem = $stockItem;
+        $this->getSourceItemsBySku = $getSourceItemsBySku;
     }
 
     public function getId(): int
@@ -91,8 +91,14 @@ class ProductVariation implements ExportEntityInterface
             return $this->product->isAvailable();
         }
 
-        $quantity = $this->stockItem->get($this->product->getId());
+        $sourceItems = $this->getSourceItemsBySku->execute($this->product->getSku());
 
-        return $quantity->getIsInStock();
+        foreach ($sourceItems as $sourceItem) {
+            if ($sourceItem->getStatus()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

@@ -7,9 +7,9 @@ namespace Omikron\Factfinder\Model\Export\Catalog\ProductType;
 use Magento\Catalog\Api\Data\ProductInterface;
 use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Catalog\Model\Product;
-use Magento\CatalogInventory\Model\Stock\StockItemRepository as StockItem;
 use Magento\ConfigurableProduct\Model\Product\Type\Configurable as ConfigurableProductType;
 use Magento\Framework\Api\SearchCriteriaBuilder;
+use Magento\Inventory\Model\SourceItem\Command\GetSourceItemsBySku;
 use Omikron\Factfinder\Api\Export\ExportEntityInterface;
 use Omikron\Factfinder\Api\Filter\FilterInterface;
 use Omikron\Factfinder\Model\Export\Catalog\Entity\ProductVariationFactory;
@@ -18,17 +18,17 @@ use Omikron\Factfinder\Model\Formatter\NumberFormatter;
 class ConfigurableDataProvider extends SimpleDataProvider
 {
     public function __construct(
-        protected Product                  $product,
-        protected NumberFormatter          $numberFormatter,
+        protected Product                           $product,
+        protected NumberFormatter                   $numberFormatter,
         private readonly ConfigurableProductType    $productType,
         private readonly FilterInterface            $filter,
         private readonly ProductVariationFactory    $variationFactory,
         private readonly ProductRepositoryInterface $productRepository,
         private readonly SearchCriteriaBuilder      $builder,
-        StockItem $stockItem,
-        protected array                    $productFields = []
+        protected GetSourceItemsBySku               $getSourceItemsBySku,
+        protected array                             $productFields = []
     ) {
-        parent::__construct($product, $numberFormatter, $stockItem, $productFields);
+        parent::__construct($product, $numberFormatter, $getSourceItemsBySku, $productFields);
     }
 
     public function getEntities(): iterable
