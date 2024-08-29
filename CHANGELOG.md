@@ -1,4 +1,9 @@
 # Changelog
+## Unreleased
+### Fix
+- Support MSI - checking all inventory sources during export feed
+- Fix feed path for UI export type
+
 ## [v5.0.0] - 2024.07.08
 ### BREAKING
 - Upgrade FACT-Finder Web-Components to version 5.0.0-pre.1
@@ -45,7 +50,7 @@
 ### Fix
 - Fix problems in factfinder_feed_export cron job by casting `storeid` to int.
 
-## [v4.1.6] - 2023.07.19
+## [v4.1.6] - 2023.07.19 
 ### Fix
 - Set default value for $pushImportResult to prevent initialization exception
 

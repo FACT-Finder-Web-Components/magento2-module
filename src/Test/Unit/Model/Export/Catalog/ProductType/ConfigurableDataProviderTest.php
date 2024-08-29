@@ -6,10 +6,10 @@ namespace Omikron\Factfinder\Model\Export\Catalog\ProductType;
 
 use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Catalog\Model\Product;
-use Magento\CatalogInventory\Api\Data\StockItemInterface;
-use Magento\CatalogInventory\Model\Stock\StockItemRepository;
 use Magento\ConfigurableProduct\Model\Product\Type\Configurable as ConfigurableProductType;
 use Magento\Framework\Api\SearchCriteriaBuilder;
+use Magento\Inventory\Model\SourceItem;
+use Magento\Inventory\Model\SourceItem\Command\GetSourceItemsBySku;
 use Omikron\Factfinder\Api\Filter\FilterInterface;
 use Omikron\Factfinder\Model\Export\Catalog\Entity\ProductVariationFactory;
 use Omikron\Factfinder\Model\Formatter\NumberFormatter;
@@ -114,11 +114,8 @@ class ConfigurableDataProviderTest extends TestCase
             $this->variantFactoryMock,
             $this->repositoryMock,
             $this->builderMock,
-            $this->createConfiguredMock(StockItemRepository::class, [
-                'get' => $this->createConfiguredMock(
-                    StockItemInterface::class,
-                    ['getIsInStock' => true]
-                )
+            $this->createConfiguredMock(GetSourceItemsBySku::class, [
+                'execute' => [$this->createConfiguredMock(SourceItem::class, ['getStatus' => 1])]
             ]),
         );
     }
