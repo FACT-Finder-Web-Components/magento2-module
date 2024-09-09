@@ -1,7 +1,11 @@
 # Changelog
-## Unreleased
+## [v4.4.0] - 2024.09.09
+### Add
 - Add support for PHP v8.2 and v8.3
 - Add support for Magento 2.4.7
+
+### Fix
+- Fix uninitialized member variables access
 
 ## [v4.3.3] - 2024.04.17
 ### Fix
@@ -614,6 +618,7 @@
 ### Added
 - Feed Export: Export feed file is now available via separate link
 
+[v4.4.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v4.4.0
 [v4.3.3]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v4.3.3
 [v4.3.2]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v4.3.2
 [v4.3.1]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v4.3.1
