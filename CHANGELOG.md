@@ -1,5 +1,8 @@
 # Changelog
 ## Unreleased
+### Update
+- Update FactFinder logo
+
 ### Fix
 - Support MSI - checking all inventory sources during export feed
 - Fix feed path for UI export type
