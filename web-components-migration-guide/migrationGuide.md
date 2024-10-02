@@ -231,89 +231,6 @@ It is also useful if you need to interrupt the automatic pipeline processing and
 
 Methods in this namespace are used to deal with the response part of the pipeline after the request returns from FactFinder.
 
-
-#### Subscribers
-
-`subscribe*` methods (e.g. `subscribeSearch` or `subscribeSuggest`) take a subscriber function and return the subscriber's auto-generated ID.
-They replace `ResultDispatcher.subscribe(topic, fn)`.
-
-Subscriber functions, when invoked by the response pipeline, receive two parameters.
-- The first is the FactFinder result data of the type specified above.
-- The second is a _RequestInfo_ object.
-
-```js
-factfinder.response.subscribeSuggest((suggestionResult, requestInfo) => {
-  // suggestionResult: is `SuggestionResult` from the FactFinder REST API
-
-  // requestInfo: contains the endpoint-specific params object
-  // and the `requestOptions` object that were used to invoke the request.
-  // {
-  //   suggestParams,  // This would be `campaignPageParams`, `recommendationParams`, etc. for other endopints.
-  //   requestOptions,
-  // }
-});
-```
-
-There are some special cases.
-The _RequestInfo_ object for subscribers to `/search` or `/navigation` consists of the REST API's `SearchRequest` object, or `NavigationRequest` respectively, minus its `params` field but instead with a `requestOptions` field like in subscribers to other endpoints.
-
-```js
-factfinder.response.subscribeSearch((result, requestInfoSearch) => {
-  // result: is `Result` from the FactFinder REST API
-
-  // requestInfoSearch:
-  // {
-  //   searchParams,
-  //   searchOptions: {
-  //     searchControlParams,
-  //     sid,
-  //     userId,
-  //     userInput,
-  //
-  //     requestOptions,
-  //   },
-  // }
-});
-```
-
-Another special case is the `factfinder.response.subscribeSearchAndNavigation` subscription.
-Depending on whether the `/search` or the `/navigation` endpoint was queried, the second argument to the subscriber is either `searchOptions` or `navigationOptions`.
-
-Lastly, `factfinder.response.subscribeCampaignRedirect` also receives different arguments.
-
-> Pro tip!
->
-> Remember, you can always inspect the arguments to subscribers by logging them to the browser's console and by setting a breakpoint.
-
-```js
-factfinder.response.subscribeSearchAndNavigation((...args) => {
-  console.log(...args);
-  debugger;
-});
-```
-
-Return values of subscribers are discarded.
-
-Subscribers receive data **after** the Web Components.
-
-You can subscribe as many handlers as you like.
-Subscribers are called in the order they were registered.
-
-`unsubscribe` lets you remove a subscriber by passing its subscriber ID that you received when registering it.
-
-
-#### Transformers
-
-Transformers are used to manipulate a FactFinder result **before** it is dispatched to the Web Components.
-They take one parameter of the type specified above.
-They replace `ResultDispatcher.addCallback(topic, fn)`.
-
-Transformers must return the manipulated result, or an error will be emitted.
-
-You can register as many transformers as you like.
-They are called in the order of registration.
-
-
 #### Dispatching manually
 
 You can manually invoke the response pipeline by sending data through the various entry points in the `response.dispatch` namespace.
@@ -401,42 +318,6 @@ factfinder.config.setAppConfig({
 ```
 
 
-### Notifications
-
-Web Components no longer emits DOM events (e.g., `suggest-item-clicked`).
-Instead, the global `factfinder` object offers the `notifications` namespace.
-There you can register event listeners independent of the current DOM status.
-
-All suggest-related listeners receive a reference to the clicked `ff-suggest-item` through their `origin` parameter.
-
-Multiple click-listeners can be added.
-
-```js
-factfinder.notifications.addSuggestClickListener(origin => {
-    // Return `false` to prevent the pending request from being sent.
-    // Returning `false` does NOT prevent other click listeners from being invoked.
-
-    // return false;
-});
-```
-
-The detail-listener is invoked when a suggest-item with a type specified in `ff-suggest`'s `request-mapping-detail` attribute is clicked.
-
-```js
-factfinder.notifications.setSuggestDetailListener(origin => {
-
-});
-```
-
-The unmapped-listener is invoked when a suggest-item is clicked whose type does not appear in any of `ff-suggest`'s `request-mapping` attributes.
-
-```js
-factfinder.notifications.setSuggestUnmappedListener(origin => {
-
-});
-```
-
-
 ### Routing
 
 The `routing` namespace has been introduced to the global `factfinder` object.
@@ -475,30 +356,6 @@ factfinder.routing.setUrlParamOptionsListener(() => ({
 ```
 
 See _Customize URL parameters_ for more details.
-
-### Notes regarding the Core API
-
-#### `requestOptions.origin`
-
-Throughout the request/response pipeline you will encounter the `origin` reference in `requestOptions`.
-It does not have a specific type as it can be anything.
-
-If you issue a request manually, you have the option to set `origin` to whatever makes most sense for you.
-
-If a request is issued by a Web Components element, `origin` will be the `ff-` DOM element that was interacted with.
-You can access `origin` in for example the listeners from the `factfinder.request.before` namespace.
-
-Be aware that the DOM element referenced in `origin` may be reused by the rendering mechanism when the upcoming response is processed.
-Avoid storing and using the `origin` reference outside the context you encounter it.
-
-Web Components restores previous search results from the browser history when navigating back and forth.
-However, it is important to note that DOM elements cannot be stored in the browser history.
-Therefore, restored search results that pass through the response pipeline do not contain the `origin` field.
-
-
-#### Global values
-
-`factfinder.communication.globalElementValues.currentFFSearchBoxValue` was removed without replacement.
 
 
 ## Initialization of the Web Components application
@@ -947,108 +804,6 @@ In the FactFinder response it is called the `associatedFieldName`.
 <ff-asn hide-facets="category,brand"></ff-asn>
 ```
 
-
-### Slider
-
-#### One Touch Slider element merged
-
-The elements `ff-slider` and `ff-slider-one-touch` have been merged into `ff-slider`.
-The `ff-slider-one-touch` element is no longer available as a stand-alone element.
-Instead, you can toggle the "one-touch" behaviour on by setting the `one-touch` attribute on `ff-slider`.
-
-Classic slider:
-
-```html
-<ff-slider></ff-slider>
-```
-
-One-Touch slider:
-
-```html
-<ff-slider one-touch></ff-slider>
-```
-
-
-#### Attributes
-
-The `step-size` attribute on `ff-slider` was renamed to `step`.
-
-```html
-<!-- Previously -->
-<ff-slider step-size="5"></ff-slider>
-
-<!-- Now -->
-<ff-slider step="5"></ff-slider>
-```
-
-The `unit` attribute on `ff-slider` is no longer required and was removed.
-
-
-#### Slider Control
-
-In `ff-slider-control`, the `input` elements were required to have an attribute `data-control="1"` and `data-control="2"` respectively to define which `input` controls the lower-value handle and which controls the upper-value handle.
-
-The values to these attributes have been changed from `1` and `2` to `min` and `max`.
-
-```html
-<ff-slider-control>
-  <div>
-    <input data-control="min">
-  </div>
-  <div>
-    <input data-control="max">
-  </div>
-</ff-slider-control>
-```
-
-The numbers rendered in the `input` elements are no longer formatted with a unit symbol.
-They are formatted as a decimal number according to your `factfinder.config.get().appConfig.formatting.locale` settings.
-
-The attribute `decimal-places` was **renamed** to `fraction-digits`.
-It allows you to define the number of decimal places rendered in the `input` elements.
-The **default value** changed from `undefined` to `0`.
-
-In order to render the facet's unit there is a **new attribute** `data-unit` that can be put on any element.
-The `innerText` of these elements gets overwritten with the `unit` that is defined for the related _Facet_ object.
-Leave those elements empty.
-
-```html
-<ff-slider-control fraction-digits="2">
-  <div>
-    <input data-control="min">
-    <span data-unit></span>
-  </div>
-  <div>
-    <input data-control="max">
-    <span data-unit></span>
-  </div>
-</ff-slider-control>
-```
-
-The **default template** of `ff-slider-control` no longer uses inline styles.
-If you leave `ff-slider-control` empty, the following HTML is used:
-
-```html
-<div class="ffw-slider-control-default">
-  <ff-slider one-touch></ff-slider>
-
-  <div class="ffw-slider-control-inputs">
-    <div class="ffw-input-container">
-      <input data-control="min">
-      <span data-unit></span>
-    </div>
-
-    <span class="ffw-slider-control-line"></span>
-
-    <div class="ffw-input-container">
-      <input data-control="max">
-      <span data-unit></span>
-    </div>
-  </div>
-</div>
-```
-
-
 ### Breadcrumb Trail
 
 The data format available in the HTML template context of `ff-breadcrumb-trail-item` has changed.
@@ -1176,65 +931,6 @@ Consult your FactFinder API documentation for the structure of these response ob
 ```html
 <ff-template scope="Search">Your search produced {{totalHits}} hits.</ff-template>
 ```
-
-
-### Single Word Search
-
-The `ff-single-word-search-record` element no longer provides a default template.
-Therefore, an empty `ff-single-word-search` element will no longer create valid output.
-
-```html
-<!-- No longer renders data. Must provide HTML template manually. -->
-<ff-single-word-search></ff-single-word-search>
-```
-
-On `ff-single-word-search-record`, the `word` property was renamed to `singleWordResult`.
-
-On `ff-single-word-search`, the `words` property was renamed to `singleWordResults`.
-
-### Product Detail
-
-The `ff-product-detail` element has been removed.
-
-
-### Search feedback
-
-The `ff-search-feedback` element has been removed.
-
-
-### Notes regarding custom elements
-
-#### Suggest related
-
-`ff-suggest` no longer emits the `suggest-item-clicked` event.
-`ff-suggest-item` no longer emits the `item-clicked` event.
-`ffPreventDefault` inside these events is therefore no longer available.
-Instead, Core offers `addSuggestClickListener` in the new `notifications` API.
-
-Suggest can react in four ways:
-
-- redirect immediately when `deeplink` is available on clicked item
-- issue search request
-- issue navigation request
-- call custom handler on product suggestions without deeplink.
-  Suggest no longer issues a follow-up request to obtain the missing deeplink.
-
-Suggest has new attributes `request-mapping-search`, `request-mapping-navigation`, `request-mapping-detail`.
-With the mapping attributes you can direct suggestion types to certain actions.
-Defaults are:
-
-- _search_: `searchTerm`
-- _navigation_: `category`, `brand`
-- _detail_: `productName`
-
-```html
-<ff-suggest
-    request-mapping-search="searchTerm"
-    request-mapping-navigation="category,brand"
-    request-mapping-detail="productName"
-></ff-suggest>
-```
-
 
 #### Products Per Page
 
@@ -1490,14 +1186,6 @@ Make sure to correctly configure the destination URL in your FactFinder UI.
 Subscribers to redirect campaigns have received the ability to interrupt the subsequent response pipeline.
 Requests that were issued in parallel are not affected, however.
 
-
-#### Remove all filters
-
-The `ff-asn-remove-all-filter` was renamed to `ff-asn-remove-all-filters`.
-Note the added `s` at the end.
-
-It no longer supports the `keep-category-path` attribute.
-See _Category Pages_ for how to implement category and brand pages.
 
 ## How To
 
