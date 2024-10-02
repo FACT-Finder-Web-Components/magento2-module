@@ -1,12 +1,13 @@
-# WKNG Migration Guide
+# Web Components Migration Guide
 
 This is a migration guide which should help you update your Magento module to the WebComponents from v4 to v5
-if for some reason you do not want to use our ready-made module.
+if for some reason you do not want to use our ready-made module. It is not a step-by-step guide to walk you through the migration.
+Skim through the document in its entirety first to get an overview of all changes before starting to work through each topic in detail.
 
 
 ## Overview
 
-WKNG is undergoing a complete rewrite of its core.
+Web Components has undergone a complete rewrite of its core.
 The new library more closely reflects the FactFinder REST API with as few abstractions as possible.
 This shall reduce the number of concepts required to learn while simultaneously increase transparency of the data flow.
 
@@ -17,6 +18,13 @@ You can (and should) always consult FactFinder's API documentation for details.
 ### Backward compatibility
 
 FactFinder versions prior to NG (`v5` API) are no longer supported.
+Going forward, the latest version of Web Components will only support the latest API version of FactFinder.
+
+
+### Diagram of request/response pipelines
+
+There is now more focus on the request/response pipelines which shall provide more clarity of the data flow.
+See the end of this migration guide for a visual representation of these pipelines.
 
 
 ## Including the library
@@ -32,7 +40,7 @@ This shall emphasize that the core and the custom elements initialize separately
 
 ```js
 document.addEventListener(`ffCoreReady`, ({ factfinder, init, initialSearch }) => {
-    
+
 });
 ```
 
@@ -59,7 +67,7 @@ Depending on whether the application is configured to be a category page or regu
 Make sure to always use this function for the initial search request as it provides different handling of the browser history than a regular search request.
 
 ```js
-initialSearch({ query: `deck chair` });
+initialSearch({ query: `deck chair` }, { userId: `user123` });
 ```
 
 You can always pass a _SearchParams_ object to `initialSearch`, even when the application is configured to category page.
@@ -74,109 +82,109 @@ The core's structure is as follows.
 ```js
 factfinder: {
     request: {
-        campaignPage: (Required CampaignPageParams, Optional WKRequestOptions) => FF CampaignsResult,
-        campaignProduct: (Required CampaignProductParams, Optional WKRequestOptions) => FF CampaignsResult,
-        campaignShoppingCart: (Required CampaignShoppingCartParams, Optional WKRequestOptions) => FF CampaignsResult,
-        navigation: (Required NavigationParams, Optional WKNavigationOptions) => (FF Result),
-        navigationCategory: (Required NavigationCategoryParams, Optional WKRequestOptions) => (FF CategoryNavigation),
-        predictiveBasket: Required PredictiveBasketParams, Optional WKRequestOptions) => FF PredictiveBasketResult,
-        recommendation: (Required RecommendationParams, Optional WKRequestOptions) => FF RecommendationResultWithFieldRoles,
-        records: (Required RecordsParams, Optional WKRequestOptions) => FF FlatRecordsResult,
-        search: (Required SearchParams, Optional WKSearchOptions) => FF Result,
-        similar: (Required SimilarParams, Optional WKRequestOptions) => FF SimilarProductsWithFieldRoles,
-        suggest: (Required SuggestParams, Optional WKRequestOptions) => FF SuggestionResult,
+        campaignPage: (Required CampaignPageParams, Optional RequestOptions) => Promise CampaignsResult,
+        campaignProduct: (Required CampaignProductParams, Optional RequestOptions) => Promise CampaignsResult,
+        campaignShoppingCart: (Required CampaignShoppingCartParams, Optional RequestOptions) => Promise CampaignsResult,
+        navigation: (Required NavigationParams, Optional NavigationOptions) => Promise Result,
+        navigationCategory: (Required NavigationCategoryParams, Optional RequestOptions) => Promise CategoryNavigation,
+        predictiveBasket: Required PredictiveBasketParams, Optional RequestOptions) => Promise PredictiveBasketResult,
+        recommendation: (Required RecommendationParams, Optional RequestOptions) => Promise RecommendationResultWithFieldRoles,
+        records: (Required RecordsParams, Optional RequestOptions) => Promise FlatRecordsResult,
+        search: (Required SearchParams, Optional SearchOptions) => Promise Result,
+        similar: (Required SimilarParams, Optional RequestOptions) => Promise SimilarProductsWithFieldRoles,
+        suggest: (Required SuggestParams, Optional RequestOptions) => Promise SuggestionResult,
         before: {
-            campaignPage: CancellableSubscriber RequestInfoCampaignPage => WK SubscriberID,
-            campaignProduct: CancellableSubscriber RequestInfoCampaignProduct => WK SubscriberID,
-            campaignShoppingCart: CancellableSubscriber RequestInfoCampaignShoppingCart => WK SubscriberID,
-            compare: CancellableSubscriber RequestInfoCompare => WK SubscriberID,
-            navigation: CancellableSubscriber RequestInfoNavigation => WK SubscriberID,
-            navigationCategory: CancellableSubscriber RequestInfoNavigationCategory => WK SubscriberID,
-            predictiveBasket: CancellableSubscriber RequestInfoPredictiveBasket => WK SubscriberID,
-            recommendation: CancellableSubscriber RequestInfoRecommendation => WK SubscriberID,
-            records: CancellableSubscriber RequestInfoRecords => WK SubscriberID,
-            search: CancellableSubscriber RequestInfoSearch => WK SubscriberID,
-            similar: CancellableSubscriber RequestInfoSimilar => WK SubscriberID,
-            suggest: CancellableSubscriber RequestInfoSuggest => WK SubscriberID,
+            campaignPage: CancellableSubscriber RequestInfoCampaignPage => SubscriberID,
+            campaignProduct: CancellableSubscriber RequestInfoCampaignProduct => SubscriberID,
+            campaignShoppingCart: CancellableSubscriber RequestInfoCampaignShoppingCart => SubscriberID,
+            compare: CancellableSubscriber RequestInfoCompare => SubscriberID,
+            navigation: CancellableSubscriber RequestInfoNavigation => SubscriberID,
+            navigationCategory: CancellableSubscriber RequestInfoNavigationCategory => SubscriberID,
+            predictiveBasket: CancellableSubscriber RequestInfoPredictiveBasket => SubscriberID,
+            recommendation: CancellableSubscriber RequestInfoRecommendation => SubscriberID,
+            records: CancellableSubscriber RequestInfoRecords => SubscriberID,
+            search: CancellableSubscriber RequestInfoSearch => SubscriberID,
+            similar: CancellableSubscriber RequestInfoSimilar => SubscriberID,
+            suggest: CancellableSubscriber RequestInfoSuggest => SubscriberID,
         },
     },
     response: {
-        subscribeCampaignPage: Subscriber CampaignsResult => WK SubscriberID,
-        subscribeCampaignProduct: Subscriber CampaignsResult => WK SubscriberID,
-        subscribeCampaignRedirect: CancellableSubscriber ({ campaign: Campaign, result: Result }) => WK SubscriberID,
-        subscribeCampaignShoppingCart: Subscriber CampaignsResult => WK SubscriberID,
-        subscribeNavigation: Subscriber Result => WK SubscriberID,
-        subscribeNavigationCategory: Subscriber CategoryNavigation => WK SubscriberID,
-        subscribePredictiveBasket: Subscriber PredictiveBasketResult => WK SubscriberID,
-        subscribeRecommendation: Subscriber RecommendationResultWithFieldRoles => WK SubscriberID,
-        subscribeRecords: Subscriber FlatRecordsResult => WK SubscriberID,
-        subscribeSearch: Subscriber Result => WK SubscriberID,
-        subscribeSimilar: Subscriber SimilarProductsWithFieldRoles => WK SubscriberID,
-        subscribeSuggest: Subscriber SuggestionResult => WK SubscriberID,
-        subscribeSearchAndNavigation: Subscriber Result => WK SubscriberID,
+        subscribeCampaignPage: Subscriber CampaignsResult => SubscriberID,
+        subscribeCampaignProduct: Subscriber CampaignsResult => SubscriberID,
+        subscribeCampaignRedirect: CancellableSubscriber ({ campaign: Campaign, result: Result }) => SubscriberID,
+        subscribeCampaignShoppingCart: Subscriber CampaignsResult => SubscriberID,
+        subscribeNavigation: Subscriber Result => SubscriberID,
+        subscribeNavigationCategory: Subscriber CategoryNavigation => SubscriberID,
+        subscribePredictiveBasket: Subscriber PredictiveBasketResult => SubscriberID,
+        subscribeRecommendation: Subscriber RecommendationResultWithFieldRoles => SubscriberID,
+        subscribeRecords: Subscriber FlatRecordsResult => SubscriberID,
+        subscribeSearch: Subscriber Result => SubscriberID,
+        subscribeSimilar: Subscriber SimilarProductsWithFieldRoles => SubscriberID,
+        subscribeSuggest: Subscriber SuggestionResult => SubscriberID,
+        subscribeSearchAndNavigation: Subscriber Result => SubscriberID,
         unsubscribe: SubscriberID => Boolean,
-        transformCampaignPage: Transformer CampaignsResult => WK undefined,
-        transformCampaignProduct: Transformer CampaignsResult => WK undefined,
-        transformCampaignShoppingCart: Transformer CampaignsResult => WK undefined,
-        transformCompare: Transformer CompareResult => WK undefined,
-        transformNavigation: Transformer Result => WK undefined,
-        transformNavigationCategory: Transformer CategoryNavigation => WK undefined,
-        transformPredictiveBasket: Transformer PredictiveBasketResult => WK undefined,
-        transformRecommendation: Transformer RecommendationResultWithFieldRoles => WK undefined,
-        transformRecords: Transformer FlatRecordsResult => WK undefined,
-        transformSearch: Transformer Result => WK undefined,
-        transformSimilar: Transformer SimilarProductsWithFieldRoles => WK undefined,
-        transformSuggest: Transformer SuggestionResult => WK undefined,
+        transformCampaignPage: Transformer CampaignsResult => undefined,
+        transformCampaignProduct: Transformer CampaignsResult => undefined,
+        transformCampaignShoppingCart: Transformer CampaignsResult => undefined,
+        transformCompare: Transformer CompareResult => undefined,
+        transformNavigation: Transformer Result => undefined,
+        transformNavigationCategory: Transformer CategoryNavigation => undefined,
+        transformPredictiveBasket: Transformer PredictiveBasketResult => undefined,
+        transformRecommendation: Transformer RecommendationResultWithFieldRoles => undefined,
+        transformRecords: Transformer FlatRecordsResult => undefined,
+        transformSearch: Transformer Result => undefined,
+        transformSimilar: Transformer SimilarProductsWithFieldRoles => undefined,
+        transformSuggest: Transformer SuggestionResult => undefined,
         dispatch: {
-            navigation: (Result, Maybe RequestInfoNavigation) => WK Result,
-            navigationBeforeTransform: (Result, Maybe RequestInfoNavigation) => WK Result,
-            search: (Result, Maybe RequestInfoSearch) => WK Result,
-            searchBeforeTransform: (Result, Maybe RequestInfoSearch) => WK Result,
-            suggest: (SuggestionResult, Maybe RequestInfoSuggest) => WK SuggestionResult,
-            ssrNavigation: (Result, Maybe RequestInfoNavigation) => WK Result,
-            ssrSearch: (Result, Maybe RequestInfoSearch) => WK Result,
+            navigation: (Result, Optional RequestInfoNavigation) => Result,
+            navigationBeforeTransform: (Result, Optional RequestInfoNavigation) => Result,
+            search: (Result, Optional RequestInfoSearch) => Result,
+            searchBeforeTransform: (Result, Optional RequestInfoSearch) => Result,
+            suggest: (SuggestionResult, Optional RequestInfoSuggest) => SuggestionResult,
+            ssrNavigation: (Result, Optional RequestInfoNavigation) => Result,
+            ssrSearch: (Result, Optional RequestInfoSearch) => Result,
         },
     },
     tracking: {
-        cart: (Required (NonEmptyArray CartOrCheckoutEvent), Optional WKRequestOptions) => FF undefined,
-        checkout: (Required (NonEmptyArray CartOrCheckoutEvent), Optional WKRequestOptions) => FF undefined,
-        click: (Required (NonEmptyArray ClickEvent), Optional WKRequestOptions) => FF undefined,
-        landingPageClick: (Required (NonEmptyArray LandingPageClickEvent), Optional WKRequestOptions) => FF undefined,
-        login: (Required (NonEmptyArray LoginEvent), Optional WKRequestOptions) => FF undefined,
-        predbasketClick: (Required (NonEmptyArray PredBasketClickEvent), Optional WKRequestOptions) => FF undefined,
-        recommendationClick: (Required (NonEmptyArray RecommendationClickEvent), Optional WKRequestOptions) => FF undefined,
+        cart: (Required (NonEmptyArray CartOrCheckoutEvent), Optional RequestOptions) => Promise undefined,
+        checkout: (Required (NonEmptyArray CartOrCheckoutEvent), Optional RequestOptions) => Promise undefined,
+        click: (Required (NonEmptyArray ClickEvent), Optional RequestOptions) => Promise undefined,
+        landingPageClick: (Required (NonEmptyArray LandingPageClickEvent), Optional RequestOptions) => Promise undefined,
+        login: (Required (NonEmptyArray LoginEvent), Optional RequestOptions) => Promise undefined,
+        predbasketClick: (Required (NonEmptyArray PredBasketClickEvent), Optional RequestOptions) => Promise undefined,
+        recommendationClick: (Required (NonEmptyArray RecommendationClickEvent), Optional RequestOptions) => Promise undefined,
         before: {
-            cart: CancellableSubscriber RequestInfoTrackCartOrCheckout => WK SubscriberID,
-            checkout: CancellableSubscriber RequestInfoTrackCartOrCheckout => WK SubscriberID,
-            click: CancellableSubscriber RequestInfoTrackClick => WK SubscriberID,
-            landingPageClick: CancellableSubscriber RequestInfoTrackLandingPageClick => WK SubscriberID,
-            login: CancellableSubscriber RequestInfoTrackLogin => WK SubscriberID,
-            predbasketClick: CancellableSubscriber RequestInfoTrackPredBasketClick => WK SubscriberID,
-            recommendationClick: CancellableSubscriber RequestInfoTrackRecommendationClick => WK SubscriberID,
+            cart: CancellableSubscriber RequestInfoTrackCartOrCheckout => SubscriberID,
+            checkout: CancellableSubscriber RequestInfoTrackCartOrCheckout => SubscriberID,
+            click: CancellableSubscriber RequestInfoTrackClick => SubscriberID,
+            landingPageClick: CancellableSubscriber RequestInfoTrackLandingPageClick => SubscriberID,
+            login: CancellableSubscriber RequestInfoTrackLogin => SubscriberID,
+            predbasketClick: CancellableSubscriber RequestInfoTrackPredBasketClick => SubscriberID,
+            recommendationClick: CancellableSubscriber RequestInfoTrackRecommendationClick => SubscriberID,
          },
     },
     config: {
-        get: () => WK Config
-        setFFParams: ffParams => WK undefined,
-        setAppConfig: appConfig => WK undefined,
+        get: () => Config
+        setFFParams: ffParams => undefined,
+        setAppConfig: appConfig => undefined,
     },
     notifications: {
-        setSuggestClickListener: (origin) => Boolean,
-        setSuggestDetailListener: (origin) => undefined,
-        setSuggestUnmappedListener: (origin) => undefined,
+        addSuggestClickListener: CancellableSubscriber Origin => undefined,
+        setSuggestDetailListener: Subscriber Origin => undefined,
+        setSuggestUnmappedListener: Subscriber Origin => undefined,
     },
     routing: {
         setNavigateListener: ((url, origin) => Boolean) => undefined,
         setUrlParamOptionsListener: (() => UrlParamMappingOptions) => undefined,
         sandboxed: {
-            restoreHistory: (historyPayload) => undefined,
-            setHistoryWriteListener: ((historyPayload) => undefined) => undefined,
+            restoreHistory: historyPayload => undefined,
+            setHistoryWriteListener: (historyPayload => undefined) => undefined,
             setSessionReadWriteListeners: ({ read, write }) => undefined,
         },
     },
     utils: {
         env: {
-            searchParamsFromUrl: (options) => SearchParams,
+            searchParamsFromUrl: options => SearchParams,
         },
         filterBuilders: {
             categoryFilter: (name, path) => Filter,
@@ -197,7 +205,7 @@ Methods in this namespace reflect the relevant FactFinder REST API endpoints.
 They are used for initiating requests to FactFinder.
 This replaces `EventAggregator.addFFEvent(ffEvent)`.
 
-These methods take a required parameter which is equivalent to the FactFinder API specification for POST requests and an optional parameter to define various options to the request's behaviour.
+These methods take a required parameter which is equivalent to the FactFinder API specification for POST requests and an optional parameter to define various options to the request pipeline's behaviour.
 
 All methods in this namespace return a `Promise` that resolves to the relevant result after the request/response pipeline has completed.
 Note that this `Promise` rejects on server responses that are not `200`.
@@ -222,6 +230,88 @@ It is also useful if you need to interrupt the automatic pipeline processing and
 ### Response
 
 Methods in this namespace are used to deal with the response part of the pipeline after the request returns from FactFinder.
+
+
+#### Subscribers
+
+`subscribe*` methods (e.g. `subscribeSearch` or `subscribeSuggest`) take a subscriber function and return the subscriber's auto-generated ID.
+They replace `ResultDispatcher.subscribe(topic, fn)`.
+
+Subscriber functions, when invoked by the response pipeline, receive two parameters.
+- The first is the FactFinder result data of the type specified above.
+- The second is a _RequestInfo_ object.
+
+```js
+factfinder.response.subscribeSuggest((suggestionResult, requestInfo) => {
+  // suggestionResult: is `SuggestionResult` from the FactFinder REST API
+
+  // requestInfo: contains the endpoint-specific params object
+  // and the `requestOptions` object that were used to invoke the request.
+  // {
+  //   suggestParams,  // This would be `campaignPageParams`, `recommendationParams`, etc. for other endopints.
+  //   requestOptions,
+  // }
+});
+```
+
+There are some special cases.
+The _RequestInfo_ object for subscribers to `/search` or `/navigation` consists of the REST API's `SearchRequest` object, or `NavigationRequest` respectively, minus its `params` field but instead with a `requestOptions` field like in subscribers to other endpoints.
+
+```js
+factfinder.response.subscribeSearch((result, requestInfoSearch) => {
+  // result: is `Result` from the FactFinder REST API
+
+  // requestInfoSearch:
+  // {
+  //   searchParams,
+  //   searchOptions: {
+  //     searchControlParams,
+  //     sid,
+  //     userId,
+  //     userInput,
+  //
+  //     requestOptions,
+  //   },
+  // }
+});
+```
+
+Another special case is the `factfinder.response.subscribeSearchAndNavigation` subscription.
+Depending on whether the `/search` or the `/navigation` endpoint was queried, the second argument to the subscriber is either `searchOptions` or `navigationOptions`.
+
+Lastly, `factfinder.response.subscribeCampaignRedirect` also receives different arguments.
+
+> Pro tip!
+>
+> Remember, you can always inspect the arguments to subscribers by logging them to the browser's console and by setting a breakpoint.
+
+```js
+factfinder.response.subscribeSearchAndNavigation((...args) => {
+  console.log(...args);
+  debugger;
+});
+```
+
+Return values of subscribers are discarded.
+
+Subscribers receive data **after** the Web Components.
+
+You can subscribe as many handlers as you like.
+Subscribers are called in the order they were registered.
+
+`unsubscribe` lets you remove a subscriber by passing its subscriber ID that you received when registering it.
+
+
+#### Transformers
+
+Transformers are used to manipulate a FactFinder result **before** it is dispatched to the Web Components.
+They take one parameter of the type specified above.
+They replace `ResultDispatcher.addCallback(topic, fn)`.
+
+Transformers must return the manipulated result, or an error will be emitted.
+
+You can register as many transformers as you like.
+They are called in the order of registration.
 
 
 #### Dispatching manually
@@ -310,11 +400,48 @@ factfinder.config.setAppConfig({
 });
 ```
 
+
+### Notifications
+
+Web Components no longer emits DOM events (e.g., `suggest-item-clicked`).
+Instead, the global `factfinder` object offers the `notifications` namespace.
+There you can register event listeners independent of the current DOM status.
+
+All suggest-related listeners receive a reference to the clicked `ff-suggest-item` through their `origin` parameter.
+
+Multiple click-listeners can be added.
+
+```js
+factfinder.notifications.addSuggestClickListener(origin => {
+    // Return `false` to prevent the pending request from being sent.
+    // Returning `false` does NOT prevent other click listeners from being invoked.
+
+    // return false;
+});
+```
+
+The detail-listener is invoked when a suggest-item with a type specified in `ff-suggest`'s `request-mapping-detail` attribute is clicked.
+
+```js
+factfinder.notifications.setSuggestDetailListener(origin => {
+
+});
+```
+
+The unmapped-listener is invoked when a suggest-item is clicked whose type does not appear in any of `ff-suggest`'s `request-mapping` attributes.
+
+```js
+factfinder.notifications.setSuggestUnmappedListener(origin => {
+
+});
+```
+
+
 ### Routing
 
 The `routing` namespace has been introduced to the global `factfinder` object.
 It contains various tools to deal with routing related topics.
-It also contains a sub-namespace `routing.sandboxed`, when you run Web Components in sandbox mode, that enables you to manually deal with all environment interactions that Web Components would usually do automatically.
+It also contains a sub-namespace `routing.sandboxed` that, when you run Web Components in sandbox mode, enables you to manually deal with all environment interactions that Web Components would usually do automatically.
 
 `setNavigateListener` allows you to register a listener that is invoked whenever Web Components arrives at a point where it would navigate to a new page.
 For example after clicking on a product suggestion that leads to a product detail page.
@@ -325,7 +452,7 @@ You can interrupt Web Components' attempt to navigate and handle it as your envi
 factfinder.routing.setNavigateListener((url, origin) => {
     // `url` is the URL to which Web Components is about to navigate to.
     window.location.href = `/my/custom/target`;
-    return false;  // To interrupt pipeline and prevent redundant requests to FactFinder.
+    return false;  // To prevent navigation by Web Components.
 });
 ```
 
@@ -347,7 +474,32 @@ factfinder.routing.setUrlParamOptionsListener(() => ({
 }));
 ```
 
-See _Customise URL parameters_ for more details.
+See _Customize URL parameters_ for more details.
+
+### Notes regarding the Core API
+
+#### `requestOptions.origin`
+
+Throughout the request/response pipeline you will encounter the `origin` reference in `requestOptions`.
+It does not have a specific type as it can be anything.
+
+If you issue a request manually, you have the option to set `origin` to whatever makes most sense for you.
+
+If a request is issued by a Web Components element, `origin` will be the `ff-` DOM element that was interacted with.
+You can access `origin` in for example the listeners from the `factfinder.request.before` namespace.
+
+Be aware that the DOM element referenced in `origin` may be reused by the rendering mechanism when the upcoming response is processed.
+Avoid storing and using the `origin` reference outside the context you encounter it.
+
+Web Components restores previous search results from the browser history when navigating back and forth.
+However, it is important to note that DOM elements cannot be stored in the browser history.
+Therefore, restored search results that pass through the response pipeline do not contain the `origin` field.
+
+
+#### Global values
+
+`factfinder.communication.globalElementValues.currentFFSearchBoxValue` was removed without replacement.
+
 
 ## Initialization of the Web Components application
 
@@ -356,7 +508,7 @@ The event occurs on the `document` object when the library's core finishes its i
 
 Call the `init` function and pass it a **config object** with all parameters your application requires.
 
-The following example shows the minimum setup.
+The following example shows the **minimum setup**.
 
 ```js
 document.addEventListener(`ffCoreReady`, ({ factfinder, init, initialSearch }) => {
@@ -420,7 +572,7 @@ document.addEventListener(`ffCoreReady`, ({ factfinder, init, initialSearch }) =
 
 #### Session ID
 
-If `sid` is empty, a new random session ID will be generated by Web Components and preserved across page loads.
+If `sid` is empty and Web Components is unable to determine a session ID from the environment, a new random session ID will be generated and preserved across page loads.
 Usually, you never have to set it.
 You only need to set it if you want to force a particular session ID.
 
@@ -433,7 +585,7 @@ None of these parameters are sent to FactFinder.
 The `appConfig` section itself and all of its fields are optional.
 You only need to specify the fields you want to set.
 
-The following example shows all available fields and their default value.
+The following example shows all available fields and their default values.
 
 ```js
 document.addEventListener(`ffCoreReady`, ({ factfinder, init, initialSearch }) => {
@@ -457,7 +609,7 @@ document.addEventListener(`ffCoreReady`, ({ factfinder, init, initialSearch }) =
 #### Category page
 
 This property takes an array of `Filter` objects as defined by the FactFinder API.
-When this property is set, Web Components considers the current page a category page and behaves accordingly.
+When this property is set, Web Components considers the current page to be a category page and behaves accordingly.
 
 Examples of this behavior are:
 - usage of the `/navigation` API endpoint instead of `/search`
@@ -487,7 +639,11 @@ They must be different or the template engine will not be able to interpret the 
 Make sure to choose tags that do not occur anywhere else.
 
 ```js
-factfinder.config.dataBindingTags = [`[[`, `]]`];
+init({
+    appConfig: {
+        dataBindingTags: [`[[`, `]]`],
+    },
+});
 ```
 ```html
 <ff-record>[[regular]]</ff-record>
@@ -506,7 +662,7 @@ After an error, the Web Components application will be in an invalid state.
 
 There is also more logging.
 
-It is advisable to use this mode during development to find errors quickly and easily.
+It is advisable to use this mode during development to find errors quickly.
 
 _Live mode_ is the default setting.
 It will catch errors and skip to the next operation in order to keep the application running without becoming unusable.
@@ -521,10 +677,11 @@ The most important aim of _live mode_ is to prevent system level exceptions that
 By setting this property you can tell the library the field role mapping without waiting for a response from FactFinder.
 Here you can override the field roles defined in FactFinder.
 
-Usually, it is not necessary to set this value.
 If unset, the first response with field roles from FactFinder will set it.
 
-You need to set it when you want to issue requests that rely on the field roles, but you don't want to first invoke a search request.
+While most scenarios don't require this value to be set, it is still advisable to always do so to avoid unexpectedly encountering situations that do require this value.
+
+You do need to set it when you want to issue requests that rely on the field roles, but you don't want to first invoke a search request.
 This is typically limited to checkout-tracking requests.
 
 
@@ -551,13 +708,17 @@ See [MDN for details](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Re
 Example:
 
 ```js
-factfinder.config.formatting = {
-    locale: `en-GB`,
-    formatOptions: {
-        style: `currency`,
-        currency: `GBP`,
+init({
+    appConfig: {
+        formatting: {
+            locale: `en-GB`,
+            formatOptions: {
+                style: `currency`,
+                currency: `GBP`,
+            },
+        },
     },
-};
+});
 ```
 
 
@@ -580,14 +741,82 @@ Web Components offers the following **default formatters**:
 
 - `$` (number, fractionDigits): Formats its first parameter according to the currency configuration.
   The second parameter is optional and allows you to override your global settings for the number of decimal places.
+  ```html
+  <ff-record>
+    <span>{{$ variantValues.0.Old_price 0}}</span>
+    <span>{{$ variantValues.0.Price}}</span>
+  </ff-record>
+  ```
+
+- `$dec` (number, fractionDigits): Formats numbers according to your _locale_ settings without any units.
+  The second parameter is optional.
+  ```html
+  <ff-record>Tolerance: {{$dec variantValues.0.Tolerance 3}} mm</ff-record>
+  ```
+
+- `$bctFilter`: This formatter takes no arguments and only works in `ff-breadcrumb-trail-item` elements with `type="filter"`.
+  This specialized formatter is necessary because of the special data structure provided in the `ff-breadcrumb-trail-item` template context.
+
+  **Important!**
+  It formats only items that are related to facets with a `unit` set.
+  You set this `unit` in your FactFinder UI, it must be identical to the currency unit that your formatting configuration produces.
+  If your `formatOptions` are configured to render a `€` symbol, your `unit` settings in the FactFinder UI must also be `€` for this particular facet.
+  ```html
+  <ff-breadcrumb-trail-item type="filter">{{$bctFilter}}</ff-breadcrumb-trail-item>
+  ```
+
+- `$facetElement`: This formatter takes no arguments and only works in `ff-filter-cloud` and `ff-asn-group-element`.
+
+  **Important!**
+  Like `$bctFilter` it only formats values related to a facet with its `unit` set to the currency symbol that your `formatOptions` produce.
+
+  ```html
+  <ff-filter-cloud>
+    <span data-template="filter">[x] {{facet.name}}: {{$facetElement}}</span>
+  </ff-filter-cloud>
+
+  <ff-asn>
+    <ff-asn-group for-group="price">
+      <ff-asn-group-element>
+        <div slot="unselected">{{$facetElement}} ({{element.totalHits}})</div>
+        <div slot="selected">{{$facetElement}}</div>
+      </ff-asn-group-element>
+    </ff-asn-group>
+  </ff-asn>
+  ```
+
+
+##### Custom formatters
+
+If the default formatters don't meet your requirements, you have the option to define your own formatters.
+Use the `factfinder.utils.formatters.add(name, fn)` method to register them.
+(Note that you cannot overwrite existing formatters.)
+
+The function that you pass as the second argument receives all values that are passed to it from the HTML template.
+The `this` keyword will be a reference of the data object available in the HTML template context.
+(Use the `function` keyword instead of an arrow function if you want to use `this`.)
+
+```js
+factfinder.utils.formatters.add(`allCaps`, function(str) {
+    return str.toUpperCase();
+});
+```
+
+```html
+<ff-record>{{allCaps variantValues.0.Title}}</ff-record>
+```
+
+In the HTML example above, `this` inside the `allCaps` function would point to the _Record_ object that you can also access from within `ff-record`.
+
+As an **alternative to custom formatters**, you can also use the `factfinder.response.transform___` API to directly manipulate data fields and display them without any further formatting.
 
 
 ## Custom Elements
 
 ### Data structure
 
-In previous versions the Web Components received data that was transformed to the structure of FACT-Finder 7.3.
-Starting from this version, this kind of transformation no longer happens.
+In previous versions Web Components transformed the data it received from FactFinder into the data structure of FACT-Finder 7.3.
+Starting from this version, this transformation no longer happens.
 The response data as reported by the browser's network tab is now reflected in the Web Components' HTML templates.
 
 
@@ -649,7 +878,7 @@ By nesting the `ff-searchbutton` inside an `ff-searchbox`, the elements automati
 ##### Via attributes
 
 Similar to the native HTML elements `label` and `input` you can define the `id` attribute on `ff-searchbox` and the `for` attribute on `ff-searchbutton` and give them the same value.
-With this approach the elements' locations in the DOM is irrelevant.
+With this approach the elements' locations in the DOM are irrelevant.
 
 ```html
 <div>
@@ -707,7 +936,8 @@ You can use it to prevent the ASN from rendering the specified facets without re
 
 A common use case is to hide the category facet on category pages or the brand facet on brand pages.
 
-Previously, you had to use CSS, which would still have the `ff-asn` element process the data, or even delete the facet from the search result which can lead to data integrity problems.
+Previously, you had to use CSS, which would still have the `ff-asn` element process the data.
+Or you had to delete the facet from the search result which could lead to data integrity problems.
 
 The attribute takes a comma-separated list of facet names.
 Note that these are **not** the facet's display name but the _field name_ from your data feed.
@@ -716,6 +946,108 @@ In the FactFinder response it is called the `associatedFieldName`.
 ```html
 <ff-asn hide-facets="category,brand"></ff-asn>
 ```
+
+
+### Slider
+
+#### One Touch Slider element merged
+
+The elements `ff-slider` and `ff-slider-one-touch` have been merged into `ff-slider`.
+The `ff-slider-one-touch` element is no longer available as a stand-alone element.
+Instead, you can toggle the "one-touch" behaviour on by setting the `one-touch` attribute on `ff-slider`.
+
+Classic slider:
+
+```html
+<ff-slider></ff-slider>
+```
+
+One-Touch slider:
+
+```html
+<ff-slider one-touch></ff-slider>
+```
+
+
+#### Attributes
+
+The `step-size` attribute on `ff-slider` was renamed to `step`.
+
+```html
+<!-- Previously -->
+<ff-slider step-size="5"></ff-slider>
+
+<!-- Now -->
+<ff-slider step="5"></ff-slider>
+```
+
+The `unit` attribute on `ff-slider` is no longer required and was removed.
+
+
+#### Slider Control
+
+In `ff-slider-control`, the `input` elements were required to have an attribute `data-control="1"` and `data-control="2"` respectively to define which `input` controls the lower-value handle and which controls the upper-value handle.
+
+The values to these attributes have been changed from `1` and `2` to `min` and `max`.
+
+```html
+<ff-slider-control>
+  <div>
+    <input data-control="min">
+  </div>
+  <div>
+    <input data-control="max">
+  </div>
+</ff-slider-control>
+```
+
+The numbers rendered in the `input` elements are no longer formatted with a unit symbol.
+They are formatted as a decimal number according to your `factfinder.config.get().appConfig.formatting.locale` settings.
+
+The attribute `decimal-places` was **renamed** to `fraction-digits`.
+It allows you to define the number of decimal places rendered in the `input` elements.
+The **default value** changed from `undefined` to `0`.
+
+In order to render the facet's unit there is a **new attribute** `data-unit` that can be put on any element.
+The `innerText` of these elements gets overwritten with the `unit` that is defined for the related _Facet_ object.
+Leave those elements empty.
+
+```html
+<ff-slider-control fraction-digits="2">
+  <div>
+    <input data-control="min">
+    <span data-unit></span>
+  </div>
+  <div>
+    <input data-control="max">
+    <span data-unit></span>
+  </div>
+</ff-slider-control>
+```
+
+The **default template** of `ff-slider-control` no longer uses inline styles.
+If you leave `ff-slider-control` empty, the following HTML is used:
+
+```html
+<div class="ffw-slider-control-default">
+  <ff-slider one-touch></ff-slider>
+
+  <div class="ffw-slider-control-inputs">
+    <div class="ffw-input-container">
+      <input data-control="min">
+      <span data-unit></span>
+    </div>
+
+    <span class="ffw-slider-control-line"></span>
+
+    <div class="ffw-input-container">
+      <input data-control="max">
+      <span data-unit></span>
+    </div>
+  </div>
+</div>
+```
+
 
 ### Breadcrumb Trail
 
@@ -828,7 +1160,6 @@ It takes the value that is labeled with the `productNumber` **field role**.
 
 Other parameters accepted by FactFinder API (`purchaserId`, `sid`, `userId`) must be configured in the global Web Components config if required.
 
-
 ### ff-template
 
 The available values for `ff-template`'s `scope` attribute have changed to the supported endpoints of FactFinder's REST API.
@@ -846,6 +1177,65 @@ Consult your FactFinder API documentation for the structure of these response ob
 <ff-template scope="Search">Your search produced {{totalHits}} hits.</ff-template>
 ```
 
+
+### Single Word Search
+
+The `ff-single-word-search-record` element no longer provides a default template.
+Therefore, an empty `ff-single-word-search` element will no longer create valid output.
+
+```html
+<!-- No longer renders data. Must provide HTML template manually. -->
+<ff-single-word-search></ff-single-word-search>
+```
+
+On `ff-single-word-search-record`, the `word` property was renamed to `singleWordResult`.
+
+On `ff-single-word-search`, the `words` property was renamed to `singleWordResults`.
+
+### Product Detail
+
+The `ff-product-detail` element has been removed.
+
+
+### Search feedback
+
+The `ff-search-feedback` element has been removed.
+
+
+### Notes regarding custom elements
+
+#### Suggest related
+
+`ff-suggest` no longer emits the `suggest-item-clicked` event.
+`ff-suggest-item` no longer emits the `item-clicked` event.
+`ffPreventDefault` inside these events is therefore no longer available.
+Instead, Core offers `addSuggestClickListener` in the new `notifications` API.
+
+Suggest can react in four ways:
+
+- redirect immediately when `deeplink` is available on clicked item
+- issue search request
+- issue navigation request
+- call custom handler on product suggestions without deeplink.
+  Suggest no longer issues a follow-up request to obtain the missing deeplink.
+
+Suggest has new attributes `request-mapping-search`, `request-mapping-navigation`, `request-mapping-detail`.
+With the mapping attributes you can direct suggestion types to certain actions.
+Defaults are:
+
+- _search_: `searchTerm`
+- _navigation_: `category`, `brand`
+- _detail_: `productName`
+
+```html
+<ff-suggest
+    request-mapping-search="searchTerm"
+    request-mapping-navigation="category,brand"
+    request-mapping-detail="productName"
+></ff-suggest>
+```
+
+
 #### Products Per Page
 
 Introduced `values` attribute on all products-per-page elements (`ff-products-per-page-dropdown`, `ff-products-per-page-list`, `ff-products-per-page-select`).
@@ -854,6 +1244,37 @@ With this attribute you specify which page sizes shall be available in the eleme
 ```html
 <ff-products-per-page-select values="20,40,60"></ff-products-per-page-select>
 ```
+
+
+##### Products Per Page Dropdown
+
+- Removed `items` property.
+- Attribute `collapse-onblur` is now `true` by default.
+- Attribute `show-selected` is now type boolean.
+  Default remains `false`.
+- Renamed `show()` to `expand()`.
+- Renamed `hide()` to `collapse()`.
+- Changed parameter from `toggle(collapse)` to `toggle(expand)`.
+  `toggle(true)` will now expand the dropdown list.
+  The parameter remains optional.
+
+
+##### Products Per Page List
+
+Removed `items` property.
+
+
+##### Products Per Page Select
+
+Removed `options` property.
+
+Removed the `[data-template]` attribute.
+```html
+<ff-products-per-page-select>
+    <option data-template>data-template attribute is obsolete: {{value}}</option>
+</ff-products-per-page-select>
+```
+
 
 #### Paging related
 
@@ -869,15 +1290,12 @@ It takes no value.
 
 ##### Paging item
 
-Paging item type `pageLink` is no longer available.
-
-Default value for `type` is now `currentLink`.
-
-`show-only` changed from _String_ to _Boolean_.
-
-`page-item` was replaced by `page`.
-`page` is a _Number_.
-See above.
+- Paging item type `pageLink` is no longer available.
+- Default value for `type` is now `currentLink`.
+- `show-only` changed from _String_ to _Boolean_.
+- `page-item` was replaced by `page`.
+  `page` is a _Number_.
+  See above.
 
 In the HTML template, `page` is now the only available value.
 
@@ -888,18 +1306,14 @@ In the HTML template, `page` is now the only available value.
 
 ##### Paging dropdown
 
-Replaced `items` property with `pages`.
-`pages` takes an array of numbers.
-
-Attribute `collapse-onblur` is now `true` by default.
-
-Renamed `show()` to `expand()`.
-
-Renamed `hide()` to `collapse()`.
-
-Changed parameter from `toggle(collapse)` to `toggle(expand)`.
-`toggle(true)` will now expand the dropdown list.
-The parameter remains optional.
+- Replaced `items` property with `pages`.
+  `pages` takes an array of numbers.
+- Attribute `collapse-onblur` is now `true` by default.
+- Renamed `show()` to `expand()`.
+- Renamed `hide()` to `collapse()`.
+- Changed parameter from `toggle(collapse)` to `toggle(expand)`.
+  `toggle(true)` will now expand the dropdown list.
+  The parameter remains optional.
 
 In the HTML template of `ff-paging-item`, `page` is now the only available value.
 
@@ -925,21 +1339,16 @@ In the HTML templates of the `option` elements, `page` is now the only available
 
 #### Sortbox
 
-Attribute `show-selected` is now type boolean.
-Its default value remains `false`.
-
-Attribute `show-selected-first` is now type boolean.
-Its default value remains `false`.
-
-Attribute `collapse-onblur` is now `true` by default.
-
-Renamed `show()` to `expand()`.
-
-Renamed `hide()` to `collapse()`.
-
-Changed parameter from `toggle(collapse)` to `toggle(expand)`.
-`toggle(true)` will now expand the dropdown list.
-The parameter remains optional.
+- Attribute `show-selected` is now type boolean.
+  Its default value remains `false`.
+- Attribute `show-selected-first` is now type boolean.
+  Its default value remains `false`.
+- Attribute `collapse-onblur` is now `true` by default.
+- Renamed `show()` to `expand()`.
+- Renamed `hide()` to `collapse()`.
+- Changed parameter from `toggle(collapse)` to `toggle(expand)`.
+  `toggle(true)` will now expand the dropdown list.
+  The parameter remains optional.
 
 
 ##### Sortbox item
@@ -952,6 +1361,7 @@ When defining an `ff-sortbox-item` HTML template for _Most relevant_, the attrib
   <ff-sortbox-item key="default.template">{{description}}</ff-sortbox-item>
 </ff-sortbox>
 ```
+
 
 #### Product campaign
 
@@ -978,60 +1388,11 @@ When both attributes are set, only the `name` attribute will be considered.
 
 The `ff-campaign-shopping-cart` attribute `record-id` was renamed to `product-id`.
 
-#### Category Pages
 
-The `category-page` attribute is now only available via JavaScript during application initialization and through the `factfinder.config.setAppConfig(appConfig)` function.
+#### Filter Cloud
 
-You can read the currently configured value at
-```js
-factfinder.config.get().appConfig.categoryPage
-```
-
-`categoryPage` takes an array of `Filter` objects as specified by the FactFinder REST API.
-You can specify them manually or use the filter builders.
-
-```js
-document.addEventListener(`ffCoreReady`, ({ factfinder, init, initialSearch }) => {
-    init({
-        ff: { ... },
-        appConfig: {
-            categoryPage: [
-                factfinder.utils.filterBuilders.categoryFilter(`Category`, [`Clothing`, `Casual`, `T-shirts`]),
-                factfinder.utils.filterBuilders.filter(`Manufacturer`, [`adidas`]),
-            ],
-        },
-    });
-});
-```
-
-You can specify any type of filter.
-This allows you to build category-page style pages based on any filter.
-Brand pages may be a common use case.
-
-> The specified filters are considered the page's _fixed_ filters and cannot be removed by the user.
-> However, they are **not automatically applied** to requests invoked through JavaScript.
-> This leaves you the option to do searches outside the page's context.
-
-Typically, you then trigger the initial request with the filters you just specified in `categoryPage`.
-
-```js
-initialSearch({ filters: factfinder.config.get().appConfig.categoryPage });
-```
-
-
-##### Tracking on category and brand pages
-
-When `categoryPage` is set, Web Components uses the `/navigation` endpoint from the FactFinder API for searches.
-
-These navigation requests don't use a `query` parameter.
-This means that click tracking events must receive a substitute value for the required `query` parameter.
-
-If a _category filter_ is specified, Web Components will use the **category path**.
-
-If a _different type_ of filter (e.g. brand) is specified, Web Components will use the **first specified filter value**.
-This would be the brand name in case of a brand page.
-
-If you need a different `query` value tracked to identify these requests in your analytics, use the `factfinder.tracking.before.click(handler)` pipeline hook to modify the parameters before they are sent to FactFinder.
+Attributes `blacklist` and `whitelist` no longer accept facet names, but only their `associatedFieldName`.
+The `associatedFieldName` is more reliable in multi-language environments.
 
 
 #### Record List
@@ -1124,10 +1485,19 @@ Records from a **Predictive Basket** result use `TypedFlatRecord`.
 #### Redirect Campaign
 
 `ff-campaign-redirect` dropped the `relative-to-origin` attribute.
-Make sure to correctly configure the destination URL in your FF UI.
+Make sure to correctly configure the destination URL in your FactFinder UI.
 
 Subscribers to redirect campaigns have received the ability to interrupt the subsequent response pipeline.
 Requests that were issued in parallel are not affected, however.
+
+
+#### Remove all filters
+
+The `ff-asn-remove-all-filter` was renamed to `ff-asn-remove-all-filters`.
+Note the added `s` at the end.
+
+It no longer supports the `keep-category-path` attribute.
+See _Category Pages_ for how to implement category and brand pages.
 
 ## How To
 
@@ -1166,8 +1536,8 @@ document.addEventListener(`ffCoreReady`, ({ factfinder, init, initialSearch }) =
         searchParams,
 
         // Specifying `origin` is optional.
-        // You can use it to tell your 'before search' listeners and other stations later in the pipeline who initiated the request
-        // and allow them to react accordingly.
+        // You can use it to tell your 'before search' listeners and other stations later in the pipeline
+        // who initiated the request and allow them to react accordingly.
         // If you do not specify it, `initialSearch()` will set it to the string "initialSearch".
         { requestOptions: { origin: `initialSearch` } }
     );
@@ -1195,7 +1565,63 @@ document.addEventListener("ffCoreReady", ({ factfinder }) => {
 ```
 
 
-### Customise URL parameters
+### Category Pages
+
+The `category-page` attribute is now only available via JavaScript during application initialization and through the `factfinder.config.setAppConfig(appConfig)` function.
+
+You can read the currently configured value at
+```js
+factfinder.config.get().appConfig.categoryPage
+```
+
+`categoryPage` takes an array of `Filter` objects as specified by the FactFinder REST API.
+You can specify them manually or use the filter builders.
+
+```js
+document.addEventListener(`ffCoreReady`, ({ factfinder, init, initialSearch }) => {
+    init({
+        ff: { ... },
+        appConfig: {
+            categoryPage: [
+                factfinder.utils.filterBuilders.categoryFilter(`Category`, [`Clothing`, `Casual`, `T-shirts`]),
+                factfinder.utils.filterBuilders.filter(`Manufacturer`, [`adidas`]),
+            ],
+        },
+    });
+});
+```
+
+You can specify any type of filter.
+This allows you to build category-page style pages based on any filter.
+Brand pages may be a common use case.
+
+> The specified filters are considered the page's _fixed_ filters and cannot be removed by the user.
+> However, they are **not automatically applied** to requests invoked through JavaScript.
+> This leaves you the option to do searches outside the page's context.
+
+Typically, you then trigger the initial request with the filters you just specified in `categoryPage`.
+
+```js
+initialSearch({ filters: factfinder.config.get().appConfig.categoryPage });
+```
+
+
+#### Tracking on category and brand pages
+
+When `categoryPage` is set, Web Components uses the `/navigation` endpoint from the FactFinder API for searches.
+
+These navigation requests don't use a `query` parameter.
+This means that click tracking events must receive a substitute value for the required `query` parameter.
+
+If a _category filter_ is specified, Web Components will use the **category path**.
+
+If a _different type_ of filter (e.g. brand) is specified, Web Components will use the **first specified filter value**.
+This would be the brand name in case of a brand page.
+
+If you need a different `query` value tracked to identify these requests in your analytics, use the `factfinder.tracking.before.click(handler)` pipeline hook to modify the parameters before they are sent to FactFinder.
+
+
+### Customize URL parameters
 
 Whenever a search request happens, Web Components writes the used search parameters to the URL and creates an entry in the browser history.
 This allows you to share the URL with others and to navigate back and forth through the browser history.
@@ -1205,7 +1631,7 @@ Conversion between URL parameters and FactFinder _SearchParams_ is required in *
 
 > Note that the _SearchParams_' `customParameters` field is neither parsed nor stringified.
 > If you need custom parameters sent to FactFinder or appear in your URL, you will have to add them manually.
-> The tools described in this section provide options to apply relevant customisations.
+> The tools described in this section provide options to apply relevant customizations.
 
 Converting URL params to _SearchParams_ is done on page load in order to produce the initial search request based on the current URL params.
 It must be done manually in the `ffCoreReady` event handler.
@@ -1261,7 +1687,7 @@ Frequently, this is the category filter.
 In this case, you don't want the category filter to appear again in the URL's query string.
 
 ```js
-// URL with category filter: https://yourshop.com/powertools/woodworking?filter=input:220V
+// URL with category filter: https://yourshop.com/powertools/woodworking?filter=input:230V
 
 factfinder.routing.setUrlParamOptionsListener(() => ({
     // Assuming your category filter's field name is 'Category'.
@@ -1325,8 +1751,8 @@ factfinder.routing.setUrlParamOptionsListener(() => ({
 ```
 
 `stringifiers` allows you to define custom stringifiers.
-It is the kind of counterpart to `searchParamsFromUrl`'s `preparsers`.
-It takes an object with _SearchParams_ keys and the stringifying function.
+It is the counterpart to `searchParamsFromUrl`'s `preparsers`.
+It takes an object with _SearchParams_ keys and the stringifier functions.
 
 The following example complements the `location` example in the **parsing options** section.
 
@@ -1337,7 +1763,7 @@ The following example complements the `location` example in the **parsing option
 factfinder.routing.setUrlParamOptionsListener(() => ({
 
     // Use the same object as in `searchParamsFromUrl`.
-    // `articleNumberSearch` is not required in the example, though.
+    // `articleNumberSearch` is not required in this example, though.
     keyMapping: { articleNumberSearch: `ans`, latitude: `loc` },
 
     stringifiers: {
@@ -1355,7 +1781,7 @@ factfinder.routing.setUrlParamOptionsListener(() => ({
 
             // You can call `addParam` as many times as you require.
 
-            // If you wanted to produce the same result is the default stringifier,
+            // If you wanted to produce the same result as the default stringifier,
             // you would call `addParam` once for each location component.
 
             // addParam(location.latitude, `latitude`);
@@ -1383,3 +1809,12 @@ factfinder.response.dispatch.ssrSearch(responseJson, requestInfo);
 // For category pages.
 factfinder.response.dispatch.ssrNavigation(responseJson, requestInfo);
 ```
+
+
+## Pipeline diagram
+
+The following visualization outlines the various phases a request goes through, as well as the entry and exit points to and from the pipeline.
+
+This diagram might be the most valuable resource for integrating your Web Components application.
+
+![request-pipelines-public.jpg](request-pipelines-public.jpg)
