@@ -1,5 +1,5 @@
 # Changelog
-## Unreleased
+## [v5.0.1] - 2024.11.07
 ### Update
 - Update FactFinder logo
 - Update WebComponents library to version 5.0.0-pre.4
@@ -625,6 +625,7 @@
 ### Added
 - Feed Export: Export feed file is now available via separate link
 
+[v5.0.1]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v5.0.1
 [v5.0.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v5.0.0
 [v4.3.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v4.3.0
 [v4.2.2]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v4.2.2
