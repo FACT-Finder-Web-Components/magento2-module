@@ -10,6 +10,9 @@ use Magento\Framework\App\Filesystem\DirectoryList;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\MediaStorage\Model\File\Uploader;
 
+/**
+ * @SuppressWarnings(PHPMD)
+ */
 class Rsa extends File
 {
     public function beforeSave()
