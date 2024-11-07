@@ -2,11 +2,13 @@
 ## Unreleased
 ### Update
 - Update FactFinder logo
+- Update WebComponents library to version 5.0.0-pre.4
 
 ### Fix
 - Support MSI - checking all inventory sources during export feed
 - Fix feed path for UI export type
 - Fix upload validation SSH key file issue
+- Fix reset useId in WebComponents after user logout
 
 ## [v5.0.0] - 2024.07.08
 ### BREAKING
