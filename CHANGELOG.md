@@ -6,6 +6,7 @@
 ### Fix
 - Support MSI - checking all inventory sources during export feed
 - Fix feed path for UI export type
+- Fix upload validation SSH key file issue
 
 ## [v5.0.0] - 2024.07.08
 ### BREAKING
