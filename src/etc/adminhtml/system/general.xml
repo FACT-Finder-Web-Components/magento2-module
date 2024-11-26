@@ -31,7 +31,13 @@
             <label>Use FACT-Finder® for category pages?</label>
             <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
         </field>
-        <field id="use_ssr" translate="label" type="select" sortOrder="76" showInDefault="1" showInWebsite="1" showInStore="1">
+        <field id="category_path_name" translate="label" type="text" sortOrder="76" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Category Path field name</label>
+            <depends>
+                <field id="use_for_categories">1</field>
+            </depends>
+        </field>
+        <field id="use_ssr" translate="label" type="select" sortOrder="77" showInDefault="1" showInWebsite="1" showInStore="1">
             <label>Use server-side rendering?</label>
             <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
         </field>

@@ -355,6 +355,11 @@ Sending each request to FACT-Finder instance trough Magento, you lose on perform
 Module in order to preserve categories URLs and hence SEO get use of standard Magento routing with the combination of FACT-Finder availability to pass custom parameters to search request.
 Once user is landed on category page. Search request is performed immediately (thanks to `searchImmediately` parameter usage).
 To enable that, turn on corresponding option in *Main Settings* section.
+
+#### Set correct name for CategoryPath field
+By default, SDK uses a field named CategoryPath (default category field name for FactFinder instance). If in your FactFinder instance configuration you have a different field name for Category field then you must set this name in the SDK configuration page:
+
+![Main Settings](docs/assets/category-field-name.png "Category field name")
  
 ### Tracking
 The module uses Web Components API to track following events:

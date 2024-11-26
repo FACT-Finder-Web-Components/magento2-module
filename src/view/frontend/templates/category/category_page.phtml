@@ -2,13 +2,14 @@
 /** @var Magento\Framework\View\Element\Template $block */
 /** @var Magento\Framework\Escaper $escaper */
 $categoryPath = (array) $block->getData('category_path');
+$categoryPathFieldName = $block->getData('category_path_field_name');
 ?>
 
 <script>
     document.addEventListener(`ffCoreReady`, ({ factfinder }) => {
         factfinder.config.setAppConfig({
             categoryPage: [
-                factfinder.utils.filterBuilders.categoryFilter(`CategoryPath`, <?= /* @noEscape */ json_encode($categoryPath); ?>)
+                factfinder.utils.filterBuilders.categoryFilter('<?= $categoryPathFieldName ?>', <?= /* @noEscape */ json_encode($categoryPath); ?>)
             ],
         });
 
