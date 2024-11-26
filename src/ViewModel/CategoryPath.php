@@ -17,6 +17,7 @@ class CategoryPath implements ArgumentInterface
 
     public function __construct(
         private readonly Registry             $registry,
+        private readonly CommunicationConfig $communicationConfig,
         private readonly ScopeConfigInterface $scopeConfig,
     ) {
     }
