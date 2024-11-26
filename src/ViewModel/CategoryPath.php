@@ -5,17 +5,20 @@ declare(strict_types=1);
 namespace Omikron\Factfinder\ViewModel;
 
 use Magento\Catalog\Model\Category;
+use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Registry;
 use Magento\Framework\View\Element\Block\ArgumentInterface;
+use Magento\Store\Model\ScopeInterface as Scope;
 use Omikron\Factfinder\Model\Config\CommunicationConfig;
 
 class CategoryPath implements ArgumentInterface
 {
+    private const PATH_CATEGORY_PATH_NAME = 'factfinder/general/category_path_name';
+
     public function __construct(
-        private readonly Registry            $registry,
+        private readonly Registry             $registry,
         private readonly CommunicationConfig $communicationConfig,
-        private readonly string              $param = 'CategoryPath',
-        private readonly array               $initial = [],
+        private readonly ScopeConfigInterface $scopeConfig,
     ) {
     }
 
@@ -33,7 +36,7 @@ class CategoryPath implements ArgumentInterface
 
     public function getCategoryPathFieldName(): string
     {
-        return $this->param;
+        return $this->scopeConfig->getValue(self::PATH_CATEGORY_PATH_NAME, Scope::SCOPE_STORE) ?? 'CategoryPath';
     }
 
     /**

@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Improve
+- Add the ability to set a name for the CategoryPath field
+
 ## [v5.0.1] - 2024.11.07
 ### Update
 - Update FactFinder logo

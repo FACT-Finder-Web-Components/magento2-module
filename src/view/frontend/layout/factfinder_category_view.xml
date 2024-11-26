@@ -10,6 +10,7 @@
             <block class="Magento\Framework\View\Element\Template" name="factfinder.category.page" template="Omikron_Factfinder::category/category_page.phtml" after="factfinder.communication" >
                 <arguments>
                     <argument name="category_path" xsi:type="helper" helper="Omikron\Factfinder\ViewModel\CategoryPath::getCategoryPath" />
+                    <argument name="category_path_field_name" xsi:type="helper" helper="Omikron\Factfinder\ViewModel\CategoryPath::getCategoryPathFieldName" />
                 </arguments>
             </block>
         </referenceBlock>

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Omikron\Factfinder\ViewModel;
 
 use Magento\Catalog\Model\Category;
+use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Registry;
 use Omikron\Factfinder\Model\Config\CommunicationConfig;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -24,6 +25,9 @@ class CategoryPathTest extends TestCase
     /** @var MockObject|CommunicationConfig */
     private MockObject $communicationConfig;
 
+    /** @var MockObject|ScopeConfigInterface */
+    private MockObject $scopeConfig;
+
     public function test_category_names_are_trimmed()
     {
         $this->communicationConfig->method('getVersion')->willReturn('ng');
@@ -39,6 +43,7 @@ class CategoryPathTest extends TestCase
     protected function setUp(): void
     {
         $this->communicationConfig = $this->createMock(CommunicationConfig::class);
+        $this->scopeConfig = $this->createMock(ScopeConfigInterface::class);
         $this->currentCategory = $this->createMock(Category::class);
         $this->registry              = new Registry();
         $this->registry->register('current_category', $this->currentCategory);
@@ -51,6 +56,6 @@ class CategoryPathTest extends TestCase
 
     private function newCategoryPath(): CategoryPath
     {
-        return new CategoryPath($this->registry, $this->communicationConfig);
+        return new CategoryPath($this->registry, $this->communicationConfig, $this->scopeConfig);
     }
 }
