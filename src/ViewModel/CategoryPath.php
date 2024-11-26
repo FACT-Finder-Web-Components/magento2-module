@@ -35,10 +35,6 @@ class CategoryPath implements ArgumentInterface
 
     public function getCategoryPathFieldName(): string
     {
-//        return !empty($this->scopeConfig->getValue(self::PATH_CATEGORY_PATH_NAME, Scope::SCOPE_STORE)) ?
-//            $this->scopeConfig->getValue(self::PATH_CATEGORY_PATH_NAME, Scope::SCOPE_STORE) :
-//            'CategoryPath';
-
         return $this->scopeConfig->getValue(self::PATH_CATEGORY_PATH_NAME, Scope::SCOPE_STORE) ?? 'CategoryPath';
     }
 
