@@ -2,6 +2,10 @@
 ## Unreleased
 ### Improve
 - Add the ability to set a name for the CategoryPath field
+- Do not redirect to result page if search execute already on results page
+
+### Update
+- Update WebComponents library to version 5.0.0-pre.6
 
 ## [v5.0.1] - 2024.11.07
 ### Update
