@@ -48,7 +48,7 @@ $searchImmediate = $communicationParameters['search-immediate'] ?? 'false';
             }));
         <?php endif; ?>
 
-        <?php if (($request = $block->getRequest()) instanceof \Magento\Framework\App\Request\Http && '/factfinder/result' !== $request->getPathInfo()): ?>
+        <?php if (($request = $block->getRequest()) instanceof \Magento\Framework\App\Request\Http && '/factfinder/result' !== rtrim($request->getPathInfo(), '/')): ?>
             factfinder.request.before.search(({ searchParams, searchOptions }) => {
                 if (searchOptions?.requestOptions?.origin?.tagName === `FF-SEARCHBOX`) {
                     <?php if(!empty($parameters['add-params'])) : ?>
