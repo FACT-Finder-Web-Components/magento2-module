@@ -48,18 +48,20 @@ $searchImmediate = $communicationParameters['search-immediate'] ?? 'false';
             }));
         <?php endif; ?>
 
-        factfinder.request.before.search(({ searchParams, searchOptions }) => {
-            if (searchOptions?.requestOptions?.origin?.tagName === `FF-SEARCHBOX`) {
-                <?php if(!empty($parameters['add-params'])) : ?>
-                    window.location.href =  `/factfinder/result?query=${searchParams.query}&<?= /* @noEscape */ http_build_query($parameters['add-params']) ?>`;
-                <?php else : ?>
-                    window.location.href =  `/factfinder/result?query=${searchParams.query}`;
-                <?php endif; ?>
+        <?php if (($request = $block->getRequest()) instanceof \Magento\Framework\App\Request\Http && '/factfinder/result' !== $request->getPathInfo()): ?>
+            factfinder.request.before.search(({ searchParams, searchOptions }) => {
+                if (searchOptions?.requestOptions?.origin?.tagName === `FF-SEARCHBOX`) {
+                    <?php if(!empty($parameters['add-params'])) : ?>
+                        window.location.href =  `/factfinder/result?query=${searchParams.query}&<?= /* @noEscape */ http_build_query($parameters['add-params']) ?>`;
+                    <?php else : ?>
+                        window.location.href =  `/factfinder/result?query=${searchParams.query}`;
+                    <?php endif; ?>
 
-                // Cancel the pipeline to avoid sending a search request to FactFinder before the redirect is complete.
-                return false;
-            }
-        });
+                    // Cancel the pipeline to avoid sending a search request to FactFinder before the redirect is complete.
+                    return false;
+                }
+            });
+        <?php endif; ?>
 
         if (<?= /** @SuppressWarnings(PHPMD) */ $searchImmediate ?>) {
             const searchParams = factfinder.utils.env.searchParamsFromUrl();
