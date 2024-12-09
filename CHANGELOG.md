@@ -1,5 +1,5 @@
 # Changelog
-## Unreleased
+## [v5.0.2] - 2024.12.08
 ### Improve
 - Add the ability to set a name for the CategoryPath field
 - Do not redirect to result page if search execute already on results page
@@ -633,6 +633,7 @@
 ### Added
 - Feed Export: Export feed file is now available via separate link
 
+[v5.0.2]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v5.0.2
 [v5.0.1]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v5.0.1
 [v5.0.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v5.0.0
 [v4.3.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v4.3.0
