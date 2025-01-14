@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Fix
+- Set correct CategoryPath field name for searchParamsFromUrl
+
 ## [v5.0.2] - 2024.12.08
 ### Improve
 - Add the ability to set a name for the CategoryPath field
