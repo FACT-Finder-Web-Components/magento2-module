@@ -64,7 +64,7 @@ $searchImmediate = $communicationParameters['search-immediate'] ?? 'false';
         <?php endif; ?>
 
         if (<?= /** @SuppressWarnings(PHPMD) */ $searchImmediate ?>) {
-            const searchParams = factfinder.utils.env.searchParamsFromUrl();
+            const searchParams = factfinder.utils.env.searchParamsFromUrl({ categoryFieldName: `<?= $escaper->escapeHtml($parameters['category_path_field_name'])?>` });
             initialSearch(searchParams, { requestOptions: { origin: `initialSearch` } });
         }
     });

@@ -19,6 +19,7 @@ class CommunicationConfig implements ParametersSourceInterface
     private const PATH_DATA_TRANSFER_IMPORT = 'factfinder/data_transfer/ff_push_import_enabled';
     private const PATH_IS_LOGGING_ENABLED   = 'factfinder/general/logging_enabled';
     private const PATH_FF_API_KEY           = 'factfinder/general/ff_api_key';
+    private const PATH_CATEGORY_PATH_NAME = 'factfinder/general/category_path_name';
 
     private ScopeConfigInterface $scopeConfig;
 
@@ -65,12 +66,21 @@ class CommunicationConfig implements ParametersSourceInterface
         return $this->scopeConfig->isSetFlag(self::PATH_IS_LOGGING_ENABLED, ScopeInterface::SCOPE_STORES);
     }
 
+    public function getCategoryPathFieldName(): string
+    {
+        return $this->scopeConfig->getValue(
+            self::PATH_CATEGORY_PATH_NAME,
+            ScopeInterface::SCOPE_STORE
+        ) ?? 'CategoryPath';
+    }
+
     public function getParameters(): array
     {
         return [
-            'url'     => $this->getServerUrl(),
-            'channel' => $this->getChannel(),
-            'api_key' => $this->getApiKey(),
+            'url'                      => $this->getServerUrl(),
+            'channel'                  => $this->getChannel(),
+            'api_key'                  => $this->getApiKey(),
+            'category_path_field_name' => $this->getCategoryPathFieldName(),
         ];
     }
 
