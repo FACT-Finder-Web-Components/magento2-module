@@ -1,5 +1,5 @@
 # Changelog
-## Unreleased
+## [v5.0.3] - 2025.01.20
 ### Fix
 - Set correct CategoryPath field name for searchParamsFromUrl
 
@@ -640,6 +640,7 @@
 ### Added
 - Feed Export: Export feed file is now available via separate link
 
+[v5.0.3]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v5.0.3
 [v5.0.2]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v5.0.2
 [v5.0.1]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v5.0.1
 [v5.0.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v5.0.0
