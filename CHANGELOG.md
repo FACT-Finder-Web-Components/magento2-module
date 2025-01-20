@@ -3,6 +3,9 @@
 ### Fix
 - Set correct CategoryPath field name for searchParamsFromUrl
 
+### Update
+- Update WebComponents library to version 5.0.0
+
 ## [v5.0.2] - 2024.12.08
 ### Improve
 - Add the ability to set a name for the CategoryPath field

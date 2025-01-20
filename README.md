@@ -4,8 +4,7 @@
 [![Build status](https://github.com/FACT-Finder-Web-Components/magento2-module/workflows/build/badge.svg)](https://github.com/FACT-Finder-Web-Components/magento2-module/actions)
 [![GitHub contributors](https://img.shields.io/github/contributors/FACT-Finder-Web-Components/magento2-module)](https://github.com/FACT-Finder-Web-Components/magento2-module/graphs/contributors)
 
-This is a new version of SDK which support new WebComponents v5 NG. WebComponents v5 is in pre-released phrase.
-For official released WebComponents please SDK v4 available [here](https://github.com/FACT-Finder-Web-Components/magento2-module)
+This is a new version of SDK which support new WebComponents v5 NG.
 
 This document helps you integrate the FACT-Finder Web Components SDK into your Magento 2 Shop. In addition, it gives a
 concise overview of its primary functions. The first chapter *Installation* walks you through the suggested installation
@@ -14,7 +13,7 @@ final chapter *Web Component Integration* describes how the web components inter
 customise them. 
 
 Our Magento 2 module offers a basic working integration for default Magento2 Luma theme. Most projects may require
-modifications in order to fit their needs. For more advanced features please check our official [WebComponnents documentation](https://web-components.fact-finder.de/documentation/4.x/install-dist).
+modifications in order to fit their needs. For more advanced features please check our official [WebComponnents documentation](https://web-components.fact-finder.de/documentation/5.x/install-dist).
 
 ## Table of contents
 - [Requirements](#requirements)
@@ -126,7 +125,7 @@ This is useful especially in terms of SEO because `ff-record-list` renders produ
 Without SSR enabled, web crawlers could not have a chance to scan the element rendered content because it will not yet be rendered on the time of scanning.
 The module uses [Mustache.php](https://github.com/bobthecow/mustache.php) library for template processing
 
-**Note:** More information about SSR concept you can find in the article [Server Side Rendering](https://web-components.fact-finder.de/documentation/4.x/server-side-rendering) from Web Components documentation.
+**Note:** More information about SSR concept you can find in the article [Server Side Rendering](https://web-components.fact-finder.de/documentation/5.x/server-side-rendering) from Web Components documentation.
 
 ### Advanced Settings
 
