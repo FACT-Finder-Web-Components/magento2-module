@@ -10,6 +10,8 @@ use Magento\Framework\App\Response\RedirectInterface;
 use Magento\Framework\Serialize\SerializerInterface;
 use Magento\Framework\View\Element\Template;
 use Magento\Framework\View\Element\Template\Context;
+use Omikron\FactFinder\Communication\Client\ClientException;
+use Omikron\Factfinder\Logger\FactFinderLogger;
 use Omikron\Factfinder\Model\FieldRoles;
 use Omikron\Factfinder\Model\Ssr\SearchAdapter;
 
@@ -25,6 +27,7 @@ class RecordList extends Template
         private readonly RedirectInterface   $redirect,
         private readonly FieldRoles          $fieldRoles,
         Context                              $context,
+        private readonly FactFinderLogger    $logger,
         array                                $data = []
     ) {
         parent::__construct($context, $data);
@@ -35,7 +38,13 @@ class RecordList extends Template
      */
     protected function _afterToHtml($html): string
     {
-        $result = $this->searchResult($this->getRequest(), $this->getSearchParams());
+        try {
+            $result = $this->searchResult($this->getRequest(), $this->getSearchParams());
+        } catch (ClientException $e) {
+            $this->logger->error("{$e->getMessage()}. Check logs for more information.");
+
+            return 'HTTP 400 error during search request. Check logs for more information.';
+        }
 
         //Support redirect campaigns for SSR
         if ($this->getRedirectCampaign($result)) {
