@@ -3,6 +3,9 @@
 ### Update
 - Update WebComponents library to version 5.0.1
 
+### Fix
+- Handle ClientException for SSR (invalid credentials, API issue etc.)
+
 ## [v5.0.3] - 2025.01.20
 ### Fix
 - Set correct CategoryPath field name for searchParamsFromUrl
