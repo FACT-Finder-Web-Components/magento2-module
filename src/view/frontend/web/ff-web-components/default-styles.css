@@ -649,13 +649,8 @@ ff-slider-control .ffw-slider-control-default .ffw-slider-control-line {
     background-color: black;
 }
 
-ff-slider-control .ffw-sliderSection {
-    margin-top: 10px;
-}
-
 ff-slider {
     display: block;
-    z-index: -1001;
     pointer-events: none;
 }
 
@@ -663,6 +658,7 @@ ff-slider .ffw-slider-container {
     top: 0;
     position: relative;
     pointer-events: none;
+    height: 51px;
 }
 
 ff-slider .ffw-triangle {
@@ -697,11 +693,7 @@ ff-slider .ffw-triangle.ffw-no-transition {
 
 ff-slider .ffw-line {
     pointer-events: auto;
-    z-index: 999;
-    top: 50%;
-    position: absolute;
     height: 1px;
-    transform: translateY(-50%);
     background-color: black;
     background-clip: padding-box;
     border-top: 25px solid transparent;

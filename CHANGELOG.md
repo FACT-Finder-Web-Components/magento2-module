@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Update
+- Update WebComponents library to version 5.0.1
+
 ## [v5.0.3] - 2025.01.20
 ### Fix
 - Set correct CategoryPath field name for searchParamsFromUrl
