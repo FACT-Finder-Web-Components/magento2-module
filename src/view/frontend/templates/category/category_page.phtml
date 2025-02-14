@@ -6,13 +6,20 @@ $categoryPathFieldName = $block->getData('category_path_field_name');
 ?>
 
 <script>
-    document.addEventListener(`ffCoreReady`, ({ factfinder }) => {
+    document.addEventListener(`ffCoreReady`, ({ factfinder, initialSearch }) => {
         factfinder.config.setAppConfig({
             categoryPage: [
                 factfinder.utils.filterBuilders.categoryFilter('<?= /* @noEscape */ $categoryPathFieldName ?>', <?= /* @noEscape */ json_encode($categoryPath); ?>)
             ],
         });
 
-        factfinder.request.navigation({'filters': factfinder.config.get().appConfig.categoryPage}, { requestOptions: { origin: `searchImmediately` } });
+        factfinder.routing.setUrlParamOptionsListener(() => ({
+            blockFilters: [`<?= /* @noEscape */ $categoryPathFieldName ?>`],
+        }));
+
+        const initOptions = factfinder.config.get();
+        initialSearch({
+            filters: initOptions.appConfig.categoryPage,
+        });
     });
 </script>
