@@ -1,8 +1,10 @@
 # Changelog
 ## Unreleased
+### Add
+- Introduce Handlebars.js template engine instead of Mustache.js in SSR
+
 ### Update
 - Update WebComponents library to version 5.0.1
-- Introduce Handlebars.js template engine instead of Mustache.js in SSR
 
 ### Fix
 - Handle ClientException for SSR (invalid credentials, API issue etc.)
