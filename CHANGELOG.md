@@ -5,6 +5,7 @@
 
 ### Fix
 - Handle ClientException for SSR (invalid credentials, API issue etc.)
+- Remove CategoryPath filter in URL and ASN on category page
 
 ## [v5.0.3] - 2025.01.20
 ### Fix

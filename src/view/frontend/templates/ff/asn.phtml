@@ -14,7 +14,7 @@ $isCategoryPage = (bool) $block->getData('is_category_page');
             <?= $block->getChildHtml('factfinder.asn_group') ?>
         </ff-asn-group>
 
-        <ff-asn-group for-group="<?= /* @noEscape */ $categoryPathFieldName ?>ROOT" <?php if($isCategoryPage):?> class="hidden" <?php endif;?>>
+        <ff-asn-group for-group="<?= /* @noEscape */ $categoryPathFieldName ?>" <?php if($isCategoryPage):?> class="hidden" <?php endif;?>>
             <?= $block->getChildHtml('factfinder.asn_group') ?>
         </ff-asn-group>
 
