@@ -27,6 +27,7 @@
  */
 
 /*!
- * mustache.js - Logic-less {{mustache}} templates with JavaScript
- * http://github.com/janl/mustache.js
+ * handlebars.js - Logic-less {{handlebars}} templates with JavaScript
+ * https://handlebarsjs.com/
  */
+

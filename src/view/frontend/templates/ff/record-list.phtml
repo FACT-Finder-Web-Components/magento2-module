@@ -11,6 +11,8 @@ $viewModel = $block->getViewModel();
     >
         <template data-role="record">
             <ff-record class="item product product-item">
+
+
                 <div class="product-item-info" data-container="product-grid">
                     <a class="product-image-container" data-redirect="{{masterValues.Deeplink}}" data-anchor="{{masterValues.Deeplink}}" data-redirect-target="_self">
                         <span class="product-image-wrapper">
@@ -20,6 +22,13 @@ $viewModel = $block->getViewModel();
 
                     <div class="product details product-item-details">
                         <div class="product name product-item-name">{{masterValues.Name}}</div>
+
+                        {{#if masterValues.Name }}
+                        Test: {{ masterValues.Name }}
+                        {{/if }}'
+
+                        Test2: {{ masterValues.Name }}
+
                         <div class="price-box price-final_price" data-role="priceBox">
                             <span class="price-container price-final_price tax weee">
                                 <span data-price-amount="{{masterValues.Price}}" data-price-type="finalPrice" class="price-wrapper">

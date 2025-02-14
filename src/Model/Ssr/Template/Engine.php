@@ -6,15 +6,15 @@ namespace Omikron\Factfinder\Model\Ssr\Template;
 
 use Magento\Framework\View\Element\BlockInterface;
 use Magento\Framework\View\TemplateEngineInterface;
-use Mustache_Engine as Mustache;
+use Handlebars\Handlebars;
 
 class Engine implements TemplateEngineInterface
 {
-    public function __construct(private readonly Mustache $engine)
+    public function __construct(private readonly Handlebars $engine)
     {
     }
 
-    public function render(BlockInterface $block, $templateFile, array $dictionary = [])
+    public function render(BlockInterface $block, $templateFile, array $dictionary = []): string
     {
         return $this->engine->loadTemplate($templateFile)->render($dictionary + ['block' => $block]);
     }
