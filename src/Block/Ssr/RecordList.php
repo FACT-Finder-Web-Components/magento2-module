@@ -95,7 +95,7 @@ class RecordList extends Template
     {
         return function (string $initial, array $record) use ($template): string {
             $this->assign($record);
-            $templateEngine = $this->templateEnginePool->get('mustache');
+            $templateEngine = $this->templateEnginePool->get('handlebars');
 
             return $initial . $templateEngine->render($this->templateContext, $template, $this->_viewVars);
         };

@@ -123,7 +123,7 @@ That option enables Server Side Rendering (SSR) for `ff-record-list` element on 
 That means when user navigate to a page of mentioned type, the HTML output will contain the pre-rendered custom elements.
 This is useful especially in terms of SEO because `ff-record-list` renders product data which could have much impact on page rating in browser.
 Without SSR enabled, web crawlers could not have a chance to scan the element rendered content because it will not yet be rendered on the time of scanning.
-The module uses [Mustache.php](https://github.com/bobthecow/mustache.php) library for template processing
+The module uses [Handlebars PHP](https://github.com/salesforce/handlebars-php) library for template processing
 
 **Note:** More information about SSR concept you can find in the article [Server Side Rendering](https://web-components.fact-finder.de/documentation/5.x/server-side-rendering) from Web Components documentation.
 
@@ -312,6 +312,9 @@ You can also instantiate block in templates using the Magento Layout API, but it
 ->setTemplate('Omikron_Factfinder::ff/suggest.phtml')
 ->toHtml(); ?>
 ```
+
+**Note** FactFinder Web Components uses handlebars as the engine to resolve its HTML templates. Please refer to the official documentation for available features and their usage:
+https://handlebarsjs.com/
 
 ### Configuration Element
 The main configuration element of Web Components `communication` element is included in template `src/view/frontend/templates/ff/communication.phtml` which comes together with a dedicated view model `src/ViewModel/Communication.php`.

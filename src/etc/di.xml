@@ -7,21 +7,20 @@
     <type name="Magento\Framework\View\TemplateEngineFactory">
         <arguments>
             <argument name="engines" xsi:type="array">
-                <item name="mustache" xsi:type="string">Omikron\Factfinder\Model\Ssr\Template\Engine</item>
+                <item name="handlebars" xsi:type="string">Omikron\Factfinder\Model\Ssr\Template\Engine</item>
             </argument>
         </arguments>
     </type>
-    <type name="Mustache_Engine">
+    <type name="Handlebars\Handlebars">
         <arguments>
             <argument name="options" xsi:type="array">
                 <item name="loader" xsi:type="object">Omikron\Factfinder\Model\Ssr\Template\Loader</item>
-                <item name="strict_callables" xsi:type="boolean">true</item>
             </argument>
         </arguments>
     </type>
-        <type name="Omikron\Factfinder\Model\Ssr\Template\Loader">
+    <type name="Omikron\Factfinder\Model\Ssr\Template\Loader">
         <arguments>
-            <argument name="loader" xsi:type="object">Mustache_Loader_StringLoader</argument>
+            <argument name="loader" xsi:type="object">Handlebars\Loader\StringLoader</argument>
             <argument name="filter" xsi:type="object">Omikron\Factfinder\Model\Ssr\Template\Filter</argument>
         </arguments>
     </type>
