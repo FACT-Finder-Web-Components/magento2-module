@@ -61,6 +61,19 @@ $searchImmediate = $communicationParameters['search-immediate'] ?? 'false';
                     return false;
                 }
             });
+
+            factfinder.notifications.addSuggestClickListener(origin => {
+                if (origin.suggestion.type === `searchTerm` || origin.suggestion.type === `brand`) {
+                    window.location.href =  `/factfinder/result?query=${origin.suggestion.searchParams.query}`;
+                    return false;
+                }
+            });
+
+            factfinder.notifications.addPopularSearchClickListener(({ origin, popularSearch }) => {
+                window.location = `/factfinder/result?query=${popularSearch.name}`;
+                return false;
+            });
+
         <?php endif; ?>
 
         if (<?= /** @SuppressWarnings(PHPMD) */ $searchImmediate ?>) {

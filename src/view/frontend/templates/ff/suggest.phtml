@@ -3,6 +3,13 @@
 ?>
 <ff-suggest for-searchbox="ff-searchbox" layout="block" unresolved>
     <section id="searchContainer" class="searchTermContainer">
+        <template data-role="popularSearches">
+            <div class="popular-searches">
+                <h3><?= $escaper->escapeHtmlAttr(__('Popular Searches')) ?></h3>
+                <div data-template>{{name}}</div>
+            </div>
+        </template>
+
         <div data-container="searchTerm">
             <p class="containerCaption"><?= $escaper->escapeHtml(__('Search suggestions')) ?></p>
             <ff-suggest-item type="searchTerm">

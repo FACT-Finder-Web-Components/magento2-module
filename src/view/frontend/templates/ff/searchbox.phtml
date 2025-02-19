@@ -1,10 +1,12 @@
 <?php
 /** @var Magento\Framework\View\Element\Template $block */
 /** @var Magento\Framework\Escaper $escaper */
+$isPopularSearchesEnabled = $this->helper('Omikron\Factfinder\Helper\ConfigurationHelper')->getConfig('factfinder/components/popular_searches');
+//var_dump($isPopularSearchesEnabled); die();
 ?>
 <div class="search-wrapper">
     <div class="top-search-box">
-        <ff-searchbox id="ff-searchbox" class="ff-searchbox" suggest-onfocus="true" use-suggest="true" select-onclick="true" unresolved>
+        <ff-searchbox id="ff-searchbox" class="ff-searchbox" suggest-onfocus="true" use-suggest="true" select-onclick="true" <?= $isPopularSearchesEnabled ? 'popular-searches' : '' ?>  unresolved>
             <input class="input-text" type="search" placeholder="<?= $escaper->escapeHtmlAttr(__('Search…')) ?>"/>
             <ff-searchbutton>
                 <button><span><?= $escaper->escapeHtml(__('Search…')) ?></span></button>
