@@ -25,7 +25,7 @@ class AnonymizeUserId
      */
     public function afterGetUserId(SessionData $_, string $userId)
     {
-        return $this->isAnonymizationEnabled() && $userId ? md5($userId) : $userId; // phpcs:ignore
+        return $this->isAnonymizationEnabled() && $userId ? hash('sha256', $userId) : $userId; // phpcs:ignore
     }
 
     private function isAnonymizationEnabled(): bool

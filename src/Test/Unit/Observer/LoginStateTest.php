@@ -22,7 +22,7 @@ class LoginStateTest extends TestCase
     public function testShouldSetUserIdCookie()
     {
         // Expect & Given
-        $userId = md5('some user id');
+        $userId = hash('sha256', 'some user id');
         $this->sessionData->method('getUserId')->willReturn($userId);
         $this->observer->expects($this->once())
             ->method('setCookie')

@@ -7,6 +7,7 @@ namespace Omikron\Factfinder\Model\Stream;
 use BadMethodCallException;
 use Magento\Framework\Filesystem\DriverInterface;
 use Omikron\Factfinder\Api\StreamInterface;
+use RuntimeException;
 
 class Stdout implements StreamInterface
 {
@@ -31,6 +32,10 @@ class Stdout implements StreamInterface
     {
         //after export we need to exit, output has been sent to STDOUT so it is not possible to upload it
         //@phpcs:ignore Magento2.Security.LanguageConstruct.ExitUsage
-        exit();
+        // exit();
+
+        if (empty($this->file)) {
+            throw new RuntimeException('Feed file is empty!');
+        }
     }
 }

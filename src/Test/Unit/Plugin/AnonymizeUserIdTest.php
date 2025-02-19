@@ -28,7 +28,7 @@ class AnonymizeUserIdTest extends TestCase
             ->with('factfinder/advanced/anonymize_user_id', ScopeInterface::SCOPE_STORES, null)
             ->willReturn(true);
         $userId = '1234';
-        $hashed = md5($userId); //phpcs:ignore
+        $hashed = hash('sha256', $userId); //phpcs:ignore
 
         $this->assertSame($hashed, $this->plugin->afterGetUserId($this->createMock(SessionData::class), $userId));
     }
