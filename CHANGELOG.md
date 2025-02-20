@@ -3,6 +3,7 @@
 ### Add
 - Introduce Handlebars.js template engine instead of Mustache.js in SSR
 - Implement Popular Searches
+- Add `user-id` anonymization for tracking requests
 
 ### Update
 - Update WebComponents library to version 5.1.0

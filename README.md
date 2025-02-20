@@ -39,7 +39,6 @@ modifications in order to fit their needs. For more advanced features please che
         - [HTTP Export](#http-export)
     - [Console Command](#console-command)
 - [Web Component Integration](#web-component-integration)
-    - [Communication Element](#communication-element)
     - [Searchbox Integration and Functions](#searchbox-integration-and-functions)
     - [Process of Data Transfer between Shop and FACT-Finder](#process-of-data-transfer-between-shop-and-fact-finder)
         - [Using Proxy](#using-proxy)
@@ -49,7 +48,6 @@ modifications in order to fit their needs. For more advanced features please che
     - [Changing existing column names](#changing-existing-column-names)
     - [Adding new column](#adding-new-column)
         - [GenericField usage](#genericfield-usage)
-    - [Adding custom communication parameter](#adding-custom-communication-parameter)
     - [Adding custom product data provider](#adding-custom-product-data-provider)
     - [Configure field to be exported from variant](#configure-field-to-be-exported-from-variant)
 - [Troubleshooting](#troubleshooting)
@@ -129,12 +127,14 @@ The module uses [Handlebars PHP](https://github.com/salesforce/handlebars-php) l
 
 ### Advanced Settings
 
+![Optional Custom Elements](docs/assets/advanced-settings.png "Optional Custom Elements")
+
 Advanced Settings contains additional parameters used for the WebComponents configurations. Each setting is set to a
 default value and has a short explanatory text attached.  
  
 #### Currency and Country Settings
-You don't need to set currency nor country only for module purposes. It will use currently used currency and pass this information to `ff-communication`
-component as respectively `currency-code` and `country-code` parameters. You can find these settings under Magento General settings
+You don't need to set currency nor country only for module purposes. It will use currently used currency and pass this information to `factfinder init`
+component as respectively `currency-code` and `currency-country-code` parameters. You can find these settings under Magento General settings
 - [How to configure currency?](https://docs.magento.com/m2/ce/user_guide/stores/currency-configuration.html)
 - [How to configure country?](https://docs.magento.com/m2/ce/user_guide/stores/country-options.html)
 
@@ -317,7 +317,7 @@ You can also instantiate block in templates using the Magento Layout API, but it
 https://handlebarsjs.com/
 
 ### Configuration Element
-The main configuration element of Web Components `communication` element is included in template `src/view/frontend/templates/ff/communication.phtml` which comes together with a dedicated view model `src/ViewModel/Communication.php`.
+The main configuration of Web Components is included in template `src/view/frontend/templates/ff/communication.phtml` which comes together with a dedicated view model `src/ViewModel/Communication.php`.
 This template is part of the `default` layout, added to the `after.body.start` container.
 It is essential for whole module to work, so make sure it is also included in your project.
 
