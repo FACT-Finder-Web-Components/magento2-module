@@ -100,3 +100,4 @@ Password,Passwort
 "Show 'Add to Cart' button in search results","'In den Warenkorb'-Button auf Produktlisten anzeigen"
 "Use Proxy","Proxy aktivieren?"
 "Using Proxy allows you to refine the data coming back from FACT-Finder inside the SDK code. Please refer the documentation for more infos (last chapter about data-communication).","Mit der Daten-Anreicherungsfunktion können Sie die Daten überarbeiten, die von FACT-Finder zurückkommen. Weitere Informationen dazu finden Sie in der Dokumentation im Abschnitt über den Ablauf der Datenkommunikation."
+"Popular Searches", "Beliebte Suchanfragen"

@@ -2,9 +2,10 @@
 ## Unreleased
 ### Add
 - Introduce Handlebars.js template engine instead of Mustache.js in SSR
+- Implement Popular Searches
 
 ### Update
-- Update WebComponents library to version 5.0.1
+- Update WebComponents library to version 5.1.0
 
 ### Fix
 - Handle ClientException for SSR (invalid credentials, API issue etc.)
