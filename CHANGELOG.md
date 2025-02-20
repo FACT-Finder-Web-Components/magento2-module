@@ -1,5 +1,5 @@
 # Changelog
-## Unreleased
+## [v5.1.0] - 2025.02.20
 ### Add
 - Introduce Handlebars.js template engine instead of Mustache.js in SSR
 - Implement Popular Searches
@@ -653,6 +653,7 @@
 ### Added
 - Feed Export: Export feed file is now available via separate link
 
+[v5.1.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v5.1.0
 [v5.0.3]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v5.0.3
 [v5.0.2]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v5.0.2
 [v5.0.1]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v5.0.1
