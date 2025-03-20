@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased 
+### Update
+- Update WebComponents library to version 5.1.1
+
 ## [v5.1.0] - 2025.02.20
 ### Add
 - Introduce Handlebars.js template engine instead of Mustache.js in SSR
