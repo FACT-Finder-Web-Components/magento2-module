@@ -18,8 +18,10 @@ $categoryPathFieldName = $block->getData('category_path_field_name');
         }));
 
         const initOptions = factfinder.config.get();
-        initialSearch({
-            filters: initOptions.appConfig.categoryPage,
-        });
+        const searchParams = factfinder.utils.env.searchParamsFromUrl({ categoryFieldName: `<?= /* @noEscape */ $categoryPathFieldName ?>` });
+
+        searchParams.filters = searchParams.filters ?? [];
+        searchParams.filters.push(initOptions.appConfig.categoryPage[0]);
+        initialSearch(searchParams);
     });
 </script>
