@@ -1,5 +1,8 @@
 # Changelog
 ## Unreleased 
+### Fix
+- Fix filter cloud issue on category pages
+
 ### Update
 - Update WebComponents library to version 5.1.1
 
