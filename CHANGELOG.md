@@ -1,5 +1,5 @@
 # Changelog
-## Unreleased 
+## [v5.1.1] - 2025.03.21
 ### Fix
 - Fix filter cloud issue on category pages
 
@@ -660,6 +660,7 @@
 ### Added
 - Feed Export: Export feed file is now available via separate link
 
+[v5.1.1]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v5.1.1
 [v5.1.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v5.1.0
 [v5.0.3]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v5.0.3
 [v5.0.2]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v5.0.2
