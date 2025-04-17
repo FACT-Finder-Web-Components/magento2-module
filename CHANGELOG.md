@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Fix
+- Add price attribute for ff-checkout-tracking-item
+
 ## [v5.1.1] - 2025.03.21
 ### Fix
 - Fix filter cloud issue on category pages

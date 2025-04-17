@@ -5,9 +5,10 @@
 <ff-checkout-tracking>
     <?php foreach ($block->getData('items') as $item): ?>
         <ff-checkout-tracking-item
-            product-number="<?= /* @noEscape */ $item->getSku() ?>"
-            count="<?= /* @noEscape */ $item->getQty() ?>"
-            channel="<?= /* @noEscape */ $block->getData('channel') ?>">
+            product-number="<?= /* @noEscape */ $item->getSku(); ?>"
+            count="<?= /* @noEscape */ $item->getQty(); ?>"
+            price="<?= /* @noEscape */ $item->getPrice(); ?>"
+            channel="<?= /* @noEscape */ $block->getData('channel'); ?>">
         </ff-checkout-tracking-item>
     <?php endforeach; ?>
 </ff-checkout-tracking>
