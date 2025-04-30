@@ -1,5 +1,8 @@
 # Changelog
 ## Unreleased
+### Change
+- Rewrite less files to support Magento v2.4.8
+
 ### Fix
 - Add price attribute for ff-checkout-tracking-item
 
