@@ -1,10 +1,14 @@
 # Changelog
 ## Unreleased
-### Change
-- Rewrite less files to support Magento v2.4.8
+### Add
+- Add support for Magento v2.4.8
+
+### Update
+- Update WebComponents library to version 5.1.2
 
 ### Fix
 - Add price attribute for ff-checkout-tracking-item
+- Rewrite less files to support Magento v2.4.8
 
 ## [v5.1.1] - 2025.03.21
 ### Fix
