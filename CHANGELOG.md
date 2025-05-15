@@ -1,5 +1,5 @@
 # Changelog
-## Unreleased
+## [v5.2.0] - 2025.05.15
 ### Add
 - Add support for Magento v2.4.8
 
@@ -671,6 +671,7 @@
 ### Added
 - Feed Export: Export feed file is now available via separate link
 
+[v5.2.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v5.2.0
 [v5.1.1]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v5.1.1
 [v5.1.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v5.1.0
 [v5.0.3]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v5.0.3
