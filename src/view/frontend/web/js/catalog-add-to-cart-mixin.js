@@ -25,7 +25,7 @@ define([
                     const track = factfinder.tracking;
                     track.cart([{
                         id: cartItem.product_sku,
-                        price: cartItem.product_price_value,
+                        price: parseFloat(cartItem.product_price_value),
                         masterId: eventData.sku || cartItem.product_sku,
                         count: parseInt(qtyInput.value),
                         sid: JSON.parse(localStorage.ffwebco).sid
