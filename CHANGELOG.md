@@ -3,6 +3,9 @@
 ### Fix
 - Cart tracking - parse price to float
 
+### Update
+- Update WebComponents library to version 5.1.5
+
 ## [v5.2.0] - 2025.05.15
 ### Add
 - Add support for Magento v2.4.8
