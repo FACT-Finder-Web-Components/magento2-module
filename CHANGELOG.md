@@ -1,5 +1,8 @@
 # Changelog
 ## Unreleased
+### Change
+- Support tab navigation for search, suggest and paging components
+
 ### Fix
 - Cart tracking - parse price to float
 
