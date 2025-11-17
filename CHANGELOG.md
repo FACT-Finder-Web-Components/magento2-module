@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Update
+- Update WebComponents library to version 5.1.7
+
 ## [v5.2.1] - 2025.07.17
 ### Change
 - Support tab navigation for search, suggest and paging components
