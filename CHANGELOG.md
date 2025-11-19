@@ -2,6 +2,7 @@
 ## Unreleased
 ### Update
 - Update WebComponents library to version 5.1.7
+- Add template to suggest element
 
 ## [v5.2.1] - 2025.07.17
 ### Change
