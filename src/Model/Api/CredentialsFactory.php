@@ -19,7 +19,7 @@ class CredentialsFactory
         $this->authConfig    = $authConfig;
     }
 
-    public function create(array $authData = null)
+    public function create(?array $authData = null)
     {
         return $this->objectManager->create(Credentials::class, $authData ??
               [

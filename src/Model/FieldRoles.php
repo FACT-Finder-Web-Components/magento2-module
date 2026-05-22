@@ -22,7 +22,7 @@ class FieldRoles
     ) {
     }
 
-    public function getFieldRoles(int $scopeId = null): array
+    public function getFieldRoles(?int $scopeId = null): array
     {
         try {
             $config = $this->scopeConfig->getValue(self::PATH_PRODUCT_FIELD_ROLE, Scope::SCOPE_STORES, $scopeId);
@@ -32,12 +32,12 @@ class FieldRoles
         }
     }
 
-    public function getFieldRole(string $roleName, int $scopeId = null): string
+    public function getFieldRole(string $roleName, ?int $scopeId = null): string
     {
         return (string) ($this->getFieldRoles($scopeId)[$roleName] ?? '');
     }
 
-    public function saveFieldRoles(array $fieldRoles, int $scopeId = null): bool
+    public function saveFieldRoles(array $fieldRoles, ?int $scopeId = null): bool
     {
         try {
             $roles = (string) $this->serializer->serialize($fieldRoles);
