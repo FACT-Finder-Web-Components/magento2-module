@@ -39,7 +39,7 @@ class ExportConfig
         return $this->getAttributeCodes($storeId, fn (array $row): bool => !$row['multi']);
     }
 
-    public function getPushImportDataTypes(int $scopeId = null): array
+    public function getPushImportDataTypes(?int $scopeId = null): array
     {
         $configPath = 'factfinder/data_transfer/ff_push_import_type';
         $dataTypes  = (string) $this->scopeConfig->getValue($configPath, ScopeInterface::SCOPE_STORES, $scopeId);

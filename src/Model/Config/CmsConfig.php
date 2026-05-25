@@ -17,7 +17,7 @@ class CmsConfig
         $this->scopeConfig = $scopeConfig;
     }
 
-    public function getCmsBlacklist(int $scopeCode = null): array
+    public function getCmsBlacklist(?int $scopeCode = null): array
     {
         $pages = (string) $this->scopeConfig->getValue(self::PATH_DISABLE_CMS_PAGES, 'store', $scopeCode);
         return array_filter(explode(',', $pages));
