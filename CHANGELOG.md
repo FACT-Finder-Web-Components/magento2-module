@@ -1,5 +1,9 @@
 # Changelog
 ## Unreleased
+### Add
+- Add support for Magento v2.4.9
+- Add support for PHP 8.4
+
 ### Update
 - Update WebComponents library to version 5.1.7
 - Add template to suggest element
