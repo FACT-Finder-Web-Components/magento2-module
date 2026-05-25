@@ -25,7 +25,7 @@
   "require-dev": {
     "pdepend/pdepend": "^2.16",
     "phpmd/phpmd" : "^2.15",
-    "phpunit/phpunit": "~9.5.0",
+    "phpunit/phpunit": "^9.6",
     "magento/magento-coding-standard": "*",
     "friendsofphp/php-cs-fixer": "^3.58"
   },
