@@ -6,6 +6,7 @@ namespace Omikron\Factfinder\ViewModel;
 
 use Magento\Catalog\Api\Data\ProductInterface;
 use Magento\Catalog\Helper\Image;
+use Magento\Catalog\Helper\ImageFactory;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Registry;
 use Magento\Framework\UrlInterface;
@@ -22,6 +23,7 @@ class ProductBasedComponent implements ArgumentInterface
         private readonly ScopeConfigInterface $scopeConfig,
         private readonly UrlInterface         $urlBuilder,
         private readonly Registry             $registry,
+        private readonly ImageFactory $imageHelperFactory
     ) {
     }
 
@@ -56,5 +58,16 @@ class ProductBasedComponent implements ArgumentInterface
     public function isSsrEnable(): bool
     {
         return (bool) $this->scopeConfig->isSetFlag(self::PATH_USE_SRR);
+    }
+
+    public function getImageUrl($product): string
+    {
+        if (!$product) {
+            return '';
+        }
+
+        $imageHelper = $this->imageHelperFactory->create();
+
+        return $imageHelper->init($product, 'product_small_image')->getUrl();
     }
 }

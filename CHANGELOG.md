@@ -3,9 +3,10 @@
 ### Add
 - Add support for Magento v2.4.9
 - Add support for PHP 8.4
+- Add Recently viewed component
 
 ### Update
-- Update WebComponents library to version 5.1.7
+- Update WebComponents library to version 5.2.1
 - Add template to suggest element
 
 ## [v5.2.1] - 2025.07.17
