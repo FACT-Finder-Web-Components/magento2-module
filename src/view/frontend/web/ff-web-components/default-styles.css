@@ -274,6 +274,13 @@ ff-similar-products {
 }
 
 
+/* ---- ff-recently-viewed ---- */
+
+ff-recently-viewed {
+    display: block;
+}
+
+
 /* ---- ff-onfocus-suggest ---- */
 
 ff-onfocus-suggest {
@@ -725,6 +732,13 @@ ff-slider .ffw-slider-button-left {
 }
 ff-slider .ffw-slider-button-right {
     transform: translate(0, -50%);
+}
+
+/* Hidden visibility is important to take nested elements out of the tabindex chain when group is collapsed.
+   `display:none` cannot be used because it breaks the recalculation of the slider's position. */
+ff-asn-group .ffw-wrapper:not([opened]),
+ff-asn-group-slider .ffw-wrapper:not([opened]) {
+    visibility: hidden;
 }
 
 ff-asn-remove-all-filters {

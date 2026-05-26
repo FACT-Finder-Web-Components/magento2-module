@@ -1,0 +1,73 @@
+<?php
+/** @var Magento\Framework\View\Element\Template $block */
+/** @var ?Omikron\Factfinder\ViewModel\ProductBasedComponent $viewModel */
+/** @var Magento\Framework\Escaper $escaper */
+$viewModel = $block->getViewModel();
+$product = $viewModel->getProduct();
+
+if (!$product || !$product->getId()) {
+    return;
+}
+
+$masterProductNumber = $product->getSku();
+
+if ($product->getTypeId() === \Magento\ConfigurableProduct\Model\Product\Type\Configurable::TYPE_CODE) {
+    $masterProductNumber = $product->getData('sku');
+}
+
+$imageUrl = $viewModel->getImageUrl($product);
+?>
+
+<script>
+    document.addEventListener('ffCoreReady', ({ factfinder }) => {
+        factfinder.components.recentlyViewed.config({
+            maxLength: 9,
+        });
+
+        factfinder.components.recentlyViewed.addEntry({
+            Name: '<?= $escaper->escapeJs($product->getName()) ?>',
+            Master: '<?= $escaper->escapeJs($masterProductNumber) ?>',
+            ProductNumber: '<?= $escaper->escapeJs($product->getSku()) ?>',
+            Deeplink: '<?= $escaper->escapeJs($product->getProductUrl()) ?>',
+            Price: <?= (float) $product->getFinalPrice() ?>,
+            ImageUrl: '<?= $escaper->escapeJs($imageUrl) ?>',
+        });
+    });
+</script>
+
+
+<ff-recently-viewed wait-for-update>
+    <div class="block upsell">
+        <div class="block-title title">
+            <strong role="heading" aria-level="2"><?= $escaper->escapeHtml(__('Recently Viewed Products')) ?></strong>
+        </div>
+        <div class="block-content content">
+
+            <ff-record-list class="products list items product-items" subscribe="false" unresolved>
+                <template data-role="record">
+                    <ff-record class="item product product-item">
+                        <div class="product-item-info" data-container="product-grid">
+                            <a class="product-image-container" data-redirect="{{Deeplink}}" data-anchor="{{Deeplink}}" data-redirect-target="_self">
+                                <span class="product-image-wrapper">
+                                    <img class="product-image-photo" data-image="{{ImageUrl}}" alt="{{Name}}"/>
+                                </span>
+                            </a>
+
+                            <div class="product details product-item-details">
+                                <div class="product name product-item-name">{{Name}}</div>
+                                <div class="price-box price-final_price" data-role="priceBox">
+                                    <span class="price-container price-final_price tax weee">
+                                        <span data-price-amount="{{masterValues.Price}}" data-price-type="finalPrice" class="price-wrapper">
+                                            <span class="price">{{$ Price}}</span>
+                                        </span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </ff-record>
+                </template>
+            </ff-record-list>
+
+        </div>
+    </div>
+</ff-recently-viewed>

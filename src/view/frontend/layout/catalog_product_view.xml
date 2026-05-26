@@ -22,6 +22,11 @@
                     <argument name="view_model" xsi:type="object">Omikron\Factfinder\ViewModel\ProductBasedComponent</argument>
                 </arguments>
             </block>
+            <block class="Magento\Framework\View\Element\Template" name="factfinder.recently_viewed" ifconfig="factfinder/components/recently_viewed" template="Omikron_Factfinder::ff/recently_viewed.phtml">
+                <arguments>
+                    <argument name="view_model" xsi:type="object">Omikron\Factfinder\ViewModel\ProductBasedComponent</argument>
+                </arguments>
+            </block>
         </referenceContainer>
 
         <referenceBlock name="factfinder.feedbacktext">
