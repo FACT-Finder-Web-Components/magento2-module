@@ -1,5 +1,5 @@
 # Changelog
-## Unreleased
+## [v5.3.0] - 2026.05.26
 ### Add
 - Add support for Magento v2.4.9
 - Add support for PHP 8.4
@@ -692,6 +692,7 @@
 ### Added
 - Feed Export: Export feed file is now available via separate link
 
+[v5.3.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v5.3.0
 [v5.2.1]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v5.2.1
 [v5.2.0]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v5.2.0
 [v5.1.1]:       https://github.com/FACT-Finder-Web-Components/magento2-module/releases/tag/v5.1.1
