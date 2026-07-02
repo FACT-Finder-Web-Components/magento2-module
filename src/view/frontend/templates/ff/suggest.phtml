@@ -1,7 +1,7 @@
 <?php
 /** @var Magento\Framework\Escaper $escaper */
 ?>
-<ff-suggest for-searchbox="ff-searchbox" layout="block" unresolved>
+<ff-suggest for-searchbox="ff-searchbox" layout="block" hide-delay="200" unresolved>
     <template data-role="popularSearches">
         <div class="popular-searches">
             <h3><?= $escaper->escapeHtmlAttr(__('Popular Searches')) ?></h3>
@@ -13,21 +13,21 @@
             <div data-container="searchTerm">
                 <p class="containerCaption"><?= $escaper->escapeHtml(__('Search suggestions')) ?></p>
                 <ff-suggest-item type="searchTerm">
-                    <a href="#">{{{name}}}</a>
+                    <span>{{{name}}}</span>
                 </ff-suggest-item>
             </div>
 
             <div data-container="category">
                 <p class="containerCaption"><?= $escaper->escapeHtml(__('Category suggestions')) ?></p>
                 <ff-suggest-item type="category">
-                    <a href="#">{{{name}}}</a>
+                    <span>{{{name}}}</span>
                 </ff-suggest-item>
             </div>
 
             <div data-container="brand">
                 <p class="containerCaption"><?= $escaper->escapeHtml(__('Brands')) ?></p>
                 <ff-suggest-item type="brand">
-                    <a href="#">{{{name}}}</a>
+                    <span>{{{name}}}</span>
                 </ff-suggest-item>
             </div>
         </section>
@@ -38,7 +38,7 @@
                 <ff-suggest-item type="productName">
                     <img data-image="{{suggestions.image}}" />
                     <div class="product-center">
-                        <a href="#" class="product-name">{{{name}}}</a>
+                        <a href="{{attributes.Deeplink}}" class="product-name">{{{name}}}</a>
                     </div>
                     <div class="product-right">
                         <div class="product-price">{{attributes.Price}}</div>
