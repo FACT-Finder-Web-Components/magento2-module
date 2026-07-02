@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Fix
+- Fix redirection for ff-suggest
+
 ## [v5.3.0] - 2026.05.26
 ### Add
 - Add support for Magento v2.4.9
