@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Update
+- Update WebComponents library to version 5.3.0
+
 ## [v5.3.1] - 2026.07.02
 ### Fix
 - Fix redirection for ff-suggest
