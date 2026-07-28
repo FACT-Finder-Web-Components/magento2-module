@@ -27,6 +27,7 @@ $searchImmediate = $communicationParameters['search-immediate'] ?? 'false';
                         currency: `<?= $escaper->escapeUrl($parameters['currency-code'])?>`,
                     },
                 },
+                atlasAiMode: `<?= $escaper->escapeUrl($parameters['support_atlas_ai'])?>`,
             },
         });
 
@@ -136,6 +137,7 @@ $searchImmediate = $communicationParameters['search-immediate'] ?? 'false';
         const clearCookie = (name) => {
             document.cookie = name+'=; Max-Age=-1;';
         }
+
 
         if (cookies['ff_user_id']) {
             factfinder.config.setFFParams({userId: cookies['ff_user_id']});

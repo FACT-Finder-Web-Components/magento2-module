@@ -26,5 +26,10 @@
             <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
             <tooltip>Sends hashed user id with tracking requests</tooltip>
         </field>
+        <field id="atlas_ai_user_id" translate="label comment" type="select" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Atlas AI support</label>
+            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+            <tooltip>If Atlas AI support is enabled, the integration handles Atlas AI-specific requirements automatically. This includes creating a dedicated Atlas AI user ID and storing it on the client side across sessions. Important: If you enable this function, userId will be generated automatically and the previous values for userId that were sent for logged in users will be overwritten.</tooltip>
+        </field>
     </group>
 </include>
