@@ -14,7 +14,11 @@ $viewModel = $block->getViewModel();
                 <div class="product-item-info" data-container="product-grid">
                     <a class="product-image-container" data-redirect="{{masterValues.Deeplink}}" data-anchor="{{masterValues.Deeplink}}" data-redirect-target="_self">
                         <span class="product-image-wrapper">
-                            <img class="product-image-photo" data-image="{{masterValues.ImageUrl}}" alt="{{masterValues.Name}}"/>
+                            {{#if masterValues.ImageUrl}}
+                                <img class="product-image-photo" data-image="{{masterValues.ImageUrl}}" alt="{{masterValues.Name}}"/>
+                            {{else}}
+                                <img class="product-image-photo" data-image="{{variantValues.0.ImageUrl}}" alt="{{masterValues.Name}}"/>
+                            {{/if}}
                         </span>
                     </a>
 

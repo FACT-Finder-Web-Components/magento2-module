@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Omikron\Factfinder\Model\Ssr\Template;
 
+use Handlebars\HandlebarsString;
 use Handlebars\Loader as HandlebarsLoader;
 use Omikron\Factfinder\Api\Filter\FilterInterface;
 
@@ -22,6 +23,8 @@ class Loader implements HandlebarsLoader
     {
         $template = $this->loader->load($name);
 
-        return $this->filter->filterValue($template);
+        $filteredTemplate = $this->filter->filterValue((string) $template);
+
+        return new HandlebarsString($filteredTemplate);
     }
 }
