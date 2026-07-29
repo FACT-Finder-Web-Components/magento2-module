@@ -20,7 +20,7 @@ class CommunicationConfig implements ParametersSourceInterface
     private const PATH_IS_LOGGING_ENABLED   = 'factfinder/general/logging_enabled';
     private const PATH_FF_API_KEY           = 'factfinder/general/ff_api_key';
     private const PATH_CATEGORY_PATH_NAME   = 'factfinder/general/category_path_name';
-    private const PATH_SUPPORT_ATLAS_AI     = 'factfinder/general/category_path_name';
+    private const PATH_SUPPORT_ATLAS_AI     = 'factfinder/advanced/atlas_ai_user_id';
 
     private ScopeConfigInterface $scopeConfig;
 
@@ -52,6 +52,11 @@ class CommunicationConfig implements ParametersSourceInterface
         return $this->scopeConfig->isSetFlag(self::PATH_DATA_TRANSFER_IMPORT, ScopeInterface::SCOPE_STORES, $scopeId);
     }
 
+    public function isAtlasAIEnabled(?int $scopeId = null): bool
+    {
+        return $this->scopeConfig->isSetFlag(self::PATH_SUPPORT_ATLAS_AI, ScopeInterface::SCOPE_STORES, $scopeId);
+    }
+
     public function getVersion(): string
     {
         return 'ng';
@@ -77,29 +82,19 @@ class CommunicationConfig implements ParametersSourceInterface
 
     public function getParameters(): array
     {
+//        var_dump($this->isAtlasAIEnabled());
         return [
             'url'                      => $this->getServerUrl(),
             'channel'                  => $this->getChannel(),
             'api_key'                  => $this->getApiKey(),
             'category_path_field_name' => $this->getCategoryPathFieldName(),
-            'support_atlas_ai'         => $this->getSupportAtlasAi(),
+            'support_atlas_ai'         => $this->isAtlasAIEnabled()
         ];
     }
 
     public function getApiVersion(): string
     {
         return 'v5';
-    }
-
-    public function getSupportAtlasAi(?int $scopeId = null): string
-    {
-        $supportAtlasAI = $this->scopeConfig->isSetFlag(self::PATH_SUPPORT_ATLAS_AI, ScopeInterface::SCOPE_STORES, $scopeId);
-
-        if ($supportAtlasAI) {
-            return 'true';
-        }
-
-        return 'false';
     }
 
     private function getServerUrl(): string

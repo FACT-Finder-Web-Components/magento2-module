@@ -27,8 +27,7 @@ $searchImmediate = $communicationParameters['search-immediate'] ?? 'false';
                         currency: `<?= $escaper->escapeUrl($parameters['currency-code'])?>`,
                     },
                 },
-                atlasAiMode: `<?= $escaper->escapeUrl($parameters['support_atlas_ai'])?>`,
-            },
+                atlasAiMode: <?= !empty($parameters['support_atlas_ai']) ? 'true' : 'false' ?>,            },
         });
 
         <?php if(!empty($parameters['add-params'])) : ?>
@@ -94,33 +93,43 @@ $searchImmediate = $communicationParameters['search-immediate'] ?? 'false';
 
 <?php if ($viewModel->isSsrEnable()): ?>
     <script>
-            function generateSid() {
-                var length = 30;
-                var characterSet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-                var text = "";
-                for (var i = 0; i < length; i++) {
-                    text += characterSet.charAt(Math.floor(Math.random() * characterSet.length));
-                }
-                return text;
+        function generateSid() {
+            var length = 30;
+            var characterSet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            var text = "";
+            for (var i = 0; i < length; i++) {
+                text += characterSet.charAt(Math.floor(Math.random() * characterSet.length));
+            }
+            return text;
+        }
+
+        const ffCookies = document.cookie.split('; ').reduce((acc, cookie) => {
+            const cookieData = cookie.split('=');
+            const [key, value] = cookieData;
+            acc[key.trim()] = value;
+
+            return acc;
+        }, {});
+
+        document.addEventListener(`ffCoreReady`, ({ factfinder }) => {
+            if (!ffCookies['ffwebc_sid']) {
+                const sid = generateSid();
+                document.cookie = 'ffwebc_sid=' + sid + '; path=/; max-age=31536000;';
+                factfinder.config.setFFParams({sid: sid});
+            } else {
+                factfinder.config.setFFParams({sid: ffCookies['ffwebc_sid']});
             }
 
-            const ffCookies = document.cookie.split('; ').reduce((acc, cookie) => {
-                const cookieData = cookie.split('=');
-                const [key, value] = cookieData;
-                acc[key] = value;
+            const isAtlasAIEnabled = <?= $viewModel->isAtlasAIEnabled() ? 'true' : 'false' ?>;
 
-                return acc;
-            }, {});
+            if (isAtlasAIEnabled) {
+                const atlasAiUserId = localStorage.getItem('ffwebco.atlasAiUserId');
 
-            document.addEventListener(`ffCoreReady`, ({ factfinder }) => {
-                if (!ffCookies['ffwebc_sid']) {
-                    const sid = generateSid();
-                    document.cookie = 'ffwebc_sid=' + sid + '; path=/;';
-                    factfinder.config.setFFParams({sid: sid});
-                } else {
-                    factfinder.config.setFFParams({sid: ffCookies['ffwebc_sid']});
+                if (atlasAiUserId) {
+                    document.cookie = 'ff_atlas_ai_user_id=' + encodeURIComponent(atlasAiUserId) + '; path=/; max-age=31536000;';
                 }
-            });
+            }
+        });
     </script>
 <?php endif; ?>
 
@@ -138,21 +147,48 @@ $searchImmediate = $communicationParameters['search-immediate'] ?? 'false';
             document.cookie = name+'=; Max-Age=-1;';
         }
 
+        const isAtlasAIEnabled = <?= $viewModel->isAtlasAIEnabled() ? 'true' : 'false' ?>;
 
-        if (cookies['ff_user_id']) {
-            factfinder.config.setFFParams({userId: cookies['ff_user_id']});
+        function getUserId(cookies) {
+            if (isAtlasAIEnabled) {
+                try {
+                    const ffWebCo = JSON.parse(localStorage.getItem('ffwebco') || '{}');
+                    if (ffWebCo && ffWebCo.atlasAiUserId) {
+                        return ffWebCo.atlasAiUserId;
+                    }
+                } catch (e) {
+                    console.error('Error parsing ffwebco from localStorage', e);
+                }
+            }
+
+            return cookies['ff_user_id'] || null;
+        }
+
+        const userId = getUserId(cookies);
+
+        if (userId) {
+            factfinder.config.setFFParams({ userId: userId });
 
             if (cookies['ff_has_just_logged_in']) {
                 clearCookie('ff_has_just_logged_in');
+
+                let sid = '';
+                try {
+                    sid = JSON.parse(localStorage.getItem('ffwebco') || '{}').sid || '';
+                } catch (e) {}
+
                 factfinder.tracking.login([{
-                    sid: JSON.parse(localStorage.ffwebco).sid,
+                    sid: sid,
                     userId: factfinder.config.get().ffParams.userId
                 }]);
             }
         } else {
             if (cookies['ff_has_just_logged_out']) {
                 clearCookie('ff_has_just_logged_out');
-                factfinder.config.setFFParams({userId: undefined});
+
+                if (!isAtlasAIEnabled) {
+                    factfinder.config.setFFParams({ userId: undefined });
+                }
             }
         }
    });
