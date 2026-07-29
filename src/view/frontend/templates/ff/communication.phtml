@@ -152,9 +152,10 @@ $searchImmediate = $communicationParameters['search-immediate'] ?? 'false';
         function getUserId(cookies) {
             if (isAtlasAIEnabled) {
                 try {
-                    const ffWebCo = JSON.parse(localStorage.getItem('ffwebco') || '{}');
-                    if (ffWebCo && ffWebCo.atlasAiUserId) {
-                        return ffWebCo.atlasAiUserId;
+                    const atlasAiUserId = localStorage.getItem('ffwebco.atlasAiUserId');
+
+                    if (atlasAiUserId) {
+                        document.cookie = 'ff_atlas_ai_user_id=' + encodeURIComponent(atlasAiUserId) + '; path=/; max-age=31536000;';
                     }
                 } catch (e) {
                     console.error('Error parsing ffwebco from localStorage', e);
