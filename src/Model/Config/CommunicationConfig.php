@@ -82,7 +82,6 @@ class CommunicationConfig implements ParametersSourceInterface
 
     public function getParameters(): array
     {
-//        var_dump($this->isAtlasAIEnabled());
         return [
             'url'                      => $this->getServerUrl(),
             'channel'                  => $this->getChannel(),
@@ -95,6 +94,17 @@ class CommunicationConfig implements ParametersSourceInterface
     public function getApiVersion(): string
     {
         return 'v5';
+    }
+
+    public function getSupportAtlasAi(?int $scopeId = null): string
+    {
+        $supportAtlasAI = $this->scopeConfig->isSetFlag(self::PATH_SUPPORT_ATLAS_AI, ScopeInterface::SCOPE_STORES, $scopeId);
+
+        if ($supportAtlasAI) {
+            return 'true';
+        }
+
+        return 'false';
     }
 
     private function getServerUrl(): string
