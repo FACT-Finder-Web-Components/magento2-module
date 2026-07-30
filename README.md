@@ -131,6 +131,8 @@ The module uses [Handlebars PHP](https://github.com/salesforce/handlebars-php) l
 
 Advanced Settings contains additional parameters used for the WebComponents configurations. Each setting is set to a
 default value and has a short explanatory text attached.  
+
+Atlas AI support - If Atlas AI support is enabled, the integration handles Atlas AI-specific requirements automatically. This includes creating a dedicated Atlas AI user ID and storing it on the client side across sessions. **Important: If you enable this function, userId will be generated automatically and the previous values for userId that were sent for logged-in users will be overwritten.**
  
 #### Currency and Country Settings
 You don't need to set currency nor country only for module purposes. It will use currently used currency and pass this information to `factfinder init`
