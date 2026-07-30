@@ -7,12 +7,14 @@ namespace Omikron\Factfinder\ViewModel;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Serialize\SerializerInterface;
 use Magento\Framework\View\Element\Block\ArgumentInterface;
+use Magento\Store\Model\ScopeInterface;
 use Omikron\Factfinder\Model\Config\CommunicationParametersProvider;
 use Omikron\Factfinder\Model\FieldRoles;
 
 class Communication implements ArgumentInterface
 {
     private const PATH_USE_SRR = 'factfinder/general/use_ssr';
+    private const PATH_SUPPORT_ATLAS_AI = 'factfinder/advanced/atlas_ai_user_id';
 
     public function __construct(
         private readonly FieldRoles                      $fieldRoles,
@@ -42,6 +44,11 @@ class Communication implements ArgumentInterface
     public function isSsrEnable(): bool
     {
         return (bool) $this->scopeConfig->isSetFlag(self::PATH_USE_SRR);
+    }
+
+    public function isAtlasAIEnabled(?int $scopeId = null): bool
+    {
+        return $this->scopeConfig->isSetFlag(self::PATH_SUPPORT_ATLAS_AI, ScopeInterface::SCOPE_STORES, $scopeId);
     }
 
     private function mergeParameters(array ...$params): array

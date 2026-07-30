@@ -75,17 +75,23 @@ class RecordList extends Template
 
     protected function searchResult(RequestInterface $request, array $searchParams): array
     {
-        //workaround for FFWEB-2720
         $sid = 'sid=';
 
         if (!empty($request->getCookie('ffwebc_sid', null))) {
             $sid .= $request->getCookie('ffwebc_sid', '');
         }
 
+        $atlasUserIdParam = '';
+
+        if (!empty($request->getCookie('ff_atlas_ai_user_id', null))) {
+            $atlasUserIdParam = 'userId=' . $request->getCookie('ff_atlas_ai_user_id', '');
+        }
+
         $paramsString = implode('&', array_filter([
-                parse_url($request->getRequestString(), PHP_URL_QUERY), //@phpcs:ignore Magento2.Functions.DiscouragedFunction.Discouraged
-                http_build_query($searchParams),
-                $sid
+            parse_url($request->getRequestString(), PHP_URL_QUERY), //@phpcs:ignore Magento2.Functions.DiscouragedFunction.Discouraged
+            http_build_query($searchParams),
+            $sid,
+            $atlasUserIdParam
         ]));
 
         return $this->searchAdapter->search($paramsString, $this->getRequest()->getFullActionName() === 'catalog_category_view');
