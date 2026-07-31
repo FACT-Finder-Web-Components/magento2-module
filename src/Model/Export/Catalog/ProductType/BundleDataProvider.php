@@ -6,8 +6,8 @@ namespace Omikron\Factfinder\Model\Export\Catalog\ProductType;
 
 use Magento\Bundle\Model\Product\CatalogPrice;
 use Magento\Catalog\Model\Product;
-use Magento\Inventory\Model\SourceItem\Command\GetSourceItemsBySku;
 use Magento\Directory\Model\PriceCurrency;
+use Omikron\Factfinder\Model\Export\Catalog\ProductAvailability;
 use Omikron\Factfinder\Model\Formatter\NumberFormatter;
 
 class BundleDataProvider extends SimpleDataProvider
@@ -17,10 +17,10 @@ class BundleDataProvider extends SimpleDataProvider
         protected NumberFormatter      $numberFormatter,
         private readonly PriceCurrency $priceCurrency,
         private readonly CatalogPrice  $priceModel,
-        protected GetSourceItemsBySku  $getSourceItemsBySku,
+        protected ProductAvailability  $productAvailability,
         protected array                $productFields = []
     ) {
-        parent::__construct($product, $numberFormatter, $getSourceItemsBySku, $productFields);
+        parent::__construct($product, $numberFormatter, $productAvailability, $productFields);
     }
 
     public function toArray(): array

@@ -9,10 +9,10 @@ use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Catalog\Model\Product;
 use Magento\ConfigurableProduct\Model\Product\Type\Configurable as ConfigurableProductType;
 use Magento\Framework\Api\SearchCriteriaBuilder;
-use Magento\Inventory\Model\SourceItem\Command\GetSourceItemsBySku;
 use Omikron\Factfinder\Api\Export\ExportEntityInterface;
 use Omikron\Factfinder\Api\Filter\FilterInterface;
 use Omikron\Factfinder\Model\Export\Catalog\Entity\ProductVariationFactory;
+use Omikron\Factfinder\Model\Export\Catalog\ProductAvailability;
 use Omikron\Factfinder\Model\Formatter\NumberFormatter;
 
 class ConfigurableDataProvider extends SimpleDataProvider
@@ -25,10 +25,10 @@ class ConfigurableDataProvider extends SimpleDataProvider
         private readonly ProductVariationFactory    $variationFactory,
         private readonly ProductRepositoryInterface $productRepository,
         private readonly SearchCriteriaBuilder      $builder,
-        protected GetSourceItemsBySku               $getSourceItemsBySku,
+        protected ProductAvailability               $productAvailability,
         protected array                             $productFields = []
     ) {
-        parent::__construct($product, $numberFormatter, $getSourceItemsBySku, $productFields);
+        parent::__construct($product, $numberFormatter, $productAvailability, $productFields);
     }
 
     public function getEntities(): iterable
