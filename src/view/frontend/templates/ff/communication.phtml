@@ -64,7 +64,28 @@ $searchImmediate = $communicationParameters['search-immediate'] ?? 'false';
 
             factfinder.notifications.addSuggestClickListener(origin => {
                 if (origin.suggestion.type === `searchTerm` || origin.suggestion.type === `brand`) {
-                    window.location.href =  `/factfinder/result?query=${origin.suggestion.searchParams.query}`;
+                    const searchParams = origin.suggestion.searchParams;
+                    const urlParams = new URLSearchParams();
+
+                    if (searchParams.query && searchParams.query !== '*') {
+                        urlParams.set('query', searchParams.query);
+                    }
+
+                    if (searchParams.filters && searchParams.filters.length > 0) {
+                        searchParams.filters.forEach(filter => {
+                            filter.values.forEach(val => {
+                                urlParams.append('filter', `${filter.name}:${val.value}`);
+                            });
+                        });
+                    }
+
+                    <?php if(!empty($parameters['add-params'])) : ?>
+                        const addParams = <?= json_encode($parameters['add-params']) ?>;
+                        Object.keys(addParams).forEach(key => urlParams.append(key, addParams[key]));
+                    <?php endif; ?>
+
+                    window.location.href = `/factfinder/result?${urlParams.toString()}`;
+
                     return false;
                 }
             });
