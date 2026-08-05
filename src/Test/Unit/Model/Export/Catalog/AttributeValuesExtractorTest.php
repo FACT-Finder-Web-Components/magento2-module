@@ -20,6 +20,9 @@ class AttributeValuesExtractorTest extends TestCase
     /** @var NumberFormatter|MockObject  */
     private MockObject $numberFormatter;
 
+    /** @var MockObject|FilterInterface */
+    private MockObject $filterMock;
+
     public function test_it_returns_scalar_value()
     {
         $attributeValue  = 'Value';

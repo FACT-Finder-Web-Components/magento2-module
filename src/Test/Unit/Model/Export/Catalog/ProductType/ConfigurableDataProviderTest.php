@@ -12,6 +12,7 @@ use Magento\Inventory\Model\SourceItem;
 use Magento\Inventory\Model\SourceItem\Command\GetSourceItemsBySku;
 use Omikron\Factfinder\Api\Filter\FilterInterface;
 use Omikron\Factfinder\Model\Export\Catalog\Entity\ProductVariationFactory;
+use Omikron\Factfinder\Model\Export\Catalog\ProductAvailability;
 use Omikron\Factfinder\Model\Formatter\NumberFormatter;
 use Omikron\Factfinder\Test\TestHelper;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -106,6 +107,8 @@ class ConfigurableDataProviderTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
+        $productAvailabilityMock = $this->createMock(ProductAvailability::class);
+
         $this->configurableDataProvider = new ConfigurableDataProvider(
             $this->productMock,
             $this->numberFormatMock,
@@ -114,9 +117,7 @@ class ConfigurableDataProviderTest extends TestCase
             $this->variantFactoryMock,
             $this->repositoryMock,
             $this->builderMock,
-            $this->createConfiguredMock(GetSourceItemsBySku::class, [
-                'execute' => [$this->createConfiguredMock(SourceItem::class, ['getStatus' => 1])]
-            ]),
+            $productAvailabilityMock
         );
     }
 }
