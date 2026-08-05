@@ -6,10 +6,9 @@ namespace Omikron\Factfinder\Model\Export\Catalog\Entity;
 
 use Magento\Catalog\Model\Product;
 use Magento\Framework\Model\AbstractModel;
-use Magento\Inventory\Model\SourceItem;
-use Magento\Inventory\Model\SourceItem\Command\GetSourceItemsBySku;
 use Omikron\Factfinder\Model\Export\Catalog\FieldProvider;
 use Omikron\Factfinder\Model\Export\Catalog\ProductField\FilterAttributes;
+use Omikron\Factfinder\Model\Export\Catalog\ProductAvailability;
 use Omikron\Factfinder\Model\Export\Catalog\ProductField\ProductImage;
 use Omikron\Factfinder\Model\Formatter\NumberFormatter;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -53,9 +52,7 @@ class ProductVariationTest extends TestCase
             $this->createMock(Product::class),
             new NumberFormatter(),
             $fieldProviderMock,
-            $this->createConfiguredMock(GetSourceItemsBySku::class, [
-                'execute' => [$this->createConfiguredMock(SourceItem::class, ['getStatus' => 1])]
-            ]),
+            $this->createConfiguredMock(ProductAvailability::class, ['isAvailable' => true]),
             $this->configurableProductData
         );
 
@@ -94,9 +91,7 @@ class ProductVariationTest extends TestCase
             $this->createMock(Product::class),
             new NumberFormatter(),
             $fieldProviderMock,
-            $this->createConfiguredMock(GetSourceItemsBySku::class, [
-                'execute' => [$this->createConfiguredMock(SourceItem::class, ['getStatus' => 1])]
-            ]),
+            $this->createConfiguredMock(ProductAvailability::class, ['isAvailable' => true]),
             ['FilterAttributes' => '|Color=Red|Size=XS|'] + $this->configurableProductData
         );
 
@@ -104,6 +99,20 @@ class ProductVariationTest extends TestCase
             '|Color=Red|Size=XS|Eco Collection=No|New=No|Price=52.00|Quantity=In Stock|',
             $productVariation->toArray()['FilterAttributes']
         );
+    }
+
+    public function test_availability_is_taken_from_the_product_availability_service()
+    {
+        $productVariation = new ProductVariation(
+            $this->variantMock,
+            $this->createMock(Product::class),
+            new NumberFormatter(),
+            $this->createConfiguredMock(FieldProvider::class, ['getVariantFields' => []]),
+            $this->createConfiguredMock(ProductAvailability::class, ['isAvailable' => false]),
+            $this->configurableProductData
+        );
+
+        $this->assertSame(0, $productVariation->toArray()['Availability']);
     }
 
     protected function setUp(): void

@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Omikron\Factfinder\Model\Export\Catalog\ProductType;
 
 use Magento\Catalog\Model\Product;
-use Magento\Inventory\Model\SourceItem\Command\GetSourceItemsBySku;
 use Omikron\Factfinder\Api\Export\FieldInterface;
 use Omikron\Factfinder\Api\Export\DataProviderInterface;
 use Omikron\Factfinder\Api\Export\ExportEntityInterface;
+use Omikron\Factfinder\Model\Export\Catalog\ProductAvailability;
 use Omikron\Factfinder\Model\Formatter\NumberFormatter;
 
 class SimpleDataProvider implements DataProviderInterface, ExportEntityInterface
@@ -16,7 +16,7 @@ class SimpleDataProvider implements DataProviderInterface, ExportEntityInterface
     public function __construct(
         protected Product $product,
         protected NumberFormatter $numberFormatter,
-        protected GetSourceItemsBySku $getSourceItemsBySku,
+        protected ProductAvailability $productAvailability,
         protected array $productFields = [],
     ) {
     }
@@ -66,18 +66,6 @@ class SimpleDataProvider implements DataProviderInterface, ExportEntityInterface
 
     private function getAvailability(): bool
     {
-        if ($this->product->hasData('is_salable')) {
-            return $this->product->isAvailable();
-        }
-
-        $sourceItems = $this->getSourceItemsBySku->execute($this->product->getSku());
-
-        foreach ($sourceItems as $sourceItem) {
-            if ($sourceItem->getStatus()) {
-                return true;
-            }
-        }
-
-        return false;
+        return $this->productAvailability->isAvailable($this->product);
     }
 }

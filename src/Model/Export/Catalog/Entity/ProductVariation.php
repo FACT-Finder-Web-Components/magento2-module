@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Omikron\Factfinder\Model\Export\Catalog\Entity;
 
 use Magento\Catalog\Model\Product;
-use Magento\Inventory\Model\SourceItem\Command\GetSourceItemsBySku;
 use Omikron\Factfinder\Api\Export\ExportEntityInterface;
 use Omikron\Factfinder\Api\Export\FieldInterface;
 use Omikron\Factfinder\Model\Export\Catalog\FieldProvider;
+use Omikron\Factfinder\Model\Export\Catalog\ProductAvailability;
 use Omikron\Factfinder\Model\Formatter\NumberFormatter;
 
 class ProductVariation implements ExportEntityInterface
@@ -20,14 +20,14 @@ class ProductVariation implements ExportEntityInterface
 
     /** @var string[] */
     private array $configurableData;
-    private GetSourceItemsBySku $getSourceItemsBySku;
+    private ProductAvailability $productAvailability;
 
     public function __construct(
         Product $product,
         Product $configurable,
         NumberFormatter $numberFormatter,
         FieldProvider $variantFieldProvider,
-        GetSourceItemsBySku $getSourceItemsBySku,
+        ProductAvailability $productAvailability,
         array $data = []
     ) {
         $this->product          = $product;
@@ -35,7 +35,7 @@ class ProductVariation implements ExportEntityInterface
         $this->numberFormatter  = $numberFormatter;
         $this->configurableData = $data;
         $this->fieldprovider    = $variantFieldProvider;
-        $this->getSourceItemsBySku = $getSourceItemsBySku;
+        $this->productAvailability = $productAvailability;
     }
 
     public function getId(): int
@@ -87,18 +87,6 @@ class ProductVariation implements ExportEntityInterface
 
     private function getAvailability(): bool
     {
-        if ($this->product->hasData('is_salable')) {
-            return $this->product->isAvailable();
-        }
-
-        $sourceItems = $this->getSourceItemsBySku->execute($this->product->getSku());
-
-        foreach ($sourceItems as $sourceItem) {
-            if ($sourceItem->getStatus()) {
-                return true;
-            }
-        }
-
-        return false;
+        return $this->productAvailability->isAvailable($this->product);
     }
 }
