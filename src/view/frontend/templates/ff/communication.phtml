@@ -80,7 +80,7 @@ $searchImmediate = $communicationParameters['search-immediate'] ?? 'false';
                     }
 
                     <?php if(!empty($parameters['add-params'])) : ?>
-                        const addParams = <?= json_encode($parameters['add-params']) ?>;
+                        const addParams = <?= /* @noEscape */ json_encode($parameters['add-params']) ?>;
                         Object.keys(addParams).forEach(key => urlParams.append(key, addParams[key]));
                     <?php endif; ?>
 
