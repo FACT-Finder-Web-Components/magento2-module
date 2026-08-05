@@ -9,6 +9,7 @@
 ### Fix
 - Fix issue with cart btn if WebComponents library is disabled
 - Fix brand suggestion redirection url
+- Export the real product salability as Availability
 
 ## [v5.3.1] - 2026.07.02
 ### Fix
