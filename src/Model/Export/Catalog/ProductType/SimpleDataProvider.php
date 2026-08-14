@@ -29,6 +29,15 @@ class SimpleDataProvider implements DataProviderInterface, ExportEntityInterface
         return [$this];
     }
 
+    public function getEntitiesBatch(int $offset, int $limit): iterable
+    {
+        $entities = is_array($this->getEntities())
+            ? $this->getEntities()
+            : iterator_to_array($this->getEntities(), false);
+
+        return array_slice($entities, $offset, $limit);
+    }
+
     public function getId(): int
     {
         return (int) $this->product->getId();

@@ -230,6 +230,16 @@
                 <item name="omikron_factfinder_export" xsi:type="object">Omikron\Factfinder\Console\Command\Export</item>
             </argument>
         </arguments>
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="omikron_factfinder_export_batch" xsi:type="object">Omikron\Factfinder\Console\Command\ExportBatch</item>
+            </argument>
+        </arguments>
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="omikron_factfinder_export_worker" xsi:type="object">Omikron\Factfinder\Console\Command\WorkerExport</item>
+            </argument>
+        </arguments>
     </type>
     <type name="Omikron\Factfinder\Logger\Handler\FactFinderErrorHandler">
         <arguments>

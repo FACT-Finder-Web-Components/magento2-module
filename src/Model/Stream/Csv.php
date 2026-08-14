@@ -17,7 +17,8 @@ class Csv implements StreamInterface
 
     public function __construct(
         private readonly Filesystem $filesystem,
-        private readonly string     $filename = 'factfinder/export.csv'
+        private readonly string     $filename = 'factfinder/export.csv',
+        private readonly string     $mode = 'w+'
     ) {
     }
 
@@ -40,7 +41,7 @@ class Csv implements StreamInterface
     {
         if (!isset($this->stream)) {
             $directory    = $this->filesystem->getDirectoryWrite(DirectoryList::VAR_DIR);
-            $this->stream = $directory->openFile($directory->getAbsolutePath($this->filename), 'w+');
+            $this->stream = $directory->openFile($directory->getAbsolutePath($this->filename), $this->mode);
             $this->stream->lock();
         }
 
