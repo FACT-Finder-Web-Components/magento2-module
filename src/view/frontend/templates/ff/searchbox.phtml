@@ -1,7 +1,7 @@
 <?php
 /** @var Magento\Framework\View\Element\Template $block */
 /** @var Magento\Framework\Escaper $escaper */
-$isPopularSearchesEnabled = $this->helper('Omikron\Factfinder\Helper\ConfigurationHelper')->getConfig('factfinder/components/popular_searches');
+$isPopularSearchesEnabled = $block->helper('Omikron\Factfinder\Helper\ConfigurationHelper')->getConfig('factfinder/components/popular_searches');
 ?>
 <div class="search-wrapper">
     <div class="top-search-box">
