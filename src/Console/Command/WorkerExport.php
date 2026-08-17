@@ -113,7 +113,7 @@ class WorkerExport extends Command
             return false;
         }
 
-        if (!$this->handlePushImport($pushImport, $storeId, $filename, $output)) {
+        if (!$this->handlePushImport($pushImport, $storeId, $output)) {
             return false;
         }
 
@@ -227,7 +227,6 @@ class WorkerExport extends Command
     private function handlePushImport(
         bool $pushImport,
         int $storeId,
-        string $filename,
         OutputInterface $output
     ): bool {
         if (!$pushImport) {

@@ -33,12 +33,11 @@ class Feed
     public function generateBatch(
         StreamInterface $stream,
         int $offset,
-        int $limit,
-        bool $isFirstBatch = false
+        int $limit
     ): int {
         $columns = $this->getColumns($this->fields);
 
-        if ($isFirstBatch) {
+        if ($offset === 0) {
             $stream->addEntity($columns);
         }
 

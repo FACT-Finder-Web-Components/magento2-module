@@ -61,7 +61,7 @@ class ExportBatch extends Command
             ]);
 
             $generator = $this->feedGeneratorFactory->create($type);
-            $processedCount = $generator->generateBatch($stream, $offset, $limit, $offset === 0);
+            $processedCount = $generator->generateBatch($stream, $offset, $limit);
         });
 
         $memoryUsageMB = memory_get_usage(true) / 1024 / 1024;
