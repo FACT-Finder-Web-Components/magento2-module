@@ -30,6 +30,28 @@ class Feed
         $stream->finalize();
     }
 
+    public function generateBatch(
+        StreamInterface $stream,
+        int $offset,
+        int $limit
+    ): int {
+        $columns = $this->getColumns($this->fields);
+
+        if ($offset === 0) {
+            $stream->addEntity($columns);
+        }
+
+        $processedCount = $this->exporter->exportEntitiesBatch(
+            $stream,
+            $this->dataProvider,
+            $columns,
+            $offset,
+            $limit
+        );
+
+        return (int) $processedCount;
+    }
+
     private function getColumns(array $fields): array
     {
         return array_values(array_unique([...$this->columns, ...array_map([$this, 'getFieldName'], $fields)]));

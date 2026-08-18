@@ -31,6 +31,41 @@ class DataProvider implements DataProviderInterface
         }
     }
 
+    /**
+     * @return ExportEntityInterface[]
+     */
+    public function getEntitiesBatch(int $offset, int $limit): iterable
+    {
+        yield from []; // init generator
+
+        $productsBatch = $this->getProductsSlice($offset, $limit);
+
+        foreach ($productsBatch as $product) {
+            yield from $this->entitiesFrom($product)->getEntities();
+        }
+    }
+
+    private function getProductsSlice(int $offset, int $limit): iterable
+    {
+        if (method_exists($this->products, 'getBatch')) {
+            return $this->products->getBatch($offset, $limit);
+        }
+
+        if (method_exists($this->products, 'setPageSize') && method_exists($this->products, 'setCurPage')) {
+            $pageNumber = (int) floor($offset / $limit) + 1;
+            $this->products->setPageSize($limit);
+            $this->products->setCurPage($pageNumber);
+
+            return $this->products;
+        }
+
+        $productsArray = is_array($this->products)
+            ? $this->products
+            : iterator_to_array($this->products, false);
+
+        return array_slice($productsArray, $offset, $limit);
+    }
+
     private function entitiesFrom(ProductInterface $product): DataProviderInterface
     {
         $type = $this->entityTypes[$product->getTypeId()] ?? $this->entityTypes[ProductType::DEFAULT_TYPE];

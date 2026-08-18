@@ -276,6 +276,15 @@ Command name: `factfinder:export [TYPE]`. You can add execution of this command 
     - store - define a store, which the product data will be taken from
     - skip-ftp-upload - skips the ftp upload
     - skip-push-import - skips triggering import
+
+#### Running export with a worker
+
+Since version 5.5.0, we've introduced a new export flow based on the worker.
+The biggest advantage of this export method is the reduced memory usage, which is especially helpful when you have a large or complex products catalog.
+Currently, this command is only available from the CLI and can be executed by:
+
+    php [MAGENTO_ROOT]/bin/magento factfinder:worker-export
+
     
 ## Web Component Integration
 
