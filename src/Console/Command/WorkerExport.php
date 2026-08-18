@@ -223,7 +223,7 @@ class WorkerExport extends Command
         $output->writeln("<info>[STEP 2] Starting product batch processing (Batch Size: {$batchSize})...</info>");
 
         while (true) {
-            $output->write(sprintf("   -> Processing Batch #%d (Offset: %d)... ", $batchNumber, $offset));
+            $output->write(sprintf('   -> Processing Batch #%d (Offset: %d)... ', $batchNumber, $offset));
 
             $process = new Process([
                 $phpBinary,
