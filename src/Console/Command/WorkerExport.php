@@ -6,6 +6,7 @@ namespace Omikron\Factfinder\Console\Command;
 
 use Magento\Framework\App\State;
 use Magento\Store\Model\StoreManagerInterface;
+use Omikron\Factfinder\Api\StreamInterfaceFactory;
 use Omikron\Factfinder\Model\Api\PushImport;
 use Omikron\Factfinder\Model\Config\CommunicationConfig;
 use Omikron\Factfinder\Model\FtpUploader;
@@ -27,12 +28,13 @@ class WorkerExport extends Command
     private const PRODUCTS_EXPORT_TYPE = 'product';
 
     public function __construct(
-        private readonly StoreManagerInterface $storeManager,
-        private readonly FtpUploader           $ftpUploader,
-        private readonly CommunicationConfig   $communicationConfig,
-        private readonly PushImport            $pushImport,
-        private readonly State                 $state,
-        private readonly FeedFileService       $feedFileService
+        private readonly StoreManagerInterface  $storeManager,
+        private readonly FtpUploader            $ftpUploader,
+        private readonly CommunicationConfig    $communicationConfig,
+        private readonly PushImport             $pushImport,
+        private readonly State                  $state,
+        private readonly FeedFileService        $feedFileService,
+        private readonly StreamInterfaceFactory $streamFactory
     ) {
         parent::__construct();
     }
@@ -59,7 +61,8 @@ class WorkerExport extends Command
     {
         $this->state->setAreaCode('frontend');
 
-        $storeIds = $this->resolveStoreIds($input, $output);
+        [$storeIds, $upload, $pushImport] = $this->resolveExecutionParameters($input, $output);
+
         if (empty($storeIds)) {
             $output->writeln('<error>[ERROR] There is no integration enabled for any store.</error>');
             return Command::FAILURE;
@@ -68,8 +71,6 @@ class WorkerExport extends Command
         $phpBinaryFinder = new PhpExecutableFinder();
         $phpBinary       = $phpBinaryFinder->find() ?: 'php';
         $type            = $input->getArgument('type') ?? self::PRODUCTS_EXPORT_TYPE;
-        $upload          = (bool) $input->getOption('upload');
-        $pushImport      = (bool) $input->getOption('push-import');
 
         foreach ($storeIds as $storeId) {
             $success = $this->exportForStore($storeId, $type, $upload, $pushImport, $output, $phpBinary);
@@ -79,6 +80,78 @@ class WorkerExport extends Command
         }
 
         return Command::SUCCESS;
+    }
+
+    private function resolveExecutionParameters(InputInterface $input, OutputInterface $output): array
+    {
+        $storeIdInput = $input->getOption('store');
+        $upload       = (bool) $input->getOption('upload');
+        $pushImport   = (bool) $input->getOption('push-import');
+
+        if ($input->isInteractive()) {
+            $helper = $this->getHelper('question');
+
+            if (empty($storeIdInput)) {
+                $storeIdInput = $this->askStoreId($input, $output, $helper);
+            }
+
+            if (!$upload) {
+                $upload = $this->askYesNoQuestion(
+                    $input,
+                    $output,
+                    $helper,
+                    'Should upload feed to FTP after exporting?'
+                );
+            }
+
+            if (!$pushImport) {
+                $pushImport = $this->askYesNoQuestion(
+                    $input,
+                    $output,
+                    $helper,
+                    'Should trigger Push Import after uploading?'
+                );
+            }
+        }
+
+        $storeIds = $this->getStoreIds($storeIdInput ? (int) $storeIdInput : 0);
+
+        return [$storeIds, $upload, $pushImport];
+    }
+
+    private function askStoreId(InputInterface $input, OutputInterface $output, mixed $helper): ?string
+    {
+        $storeChoices = [];
+        foreach ($this->storeManager->getStores() as $store) {
+            if ($this->communicationConfig->isChannelEnabled((int) $store->getId())) {
+                $storeChoices[$store->getId()] = "{$store->getName()} (ID: {$store->getId()})";
+            }
+        }
+
+        if (empty($storeChoices)) {
+            return null;
+        }
+
+        $question     = new ChoiceQuestion('Select store ID:', $storeChoices);
+        $storeIdInput = $helper->ask($input, $output, $question);
+
+        if (preg_match('/ID: (\d+)\)/', (string) $storeIdInput, $matches)) {
+            return $matches[1];
+        }
+
+        return (string) $storeIdInput;
+    }
+
+    private function askYesNoQuestion(
+        InputInterface $input,
+        OutputInterface $output,
+        mixed $helper,
+        string $questionText
+    ): bool {
+        $question = new ChoiceQuestion("{$questionText} (default: no)", ['no', 'yes'], 0);
+        $answer   = $helper->ask($input, $output, $question);
+
+        return $answer === 'yes';
     }
 
     private function exportForStore(
@@ -150,7 +223,7 @@ class WorkerExport extends Command
         $output->writeln("<info>[STEP 2] Starting product batch processing (Batch Size: {$batchSize})...</info>");
 
         while (true) {
-            $output->write(sprintf('   -> Processing Batch #%d (Offset: %d)... ', $batchNumber, $offset));
+            $output->write(sprintf("   -> Processing Batch #%d (Offset: %d)... ", $batchNumber, $offset));
 
             $process = new Process([
                 $phpBinary,
@@ -214,7 +287,10 @@ class WorkerExport extends Command
 
         $output->writeln("<comment>[STEP 3] Uploading file {$filename} to FTP server...</comment>");
         try {
-            $stream = $this->feedFileService->getStream($relativePath);
+            $stream = $this->streamFactory->create([
+                'filename' => $relativePath,
+                'mode'     => 'r',
+            ]);
             $this->ftpUploader->upload($filename, $stream);
             $output->writeln('<info>[STEP 3 COMPLETED] File successfully uploaded to FTP.</info>');
             return true;
@@ -246,32 +322,6 @@ class WorkerExport extends Command
             $output->writeln("<error>[ERROR] Push Import failed: {$e->getMessage()}</error>");
             return false;
         }
-    }
-
-    private function resolveStoreIds(InputInterface $input, OutputInterface $output): array
-    {
-        $storeIdInput = $input->getOption('store');
-
-        if ($input->isInteractive() && empty($storeIdInput)) {
-            $storeChoices = [];
-            foreach ($this->storeManager->getStores() as $store) {
-                if ($this->communicationConfig->isChannelEnabled((int) $store->getId())) {
-                    $storeChoices[$store->getId()] = "{$store->getName()} (ID: {$store->getId()})";
-                }
-            }
-
-            if (!empty($storeChoices)) {
-                $helper       = $this->getHelper('question');
-                $question     = new ChoiceQuestion('Select store ID:', $storeChoices);
-                $storeIdInput = $helper->ask($input, $output, $question);
-
-                if (preg_match('/ID: (\d+)\)/', (string) $storeIdInput, $matches)) {
-                    $storeIdInput = $matches[1];
-                }
-            }
-        }
-
-        return $this->getStoreIds($storeIdInput ? (int) $storeIdInput : 0);
     }
 
     private function getStoreIds(int $storeId): array
