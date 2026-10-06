@@ -29,6 +29,9 @@
     "magento/magento-coding-standard": "*",
     "friendsofphp/php-cs-fixer": "^3.58"
   },
+  "suggest": {
+    "magento/module-inventory-sales-api": "Required for availability information in product data feed file"
+  },
   "autoload": {
     "files": [
       "src/registration.php"
