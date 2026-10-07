@@ -35,8 +35,6 @@ class ProductAvailabilityTest extends TestCase
         $this->stockRegistryMock = $this->createMock(StockRegistryInterface::class);
         $this->storeManagerMock = $this->createMock(StoreManagerInterface::class);
         $this->loggerMock = $this->createMock(LoggerInterface::class);
-
-        // Poprawka 1: Usunięto wstrzykiwanie $this->stockRegistryMock
         $this->availability = new ProductAvailability(
             $this->moduleManagerMock,
             $this->objectManagerMock,
@@ -51,7 +49,6 @@ class ProductAvailabilityTest extends TestCase
             ->with('Magento_InventorySalesApi')
             ->willReturn(false);
 
-        // Poprawka 2: ObjectManager musi zwrócić mock StockRegistry
         $this->objectManagerMock->method('get')
             ->with(StockRegistryInterface::class)
             ->willReturn($this->stockRegistryMock);

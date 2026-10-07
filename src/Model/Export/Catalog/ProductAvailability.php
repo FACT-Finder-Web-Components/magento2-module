@@ -99,7 +99,7 @@ class ProductAvailability
     {
         try {
             if (!interface_exists(self::LEGACY_STOCK_REGISTRY_INTERFACE)) {
-                return false; // Skrajny przypadek: klient usunął również stare CatalogInventory
+                return false;
             }
 
             if ($this->legacyStockRegistry === null) {
