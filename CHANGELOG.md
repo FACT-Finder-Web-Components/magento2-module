@@ -1,8 +1,12 @@
 # Changelog
 ## Unreleased
-### Ad
+### Add
 - Add support for PHP 8.5
 - Alternative product export command based on a queue system
+- Support stores without Magento Multi-Source Inventory
+
+### Update
+- Update WebComponents library to version 5.3.1
 
 ## [v5.4.0] - 2026.08.05
 ### Add
