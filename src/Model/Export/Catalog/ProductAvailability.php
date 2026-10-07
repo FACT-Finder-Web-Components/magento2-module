@@ -5,52 +5,137 @@ declare(strict_types=1);
 namespace Omikron\Factfinder\Model\Export\Catalog;
 
 use Magento\Catalog\Model\Product;
-use Magento\InventorySalesApi\Api\AreProductsSalableInterface;
-use Magento\InventorySalesApi\Api\Data\SalesChannelInterface;
-use Magento\InventorySalesApi\Api\StockResolverInterface;
+use Magento\Framework\Module\Manager as ModuleManager;
+use Magento\Framework\ObjectManagerInterface;
 use Magento\Store\Model\StoreManagerInterface;
+use Psr\Log\LoggerInterface;
 
 /**
- * Resolves the availability of a product the same way the storefront does.
+ * Handles product availability check with support for both MSI and Legacy CatalogInventory.
  *
- * The MSI source items are not a reliable source of truth. In single source mode the salability is
- * derived from the legacy stock tables, so an installation which writes stock data without going
- * through the MSI synchronization ends up with products which are salable everywhere but have no
- * source item at all.
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class ProductAvailability
 {
-    /** @var array<string, int> */
-    private array $stockIds = [];
+    private const MSI_MODULE_NAME = 'Magento_InventorySalesApi';
+    private const ARE_PRODUCTS_SALABLE_INTERFACE = 'Magento\InventorySalesApi\Api\AreProductsSalableInterface';
+    private const STOCK_RESOLVER_INTERFACE = 'Magento\InventorySalesApi\Api\StockResolverInterface';
+    private const SALES_CHANNEL_INTERFACE = 'Magento\InventorySalesApi\Api\Data\SalesChannelInterface';
+    private const LEGACY_STOCK_REGISTRY_INTERFACE = 'Magento\CatalogInventory\Api\StockRegistryInterface';
+
+    private ?bool $isMsiAvailable = null;
+    private mixed $areProductsSalable = null;
+    private mixed $stockResolver = null;
+    private mixed $legacyStockRegistry = null;
 
     public function __construct(
-        private readonly AreProductsSalableInterface $areProductsSalable,
-        private readonly StockResolverInterface $stockResolver,
+        private readonly ModuleManager $moduleManager,
+        private readonly ObjectManagerInterface $objectManager,
         private readonly StoreManagerInterface $storeManager,
+        private readonly LoggerInterface $logger
     ) {
     }
 
     public function isAvailable(Product $product): bool
     {
-        if ($product->hasData('is_salable')) {
-            return $product->isAvailable();
+        if ($this->canUseMsi()) {
+            return $this->isAvailableViaMsi($product);
         }
 
-        foreach ($this->areProductsSalable->execute([(string) $product->getSku()], $this->getStockId()) as $result) {
-            if ($result->isSalable()) {
-                return true;
-            }
-        }
-
-        return false;
+        return $this->isAvailableViaLegacyInventory($product);
     }
 
-    private function getStockId(): int
+    private function canUseMsi(): bool
     {
-        $websiteCode = (string) $this->storeManager->getWebsite()->getCode();
+        if ($this->isMsiAvailable === null) {
+            $this->isMsiAvailable = $this->moduleManager->isEnabled(self::MSI_MODULE_NAME)
+                && interface_exists(self::ARE_PRODUCTS_SALABLE_INTERFACE)
+                && interface_exists(self::STOCK_RESOLVER_INTERFACE);
+        }
 
-        return $this->stockIds[$websiteCode] ??= (int) $this->stockResolver
-            ->execute(SalesChannelInterface::TYPE_WEBSITE, $websiteCode)
-            ->getStockId();
+        return $this->isMsiAvailable;
+    }
+
+    private function isAvailableViaMsi(Product $product): bool
+    {
+        try {
+            $areProductsSalable = $this->getAreProductsSalable();
+            $stockResolver = $this->getStockResolver();
+
+            if (!$areProductsSalable || !$stockResolver) {
+                return $this->isAvailableViaLegacyInventory($product);
+            }
+
+            $websiteCode = $this->storeManager->getWebsite()->getCode();
+            $typeWebsite = defined(self::SALES_CHANNEL_INTERFACE . '::TYPE_WEBSITE')
+                ? constant(self::SALES_CHANNEL_INTERFACE . '::TYPE_WEBSITE')
+                : 'website';
+
+            $stock = $stockResolver->execute($typeWebsite, $websiteCode);
+            $stockId = (int) $stock->getId();
+
+            $sku = (string) $product->getSku();
+            $salableList = $areProductsSalable->execute([$sku], $stockId);
+
+            $result = $salableList[$sku] ?? reset($salableList);
+
+            return $result ? (bool) $result->isSalable() : false;
+        } catch (\Throwable $e) {
+            $this->logger->warning(sprintf(
+                '[FactFinder] Failed to determine MSI availability for SKU "%s", falling back to legacy: %s',
+                $product->getSku(),
+                $e->getMessage()
+            ));
+
+            return $this->isAvailableViaLegacyInventory($product);
+        }
+    }
+
+    /**
+     * Resolves availability via classic Magento CatalogInventory (Non-MSI).
+     * We use ObjectManager here to avoid Hard Dependencies on deprecated core classes.
+     */
+    private function isAvailableViaLegacyInventory(Product $product): bool
+    {
+        try {
+            if (!interface_exists(self::LEGACY_STOCK_REGISTRY_INTERFACE)) {
+                return false;
+            }
+
+            if ($this->legacyStockRegistry === null) {
+                $this->legacyStockRegistry = $this->objectManager->get(self::LEGACY_STOCK_REGISTRY_INTERFACE);
+            }
+
+            $websiteId = (int) $product->getStore()->getWebsiteId();
+            $stockItem = $this->legacyStockRegistry->getStockItem((int) $product->getId(), $websiteId);
+
+            return (bool) $stockItem->getIsInStock();
+        } catch (\Throwable $e) {
+            $this->logger->warning(sprintf(
+                '[FactFinder] Failed to determine legacy stock for product ID "%d": %s',
+                $product->getId(),
+                $e->getMessage()
+            ));
+
+            return false;
+        }
+    }
+
+    private function getAreProductsSalable(): mixed
+    {
+        if ($this->areProductsSalable === null) {
+            $this->areProductsSalable = $this->objectManager->get(self::ARE_PRODUCTS_SALABLE_INTERFACE);
+        }
+
+        return $this->areProductsSalable;
+    }
+
+    private function getStockResolver(): mixed
+    {
+        if ($this->stockResolver === null) {
+            $this->stockResolver = $this->objectManager->get(self::STOCK_RESOLVER_INTERFACE);
+        }
+
+        return $this->stockResolver;
     }
 }
